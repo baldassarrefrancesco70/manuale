@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlante delle macchine</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d; --lavoro:#9d4a2b; --steam:#3d5566; --iron:#6b5545;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:920px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .tabs{display:flex;gap:6px;border-bottom:2px solid var(--rule);margin-bottom:14px;flex-wrap:wrap}
+  .tabs button{appearance:none;border:0;background:transparent;font-family:var(--sans);font-size:.9rem;
+    padding:9px 15px;cursor:pointer;color:var(--ink-soft);border-bottom:2px solid transparent;margin-bottom:-2px}
+  .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+  .chain{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-bottom:16px}
+  .chain .node{display:flex;align-items:center}
+  .chain button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.8rem;padding:7px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);white-space:nowrap}
+  .chain button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .chain .arr{color:var(--rule);font-family:var(--sans);padding:0 6px;align-self:center}
+  .detail{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:660px){.detail{grid-template-columns:1fr}}
+  .stage{display:flex;flex-direction:column;gap:12px}
+  .zone{border:1px solid var(--rule);background:linear-gradient(180deg,#f3eee2,#ece5d3);border-radius:2px;padding:10px 10px 12px}
+  .zlab{font-family:var(--sans);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:6px}
+  .zone svg{width:100%;height:auto;display:block}
+  figure.epoca{margin:0}
+  figure.epoca img{width:100%;display:block;border:1px solid var(--rule);border-radius:2px}
+  figure.epoca figcaption{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-top:6px;font-style:italic}
+  .broken{display:none;font-family:var(--sans);font-size:.76rem;color:var(--ink-soft);
+    border:1px dashed var(--rule);border-radius:2px;padding:14px;text-align:center}
+  .info h2{font-size:1.2rem;margin:.1rem 0 .3rem}
+  .facts{font-family:var(--sans);font-size:.86rem;border-top:1px solid var(--line);margin-top:6px}
+  .facts .row{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .facts .k{flex:0 0 96px;color:var(--ink-soft);text-transform:uppercase;font-size:.68rem;letter-spacing:.05em;padding-top:2px}
+  .facts .v{color:var(--ink)}
+  .rincorsa{margin-top:12px;background:var(--paper-2);border-radius:2px;padding:11px 13px}
+  .rincorsa .step{font-size:.94rem;margin:4px 0}
+  .rincorsa .tag{font-family:var(--sans);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    display:inline-block;min-width:74px}
+  .rincorsa .nasce .tag{color:var(--steam)} .rincorsa .apre .tag{color:var(--lavoro)}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:14px;
+    border-top:1px solid var(--line);padding-top:8px}
+
+  /* --- schematic animations --- */
+  .spin,.slidex,.slidec,.bob,.rock,.flick,.rise,.belt,.stir,.flow{transform-box:fill-box;transform-origin:center}
+  .stir{transform-origin:left center}
+  @media (prefers-reduced-motion:no-preference){
+    .spin{animation:spin 3.6s linear infinite}
+    .slidex{animation:slidex 2.6s ease-in-out infinite}
+    .slidec{animation:slidec 3s ease-in-out infinite}
+    .bob{animation:bob 1.9s ease-in-out infinite}
+    .rock{animation:rock 2.8s ease-in-out infinite}
+    .stir{animation:rock 3s ease-in-out infinite}
+    .flick{animation:flick 1.5s ease-in-out infinite}
+    .rise{animation:rise 2.6s ease-in infinite}
+    .belt{animation:belt 1.1s linear infinite}
+    .flow{animation:flow 1.4s linear infinite}
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes slidex{0%,100%{transform:translateX(6px)}50%{transform:translateX(150px)}}
+  @keyframes slidec{0%,100%{transform:translateX(2px)}50%{transform:translateX(64px)}}
+  @keyframes bob{0%,100%{transform:translateY(-7px)}50%{transform:translateY(7px)}}
+  @keyframes rock{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+  @keyframes flick{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes rise{0%{transform:translateY(6px);opacity:0}25%{opacity:.65}100%{transform:translateY(-20px);opacity:0}}
+  @keyframes belt{to{stroke-dashoffset:-16}}
+  @keyframes flow{to{transform:translateX(-24px)}}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 2 · Le innovazioni tecniche</div>
+  <h1>Atlante delle macchine</h1>
+  <p class="sub">Ogni macchina nasce da uno squilibrio e ne apre un altro: non un progresso ordinato, ma una rincorsa a scatti. A sinistra il principio in movimento, sotto l'immagine d'epoca; a destra i dati e la catena. Le frecce in alto seguono la rincorsa.</p>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="chain" id="chain"></div>
+
+  <div class="detail">
+    <div class="stage">
+      <div class="zone">
+        <span class="zlab">Il principio</span>
+        <div id="stage-svg"></div>
+      </div>
+      <figure class="epoca">
+        <span class="zlab">L'immagine d'epoca</span>
+        <img id="m-img" alt="">
+        <div class="broken" id="m-broken">Immagine non ancora raggiungibile a questo indirizzo.</div>
+        <figcaption id="m-cap"></figcaption>
+      </figure>
+    </div>
+    <div class="info">
+      <h2 id="m-name"></h2>
+      <div class="facts" id="m-facts"></div>
+      <div class="rincorsa" id="m-rincorsa"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const IMG='https://baldassarrefrancesco70.github.io/artefatti_storia/img/';
+  const spokes=(cx,cy,r,n,col)=>Array.from({length:n},(_,i)=>{const a=i*(360/n)*Math.PI/180;return `<line x1="${cx}" y1="${cy}" x2="${(cx+r*Math.cos(a)).toFixed(1)}" y2="${(cy+r*Math.sin(a)).toFixed(1)}" stroke="${col}" stroke-width="2"/>`;}).join('');
+
+  const M = {
+    filatura:{
+      label:'Filatura e tessitura',
+      items:[
+        {id:'navetta',name:'Navetta volante',img:'telaio.jpg',
+         facts:[['Inventore','John Kay'],['Anno','1733'],['Energia','forza umana'],['Dove','a domicilio'],['Effetto','tessitura più veloce']],
+         nasce:'La tessitura a mano era lenta quanto la filatura: un equilibrio.',
+         apre:'Un tessitore più rapido divora più filo di quanto la filatura manuale possa dargli.',
+         svg:`<svg viewBox="0 0 240 160">
+           <rect x="22" y="30" width="196" height="100" rx="5" fill="none" stroke="#b7ab8d" stroke-width="2.4"/>
+           <g stroke="#cbb98a" stroke-width="2.2"><line x1="30" y1="52" x2="210" y2="52"/><line x1="30" y1="72" x2="210" y2="72"/><line x1="30" y1="92" x2="210" y2="92"/><line x1="30" y1="112" x2="210" y2="112"/></g>
+           <rect x="30" y="46" width="26" height="72" fill="#d8c9a1" opacity=".55"/>
+           <g class="slidex"><path d="M0 82 Q22 66 44 82 Q22 98 0 82 Z" fill="#9d4a2b"/><circle class="spin" cx="22" cy="82" r="4.5" fill="#efe9dc"/></g></svg>`},
+        {id:'jenny',name:'Spinning jenny',img:'Spinning_jenny.jpg',
+         facts:[['Inventore','James Hargreaves'],['Anno','1764–65'],['Energia','forza umana'],['Dove','ancora a domicilio'],['Filo','sottile ma debole (trama)']],
+         nasce:'La fame di filo aperta dalla navetta volante.',
+         apre:'Molti fusi in una casa, ma un filo troppo debole per l\'ordito.',
+         svg:`<svg viewBox="0 0 240 160">
+           <line x1="112" y1="34" x2="222" y2="34" stroke="#b7ab8d" stroke-width="2"/>
+           ${[124,152,180,208].map(x=>`<line x1="${x}" y1="34" x2="${x}" y2="98" stroke="#cbb98a" stroke-width="1.6"/><g class="spin"><ellipse cx="${x}" cy="70" rx="5" ry="15" fill="#9d4a2b"/><line x1="${x}" y1="57" x2="${x}" y2="83" stroke="#efe9dc" stroke-width="1"/></g>`).join('')}
+           <g class="spin"><circle cx="56" cy="106" r="32" fill="none" stroke="#201d18" stroke-width="3.2"/>${spokes(56,106,32,6,'#201d18')}<circle cx="56" cy="106" r="4" fill="#201d18"/><circle cx="56" cy="78" r="4" fill="#5b5346"/></g>
+           <line class="belt" x1="86" y1="98" x2="120" y2="58" stroke="#5b5346" stroke-width="1.6" stroke-dasharray="4 4"/></svg>`},
+        {id:'water',name:'Water frame',img:'Mule water.jpg',
+         facts:[['Inventore','Richard Arkwright'],['Anno','1769'],['Energia','idraulica (acqua)'],['Dove','fuori casa: il mill'],['Filo','robusto (ordito)']],
+         nasce:'Il bisogno di un filo resistente che la jenny non dava.',
+         apre:'Una macchina legata al fiume non sta più in casa: nasce la fabbrica.',
+         svg:`<svg viewBox="0 0 240 160">
+           <g class="spin"><circle cx="50" cy="84" r="34" fill="none" stroke="#3d5566" stroke-width="3"/>${spokes(50,84,34,8,'#3d5566')}<circle cx="50" cy="84" r="4" fill="#3d5566"/></g>
+           <g class="flow"><path d="M-12 136 q12 -7 24 0 t24 0 t24 0 t24 0 t24 0 t24 0" fill="none" stroke="#6a8ba0" stroke-width="2.6" opacity=".7"/></g>
+           ${[52,78,104].map(y=>`<g class="spin"><circle cx="150" cy="${y}" r="12" fill="none" stroke="#201d18" stroke-width="2.6"/><line x1="150" y1="${y-12}" x2="150" y2="${y+12}" stroke="#201d18" stroke-width="1.4"/></g>`).join('')}
+           <line x1="150" y1="24" x2="150" y2="40" stroke="#cbb98a" stroke-width="6"/>
+           <line x1="150" y1="116" x2="150" y2="140" stroke="#cbb98a" stroke-width="1.6"/>
+           <text x="176" y="34" font-family="'Gill Sans',sans-serif" font-size="10" fill="#5b5346">rulli</text></svg>`},
+        {id:'mule',name:'Spinning mule',img:'Spinning Mule.jpg',
+         facts:[['Inventore','Samuel Crompton'],['Anno','1779'],['Energia','acqua, poi vapore'],['Dove','fabbrica'],['Filo','fine e resistente insieme']],
+         nasce:'L\'incrocio tra i rulli del water frame e il carrello della jenny.',
+         apre:'Tanto filo, e di qualità, che la tessitura manuale non riesce più a smaltire.',
+         svg:`<svg viewBox="0 0 240 160">
+           ${[54,80].map(y=>`<g class="spin"><circle cx="66" cy="${y}" r="10" fill="none" stroke="#201d18" stroke-width="2.4"/><line x1="56" y1="${y}" x2="76" y2="${y}" stroke="#201d18" stroke-width="1.3"/></g>`).join('')}
+           <line x1="66" y1="90" x2="66" y2="102" stroke="#cbb98a" stroke-width="1.6"/>
+           <g class="slidec"><rect x="30" y="100" width="62" height="34" rx="3" fill="none" stroke="#9d4a2b" stroke-width="2.2"/>${[44,61,78].map(dx=>`<g class="spin"><ellipse cx="${dx}" cy="117" rx="4" ry="12" fill="#9d4a2b"/></g>`).join('')}</g>
+           <line x1="24" y1="136" x2="200" y2="136" stroke="#b7ab8d" stroke-width="2"/>
+           <text x="150" y="52" font-family="'Gill Sans',sans-serif" font-size="10" fill="#5b5346">carrello mobile</text></svg>`},
+        {id:'telaio',name:'Telaio meccanico',img:'Telaio_meccanico.jpg',
+         facts:[['Inventore','Edmund Cartwright'],['Anno','1785 (brev. 1787)'],['Energia','vapore'],['Dove','fabbrica'],['Effetto','meccanizza la tessitura']],
+         nasce:'Il troppo filo prodotto dai filatoi meccanici.',
+         apre:'Chiude il cerchio: la macchina torna dove tutto era cominciato, la tessitura.',
+         svg:`<svg viewBox="0 0 240 160">
+           <rect x="24" y="28" width="168" height="100" rx="5" fill="none" stroke="#b7ab8d" stroke-width="2.4"/>
+           <g stroke="#cbb98a" stroke-width="2.2"><line x1="32" y1="50" x2="184" y2="50"/><line x1="32" y1="70" x2="184" y2="70"/><line x1="32" y1="90" x2="184" y2="90"/><line x1="32" y1="110" x2="184" y2="110"/></g>
+           <g class="slidex"><path d="M0 80 Q20 66 40 80 Q20 94 0 80 Z" fill="#9d4a2b"/></g>
+           <g class="spin"><circle cx="208" cy="128" r="18" fill="none" stroke="#3d5566" stroke-width="2.8"/>${spokes(208,128,18,6,'#3d5566')}<circle cx="208" cy="128" r="3.5" fill="#3d5566"/></g>
+           <line class="belt" x1="192" y1="118" x2="208" y2="128" stroke="#5b5346" stroke-width="1.6" stroke-dasharray="4 4"/></svg>`}
+      ]},
+    vapore:{
+      label:'Vapore',
+      items:[
+        {id:'newcomen',name:'Macchina di Newcomen',img:'Newcomen.png',
+         facts:[['Inventore','Thomas Newcomen'],['Anno','1712'],['Energia','vapore (atmosferica)'],['Uso','pompare acqua dalle miniere'],['Limite','enorme spreco di carbone']],
+         nasce:'Le miniere di carbone, scavando in profondità, si allagavano.',
+         apre:'Una pompa che brucia carbone per estrarre altro carbone: l\'anello si chiude.',
+         svg:`<svg viewBox="0 0 240 160">
+           <line x1="120" y1="40" x2="106" y2="98" stroke="#b7ab8d" stroke-width="2.4"/><line x1="120" y1="40" x2="134" y2="98" stroke="#b7ab8d" stroke-width="2.4"/>
+           <g class="rock"><rect x="40" y="35" width="160" height="10" rx="4" fill="#201d18"/></g>
+           <rect x="52" y="60" width="26" height="46" rx="2" fill="none" stroke="#3d5566" stroke-width="2.4"/>
+           <g class="bob"><rect x="58" y="56" width="14" height="20" rx="2" fill="#3d5566"/><line x1="65" y1="42" x2="65" y2="58" stroke="#3d5566" stroke-width="2.4"/></g>
+           <g class="bob" style="animation-delay:-1.4s"><line x1="176" y1="50" x2="176" y2="98" stroke="#6b5545" stroke-width="3"/></g>
+           <rect x="169" y="98" width="14" height="34" fill="none" stroke="#b7ab8d" stroke-width="2"/>
+           <rect x="44" y="112" width="48" height="22" rx="2" fill="none" stroke="#6b5545" stroke-width="2"/>
+           <rect x="48" y="128" width="40" height="6" fill="#c8622e" class="flick"/>
+           <g class="rise"><ellipse cx="88" cy="60" rx="6" ry="4" fill="#b7ab8d" opacity=".5"/></g>
+           <g class="rise" style="animation-delay:-1.3s"><ellipse cx="96" cy="58" rx="5" ry="3.5" fill="#b7ab8d" opacity=".4"/></g></svg>`},
+        {id:'watt',name:'Macchina di Watt',img:'Watt.jpg',
+         facts:[['Inventore','James Watt'],['Anno','1769–1784'],['Energia','vapore'],['Chiave','condensatore separato'],['Effetto','moto rotatorio continuo']],
+         nasce:'Lo spreco di combustibile della macchina di Newcomen.',
+         apre:'Energia costante e svincolata dai fiumi: la fabbrica può sorgere ovunque.',
+         svg:`<svg viewBox="0 0 240 160">
+           <line x1="96" y1="40" x2="86" y2="92" stroke="#b7ab8d" stroke-width="2.4"/><line x1="96" y1="40" x2="106" y2="92" stroke="#b7ab8d" stroke-width="2.4"/>
+           <g class="rock"><rect x="30" y="35" width="132" height="10" rx="4" fill="#201d18"/></g>
+           <g class="bob"><rect x="40" y="52" width="16" height="24" rx="2" fill="#3d5566"/><line x1="48" y1="40" x2="48" y2="54" stroke="#3d5566" stroke-width="2.4"/></g>
+           <rect x="150" y="58" width="18" height="34" rx="2" fill="#9d4a2b" opacity=".2" stroke="#9d4a2b" stroke-width="2"/>
+           <text x="159" y="104" text-anchor="middle" font-family="'Gill Sans',sans-serif" font-size="8.5" fill="#9d4a2b">condensatore</text>
+           <g class="spin"><circle cx="150" cy="130" r="22" fill="none" stroke="#201d18" stroke-width="3"/>${spokes(150,130,22,6,'#201d18')}<circle cx="150" cy="130" r="4" fill="#201d18"/></g>
+           <line class="belt" x1="128" y1="120" x2="150" y2="130" stroke="#5b5346" stroke-width="1.6" stroke-dasharray="4 4"/>
+           <g class="spin"><line x1="206" y1="38" x2="206" y2="70" stroke="#201d18" stroke-width="2"/><line x1="206" y1="46" x2="190" y2="64" stroke="#201d18" stroke-width="2"/><circle cx="190" cy="64" r="5" fill="#3d5566"/><line x1="206" y1="46" x2="222" y2="64" stroke="#201d18" stroke-width="2"/><circle cx="222" cy="64" r="5" fill="#3d5566"/></g>
+           <text x="206" y="84" text-anchor="middle" font-family="'Gill Sans',sans-serif" font-size="8" fill="#5b5346">regolatore</text></svg>`}
+      ]},
+    ferro:{
+      label:'Ferro',
+      items:[
+        {id:'coke',name:'Il coke nell\'altoforno',img:'Altoforno.png',
+         facts:[['Inventore','Abraham Darby'],['Anno','dal 1709'],['Cosa fa','sostituisce il carbone di legna'],['Vantaggio','temperature più alte'],['Sblocca','la scarsità di legname']],
+         nasce:'Gli altiforni dipendevano dal carbone di legna, in esaurimento.',
+         apre:'Ferro in quantità: ma serve purificarlo per renderlo lavorabile.',
+         svg:`<svg viewBox="0 0 240 160">
+           <polygon points="92,26 148,26 166,132 74,132" fill="none" stroke="#6b5545" stroke-width="2.6"/>
+           <g stroke="#6b5545" stroke-width="1" opacity=".45"><line x1="82" y1="62" x2="158" y2="62"/><line x1="78" y1="98" x2="162" y2="98"/></g>
+           <g fill="#201d18">${[[104,44],[122,40],[136,46],[112,52],[128,54]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="5"/>`).join('')}</g>
+           <rect x="82" y="112" width="76" height="20" fill="#c8622e" class="flick"/>
+           <path d="M112 30 q-5 -16 8 -24 q13 8 8 24" fill="#c8622e" class="flick" opacity=".8"/>
+           <g class="rise"><ellipse cx="120" cy="16" rx="7" ry="5" fill="#b7ab8d" opacity=".5"/></g>
+           <g class="rise" style="animation-delay:-1s"><ellipse cx="132" cy="14" rx="6" ry="4" fill="#b7ab8d" opacity=".4"/></g>
+           <text x="120" y="150" text-anchor="middle" font-family="'Gill Sans',sans-serif" font-size="10" fill="#5b5346">coke + minerale</text></svg>`},
+        {id:'puddellaggio',name:'Il puddellaggio',img:'Puddling_furnace.jpg',
+         facts:[['Inventore','Henry Cort'],['Anno','1783–84'],['Cosa fa','purifica la ghisa'],['Prodotto','ferro dolce lavorabile'],['Effetto','anche dal minerale inglese']],
+         nasce:'La ghisa grezza era dura ma fragile, poco utile.',
+         apre:'Ferro dolce a basso costo: pronto per macchine, edifici, ferrovie.',
+         svg:`<svg viewBox="0 0 240 160">
+           <rect x="46" y="58" width="150" height="58" rx="5" fill="none" stroke="#6b5545" stroke-width="2.6"/>
+           <rect x="176" y="28" width="18" height="32" fill="none" stroke="#6b5545" stroke-width="2"/>
+           <g class="rise"><ellipse cx="185" cy="22" rx="6" ry="4" fill="#b7ab8d" opacity=".5"/></g>
+           <rect x="54" y="98" width="134" height="14" rx="3" fill="#c8622e" class="flick"/>
+           <path d="M62 98 q-3 -12 5 -18 M84 98 q-3 -12 5 -18 M106 98 q-3 -12 5 -18" stroke="#c8622e" stroke-width="2" fill="none" class="flick"/>
+           <g class="stir"><line x1="28" y1="90" x2="120" y2="104" stroke="#201d18" stroke-width="3"/><circle cx="28" cy="90" r="4" fill="#201d18"/></g>
+           <text x="120" y="140" text-anchor="middle" font-family="'Gill Sans',sans-serif" font-size="10" fill="#5b5346">si rimescola la massa</text></svg>`}
+      ]}
+  };
+
+  const tabsEl=document.getElementById('tabs');
+  const chainEl=document.getElementById('chain');
+  const imgEl=document.getElementById('m-img');
+  const brokenEl=document.getElementById('m-broken');
+  let curTab='filatura', curItem='navetta';
+
+  imgEl.addEventListener('error',()=>{ imgEl.style.display='none'; brokenEl.style.display='block'; });
+  imgEl.addEventListener('load',()=>{ imgEl.style.display='block'; brokenEl.style.display='none'; });
+
+  Object.keys(M).forEach(k=>{
+    const b=document.createElement('button');
+    b.textContent=M[k].label; b.setAttribute('role','tab');
+    b.addEventListener('click',()=>{curTab=k;curItem=M[k].items[0].id;draw();});
+    tabsEl.appendChild(b);
+  });
+
+  function draw(){
+    [...tabsEl.children].forEach((b,i)=>b.setAttribute('aria-selected',Object.keys(M)[i]===curTab));
+    chainEl.innerHTML='';
+    M[curTab].items.forEach((it,i)=>{
+      const node=document.createElement('div'); node.className='node';
+      const b=document.createElement('button');
+      b.textContent=it.name; b.setAttribute('aria-pressed',it.id===curItem);
+      b.addEventListener('click',()=>{curItem=it.id;draw();});
+      node.appendChild(b);
+      if(i<M[curTab].items.length-1){ const a=document.createElement('span'); a.className='arr'; a.textContent='→'; node.appendChild(a); }
+      chainEl.appendChild(node);
+    });
+    const it=M[curTab].items.find(x=>x.id===curItem);
+    document.getElementById('stage-svg').innerHTML=it.svg;
+    imgEl.style.display=''; brokenEl.style.display='none';
+    imgEl.src=IMG+encodeURI(it.img); imgEl.alt=it.name;
+    document.getElementById('m-cap').textContent=it.name;
+    document.getElementById('m-name').textContent=it.name;
+    document.getElementById('m-facts').innerHTML=it.facts.map(f=>`<div class="row"><div class="k">${f[0]}</div><div class="v">${f[1]}</div></div>`).join('');
+    document.getElementById('m-rincorsa').innerHTML=
+      `<div class="step nasce"><span class="tag">nasce da</span> ${it.nasce}</div>`+
+      `<div class="step apre"><span class="tag">e apre</span> ${it.apre}</div>`;
+  }
+  draw();
+})();
+</script>
+</body>
+</html>

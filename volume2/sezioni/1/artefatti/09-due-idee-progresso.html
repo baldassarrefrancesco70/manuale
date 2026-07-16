@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Due idee di progresso</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --lib:#3d5566;   /* liberismo: slate */
+    --soc:#7c2e35;   /* socialismo: wine red */
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.55;padding:22px;max-width:900px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.1rem}
+  .stepper{display:flex;gap:0;margin-bottom:18px;flex-wrap:wrap}
+  .stepper .st{display:flex;align-items:center}
+  .stepper button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--sans);font-size:.8rem;padding:8px 13px;border-radius:2px;cursor:pointer;color:var(--ink-soft);white-space:nowrap}
+  .stepper button[aria-current="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .stepper .sep{width:22px;height:1px;background:var(--rule);margin:0 2px;align-self:center}
+  .qhead{font-family:var(--sans);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+  .qtitle{font-size:1.2rem;font-weight:600;margin:0 0 14px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .col{border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .col .h{padding:10px 14px;color:#fff;font-family:var(--sans);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+  .col.lib .h{background:var(--lib)} .col.soc .h{background:var(--soc)}
+  .col .b{padding:13px 15px;font-size:1rem}
+  /* synthesis */
+  .synth{border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+  .synth .h{padding:12px 15px;color:#fff;font-family:var(--sans);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;
+    background:linear-gradient(90deg,var(--lib),var(--soc))}
+  .synth .b{padding:15px 16px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .synth p{margin:0 0 12px;font-size:1.02rem}
+  .synth .keline{font-size:1.05rem;border-left:3px solid var(--ink);padding-left:13px;margin:14px 0}
+  .caveat{background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;padding:12px 14px;margin:14px 0;font-size:.96rem}
+  .caveat .lab{font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soc);display:block;margin-bottom:5px}
+  .close{font-style:italic;color:var(--ink);font-size:1.02rem;margin-top:14px}
+  .nav{display:flex;justify-content:space-between;margin-top:18px}
+  .nav button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.86rem;padding:9px 18px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav button:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+  .nav button:disabled{opacity:.4;cursor:default}
+  .nav button.reveal{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 2 · Le ideologie del progresso</div>
+  <h1>Due idee di progresso</h1>
+  <p class="sub">Liberismo e socialismo si scontrarono su tre domande. Attraversale una a una, poi scopri ciò che, senza saperlo, avevano in comune.</p>
+
+  <div class="stepper" id="stepper"></div>
+  <div id="panel"></div>
+
+  <div class="nav">
+    <button id="prev">‹ Indietro</button>
+    <button id="next">Avanti ›</button>
+  </div>
+
+<script>
+(function(){
+  const steps=[
+    {key:"come", chip:"Come", q:"Come si realizza il progresso?",
+     lib:"Il progresso è spontaneo. Rimossi gli ostacoli e liberato il mercato, la «mano invisibile» converte l'egoismo di ciascuno nel benessere di tutti. Il progresso non va costruito: va lasciato accadere.",
+     soc:"Il progresso non è automatico. Lasciato a se stesso, il mercato non produce armonia ma crisi e miseria crescente. Il progresso va voluto e organizzato, piegando l'economia al governo consapevole della collettività."},
+    {key:"chi", chip:"Chi lo muove", q:"Chi muove il progresso?",
+     lib:"Lo muove l'individuo in competizione. Nella sua versione più cruda, il darwinismo sociale, è la lotta per l'esistenza che seleziona i più adatti e lascia indietro i deboli.",
+     soc:"Lo muove il conflitto tra le classi. Il progresso non è un'ascesa graduale, ma il prodotto di rotture: persino la borghesia fu una forza progressiva a suo tempo, e proprio per questo destinata a essere superata."},
+    {key:"giova", chip:"A chi giova", q:"A chi giova il progresso?",
+     lib:"La disuguaglianza non è un difetto ma un ingrediente: il prezzo necessario dello sviluppo, se non la sua prova, poiché il successo attesta il merito e la miseria la sua mancanza.",
+     soc:"Un progresso che arricchisce pochi e immiserisce molti non è progresso, ma il suo contrario mascherato. L'unico avanzamento che meriti il nome è l'emancipazione di tutti dallo sfruttamento."},
+    {key:"comune", chip:"La premessa comune", synthesis:true}
+  ];
+  let cur=0;
+  const stepper=document.getElementById('stepper');
+  const panel=document.getElementById('panel');
+  const prev=document.getElementById('prev');
+  const next=document.getElementById('next');
+
+  function buildStepper(){
+    stepper.innerHTML='';
+    steps.forEach((s,i)=>{
+      const wrap=document.createElement('div'); wrap.className='st';
+      const b=document.createElement('button');
+      b.textContent=s.chip; b.setAttribute('aria-current', i===cur);
+      b.addEventListener('click',()=>{cur=i;render();});
+      wrap.appendChild(b);
+      if(i<steps.length-1){const sep=document.createElement('span');sep.className='sep';wrap.appendChild(sep);}
+      stepper.appendChild(wrap);
+    });
+  }
+  function render(){
+    buildStepper();
+    const s=steps[cur];
+    if(s.synthesis){
+      panel.innerHTML=`<div class="synth">
+        <div class="h">La premessa comune</div>
+        <div class="b">
+          <p>Guarda adesso ciò che i due avversari avevano <em>in comune</em>, invece di ciò che li divideva. Si scopre qualcosa che nessuno dei due poteva vedere dall'interno.</p>
+          <p>Entrambi credevano che la storia avesse una direzione, e che quella direzione fosse buona.</p>
+          <div class="keline">La «mano invisibile» del liberismo e la «necessità storica» del crollo in Marx sono, sotto la loro opposizione, la stessa figura di pensiero: la fiducia che un meccanismo impersonale garantisca da sé l'approdo felice, quasi a prescindere dalla volontà e dagli errori degli uomini. Due determinismi speculari.</div>
+          <div class="caveat"><span class="lab">Un'avvertenza necessaria</span>Riconoscere una figura di pensiero condivisa non significa equiparare moralmente l'apologia della disuguaglianza e la rivendicazione della giustizia: le due cause non pesano ugualmente sulla bilancia morale.</div>
+          <p class="close">La certezza di un futuro necessariamente migliore era essa stessa un tratto d'epoca, la grande illusione ottimistica dell'Ottocento. Il progresso non è un destino: va scelto, difeso e pagato, ogni volta, da chi lo vuole.</p>
+        </div></div>`;
+    } else {
+      panel.innerHTML=`<div class="qhead">Domanda ${cur+1} di 3</div>
+        <h2 class="qtitle">${s.q}</h2>
+        <div class="cols">
+          <div class="col lib"><div class="h">Liberismo</div><div class="b">${s.lib}</div></div>
+          <div class="col soc"><div class="h">Socialismo</div><div class="b">${s.soc}</div></div>
+        </div>`;
+    }
+    prev.disabled=(cur===0);
+    next.disabled=(cur===steps.length-1);
+    next.classList.toggle('reveal', cur===steps.length-2);
+    next.textContent = cur===steps.length-2 ? "Scopri la premessa comune ›" : "Avanti ›";
+  }
+  prev.addEventListener('click',()=>{if(cur>0){cur--;render();}});
+  next.addEventListener('click',()=>{if(cur<steps.length-1){cur++;render();}});
+  render();
+})();
+</script>
+</body>
+</html>

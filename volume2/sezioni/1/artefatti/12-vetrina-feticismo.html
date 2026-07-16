@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La vetrina e la fabbrica</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d; --lavoro:#9d4a2b; --gold:#b0872e;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:860px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .item{border:1px solid var(--rule);border-radius:2px;overflow:hidden;display:flex;flex-direction:column;min-height:340px}
+  .face{padding:14px;flex:1;display:flex;flex-direction:column}
+  .flabel{font-family:var(--sans);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  /* sogno */
+  .item.dream .face{background:linear-gradient(180deg,#f6f1e5,#ece3cc)}
+  .item.dream .flabel{color:var(--gold)}
+  .item.dream .prod-name{font-size:1.12rem;font-weight:600;margin:2px 0 4px}
+  .item.dream .tagline{font-style:italic;color:var(--ink);font-size:1rem;margin-bottom:10px}
+  .item.dream .price{font-family:var(--sans);font-size:.86rem;color:var(--ink-soft);margin-top:auto}
+  .stage{display:flex;align-items:center;justify-content:center;padding:8px 0 12px}
+  .stage svg{width:96px;height:96px}
+  .sparkle{fill:var(--gold)}
+  /* realtà */
+  .item.real .face{background:linear-gradient(180deg,#e7ded0,#ded3bd)}
+  .item.real .flabel{color:var(--lavoro)}
+  .item.real h3{font-size:1.02rem;margin:2px 0 8px}
+  .item.real p{font-size:.9rem;margin:0 0 10px}
+  .btn{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.8rem;padding:9px 12px;border-radius:2px;cursor:pointer;color:var(--ink);width:100%}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .veil{border-top:1px solid var(--line);padding:11px 14px;background:var(--paper-2)}
+  .outro{margin-top:20px;background:var(--paper-2);border-left:3px solid var(--ink);border-radius:2px;padding:14px 16px;font-size:1rem}
+  .outro .lab{font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:6px}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:14px;border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 3 · Focus · I templi del consumo</div>
+  <h1>La vetrina e la fabbrica</h1>
+  <p class="sub">La vetrina mostra un sogno e nasconde il lavoro che lo ha prodotto. Questa distanza tra le due facce di ogni merce è ciò che si chiama «feticismo della merce». Solleva il velo su ciascun oggetto e guarda che cosa c'è dietro il vetro.</p>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="outro">
+    <span class="lab">Che cosa hai visto</span>
+    Nessuno di questi oggetti è, in sé, un sogno: sono cotone, acciaio, carne, prodotti da mani e macchine in condizioni precise. La vetrina aggiunge alla merce un'aura, un significato, un desiderio che il suo semplice uso non possiede, e nello stesso gesto fa dimenticare da dove viene e chi l'ha fatta. Imparare a rovesciare la vetrina, a vedere la fabbrica dietro il sogno, è uno dei modi in cui lo storico, e il cittadino, guardano il mondo delle merci.
+  </div>
+
+  <p class="note">Le illustrazioni sono schematiche. Gli esempi ricostruiscono processi produttivi reali di fine Ottocento in forma sintetica, a scopo didattico.</p>
+
+<script>
+(function(){
+  const ITEMS=[
+    {
+      name:"Abito di cotone",
+      tagline:"Eleganza alla portata di tutti.",
+      price:"Prezzo fisso · a rate da poche lire al mese",
+      svg:`<svg viewBox="0 0 100 100"><polygon points="50,14 62,26 58,86 42,86 38,26" fill="#efe9dc" stroke="#9d4a2b" stroke-width="2"/><line x1="50" y1="18" x2="50" y2="82" stroke="#b7ab8d" stroke-width="1"/><g class="sparkle"><circle cx="24" cy="30" r="2"/><circle cx="78" cy="40" r="2.5"/><circle cx="72" cy="22" r="1.6"/></g></svg>`,
+      realTitle:"Da dove viene",
+      real:"Il cotone arriva dalle piantagioni schiaviste d'oltre oceano. Viene filato e tessuto in fabbriche dove si lavora fino a quattordici ore al giorno, spesso donne e ragazzi, al ritmo delle macchine. L'abito che in vetrina promette eleganza è il prodotto finale di quella catena, che la vetrina non mostra."
+    },
+    {
+      name:"Carne in scatola",
+      tagline:"Il gusto del mondo sulla tua tavola.",
+      price:"Prezzo fisso · sempre disponibile",
+      svg:`<svg viewBox="0 0 100 100"><rect x="34" y="30" width="32" height="44" rx="3" fill="#efe9dc" stroke="#9d4a2b" stroke-width="2"/><rect x="34" y="42" width="32" height="18" fill="#e6dfcd" stroke="#9d4a2b" stroke-width="1"/><g class="sparkle"><circle cx="26" cy="34" r="2"/><circle cx="76" cy="46" r="2.4"/></g></svg>`,
+      realTitle:"Da dove viene",
+      real:"La carne viene macellata in stabilimenti lontani migliaia di chilometri, conservata grazie alle nuove celle frigorifere e trasportata via nave e ferrovia. Dietro la comodità della scatola ci sono il lavoro durissimo dei mattatoi e una filiera intercontinentale che il consumatore non vede e non immagina."
+    },
+    {
+      name:"Bicicletta",
+      tagline:"La libertà di andare dove vuoi.",
+      price:"Prezzo fisso · a rate",
+      svg:`<svg viewBox="0 0 100 100"><circle cx="32" cy="62" r="18" fill="none" stroke="#9d4a2b" stroke-width="2.5"/><circle cx="72" cy="62" r="18" fill="none" stroke="#9d4a2b" stroke-width="2.5"/><path d="M32 62 L52 62 L64 44 M52 62 L72 62 M52 62 L46 44 L64 44" fill="none" stroke="#201d18" stroke-width="2"/><g class="sparkle"><circle cx="52" cy="30" r="2.2"/><circle cx="80" cy="34" r="1.8"/></g></svg>`,
+      realTitle:"Da dove viene",
+      real:"Il telaio è d'acciaio, prodotto nelle nuove acciaierie; le ruote montano pneumatici di gomma, e la gomma viene dal caucciù raccolto nelle colonie, spesso in condizioni di sfruttamento estremo. La «libertà» venduta in vetrina poggia su una geografia di fabbriche e di imperi."
+    }
+  ];
+
+  const grid=document.getElementById('grid');
+  grid.innerHTML=ITEMS.map((it,i)=>`
+    <div class="item dream" id="item-${i}">
+      <div class="face">
+        <span class="flabel">In vetrina</span>
+        <div class="stage">${it.svg}</div>
+        <div class="prod-name">${it.name}</div>
+        <div class="tagline">${it.tagline}</div>
+        <div class="price">${it.price}</div>
+      </div>
+      <button class="btn" data-i="${i}">Solleva il velo ▾</button>
+    </div>`).join('');
+
+  grid.addEventListener('click',e=>{
+    const b=e.target.closest('[data-i]'); if(!b) return;
+    const i=+b.dataset.i, el=document.getElementById('item-'+i), it=ITEMS[i];
+    if(el.classList.contains('dream')){
+      el.classList.remove('dream'); el.classList.add('real');
+      el.innerHTML=`<div class="face">
+        <span class="flabel">Dietro il vetro</span>
+        <h3>${it.realTitle}</h3>
+        <p>${it.real}</p>
+      </div>
+      <button class="btn" data-i="${i}">Torna alla vetrina ▴</button>`;
+    } else {
+      el.classList.remove('real'); el.classList.add('dream');
+      el.innerHTML=`<div class="face">
+        <span class="flabel">In vetrina</span>
+        <div class="stage">${it.svg}</div>
+        <div class="prod-name">${it.name}</div>
+        <div class="tagline">${it.tagline}</div>
+        <div class="price">${it.price}</div>
+      </div>
+      <button class="btn" data-i="${i}">Solleva il velo ▾</button>`;
+    }
+  });
+})();
+</script>
+</body>
+</html>

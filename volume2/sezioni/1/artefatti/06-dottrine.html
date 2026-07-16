@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Da dove viene la ricchezza</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --oro:#a6812e; --terra:#5c7343; --lavoro:#9d4a2b;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:900px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .dims{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .dims button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--sans);font-size:.82rem;padding:8px 14px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .dims button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .col{border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .col .head{padding:12px 14px;color:#fff}
+  .col.m .head{background:var(--oro)} .col.f .head{background:var(--terra)} .col.l .head{background:var(--lavoro)}
+  .head .k{font-family:var(--sans);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;opacity:.9}
+  .head h2{margin:.1rem 0 0;font-size:1.15rem;font-weight:600}
+  .head .src{font-family:var(--sans);font-size:.85rem;margin-top:3px;opacity:.95}
+  .body{padding:6px 14px 14px}
+  .row{padding:11px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .row .lab{font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+  .row .val{font-size:.95rem}
+  .row.hl{background:var(--paper-2);margin:0 -14px;padding-inline:14px;border-radius:2px}
+  .callout{font-size:.97rem;background:var(--paper-2);border-left:3px solid var(--ink);
+    padding:12px 15px;margin-top:16px;border-radius:2px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 1 · Le dottrine economiche</div>
+  <h1>Da dove viene la ricchezza?</h1>
+  <p class="sub">Una domanda, tre risposte incompatibili. Scegli una riga per confrontarle su un punto solo.</p>
+
+  <div class="dims" id="dims" role="group" aria-label="Dimensioni di confronto">
+    <button data-d="fonte" aria-pressed="true">Fonte della ricchezza</button>
+    <button data-d="stato" aria-pressed="false">Ruolo dello Stato</button>
+    <button data-d="pol" aria-pressed="false">Politica economica</button>
+    <button data-d="chi" aria-pressed="false">Esponenti</button>
+  </div>
+
+  <div class="cols" id="cols"></div>
+
+  <div class="callout">Attenzione all'ordine in cui le incontri. Non sono tre tappe di un progresso che culmina nel liberismo: sono tre risposte in concorrenza, date quasi nello stesso tempo. Il liberismo si impose, ma «imporsi» non è «avere ragione per forza».</div>
+
+<script>
+(function(){
+  const doctrines=[
+    {cls:'m',k:'Il commercio e l\'oro',name:'Mercantilismo',src:'la ricchezza è nei metalli',
+      fonte:'I metalli preziosi accumulati entro i confini dello Stato. La ricchezza mondiale è una quantità data: il commercio è un gioco a somma zero.',
+      stato:'Interventista e protezionista. Ricchezza e potenza coincidono: uno Stato ricco di metalli arma eserciti e flotte.',
+      pol:'Dazi, barriere doganali, manifatture reali (Colbert), compagnie privilegiate in monopolio. Bilancia commerciale attiva.',
+      chi:'Jean-Baptiste Colbert e la pratica dei governi assoluti; un\'etichetta storiografica per politiche diverse tra loro.'},
+    {cls:'f',k:'La terra',name:'Fisiocrazia',src:'la ricchezza è nel suolo',
+      fonte:'Solo l\'agricoltura produce un «prodotto netto», un\'eccedenza reale. Le altre attività trasformano o fanno circolare ciò che la terra ha generato.',
+      stato:'Deve liberare la terra dai vincoli dell\'antico regime, ma non guidare la produzione. Prima scuola sistematica di economisti.',
+      pol:'Terra come bene liberamente vendibile, libertà di iniziativa e commercio, imposta unica e razionale. Il tentativo di Turgot fallì.',
+      chi:'François Quesnay, Anne-Robert-Jacques Turgot. Francia, Settecento.'},
+    {cls:'l',k:'Il lavoro',name:'Liberismo',src:'la ricchezza è nel lavoro',
+      fonte:'Il lavoro umano e la sua organizzazione, la divisione del lavoro. Non l\'oro, non la terra: la fatica riorganizzata.',
+      stato:'Ridotto a poche funzioni essenziali. Il mercato si autoregola attraverso la «mano invisibile»; l\'intervento pubblico è dannoso.',
+      pol:'Libero mercato, libero scambio internazionale, concorrenza. Lo Stato garantisce proprietà, giustizia, ordine, poco altro.',
+      chi:'Adam Smith, <em>Ricchezza delle nazioni</em> (1776). L\'ideologia della borghesia capitalista nascente.'}
+  ];
+  const cols=document.getElementById('cols');
+  const dimLabels={fonte:'Fonte della ricchezza',stato:'Ruolo dello Stato',pol:'Politica economica',chi:'Esponenti'};
+  let active='fonte';
+
+  function render(){
+    cols.innerHTML=doctrines.map(d=>{
+      const rows=Object.keys(dimLabels).map(dim=>
+        `<div class="row ${dim===active?'hl':''}"><div class="lab">${dimLabels[dim]}</div><div class="val">${d[dim]}</div></div>`
+      ).join('');
+      return `<div class="col ${d.cls}">
+        <div class="head"><div class="k">${d.k}</div><h2>${d.name}</h2><div class="src">${d.src}</div></div>
+        <div class="body">${rows}</div></div>`;
+    }).join('');
+  }
+  document.getElementById('dims').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    active=b.dataset.d;
+    [...document.querySelectorAll('#dims button')].forEach(x=>x.setAttribute('aria-pressed',x===b));
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

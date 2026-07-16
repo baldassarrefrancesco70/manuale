@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il ciclo del putting-out</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d; --accent:#3d5566; --profit:#9d4a2b;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:860px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .frame{border:1px solid var(--rule);background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px;border-radius:2px}
+  svg{width:100%;height:auto;display:block}
+  .node{cursor:pointer}
+  .node circle{fill:var(--paper-2);stroke:var(--rule);stroke-width:1.5;transition:all .3s}
+  .node.on circle{fill:var(--ink);stroke:var(--ink)}
+  .node text{font-family:var(--sans);font-size:12.5px;fill:var(--ink)}
+  .node.on text{fill:var(--paper)}
+  .arrow{stroke:var(--rule);stroke-width:2;fill:none;marker-end:url(#ah)}
+  .arrow.on{stroke:var(--accent)}
+  .controls{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:var(--sans)}
+  .controls button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--sans);font-size:.85rem;padding:8px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .controls button:hover{background:var(--ink);color:var(--paper)}
+  .step{flex:1;font-size:.82rem;color:var(--ink-soft)}
+  .expl{min-height:70px;background:var(--paper-2);border-left:3px solid var(--accent);
+    padding:12px 15px;margin-top:12px;border-radius:2px;font-size:.98rem}
+  .expl.profit{border-left-color:var(--profit)}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 1 · La manifattura prima della fabbrica</div>
+  <h1>Il giro del mercante</h1>
+  <p class="sub">Segui il ciclo un passo alla volta. Alla fine, guarda dove nasce il profitto.</p>
+
+  <div class="frame">
+    <svg id="diagram" viewBox="0 0 620 360" role="img" aria-label="Ciclo del putting-out system">
+      <defs>
+        <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0 0 L9 4.5 L0 9 z" fill="#8a7f63"/>
+        </marker>
+      </defs>
+      <g id="arrows"></g>
+      <g id="nodes"></g>
+    </svg>
+
+    <div class="controls">
+      <button id="prev">‹ Indietro</button>
+      <button id="next">Avanti ›</button>
+      <span class="step" id="stepLabel"></span>
+    </div>
+  </div>
+
+  <div class="expl" id="expl"></div>
+
+<script>
+(function(){
+  const cx=310, cy=180, R=128;
+  const nodes=[
+    {id:'mercante',label:['Mercante','imprenditore'],ang:-90},
+    {id:'materia', label:['Materia','prima'],ang:-18},
+    {id:'famiglie',label:['Famiglie','contadine'],ang:54},
+    {id:'prodotto',label:['Prodotto','finito'],ang:126},
+    {id:'mercato', label:['Mercato'],ang:198}
+  ];
+  nodes.forEach(n=>{ const a=n.ang*Math.PI/180; n.x=cx+R*Math.cos(a); n.y=cy+R*Math.sin(a); });
+
+  const steps=[
+    {from:'mercante',to:'materia', txt:"Il mercante-imprenditore acquista la materia prima, lana o cotone grezzo, con i propri capitali.",profit:false},
+    {from:'materia',to:'famiglie', txt:"La distribuisce alle famiglie contadine, che filano e tessono in casa, nelle pause dei lavori agricoli.",profit:false},
+    {from:'famiglie',to:'prodotto',txt:"Ritira il prodotto finito e paga a cottimo, cioè in base alla quantità: un compenso minimo.",profit:false},
+    {from:'prodotto',to:'mercato', txt:"Rivende sui mercati cittadini o internazionali, a un prezzo molto più alto del cottimo versato.",profit:false},
+    {from:'mercato',to:'mercante', txt:"Il profitto torna al mercante, e nasce tutto qui: nello scarto tra il compenso ai contadini e il prezzo di vendita. Nessun edificio, nessuna macchina di proprietà, nessun rischio fisso: alla prima crisi, basta smettere di distribuire.",profit:true}
+  ];
+
+  const gA=document.getElementById('arrows');
+  const gN=document.getElementById('nodes');
+  const expl=document.getElementById('expl');
+  const stepLabel=document.getElementById('stepLabel');
+  let cur=-1;
+
+  function pos(id){return nodes.find(n=>n.id===id);}
+  function draw(){
+    // arrows
+    let a='';
+    steps.forEach((st,i)=>{
+      const p=pos(st.from), q=pos(st.to);
+      // shorten to node edge
+      const dx=q.x-p.x, dy=q.y-p.y, L=Math.hypot(dx,dy), ux=dx/L, uy=dy/L, r=42;
+      const x1=p.x+ux*r, y1=p.y+uy*r, x2=q.x-ux*r, y2=q.y-uy*r;
+      const mx=(x1+x2)/2 - uy*26, my=(y1+y2)/2 + ux*26; // curve outward
+      a+=`<path class="arrow${i<=cur?' on':''}" d="M${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}"/>`;
+    });
+    gA.innerHTML=a;
+    // nodes
+    let n='';
+    nodes.forEach(nd=>{
+      const active=(cur>=0 && (steps[cur].from===nd.id||steps[cur].to===nd.id));
+      n+=`<g class="node${active?' on':''}"><circle cx="${nd.x}" cy="${nd.y}" r="42"/>`;
+      nd.label.forEach((ln,k)=>{ n+=`<text x="${nd.x}" y="${nd.y+(k-(nd.label.length-1)/2)*15+4}" text-anchor="middle">${ln}</text>`; });
+      n+='</g>';
+    });
+    gN.innerHTML=n;
+    if(cur<0){ expl.textContent="Premi Avanti per seguire il ciclo."; expl.className='expl'; stepLabel.textContent=''; }
+    else{ expl.textContent=steps[cur].txt; expl.className='expl'+(steps[cur].profit?' profit':''); stepLabel.textContent=`Passo ${cur+1} di ${steps.length}`; }
+  }
+  document.getElementById('next').addEventListener('click',()=>{ if(cur<steps.length-1)cur++; draw(); });
+  document.getElementById('prev').addEventListener('click',()=>{ if(cur>-1)cur--; draw(); });
+  draw();
+})();
+</script>
+</body>
+</html>

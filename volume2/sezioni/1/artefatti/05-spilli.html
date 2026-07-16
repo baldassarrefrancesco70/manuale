@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La fabbrica di spilli</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d; --work:#9d4a2b; --cost:#7a2e22;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:860px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .toggle{display:inline-flex;border:1px solid var(--rule);border-radius:2px;overflow:hidden;
+    font-family:var(--sans);font-size:.84rem;margin-bottom:16px}
+  .toggle button{appearance:none;border:0;background:transparent;padding:9px 16px;cursor:pointer;color:var(--ink-soft)}
+  .toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .frame{border:1px solid var(--rule);background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:16px;border-radius:2px}
+  .counter{font-family:var(--sans);text-align:center;margin-bottom:6px}
+  .counter .big{font-size:2.9rem;font-weight:700;color:var(--work);line-height:1.05;
+    font-variant-numeric:tabular-nums}
+  .counter .cap{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .per{text-align:center;font-family:var(--sans);font-size:.86rem;color:var(--ink-soft);margin-bottom:14px}
+  .ops{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:14px 0}
+  .op{width:30px;height:30px;border:1px solid var(--rule);border-radius:2px;background:var(--paper-2);
+    display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);
+    transition:all .25s}
+  .op.lit{background:var(--work);color:#fff;border-color:var(--work)}
+  .op.dim{opacity:.35}
+  .opsLabel{text-align:center;font-family:var(--sans);font-size:.78rem;color:var(--ink-soft);margin-top:2px}
+  .callout{font-size:.96rem;background:var(--paper-2);padding:12px 15px;margin-top:16px;border-radius:2px;
+    border-left:3px solid var(--work)}
+  .callout.cost{border-left-color:var(--cost)}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:12px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Focus · Adam Smith e la divisione del lavoro</div>
+  <h1>Uno spillo, diciotto gesti</h1>
+  <p class="sub">Le stesse braccia, riorganizzate. Scegli come lavorano e guarda cosa succede alla produzione, e a chi la produce.</p>
+
+  <div class="toggle" role="group" aria-label="Organizzazione del lavoro">
+    <button id="btnSolo" aria-pressed="true">Un operaio, tutti i gesti</button>
+    <button id="btnDiv" aria-pressed="false">Dieci operai, gesti divisi</button>
+  </div>
+
+  <div class="frame">
+    <div class="counter">
+      <div class="big" id="big">meno di 20</div>
+      <div class="cap" id="cap">spilli al giorno · in tutto</div>
+    </div>
+    <div class="per" id="per">un solo lavoratore, diciotto operazioni a testa</div>
+
+    <div class="ops" id="ops"></div>
+    <div class="opsLabel" id="opsLabel">le diciotto operazioni, tutte nelle stesse mani</div>
+  </div>
+
+  <div class="callout" id="callout">Un operaio che esegua da sé l'intera sequenza, tirare il filo, raddrizzarlo, tagliarlo, appuntirlo, fino alla capocchia e all'impacchettamento, non arriva a venti spilli al giorno. Forse nemmeno a uno.</div>
+
+  <p class="note">Cifre dall'esempio di Smith, <em>Ricchezza delle nazioni</em>, libro I. Da confermare in fase di stampa.</p>
+
+<script>
+(function(){
+  const ops=document.getElementById('ops');
+  const N=18;
+  let html='';
+  for(let i=1;i<=N;i++) html+=`<div class="op" data-i="${i}">${i}</div>`;
+  ops.innerHTML=html;
+  const cells=[...ops.querySelectorAll('.op')];
+
+  const big=document.getElementById('big'), cap=document.getElementById('cap'),
+        per=document.getElementById('per'), opsLabel=document.getElementById('opsLabel'),
+        callout=document.getElementById('callout');
+  const bSolo=document.getElementById('btnSolo'), bDiv=document.getElementById('btnDiv');
+
+  function solo(){
+    bSolo.setAttribute('aria-pressed','true'); bDiv.setAttribute('aria-pressed','false');
+    big.textContent='meno di 20'; big.style.fontSize='2.4rem';
+    cap.textContent='spilli al giorno · in tutto';
+    per.textContent='un solo lavoratore, diciotto operazioni a testa';
+    cells.forEach(c=>{c.className='op lit';});
+    opsLabel.textContent='le diciotto operazioni, tutte nelle stesse mani';
+    callout.className='callout';
+    callout.innerHTML="Un operaio che esegua da sé l'intera sequenza, tirare il filo, raddrizzarlo, tagliarlo, appuntirlo, fino alla capocchia e all'impacchettamento, non arriva a venti spilli al giorno. Forse nemmeno a uno.";
+  }
+  function divided(){
+    bSolo.setAttribute('aria-pressed','false'); bDiv.setAttribute('aria-pressed','true');
+    big.style.fontSize='2.9rem';
+    // count up animation
+    animate(0,48000,900,v=>{ big.textContent=v.toLocaleString('it-IT'); });
+    cap.textContent='spilli al giorno · in tutto';
+    per.textContent='dieci operai · circa 4.800 spilli a testa';
+    // each worker locked to ~2 gestures; highlight only the first worker's share
+    cells.forEach((c,k)=>{ c.className = k<2 ? 'op lit' : 'op dim'; });
+    opsLabel.textContent='ciò che tocca a un solo operaio: due gesti, ripetuti per tutta la vita';
+    callout.className='callout cost';
+    callout.innerHTML="Dividendo i compiti fra dieci operai, se ne producono oltre <strong>quarantottomila</strong> al giorno. La produttività esplode. Ma guarda in basso: al singolo operaio non resta che un paio di gesti, ripetuti all'infinito. È il rovescio della stessa medaglia, e Smith stesso lo intravide.";
+  }
+  function animate(from,to,dur,cb){
+    if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){ cb(to); return; }
+    const t0=performance.now();
+    function tick(t){ const p=Math.min(1,(t-t0)/dur); const e=1-Math.pow(1-p,3);
+      cb(Math.round(from+(to-from)*e)); if(p<1)requestAnimationFrame(tick); }
+    requestAnimationFrame(tick);
+  }
+  bSolo.addEventListener('click',solo);
+  bDiv.addEventListener('click',divided);
+  solo();
+})();
+</script>
+</body>
+</html>

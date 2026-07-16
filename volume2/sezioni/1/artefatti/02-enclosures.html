@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campi aperti e recinzioni</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:860px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;
+    font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .stage{position:relative;border:1px solid var(--rule);border-radius:2px;overflow:hidden;
+    aspect-ratio:8/5;user-select:none;touch-action:none}
+  .stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .after-wrap{position:absolute;inset:0;overflow:hidden;width:50%}
+  .tag{position:absolute;top:10px;font-family:var(--sans);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;background:rgba(32,29,24,.82);color:#efe9dc;padding:4px 9px;border-radius:2px}
+  .tag.l{left:10px} .tag.r{right:10px}
+  .handle{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);left:50%;cursor:ew-resize}
+  .handle::after{content:"↔";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:34px;height:34px;background:var(--ink);color:var(--paper);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:1rem}
+  .readout{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .card{border:1px solid var(--line);background:var(--paper-2);padding:11px 13px;border-radius:2px}
+  .card h3{font-family:var(--sans);font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;
+    margin:0 0 5px;color:var(--ink-soft)}
+  .card p{margin:0;font-size:.95rem}
+  .callout{font-size:.95rem;background:var(--paper-2);border-left:3px solid #9d4a2b;
+    padding:11px 14px;margin-top:12px;border-radius:2px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 1 · La rivoluzione agricola</div>
+  <h1>Prima e dopo la recinzione</h1>
+  <p class="sub">Trascina la maniglia sullo stesso villaggio. A sinistra i campi aperti, a destra le terre recintate.</p>
+
+  <div class="stage" id="stage">
+    <!-- BEFORE: open fields -->
+    <svg viewBox="0 0 400 250" aria-label="Villaggio a campi aperti" preserveAspectRatio="xMidYMid slice">
+      <rect width="400" height="250" fill="#d9cfb2"/>
+      <!-- thin strips -->
+      <g stroke="#a89a72" stroke-width="1">
+        <!-- alternating strip colors -->
+      </g>
+      <g id="strips"></g>
+      <!-- common land -->
+      <rect x="0" y="196" width="400" height="54" fill="#7d8a5c"/>
+      <text x="200" y="228" text-anchor="middle" font-family="Gill Sans,sans-serif" font-size="12" fill="#33361f">terra comune · pascolo</text>
+      <!-- scattered small figures -->
+      <g id="folks"></g>
+    </svg>
+    <!-- AFTER: enclosed -->
+    <div class="after-wrap" id="afterWrap">
+      <svg viewBox="0 0 400 250" aria-label="Villaggio recintato" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="250" fill="#cbbf9c"/>
+        <g id="fields"></g>
+        <!-- hedges drawn over -->
+        <g id="hedges" stroke="#5c6b3a" stroke-width="2.5" fill="none"></g>
+      </svg>
+    </div>
+    <span class="tag l">Campi aperti</span>
+    <span class="tag r">Recinzioni</span>
+    <div class="handle" id="handle"></div>
+  </div>
+
+  <div class="readout">
+    <div class="card">
+      <h3>Campi aperti</h3>
+      <p>Strisce sparse coltivate da molti, più la terra comune per il pascolo e la legna. Molti piccoli coltivatori, poca resa.</p>
+    </div>
+    <div class="card">
+      <h3>Recinzioni</h3>
+      <p>Terra privatizzata e concentrata in pochi appezzamenti recintati. Pochi grandi proprietari, resa alta, e chi coltivava le strisce diventa bracciante o emigra.</p>
+    </div>
+  </div>
+
+  <div class="callout">Il paesaggio si razionalizza, il numero delle persone sulla terra crolla. La stessa immagine che documenta un progresso tecnico documenta uno sradicamento: per chi lo subì fu impoverimento, non opportunità.</div>
+
+<script>
+(function(){
+  // BEFORE strips
+  const strips=document.getElementById('strips');
+  const cols=['#cdbf90','#c2b17e','#d4c79a','#bcab77'];
+  let s='';
+  for(let i=0;i<20;i++){
+    s+=`<rect x="${i*20}" y="0" width="20" height="196" fill="${cols[i%4]}" stroke="#a89a72" stroke-width=".7"/>`;
+  }
+  strips.innerHTML=s;
+  // scattered folk (many)
+  const folks=document.getElementById('folks');
+  let f='';
+  const pts=[[40,90],[95,150],[150,70],[210,130],[260,95],[320,160],[70,175],[300,60],[180,185],[130,110],[250,175],[350,120]];
+  pts.forEach(p=>{ f+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#3a3529"/><line x1="${p[0]}" y1="${p[1]+3}" x2="${p[0]}" y2="${p[1]+10}" stroke="#3a3529" stroke-width="2"/>`; });
+  folks.innerHTML=f;
+
+  // AFTER enclosed fields (few large blocks)
+  const fields=document.getElementById('fields');
+  const blocks=[[0,0,150,120,'#c8bd94'],[150,0,250,120,'#bdb082'],[0,120,250,130,'#c4b98f'],[250,120,150,130,'#b7aa7a']];
+  let ff='';
+  blocks.forEach(b=>{ ff+=`<rect x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}" fill="${b[4]}"/>`; });
+  fields.innerHTML=ff;
+  const hedges=document.getElementById('hedges');
+  hedges.innerHTML=`<path d="M150 0 V250 M0 120 H400 M250 120 V250"/><rect x="2" y="2" width="396" height="246"/>`;
+  // one big proprietor + one labourer
+  hedges.insertAdjacentHTML('afterend',
+    '<g><circle cx="70" cy="60" r="4" fill="#3a3529"/><line x1="70" y1="64" x2="70" y2="74" stroke="#3a3529" stroke-width="2.5"/>'+
+    '<circle cx="300" cy="185" r="3" fill="#6b5f45"/><line x1="300" y1="188" x2="300" y2="196" stroke="#6b5f45" stroke-width="2"/></g>');
+
+  // slider logic
+  const stage=document.getElementById('stage');
+  const wrap=document.getElementById('afterWrap');
+  const handle=document.getElementById('handle');
+  function setPct(px){
+    const r=stage.getBoundingClientRect();
+    let p=(px-r.left)/r.width; p=Math.max(0,Math.min(1,p));
+    wrap.style.width=(p*100)+'%';
+    handle.style.left=(p*100)+'%';
+  }
+  let drag=false;
+  const start=e=>{drag=true;move(e);};
+  const end=()=>{drag=false;};
+  const move=e=>{ if(!drag)return; const x=(e.touches?e.touches[0].clientX:e.clientX); setPct(x); };
+  stage.addEventListener('mousedown',start); window.addEventListener('mousemove',move); window.addEventListener('mouseup',end);
+  stage.addEventListener('touchstart',start,{passive:true}); window.addEventListener('touchmove',move,{passive:true}); window.addEventListener('touchend',end);
+})();
+</script>
+</body>
+</html>

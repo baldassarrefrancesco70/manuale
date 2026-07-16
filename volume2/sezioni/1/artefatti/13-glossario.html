@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le parole della sezione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --c1:#5c7343; --c2:#9d4a2b; --c3:#3d5566; --contesa:#b0872e;
+    --ok:#5c7343; --err:#a53b2a;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:880px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .modes{display:flex;gap:6px;border-bottom:2px solid var(--rule);margin-bottom:16px}
+  .modes button{appearance:none;border:0;background:transparent;font-family:var(--sans);font-size:.9rem;
+    padding:9px 16px;cursor:pointer;color:var(--ink-soft);border-bottom:2px solid transparent;margin-bottom:-2px}
+  .modes button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+
+  .tools{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+  input[type=search]{flex:1;min-width:180px;font-family:var(--sans);font-size:.92rem;padding:8px 11px;
+    border:1px solid var(--rule);border-radius:2px;background:#fff;color:var(--ink)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .count{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-bottom:10px}
+  .entry{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);
+    padding:12px 14px;margin-bottom:9px}
+  .entry .head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .entry h3{margin:0;font-size:1.06rem}
+  .entry .coord{font-family:var(--sans);font-size:.7rem;color:var(--ink-soft);letter-spacing:.03em;margin-left:auto}
+  .entry .def{margin:7px 0 0;font-size:.97rem}
+  .tag-contesa{font-family:var(--sans);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;
+    color:#fff;background:var(--contesa);padding:2px 7px;border-radius:2px}
+  .why{margin:9px 0 0;padding:9px 11px;background:var(--paper-2);border-left:3px solid var(--contesa);border-radius:2px;font-size:.92rem}
+  .why .lab{font-family:var(--sans);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--contesa);display:block;margin-bottom:3px}
+  .empty{font-family:var(--sans);font-size:.9rem;color:var(--ink-soft);padding:16px 0}
+
+  /* prova */
+  .quiz{border:1px solid var(--rule);border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:16px 18px}
+  .qlab{font-family:var(--sans);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .sentence{font-size:1.08rem;line-height:1.66;margin:0 0 6px}
+  .blank{display:inline-block;min-width:96px;border-bottom:2px solid var(--c2);color:var(--c2);text-align:center;font-weight:600}
+  .src{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);font-style:italic;margin:0 0 14px}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media(max-width:560px){.opts{grid-template-columns:1fr}}
+  .opts button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--serif);
+    font-size:.98rem;padding:10px 13px;border-radius:2px;cursor:pointer;color:var(--ink);text-align:left}
+  .opts button:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+  .opts button:disabled{cursor:default}
+  .opts button.right{border-color:var(--ok);background:#eef3e8;color:var(--ink)}
+  .opts button.wrong{border-color:var(--err);background:#f7ece9;color:var(--ink)}
+  .after{margin-top:14px;padding:12px 14px;background:var(--paper-2);border-left:3px solid var(--rule);border-radius:2px;display:none}
+  .after.show{display:block}
+  .after.right{border-left-color:var(--ok)} .after.wrong{border-left-color:var(--err)}
+  .after .verdict{font-family:var(--sans);font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+  .after .verdict.right{color:var(--ok)} .after .verdict.wrong{color:var(--err)}
+  .after .d{font-size:.97rem;margin:0}
+  .qnav{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+  .score{font-family:var(--sans);font-size:.78rem;color:var(--ink-soft)}
+  .qnav button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .qnav button:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+  .qnav button:disabled{opacity:.4;cursor:default}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce l'economia del mondo moderno · Apparati</div>
+  <h1>Le parole della sezione</h1>
+  <p class="sub">Non tutte le parole di questo glossario sono neutre. Alcune sono <strong>contese</strong>: qualcuno le ha coniate contro qualcun altro, o nascondono un giudizio sotto l'apparenza di una descrizione. Sono segnalate, e vale la pena guardarle da vicino.</p>
+
+  <div class="modes" role="tablist" id="modes">
+    <button role="tab" aria-selected="true" data-m="consulta">Consulta</button>
+    <button role="tab" aria-selected="false" data-m="prova">Mettiti alla prova</button>
+  </div>
+
+  <div id="pane-consulta">
+    <div class="tools">
+      <input type="search" id="q" placeholder="Cerca una parola o una definizione…" aria-label="Cerca">
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="count" id="count"></div>
+    <div id="list"></div>
+    <div class="empty" id="empty" style="display:none">Nessuna parola corrisponde alla ricerca.</div>
+  </div>
+
+  <div id="pane-prova" style="display:none">
+    <div class="quiz">
+      <div class="qlab" id="qlab"></div>
+      <p class="sentence" id="sentence"></p>
+      <p class="src" id="src"></p>
+      <div class="opts" id="opts"></div>
+      <div class="after" id="after">
+        <div class="verdict" id="verdict"></div>
+        <p class="d" id="afterdef"></p>
+      </div>
+      <div class="qnav">
+        <span class="score" id="score"></span>
+        <button id="nextq">Frase successiva ›</button>
+      </div>
+    </div>
+    <p class="note">Le frasi sono tratte dal testo della sezione. Riconoscere una parola dove lavora conta più che ripeterne la definizione.</p>
+  </div>
+
+  <p class="note" id="footnote">Il rimando indica il punto in cui il termine nasce nel testo. La numerazione dei paragrafi sarà fissata in fase di impaginazione.</p>
+
+<script>
+(function(){
+  const CAP={
+    1:{lab:"Capitolo 1",col:"#5c7343"},
+    2:{lab:"Capitolo 2",col:"#9d4a2b"},
+    3:{lab:"Capitolo 3",col:"#3d5566"}
+  };
+
+  const G=[
+    // ---- Capitolo 1
+    {t:"Rivoluzione demografica",c:1,p:"La rivoluzione demografica",
+     d:"La crescita continua e senza precedenti della popolazione europea a partire dal Settecento, dovuta non a un aumento delle nascite ma al calo della mortalità: per la prima volta la popolazione cresce senza che una carestia o un'epidemia la riporti indietro."},
+    {t:"Enclosures",c:1,p:"La rivoluzione agricola inglese",
+     d:"Le recinzioni delle terre comuni inglesi, che le trasformarono in proprietà private delimitate, cancellando i diritti d'uso collettivi su cui si reggeva la sopravvivenza di molti contadini.",
+     contesa:"Furono modernizzazione necessaria o spoliazione dei poveri? La storiografia si divide da un secolo, e la ricerca recente suggerisce che siano state entrambe le cose: la vera domanda è per chi furono l'una e per chi l'altra.",
+     s:"Le ▮▮▮ trasformarono le terre comuni in proprietà private delimitate, e nel farlo sradicarono una parte della popolazione rurale."},
+    {t:"Sistema del putting-out",c:1,p:"La manifattura prima della fabbrica",
+     d:"Il lavoro a domicilio: il mercante-imprenditore consegna la materia prima ai contadini, che filano e tessono in casa propria coi propri strumenti, e ritira il prodotto pagando a cottimo. Non è ancora la fabbrica: manca la concentrazione dei lavoratori sotto un unico tetto.",
+     s:"Nel ▮▮▮ il mercante portava la materia prima nelle case, e il contadino lavorava con i propri strumenti, nei propri tempi."},
+    {t:"Protoindustria",c:1,p:"La manifattura prima della fabbrica",
+     d:"L'insieme delle attività manifatturiere diffuse nelle campagne prima della rivoluzione industriale. Il nome, coniato a posteriori, suggerisce che fossero un preludio: ma era un sistema compiuto in sé, non l'anticamera di qualcos'altro."},
+    {t:"Mercantilismo",c:1,p:"Le dottrine economiche",
+     d:"La dottrina secondo cui la ricchezza di uno Stato coincide con la quantità di metalli preziosi che accumula, e si ottiene esportando più di quanto si importa. Ne consegue che il commercio è un gioco a somma zero: ciò che uno guadagna, un altro lo perde."},
+    {t:"Fisiocrazia",c:1,p:"Le dottrine economiche",
+     d:"La dottrina francese secondo cui l'unica vera fonte di ricchezza è la terra, e il lavoro agricolo il solo davvero produttivo: manifattura e commercio si limiterebbero a trasformare e spostare ciò che la terra ha generato."},
+    {t:"Liberismo",c:1,p:"Le dottrine economiche",
+     d:"La dottrina secondo cui la ricchezza nasce dal lavoro e dalla sua organizzazione, e il mercato, lasciato libero da vincoli, produce da sé il massimo benessere collettivo. Ne discende il laissez-faire e lo Stato ridotto a poche funzioni essenziali."},
+    {t:"Divisione del lavoro",c:1,p:"Focus · Adam Smith",
+     d:"La scomposizione della produzione in operazioni semplici affidate a lavoratori diversi. Moltiplica la produttività, come nella fabbrica di spilli descritta da Smith; ma lo stesso Smith vide che rende l'operaio 'stupido e ignorante quanto può diventarlo una creatura umana'."},
+    {t:"Mano invisibile",c:1,p:"Focus · Adam Smith",
+     d:"L'immagine con cui Smith indica il meccanismo per cui ciascuno, perseguendo il proprio interesse, contribuisce senza volerlo al benessere di tutti. Nessuno la governa: è l'esito non intenzionale di milioni di scelte egoistiche.",
+     s:"Perseguendo il proprio tornaconto, l'imprenditore è guidato come da una ▮▮▮ a produrre, senza averlo voluto, il benessere della collettività."},
+
+    // ---- Capitolo 2
+    {t:"Rivoluzione industriale",c:2,p:"La rottura",
+     d:"Il passaggio a un sistema produttivo fondato su energia inanimata, macchine e concentrazione del lavoro in fabbrica, avviato in Gran Bretagna nel tardo Settecento.",
+     contesa:"Il nome stesso è discusso. «Rivoluzione» nomina una discontinuità reale, ma suggerisce una soglia netta che i processi, lentissimi, non ebbero: c'è chi propone di parlare piuttosto di lenta accelerazione."},
+    {t:"Settore trainante",c:2,p:"Il settore trainante",
+     d:"Il ramo produttivo che, meccanizzandosi per primo, trascina l'intera economia obbligando gli altri settori a seguirlo. Nella prima rivoluzione industriale fu il cotone."},
+    {t:"Water frame",c:2,p:"Focus · La meccanizzazione della filatura",
+     d:"Il filatoio idraulico di Arkwright (1769), che produceva un filo robusto adatto all'ordito. Dipendendo dall'energia dell'acqua non poteva stare in una casa: è la macchina che porta il lavoro fuori dal domicilio e fa nascere la fabbrica."},
+    {t:"Coke",c:2,p:"Carbone e vapore",
+     d:"Carbon fossile distillato, privato delle impurità, che sostituisce il carbone di legna negli altiforni. Sblocca la produzione di ferro dal vincolo del legname, in via di esaurimento."},
+    {t:"Puddellaggio",c:2,p:"Carbone e vapore",
+     d:"Il procedimento di Cort che purifica la ghisa rimescolandola in un forno a riverbero, ottenendo ferro dolce lavorabile a basso costo: quello con cui si costruiranno macchine, edifici e ferrovie."},
+    {t:"Classe",c:2,p:"Focus · La parola «classe»",
+     d:"Il raggruppamento delle persone in base alla loro posizione nel sistema produttivo. Gli economisti classici la usavano per distinguere le fonti del reddito (rendita, profitto, salario); i socialisti ne fecero il nome di un antagonismo.",
+     contesa:"La parola viene dalle *classes* con cui Servio Tullio ordinava i cittadini romani secondo il censo. Nelle mani dei socialisti smette di indicare una scala ordinata e diventa un campo di battaglia: chiamare «classe» un gruppo è già una tesi su come è fatta la società.",
+     s:"Nelle mani dei pensatori socialisti la parola ▮▮▮ divenne il nome di un antagonismo irriducibile, e la società cessò di apparire come una scala ordinata."},
+    {t:"Proletariato",c:2,p:"Dagli ordini alle classi",
+     d:"Chi non possiede mezzi di produzione e vive vendendo la propria forza-lavoro in cambio di un salario. Il termine viene dai *proletarii* romani, i censiti più poveri, che allo Stato non davano che la prole."},
+    {t:"Disciplina del tempo",c:2,p:"La disciplina del tempo",
+     d:"L'imposizione in fabbrica di un tempo misurato dall'orologio e non più dalla luce, dalla stagione o dal compito. Il lavoratore non vende più un prodotto ma delle ore: è la trasformazione del tempo in merce.",
+     s:"Con la fabbrica il contadino, che aveva lavorato secondo la stagione e la luce, dovette imparare la ▮▮▮: non più il compito, ma l'ora."},
+    {t:"Questione sociale",c:2,p:"La questione sociale",
+     d:"L'insieme dei problemi posti dalle condizioni di vita e di lavoro delle masse industriali (orari, salari, abitazioni, malattie, lavoro minorile), e il dibattito su chi ne fosse responsabile e chi dovesse porvi rimedio."},
+    {t:"Luddismo",c:2,p:"Le prime reazioni",
+     d:"La distruzione delle macchine da parte degli operai inglesi nei primi decenni dell'Ottocento.",
+     contesa:"Fu a lungo raccontato come rifiuto cieco del progresso. Ma i luddisti colpivano macchine scelte, in fabbriche scelte: non odiavano la tecnica, contestavano l'uso che se ne faceva contro di loro. «Luddista», oggi, resta un insulto: ed è il segno di quale versione ha vinto."},
+    {t:"Trade Unions",c:2,p:"Le prime reazioni",
+     d:"I sindacati britannici, nati dalle società di mestiere, che sostituirono alla distruzione delle macchine l'organizzazione stabile e l'arma dello sciopero."},
+    {t:"Cartismo",c:2,p:"Le prime reazioni",
+     d:"Il movimento britannico che tra il 1838 e il 1848 chiese, con la Carta del popolo, il suffragio universale maschile e altre riforme politiche: il primo a trasformare la rivendicazione salariale in rivendicazione del voto."},
+    {t:"Positivismo",c:2,p:"La fede nel progresso",
+     d:"La mentalità diffusa dell'Ottocento secondo cui l'unica conoscenza valida è quella scientifica, fondata su dati «positivi», e i metodi delle scienze naturali vanno estesi a ogni campo, società compresa. Padre riconosciuto: Auguste Comte."},
+    {t:"Darwinismo sociale",c:2,p:"La fede nel progresso",
+     d:"L'applicazione alla società umana della selezione naturale: il conflitto sarebbe il mezzo con cui i gruppi «più adatti» soppiantano i «più deboli», il che giustificherebbe disuguaglianze e dominio coloniale.",
+     contesa:"Darwin era un biologo e non sostenne nulla di simile: l'espressione «sopravvivenza del più adatto» è di Spencer, e l'etichetta stessa è posteriore. È il caso esemplare di una scienza piegata a benedire i rapporti di forza tra gli uomini."},
+    {t:"Progresso",c:2,p:"Due idee di progresso",
+     d:"Nell'Ottocento, la certezza che la storia abbia una direzione e che quella direzione sia buona: non più, come nell'Illuminismo, una speranza morale, ma una legge dello sviluppo materiale.",
+     contesa:"Liberali e socialisti non si dividevano tra chi credeva nel progresso e chi lo rifiutava: ci credevano entrambi, e litigavano su che cosa fosse e a chi dovesse giovare. La loro premessa comune, che un meccanismo impersonale garantisca l'esito buono, era essa stessa un'illusione del secolo.",
+     s:"Il conflitto non era tra chi credeva nel ▮▮▮ e chi lo rifiutava: i due contendenti ci credevano entrambi, e litigavano su che cosa fosse."},
+    {t:"Socialismo utopistico",c:2,p:"I socialismi",
+     d:"Le prime formulazioni socialiste (Saint-Simon, Owen, Fourier), fiduciose che bastasse mostrare la razionalità di un ordinamento giusto, con la propaganda e con l'esempio, per convincere l'intera società ad adottarlo.",
+     contesa:"L'etichetta fu coniata da Marx ed Engels contro i predecessori, per relegarli nel sogno e riservare a sé il terreno solido della «scienza». Owen e Fourier non erano ingenui: erano un'altra cosa, e la parola con cui li ricordiamo è quella scelta dal loro critico più efficace."},
+    {t:"Plusvalore",c:2,p:"I socialismi",
+     d:"Nell'analisi di Marx, la differenza tra il valore che l'operaio produce col suo lavoro e il salario che riceve. Quella parte non pagata, di cui il capitalista si appropria, è la fonte del profitto: lo sfruttamento non è un abuso di padroni cattivi, ma il meccanismo stesso del sistema.",
+     s:"L'operaio produce un valore maggiore del salario che riceve: quella differenza non pagata è il ▮▮▮, ed è la fonte del profitto."},
+    {t:"Revisionismo",c:2,p:"Focus · Il movimento operaio",
+     d:"La proposta di Bernstein, a fine Ottocento, di abbandonare l'attesa del crollo del capitalismo e di perseguire il miglioramento delle condizioni operaie per via di riforme, dentro il sistema democratico."},
+
+    // ---- Capitolo 3
+    {t:"Vantaggio del ritardatario",c:3,p:"Arrivare dopo",
+     d:"Il paradosso per cui chi si industrializza dopo può saltare le fasi primitive e adottare subito le tecnologie mature, costruendo impianti già grandi e moderni: partire svantaggiati significa, sotto un altro aspetto, partire più avanti.",
+     s:"Chi arriva dopo non rifà la stessa strada più lentamente: può ▮▮▮ le fasi primitive e adottare direttamente le tecnologie già mature."},
+    {t:"Zollverein",c:3,p:"Arrivare dopo",
+     d:"L'unione doganale tedesca del 1834, che unificò il mercato interno abbattendo le barriere tra i vari staterelli: una delle due leve, con l'istruzione tecnica, dell'accelerazione industriale tedesca."},
+    {t:"Era Meiji",c:3,p:"Arrivare dopo",
+     d:"Il periodo aperto in Giappone nel 1868, in cui lo Stato smantellò il sistema feudale e si fece promotore assoluto dell'industrializzazione: l'unico caso di economia extra-europea che riuscì a competere invece di essere assorbita come colonia."},
+    {t:"Zaibatsu",c:3,p:"Arrivare dopo",
+     d:"I grandi agglomerati industriali e finanziari giapponesi (Mitsubishi, Mitsui), nati quando lo Stato Meiji cedette a pochi imprenditori privati le industrie che aveva fondato e finanziato."},
+    {t:"Sistema americano di fabbrica",c:3,p:"Arrivare dopo",
+     d:"Il metodo produttivo nato negli Stati Uniti dalla penuria di manodopera: macchine utensili di precisione producono parti standardizzate e intercambiabili, assemblabili in serie. È la premessa diretta della catena di montaggio."},
+    {t:"Banche miste",c:3,p:"Il capitalismo organizzato",
+     d:"Istituti che non si limitano a custodire i risparmi ma li incanalano in investimenti industriali a lungo termine. Nate per accendere l'industrializzazione dei paesi ritardatari, diventeranno il perno del capitalismo finanziario."},
+    {t:"Capitalismo finanziario",c:3,p:"Il capitalismo organizzato",
+     d:"La fusione tra capitale bancario e capitale industriale: le banche acquistano quote delle aziende che finanziano e siedono nei loro consigli, e i magnati dell'industria nei propri. I due mondi cessano di essere distinti."},
+    {t:"Capitalismo manageriale",c:3,p:"Il capitalismo organizzato",
+     d:"La separazione tra proprietà e direzione: la proprietà si polverizza tra migliaia di azionisti, e a guidare l'impresa non è più chi la possiede ma un dirigente stipendiato. Per la prima volta chi possiede e chi governa sono persone diverse.",
+     s:"Con il ▮▮▮ la proprietà, polverizzata tra migliaia di azionisti, si separò dalla direzione, affidata a dirigenti stipendiati."},
+    {t:"Colletti bianchi",c:3,p:"Il capitalismo organizzato",
+     d:"I lavoratori non manuali della grande impresa burocratica: impiegati, contabili, ingegneri, pubblicitari, contrapposti ai «colletti blu» degli operai. La loro ascesa è il primo grande motore del settore terziario.",
+     contesa:"Il ceto nasce a fine Ottocento, ma l'espressione fu resa celebre solo nel 1951 dal sociologo C. W. Mills: usarla per l'Ottocento è comodo, purché si sappia che è una categoria applicata a posteriori."},
+    {t:"Grande depressione",c:3,p:"La Grande depressione",
+     d:"Il lungo periodo di difficoltà economica dal 1873 al 1896, aperto dal crollo delle borse di Vienna e New York e caratterizzato da una caduta prolungata dei prezzi.",
+     contesa:"La parola inganna, ed è il punto. In quel ventennio la produzione non crollò, il commercio crebbe, e i salariati con il lavoro spesso migliorarono il proprio potere d'acquisto. A essere «depressi» furono i prezzi e i profitti: il nome drammatico dice lo spavento degli imprenditori più che lo stato dell'economia.",
+     s:"Fu una crisi dei profitti e non della produzione: a cadere non furono i volumi, ma i ▮▮▮, e con essi i margini degli imprenditori."},
+    {t:"Deflazione",c:3,p:"La Grande depressione",
+     d:"La caduta prolungata e generalizzata dei prezzi. Danneggia chi produce e chi ha debiti, mentre avvantaggia chi compra a reddito invariato: è la ragione per cui la stessa crisi ebbe vincitori e vinti."},
+    {t:"Sovrapproduzione",c:3,p:"La Grande depressione",
+     d:"L'eccesso di offerta rispetto alla domanda solvibile. Fu la prima grande crisi generata non dalla scarsità, come tutte quelle dei secoli precedenti, ma dal troppo: una crisi di abbondanza.",
+     contesa:"Difetto strutturale del capitalismo, che tende per sua natura a produrre più di quanto il mercato assorba (lettura di ascendenza marxiana), o squilibrio congiunturale che il mercato riassesta da sé (lettura liberale)? Il dibattito non si è chiuso, e la posizione di ciascun interprete tende a coincidere con la sua collocazione politica."},
+    {t:"Cartello",c:3,p:"La concentrazione",
+     d:"Accordo tra aziende indipendenti dello stesso settore per non farsi concorrenza, fissando prezzi minimi e quote di produzione."},
+    {t:"Trust",c:3,p:"La concentrazione",
+     d:"Fusione vera e propria di imprese prima autonome sotto un'unica direzione. L'esempio emblematico è la Standard Oil di Rockefeller, che arrivò a controllare quasi tutta la raffinazione americana."},
+    {t:"Holding",c:3,p:"La concentrazione",
+     d:"Società che controlla altre imprese possedendone i pacchetti azionari, senza necessariamente produrre nulla in proprio."},
+    {t:"Taylorismo",c:3,p:"La concentrazione",
+     d:"L'«organizzazione scientifica del lavoro» di F. W. Taylor, fondata su due principi: la parcellizzazione del lavoro in operazioni elementari cronometrate, e la separazione tra ideazione ed esecuzione, che espropria all'operaio il suo sapere e lo concentra negli uffici dei tecnici.",
+     s:"Con il ▮▮▮ la conoscenza dell'operaio di mestiere gli veniva espropriata e concentrata negli uffici: a lui restava solo eseguire gesti pensati da altri."},
+    {t:"Operaio massa",c:3,p:"La concentrazione",
+     d:"Il lavoratore della catena di montaggio: parcellizzato, ripetitivo, dequalificato e del tutto intercambiabile, ridotto ad appendice della macchina.",
+     contesa:"La formula è una categoria della sociologia del lavoro del Novecento, applicata a posteriori alla fabbrica di inizio secolo. Utile, ma non è il modo in cui quei lavoratori si nominavano."},
+    {t:"Protezionismo",c:3,p:"Il ritorno dello Stato",
+     d:"La difesa del mercato nazionale con alte tariffe doganali sulle importazioni. Inaugurato dalla Germania di Bismarck nel 1879 e presto imitato quasi ovunque, segna l'abbandono del libero scambio e il ritorno dello Stato nell'economia."},
+    {t:"Feticismo della merce",c:3,p:"Focus · I templi del consumo",
+     d:"L'aura di significato e di desiderio di cui la merce viene rivestita, indipendente dalla sua utilità, e che nasconde le condizioni in cui è stata prodotta. La vetrina mostra il sogno e nasconde la fabbrica.",
+     contesa:"L'espressione è di Marx, ripresa poi dagli studiosi dei grandi magazzini. Non è una descrizione neutra ma una lente interpretativa: chiamare «feticismo» il desiderio di un oggetto è già un giudizio su chi lo desidera.",
+     s:"La vetrina aggiunge alla merce un'aura indipendente dal suo uso, e nello stesso gesto ne nasconde l'origine: è ciò che si chiama ▮▮▮."}
+  ];
+
+  let mode='consulta', filt='tutti', query='';
+
+  // ---------- Consulta
+  const chips=document.getElementById('chips'), list=document.getElementById('list'),
+        empty=document.getElementById('empty'), count=document.getElementById('count'),
+        qEl=document.getElementById('q');
+
+  function buildChips(){
+    chips.innerHTML='';
+    const mk=(k,lab,col)=>{
+      const b=document.createElement('button');
+      b.setAttribute('aria-pressed',filt===k);
+      b.innerHTML=(col?`<span class="dot" style="background:${col}"></span>`:'')+lab;
+      b.addEventListener('click',()=>{filt=k;renderList();});
+      chips.appendChild(b);
+    };
+    mk('tutti','Tutte',null);
+    [1,2,3].forEach(c=>mk(String(c),CAP[c].lab,CAP[c].col));
+    mk('contese','Solo contese','#b0872e');
+  }
+  function match(g){
+    if(filt==='contese' && !g.contesa) return false;
+    if(filt!=='tutti' && filt!=='contese' && String(g.c)!==filt) return false;
+    if(query){
+      const q=query.toLowerCase();
+      const hay=(g.t+' '+g.d+' '+(g.contesa||'')).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  }
+  function renderList(){
+    buildChips();
+    const items=G.filter(match).sort((a,b)=>a.t.localeCompare(b.t,'it'));
+    count.textContent = items.length===1 ? '1 parola' : items.length+' parole';
+    list.innerHTML=items.map(g=>{
+      const col=CAP[g.c].col;
+      return `<div class="entry" style="border-left-color:${col}">
+        <div class="head">
+          <h3>${g.t}</h3>
+          ${g.contesa?'<span class="tag-contesa">◆ parola contesa</span>':''}
+          <span class="coord">${CAP[g.c].lab} · ${g.p}</span>
+        </div>
+        <p class="def">${g.d}</p>
+        ${g.contesa?`<div class="why"><span class="lab">Perché è contesa</span>${g.contesa}</div>`:''}
+      </div>`;
+    }).join('');
+    empty.style.display = items.length? 'none':'block';
+  }
+  qEl.addEventListener('input',e=>{query=e.target.value.trim();renderList();});
+
+  // ---------- Prova
+  const QUIZ=G.filter(g=>g.s);
+  let order=[], qi=0, answered=false, right=0, done=0;
+  const sentence=document.getElementById('sentence'), src=document.getElementById('src'),
+        opts=document.getElementById('opts'), after=document.getElementById('after'),
+        verdict=document.getElementById('verdict'), afterdef=document.getElementById('afterdef'),
+        score=document.getElementById('score'), nextq=document.getElementById('nextq'),
+        qlab=document.getElementById('qlab');
+
+  function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+  function newRound(){ order=shuffle(QUIZ.map((_,i)=>i)); qi=0; right=0; done=0; showQ(); }
+
+  function showQ(){
+    answered=false;
+    after.className='after';
+    const g=QUIZ[order[qi]];
+    qlab.textContent=`Frase ${qi+1} di ${order.length} · quale parola manca?`;
+    sentence.innerHTML=g.s.replace('▮▮▮','<span class="blank" id="bl">?</span>');
+    src.textContent=`${CAP[g.c].lab} · ${g.p}`;
+    const others=shuffle(QUIZ.filter(x=>x.t!==g.t).map(x=>x.t)).slice(0,3);
+    const choices=shuffle([g.t,...others]);
+    opts.innerHTML=choices.map(c=>`<button data-c="${c.replace(/"/g,'&quot;')}">${c}</button>`).join('');
+    score.textContent = done? `${right} su ${done}` : '';
+    nextq.disabled=true;
+  }
+  opts.addEventListener('click',e=>{
+    const b=e.target.closest('[data-c]'); if(!b||answered) return;
+    answered=true; done++;
+    const g=QUIZ[order[qi]], pick=b.dataset.c, ok=(pick===g.t);
+    if(ok) right++;
+    [...opts.children].forEach(btn=>{
+      btn.disabled=true;
+      if(btn.dataset.c===g.t) btn.classList.add('right');
+      else if(btn===b) btn.classList.add('wrong');
+    });
+    const bl=document.getElementById('bl');
+    if(bl){ bl.textContent=g.t; }
+    verdict.textContent = ok? 'Esatto' : 'Non è questa';
+    verdict.className='verdict '+(ok?'right':'wrong');
+    afterdef.textContent=g.d;
+    after.className='after show '+(ok?'right':'wrong');
+    score.textContent=`${right} su ${done}`;
+    nextq.disabled=false;
+  });
+  let finished=false;
+  nextq.addEventListener('click',()=>{
+    if(finished){ finished=false; nextq.textContent='Frase successiva ›'; newRound(); return; }
+    qi++;
+    if(qi>=order.length){
+      finished=true;
+      qlab.textContent='Fine';
+      sentence.innerHTML=`Hai riconosciuto <strong>${right}</strong> parole su <strong>${done}</strong>.`;
+      src.textContent='';
+      opts.innerHTML='';
+      after.className='after show';
+      verdict.textContent='Un\'osservazione'; verdict.className='verdict';
+      afterdef.textContent='Riconoscere una parola dentro una frase non è ricordarne la definizione: è vederla al lavoro. Ed è il motivo per cui alcune di queste parole vanno maneggiate con cautela: chi le usa, spesso, sta già sostenendo una tesi.';
+      nextq.textContent='Ricomincia';
+      nextq.disabled=false;
+      return;
+    }
+    showQ();
+  });
+
+  // ---------- modes
+  document.getElementById('modes').addEventListener('click',e=>{
+    const b=e.target.closest('[data-m]'); if(!b) return;
+    mode=b.dataset.m;
+    [...document.getElementById('modes').children].forEach(x=>x.setAttribute('aria-selected',x.dataset.m===mode));
+    document.getElementById('pane-consulta').style.display = mode==='consulta'?'block':'none';
+    document.getElementById('pane-prova').style.display = mode==='prova'?'block':'none';
+    document.getElementById('footnote').style.display = mode==='consulta'?'block':'none';
+    if(mode==='prova' && !order.length) newRound();
+  });
+
+  renderList();
+})();
+</script>
+</body>
+</html>

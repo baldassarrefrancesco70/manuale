@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prerequisiti · i quattro nodi</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d; --accent:#3d5566;
+    --ok:#5c7343; --rev:#a6812e;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:860px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .banner{border:1px solid var(--rule);background:var(--paper-2);padding:12px 15px;border-radius:2px;
+    font-size:.97rem;margin-bottom:16px;border-left:3px solid var(--accent)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--rule);border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);
+    padding:14px 15px;display:flex;flex-direction:column}
+  .num{font-family:var(--sans);font-size:.72rem;letter-spacing:.1em;color:var(--ink-soft)}
+  .card h2{font-size:1.08rem;margin:.15rem 0 .5rem;font-weight:600}
+  .q{font-size:.95rem;margin:0 0 10px}
+  .reveal{border:0;background:transparent;color:var(--accent);font-family:var(--sans);
+    font-size:.82rem;cursor:pointer;padding:0;text-align:left;text-decoration:underline;text-underline-offset:3px}
+  .ans{font-size:.93rem;background:var(--paper-2);border-radius:2px;padding:10px 12px;margin:8px 0 10px;
+    display:none;border-left:3px solid var(--ok)}
+  .ans.show{display:block}
+  .rate{display:flex;gap:8px;margin-top:auto}
+  .rate button{flex:1;appearance:none;border:1px solid var(--rule);background:var(--paper);
+    font-family:var(--sans);font-size:.78rem;padding:7px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .rate button[data-on="ok"]{border-color:var(--ok);background:var(--ok);color:#fff}
+  .rate button[data-on="rev"]{border-color:var(--rev);background:var(--rev);color:#fff}
+  .tally{margin-top:16px;font-family:var(--sans);font-size:.86rem;color:var(--ink-soft);
+    border-top:1px solid var(--line);padding-top:10px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 1 · Prerequisiti</div>
+  <h1>Quattro nodi da sciogliere</h1>
+  <p class="sub">Prima di procedere, controlla che ciascun nodo ti sia chiaro. Non è una verifica con voto: è uno specchio.</p>
+
+  <div class="banner">Un avvertimento vale per tutti e quattro: nessuno di questi mondi stava «preparando» la rivoluzione industriale. Erano lo stato delle cose, non la sua anticamera. Tienilo presente mentre rispondi.</div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="tally" id="tally">Valuta i quattro nodi per vedere il quadro.</div>
+
+<script>
+(function(){
+  const cards=[
+    {n:'Nodo 1',t:'Agricoltura di antico regime',
+     q:'Perché un\'economia in cui quattro persone su cinque lavorano la terra ha mercati così ristretti?',
+     a:'Perché gran parte del prodotto va all\'autoconsumo e le comunicazioni sono precarie: si scambia poco e vicino. Su questo pesano un tetto demografico malthusiano e una strozzatura energetica (acqua, vento, animali, legname).'},
+    {n:'Nodo 2',t:'Economia-mondo',
+     q:'Se i mercati interni erano angusti, come si accumulavano grandi capitali?',
+     a:'Sul commercio intercontinentale, non su quello interno: le rotte atlantiche e il commercio triangolare concentrano ricchezza nelle potenze marittime, Gran Bretagna e Olanda, e in un ceto mercantile con mentalità imprenditoriale.'},
+    {n:'Nodo 3',t:'Crisi del Seicento',
+     q:'Perché una crisi può rafforzare una regione e affossarne un\'altra?',
+     a:'Perché non colpisce in modo uniforme: sposta il baricentro dal Mediterraneo (declino, rifeudalizzazione) al Nord (supremazia marittima, primo capitalismo agrario). Che una crisi sia altrove un\'occasione è già un avvertimento contro le spiegazioni lineari.'},
+    {n:'Nodo 4',t:'Rivoluzione scientifica',
+     q:'La scienza teorica del Seicento produsse direttamente le prime macchine?',
+     a:'No: le prime macchine nacquero dall\'ingegno pratico di artigiani e meccanici, non dalla scienza teorica. Il legame tra sapere e produzione è più tortuoso di quanto il mito del progresso lasci intendere.'}
+  ];
+  const grid=document.getElementById('grid');
+  const state={};
+  cards.forEach((c,i)=>{
+    const el=document.createElement('div'); el.className='card';
+    el.innerHTML=`<span class="num">${c.n}</span><h2>${c.t}</h2>
+      <p class="q">${c.q}</p>
+      <button class="reveal" data-i="${i}">Cosa devi aver chiarito →</button>
+      <div class="ans" id="ans${i}">${c.a}</div>
+      <div class="rate">
+        <button data-i="${i}" data-v="ok">Chiaro</button>
+        <button data-i="${i}" data-v="rev">Da rivedere</button>
+      </div>`;
+    grid.appendChild(el);
+  });
+  grid.addEventListener('click',e=>{
+    const rv=e.target.closest('.reveal');
+    if(rv){ document.getElementById('ans'+rv.dataset.i).classList.toggle('show'); return; }
+    const rt=e.target.closest('.rate button');
+    if(rt){
+      const i=rt.dataset.i, v=rt.dataset.v;
+      state[i]=v;
+      rt.parentElement.querySelectorAll('button').forEach(b=>b.removeAttribute('data-on'));
+      rt.setAttribute('data-on',v);
+      tally();
+    }
+  });
+  function tally(){
+    const done=Object.keys(state).length;
+    const ok=Object.values(state).filter(v=>v==='ok').length;
+    const rev=Object.values(state).filter(v=>v==='rev').length;
+    const t=document.getElementById('tally');
+    if(done<4){ t.textContent=`Valutati ${done} nodi su 4.`; return; }
+    if(rev===0){ t.textContent='Tutti e quattro i nodi sono chiari. Puoi procedere al capitolo tenendo presente l\'avvertimento in alto.'; }
+    else{ t.textContent=`${ok} chiari, ${rev} da rivedere. Torna sui nodi segnati prima di procedere: senza di essi il capitolo perde l\'aggancio.`; }
+  }
+})();
+</script>
+</body>
+</html>

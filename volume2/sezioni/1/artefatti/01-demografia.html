@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La crescita demografica, 1600–1830</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --eu:#3d5566;      /* Europa: slate */
+    --en:#9d4a2b;      /* Inghilterra: sienna */
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:860px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;
+    font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem;letter-spacing:.01em}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .frame{border:1px solid var(--rule);background:linear-gradient(180deg,#f3eee2,#ece5d3);
+    padding:14px 14px 6px;border-radius:2px}
+  .toggle{display:inline-flex;border:1px solid var(--rule);border-radius:2px;overflow:hidden;
+    font-family:var(--sans);font-size:.82rem;margin-bottom:10px}
+  .toggle button{appearance:none;border:0;background:transparent;padding:7px 14px;cursor:pointer;
+    color:var(--ink-soft);letter-spacing:.03em}
+  .toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:18px;font-family:var(--sans);font-size:.82rem;margin:4px 2px 2px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .swatch{width:22px;height:3px;display:inline-block}
+  .callout{font-size:.95rem;color:var(--ink);background:var(--paper-2);
+    border-left:3px solid var(--en);padding:11px 14px;margin-top:12px;border-radius:2px}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:12px;
+    border-top:1px solid var(--line);padding-top:8px}
+  @media (prefers-reduced-motion:no-preference){
+    path.series,circle.pt{transition:opacity .35s ease}
+  }
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 1 · La rivoluzione demografica</div>
+  <h1>Crescere per sottrazione</h1>
+  <p class="sub">La popolazione aumenta, ma i numeri assoluti nascondono il fatto più interessante. Cambia vista per vederlo.</p>
+
+  <div class="frame">
+    <div class="toggle" role="group" aria-label="Scelta della vista">
+      <button id="btnAbs" aria-pressed="true">Valori assoluti</button>
+      <button id="btnIdx" aria-pressed="false">Crescita relativa</button>
+    </div>
+    <svg id="chart" viewBox="0 0 800 440" role="img" aria-label="Grafico della popolazione"></svg>
+    <div class="legend">
+      <span><i class="swatch" style="background:var(--eu)"></i>Europa</span>
+      <span><i class="swatch" style="background:var(--en)"></i>Inghilterra</span>
+    </div>
+  </div>
+
+  <div class="callout" id="callout"></div>
+
+  <p class="note">Cifre tratte dal capitolo (Europa: 108 → 125 → 145 milioni; Inghilterra: 6 → 14 milioni). Dati schematici, da confermare in fase di stampa. Le date europee sono approssimate al secolo.</p>
+
+<script>
+(function(){
+  const europe  = [{x:1600,v:108},{x:1700,v:125},{x:1750,v:145}];
+  const england = [{x:1740,v:6},{x:1830,v:14}];
+  const svg = document.getElementById('chart');
+  const callout = document.getElementById('callout');
+  const W=800,H=440, m={t:24,r:26,b:46,l:56};
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const xMin=1580,xMax=1840;
+  let mode='abs';
+
+  function idx(series){const b=series[0].v;return series.map(p=>({x:p.x,v:p.v/b*100}));}
+  const sx = x => m.l + (x-xMin)/(xMax-xMin)*iw;
+
+  function render(){
+    const abs = mode==='abs';
+    const eu = abs?europe:idx(europe);
+    const en = abs?england:idx(england);
+    const yMin = abs?0:88, yMax=abs?150:245;
+    const sy = v => m.t + (1-(v-yMin)/(yMax-yMin))*ih;
+
+    const yticks = abs?[0,30,60,90,120,150]:[100,150,200,245];
+    const xticks=[1600,1650,1700,1750,1800];
+
+    let g='';
+    // gridlines + y labels
+    yticks.forEach(t=>{
+      const y=sy(t);
+      g+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="#cdc2a8" stroke-width="1"/>`;
+      g+=`<text x="${m.l-10}" y="${y+4}" text-anchor="end" font-family="'Gill Sans','Gill Sans MT',Calibri,'Segoe UI',system-ui,sans-serif" font-size="12" fill="#5b5346">${t}</text>`;
+    });
+    // x labels
+    xticks.forEach(t=>{
+      const x=sx(t);
+      g+=`<line x1="${x}" y1="${m.t}" x2="${x}" y2="${H-m.b}" stroke="#cdc2a8" stroke-width=".5"/>`;
+      g+=`<text x="${x}" y="${H-m.b+20}" text-anchor="middle" font-family="'Gill Sans','Gill Sans MT',Calibri,'Segoe UI',system-ui,sans-serif" font-size="12" fill="#5b5346">${t}</text>`;
+    });
+    // axis titles
+    g+=`<text x="${m.l}" y="${m.t-8}" font-family="'Gill Sans','Gill Sans MT',Calibri,'Segoe UI',system-ui,sans-serif" font-size="11" letter-spacing=".08em" fill="#5b5346">${abs?'MILIONI DI ABITANTI':'INDICE (PRIMO VALORE = 100)'}</text>`;
+
+    function line(series,color){
+      const d=series.map((p,i)=>(i?'L':'M')+sx(p.x)+' '+sy(p.v)).join(' ');
+      let s=`<path class="series" d="${d}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round"/>`;
+      series.forEach(p=>{ s+=`<circle class="pt" cx="${sx(p.x)}" cy="${sy(p.v)}" r="4.5" fill="${color}"/>`;
+        const lab = abs? Math.round(p.v) : Math.round(p.v);
+        s+=`<text x="${sx(p.x)}" y="${sy(p.v)-11}" text-anchor="middle" font-family="'Gill Sans','Gill Sans MT',Calibri,'Segoe UI',system-ui,sans-serif" font-size="12" font-weight="600" fill="${color}">${lab}${abs?'':''}</text>`;
+      });
+      return s;
+    }
+    g+=line(eu,'#3d5566');
+    g+=line(en,'#9d4a2b');
+    svg.innerHTML=g;
+
+    callout.innerHTML = abs
+      ? "In valori assoluti l'Inghilterra è una linea schiacciata in fondo al grafico: quaranta milioni di europei in più contano più di otto milioni di inglesi. Ma la scala inganna. Passa a <strong>crescita relativa</strong>."
+      : "Riportando ogni curva allo stesso punto di partenza, l'anomalia emerge: la popolazione inglese cresce molto più ripidamente di quella continentale. E lo fa per una ragione opposta, non un calo della mortalità come nel resto d'Europa, ma un aumento delle nascite. Un'anomalia da registrare, non da spiegare qui.";
+  }
+
+  document.getElementById('btnAbs').addEventListener('click',()=>{mode='abs';setP();render();});
+  document.getElementById('btnIdx').addEventListener('click',()=>{mode='index';setP();render();});
+  function setP(){
+    document.getElementById('btnAbs').setAttribute('aria-pressed',mode==='abs');
+    document.getElementById('btnIdx').setAttribute('aria-pressed',mode==='index');
+  }
+  render();
+})();
+</script>
+</body>
+</html>

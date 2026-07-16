@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronologia a corsie</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.4}
+
+  .chart{display:grid;grid-template-columns:100px minmax(0,1fr);border:1px solid var(--rule);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);overflow:hidden}
+  .labels{border-right:1px solid var(--rule);background:var(--paper-2);min-width:0}
+  .labels .sp{height:30px;border-bottom:1px solid var(--line)}
+  .labels .lb{height:58px;display:flex;align-items:center;padding:0 10px;font-family:var(--sans);
+    font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+  .labels .lb:last-child{border-bottom:0}
+  .labels .lb.off{opacity:.25}
+
+  .scroller{overflow-x:auto;overflow-y:hidden;position:relative;min-width:0}
+  .track{position:relative;height:262px}
+  .axis{height:30px;border-bottom:1px solid var(--line);position:relative}
+  .axis .tk{position:absolute;top:0;height:30px;border-left:1px solid var(--line)}
+  .axis .tk span{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);padding-left:4px;line-height:30px}
+  .lane{position:absolute;left:0;right:0;height:58px;border-bottom:1px solid var(--line)}
+  .lane.off{opacity:.12;pointer-events:none}
+  .ev{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid var(--paper);
+    cursor:pointer;margin-left:-7px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+  .ev:hover{width:18px;height:18px;margin-left:-9px;margin-top:-2px}
+  .ev.sel{box-shadow:0 0 0 3px var(--ink)}
+  .bar{position:absolute;height:8px;border-radius:4px;opacity:.38;cursor:pointer}
+  .bar:hover{opacity:.65}
+  .bar.sel{opacity:.9}
+  .cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.7;pointer-events:none}
+  .cursor::after{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;
+    border-right:5px solid transparent;border-top:7px solid var(--ink)}
+
+  .slider{margin:14px 0 4px}
+  input[type=range]{width:100%;accent-color:#201d18}
+  .yearNow{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);text-align:center;margin-bottom:12px}
+  .yearNow strong{color:var(--ink);font-size:1.05rem}
+
+  .now{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  @media(max-width:760px){.now{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:440px){.now{grid-template-columns:minmax(0,1fr)}}
+  .cell{border:1px solid var(--rule);border-top-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:9px 11px;min-height:80px}
+  .cell h4{font-family:var(--sans);font-size:.64rem;letter-spacing:.07em;text-transform:uppercase;margin:0 0 6px}
+  .cell p{margin:0 0 5px;font-size:.9rem;line-height:1.4}
+  .cell p .y{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-right:5px}
+  .cell .none{color:var(--ink-soft);font-style:italic;font-size:.85rem}
+
+  .detail{margin-top:14px;border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;display:none}
+  .detail.show{display:block}
+  .detail .k{font-family:var(--sans);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  .detail h3{margin:3px 0 5px;font-size:1.08rem}
+  .detail p{margin:0;font-size:.97rem}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce l'economia del mondo moderno &middot; Apparati</div>
+  <h1>Cronologia a corsie</h1>
+  <p class="sub">Le cose non accadono in fila, accadono insieme. Quattro corsie scorrono in parallelo: sposta il cursore lungo gli anni e guarda che cosa succede nello stesso momento nella tecnica, nell'economia, nella societ&agrave; e nelle idee. Clicca un punto o una barra per leggerne la scheda.</p>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="chart">
+    <div class="labels" id="labels"></div>
+    <div class="scroller" id="scroller">
+      <div class="track" id="track">
+        <div class="axis" id="axis"></div>
+        <div class="cursor" id="cursor" style="left:0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider"><input type="range" id="range" min="1700" max="1914" value="1848" step="1" aria-label="Anno"></div>
+  <div class="yearNow">Intorno all'anno <strong id="ylab">1848</strong></div>
+
+  <div class="now" id="now"></div>
+
+  <div class="detail" id="detail">
+    <span class="k" id="d-lane"></span>
+    <h3 id="d-title"></h3>
+    <p id="d-note"></p>
+  </div>
+
+  <p class="note">Le date sono indicative e da verificare prima della stampa. La dicitura &laquo;circa&raquo; segnala processi diffusi nel tempo o datazioni convenzionali, non eventi puntuali: le barre indicano fenomeni di lunga durata, i punti eventi singoli.</p>
+
+<script>
+(function(){
+  var LANES=[
+    {k:"tec",lab:"Tecnica",col:"#6b5545"},
+    {k:"eco",lab:"Economia",col:"#b0872e"},
+    {k:"soc",lab:"Societa\u0300",col:"#9d4a2b"},
+    {k:"ide",lab:"Idee",col:"#3d5566"}
+  ];
+  LANES[2].lab="Societ\u00E0";
+
+  var Y0=1700, Y1=1914, PPY=9, PAD=20;
+  var W=(Y1-Y0)*PPY+PAD*2;
+
+  var E=[
+    {y:1709,l:"tec",t:"Il coke nell'altoforno",approx:true,
+     n:"Abraham Darby sostituisce il carbone di legna con il coke: il ferro si libera dal vincolo del legname, ormai in esaurimento."},
+    {y:1712,l:"tec",t:"Macchina di Newcomen",
+     n:"Una pompa a vapore per svuotare le miniere allagate: brucia carbone per estrarre altro carbone, e l'anello si chiude."},
+    {y:1733,l:"tec",t:"Navetta volante",
+     n:"John Kay accelera la tessitura e rompe l'equilibrio con la filatura: nasce la fame di filo che mettera\u0300 in moto tutto il resto."},
+    {y:1764,l:"tec",t:"Spinning jenny",approx:true,
+     n:"Hargreaves moltiplica i fusi dentro una sola casa, ma il filo resta troppo debole per l'ordito."},
+    {y:1769,l:"tec",t:"Water frame",
+     n:"Il filatoio idraulico di Arkwright. Legato al fiume, non sta pi\u00F9 in una casa: \u00E8 la macchina che fa nascere la fabbrica."},
+    {y:1769,l:"tec",t:"Condensatore separato di Watt",
+     n:"Watt elimina lo spreco di combustibile di Newcomen. Nel 1784 arriver\u00E0 il moto rotatorio continuo, e la fabbrica potr\u00E0 sorgere ovunque."},
+    {y:1779,l:"tec",t:"Spinning mule",
+     n:"Crompton incrocia i rulli del water frame e il carrello della jenny: filo fine e resistente insieme. Ora \u00E8 la tessitura a non tenere il passo."},
+    {y:1783,l:"tec",t:"Puddellaggio",approx:true,
+     n:"Henry Cort purifica la ghisa: ferro dolce a basso costo, pronto per macchine, edifici e ferrovie."},
+    {y:1785,l:"tec",t:"Telaio meccanico",approx:true,
+     n:"Cartwright meccanizza la tessitura: il cerchio si chiude dove tutto era cominciato."},
+    {y:1856,l:"tec",t:"Convertitore Bessemer",
+     n:"Acciaio di qualit\u00E0 in grandi quantit\u00E0 e a basso costo: comincia l'et\u00E0 dell'acciaio, e con essa la seconda rivoluzione."},
+    {y:1859,l:"tec",t:"Primo pozzo di petrolio",
+     n:"Drake, in Pennsylvania. Ma il petrolio costa dalle cinque alle dieci volte pi\u00F9 del carbone, e rester\u00E0 secondario per gran parte del Novecento."},
+    {y:1876,l:"tec",t:"Motore a scoppio e telefono",approx:true,
+     n:"La combustione entra dentro il motore; la voce entra dentro un filo. Due invenzioni che cambieranno il secolo successivo pi\u00F9 del proprio."},
+    {y:1879,l:"tec",t:"Lampadina di Edison",
+     n:"L'elettricit\u00E0 entra nelle case e nelle strade: nasce la domanda di massa che far\u00E0 sorgere le centrali."},
+    {y:1885,l:"tec",t:"Prime automobili",
+     n:"Daimler e Benz montano su ruote il motore a scoppio, alimentato a benzina."},
+    {y:1889,l:"tec",t:"Torre Eiffel",
+     n:"Non un'invenzione ma un manifesto: il ferro esibito come promessa di modernit\u00E0."},
+    {y:1895,l:"tec",t:"Cinematografo",
+     n:"I Lumi\u00E8re mettono in movimento l'immagine: nasce un linguaggio che sar\u00E0 della societ\u00E0 di massa."},
+    {y:1913,l:"tec",t:"Catena di montaggio",
+     n:"Da Ford: non \u00E8 pi\u00F9 l'operaio ad andare verso il pezzo, ma il pezzo a scorrere verso di lui, a una velocit\u00E0 decisa dalla direzione."},
+
+    {y:1750,y2:1830,l:"eco",t:"Enclosures parlamentari",approx:true,
+     n:"Le recinzioni delle terre comuni: rese in aumento e diritti d'uso cancellati. Progresso o esproprio? Il dibattito non si \u00E8 mai chiuso."},
+    {y:1770,l:"eco",t:"Cotone: 4 milioni di libbre",
+     n:"Alla vigilia della meccanizzazione della filatura, una quantit\u00E0 ancora da manifattura artigianale."},
+    {y:1800,l:"eco",t:"Cotone: 52 milioni di libbre",
+     n:"In trent'anni la cifra si \u00E8 moltiplicata per tredici. La curva comincia a impennarsi."},
+    {y:1830,l:"eco",t:"Cotone: 264 milioni di libbre",
+     n:"Quasi il doppio del 1820, in un solo decennio. Il settore trainante trascina l'intera economia britannica."},
+    {y:1834,l:"eco",t:"Zollverein",
+     n:"L'unione doganale unifica il mercato tedesco: una delle due leve, con l'istruzione tecnica, del sorpasso che verr\u00E0."},
+    {y:1850,l:"eco",t:"Cotone: 588 milioni di libbre",
+     n:"Oltre centoquaranta volte la cifra di ottant'anni prima. La Gran Bretagna \u00E8 l'officina del mondo."},
+    {y:1861,y2:1865,l:"eco",t:"Guerra civile americana",
+     n:"Rimuove il contrasto tra Nord industriale e Sud schiavista: via libera all'egemonia del capitalismo industriale sul continente."},
+    {y:1868,l:"eco",t:"Era Meiji",
+     n:"Il Giappone smantella il feudalesimo e si industrializza dall'alto: l'unica economia extra-europea che compete invece di essere colonizzata."},
+    {y:1870,y2:1914,l:"eco",t:"Seconda rivoluzione industriale",
+     n:"Acciaio, chimica, elettricit\u00E0, motore a scoppio. La novit\u00E0 non sono le invenzioni, ma il modo di produrle: la scienza applicata in serie all'industria."},
+    {y:1870,l:"eco",t:"Standard Oil",approx:true,
+     n:"Rockefeller costruisce il monopolio della raffinazione americana: l'esempio che riassume l'et\u00E0 dei trust."},
+    {y:1873,l:"eco",t:"Inizia la Grande depressione",
+     n:"Crollano le borse di Vienna e New York. Ma la produzione non crolla: a cadere sono i prezzi. \u00C8 una crisi dei profitti, non della produzione."},
+    {y:1879,l:"eco",t:"Dazi di Bismarck",
+     n:"La Germania inaugura il ritorno del protezionismo, e quasi tutti la seguono. Solo la Gran Bretagna resta liberoscambista, e ne paga il prezzo."},
+    {y:1890,l:"eco",t:"Dazi statunitensi",approx:true,
+     n:"Gli Stati Uniti alzano ulteriormente le barriere: il mercato interno, gi\u00E0 sterminato, \u00E8 anche protetto."},
+    {y:1896,l:"eco",t:"Finisce la Grande depressione",
+     n:"I prezzi risalgono. Ma il mondo che ne esce non \u00E8 pi\u00F9 quello del libero scambio: \u00E8 fatto di monopoli protetti dagli Stati."},
+
+    {y:1750,y2:1850,l:"soc",t:"Rivoluzione demografica",approx:true,
+     n:"La popolazione europea cresce senza che carestie o epidemie la riportino indietro: non nascono pi\u00F9 bambini, ne muoiono meno."},
+    {y:1790,y2:1865,l:"soc",t:"Schiavit\u00F9 e cotone",approx:true,
+     n:"Le piantagioni schiaviste d'oltre oceano forniscono la materia prima del settore trainante. Le due curve, quella del cotone e quella della tratta, salgono insieme."},
+    {y:1811,y2:1813,l:"soc",t:"Luddismo",approx:true,
+     n:"Gli operai distruggono le macchine. Non un rifiuto cieco della tecnica: colpivano macchine scelte, in fabbriche scelte."},
+    {y:1832,l:"soc",t:"Inchiesta Sadler",
+     n:"Le testimonianze dei bambini delle filande davanti alla commissione parlamentare. Fonte potentissima e di parte: va ascoltata e insieme interrogata."},
+    {y:1833,l:"soc",t:"Legge sulle fabbriche",approx:true,
+     n:"Limita l'orario di lavoro di donne e bambini: la prima risposta legislativa alla questione sociale, un anno dopo l'inchiesta Sadler."},
+    {y:1833,l:"soc",t:"Abolizione della schiavit\u00F9 nell'impero britannico",approx:true,
+     n:"Per scrupolo morale o perch\u00E9 non era pi\u00F9 redditizia? \u00C8 la seconda tesi, discussa, di Eric Williams."},
+    {y:1838,y2:1848,l:"soc",t:"Cartismo",approx:true,
+     n:"Il primo movimento che trasforma la rivendicazione del salario in rivendicazione del voto."},
+    {y:1852,l:"soc",t:"Nascono i grandi magazzini",approx:true,
+     n:"Prezzo fisso, vendita a rate, cataloghi: e la vetrina, che mostra il sogno e nasconde la fabbrica."},
+    {y:1864,l:"soc",t:"Prima Internazionale",
+     n:"I lavoratori si organizzano oltre le frontiere, e scoprono subito di non essere d'accordo: Marx contro Bakunin."},
+    {y:1865,l:"soc",t:"Abolizione della schiavit\u00F9 negli Stati Uniti",approx:true,
+     n:"Finisce il sistema che aveva alimentato per mezzo secolo le filande di Manchester."},
+    {y:1880,y2:1914,l:"soc",t:"Emigrazione di massa",
+     n:"La rovina delle campagne europee spinge oltre un milione di persone all'anno verso le Americhe."},
+    {y:1889,l:"soc",t:"Seconda Internazionale",
+     n:"Il marxismo diventa l'ideologia ufficiale del movimento operaio, proprio mentre le sue previsioni non si stanno avverando."},
+    {y:1911,l:"soc",t:"Organizzazione scientifica del lavoro",approx:true,
+     n:"Taylor: il lavoro scomposto e cronometrato, e il sapere dell'operaio espropriato e concentrato negli uffici. Dopo il tempo, gli si toglie la competenza."},
+
+    {y:1758,l:"ide",t:"Fisiocrazia",approx:true,
+     n:"La ricchezza viene dalla terra, e solo il lavoro agricolo \u00E8 davvero produttivo: manifattura e commercio non farebbero che spostare ci\u00F2 che la terra ha generato."},
+    {y:1776,l:"ide",t:"La ricchezza delle nazioni",
+     n:"Adam Smith: la ricchezza nasce dal lavoro e dalla sua divisione, e la \u00ABmano invisibile\u00BB converte l'egoismo di ciascuno nel benessere di tutti."},
+    {y:1830,y2:1842,l:"ide",t:"Positivismo di Comte",approx:true,
+     n:"La scienza come unica conoscenza valida, e come religione laica del secolo: il progresso tecnico risolver\u00E0 ogni problema dell'umanit\u00E0."},
+    {y:1848,l:"ide",t:"Manifesto del partito comunista",
+     n:"Marx ed Engels. Il socialismo smette di argomentare che il capitalismo dovrebbe finire, e sostiene di poter dimostrare che finir\u00E0."},
+    {y:1859,l:"ide",t:"L'origine delle specie",
+     n:"Darwin: una storia della vita senza disegno e senza fine prestabilita. Le sue idee saranno presto strappate al loro terreno."},
+    {y:1860,y2:1890,l:"ide",t:"Darwinismo sociale",approx:true,
+     n:"Spencer applica alla societ\u00E0 la \u00ABsopravvivenza del pi\u00F9 adatto\u00BB: la scienza piegata a giustificare le disuguaglianze e il dominio coloniale."},
+    {y:1867,l:"ide",t:"Il Capitale",
+     n:"Marx cerca le leggi del sistema borghese per svelarne il difetto fatale: il plusvalore, e i \u00ABbecchini\u00BB che il capitalismo si crea con le proprie mani."},
+    {y:1899,l:"ide",t:"Revisionismo di Bernstein",approx:true,
+     n:"Il crollo non arriva e i salari salgono: tanto vale smettere di attenderlo e riformare il sistema dall'interno."}
+  ];
+
+  var on={tec:true,eco:true,soc:true,ide:true};
+  var sel=null, year=1848;
+
+  function x(y){ return PAD+(y-Y0)*PPY; }
+
+  var track=document.getElementById('track');
+  var axis=document.getElementById('axis');
+  var cursor=document.getElementById('cursor');
+  var labels=document.getElementById('labels');
+  var chips=document.getElementById('chips');
+  var nowEl=document.getElementById('now');
+  var range=document.getElementById('range');
+  var ylab=document.getElementById('ylab');
+  var scroller=document.getElementById('scroller');
+  var detail=document.getElementById('detail');
+
+  track.style.width=W+'px';
+
+  var ax='';
+  for(var yy=1700; yy<=1914; yy+=20){
+    ax+='<div class="tk" style="left:'+x(yy)+'px"><span>'+yy+'</span></div>';
+  }
+  axis.innerHTML=ax;
+
+  var lh='<div class="sp"></div>';
+  LANES.forEach(function(l){
+    lh+='<div class="lb" data-l="'+l.k+'" style="color:'+l.col+'">'+l.lab+'</div>';
+  });
+  labels.innerHTML=lh;
+
+  LANES.forEach(function(l,i){
+    var lane=document.createElement('div');
+    lane.className='lane';
+    lane.setAttribute('data-l',l.k);
+    lane.style.top=(30+i*58)+'px';
+    track.appendChild(lane);
+  });
+
+  function paint(){
+    LANES.forEach(function(l){
+      var lane=track.querySelector('.lane[data-l="'+l.k+'"]');
+      if(!lane) return;
+      if(on[l.k]) lane.classList.remove('off'); else lane.classList.add('off');
+      lane.innerHTML='';
+      var items=E.filter(function(e){ return e.l===l.k; })
+                 .sort(function(a,b){ return a.y-b.y; });
+      var lastX=-999, row=0;
+      items.forEach(function(e,idx){
+        var id=l.k+'-'+idx;
+        var px=x(e.y);
+        if(px-lastX<16){ row=(row+1)%2; } else { row=0; }
+        lastX=px;
+        var el=document.createElement('div');
+        if(e.y2){
+          el.className='bar'+(sel===id?' sel':'');
+          el.style.width=Math.max(8,(e.y2-e.y)*PPY)+'px';
+          el.style.top=(24+(row?14:0))+'px';
+          el.title=e.y+'-'+e.y2+' \u00B7 '+e.t;
+        } else {
+          el.className='ev'+(sel===id?' sel':'');
+          el.style.top=(21+(row?14:0))+'px';
+          el.title=e.y+' \u00B7 '+e.t;
+        }
+        el.style.left=px+'px';
+        el.style.background=l.col;
+        el.addEventListener('click',function(){ pick(e,id,l); });
+        lane.appendChild(el);
+      });
+    });
+    var lbs=labels.querySelectorAll('.lb');
+    for(var i=0;i<lbs.length;i++){
+      if(on[lbs[i].getAttribute('data-l')]) lbs[i].classList.remove('off');
+      else lbs[i].classList.add('off');
+    }
+  }
+
+  function pick(e,id,l){
+    sel=id; year=e.y; range.value=e.y;
+    detail.className='detail show';
+    detail.style.borderLeftColor=l.col;
+    document.getElementById('d-lane').textContent=
+      l.lab+' \u00B7 '+e.y+(e.y2?'-'+e.y2:'')+(e.approx?' circa':'');
+    document.getElementById('d-title').textContent=e.t;
+    document.getElementById('d-note').textContent=e.n;
+    paint(); moveCursor(); renderNow();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  }
+
+  function moveCursor(){
+    cursor.style.left=x(year)+'px';
+    ylab.textContent=year;
+  }
+
+  function renderNow(){
+    var WIN=6, html='';
+    LANES.forEach(function(l){
+      if(!on[l.k]) return;
+      var hits=E.filter(function(e){
+        if(e.l!==l.k) return false;
+        if(e.y2) return (year>=e.y-1 && year<=e.y2+1);
+        return Math.abs(e.y-year)<=WIN;
+      }).sort(function(a,b){ return a.y-b.y; });
+      var body='';
+      if(hits.length){
+        hits.forEach(function(e){
+          body+='<p><span class="y">'+e.y+(e.y2?'-'+e.y2:'')+'</span>'+e.t+'</p>';
+        });
+      } else {
+        body='<p class="none">niente di rilevante in questi anni</p>';
+      }
+      html+='<div class="cell" style="border-top-color:'+l.col+'">'+
+            '<h4 style="color:'+l.col+'">'+l.lab+'</h4>'+body+'</div>';
+    });
+    nowEl.innerHTML=html;
+  }
+
+  function buildChips(){
+    chips.innerHTML='';
+    LANES.forEach(function(l){
+      var b=document.createElement('button');
+      b.setAttribute('aria-pressed', on[l.k] ? 'true' : 'false');
+      b.innerHTML='<span class="dot" style="background:'+l.col+'"></span>'+l.lab;
+      b.addEventListener('click',function(){
+        on[l.k]=!on[l.k];
+        buildChips(); paint(); renderNow();
+      });
+      chips.appendChild(b);
+    });
+  }
+
+  range.addEventListener('input',function(ev){
+    year=parseInt(ev.target.value,10);
+    sel=null;
+    detail.className='detail';
+    moveCursor(); renderNow(); paint();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  });
+
+  buildChips();
+  paint();
+  moveCursor();
+  renderNow();
+  scroller.scrollLeft=Math.max(0, x(1848)-scroller.clientWidth/2);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlante delle invenzioni</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d; --fire:#c8622e;
+    --acciaio:#6b5545; --chimica:#5c7343; --elettr:#b0872e; --motore:#9d4a2b;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:920px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+  .filters button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.8rem;padding:7px 12px;border-radius:2px;cursor:pointer;color:var(--ink-soft);display:flex;align-items:center;gap:7px}
+  .filters button .dot{width:9px;height:9px;border-radius:50%}
+  .filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .timeline{position:relative;display:flex;gap:0;overflow-x:auto;padding:6px 2px 14px;margin-bottom:16px;border-bottom:2px solid var(--rule)}
+  .timeline .chip{flex:0 0 auto;display:flex;align-items:center}
+  .timeline button{appearance:none;border:1px solid var(--rule);border-left-width:3px;background:var(--paper-2);
+    font-family:var(--sans);font-size:.78rem;padding:7px 10px;border-radius:2px;cursor:pointer;color:var(--ink);white-space:nowrap}
+  .timeline button .y{font-weight:600;margin-right:6px}
+  .timeline button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .timeline .arr{color:var(--rule);font-family:var(--sans);padding:0 5px;align-self:center}
+  .detail{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:660px){.detail{grid-template-columns:1fr}}
+  .media{border:1px solid var(--rule);background:linear-gradient(180deg,#f3eee2,#ece5d3);border-radius:2px;padding:10px}
+  .zlab{font-family:var(--sans);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:6px}
+  .media svg{width:100%;height:auto;display:block}
+  .media img{width:100%;display:block;border-radius:2px}
+  .broken{display:none;font-family:var(--sans);font-size:.76rem;color:var(--ink-soft);
+    border:1px dashed var(--rule);border-radius:2px;padding:20px 12px;text-align:center;font-style:italic}
+  .info h2{font-size:1.2rem;margin:.1rem 0 .4rem}
+  .facts{font-family:var(--sans);font-size:.86rem;border-top:1px solid var(--line)}
+  .facts .row{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .facts .k{flex:0 0 90px;color:var(--ink-soft);text-transform:uppercase;font-size:.68rem;letter-spacing:.05em;padding-top:2px}
+  .info p{font-size:.98rem;margin:12px 0 0}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;border-top:1px solid var(--line);padding-top:8px}
+
+  .spin,.bob,.flick,.tilt{transform-box:fill-box;transform-origin:center}
+  @media (prefers-reduced-motion:no-preference){
+    .spin{animation:spin 3s linear infinite}
+    .bob{animation:bob 1.5s ease-in-out infinite}
+    .flick{animation:flick 1.2s ease-in-out infinite}
+    .tilt{animation:tilt 3.4s ease-in-out infinite}
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes bob{0%,100%{transform:translateY(-8px)}50%{transform:translateY(8px)}}
+  @keyframes flick{0%,100%{opacity:.4}50%{opacity:1}}
+  @keyframes tilt{0%,100%{transform:rotate(-11deg)}50%{transform:rotate(11deg)}}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 3 · Scienza e industria</div>
+  <h1>Atlante delle invenzioni</h1>
+  <p class="sub">La seconda rivoluzione industriale non fu un'altra ondata di macchine, ma un modo nuovo di produrle: la scienza applicata all'industria. Scorri la cronologia in alto e scegli un'invenzione; dove c'è un principio da mostrare lo vedi in movimento, altrove nell'immagine d'epoca. Premesse lontane: la pila di Volta (1800) e l'induzione di Faraday (1831).</p>
+
+  <div class="filters" id="filters"></div>
+  <div class="timeline" id="timeline"></div>
+
+  <div class="detail">
+    <div class="media" id="media"></div>
+    <div class="info">
+      <h2 id="m-name"></h2>
+      <div class="facts" id="m-facts"></div>
+      <p id="m-note"></p>
+    </div>
+  </div>
+
+  <p class="note">Le animazioni illustrano il principio in forma schematica. Le immagini d'epoca vanno di pubblico dominio (Wikimedia Commons); gli spazi tratteggiati indicano quali reperire. Date e attribuzioni indicative, da verificare prima della stampa.</p>
+
+<script>
+(function(){
+  const IMG='https://baldassarrefrancesco70.github.io/artefatti_storia/img/';
+  const SEC={
+    acciaio:{lab:"Acciaio",col:"#6b5545"},
+    chimica:{lab:"Chimica",col:"#5c7343"},
+    elettr:{lab:"Elettricità e comunicazioni",col:"#b0872e"},
+    motore:{lab:"Motore e petrolio",col:"#9d4a2b"}
+  };
+
+  const ANIM={
+    bessemer:`<svg viewBox="0 0 200 160"><line x1="42" y1="44" x2="42" y2="140" stroke="#b7ab8d" stroke-width="3"/><line x1="152" y1="44" x2="152" y2="140" stroke="#b7ab8d" stroke-width="3"/>
+      <g class="tilt"><path d="M72 58 L122 58 L130 118 Q97 136 64 118 Z" fill="none" stroke="#6b5545" stroke-width="3"/><rect x="82" y="44" width="30" height="16" fill="none" stroke="#6b5545" stroke-width="2"/><path d="M68 106 Q97 120 126 106 L122 116 Q97 128 72 116 Z" fill="#c8622e" class="flick"/></g>
+      <g class="flick" fill="#c8622e"><circle cx="100" cy="34" r="2.4"/><circle cx="114" cy="27" r="1.7"/><circle cx="86" cy="29" r="1.7"/></g></svg>`,
+    dinamo:`<svg viewBox="0 0 200 160"><rect x="22" y="54" width="34" height="52" rx="3" fill="#3d5566"/><rect x="144" y="54" width="34" height="52" rx="3" fill="#9d4a2b"/>
+      <text x="39" y="86" text-anchor="middle" font-family="'Gill Sans',sans-serif" font-size="15" fill="#efe9dc">N</text><text x="161" y="86" text-anchor="middle" font-family="'Gill Sans',sans-serif" font-size="15" fill="#efe9dc">S</text>
+      <g class="spin"><circle cx="100" cy="80" r="30" fill="none" stroke="#201d18" stroke-width="3"/><line x1="70" y1="80" x2="130" y2="80" stroke="#201d18" stroke-width="3"/><line x1="100" y1="50" x2="100" y2="110" stroke="#b7ab8d" stroke-width="2"/></g></svg>`,
+    lampadina:`<svg viewBox="0 0 200 160"><circle cx="100" cy="72" r="30" fill="#c8622e" opacity=".14" class="flick"/>
+      <path d="M100 30 C130 30 140 60 128 84 C122 96 116 100 116 110 L84 110 C84 100 78 96 72 84 C60 60 70 30 100 30 Z" fill="#f6f1e5" stroke="#b7ab8d" stroke-width="2"/>
+      <rect x="84" y="110" width="32" height="18" rx="2" fill="#6b5545"/><rect x="88" y="128" width="24" height="8" rx="2" fill="#5b5346"/>
+      <path class="flick" d="M92 58 q8 10 0 20 q-8 10 0 20 M108 58 q-8 10 0 20 q8 10 0 20" fill="none" stroke="#c8622e" stroke-width="2.4"/></svg>`,
+    scoppio:`<svg viewBox="0 0 200 160"><rect x="72" y="30" width="56" height="80" rx="4" fill="none" stroke="#9d4a2b" stroke-width="3"/>
+      <line x1="100" y1="16" x2="100" y2="30" stroke="#201d18" stroke-width="3"/><circle class="flick" cx="100" cy="40" r="4.5" fill="#c8622e"/>
+      <g class="bob"><rect x="78" y="58" width="44" height="22" rx="2" fill="#6b5545"/></g>
+      <line x1="100" y1="80" x2="100" y2="120" stroke="#201d18" stroke-width="3"/>
+      <g class="spin"><circle cx="100" cy="132" r="16" fill="none" stroke="#201d18" stroke-width="2.5"/><line x1="100" y1="120" x2="100" y2="132" stroke="#201d18" stroke-width="2.5"/></g></svg>`
+  };
+
+  const D=[
+    {y:1856,s:"acciaio",name:"Convertitore Bessemer",who:"Henry Bessemer",media:{type:"anim",key:"bessemer"},
+     note:"Un getto d'aria attraversa la ghisa fusa e ne brucia le impurità: per la prima volta si produce acciaio in grande quantità e a basso costo. Comincia l'età dell'acciaio."},
+    {y:1856,s:"chimica",name:"Coloranti artificiali",who:"ricerca europea, poi tedesca",media:{type:"img",file:"Coloranti.jpg",subject:"campioni di coloranti all'anilina, o uno stabilimento chimico d'epoca"},
+     note:"Dal catrame di carbone si ricavano colori che in natura non esistono. È il primo trionfo della chimica che crea, invece di trasformare, e il campo in cui la Germania prende il primato."},
+    {y:1859,s:"motore",name:"Primo pozzo di petrolio",who:"Edwin Drake, Pennsylvania",media:{type:"img",file:"Pozzo_Drake.jpg",subject:"il pozzo di Drake a Titusville, 1859"},
+     note:"Nasce l'estrazione petrolifera moderna. Ma il petrolio costa molto più del carbone e resterà secondario per gran parte del Novecento: la sua età non era ancora cominciata."},
+    {y:1870,s:"elettr",name:"Dinamo e generatori",who:"vari (da Faraday in poi)",media:{type:"anim",key:"dinamo"},
+     note:"Facendo ruotare una spira tra i poli di un magnete si produce corrente in modo continuo. L'elettricità, studiata per decenni come curiosità, diventa una forza disponibile su vasta scala.",approx:true},
+    {y:1876,s:"elettr",name:"Telefono",who:"A. G. Bell (ruolo rivendicato per A. Meucci)",media:{type:"img",file:"Telefono.jpg",subject:"un apparecchio telefonico Bell delle origini"},
+     note:"La voce viaggia lungo un filo: la comunicazione si stacca definitivamente dal trasporto fisico. La paternità dell'invenzione è storicamente contesa."},
+    {y:1876,s:"motore",name:"Motore a scoppio",who:"Nikolaus Otto (a quattro tempi)",media:{type:"anim",key:"scoppio"},
+     note:"Il combustibile esplode dentro il motore, e la spinta muove il pistone. Più compatto ed efficiente della macchina a vapore, sarà il cuore dell'automobile.",approx:true},
+    {y:1879,s:"elettr",name:"Lampadina a incandescenza",who:"Thomas Edison",media:{type:"anim",key:"lampadina"},
+     note:"Un filo portato all'incandescenza dà luce senza fiamma. È il salto che porta l'elettricità dentro le case e le strade, e crea la domanda di massa che farà nascere le centrali."},
+    {y:1885,s:"motore",name:"Prime automobili",who:"Gottlieb Daimler, Carl Benz",media:{type:"img",file:"Automobile_Benz.jpg",subject:"il Benz Patent-Motorwagen del 1885-86"},
+     note:"Il motore a scoppio, alimentato a benzina, viene montato su veicoli a ruote. Nasce l'industria che, nel secolo nuovo, trasformerà il petrolio nel combustibile del mondo."},
+    {y:1888,s:"chimica",name:"Pneumatico",who:"John Boyd Dunlop",media:{type:"img",file:"Dunlop.jpg",subject:"uno dei primi pneumatici Dunlop, o una bicicletta d'epoca"},
+     note:"La ruota gonfiabile apre l'industria della gomma, e con essa la domanda di caucciù, che verrà raccolto nelle colonie in condizioni spesso durissime."},
+    {y:1889,s:"acciaio",name:"Torre Eiffel",who:"Gustave Eiffel",media:{type:"img",file:"Torre_Eiffel.jpg",subject:"la Torre Eiffel, 1889 (anche in costruzione)"},
+     note:"Non un'invenzione ma un manifesto: ferro e acciaio diventano il simbolo dichiarato della nuova era, esibiti come una promessa di modernità."},
+    {y:1895,s:"elettr",name:"Cinematografo",who:"fratelli Lumière",media:{type:"img",file:"Cinematografo.jpg",subject:"il cinématographe Lumière, o un manifesto del 1895-96"},
+     note:"L'immagine si mette in movimento. Nasce un linguaggio nuovo, che diventerà uno dei grandi strumenti della società di massa del Novecento."},
+    {y:1897,s:"chimica",name:"Aspirina",who:"Bayer (acido acetilsalicilico)",media:{type:"img",file:"Aspirina_Bayer.jpg",subject:"una confezione o pubblicità Bayer dell'aspirina, primi del Novecento"},
+     note:"Un farmaco prodotto in laboratorio e venduto in massa: la chimica entra nella farmacia, e la salute diventa anche un prodotto industriale.",approx:true},
+    {y:1897,s:"motore",name:"Motore Diesel",who:"Rudolf Diesel",media:{type:"img",file:"Diesel.jpg",subject:"un primo motore Diesel, fine Ottocento"},
+     note:"Un motore a combustione interna alimentato a nafta, robusto ed economico, destinato all'industria pesante e ai trasporti."}
+  ];
+  D.sort((a,b)=>a.y-b.y);
+
+  let active="tutti", cur=null;
+  const filtersEl=document.getElementById('filters');
+  const timeline=document.getElementById('timeline');
+  const media=document.getElementById('media');
+
+  function mkFilter(key,lab,col){
+    const b=document.createElement('button');
+    b.setAttribute('aria-pressed',active===key);
+    b.innerHTML=(col?`<span class="dot" style="background:${col}"></span>`:'')+lab;
+    b.addEventListener('click',()=>{active=key; if(!visible().includes(cur)) cur=visible()[0]; draw();});
+    filtersEl.appendChild(b);
+  }
+  function buildFilters(){
+    filtersEl.innerHTML='';
+    mkFilter('tutti','Tutte',null);
+    Object.keys(SEC).forEach(k=>mkFilter(k,SEC[k].lab,SEC[k].col));
+  }
+  function visible(){ return D.map((_,i)=>i).filter(i=>active==='tutti'||D[i].s===active); }
+
+  function draw(){
+    buildFilters();
+    const vis=visible();
+    if(cur===null||!vis.includes(cur)) cur=vis[0];
+    timeline.innerHTML='';
+    vis.forEach((i,k)=>{
+      const d=D[i], col=SEC[d.s].col;
+      const chip=document.createElement('div'); chip.className='chip';
+      const b=document.createElement('button');
+      b.style.borderLeftColor=col;
+      b.innerHTML=`<span class="y">${d.y}</span>${d.name}`;
+      b.setAttribute('aria-pressed', i===cur);
+      b.addEventListener('click',()=>{cur=i;draw();});
+      chip.appendChild(b);
+      if(k<vis.length-1){const a=document.createElement('span');a.className='arr';a.textContent='→';chip.appendChild(a);}
+      timeline.appendChild(chip);
+    });
+    const d=D[cur], col=SEC[d.s].col;
+    if(d.media.type==='anim'){
+      media.innerHTML=`<span class="zlab">Il principio</span>${ANIM[d.media.key]}`;
+    } else {
+      media.innerHTML=`<span class="zlab">L'immagine d'epoca</span>
+        <img id="mimg" alt="${d.name}">
+        <div class="broken" id="mbroken">Immagine d'epoca da caricare: ${d.media.subject}.</div>`;
+      const im=document.getElementById('mimg'), bk=document.getElementById('mbroken');
+      im.addEventListener('error',()=>{im.style.display='none';bk.style.display='block';});
+      im.addEventListener('load',()=>{im.style.display='block';bk.style.display='none';});
+      im.src=IMG+encodeURI(d.media.file);
+    }
+    document.getElementById('m-name').textContent=d.name;
+    document.getElementById('m-facts').innerHTML=
+      `<div class="row"><div class="k">Anno</div><div>${d.y}${d.approx?' circa':''}</div></div>`+
+      `<div class="row"><div class="k">Autore</div><div>${d.who}</div></div>`+
+      `<div class="row"><div class="k">Settore</div><div>${SEC[d.s].lab}</div></div>`;
+    document.getElementById('m-note').textContent=d.note;
+  }
+  draw();
+})();
+</script>
+</body>
+</html>

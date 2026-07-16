@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#b0872e;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:940px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .picker{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--rule);margin-bottom:16px;padding-bottom:10px}
+  .picker button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.76rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .picker button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .thesis{border:1px solid var(--rule);border-left-width:4px;border-left-color:var(--ink);border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:13px 16px;margin-bottom:16px}
+  .thesis .k{font-family:var(--sans);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:5px}
+  .thesis p{margin:0;font-size:1.14rem;line-height:1.5}
+  .thesis .from{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-top:7px;font-style:italic}
+
+  .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  @media(max-width:720px){.cols{grid-template-columns:minmax(0,1fr)}}
+  .col{border:1px solid var(--rule);border-top-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:10px;min-height:70px}
+  .col.pro{border-top-color:var(--pro)} .col.contra{border-top-color:var(--contra)} .col.nulla{border-top-color:var(--nulla)}
+  .col h3{font-family:var(--sans);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;margin:0 0 3px}
+  .col.pro h3{color:var(--pro)} .col.contra h3{color:var(--contra)} .col.nulla h3{color:var(--nulla)}
+  .col .hint{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);margin:0 0 8px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px}
+  .card{border:1px solid var(--rule);background:var(--paper-2);border-radius:2px;padding:9px 11px;margin-bottom:8px;font-size:.93rem}
+  .card .txt{margin-bottom:8px;line-height:1.42}
+  .card .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .card .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.72rem;padding:5px 9px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .card .acts button:hover{color:var(--paper)}
+  .card .acts button.p:hover{background:var(--pro);border-color:var(--pro)}
+  .card .acts button.c:hover{background:var(--contra);border-color:var(--contra)}
+  .card .acts button.n:hover{background:var(--nulla);border-color:var(--nulla)}
+  .card.small{font-size:.88rem;padding:8px 10px}
+  .card.rev-pro{border-left:3px solid var(--pro)}
+  .card.rev-contra{border-left:3px solid var(--contra)}
+  .card.rev-nulla{border-left:3px solid var(--nulla);background:#efe6cf}
+  .card .why{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-top:6px;line-height:1.4}
+  .card .mark{font-family:var(--sans);font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;margin-top:5px}
+  .card .mark.ok{color:var(--pro)} .card .mark.no{color:var(--contra)}
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.7rem;cursor:pointer;padding:0;text-decoration:underline}
+
+  .controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:4px}
+  .controls button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .controls button:hover{background:var(--ink);color:var(--paper)}
+  .controls button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .calib{margin-top:18px;border:1px solid var(--rule);border-radius:2px;overflow:hidden;display:none}
+  .calib.show{display:block}
+  .calib .h{background:var(--ink);color:var(--paper);padding:11px 15px;font-family:var(--sans);
+    font-size:.76rem;letter-spacing:.07em;text-transform:uppercase}
+  .calib .b{padding:14px 16px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .calib .q{font-size:1rem;margin:0 0 12px}
+  .opt{display:block;width:100%;text-align:left;appearance:none;border:1px solid var(--rule);
+    background:var(--paper-2);border-radius:2px;padding:11px 13px;margin-bottom:8px;cursor:pointer;
+    font-family:var(--serif);font-size:.98rem;color:var(--ink);line-height:1.45}
+  .opt:hover:not(:disabled){border-color:var(--ink)}
+  .opt:disabled{cursor:default}
+  .opt.sel{border-color:var(--ink);border-width:2px}
+  .resp{margin-top:12px;padding:12px 14px;background:var(--paper-2);border-left:3px solid var(--ink);
+    border-radius:2px;font-size:.97rem;display:none}
+  .resp.show{display:block}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce l'economia del mondo moderno &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Uno storico non colleziona prove a favore della propria tesi: la mette alla prova. Scegli una tesi, poi decidi per ogni affermazione se la sostiene, la confuta, oppure non la decide affatto. L'ultimo contenitore &egrave; il pi&ugrave; importante: molte prove vere sono irrilevanti rispetto alla domanda che si sta ponendo.</p>
+
+  <div class="picker" id="picker"></div>
+
+  <div class="thesis">
+    <span class="k">La tesi da mettere alla prova</span>
+    <p id="t-text"></p>
+    <div class="from" id="t-from"></div>
+  </div>
+
+  <div class="cols">
+    <div class="col pro"><h3>La sostiene</h3><p class="hint">rende la tesi pi&ugrave; probabile</p><div id="c-pro"></div></div>
+    <div class="col contra"><h3>La confuta</h3><p class="hint">la rende meno probabile</p><div id="c-contra"></div></div>
+    <div class="col nulla"><h3>Non la decide</h3><p class="hint">vera, ma non pertinente alla domanda</p><div id="c-nulla"></div></div>
+  </div>
+
+  <p class="poolhead" id="poolhead">Affermazioni da collocare</p>
+  <div id="pool"></div>
+
+  <div class="controls">
+    <button id="check" class="primary">Verifica la distribuzione</button>
+    <button id="reset">Ricomincia</button>
+  </div>
+
+  <div class="calib" id="calib">
+    <div class="h">Ora calibra la tesi</div>
+    <div class="b">
+      <p class="q">Alla luce di come si distribuiscono le prove, quale di queste tre formulazioni regge meglio?</p>
+      <div id="opts"></div>
+      <div class="resp" id="resp"></div>
+    </div>
+  </div>
+
+  <p class="note">Le affermazioni sono tratte dai nodi storiografici della sezione. Nessuna &egrave; inventata: sono tutte posizioni o dati realmente discussi dagli storici.</p>
+
+<script>
+(function(){
+  var T=[
+    {
+      id:"enclosures", tab:"Le enclosures", from:"Capitolo 1 \u00B7 Le enclosures: progresso o esproprio?",
+      thesis:"Le enclosures furono un esproprio ai danni dei poveri delle campagne.",
+      cards:[
+        {t:"Le recinzioni cancellarono i diritti d'uso collettivi su cui si reggeva la sopravvivenza di molti.",b:"pro",
+         w:"\u00C8 il nucleo fattuale della tesi: chi viveva di quei diritti li perse."},
+        {t:"Una parte della popolazione rurale fu sradicata e sospinta verso le citt\u00E0.",b:"pro",
+         w:"L'effetto sociale che la tesi denuncia, documentato."},
+        {t:"Le rese agricole aumentarono, e permisero di nutrire una popolazione crescente.",b:"contra",
+         w:"Se il risultato fu un beneficio collettivo, chiamarlo solo esproprio diventa parziale."},
+        {t:"Le recinzioni assunsero forme molto diverse tra loro, e alcuni studiosi ne hanno ridimensionato la portata dello sradicamento.",b:"contra",
+         w:"Attacca l'ampiezza del fenomeno, e quindi la generalit\u00E0 della tesi."},
+        {t:"Parte dell'aumento di produttivit\u00E0 venne prima delle recinzioni parlamentari, e si dovette ai piccoli coltivatori indipendenti.",b:"nulla",
+         w:"Attenzione: questa carta scardina l'idea che le recinzioni abbiano prodotto il progresso agrario. Ma la tesi in esame non parla di progresso: parla di esproprio. Confuta la tesi avversaria, non sostiene questa."},
+        {t:"Il racconto marxiano dell'accumulazione originaria vede nelle enclosures il peccato d'origine del capitalismo.",b:"nulla",
+         w:"Spiega perch\u00E9 la lettura dell'esproprio ha una presa tenace. Ma la fortuna di una tesi non \u00E8 una prova della sua verit\u00E0."},
+        {t:"Le enclosures furono decise da parlamenti in cui i grandi proprietari terrieri avevano voce, i contadini poveri no.",b:"pro",
+         w:"Chi decide non \u00E8 chi subisce: rafforza la lettura dell'atto di forza."}
+      ],
+      opts:[
+        {t:"Le enclosures furono un esproprio ai danni dei poveri delle campagne.",kind:"orig",
+         r:"\u00C8 la tesi di partenza, e le prove la sostengono in parte: la perdita dei diritti d'uso e lo sradicamento sono documentati. Ma lasciata cos\u00EC ignora le carte che stanno dall'altro lato: le rese crebbero davvero, e il fenomeno non fu ovunque uguale. Una tesi che non fa i conti con le prove contrarie non \u00E8 sbagliata: \u00E8 solo pi\u00F9 debole di quanto potrebbe essere."},
+        {t:"Le enclosures furono insieme progresso agrario ed esproprio: la domanda non \u00E8 quale delle due cose siano state, ma per chi furono l'una e per chi l'altra.",kind:"restr",
+         r:"\u00C8 la formulazione che regge meglio, e non per prudenza: perch\u00E9 \u00E8 l'unica che tiene dentro tutte le carte invece di scartarne met\u00E0. Nota che cosa \u00E8 successo: le prove non hanno n\u00E9 confermato n\u00E9 demolito la tesi di partenza, l'hanno costretta a restringersi e a precisarsi. \u00C8 quasi sempre cos\u00EC, ed \u00E8 il lavoro dello storico."},
+        {t:"Le enclosures furono una modernizzazione necessaria, e il costo sociale fu il prezzo del progresso.",kind:"opp",
+         r:"\u00C8 la tesi opposta, ed \u00E8 sostenuta da alcune carte, ma paga lo stesso prezzo di quella di partenza al contrario: la parola \u00ABnecessaria\u00BB \u00E8 esattamente ci\u00F2 che le prove non mostrano, e il \u00ABprezzo\u00BB lo pag\u00F2 qualcuno in particolare, non un soggetto astratto. Rovesciare una tesi unilaterale d\u00E0 un'altra tesi unilaterale."}
+      ]
+    },
+    {
+      id:"inghilterra", tab:"Perch\u00E9 l'Inghilterra", from:"Capitolo 2 \u00B7 Perch\u00E9 proprio l'Inghilterra: merito o fortuna?",
+      thesis:"L'Inghilterra fu la prima a industrializzarsi grazie a una superiorit\u00E0 profonda e strutturale.",
+      cards:[
+        {t:"Dopo il 1688 aveva istituzioni parlamentari e una salda tutela della propriet\u00E0.",b:"pro",
+         w:"Un vantaggio istituzionale reale e di lungo periodo: \u00E8 il tipo di prova su cui la tesi si regge."},
+        {t:"Una mentalit\u00E0 scientifica e pratica era diffusa nella societ\u00E0 britannica.",b:"pro",
+         w:"Il vantaggio culturale che la lettura del \u00ABmerito\u00BB indica come decisivo."},
+        {t:"Fino alla met\u00E0 del Settecento le regioni pi\u00F9 avanzate di Cina ed Europa avevano tenore di vita, consumi e tecniche sorprendentemente simili.",b:"contra",
+         w:"Se la superiorit\u00E0 fosse stata profonda, si vedrebbe prima del decollo. Non si vede."},
+        {t:"Presi uno a uno, quasi tutti quei fattori si ritrovavano anche in Francia o in Olanda.",b:"contra",
+         w:"Un vantaggio condiviso non spiega un esito unico."},
+        {t:"L'Inghilterra aveva giacimenti di carbone proprio dove servivano.",b:"contra",
+         w:"Una circostanza geografica non \u00E8 un merito: gioca a favore della lettura della contingenza."},
+        {t:"L'Inghilterra fu effettivamente la prima a industrializzarsi.",b:"nulla",
+         w:"Attenzione: \u00E8 il fatto da spiegare, non una spiegazione. Vale allo stesso modo per la tesi opposta, e quindi non decide nulla."},
+        {t:"La lettura del \u00ABmerito\u00BB ha dominato a lungo la storiografia occidentale.",b:"nulla",
+         w:"Che una lettura sia stata a lungo dominante, e lusinghiera per chi la sosteneva, non dice se sia vera."}
+      ],
+      opts:[
+        {t:"L'Inghilterra fu la prima grazie a una superiorit\u00E0 profonda e strutturale.",kind:"orig",
+         r:"Alcune carte la sostengono: le istituzioni e la cultura tecnica erano vantaggi reali. Ma la tesi non regge alla carta pi\u00F9 dura, cio\u00E8 che quei vantaggi, presi uno a uno, esistevano anche altrove, e che fino a met\u00E0 Settecento la distanza con le regioni avanzate d'Asia era minima. Se la superiorit\u00E0 fosse stata profonda, si vedrebbe prima."},
+        {t:"L'Inghilterra ebbe vantaggi reali, ma fu la loro combinazione simultanea, insieme a circostanze contingenti come il carbone e le colonie, a produrre l'esito.",kind:"restr",
+         r:"\u00C8 la formulazione che sopravvive alle prove. Salva ci\u00F2 che di vero c'era nella tesi di partenza (i vantaggi esistevano) e incorpora ci\u00F2 che la contraddiceva (esistevano anche altrove; il carbone e le colonie non sono meriti). Nota il guadagno: la tesi non \u00E8 stata vinta n\u00E9 persa, \u00E8 stata calibrata."},
+        {t:"L'Inghilterra fu prima per pura fortuna geografica e imperiale.",kind:"opp",
+         r:"La parola \u00ABpura\u00BB \u00E8 il problema. Le carte sulla contingenza sono forti, ma nessuna dice che istituzioni e cultura tecnica fossero irrilevanti: dicono che non bastavano. Sostituire una spiegazione unilaterale con l'altra non \u00E8 correggere un errore, \u00E8 ripeterlo a specchio."}
+      ]
+    },
+    {
+      id:"vita", tab:"Condizioni di vita", from:"Capitolo 2 \u00B7 Le condizioni di vita migliorarono o peggiorarono?",
+      thesis:"L'industrializzazione peggior\u00F2 le condizioni di vita delle masse.",
+      cards:[
+        {t:"Nei quartieri operai la speranza di vita era circa la met\u00E0 di quella delle campagne.",b:"pro",
+         w:"Un indicatore che non dipende dalle opinioni: si muore prima."},
+        {t:"Gli orari raggiungevano le quattordici o sedici ore, bambini compresi.",b:"pro",
+         w:"Una dimensione della vita che il salario non misura, e che peggior\u00F2."},
+        {t:"Nel lungo periodo i salari reali medi salirono.",b:"contra",
+         w:"Il dato su cui si fonda la lettura \u00ABottimista\u00BB."},
+        {t:"Merci e alimenti prima inaccessibili divennero via via meno costosi.",b:"contra",
+         w:"Il potere d'acquisto \u00E8 una dimensione reale del benessere, e cresceva."},
+        {t:"Il salario medio pu\u00F2 salire mentre la distribuzione peggiora: la media nasconde chi sta sotto.",b:"nulla",
+         w:"Non prova che le condizioni peggiorarono: mostra che il dato dei salari, da solo, non decide. \u00C8 un'obiezione di metodo, non una prova."},
+        {t:"Stabilire che cosa conti come \u00ABvita migliore\u00BB, se pi\u00F9 reddito o pi\u00F9 autonomia, \u00E8 gi\u00E0 una scelta di valore.",b:"nulla",
+         w:"Rivela che la domanda non \u00E8 solo fattuale. Nessuna delle due parti pu\u00F2 usarla come prova."},
+        {t:"L'inchiesta Sadler raccolse testimonianze durissime sul lavoro dei bambini.",b:"nulla",
+         w:"Attenzione: fu raccolta da un riformatore, con domande orientate e senza contraddittorio. La sofferenza era reale, ma questa fonte, da sola, non \u00E8 la prova decisiva di una tesi generale."}
+      ],
+      opts:[
+        {t:"L'industrializzazione peggior\u00F2 le condizioni di vita delle masse.",kind:"orig",
+         r:"Cos\u00EC formulata, urta contro il dato dei salari reali, che salirono. \u00C8 il punto su cui la lettura \u00ABpessimista\u00BB \u00E8 sempre stata attaccata, e con ragione: una tesi generale non pu\u00F2 ignorare la serie di numeri che le si oppone."},
+        {t:"Nella prima fase, e per una parte consistente dei lavoratori, l'industrializzazione peggior\u00F2 dimensioni della vita che il salario non misura.",kind:"restr",
+         r:"\u00C8 la formulazione che le prove permettono. Restringe nel tempo (\u00ABla prima fase\u00BB), nell'estensione (\u00ABuna parte\u00BB) e nell'oggetto (\u00ABci\u00F2 che il salario non misura\u00BB): tre limitazioni, e ognuna nasce da una carta contraria. Una tesi calibrata \u00E8 pi\u00F9 forte, non pi\u00F9 debole, perch\u00E9 non offre il fianco."},
+        {t:"L'industrializzazione miglior\u00F2 progressivamente il tenore di vita generale.",kind:"opp",
+         r:"Regge sui salari e sui prezzi, ma \u00E8 vulnerabile esattamente dove lo era la tesi opposta: chiama \u00ABtenore di vita\u00BB ci\u00F2 che sa misurare, e lascia fuori l'aria dei sobborghi, le ore, la mortalit\u00E0 urbana. Misurare ci\u00F2 che \u00E8 comodo misurare \u00E8 il pi\u00F9 comune degli errori."}
+      ]
+    },
+    {
+      id:"schiavitu", tab:"La schiavit\u00F9", from:"Capitolo 2 \u00B7 Quanto pes\u00F2 la schiavit\u00F9 nell'industrializzazione?",
+      thesis:"I profitti della schiavit\u00F9 finanziarono la rivoluzione industriale britannica.",
+      cards:[
+        {t:"I profitti della tratta e delle piantagioni furono ingenti.",b:"pro",
+         w:"La premessa della tesi di Williams: quei capitali c'erano."},
+        {t:"La \u00ABnuova storia del capitalismo\u00BB rimette schiavit\u00F9 e cotone al cuore del decollo industriale.",b:"pro",
+         w:"Una corrente storiografica recente e attrezzata sostiene la tesi."},
+        {t:"I profitti schiavistici furono una quota relativamente piccola degli investimenti totali dell'economia britannica.",b:"contra",
+         w:"\u00C8 la carta che colpisce la tesi nel punto esatto in cui \u00E8 formulata: il finanziamento."},
+        {t:"Schiavit\u00F9 e industria del cotone erano storicamente inseparabili.",b:"nulla",
+         w:"Attenzione, \u00E8 la carta pi\u00F9 insidiosa. \u00C8 vera, ed \u00E8 moralmente decisiva: ma l'intreccio non \u00E8 la misura. Che due cose siano inseparabili non dice quanto l'una abbia finanziato l'altra."},
+        {t:"L'abolizione della schiavit\u00F9 ebbe anche moventi politici e morali reali, non solo economici.",b:"nulla",
+         w:"Colpisce la seconda tesi di Williams, quella sull'abolizione. Ma la tesi in esame parla di finanziamento: questa carta non la tocca."},
+        {t:"La tesi di Williams ha una presa fortissima perch\u00E9 salda il capitalismo alla sua colpa d'origine.",b:"nulla",
+         w:"Spiega la fortuna della tesi, non la sua fondatezza. Vale per le tesi che ci piacciono quanto per quelle che detestiamo."},
+        {t:"Il cotone delle piantagioni era la materia prima del settore trainante dell'industria britannica.",b:"pro",
+         w:"Non \u00E8 finanziamento in senso stretto, ma lega la schiavit\u00F9 al cuore produttivo del decollo."}
+      ],
+      opts:[
+        {t:"I profitti della schiavit\u00F9 finanziarono la rivoluzione industriale britannica.",kind:"orig",
+         r:"\u00C8 la tesi forte di Williams, e cade sulla carta quantitativa: quei profitti, per quanto enormi in assoluto, furono una frazione modesta degli investimenti complessivi. Nota per\u00F2 che cadere su quel punto non significa che la schiavit\u00F9 non c'entri: significa che la parola \u00ABfinanziarono\u00BB dice troppo."},
+        {t:"La schiavit\u00F9 fu una delle condizioni della rivoluzione industriale, e le fu storicamente inseparabile; il suo peso quantitativo sul decollo resta discusso.",kind:"restr",
+         r:"\u00C8 la formulazione che le prove sostengono, ed \u00E8 anche la pi\u00F9 istruttiva, perch\u00E9 tiene distinti due piani che \u00E8 facilissimo confondere. Il piano morale e storico: l'intreccio \u00E8 certo. Il piano causale e quantitativo: la misura \u00E8 aperta. La verit\u00E0 morale e la misura economica non coincidono, e il compito \u00E8 non lasciare che l'una divori l'altra."},
+        {t:"La schiavit\u00F9 ebbe un peso marginale sull'industrializzazione britannica.",kind:"opp",
+         r:"La carta quantitativa autorizza a ridimensionare il \u00ABfinanziarono\u00BB, non a dire \u00ABmarginale\u00BB. Il cotone delle piantagioni era la materia prima del settore trainante: chiamare marginale tutto questo significa usare un dato contabile per cancellare un intreccio storico. \u00C8 l'errore speculare a quello della tesi di partenza."}
+      ]
+    },
+    {
+      id:"consumi", tab:"I consumi di massa", from:"Capitolo 3 \u00B7 I consumi di massa: liberazione o manipolazione?",
+      thesis:"Il consumo di massa fu una forma di manipolazione, pi\u00F9 che di liberazione.",
+      cards:[
+        {t:"La pubblicit\u00E0 si trasform\u00F2 da avviso in una scienza della persuasione, con investimenti enormi.",b:"pro",
+         w:"Qualcuno lavorava, con metodo e denaro, per orientare i desideri altrui."},
+        {t:"Le vetrine circondavano le merci di un'aura indipendente dal loro uso, e ne nascondevano l'origine.",b:"pro",
+         w:"Il meccanismo del feticismo della merce: il desiderio \u00E8 costruito, non trovato."},
+        {t:"Beni, comodit\u00E0 e svaghi un tempo riservati a pochi divennero accessibili a molti.",b:"contra",
+         w:"Una democratizzazione reale: difficile chiamarla manipolazione e basta."},
+        {t:"I grandi magazzini offrirono alle donne borghesi un primo accesso allo spazio pubblico.",b:"contra",
+         w:"Uno spazio di libert\u00E0 concreto, e non previsto da chi li aveva costruiti per vendere."},
+        {t:"L'abito smise di indicare il rango e cominci\u00F2 a esprimere la persona.",b:"nulla",
+         w:"Ambigua fino in fondo: \u00E8 una libert\u00E0 nuova, o un conformismo nuovo travestito da individualit\u00E0? La carta, da sola, non lo dice."},
+        {t:"Siamo consumatori anche noi, e ci riesce difficile pensarci come manipolati.",b:"nulla",
+         w:"Spiega perch\u00E9 la lettura \u00ABliberatoria\u00BB ci sembra ovvia. Ma il fatto che una tesi ci lusinghi non la rende n\u00E9 vera n\u00E9 falsa."},
+        {t:"Presumere che le masse siano plasmate dalla pubblicit\u00E0 significa negare loro ogni capacit\u00E0 di resistenza.",b:"nulla",
+         w:"\u00C8 un'obiezione al presupposto della tesi, non una prova contro di essa: mostra un rischio del ragionamento, non un fatto del mondo."}
+      ],
+      opts:[
+        {t:"Il consumo di massa fu una forma di manipolazione, pi\u00F9 che di liberazione.",kind:"orig",
+         r:"Le carte sulla pubblicit\u00E0 e sulle vetrine la sostengono. Ma la tesi ha un punto cieco che una delle carte \u00ABnon decide\u00BB illumina: per reggere, deve presumere che le persone siano plasmabili a piacere. E chi lo presume tratta da automi proprio coloro che vorrebbe difendere."},
+        {t:"Il consumo di massa allarg\u00F2 realmente le possibilit\u00E0 e le libert\u00E0 delle persone, dentro un campo di scelte che erano altri a disegnare.",kind:"restr",
+         r:"\u00C8 la formulazione che tiene insieme tutte le carte: la democratizzazione fu reale, e reale era anche il fatto che qualcuno decideva quali opzioni offrire. Non \u00E8 un compromesso di comodo: \u00E8 la constatazione che i consumatori non sono n\u00E9 sovrani liberi n\u00E9 burattini, e usano le merci in modi che nessuno aveva previsto."},
+        {t:"Il consumo di massa fu una democratizzazione dell'accesso ai beni e all'espressione di s\u00E9.",kind:"opp",
+         r:"Regge sulle carte dell'accessibilit\u00E0 e dello spazio femminile, ma ignora che la scienza della persuasione esisteva, era pagata, e funzionava. Chiamare \u00ABespressione di s\u00E9\u00BB una scelta tra opzioni disegnate da altri \u00E8 vero solo a met\u00E0, e la met\u00E0 mancante \u00E8 quella che conta."}
+      ]
+    },
+    {
+      id:"crisi", tab:"La sovrapproduzione", from:"Capitolo 3 \u00B7 La sovrapproduzione: la crisi era nel sistema o fu un incidente?",
+      thesis:"Le crisi di sovrapproduzione sono un difetto strutturale del capitalismo.",
+      cards:[
+        {t:"La Grande depressione nacque da un'offerta cresciuta pi\u00F9 in fretta della domanda, per effetto delle nuove macchine.",b:"pro",
+         w:"La crisi nasce dal funzionamento normale del sistema, non da un incidente esterno."},
+        {t:"Il 1929 e le crisi ricorrenti del Novecento e del nostro secolo sembrano confermare la ricorrenza.",b:"pro",
+         w:"La ripetizione \u00E8 l'argomento principale della lettura strutturale."},
+        {t:"Dopo il 1896 la ripresa arriv\u00F2 puntualmente, e il capitalismo prosper\u00F2.",b:"contra",
+         w:"Se il difetto fosse strutturale e fatale, il sistema non dovrebbe riassestarsi da s\u00E9."},
+        {t:"La crisi ebbe cause riconoscibili e contingenti: un'ondata di innovazioni, e l'arrivo del grano americano.",b:"contra",
+         w:"Cause specifiche spiegano una crisi specifica senza bisogno di una legge generale."},
+        {t:"Una teoria che prevede crisi ricorrenti trova sempre conferme, perch\u00E9 le crisi prima o poi arrivano.",b:"nulla",
+         w:"Non dice che la teoria sia falsa: dice che quel tipo di conferma vale poco. Una teoria che nessun fatto potrebbe smentire non \u00E8 rafforzata dai fatti che la confermano."},
+        {t:"La posizione di ciascun interprete su questa domanda tende a coincidere con la sua collocazione politica.",b:"nulla",
+         w:"Vale per entrambe le letture, e quindi non ne favorisce nessuna. Serve a diffidare di s\u00E9, non dell'avversario."},
+        {t:"Marx sostenne che il capitalismo genera le proprie crisi come effetto del proprio successo.",b:"nulla",
+         w:"\u00C8 la tesi in esame, autorevolmente formulata. Ma l'autorit\u00E0 di chi enuncia una tesi non \u00E8 una prova della tesi."}
+      ],
+      opts:[
+        {t:"Le crisi di sovrapproduzione sono un difetto strutturale del capitalismo.",kind:"orig",
+         r:"Ha dalla sua la ricorrenza, che \u00E8 impressionante. Ma inciampa su due cose: la ripresa del 1896 arriv\u00F2, e soprattutto una carta \u00ABnon decide\u00BB le toglie molto del suo apparente sostegno, perch\u00E9 una teoria che qualunque crisi conferma non viene davvero messa alla prova dalle crisi."},
+        {t:"Il capitalismo industriale genera periodicamente squilibri tra capacit\u00E0 produttiva e domanda; che questo lo condanni \u00E8 un'altra affermazione, e i fatti non l'hanno confermata.",kind:"restr",
+         r:"\u00C8 la formulazione che le prove reggono. Concede alla lettura strutturale ci\u00F2 che ha dimostrato (gli squilibri ricorrono, e nascono dal funzionamento normale) e le toglie ci\u00F2 che non ha dimostrato (che siano fatali). Distinguere \u00ABricorrente\u00BB da \u00ABfatale\u00BB \u00E8 il guadagno di tutto l'esercizio."},
+        {t:"Le crisi sono incidenti congiunturali che il mercato riassesta da s\u00E9.",kind:"opp",
+         r:"Ha il pregio della prudenza empirica, ma paga un prezzo: se ogni crisi ha cause proprie e nessuna regolarit\u00E0, resta da spiegare perch\u00E9 continuino ad arrivare. Ridurre a serie di incidenti ci\u00F2 che forse ha una radice \u00E8 l'errore opposto, e non meno grave."}
+      ]
+    }
+  ];
+
+  var LAB={pro:"La sostiene",contra:"La confuta",nulla:"Non la decide"};
+  var ti=0, state={}, revealed=false, chosen=null;
+
+  var picker=document.getElementById('picker');
+  var pool=document.getElementById('pool');
+  var poolhead=document.getElementById('poolhead');
+  var calib=document.getElementById('calib');
+  var optsEl=document.getElementById('opts');
+  var resp=document.getElementById('resp');
+
+  function buildPicker(){
+    picker.innerHTML='';
+    T.forEach(function(t,i){
+      var b=document.createElement('button');
+      b.textContent=t.tab;
+      b.setAttribute('aria-pressed', i===ti ? 'true':'false');
+      b.addEventListener('click',function(){ ti=i; init(); });
+      picker.appendChild(b);
+    });
+  }
+
+  function init(){
+    buildPicker();
+    state={}; revealed=false; chosen=null;
+    T[ti].cards.forEach(function(c,i){ state[i]='pool'; });
+    document.getElementById('t-text').textContent=T[ti].thesis;
+    document.getElementById('t-from').textContent=T[ti].from;
+    calib.className='calib';
+    resp.className='resp';
+    document.getElementById('check').disabled=false;
+    render();
+  }
+
+  function cardHTML(i,c){
+    if(!revealed && state[i]==='pool'){
+      return '<div class="card"><div class="txt">'+c.t+'</div><div class="acts">'+
+        '<button class="p" data-i="'+i+'" data-b="pro">sostiene</button>'+
+        '<button class="c" data-i="'+i+'" data-b="contra">confuta</button>'+
+        '<button class="n" data-i="'+i+'" data-b="nulla">non decide</button>'+
+        '</div></div>';
+    }
+    if(!revealed){
+      return '<div class="card small"><div class="txt">'+c.t+'</div>'+
+        '<button class="back" data-back="'+i+'">rimetti nel mazzo</button></div>';
+    }
+    var ok = state[i]===c.b;
+    var mark = state[i]==='pool' ? '' :
+      (ok ? '<div class="mark ok">collocata bene</div>'
+          : '<div class="mark no">tu l\'avevi messa in \u00AB'+LAB[state[i]]+'\u00BB</div>');
+    return '<div class="card small rev-'+c.b+'"><div class="txt">'+c.t+'</div>'+
+      mark+'<div class="why">'+c.w+'</div></div>';
+  }
+
+  function render(){
+    var cs=T[ti].cards;
+    var buckets={pool:'',pro:'',contra:'',nulla:''};
+    cs.forEach(function(c,i){
+      var where = revealed ? c.b : state[i];
+      buckets[where]+=cardHTML(i,c);
+    });
+    pool.innerHTML = buckets.pool || '<p class="hint" style="font-family:var(--sans);font-size:.8rem;color:var(--ink-soft)">Tutte le affermazioni sono state collocate.</p>';
+    poolhead.style.display = (revealed || !buckets.pool) ? 'none' : 'block';
+    document.getElementById('c-pro').innerHTML=buckets.pro;
+    document.getElementById('c-contra').innerHTML=buckets.contra;
+    document.getElementById('c-nulla').innerHTML=buckets.nulla;
+  }
+
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-b]');
+    if(b && !revealed){ state[parseInt(b.getAttribute('data-i'),10)]=b.getAttribute('data-b'); render(); return; }
+    var k=e.target.closest('[data-back]');
+    if(k && !revealed){ state[parseInt(k.getAttribute('data-back'),10)]='pool'; render(); return; }
+    var o=e.target.closest('[data-opt]');
+    if(o){
+      chosen=parseInt(o.getAttribute('data-opt'),10);
+      var opts=optsEl.querySelectorAll('.opt');
+      for(var i=0;i<opts.length;i++){ opts[i].disabled=true; opts[i].classList.remove('sel'); }
+      o.classList.add('sel');
+      resp.innerHTML=T[ti].opts[chosen].r;
+      resp.className='resp show';
+      return;
+    }
+  });
+
+  document.getElementById('check').addEventListener('click',function(){
+    var placed=false, i;
+    for(i in state){ if(state[i]!=='pool'){ placed=true; break; } }
+    if(!placed) return;
+    revealed=true;
+    this.disabled=true;
+    render();
+    optsEl.innerHTML='';
+    T[ti].opts.forEach(function(o,k){
+      var b=document.createElement('button');
+      b.className='opt'; b.setAttribute('data-opt',k);
+      b.textContent=o.t;
+      optsEl.appendChild(b);
+    });
+    resp.className='resp';
+    calib.className='calib show';
+    calib.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+
+  document.getElementById('reset').addEventListener('click',init);
+
+  init();
+})();
+</script>
+</body>
+</html>

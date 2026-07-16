@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Costruisci la curva del cotone</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d; --lavoro:#9d4a2b; --ok:#5c7343; --err:#a53b2a;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:880px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+  .source{border:1px solid var(--rule);background:#f3eee2;padding:14px 16px;border-radius:2px;
+    font-size:1rem;line-height:1.62}
+  .source .lab{font-family:var(--sans);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-soft);display:block;margin-bottom:7px}
+  .source .cap{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft);margin-top:10px;
+    border-top:1px solid var(--line);padding-top:7px;font-style:italic}
+  .work{display:grid;grid-template-columns:190px 1fr;gap:18px;margin-top:18px}
+  @media(max-width:640px){.work{grid-template-columns:1fr}}
+  table{border-collapse:collapse;width:100%;font-family:var(--sans)}
+  th{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);
+    text-align:left;padding:6px 4px;border-bottom:1px solid var(--rule)}
+  td{padding:4px;border-bottom:1px solid var(--line)}
+  td.yr{font-size:.95rem;color:var(--ink)}
+  input{width:74px;font-family:var(--sans);font-size:.95rem;padding:5px 7px;border:1px solid var(--rule);
+    border-radius:2px;background:#fff;color:var(--ink);text-align:right}
+  input.ok{border-color:var(--ok);background:#f0f4ea}
+  input.err{border-color:var(--err);background:#f7ece9}
+  .chart-wrap{border:1px solid var(--rule);background:linear-gradient(180deg,#f3eee2,#ece5d3);
+    border-radius:2px;padding:10px}
+  svg{width:100%;height:auto;display:block}
+  .controls{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap}
+  button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:8px 15px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  button:hover{background:var(--ink);color:var(--paper)}
+  button.ghost{background:transparent}
+  .feedback{margin-top:12px;font-size:.96rem;padding:11px 14px;border-radius:2px;background:var(--paper-2);
+    border-left:3px solid var(--rule);min-height:20px}
+  .feedback.done{border-left-color:var(--ok)}
+  .unit{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Capitolo 2 · Il cotone e il suo prezzo</div>
+  <h1>Costruisci la curva</h1>
+  <p class="sub">Una curva non è un dato di natura: si ricava da una fonte. Leggi il testo, estrai le cifre anno per anno, inseriscile nella tabella e osserva la curva prendere forma.</p>
+
+  <div class="source">
+    <span class="lab">La fonte</span>
+    Il modo più diretto per misurare la corsa dell'industria cotoniera britannica è seguire una sola serie di numeri: il cotone grezzo lavorato in Gran Bretagna, in milioni di libbre. Alla metà dell'Ottocento la macchina girava a pieno regime, e nel <strong>1850</strong> se ne lavoravano ormai <em>cinquecentottantotto</em> milioni di libbre. Per apprezzare l'enormità di quella cifra conviene risalire alle origini: appena ottant'anni prima, intorno al <strong>1770</strong>, alla vigilia della meccanizzazione della filatura, se ne trattavano soltanto <em>quattro</em> milioni. La crescita, però, non fu regolare, e i decenni centrali lo mostrano bene. Nel <strong>1820</strong>, quando la fabbrica aveva ormai soppiantato il lavoro a domicilio, il consumo aveva già toccato i <em>centoquarantuno</em> milioni di libbre, mentre una generazione prima, nel <strong>1790</strong>, con la jenny e il water frame da poco diffusi, si fermava ancora a <em>trentuno</em> milioni. Bastò un solo decennio, dopo il 1820, perché la cifra quasi raddoppiasse: nel <strong>1830</strong> si raggiunsero i <em>duecentosessantaquattro</em> milioni. Resta un anno da collocare tra gli altri, il <strong>1800</strong>, sul volgere del secolo, quando le importazioni lavorate segnavano <em>cinquantadue</em> milioni di libbre.
+    <span class="cap">Consumo di cotone grezzo (importazioni al netto delle riesportazioni), Gran Bretagna. Cifre indicative e arrotondate, da T. Ellison e da B. R. Mitchell, <em>Abstract of British Historical Statistics</em>. 1 libbra ≈ 0,45 kg.</span>
+  </div>
+
+  <div class="work">
+    <div>
+      <table>
+        <thead><tr><th>Anno</th><th>Milioni di libbre</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div>
+      <div class="chart-wrap">
+        <svg id="chart" viewBox="0 0 560 340" role="img" aria-label="Curva del consumo di cotone"></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="check">Verifica le cifre</button>
+    <button id="solve" class="ghost">Mostra soluzione</button>
+    <button id="reset" class="ghost">Azzera</button>
+  </div>
+  <div class="feedback" id="feedback">Inserisci i valori per cominciare a tracciare la curva.</div>
+
+<script>
+(function(){
+  const data=[
+    {yr:1770,v:4},{yr:1790,v:31},{yr:1800,v:52},
+    {yr:1820,v:141},{yr:1830,v:264},{yr:1850,v:588}
+  ];
+  const tbody=document.getElementById('tbody');
+  data.forEach((d,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td class="yr">${d.yr}</td><td><input type="number" inputmode="numeric" data-i="${i}" aria-label="cotone nel ${d.yr}"> <span class="unit"></span></td>`;
+    tbody.appendChild(tr);
+  });
+  const inputs=[...tbody.querySelectorAll('input')];
+  const svg=document.getElementById('chart');
+  const fb=document.getElementById('feedback');
+  const W=560,H=340,m={t:20,r:22,b:40,l:48};
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const xMin=1760,xMax=1860,yMin=0,yMax=600;
+  const sx=x=>m.l+(x-xMin)/(xMax-xMin)*iw;
+  const sy=v=>m.t+(1-(v-yMin)/(yMax-yMin))*ih;
+
+  function render(){
+    let g='';
+    [0,100,200,300,400,500,600].forEach(t=>{
+      const y=sy(t);
+      g+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="#cdc2a8" stroke-width="1"/>`;
+      g+=`<text x="${m.l-8}" y="${y+4}" text-anchor="end" font-family="'Gill Sans',sans-serif" font-size="11" fill="#5b5346">${t}</text>`;
+    });
+    data.forEach(d=>{
+      const x=sx(d.yr);
+      g+=`<text x="${x}" y="${H-m.b+18}" text-anchor="middle" font-family="'Gill Sans',sans-serif" font-size="11" fill="#5b5346">${d.yr}</text>`;
+    });
+    g+=`<text x="${m.l}" y="${m.t-6}" font-family="'Gill Sans',sans-serif" font-size="10.5" letter-spacing=".07em" fill="#5b5346">MILIONI DI LIBBRE</text>`;
+    // collect filled valid points in year order
+    const pts=[];
+    inputs.forEach((inp,i)=>{
+      const val=inp.value.trim();
+      if(val!==''&&!isNaN(+val)){ pts.push({x:sx(data[i].yr),y:sy(Math.max(0,Math.min(600,+val))),raw:+val,i}); }
+    });
+    if(pts.length>1){
+      const dPath=pts.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ');
+      g+=`<path d="${dPath}" fill="none" stroke="#9d4a2b" stroke-width="2.5" stroke-linejoin="round"/>`;
+    }
+    pts.forEach(p=>{ g+=`<circle cx="${p.x}" cy="${p.y}" r="4.5" fill="#9d4a2b"/>`; });
+    svg.innerHTML=g;
+  }
+  function check(){
+    let allRight=true,filled=0;
+    inputs.forEach((inp,i)=>{
+      inp.classList.remove('ok','err');
+      const val=inp.value.trim();
+      if(val===''){ allRight=false; return; }
+      filled++;
+      if(+val===data[i].v){ inp.classList.add('ok'); }
+      else{ inp.classList.add('err'); allRight=false; }
+    });
+    if(filled===0){ fb.textContent='Inserisci prima le cifre lette nel testo.'; fb.className='feedback'; return; }
+    if(allRight){
+      fb.innerHTML='Esatto. Guarda la forma della curva: quasi piatta fino al 1790, poi un\'impennata che a metà secolo diventa quasi verticale. Quell\'impennata <em>è</em> l\'argomento della sezione. E cade negli stessi decenni in cui si espandevano le piantagioni schiaviste che fornivano quel cotone: le due curve, se le potessimo sovrapporre, salirebbero insieme.';
+      fb.className='feedback done';
+    } else {
+      fb.textContent='Qualche cifra non corrisponde alla fonte. Le caselle in rosso vanno rilette nel testo, e attenzione: nel brano le cifre non compaiono in ordine di anno.';
+      fb.className='feedback';
+    }
+  }
+  document.getElementById('check').addEventListener('click',check);
+  document.getElementById('solve').addEventListener('click',()=>{
+    inputs.forEach((inp,i)=>{inp.value=data[i].v;inp.classList.remove('err');});
+    render(); check();
+  });
+  document.getElementById('reset').addEventListener('click',()=>{
+    inputs.forEach(inp=>{inp.value='';inp.classList.remove('ok','err');});
+    render(); fb.textContent='Inserisci i valori per cominciare a tracciare la curva.'; fb.className='feedback';
+  });
+  tbody.addEventListener('input',render);
+  render();
+})();
+</script>
+</body>
+</html>
