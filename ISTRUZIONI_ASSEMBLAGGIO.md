@@ -108,3 +108,20 @@ def set_page_break_before(tbl_el):
 4. Validare lo schema del `.docx` prima di generare il PDF
 5. Generare PDF di verifica, controllare pagine bianche/titoli tagliati a occhio
 6. Solo dopo l'ok sul `.docx`, generare l'ePub e applicare i link reali + rimozione QR
+
+## 9. Come evitare un .docx "sporco" in partenza
+
+Quasi tutti i problemi seri incontrati (evidenziazione fantasma, centinaia di falsi titoli nell'indice dell'ePub, pagine bianche) avevano un'unica causa a monte: nel documento Google Docs, per dare risalto visivo a un paragrafo che non era davvero un titolo, era stato usato lo **stile "Titolo 3"** invece della formattazione diretta (grassetto/dimensione a mano). Uno stile "ricorda" tutto quello che gli è stato applicato anche una sola volta (compresa un'evidenziazione impostata per sbaglio su un singolo paragrafo) e lo ripropone silenziosamente ovunque venga riusato.
+
+**Regola per chi scrive il testo**: i titoli veri (quelli che devono comparire come tali, es. "2.4 Il caso inglese") vanno marcati con lo stile Titolo; qualunque altro paragrafo — anche se deve *sembrare* un titolo, un'etichetta, una frase in evidenza — va lasciato **testo normale** con grassetto/dimensione applicati a mano. Prima di esportare il file, controllare il pannello "Struttura del documento" di Google Docs (Strumenti → Struttura documento): se compaiono lì frasi intere che non sono davvero titoli, è il sintomo di questo problema — vanno "declassate" a testo normale prima dell'esportazione.
+
+Le altre magagne strutturali (ID di bookmark duplicati, attributi di pagina mancanti, interruzioni di pagina manuali mal posizionate) sono invisibili e non controllabili dall'editor — sono artefatti dell'esportazione .docx di Google Docs che si ripresentano a ogni capitolo. Non serve prevenirli lato autore: gli script in `strumenti/` li correggono automaticamente ad ogni esecuzione (sezione 0/1b di `assembla_capitolo.py`).
+
+## 10. Come richiamare il processo per un nuovo capitolo
+
+In una conversazione futura, per rifare tutto senza ripartire da zero:
+
+1. Caricare il nuovo `.docx` del capitolo e la mappa dei segnaposto
+2. Chiedere a Claude di seguire `ISTRUZIONI_ASSEMBLAGGIO.md` e gli script in `strumenti/` (repository `baldassarrefrancesco70/manuale`) — es. *"assembla il capitolo usando le regole e gli script già definiti nel repo manuale, cartella strumenti/"*
+3. Gli script vanno adattati (non riscritti) nei punti marcati `# --- MODIFICARE QUI`: percorsi file, mappa di inserimento, termini in grassetto, descrizioni per l'indice finale, nomi delle barre "Capitolo N"
+4. Tutto il resto — font, spaziatura, design dei box, gestione dei link, correzioni degli artefatti Google Docs, processo ePub — resta invariato: sono le regole fissate in questo file dopo diverse iterazioni, non vanno ridiscusse da capo
