@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chi poteva fermarlo?</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:900px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:64ch; margin:0; }
+
+  .progress{ display:flex; gap:6px; padding:22px 0 4px; flex-wrap:wrap; }
+  .progress button{ width:30px; height:30px; border-radius:50%; border:1.5px solid var(--rule); background:var(--paper-card);
+    font-family:var(--font-label); font-size:11.5px; color:var(--ink-soft); cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .progress button[disabled]{ cursor:not-allowed; opacity:.45; }
+  .progress button.is-current{ border-color:var(--ink); color:var(--ink); font-weight:700; box-shadow:var(--shadow); }
+  .progress button.is-done{ background:var(--auto-soft); border-color:var(--auto); color:var(--auto); }
+  .progress button.is-done.wrong{ background:var(--gap-soft); border-color:var(--gap); color:var(--gap); }
+
+  .stage{ margin-top:20px; background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:26px 28px 28px; }
+  .stage-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; border-bottom:1px solid var(--rule-soft); padding-bottom:12px; margin-bottom:18px; }
+  .stage-actor{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--accusa); font-weight:700; }
+  .stage-title{ font-size:20px; margin:4px 0 0; }
+  .stage-date{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); }
+  .stage-step{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); }
+
+  .context{ font-size:15.5px; line-height:1.6; margin:0 0 20px; }
+  .phase-label{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:10.5px; color:var(--misto); margin:0 0 10px; font-weight:600; }
+
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ text-align:left; background:var(--paper); border:1px solid var(--rule); padding:13px 16px; font-family:var(--font-body);
+    font-size:14.5px; line-height:1.5; color:var(--ink); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease; }
+  .opt:hover{ transform:translateY(-1px); box-shadow:var(--shadow); border-color:var(--ink-soft); }
+  .opt .lab{ font-family:var(--font-label); font-weight:700; margin-right:8px; color:var(--ink-soft); }
+
+  .reveal-head{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .badge{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11px; padding:4px 10px; border:1px solid var(--badge-c); color:var(--badge-c); background:var(--badge-s); }
+  .your-pred{ font-family:var(--font-label); font-size:12.5px; color:var(--ink-soft); font-style:italic; }
+  .fact{ font-size:15.5px; line-height:1.65; margin:0 0 16px; }
+  .fact strong{ color:var(--accusa); }
+  .alt{ background:var(--paper-deep); border-left:4px solid var(--auto); padding:12px 16px 14px; margin:0 0 22px; }
+  .alt .altlab{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:10.5px; color:var(--auto); font-weight:700; }
+  .alt p{ margin:6px 0 0; font-size:14.5px; line-height:1.55; }
+
+  .next-btn, .end-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:12px; padding:11px 20px;
+    background:var(--ink); color:var(--paper); border:none; cursor:pointer; }
+  .next-btn:hover, .end-btn:hover{ background:var(--ink-soft); }
+
+  .chain{ margin:18px 0 26px; }
+  .chain-item{ display:flex; gap:14px; align-items:flex-start; border-left:3px solid var(--accusa); padding:10px 0 14px 16px; margin-bottom:2px; }
+  .chain-item .cn{ font-family:var(--font-label); font-size:11px; font-weight:700; color:var(--ink-soft); width:18px; flex-shrink:0; padding-top:2px; }
+  .chain-item .cbody .cactor{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--accusa); font-weight:700; }
+  .chain-item .cbody .ctitle{ font-size:15px; margin:3px 0 4px; }
+  .chain-item .cbody .cres{ font-family:var(--font-label); font-size:11.5px; }
+  .chain-item .cbody .cres.ok{ color:var(--auto); } .chain-item .cbody .cres.no{ color:var(--gap); }
+
+  .closing{ border-top:1px solid var(--rule); margin-top:10px; padding-top:24px; }
+  .closing h2{ font-size:19px; font-weight:400; margin:0 0 6px; }
+  .closing p.q{ font-family:var(--font-label); font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; font-style:italic; }
+  textarea{ width:100%; min-height:120px; font-family:var(--font-body); font-size:14.5px; color:var(--ink); background:var(--paper);
+    border:1px solid var(--rule); padding:12px; resize:vertical; }
+  .closing-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .export-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:9px 16px;
+    background:transparent; color:var(--ink); border:1px solid var(--rule); cursor:pointer; }
+  .export-btn:hover{ border-color:var(--ink); }
+  .restart{ margin-top:30px; text-align:center; }
+  .restart button{ font-family:var(--font-label); font-size:11.5px; color:var(--ink-soft); background:none; border:none; text-decoration:underline; cursor:pointer; }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>Nessuna di queste scelte era obbligata.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · Chi poteva fermarlo?</p>
+    <h1>Chi poteva fermarlo?</h1>
+    <p class="dek">Sette momenti tra il 1921 e il 1925 in cui qualcuno aveva il potere di opporsi al fascismo e non lo fece. Per ciascuno, prima ipotizza che cosa scelse quell'attore — poi scopri quale alternativa reale aveva davanti.</p>
+  </header>
+
+  <nav class="progress" id="progress" aria-label="Avanzamento nei sette bivi"></nav>
+  <div id="stageArea"></div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Nota quante volte l'alternativa scartata era semplicemente «applicare la legge esistente».
+  </footer>
+</div>
+
+<script>
+(function(){
+  var STAGES = [
+    {
+      actor:"Giovanni Giolitti", date:"maggio 1921", title:"I fascisti nelle liste di governo",
+      context:"Giolitti, presidente del Consiglio, indice elezioni anticipate. Il movimento fascista è ancora elettoralmente irrilevante — nel 1919 non aveva eletto nemmeno un deputato — ma le sue squadre sono ormai una forza sul territorio. Giolitti deve decidere che cosa farne.",
+      options:[
+        { text:"Escluderli da ogni lista e usare la forza pubblica per sciogliere le squadre armate.", actual:false },
+        { text:"Includerli nei «Blocchi Nazionali», le liste appoggiate dal governo, per assorbirli nel sistema parlamentare e renderli innocui.", actual:true },
+        { text:"Costruire un fronte costituzionale con socialisti e popolari per isolarli.", actual:false }
+      ],
+      fact:"Giolitti li incluse nei Blocchi Nazionali. Il calcolo era che il movimento, una volta portato in Parlamento e reso corresponsabile del governo, si sarebbe normalizzato: <strong>«saranno come i fuochi d'artificio, faranno molto rumore e non lasceranno traccia»</strong>. Entrarono in Parlamento trentacinque deputati fascisti, con l'avallo del presidente del Consiglio — e con essi la legittimazione istituzionale di un movimento che fino a quel momento non ne aveva.",
+      alt:"Giolitti disponeva della maggioranza e degli strumenti di ordine pubblico per fare l'opposto: le squadre erano formazioni armate illegali, e nessuna legge nuova sarebbe servita per scioglierle."
+    },
+    {
+      actor:"Prefetti, polizia, magistratura, esercito", date:"1921–1922", title:"Lo squadrismo tollerato",
+      context:"Le squadre fasciste incendiano camere del lavoro, sedi di cooperative, redazioni di giornali socialisti; aggrediscono e uccidono amministratori locali eletti. Gli apparati dello Stato — prefetti, polizia, magistrati, ufficiali dell'esercito — sanno e vedono.",
+      options:[
+        { text:"Applicare la legge: sciogliere le squadre, sequestrare le armi, processare i responsabili delle violenze.", actual:false },
+        { text:"Tollerare o favorire, considerando le squadre un argine utile contro il «pericolo rosso».", actual:true },
+        { text:"Sciogliere per decreto tutte le formazioni armate, di destra e di sinistra, senza distinzione.", actual:false }
+      ],
+      fact:"La linea prevalente fu la tolleranza. Numerosi prefetti non intervennero, la polizia lasciò fare, la magistratura fu indulgente, alcuni comandi militari fornirono armi e mezzi. La violenza squadrista non fu <strong>nonostante</strong> lo Stato, ma in larga misura <strong>grazie all'inerzia dello Stato</strong>: una scelta ripetuta ogni giorno da centinaia di funzionari, ciascuno dei quali avrebbe potuto agire diversamente.",
+      alt:"Non serviva alcuna legge eccezionale: bastava applicare quelle vigenti sul porto d'armi, sull'associazione a delinquere e sull'ordine pubblico, come lo Stato faceva regolarmente contro gli scioperanti."
+    },
+    {
+      actor:"I governi Bonomi e Facta", date:"agosto 1921 – ottobre 1922", title:"Il patto di pacificazione e il vuoto che segue",
+      context:"Nell'agosto 1921 il governo Bonomi promuove un patto di pacificazione tra fascisti e socialisti. Mussolini lo firma, ma i capi squadristi delle province — i ras — si ribellano apertamente al loro stesso capo, che nel novembre lo ripudia. È il momento di maggiore debolezza interna del movimento.",
+      options:[
+        { text:"Approfittare della spaccatura per sciogliere le squadre mentre Mussolini è isolato e contestato dai suoi.", actual:false },
+        { text:"Affidarsi al patto e alla buona volontà delle parti, senza misure coercitive.", actual:true },
+        { text:"Convocare elezioni anticipate per misurare la reale forza elettorale del movimento.", actual:false }
+      ],
+      fact:"I governi Bonomi prima e Facta poi si affidarono al patto e alla trattativa. Quando il patto saltò, non ne seguì alcuna conseguenza. Nell'estate del 1922 le squadre occuparono militarmente intere città — Ravenna, Parma, Milano — e lo sciopero legalitario proclamato dai sindacati contro di esse fu stroncato dagli stessi fascisti, che si presentarono come <strong>i soli capaci di garantire l'ordine</strong> che lo Stato non garantiva.",
+      alt:"La rottura tra Mussolini e i ras fu il momento in cui il movimento era più fragile e diviso. Un governo deciso avrebbe potuto agire allora, contro un avversario che stava litigando con se stesso."
+    },
+    {
+      actor:"Vittorio Emanuele III", date:"28 ottobre 1922", title:"La firma che non arriva",
+      context:"Le colonne fasciste convergono su Roma. Il governo Facta approva il decreto di stato d'assedio, che affiderebbe all'esercito il compito di fermarle. I marciatori sono poche decine di migliaia, male armati e male organizzati; il presidio militare di Roma è sufficiente e i comandi assicurano che le truppe eseguirebbero gli ordini. Manca solo la firma del re.",
+      options:[
+        { text:"Firmare il decreto e far fermare le colonne dall'esercito.", actual:false },
+        { text:"Rifiutare la firma, per il timore di una guerra civile e per le pressioni degli ambienti favorevoli a Mussolini.", actual:true },
+        { text:"Prendere tempo, rinviando la decisione e aprendo una trattativa con Mussolini.", actual:false }
+      ],
+      fact:"Il re rifiutò di firmare. Sulle sue motivazioni gli storici discutono ancora — il timore di uno scontro armato, i dubbi sulla lealtà di parte dell'esercito, la pressione di ambienti militari, economici e di corte, il sospetto che il cugino duca d'Aosta potesse essergli sostituito. Ma il punto è che <strong>il potere di firmare era suo, e la scelta di non farlo fu sua</strong>. Il giorno dopo incaricò Mussolini di formare il governo: la minaccia armata non fu respinta, fu ratificata.",
+      alt:"Lo Statuto Albertino attribuiva al re il comando delle forze armate. Firmare non era un atto rivoluzionario, era l'esercizio ordinario di una prerogativa che aveva già usato altre volte contro scioperi e disordini."
+    },
+    {
+      actor:"Il Vaticano", date:"luglio 1923", title:"Sturzo lasciato solo",
+      context:"Don Luigi Sturzo, segretario del Partito Popolare Italiano, guida la linea di opposizione al governo Mussolini e all'imminente riforma elettorale. Il Partito Popolare è la seconda forza politica del Paese e la sola con un radicamento di massa ancora intatto. La Santa Sede, sotto Pio XI, valuta invece un'intesa col nuovo governo.",
+      options:[
+        { text:"Sostenere Sturzo e la linea di opposizione del PPI, riconoscendone l'autonomia politica.", actual:false },
+        { text:"Indurlo alle dimissioni, per non compromettere i rapporti con il governo e le prospettive di un accordo tra Stato e Chiesa.", actual:true },
+        { text:"Restare formalmente neutrale, lasciando che sia il partito a decidere la propria linea.", actual:false }
+      ],
+      fact:"Sturzo si dimise da segretario nel luglio 1923, sotto la pressione vaticana, e nel 1924 lasciò l'Italia per un esilio che sarebbe durato oltre vent'anni. Privato del suo fondatore e del sostegno ecclesiastico, <strong>il Partito Popolare si disgregò</strong>: la principale forza organizzata capace di contendere al fascismo il consenso di massa cattolico uscì di scena senza essere sconfitta elettoralmente. La strada verso i Patti Lateranensi del 1929 passa anche di qui.",
+      alt:"Il PPI era un partito autonomo, non un'organizzazione ecclesiastica. La gerarchia poteva scegliere di non intervenire nella sua vita interna, come formalmente avrebbe dovuto."
+    },
+    {
+      actor:"Le opposizioni parlamentari", date:"giugno 1924", title:"L'Aventino",
+      context:"Il 10 giugno 1924 il deputato socialista Giacomo Matteotti, che aveva denunciato in Parlamento le violenze e i brogli delle elezioni, viene rapito e ucciso. L'indignazione nel Paese è enorme e il governo vacilla come mai prima. I deputati dell'opposizione devono decidere come reagire.",
+      options:[
+        { text:"Restare in aula e usare ogni seduta come tribuna per attaccare quotidianamente il governo.", actual:false },
+        { text:"Abbandonare l'aula in segno di protesta morale, contando che il re prenda atto e intervenga.", actual:true },
+        { text:"Chiamare il Paese alla mobilitazione di massa e allo sciopero generale.", actual:false }
+      ],
+      fact:"Le opposizioni scelsero la secessione dell'Aventino: uscirono dall'aula in attesa che l'autorità morale del gesto costringesse il re a intervenire. <strong>Il re non intervenne mai</strong>, e il Parlamento restò a Mussolini senza contraddittorio. Nel novembre 1926 i deputati aventiniani sarebbero stati dichiarati decaduti dal mandato: avevano lasciato un'aula in cui non sarebbero più potuti rientrare.",
+      alt:"La scelta scommetteva tutto su un attore esterno — il re — invece che sulle proprie forze. Restare in aula, o chiamare il Paese alla mobilitazione nel momento di massima indignazione popolare, erano entrambe strade praticabili in quelle settimane."
+    },
+    {
+      actor:"Vittorio Emanuele III", date:"estate 1924 – 3 gennaio 1925", title:"La seconda occasione",
+      context:"Nei mesi successivi al delitto Matteotti, il coinvolgimento di ambienti vicinissimi a Mussolini emerge con sempre maggiore chiarezza. Le opposizioni si rivolgono direttamente al re chiedendogli di revocare l'incarico al presidente del Consiglio. Lo Statuto Albertino attribuisce al sovrano il potere di nominare e revocare i ministri.",
+      options:[
+        { text:"Revocare l'incarico a Mussolini, esercitando la prerogativa prevista dallo Statuto.", actual:false },
+        { text:"Non intervenire, sostenendo che la questione riguarda il Parlamento e non la Corona.", actual:true },
+        { text:"Sciogliere le camere e indire nuove elezioni per far decidere il Paese.", actual:false }
+      ],
+      fact:"Il re non intervenne, per la seconda volta in poco più di due anni. Il 3 gennaio 1925 Mussolini si presentò alla Camera assumendosi la <strong>responsabilità politica, morale e storica</strong> di quanto accaduto, e sfidando gli avversari a metterlo in stato d'accusa. Nessuno lo fece. Da quel discorso comincia la costruzione della dittatura vera e propria, che le leggi «fascistissime» del 1925-26 avrebbero completato.",
+      alt:"L'articolo 65 dello Statuto attribuiva al re il potere di nominare e revocare i ministri. Non serviva una rivoluzione: serviva usare una prerogativa scritta nella carta costituzionale che il re aveva giurato di rispettare."
+    }
+  ];
+
+  var current = 0;
+  var answers = new Array(STAGES.length).fill(null);
+  var phase = 1;
+  var maxReached = 0;
+
+  var progressEl = document.getElementById('progress');
+  var stageArea = document.getElementById('stageArea');
+
+  function renderProgress(){
+    progressEl.innerHTML = '';
+    for(var i=0;i<STAGES.length;i++){
+      var b = document.createElement('button');
+      b.textContent = i+1; b.type='button';
+      var done = answers[i] !== null;
+      if(i === current) b.classList.add('is-current');
+      if(done){ b.classList.add('is-done'); if(!answers[i].correct) b.classList.add('wrong'); }
+      if(i > maxReached) b.disabled = true;
+      b.addEventListener('click', function(idx){ return function(){
+        if(idx <= maxReached){ current = idx; phase = answers[idx] ? 2 : 1; renderAll(); }
+      };}(i));
+      progressEl.appendChild(b);
+    }
+    var s = document.createElement('button');
+    s.textContent = '✓'; s.type='button'; s.title='La catena completa';
+    if(current === STAGES.length) s.classList.add('is-current');
+    if(maxReached < STAGES.length) s.disabled = true;
+    s.addEventListener('click', function(){ if(maxReached>=STAGES.length){ current = STAGES.length; renderAll(); } });
+    progressEl.appendChild(s);
+  }
+
+  function renderStage(){
+    var n = STAGES[current];
+    var html = '<div class="stage">';
+    html += '<div class="stage-head"><div><div class="stage-actor">'+n.actor+'</div><h2 class="stage-title">'+n.title+'</h2><div class="stage-date">'+n.date+'</div></div><div class="stage-step">Bivio '+(current+1)+' di '+STAGES.length+'</div></div>';
+    html += '<p class="context">'+n.context+'</p>';
+
+    if(phase === 1){
+      html += '<p class="phase-label">Fase 1 — Che cosa scelse?</p><div class="options">';
+      var labels = ['A','B','C'];
+      n.options.forEach(function(o, idx){
+        html += '<button class="opt" data-idx="'+idx+'" type="button"><span class="lab">'+labels[idx]+'</span>'+o.text+'</button>';
+      });
+      html += '</div>';
+    } else {
+      var chosen = answers[current];
+      var correct = chosen.correct;
+      html += '<div class="reveal-head">';
+      html += '<span class="badge" style="--badge-c:'+(correct?'var(--auto)':'var(--gap)')+';--badge-s:'+(correct?'var(--auto-soft)':'var(--gap-soft)')+'">'+(correct?'Previsione corretta':'Previsione diversa dal fatto')+'</span>';
+      html += '<span class="your-pred">La tua ipotesi: '+n.options[chosen.choiceIdx].text+'</span></div>';
+      html += '<p class="phase-label">Fase 2 — Che cosa fece davvero</p>';
+      html += '<p class="fact">'+n.fact+'</p>';
+      html += '<div class="alt"><div class="altlab">L\'alternativa reale che aveva</div><p>'+n.alt+'</p></div>';
+      if(current < STAGES.length - 1){
+        html += '<button class="next-btn" id="nextBtn" type="button">Bivio successivo →</button>';
+      } else {
+        html += '<button class="end-btn" id="endBtn" type="button">Vedi la catena completa →</button>';
+      }
+    }
+    html += '</div>';
+    stageArea.innerHTML = html;
+
+    if(phase === 1){
+      stageArea.querySelectorAll('.opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var idx = parseInt(btn.getAttribute('data-idx'),10);
+          answers[current] = { choiceIdx: idx, correct: STAGES[current].options[idx].actual === true };
+          phase = 2; renderAll();
+        });
+      });
+    } else {
+      var nb = document.getElementById('nextBtn');
+      if(nb) nb.addEventListener('click', function(){
+        current++; phase = answers[current] ? 2 : 1;
+        if(current > maxReached) maxReached = current;
+        renderAll();
+      });
+      var eb = document.getElementById('endBtn');
+      if(eb) eb.addEventListener('click', function(){ current = STAGES.length; maxReached = STAGES.length; renderAll(); });
+    }
+  }
+
+  function renderSummary(){
+    var html = '<div class="stage">';
+    html += '<div class="stage-head"><div><div class="stage-actor">La catena</div><h2 class="stage-title">Sette scelte, nessuna obbligata</h2></div></div>';
+    html += '<div class="chain">';
+    STAGES.forEach(function(n, i){
+      var a = answers[i];
+      html += '<div class="chain-item"><span class="cn">'+(i+1)+'</span><div class="cbody">';
+      html += '<div class="cactor">'+n.actor+' · '+n.date+'</div>';
+      html += '<div class="ctitle">'+n.title+'</div>';
+      html += '<div class="cres '+(a.correct?'ok':'no')+'">'+(a.correct?'✓ Avevi previsto questa scelta':'✕ Avevi previsto una scelta diversa')+'</div>';
+      html += '</div></div>';
+    });
+    html += '</div>';
+
+    html += '<div class="closing">';
+    html += '<h2>Una domanda, non una verifica</h2>';
+    html += '<p class="q">Quale di questi bivi, deciso diversamente, avrebbe cambiato di più il corso degli eventi? Puoi indicarne uno solo?</p>';
+    html += '<textarea id="answerBox" placeholder="La tua risposta..."></textarea>';
+    html += '<div class="closing-actions">';
+    html += '<button class="export-btn" id="downloadBtn" type="button">Scarica la risposta (.txt)</button>';
+    html += '<button class="export-btn" id="copyBtn" type="button">Copia negli appunti</button>';
+    html += '</div></div>';
+    html += '<div class="restart"><button id="restartBtn" type="button">↺ Ricomincia da capo</button></div>';
+    html += '</div>';
+    stageArea.innerHTML = html;
+
+    document.getElementById('downloadBtn').addEventListener('click', function(){
+      var txt = document.getElementById('answerBox').value || '(nessuna risposta scritta)';
+      var blob = new Blob(["Chi poteva fermarlo? — risposta finale\n\n" + txt], {type:'text/plain'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url; a.download = 'chi-poteva-fermarlo-risposta.txt';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    });
+    document.getElementById('copyBtn').addEventListener('click', function(){
+      var txt = document.getElementById('answerBox').value || '';
+      navigator.clipboard && navigator.clipboard.writeText(txt);
+    });
+    document.getElementById('restartBtn').addEventListener('click', function(){
+      current = 0; phase = 1; maxReached = 0; answers = new Array(STAGES.length).fill(null);
+      renderAll();
+    });
+  }
+
+  function renderAll(){
+    renderProgress();
+    if(current < STAGES.length) renderStage(); else renderSummary();
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>

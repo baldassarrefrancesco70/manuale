@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Costituzione risponde</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1040px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:66ch; margin:0; }
+
+  .caution{ margin-top:20px; border:1px dashed var(--rule); padding:14px 18px 16px; }
+  .caution .tag{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:10px; color:var(--ink-soft); font-weight:700; }
+  .caution p{ margin:6px 0 0; font-size:14px; line-height:1.55; color:var(--ink-soft); }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:22px; font-family:var(--font-label); font-size:11.5px; color:var(--ink-soft); }
+  .legend b{ color:var(--ink); }
+
+  .matrix-wrap{ overflow-x:auto; margin-top:14px; }
+  table{ width:100%; min-width:760px; border-collapse:collapse; background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); }
+  thead th{ font-family:var(--font-label); font-size:16px; font-weight:700; text-align:center; padding:12px 8px;
+    border-bottom:1.5px solid var(--rule); border-left:1px solid var(--rule-soft); background:var(--paper-deep); }
+  thead th:first-child{ border-left:none; text-align:left; padding-left:14px; }
+  thead th.colhead{ font-size:12px; }
+  tbody th{ font-family:var(--font-body); font-size:14px; line-height:1.35; text-align:left; padding:10px 14px; border-bottom:1px solid var(--rule-soft);
+    background:var(--paper-card); vertical-align:middle; max-width:210px; }
+  tbody td{ border-bottom:1px solid var(--rule-soft); border-left:1px solid var(--rule-soft); text-align:center; padding:0; }
+  .cell{ width:100%; height:52px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:none; border:none; padding:0; }
+  .cell .dot{ width:16px; height:16px; border-radius:50%; border:1.5px solid var(--rule); background:var(--paper); }
+  .cell.on .dot{ background:var(--ink-soft); border-color:var(--ink-soft); }
+  .cell.primary .dot{ background:var(--auto); border-color:var(--auto); box-shadow:0 0 0 3px var(--auto-soft); }
+  .cell.secondary .dot{ background:var(--paper); border:2px dashed var(--misto); }
+  .cell.primary.on .dot, .cell.secondary.on .dot{ box-shadow:0 0 0 3px var(--ink); }
+
+  .actions{ display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; align-items:center; }
+  .go{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:12px; padding:11px 20px;
+    background:var(--ink); color:var(--paper); border:none; cursor:pointer; }
+  .go:hover{ background:var(--ink-soft); }
+  .reset{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:12px; padding:11px 20px;
+    background:transparent; border:1px solid var(--rule); color:var(--ink); cursor:pointer; }
+
+  .explain{ display:none; margin-top:22px; }
+  .explain.on{ display:block; }
+  .exp-item{ background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--auto); padding:16px 20px 18px; margin-bottom:12px; }
+  .exp-item .row-name{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); }
+  .exp-item h3{ font-size:16.5px; font-weight:400; margin:6px 0 10px; }
+  .exp-item p{ margin:0 0 6px; font-size:14.8px; line-height:1.58; }
+  .exp-item p strong{ color:var(--auto); }
+  .exp-item p.sec strong{ color:var(--misto); }
+  .exp-item p:last-child{ margin-bottom:0; }
+
+  .closing{ display:none; border-top:1px solid var(--rule); margin-top:30px; padding-top:24px; }
+  .closing.on{ display:block; }
+  .closing h2{ font-size:19px; font-weight:400; margin:0 0 6px; }
+  .closing p.q{ font-family:var(--font-label); font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; font-style:italic; }
+  textarea{ width:100%; min-height:120px; font-family:var(--font-body); font-size:14.5px; color:var(--ink); background:var(--paper-card);
+    border:1px solid var(--rule); padding:12px; resize:vertical; }
+  .closing-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .export-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:9px 16px;
+    background:transparent; color:var(--ink); border:1px solid var(--rule); cursor:pointer; }
+  .export-btn:hover{ border-color:var(--ink); }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>Ogni scelta dei costituenti ha un referente concreto.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · La Costituzione risponde</p>
+    <h1>La Costituzione risponde</h1>
+    <p class="dek">Sei pratiche del regime appena caduto, sei soluzioni scelte dai costituenti. Clicca le caselle per collegare ogni pratica alle soluzioni che, secondo te, le rispondono — puoi collegarne più di una per riga.</p>
+  </header>
+
+  <div class="caution">
+    <div class="tag">Prima di cominciare</div>
+    <p>Alcune norme rispondono a più problemi insieme: non esiste un unico collegamento «giusto» per ogni riga. Alla fine vedrai quali collegamenti la storiografia riconosce come principali e quali come secondari — non un punteggio.</p>
+  </div>
+
+  <div class="legend"><b>A</b> Costituzione rigida &nbsp; <b>B</b> Art. 49, libertà dei partiti &nbsp; <b>C</b> Magistratura indipendente &nbsp; <b>D</b> Corte costituzionale &nbsp; <b>E</b> Presidente eletto dal Parlamento &nbsp; <b>F</b> Sistema elettorale proporzionale</div>
+
+  <div class="matrix-wrap">
+    <table>
+      <thead>
+        <tr><th>Pratica del regime</th><th class="colhead">A</th><th class="colhead">B</th><th class="colhead">C</th><th class="colhead">D</th><th class="colhead">E</th><th class="colhead">F</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="actions">
+    <button class="go" id="revealBtn" type="button">Confronta con le risposte storiche</button>
+    <button class="reset" id="resetBtn" type="button">↺ Ricomincia</button>
+  </div>
+
+  <div class="explain" id="explain"></div>
+
+  <div class="closing" id="closing">
+    <h2>Una domanda, non una verifica</h2>
+    <p class="q">Quale di queste risposte ti sembra oggi la più efficace? E ce n'è una che, come mostra il capitolo, ha avuto anche effetti indesiderati?</p>
+    <textarea id="answerBox" placeholder="La tua risposta..."></textarea>
+    <div class="closing-actions">
+      <button class="export-btn" id="downloadBtn" type="button">Scarica la risposta (.txt)</button>
+      <button class="export-btn" id="copyBtn" type="button">Copia negli appunti</button>
+    </div>
+  </div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Trova la riga in cui la soluzione scelta dai costituenti ha protetto un valore, ma ne ha indebolito un altro.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var COLS = ['A','B','C','D','E','F'];
+  var ROWS = [
+    { id:'r1', label:'Accentramento del potere esecutivo nel Capo del Governo (legge 2263/1925): risponde solo al re, non più al Parlamento.',
+      primary:['E'], secondary:['A'],
+      text:'Il presidente della Repubblica è eletto dal Parlamento in seduta comune, non dal popolo direttamente, e ha poteri di garanzia più che di governo attivo: si volle evitare la concentrazione di legittimità personale che aveva reso possibile la deriva del 1925. La <strong>rigidità costituzionale</strong> aggiunge una protezione ulteriore, rendendo impossibile ripetere quell\'accentramento con una legge ordinaria.' },
+    { id:'r2', label:'Soppressione dei partiti diversi da quello di regime (leggi del 1926).',
+      primary:['B'], secondary:['A'],
+      text:'L\'<strong>articolo 49</strong> riconosce esplicitamente il diritto dei cittadini di associarsi liberamente in partiti per concorrere, con metodo democratico, a determinare la politica nazionale: è la risposta più diretta a una soppressione che aveva lasciato in piedi un solo partito legale. Anche qui la rigidità della Costituzione aggiunge una garanzia di lungo periodo.' },
+    { id:'r3', label:'Tribunale Speciale per la Difesa dello Stato: giudici militari, nessun appello, competenza sui reati politici.',
+      primary:['C'], secondary:[],
+      text:'La <strong>magistratura indipendente e autonoma</strong>, sottratta al controllo dell\'esecutivo e retta da un proprio organo di autogoverno, risponde direttamente all\'esperienza di una giustizia politica affidata a giudici non indipendenti e priva di garanzie processuali.' },
+    { id:'r4', label:'Statuto Albertino, flessibile, mai formalmente abrogato ma svuotato per via di leggi ordinarie.',
+      primary:['A'], secondary:['D'],
+      text:'La scelta di una <strong>Costituzione rigida</strong>, modificabile solo con una procedura aggravata (art. 138), risponde punto per punto all\'esperienza di uno Statuto flessibile che poté essere svuotato con leggi ordinarie senza mai essere toccato nel testo. La <strong>Corte costituzionale</strong> aggiunge un controllo permanente: nessuna legge ordinaria in contrasto con la Costituzione può restare in vigore inosservata.' },
+    { id:'r5', label:'Legge Acerbo (1923): premio di maggioranza che trasforma una minoranza relativa in maggioranza assoluta dei seggi.',
+      primary:['F'], secondary:[],
+      text:'L\'Assemblea Costituente scelse un <strong>sistema elettorale proporzionale</strong>, che rappresenta i partiti in proporzione ai voti ricevuti senza premi che ne alterino artificialmente il peso: una risposta diretta a un meccanismo che aveva permesso a una lista di ottenere il controllo pieno del Parlamento con un consenso reale ben minore.' },
+    { id:'r6', label:'Nessun organo poteva dichiarare una legge del regime contraria ai principi costituzionali: lo Statuto non lo prevedeva.',
+      primary:['D'], secondary:['C'],
+      text:'La <strong>Corte costituzionale</strong>, che nell\'ordinamento repubblicano può annullare le leggi in contrasto con la Costituzione, è la risposta più diretta all\'assenza di qualunque controllo di legittimità nel sistema statutario. Anche l\'indipendenza della magistratura ordinaria, chiamata ad applicare le leggi senza subordinazione al potere politico, contribuisce a questa stessa garanzia.' }
+  ];
+
+  var state = {};
+  ROWS.forEach(function(r){ state[r.id] = {}; COLS.forEach(function(c){ state[r.id][c] = false; }); });
+  var revealed = false;
+
+  var tbody = document.getElementById('tbody');
+  var explain = document.getElementById('explain');
+  var closing = document.getElementById('closing');
+
+  function render(){
+    tbody.innerHTML = '';
+    ROWS.forEach(function(r){
+      var tr = document.createElement('tr');
+      var th = document.createElement('th');
+      th.textContent = r.label;
+      tr.appendChild(th);
+      COLS.forEach(function(c){
+        var td = document.createElement('td');
+        var btn = document.createElement('button');
+        btn.className = 'cell' + (state[r.id][c] ? ' on' : '');
+        if(revealed){
+          if(r.primary.indexOf(c) > -1) btn.classList.add('primary');
+          else if(r.secondary.indexOf(c) > -1) btn.classList.add('secondary');
+        }
+        btn.innerHTML = '<span class="dot"></span>';
+        btn.type = 'button';
+        btn.setAttribute('aria-label', r.label + ' — collegamento con ' + c);
+        btn.addEventListener('click', function(){
+          if(revealed) return;
+          state[r.id][c] = !state[r.id][c];
+          render();
+        });
+        td.appendChild(btn);
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('revealBtn').addEventListener('click', function(){
+    revealed = true;
+    var html = '';
+    ROWS.forEach(function(r, i){
+      html += '<div class="exp-item"><div class="row-name">Riga '+(i+1)+'</div><h3>'+r.label+'</h3>';
+      html += '<p><strong>Collegamento principale: '+r.primary.join(', ')+'.</strong> '+r.text.split('. ').slice(0,1).join('.')+'.</p>';
+      html += '<p style="font-size:14px">'+r.text+'</p>';
+      html += '</div>';
+    });
+    explain.innerHTML = html;
+    explain.classList.add('on');
+    closing.classList.add('on');
+    render();
+    explain.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    revealed = false;
+    ROWS.forEach(function(r){ COLS.forEach(function(c){ state[r.id][c] = false; }); });
+    explain.classList.remove('on');
+    closing.classList.remove('on');
+    document.getElementById('answerBox').value = '';
+    render();
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '(nessuna risposta scritta)';
+    var blob = new Blob(["La Costituzione risponde — risposta finale\n\n" + txt], {type:'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'la-costituzione-risponde-risposta.txt';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  });
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '';
+    navigator.clipboard && navigator.clipboard.writeText(txt);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

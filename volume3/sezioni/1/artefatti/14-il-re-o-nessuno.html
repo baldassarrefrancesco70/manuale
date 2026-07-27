@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il re o nessuno</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1020px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:66ch; margin:0; }
+
+  .instructions{ font-family:var(--font-label); font-size:12.5px; color:var(--ink-soft); margin:22px 0 0; text-align:center; font-style:italic; }
+
+  .cols{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
+  @media (max-width:760px){ .cols{ grid-template-columns:1fr; } }
+  .chart{ background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:20px 20px 22px; border-top:4px solid var(--c-c); }
+  .chart-name{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.12em; font-size:11px; font-weight:700; color:var(--c-c); text-align:center; margin-bottom:16px; }
+
+  .node{ border:1.5px solid var(--rule); background:var(--paper); padding:10px 12px; text-align:center; cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease; position:relative; }
+  .node:hover{ transform:translateY(-2px); box-shadow:var(--shadow); }
+  .node.selected{ outline:2px solid var(--ink); outline-offset:2px; }
+  .node .nrole{ font-family:var(--font-label); font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); }
+  .node .nname{ font-size:14.5px; margin-top:3px; line-height:1.25; }
+  .node .nverdict{ font-family:var(--font-label); font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; margin-top:5px; font-weight:700; color:var(--nv); }
+  .node.top{ border-width:3px; }
+  .node.capo{ background:var(--misto-soft); border-color:var(--misto); }
+  .node.void{ border-style:dashed; background:transparent; color:var(--ink-soft); cursor:default; }
+  .node.void:hover{ transform:none; box-shadow:none; }
+  .node.void .nname{ font-style:italic; }
+  .node.can{ background:var(--auto-soft); border-color:var(--auto); }
+  .node.blocked{ background:var(--accusa-soft); border-color:var(--accusa); }
+
+  .connector{ width:1.5px; height:16px; background:var(--rule); margin:0 auto; }
+  .connector.dashed{ background:none; border-left:1.5px dashed var(--rule); width:0; }
+  .lateral{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+
+  .try-btn{ display:block; width:100%; margin-top:16px; font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em;
+    font-size:11.5px; padding:11px 14px; background:var(--ink); color:var(--paper); border:none; cursor:pointer; }
+  .try-btn:hover{ background:var(--ink-soft); }
+  .try-btn.done{ background:transparent; color:var(--ink); border:1px solid var(--rule); }
+
+  .outcome{ margin-top:14px; border-top:1px dashed var(--rule-soft); padding-top:14px; display:none; }
+  .outcome.on{ display:block; }
+  .outcome .olab{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:10px; font-weight:700; color:var(--o-c); }
+  .outcome p{ margin:6px 0 0; font-size:14.2px; line-height:1.55; }
+  .outcome p strong{ color:var(--o-c); }
+
+  .detail{ margin-top:20px; background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--d-c); padding:20px 24px 22px; }
+  .detail .dtag{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:10.5px; font-weight:700; color:var(--d-c); }
+  .detail h2{ font-size:18px; font-weight:400; margin:8px 0 10px; }
+  .detail p{ margin:0; font-size:15px; line-height:1.6; }
+  .detail p strong{ color:var(--d-c); }
+
+  .bridge{ margin-top:20px; background:var(--paper-card); border:1px solid var(--rule); border-left:5px solid var(--misto); padding:20px 24px 22px; }
+  .bridge .tag{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:10.5px; color:var(--misto); font-weight:700; }
+  .bridge p.q{ font-family:var(--font-label); font-size:14px; color:var(--ink); margin:10px 0 14px; font-style:italic; }
+  textarea{ width:100%; min-height:110px; font-family:var(--font-body); font-size:14.5px; color:var(--ink); background:var(--paper);
+    border:1px solid var(--rule); padding:12px; resize:vertical; }
+  .closing-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .export-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:9px 16px;
+    background:transparent; color:var(--ink); border:1px solid var(--rule); cursor:pointer; }
+  .export-btn:hover{ border-color:var(--ink); }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>In Italia sopra il capo c'era ancora il re. In Germania, nessuno.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · Il re o nessuno</p>
+    <h1>Il re o nessuno</h1>
+    <p class="dek">Due organigrammi del vertice del potere. Prova a rimuovere il capo in ciascuno dei due sistemi: clicca sugli organi per scoprire quali avevano il potere di farlo e quali no. Da questa sola differenza dipendono due esiti opposti, il 1943 e il 1945.</p>
+  </header>
+
+  <p class="instructions">Clicca un organo per esaminarlo, poi premi «Prova a rimuovere il capo».</p>
+
+  <div class="cols">
+    <!-- ITALIA -->
+    <div class="chart" style="--c-c:var(--misto)">
+      <div class="chart-name">Italia · 1943</div>
+      <div id="itNodes"></div>
+      <button class="try-btn" id="itTry" type="button">Prova a rimuovere il capo</button>
+      <div class="outcome" id="itOut" style="--o-c:var(--auto)"></div>
+    </div>
+
+    <!-- GERMANIA -->
+    <div class="chart" style="--c-c:var(--gap)">
+      <div class="chart-name">Germania · 1944</div>
+      <div id="deNodes"></div>
+      <button class="try-btn" id="deTry" type="button">Prova a rimuovere il capo</button>
+      <div class="outcome" id="deOut" style="--o-c:var(--accusa)"></div>
+    </div>
+  </div>
+
+  <div class="detail" id="detail" style="--d-c:var(--ink-soft)">
+    <div class="dtag">Come si legge questo artefatto</div>
+    <h2>Due schemi apparentemente simili</h2>
+    <p>Entrambi gli organigrammi mostrano un capo al vertice, un partito unico, forze armate e un'assemblea. Clicca su ciascun organo per scoprire se avesse, o non avesse, il potere di rimuovere il capo — e perché.</p>
+  </div>
+
+  <div class="bridge">
+    <div class="tag">Un ponte all'indietro</div>
+    <p class="q">Questa differenza non nasce nel 1943. Dove l'avevi già incontrata, leggendo come i due regimi erano arrivati al potere?</p>
+    <textarea id="answerBox" placeholder="La tua risposta..."></textarea>
+    <div class="closing-actions">
+      <button class="export-btn" id="downloadBtn" type="button">Scarica la risposta (.txt)</button>
+      <button class="export-btn" id="copyBtn" type="button">Copia negli appunti</button>
+    </div>
+  </div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Conta gli organi verdi nei due schemi. La differenza è tutta lì.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var IT = [
+    { id:'it0', role:'Capo dello Stato', name:'La Corona — Vittorio Emanuele III', cls:'top can', can:true,
+      dtag:'Poteva rimuovere il capo', dtitle:'Il re: una prerogativa mai abrogata',
+      text:'Nessuna legge fascista ha mai toccato l\'articolo 65 dello Statuto Albertino, che attribuisce al re la <strong>nomina e la revoca dei ministri</strong>. Il re è rimasto capo dello Stato per tutti i vent\'anni del regime, e le forze armate hanno prestato giuramento a lui, non a Mussolini. Sono poteri inutilizzati, ma <strong>giuridicamente intatti</strong>. Il 25 luglio 1943 il re convoca Mussolini, gli comunica la destituzione e lo fa arrestare all\'uscita.' },
+    { id:'it1', role:'Capo del Governo', name:'Benito Mussolini', cls:'capo', can:null,
+      dtag:'Il capo', dtitle:'Capo del Governo, non capo dello Stato',
+      text:'Mussolini è il Duce del fascismo e il Capo del Governo, ma <strong>la sua carica dipende da una nomina regia</strong>. Occupa il secondo gradino di una scala che ne ha uno più alto: è questa, e non la sua popolarità, la vulnerabilità strutturale del suo potere.' },
+    { id:'it2', role:'Organo supremo del partito', name:'Gran Consiglio del Fascismo', cls:'can', can:true,
+      dtag:'Poteva mettere in minoranza il capo', dtitle:'Un organo del regime che si rivolta',
+      text:'Il Gran Consiglio è l\'organo supremo del PNF, previsto dalle leggi del regime e non convocato per anni. Nella notte fra il 24 e il 25 luglio 1943 viene riunito e approva a maggioranza <strong>l\'ordine del giorno Grandi</strong>, che chiede al re di riassumere il comando effettivo delle forze armate. Non è un colpo di Stato: è un organo interno al fascismo che usa una procedura prevista dal fascismo stesso.' },
+    { id:'it3', role:'Forze armate', name:'Regio Esercito', cls:'', can:false,
+      dtag:'Non direttamente, ma decisivo', dtitle:'Il giuramento era al re',
+      text:'I militari italiani avevano giurato fedeltà <strong>al re</strong>, non al Duce né al partito. Non spettava a loro deporre il capo del governo, ma la loro lealtà alla Corona è ciò che rende <strong>eseguibile</strong> la decisione del 25 luglio: quando il re ordina l\'arresto di Mussolini, i carabinieri obbediscono senza esitazioni.' },
+    { id:'it4', role:'Assemblea legislativa', name:'Camera dei Fasci e delle Corporazioni', cls:'blocked', can:false,
+      dtag:'Non poteva', dtitle:'Un\'assemblea svuotata',
+      text:'Dalle leggi del 1925-26 in poi l\'assemblea non ha più alcun potere di far cadere il governo: il Capo del Governo risponde solo al re. Nel 1939 la Camera dei deputati è stata sostituita da un\'assemblea di designati. <strong>Da questa parte non passa nessuna strada.</strong>' }
+  ];
+
+  var DE = [
+    { id:'de0', role:'Sopra il Führer', name:'nessuno', cls:'top void', can:false, novoid:true,
+      dtag:'Non esiste', dtitle:'Il gradino che manca',
+      text:'È la casella decisiva, ed è vuota. Il 2 agosto 1934, alla morte di Hindenburg, Hitler ha <strong>unito in sé la cancelleria e la presidenza del Reich</strong>. Da quel momento non esiste alcuna carica al di sopra della sua, né alcuna autorità che possa nominarlo o revocarlo. Confronta questa casella vuota con la Corona nello schema italiano: è l\'intera differenza fra i due regimi.' },
+    { id:'de1', role:'Führer e Cancelliere del Reich', name:'Adolf Hitler', cls:'capo', can:null,
+      dtag:'Il capo', dtitle:'Capo dello Stato e capo del governo insieme',
+      text:'Hitler è contemporaneamente capo dello Stato, capo del governo, capo del partito e comandante supremo delle forze armate. Nel principio del <em>Führerprinzip</em> la sua volontà <strong>è</strong> la fonte della legittimità: non c\'è norma superiore alla quale appellarsi contro di lui, perché è lui la norma.' },
+    { id:'de2', role:'Partito unico', name:'NSDAP e apparato SS', cls:'blocked', can:false,
+      dtag:'Non poteva', dtitle:'Il partito deriva dal capo, non viceversa',
+      text:'A differenza del Gran Consiglio italiano, l\'NSDAP non ha alcun organo collegiale che possa mettere in minoranza il proprio capo: nel <em>Führerprinzip</em> l\'autorità scende dall\'alto e la gerarchia di partito trae legittimità <strong>dalla persona del Führer</strong>. Rimuoverlo significherebbe togliere il fondamento a se stessi.' },
+    { id:'de3', role:'Forze armate', name:'Wehrmacht', cls:'blocked', can:false,
+      dtag:'Non poteva, per giuramento', dtitle:'Un giuramento a una persona',
+      text:'Nell\'agosto 1934 la formula del giuramento militare viene riscritta: i soldati giurano <strong>obbedienza incondizionata alla persona di Adolf Hitler</strong>, non allo Stato né a una costituzione. Per molti ufficiali questo vincolo personale resterà un ostacolo di coscienza fino alla fine, e sarà uno dei motivi per cui la congiura del 1944 troverà così pochi aderenti.' },
+    { id:'de4', role:'Assemblea legislativa', name:'Reichstag', cls:'blocked', can:false,
+      dtag:'Non poteva', dtitle:'Un\'assemblea svuotata dal 1933',
+      text:'Dopo la legge dei pieni poteri del 23 marzo 1933 il Reichstag non legifera più e si riunisce solo per ratificare. <strong>Da questa parte non passa nessuna strada</strong> — esattamente come per la Camera dei Fasci in Italia. È l\'unico punto in cui i due schemi coincidono.' },
+    { id:'de5', role:'Fuori dalla legalità', name:'La congiura del 20 luglio 1944', cls:'blocked', can:false,
+      dtag:'L\'unica strada rimasta, e fallì', dtitle:'Quando non c\'è procedura, resta l\'attentato',
+      text:'Poiché nessun organo poteva rimuovere il capo, chi voleva fermarlo dovette <strong>uscire dalla legalità</strong>: il 20 luglio 1944 un gruppo di ufficiali guidato da Claus von Stauffenberg tenta di ucciderlo. L\'attentato fallisce ed è seguito da una repressione durissima contro i congiurati e le loro famiglie. Il regime finirà solo con il crollo militare del maggio 1945, imposto dall\'esterno.' }
+  ];
+
+  var itNodes = document.getElementById('itNodes');
+  var deNodes = document.getElementById('deNodes');
+  var detail = document.getElementById('detail');
+  var selected = null;
+  var itTried = false, deTried = false;
+
+  function buildNode(n){
+    var d = document.createElement('div');
+    d.className = 'node ' + n.cls + (selected === n.id ? ' selected' : '');
+    var vtxt = '', vcol = 'var(--ink-soft)';
+    if(n.can === true){ vtxt = '✓ può rimuovere il capo'; vcol = 'var(--auto)'; }
+    else if(n.can === false && !n.novoid){ vtxt = '✕ non può'; vcol = 'var(--accusa)'; }
+    else if(n.novoid){ vtxt = '— casella vuota'; vcol = 'var(--ink-soft)'; }
+    var html = '<div class="nrole">'+n.role+'</div><div class="nname">'+n.name+'</div>';
+    if(vtxt) html += '<div class="nverdict" style="--nv:'+vcol+'">'+vtxt+'</div>';
+    d.innerHTML = html;
+    if(!n.novoid || true){
+      d.addEventListener('click', function(){ selected = n.id; showDetail(n); renderNodes(); });
+    }
+    return d;
+  }
+
+  function connector(dashed){
+    var c = document.createElement('div');
+    c.className = 'connector' + (dashed ? ' dashed' : '');
+    return c;
+  }
+
+  function renderNodes(){
+    itNodes.innerHTML = ''; deNodes.innerHTML = '';
+    IT.forEach(function(n, i){
+      itNodes.appendChild(buildNode(n));
+      if(i < IT.length - 1) itNodes.appendChild(connector(false));
+    });
+    DE.forEach(function(n, i){
+      deNodes.appendChild(buildNode(n));
+      if(i < DE.length - 1) deNodes.appendChild(connector(i === DE.length - 2));
+    });
+  }
+
+  function showDetail(n){
+    var c = (n.can === true) ? 'var(--auto)' : (n.novoid ? 'var(--ink-soft)' : 'var(--accusa)');
+    detail.style.setProperty('--d-c', c);
+    detail.innerHTML = '<div class="dtag">'+n.dtag+'</div><h2>'+n.dtitle+'</h2><p>'+n.text+'</p>';
+    detail.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  document.getElementById('itTry').addEventListener('click', function(){
+    itTried = true;
+    var o = document.getElementById('itOut');
+    o.classList.add('on');
+    o.innerHTML = '<div class="olab">Percorso trovato</div>' +
+      '<p><strong>24–25 luglio 1943.</strong> Il Gran Consiglio del Fascismo approva l\'ordine del giorno Grandi e chiede al re di riassumere il comando. Il 25 luglio Vittorio Emanuele III convoca Mussolini a Villa Savoia, lo destituisce e lo fa arrestare; nomina Badoglio capo del governo. <strong>Il regime cade dall\'interno, due anni prima della fine della guerra</strong>, senza che nessuno debba uscire dalla legalità formale.</p>';
+    this.classList.add('done');
+    this.textContent = '✓ Percorso esistente';
+  });
+
+  document.getElementById('deTry').addEventListener('click', function(){
+    deTried = true;
+    var o = document.getElementById('deOut');
+    o.classList.add('on');
+    o.innerHTML = '<div class="olab">Nessun percorso</div>' +
+      '<p>Sopra il capo: <strong>nessuno</strong>. Il partito trae legittimità da lui. Le forze armate hanno giurato alla sua persona. Il Reichstag non ha più poteri dal 1933. <strong>Ogni strada istituzionale è bloccata.</strong> L\'unica rimasta è uscire dalla legalità: il 20 luglio 1944 la congiura di Stauffenberg tenta l\'attentato e fallisce. Il regime finirà solo con il crollo militare del maggio 1945, imposto dall\'esterno.</p>';
+    this.classList.add('done');
+    this.textContent = '✕ Nessun percorso disponibile';
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '(nessuna risposta scritta)';
+    var blob = new Blob(["Il re o nessuno — risposta finale\n\n" + txt], {type:'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'il-re-o-nessuno-risposta.txt';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  });
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '';
+    navigator.clipboard && navigator.clipboard.writeText(txt);
+  });
+
+  renderNodes();
+})();
+</script>
+</body>
+</html>

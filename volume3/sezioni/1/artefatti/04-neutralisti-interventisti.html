@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neutralisti o interventisti?</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:980px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:64ch; margin:0; }
+
+  .instructions{ font-family:var(--font-label); font-size:12.5px; color:var(--ink-soft); margin:20px 0 4px; }
+
+  .pool{ display:flex; flex-wrap:wrap; gap:10px; padding:14px 0 26px; min-height:40px; border-bottom:1px dashed var(--rule); }
+  .card{
+    background:var(--paper-card); border:1px solid var(--rule); border-top:3px solid var(--rule);
+    padding:10px 12px; width:200px; font-family:var(--font-body); font-size:13.5px; line-height:1.4;
+    cursor:pointer; box-shadow:var(--shadow); transition:transform .12s ease;
+  }
+  .card:hover{ transform:translateY(-2px); }
+  .card.selected{ outline:2px solid var(--ink); outline-offset:2px; }
+  .card .who{ display:block; font-family:var(--font-label); font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin-bottom:5px; }
+
+  .columns{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:20px; }
+  @media (max-width:640px){ .columns{ grid-template-columns:1fr; } }
+  .column{ background:var(--paper-deep); border:1px solid var(--rule); min-height:220px; padding:14px; }
+  .column-head{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:12px; color:var(--ink-soft); margin:0 0 12px; text-align:center; font-weight:700; }
+  .column .cards{ display:flex; flex-direction:column; gap:8px; }
+  .column .card{ width:100%; }
+
+  .subgroup-label{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:10.5px; color:var(--grp-c); margin:14px 0 6px; padding-top:8px; border-top:1px dashed var(--rule-soft); }
+  .subgroup-label:first-child{ border-top:none; margin-top:0; padding-top:0; }
+  .card.graded{ border-top-width:3px; border-top-color:var(--grp-c); }
+
+  .actions{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; align-items:center; }
+  .verify-btn, .reset-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:12px; padding:11px 20px; border:none; cursor:pointer; }
+  .verify-btn{ background:var(--ink); color:var(--paper); }
+  .verify-btn:hover{ background:var(--ink-soft); }
+  .verify-btn[disabled]{ opacity:.4; cursor:not-allowed; }
+  .reset-btn{ background:transparent; border:1px solid var(--rule); color:var(--ink); }
+  .status{ font-family:var(--font-label); font-size:12px; color:var(--ink-soft); }
+
+  .closing{ border-top:1px solid var(--rule); margin-top:32px; padding-top:24px; }
+  .closing h2{ font-size:19px; font-weight:400; margin:0 0 6px; }
+  .closing p.q{ font-family:var(--font-label); font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; font-style:italic; }
+  textarea{ width:100%; min-height:110px; font-family:var(--font-body); font-size:14.5px; color:var(--ink); background:var(--paper-card);
+    border:1px solid var(--rule); padding:12px; resize:vertical; display:none; }
+  .closing.revealed textarea{ display:block; }
+  .closing-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .export-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:9px 16px;
+    background:transparent; color:var(--ink); border:1px solid var(--rule); cursor:pointer; display:none; }
+  .closing.revealed .export-btn{ display:inline-block; }
+  .closing:not(.revealed) .q{ opacity:.4; }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>Due fronti, ma non due blocchi compatti.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · Neutralisti o interventisti? Classifica gli argomenti</p>
+    <h1>Neutralisti o interventisti?</h1>
+    <p class="dek">Dieci voci del dibattito italiano tra il 1914 e il 1915. Trascina — o tocca e poi scegli la colonna — ogni argomento in <strong>Neutralisti</strong> o <strong>Interventisti</strong>. Alla fine scoprirai anche le sottocorrenti nascoste dentro ciascuna colonna.</p>
+  </header>
+
+  <p class="instructions">Tocca una carta per selezionarla, poi tocca la colonna di destinazione. (Funziona anche trascinando, su desktop.)</p>
+
+  <div class="pool" id="pool"></div>
+
+  <div class="columns">
+    <div class="column" data-col="neutralisti"><div class="column-head">Neutralisti</div><div class="cards" id="colNeutralisti"></div></div>
+    <div class="column" data-col="interventisti"><div class="column-head">Interventisti</div><div class="cards" id="colInterventisti"></div></div>
+  </div>
+
+  <div class="actions">
+    <button class="verify-btn" id="verifyBtn" type="button" disabled>Verifica la classificazione</button>
+    <button class="reset-btn" id="resetBtn" type="button">↺ Ricomincia</button>
+    <span class="status" id="statusText">0 di 10 carte classificate</span>
+  </div>
+
+  <div class="closing" id="closing">
+    <h2>Una domanda, non un punteggio</h2>
+    <p class="q">Due argomenti che hai messo nella stessa colonna si contraddicono fra loro. Quali, e perché stavano comunque dalla stessa parte?</p>
+    <textarea id="answerBox" placeholder="La tua risposta... (si sblocca dopo la verifica)"></textarea>
+    <div class="closing-actions">
+      <button class="export-btn" id="downloadBtn" type="button">Scarica la risposta (.txt)</button>
+      <button class="export-btn" id="copyBtn" type="button">Copia negli appunti</button>
+    </div>
+  </div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Prova a immaginare un undicesimo argomento: in quale sottocorrente lo collocheresti?
+  </footer>
+</div>
+
+<script>
+(function(){
+  var CARDS = [
+    { id:1, who:"Giolitti", text:"Restando neutrali possiamo ottenere ugualmente vantaggi importanti, per via diplomatica, senza pagare il prezzo della guerra.", col:"neutralisti", grp:"Neutralismo giolittiano (moderato)" },
+    { id:2, who:"I socialisti (PSI)", text:"È una guerra voluta dai capitalisti e dagli imperialisti, pagata col sangue dei proletari: né aderire né sabotare, restare fuori.", col:"neutralisti", grp:"Neutralismo socialista (antimilitarista)" },
+    { id:3, who:"I cattolici", text:"La guerra è una tragedia da evitare per principio morale e religioso; la Chiesa si adopera per la pace, non per la vittoria di una parte.", col:"neutralisti", grp:"Neutralismo cattolico" },
+    { id:4, who:"Cesare Battisti", text:"Solo la guerra può completare l'unità nazionale, liberando Trento e Trieste ancora sotto il dominio austriaco.", col:"interventisti", grp:"Interventismo democratico-irredentista" },
+    { id:5, who:"I nazionalisti", text:"La guerra è l'occasione per affermare la potenza e il prestigio internazionale della nazione, come già fanno le altre grandi potenze.", col:"interventisti", grp:"Interventismo nazionalista-imperialista" },
+    { id:6, who:"Mussolini", text:"La guerra può essere l'occasione di una trasformazione rivoluzionaria della società, non un semplice affare tra governi.", col:"interventisti", grp:"Interventismo rivoluzionario di piazza" },
+    { id:7, who:"Salandra e Sonnino", text:"L'Italia deve muoversi seguendo esclusivamente il proprio interesse nazionale — il «sacro egoismo» — scegliendo lo schieramento più vantaggioso.", col:"interventisti", grp:"Interventismo nazionalista-imperialista" },
+    { id:8, who:"Gli industriali", text:"La produzione bellica offre commesse e profitti enormi alle industrie nazionali, in particolare a quelle metallurgiche e meccaniche.", col:"interventisti", grp:"Interventismo nazionalista-imperialista" },
+    { id:9, who:"D'Annunzio", text:"La guerra è occasione di grandezza eroica e di rigenerazione nazionale, da vivere e celebrare come un'esperienza esaltante.", col:"interventisti", grp:"Interventismo rivoluzionario di piazza" },
+    { id:10, who:"Marinetti", text:"La guerra è la sola igiene del mondo: distrugge il vecchio e apre la strada al nuovo, alla velocità, alla modernità.", col:"interventisti", grp:"Interventismo rivoluzionario di piazza" }
+  ];
+
+  var GRP_COLOR = {
+    "Neutralismo giolittiano (moderato)": "var(--auto)",
+    "Neutralismo socialista (antimilitarista)": "var(--accusa)",
+    "Neutralismo cattolico": "var(--misto)",
+    "Interventismo democratico-irredentista": "var(--auto)",
+    "Interventismo nazionalista-imperialista": "var(--accusa)",
+    "Interventismo rivoluzionario di piazza": "var(--misto)"
+  };
+
+  var placement = {}; // id -> "neutralisti" | "interventisti" | null (pool)
+  CARDS.forEach(function(c){ placement[c.id] = null; });
+  var selectedId = null;
+  var verified = false;
+
+  var pool = document.getElementById('pool');
+  var colN = document.getElementById('colNeutralisti');
+  var colI = document.getElementById('colInterventisti');
+  var verifyBtn = document.getElementById('verifyBtn');
+  var statusText = document.getElementById('statusText');
+  var closingEl = document.getElementById('closing');
+
+  function makeCardEl(c){
+    var el = document.createElement('div');
+    el.className = 'card';
+    el.setAttribute('draggable', 'true');
+    el.setAttribute('data-id', c.id);
+    el.innerHTML = '<span class="who">'+c.who+'</span>'+c.text;
+    if(verified){
+      el.classList.add('graded');
+      el.style.setProperty('--grp-c', GRP_COLOR[c.grp]);
+    }
+    if(selectedId === c.id) el.classList.add('selected');
+
+    el.addEventListener('click', function(){
+      if(verified) return;
+      selectedId = (selectedId === c.id) ? null : c.id;
+      render();
+    });
+    el.addEventListener('dragstart', function(ev){
+      if(verified){ ev.preventDefault(); return; }
+      ev.dataTransfer.setData('text/plain', String(c.id));
+    });
+    return el;
+  }
+
+  function render(){
+    pool.innerHTML = ''; colN.innerHTML = ''; colI.innerHTML = '';
+
+    if(verified){
+      ['neutralisti','interventisti'].forEach(function(colKey){
+        var target = colKey === 'neutralisti' ? colN : colI;
+        var groups = {};
+        CARDS.filter(function(c){ return c.grp && c.col === colKey; }).forEach(function(c){
+          if(!groups[c.grp]) groups[c.grp] = [];
+          groups[c.grp].push(c);
+        });
+        Object.keys(groups).forEach(function(g){
+          var lbl = document.createElement('div');
+          lbl.className = 'subgroup-label';
+          lbl.style.setProperty('--grp-c', GRP_COLOR[g]);
+          lbl.textContent = g;
+          target.appendChild(lbl);
+          groups[g].forEach(function(c){ target.appendChild(makeCardEl(c)); });
+        });
+      });
+    } else {
+      CARDS.forEach(function(c){
+        var el = makeCardEl(c);
+        if(placement[c.id] === null) pool.appendChild(el);
+        else if(placement[c.id] === 'neutralisti') colN.appendChild(el);
+        else colI.appendChild(el);
+      });
+    }
+
+    var placed = CARDS.filter(function(c){ return placement[c.id] !== null; }).length;
+    statusText.textContent = verified ? 'Classificazione svelata — guarda le sottocorrenti' : (placed + ' di ' + CARDS.length + ' carte classificate');
+    verifyBtn.disabled = verified || placed < CARDS.length;
+  }
+
+  [colN.parentElement, colI.parentElement, pool].forEach(function(zone){
+    var key = zone === pool ? null : zone.getAttribute('data-col');
+    zone.addEventListener('dragover', function(ev){ if(!verified) ev.preventDefault(); });
+    zone.addEventListener('drop', function(ev){
+      if(verified) return;
+      ev.preventDefault();
+      var id = parseInt(ev.dataTransfer.getData('text/plain'), 10);
+      if(id){ placement[id] = key; selectedId = null; render(); }
+    });
+    zone.addEventListener('click', function(ev){
+      if(verified || !key) return;
+      if(ev.target !== zone && ev.target.closest('.card')) return; // clicked a card, handled separately
+      if(selectedId !== null){ placement[selectedId] = key; selectedId = null; render(); }
+    });
+  });
+  // also allow clicking the column head area to drop the selected card
+  document.querySelectorAll('.column').forEach(function(col){
+    col.addEventListener('click', function(ev){
+      if(verified) return;
+      if(ev.target.closest('.card')) return;
+      var key = col.getAttribute('data-col');
+      if(selectedId !== null){ placement[selectedId] = key; selectedId = null; render(); }
+    });
+  });
+  pool.addEventListener('click', function(ev){
+    if(verified) return;
+    if(ev.target.closest('.card')) return;
+    if(selectedId !== null){ placement[selectedId] = null; selectedId = null; render(); }
+  });
+
+  verifyBtn.addEventListener('click', function(){
+    verified = true;
+    closingEl.classList.add('revealed');
+    render();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    CARDS.forEach(function(c){ placement[c.id] = null; });
+    selectedId = null; verified = false;
+    closingEl.classList.remove('revealed');
+    document.getElementById('answerBox').value = '';
+    render();
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '(nessuna risposta scritta)';
+    var blob = new Blob(["Neutralisti o interventisti — risposta finale\n\n" + txt], {type:'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'neutralisti-interventisti-risposta.txt';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  });
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '';
+    navigator.clipboard && navigator.clipboard.writeText(txt);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

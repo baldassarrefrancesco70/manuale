@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il gabinetto del 30 gennaio 1933</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:940px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:64ch; margin:0; }
+
+  .tally{ display:flex; gap:26px; flex-wrap:wrap; margin:24px 0 6px; font-family:var(--font-label); }
+  .tally div{ display:flex; align-items:baseline; gap:8px; }
+  .tally .num{ font-size:26px; font-weight:700; line-height:1; }
+  .tally .lab{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); }
+
+  .cabinet{ display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; margin-top:16px; }
+  .seat{ background:var(--paper-card); border:1px solid var(--rule); border-top:4px solid var(--rule); padding:11px 12px 12px; min-height:86px; }
+  .seat.nazi{ border-top-color:var(--accusa); background:var(--accusa-soft); }
+  .seat .role{ font-family:var(--font-label); font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); line-height:1.3; }
+  .seat .who{ font-size:14.5px; margin-top:5px; line-height:1.25; }
+  .seat .party{ font-family:var(--font-label); font-size:10px; text-transform:uppercase; letter-spacing:.05em; margin-top:6px; color:var(--seat-c); font-weight:700; }
+  .seat.revealed{ cursor:pointer; transition:transform .12s ease; }
+  .seat.revealed:hover{ transform:translateY(-2px); box-shadow:var(--shadow); }
+  .seat .power{ font-size:12.5px; line-height:1.45; margin-top:8px; color:var(--ink-soft); display:none; }
+  .seat.open .power{ display:block; }
+  .seat.key{ border-top-width:6px; }
+
+  .question{ margin-top:26px; background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:24px 26px 26px; }
+  .phase-label{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:10.5px; color:var(--misto); margin:0 0 10px; font-weight:600; }
+  .question h2{ font-size:20px; font-weight:400; margin:0 0 16px; }
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ text-align:left; background:var(--paper); border:1px solid var(--rule); padding:13px 16px; font-family:var(--font-body);
+    font-size:14.5px; line-height:1.5; color:var(--ink); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease; }
+  .opt:hover{ transform:translateY(-1px); box-shadow:var(--shadow); border-color:var(--ink-soft); }
+  .opt .lab{ font-family:var(--font-label); font-weight:700; margin-right:8px; color:var(--ink-soft); }
+
+  .your-choice{ font-family:var(--font-label); font-size:12.5px; color:var(--ink-soft); font-style:italic; margin:0 0 14px; }
+  .reveal p{ font-size:15.5px; line-height:1.65; margin:0 0 14px; }
+  .reveal p strong{ color:var(--accusa); }
+  .hint{ font-family:var(--font-label); font-size:11.5px; color:var(--ink-soft); margin-top:14px; font-style:italic; }
+
+  .bridge{ margin-top:22px; background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--misto); padding:18px 22px 20px; }
+  .bridge .tag{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:10.5px; color:var(--misto); font-weight:700; }
+  .bridge p{ margin:8px 0 0; font-size:15px; line-height:1.6; }
+
+  .restart{ margin-top:28px; text-align:center; }
+  .restart button{ font-family:var(--font-label); font-size:11.5px; color:var(--ink-soft); background:none; border:none; text-decoration:underline; cursor:pointer; }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>Non quanti ministri, ma quali ministeri.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · Il gabinetto del 30 gennaio 1933</p>
+    <h1>Il gabinetto del 30 gennaio 1933</h1>
+    <p class="dek">Undici ministri, di cui solo tre nazisti. Prima di scoprire come andò, guarda la composizione del governo e rispondi a una domanda: con questi numeri, chi controlla il governo?</p>
+  </header>
+
+  <div class="tally">
+    <div><span class="num" style="color:var(--accusa)">3</span><span class="lab">ministri nazisti</span></div>
+    <div><span class="num" style="color:var(--ink-soft)">8</span><span class="lab">ministri conservatori e tecnici</span></div>
+  </div>
+
+  <div class="cabinet" id="cabinet"></div>
+
+  <div id="questionArea"></div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Riguarda le undici caselle: quali altri ministeri avrebbero potuto avere lo stesso peso di quelli nazisti?
+  </footer>
+</div>
+
+<script>
+(function(){
+  var SEATS = [
+    { role:"Cancelliere del Reich", who:"Adolf Hitler", party:"NSDAP", nazi:true, key:true,
+      power:"Guida il governo e ne fissa l'indirizzo politico. Ma il vero vantaggio è un altro: come cancelliere può chiedere al presidente lo scioglimento del Reichstag e nuove elezioni — cosa che fa immediatamente, per il 5 marzo 1933." },
+    { role:"Ministro dell'Interno del Reich", who:"Wilhelm Frick", party:"NSDAP", nazi:true, key:true,
+      power:"Il ministero che sovrintende all'amministrazione interna, all'ordine pubblico e alla legislazione elettorale. Nel sistema federale tedesco la polizia dipendeva dai singoli Länder, ma da qui passa il coordinamento e la successiva unificazione degli apparati di sicurezza." },
+    { role:"Ministro senza portafoglio · commissario per l'Interno in Prussia", who:"Hermann Göring", party:"NSDAP", nazi:true, key:true,
+      power:"È la casella decisiva. La Prussia comprendeva circa due terzi del territorio e della popolazione tedesca: controllarne il ministero dell'Interno significa controllare la polizia più grande della Germania. Göring epura i vertici e arruola come ausiliari di polizia migliaia di uomini delle SA." },
+    { role:"Vicecancelliere · commissario del Reich per la Prussia", who:"Franz von Papen", party:"Conservatore", nazi:false,
+      power:"È l'architetto dell'operazione: convince Hindenburg che Hitler, circondato da otto ministri conservatori, sarà controllabile. Ottiene il diritto di essere presente a ogni colloquio tra Hitler e il presidente — una garanzia che si rivelerà priva di sostanza." },
+    { role:"Ministro degli Esteri", who:"Konstantin von Neurath", party:"Indipendente", nazi:false,
+      power:"Diplomatico di carriera, resta in carica come elemento di continuità e rassicurazione verso l'estero. Non ha alcuno strumento per incidere sulla politica interna." },
+    { role:"Ministro della Reichswehr", who:"Werner von Blomberg", party:"Militare", nazi:false,
+      power:"Controlla le forze armate, l'unico contrappeso davvero in grado di fermare il nuovo governo. Ma è già favorevole al riarmo e alla revisione di Versailles, e l'esercito sceglie di non intervenire." },
+    { role:"Ministro delle Finanze", who:"Lutz Schwerin von Krosigk", party:"Indipendente", nazi:false,
+      power:"Tecnico di continuità, rimasto in carica attraverso i governi precedenti. La sua è una competenza contabile, non un potere politico." },
+    { role:"Ministro dell'Economia e dell'Agricoltura", who:"Alfred Hugenberg", party:"DNVP", nazi:false,
+      power:"Potente editore e leader dei nazionalisti, si considera il vero garante conservatore dell'accordo. Si dimetterà già nel giugno 1933, quando il suo partito viene sciolto." },
+    { role:"Ministro del Lavoro", who:"Franz Seldte", party:"Elmetto d'acciaio", nazi:false,
+      power:"Capo dell'associazione dei reduci Stahlhelm, alleata della destra nazionalista. Aderirà al partito nazista nel corso del 1933." },
+    { role:"Ministro della Giustizia", who:"Franz Gürtner", party:"DNVP", nazi:false,
+      power:"Giurista conservatore, resterà in carica per anni: la sua permanenza serve a dare al nuovo corso una copertura di legalità formale." },
+    { role:"Ministro delle Poste e dei Trasporti", who:"Paul von Eltz-Rübenach", party:"Indipendente", nazi:false,
+      power:"Ministero tecnico, senza alcun peso nel controllo politico del governo." }
+  ];
+
+  var OPTIONS = [
+    "Gli otto ministri conservatori: sono la maggioranza schiacciante e possono mettere Hitler in minoranza su ogni decisione.",
+    "Nessuno dei due gruppi: un governo così diviso sarà paralizzato e cadrà nel giro di poche settimane, come i precedenti.",
+    "I tre ministri nazisti: la maggioranza numerica conta meno di quali leve di potere si controllano."
+  ];
+  var CORRECT = 2;
+
+  var phase = 1;
+  var chosen = null;
+
+  var cabinetEl = document.getElementById('cabinet');
+  var qArea = document.getElementById('questionArea');
+
+  function renderCabinet(){
+    cabinetEl.innerHTML = '';
+    SEATS.forEach(function(s, i){
+      var d = document.createElement('div');
+      d.className = 'seat' + (s.nazi ? ' nazi' : '') + (phase === 2 ? ' revealed' : '') + (phase === 2 && s.key ? ' key' : '');
+      d.style.setProperty('--seat-c', s.nazi ? 'var(--accusa)' : 'var(--ink-soft)');
+      var html = '<div class="role">'+s.role+'</div><div class="who">'+s.who+'</div><div class="party">'+s.party+'</div>';
+      if(phase === 2){ html += '<div class="power">'+s.power+'</div>'; }
+      d.innerHTML = html;
+      if(phase === 2){
+        d.addEventListener('click', function(){ d.classList.toggle('open'); });
+      }
+      cabinetEl.appendChild(d);
+    });
+  }
+
+  function renderQuestion(){
+    if(phase === 1){
+      var html = '<div class="question">';
+      html += '<p class="phase-label">Fase 1 — Prima di sapere come andò</p>';
+      html += '<h2>Con questa composizione, chi controlla il governo?</h2>';
+      html += '<div class="options">';
+      var labels = ['A','B','C'];
+      OPTIONS.forEach(function(o, i){
+        html += '<button class="opt" data-idx="'+i+'" type="button"><span class="lab">'+labels[i]+'</span>'+o+'</button>';
+      });
+      html += '</div></div>';
+      qArea.innerHTML = html;
+      qArea.querySelectorAll('.opt').forEach(function(b){
+        b.addEventListener('click', function(){
+          chosen = parseInt(b.getAttribute('data-idx'),10);
+          phase = 2; render();
+        });
+      });
+    } else {
+      var html = '<div class="question">';
+      html += '<p class="phase-label">Fase 2 — Che cosa controllavano davvero quei tre ministeri</p>';
+      html += '<p class="your-choice">La tua risposta: '+OPTIONS[chosen]+'</p>';
+      html += '<div class="reveal">';
+      html += '<p>La risposta intuitiva è la prima: otto contro tre sembra una gabbia solida, ed è esattamente il calcolo che fece von Papen quando disse ai suoi che entro pochi mesi Hitler sarebbe stato «spinto in un angolo». <strong>Ma il potere di un governo non si conta per teste, si conta per ministeri.</strong></p>';
+      html += '<p>I tre ministeri nazisti erano la cancelleria, l\'Interno del Reich e — soprattutto — l\'Interno della Prussia, cioè la polizia dei due terzi della Germania. Nessuno degli otto ministeri conservatori controllava un apparato di coercizione. Quando il decreto seguito all\'incendio del Reichstag (28 febbraio 1933) sospese le libertà civili, la maggioranza numerica nel gabinetto divenne <strong>irrilevante</strong>: chi comandava la polizia poteva arrestare gli oppositori, e chi contava le teste in consiglio dei ministri non poteva impedirlo.</p>';
+      html += '<p>Nel giro di sei mesi, tutti gli otto ministri conservatori erano stati sostituiti, si erano dimessi o avevano aderito al nuovo corso. Hugenberg, che si riteneva il vero garante dell\'accordo, lasciò già nel giugno 1933.</p>';
+      html += '</div>';
+      html += '<p class="hint">Clicca ora su ciascuna delle undici caselle qui sopra per leggere che cosa controllava davvero quel ministero.</p>';
+      html += '</div>';
+
+      html += '<div class="bridge"><div class="tag">Un gancio in avanti</div><p>Dieci anni prima, in Italia, un\'altra classe dirigente aveva fatto un calcolo simile: ingabbiare un movimento pericoloso dandogli il governo e circondandolo di uomini affidabili. Lo scopriremo nel capitolo sul fascismo.</p></div>';
+
+      html += '<div class="restart"><button id="restartBtn" type="button">↺ Ricomincia da capo</button></div>';
+      qArea.innerHTML = html;
+      document.getElementById('restartBtn').addEventListener('click', function(){
+        phase = 1; chosen = null; render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+  function render(){ renderCabinet(); renderQuestion(); }
+  render();
+})();
+</script>
+</body>
+</html>

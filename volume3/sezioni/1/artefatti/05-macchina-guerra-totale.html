@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La macchina della guerra totale</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:980px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:64ch; margin:0; }
+
+  .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:26px; }
+  @media (max-width:760px){ .grid{ grid-template-columns:1fr 1fr; } }
+  .country-card{
+    background:var(--paper-card); border:1px solid var(--rule); padding:14px 12px 16px; cursor:pointer;
+    box-shadow:var(--shadow); transition:transform .12s ease;
+  }
+  .country-card:hover{ transform:translateY(-2px); }
+  .country-card.active{ outline:2px solid var(--ink); outline-offset:2px; }
+  .country-name{ font-family:var(--font-label); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:10px; }
+  .mini-bar-row{ display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+  .mini-label{ font-family:var(--font-label); font-size:9px; color:var(--ink-soft); width:60px; flex-shrink:0; }
+  .mini-track{ flex:1; height:6px; background:var(--rule-soft); position:relative; }
+  .mini-fill{ height:100%; background:var(--ind-c); }
+
+  .detail{ margin-top:24px; background:var(--paper-deep); border:1px solid var(--rule); padding:22px 26px 24px; }
+  .detail-head{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:13px; color:var(--ink-soft); margin-bottom:16px; font-weight:700; }
+  .indicator{ margin-bottom:18px; }
+  .indicator:last-child{ margin-bottom:0; }
+  .indicator-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .indicator-name{ font-family:var(--font-label); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); }
+  .indicator-val{ font-family:var(--font-label); font-size:12px; font-weight:700; color:var(--ind-c); }
+  .bar-track{ height:12px; background:var(--rule-soft); border:1px solid var(--rule); position:relative; margin-bottom:6px; }
+  .bar-fill{ height:100%; background:var(--ind-c); }
+  .indicator-note{ font-size:14px; line-height:1.55; margin:0; color:var(--ink-soft); }
+
+  .compare-hint{ font-family:var(--font-label); font-size:12px; color:var(--ink-soft); margin-top:16px; font-style:italic; }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>«Guerra totale» non è un'etichetta uniforme.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · La macchina della guerra totale</p>
+    <h1>La macchina della guerra totale</h1>
+    <p class="dek">Quattro paesi, quattro indicatori di coinvolgimento bellico dello Stato e della società. Confronta i paesi fianco a fianco, poi seleziona un paese per leggere il dettaglio.</p>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="detail" id="detail"></div>
+
+  <p class="compare-hint">I quattro riquadri in alto restano sempre visibili: puoi confrontare le barre di un paese con quelle di un altro senza perdere la visione d'insieme.</p>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Quale dei quattro indicatori varia di più da un paese all'altro? Quale resta invece simile ovunque?
+  </footer>
+</div>
+
+<script>
+(function(){
+  var IND_COLOR = { mob:"var(--accusa)", raz:"var(--misto)", cen:"var(--auto)", pro:"var(--ink-soft)" };
+  var IND_LABEL = { mob:"Mobilitazione", raz:"Razionamento", cen:"Censura", pro:"Propaganda" };
+
+  var COUNTRIES = [
+    { key:"gb", name:"Gran Bretagna",
+      mob:{val:12.5, label:"12,5%", note:"Circa il 12,5% della popolazione maschile fu mobilitato. La coscrizione obbligatoria arrivò solo nel 1916, dopo una prima fase basata sull'arruolamento volontario."},
+      raz:{val:45, label:"Medio", note:"Il razionamento di generi come zucchero, carne e burro fu introdotto solo dal 1917-18, più tardi che negli altri paesi coinvolti; il mercato nero restò relativamente contenuto."},
+      cen:{val:55, label:"Medio", note:"Il Defence of the Realm Act (DORA, 1914) attribuì al governo ampi poteri di controllo su stampa e comunicazioni, ma il sistema parlamentare e l'opposizione politica restarono attivi."},
+      pro:{val:90, label:"Alto", note:"Il War Propaganda Bureau coordinò una macchina della propaganda capillare, con manifesti, film e il coinvolgimento diretto di scrittori e intellettuali nella mobilitazione del consenso."}
+    },
+    { key:"de", name:"Germania",
+      mob:{val:15.4, label:"15,4%", note:"Circa il 15,4% della popolazione maschile fu mobilitato, una delle percentuali più alte tra le potenze coinvolte."},
+      raz:{val:90, label:"Alto", note:"Il blocco navale britannico produsse scarsità severe di generi alimentari, culminate nel «inverno delle rape» del 1916-17; il mercato nero divenne un fenomeno diffuso e strutturale."},
+      cen:{val:90, label:"Alto", note:"Dal 1914 fu proclamato lo stato d'assedio (Belagerungszustand), che sottopose stampa e corrispondenza a un controllo diretto delle autorità militari."},
+      pro:{val:85, label:"Alto", note:"Un apparato di propaganda statale capillare fu coordinato strettamente con lo sforzo bellico industriale, per sostenere il morale interno via via che la guerra si prolungava."}
+    },
+    { key:"fr", name:"Francia",
+      mob:{val:17, label:"quasi 17%", note:"Quasi il 17% della popolazione maschile fu mobilitato: la percentuale più alta tra i quattro paesi, riflesso della coscrizione universale già in vigore prima della guerra."},
+      raz:{val:80, label:"Alto", note:"Le tessere annonarie furono introdotte dal 1917-18, con carenze avvertite soprattutto nei centri urbani."},
+      cen:{val:88, label:"Alto", note:"La legge sullo stato d'assedio del 1914 sottopose la stampa al controllo militare; nacque in questo contesto l'espressione critica «bourrage de crâne» (riempimento di crani) per indicare la propaganda ufficiale percepita come eccessiva."},
+      pro:{val:88, label:"Alto", note:"La Maison de la Presse coordinò un investimento statale imponente nella produzione di materiale propagandistico, rivolto sia al fronte interno sia all'opinione pubblica alleata."}
+    },
+    { key:"it", name:"Italia",
+      mob:{val:16, label:"oltre il 15%", note:"Circa 5.615.000 uomini furono mobilitati su una popolazione di oltre 35 milioni di abitanti: oltre il 15% del totale."},
+      raz:{val:55, label:"Medio", note:"Le carte annonarie si diffusero dal 1917; la situazione fu più critica nelle campagne e peggiorò ulteriormente dopo la rotta di Caporetto."},
+      cen:{val:85, label:"Alto", note:"La censura militare fu rigida per tutta la durata del conflitto, e si inasprì ulteriormente dopo Caporetto (1917), quando il controllo sulla stampa e sulla corrispondenza dal fronte si fece più stretto."},
+      pro:{val:55, label:"Medio", note:"L'apparato di propaganda fu meno capillare rispetto a Francia e Germania nella prima fase della guerra, ma venne rafforzato dopo Caporetto per sostenere la tenuta del fronte interno."}
+    }
+  ];
+
+  var current = "gb";
+  var grid = document.getElementById('grid');
+  var detail = document.getElementById('detail');
+
+  function renderGrid(){
+    grid.innerHTML = '';
+    COUNTRIES.forEach(function(c){
+      var card = document.createElement('div');
+      card.className = 'country-card' + (c.key === current ? ' active' : '');
+      var html = '<div class="country-name">'+c.name+'</div>';
+      ['mob','raz','cen','pro'].forEach(function(k){
+        html += '<div class="mini-bar-row"><span class="mini-label">'+IND_LABEL[k]+'</span><span class="mini-track"><span class="mini-fill" style="--ind-c:'+IND_COLOR[k]+'; width:'+c[k].val+'%"></span></span></div>';
+      });
+      card.innerHTML = html;
+      card.addEventListener('click', function(){ current = c.key; render(); });
+      grid.appendChild(card);
+    });
+  }
+
+  function renderDetail(){
+    var c = COUNTRIES.find(function(x){ return x.key === current; });
+    var html = '<div class="detail-head">'+c.name+'</div>';
+    ['mob','raz','cen','pro'].forEach(function(k){
+      var d = c[k];
+      html += '<div class="indicator">';
+      html += '<div class="indicator-top"><span class="indicator-name">'+IND_LABEL[k]+'</span><span class="indicator-val" style="--ind-c:'+IND_COLOR[k]+'">'+d.label+'</span></div>';
+      html += '<div class="bar-track"><div class="bar-fill" style="--ind-c:'+IND_COLOR[k]+'; width:'+d.val+'%"></div></div>';
+      html += '<p class="indicator-note">'+d.note+'</p>';
+      html += '</div>';
+    });
+    detail.innerHTML = html;
+  }
+
+  function render(){ renderGrid(); renderDetail(); }
+  render();
+})();
+</script>
+</body>
+</html>

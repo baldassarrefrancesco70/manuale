@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Due morti a confronto: Roma 1922 / Berlino 1933</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1000px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:66ch; margin:0; }
+
+  .phasebar{ display:flex; margin-top:26px; border:1px solid var(--rule); }
+  .phaseseg{ flex:1; padding:10px 6px; text-align:center; font-family:var(--font-label); font-size:10.5px; text-transform:uppercase;
+    letter-spacing:.05em; color:var(--ink-soft); background:var(--paper-card); border-right:1px solid var(--rule); cursor:pointer; line-height:1.35; }
+  .phaseseg:last-child{ border-right:none; }
+  .phaseseg.active{ background:var(--ink); color:var(--paper); font-weight:700; }
+
+  .rails{ margin-top:22px; }
+  .rail{ background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:18px 22px 20px; margin-bottom:12px; position:relative; }
+  .rail.italia{ border-left:5px solid var(--misto); }
+  .rail.germania{ border-left:5px solid var(--gap); }
+  .rail-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:10px; }
+  .rail-country{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.12em; font-size:11px; font-weight:700; color:var(--rail-c); }
+  .rail-date{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .rail-title{ font-size:18px; margin:0 0 8px; }
+  .rail-text{ font-size:15px; line-height:1.6; margin:0; }
+
+  .axis{ display:flex; align-items:center; gap:12px; margin:0 0 12px; }
+  .axis-line{ flex:1; height:1px; background:var(--rule); }
+  .axis-lab{ font-family:var(--font-label); font-size:10px; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); }
+
+  .diff{ margin-top:16px; background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--accusa); padding:18px 22px 20px; }
+  .diff .tag{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:10.5px; color:var(--accusa); font-weight:700; }
+  .diff p{ margin:8px 0 0; font-size:15px; line-height:1.6; }
+  .diff p strong{ color:var(--accusa); }
+
+  .slider-wrap{ margin-top:24px; }
+  .slider-labels{ display:flex; justify-content:space-between; font-family:var(--font-label); font-size:10.5px; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:.06em; }
+  input[type=range]{ width:100%; accent-color:var(--ink); }
+
+  .counters{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px; }
+  @media (max-width:640px){ .counters{ grid-template-columns:1fr; } }
+  .counter{ background:var(--paper-card); border:1px solid var(--rule); padding:16px 18px 18px; }
+  .counter .clab{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); line-height:1.4; }
+  .counter .crow{ display:flex; justify-content:space-between; align-items:baseline; margin-top:10px; }
+  .counter .cnat{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--c-color); font-weight:700; }
+  .counter .cval{ font-family:var(--font-label); font-size:17px; font-weight:700; color:var(--c-color); }
+  .counter .ctrack{ height:8px; background:var(--paper-deep); border:1px solid var(--rule); margin-top:4px; }
+  .counter .cfill{ height:100%; background:var(--c-color); }
+
+  .closing{ border-top:1px solid var(--rule); margin-top:34px; padding-top:24px; }
+  .closing h2{ font-size:19px; font-weight:400; margin:0 0 6px; }
+  .closing p.q{ font-family:var(--font-label); font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; font-style:italic; }
+  textarea{ width:100%; min-height:120px; font-family:var(--font-body); font-size:14.5px; color:var(--ink); background:var(--paper-card);
+    border:1px solid var(--rule); padding:12px; resize:vertical; }
+  .closing-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .export-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:9px 16px;
+    background:transparent; color:var(--ink); border:1px solid var(--rule); cursor:pointer; }
+  .export-btn:hover{ border-color:var(--ink); }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>Due democrazie morte per via legale, con tempi opposti.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · Due morti a confronto: Roma 1922 / Berlino 1933</p>
+    <h1>Due morti a confronto</h1>
+    <p class="dek">Le due linee del tempo non sono allineate per data, ma per <strong>fase equivalente</strong>: crisi, ascesa, conquista del potere, costruzione legale della dittatura. Scorri le quattro fasi e osserva la stessa struttura svolgersi con due velocità diverse.</p>
+  </header>
+
+  <div class="phasebar" id="phasebar"></div>
+
+  <div class="rails">
+    <div class="axis"><span class="axis-lab">Italia</span><span class="axis-line"></span><span class="axis-lab" id="itDates">1919–1925</span></div>
+    <div class="rail italia" id="railIt" style="--rail-c:var(--misto)"></div>
+    <div class="axis"><span class="axis-lab">Germania</span><span class="axis-line"></span><span class="axis-lab" id="deDates">1929–1933</span></div>
+    <div class="rail germania" id="railDe" style="--rail-c:var(--gap)"></div>
+  </div>
+
+  <div class="diff" id="diff"></div>
+
+  <div class="slider-wrap">
+    <div class="slider-labels"><span>Crisi</span><span>Ascesa</span><span>Conquista del potere</span><span>Dittatura legale</span></div>
+    <input type="range" id="phaseSlider" min="0" max="3" step="1" value="0" aria-label="Fase">
+  </div>
+
+  <div class="counters">
+    <div class="counter">
+      <div class="clab">Dall'inizio dell'ascesa del movimento alla dittatura compiuta</div>
+      <div class="crow" style="--c-color:var(--misto)"><span class="cnat">Italia</span><span class="cval">5 anni e 10 mesi</span></div>
+      <div class="ctrack" style="--c-color:var(--misto)"><div class="cfill" style="width:100%"></div></div>
+      <div class="crow" style="--c-color:var(--gap)"><span class="cnat">Germania</span><span class="cval">2 anni e 6 mesi</span></div>
+      <div class="ctrack" style="--c-color:var(--gap)"><div class="cfill" style="width:43%"></div></div>
+    </div>
+    <div class="counter">
+      <div class="clab">Dalla conquista del governo alla dittatura compiuta</div>
+      <div class="crow" style="--c-color:var(--misto)"><span class="cnat">Italia</span><span class="cval">2 anni e 2 mesi</span></div>
+      <div class="ctrack" style="--c-color:var(--misto)"><div class="cfill" style="width:100%"></div></div>
+      <div class="crow" style="--c-color:var(--gap)"><span class="cnat">Germania</span><span class="cval">52 giorni</span></div>
+      <div class="ctrack" style="--c-color:var(--gap)"><div class="cfill" style="width:7%"></div></div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <h2>Una domanda, non una verifica</h2>
+    <p class="q">Stessa strategia — la legalità usata contro se stessa — due tempi diversi. Che cosa, nelle due situazioni, spiega la differenza?</p>
+    <textarea id="answerBox" placeholder="La tua risposta..."></textarea>
+    <div class="closing-actions">
+      <button class="export-btn" id="downloadBtn" type="button">Scarica la risposta (.txt)</button>
+      <button class="export-btn" id="copyBtn" type="button">Copia negli appunti</button>
+    </div>
+  </div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Copri i nomi e le date: le due colonne raccontano la stessa struttura o due storie diverse?
+  </footer>
+</div>
+
+<script>
+(function(){
+  var PHASES = [
+    {
+      short:"1<br>Crisi", label:"Crisi del dopoguerra e crisi economica",
+      itDates:"1919–1920", deDates:"1929–1930",
+      it:{ date:"1919–1920", title:"Biennio rosso e crisi del sistema liberale",
+        text:"L'Italia esce dalla guerra con un'economia in dissesto, milioni di reduci da reinserire e la percezione diffusa della «vittoria mutilata». Occupazioni di fabbriche e di terre, scioperi e conflitti sociali segnano il biennio rosso; il sistema liberale, fondato su un ceto politico ristretto, si mostra incapace di governare l'ingresso delle masse nella politica." },
+      de:{ date:"1929–1930", title:"La grande crisi e la fine dei governi di maggioranza",
+        text:"Il crollo di Wall Street e il ritiro dei capitali americani travolgono l'economia tedesca: la disoccupazione arriva a superare i sei milioni. Nel marzo 1930 cade l'ultimo governo sostenuto da una maggioranza parlamentare, e si comincia a governare per decreto presidenziale in base all'articolo 48." },
+      diff:"In entrambi i casi la crisi non è solo economica ma <strong>di legittimità del sistema parlamentare</strong>. La differenza sta nel punto di partenza: l'Italia liberale non aveva mai avuto un vero suffragio di massa consolidato, la Germania aveva una costituzione democratica avanzata e recente. La prima si sfalda, la seconda deve essere smontata."
+    },
+    {
+      short:"2<br>Ascesa", label:"Ascesa del movimento",
+      itDates:"1919–1922", deDates:"1930–1932",
+      it:{ date:"marzo 1919 – 1922", title:"Dai Fasci di combattimento al PNF",
+        text:"I Fasci italiani di combattimento nascono a Milano nel marzo 1919 e ottengono un risultato irrilevante alle elezioni dello stesso anno. La svolta arriva con lo squadrismo agrario del 1920-21 e con l'inclusione dei fascisti nei Blocchi Nazionali di Giolitti alle elezioni del 1921: trentacinque deputati fascisti entrano in Parlamento con l'avallo del governo. Nel novembre 1921 il movimento si trasforma in Partito Nazionale Fascista." },
+      de:{ date:"settembre 1930 – 1932", title:"Dal 2,6% al primo partito del Reichstag",
+        text:"Alle elezioni del 1928 il partito nazista aveva ottenuto il 2,6% dei voti. Nel settembre 1930 balza al 18,3%, e nel luglio 1932 al 37,3%: è il primo partito del Reichstag. Nel novembre 1932 arretra al 33,1%, e proprio in quel momento di apparente difficoltà l'entourage presidenziale decide di trattare." },
+      diff:"La differenza di metodo è netta: in Italia l'ascesa passa <strong>soprattutto per la violenza squadrista</strong>, tollerata dagli apparati dello Stato, con il voto come conferma successiva; in Germania passa <strong>soprattutto per le urne</strong>, con la violenza delle SA come accompagnamento. Il fascismo entra in Parlamento perché un presidente del Consiglio lo mette nelle sue liste; il nazismo perché milioni di elettori lo votano."
+    },
+    {
+      short:"3<br>Potere", label:"Conquista del potere",
+      itDates:"ottobre 1922", deDates:"gennaio 1933",
+      it:{ date:"28–30 ottobre 1922", title:"La marcia su Roma: un atto illegale legalizzato dopo",
+        text:"Colonne di squadristi convergono su Roma. Il governo Facta approva il decreto di stato d'assedio, e il comando militare assicura che le truppe eseguirebbero gli ordini. Vittorio Emanuele III rifiuta di firmarlo. Il 29 ottobre incarica Mussolini di formare il governo: la minaccia insurrezionale non viene respinta, viene <em>ratificata</em>. Mussolini arriva a Roma in treno, e il suo primo governo è di coalizione, con pochi ministri fascisti." },
+      de:{ date:"30 gennaio 1933", title:"La nomina: un atto legale fin dall'inizio",
+        text:"Non c'è nessuna marcia, nessun colpo di mano. Hindenburg nomina Hitler cancelliere secondo la procedura costituzionale, alla guida di un governo di coalizione con soli tre ministri nazisti su undici. Von Papen ha convinto il presidente che quella composizione basterà a controllarlo." },
+      diff:"È qui che le due storie divergono nel <strong>meccanismo</strong>, non nell'esito. In Italia un atto illegale — la minaccia armata — viene reso legale dopo, con l'incarico regio. In Germania l'atto è legale <strong>fin dall'inizio</strong>: non c'è nulla da sanare, perché formalmente non è successo nulla di irregolare. In entrambi i casi, però, a decidere è un capo dello Stato che sceglie di non usare i poteri che aveva."
+    },
+    {
+      short:"4<br>Dittatura", label:"Costruzione legale della dittatura",
+      itDates:"1923–1925/26", deDates:"febbraio–marzo 1933",
+      it:{ date:"1923 – 3 gennaio 1925 (e leggi del 1925-26)", title:"Due anni di svuotamento graduale",
+        text:"La legge Acerbo (1923) altera il sistema elettorale a vantaggio della lista di maggioranza. Il delitto Matteotti (giugno 1924) apre la crisi più grave del regime: l'opposizione abbandona l'aula (Aventino), il re non interviene. Il 3 gennaio 1925 Mussolini si assume in Parlamento la responsabilità politica dell'accaduto e sfida gli avversari a metterlo sotto accusa: comincia la costruzione della dittatura, che le leggi «fascistissime» del 1925-26 completeranno. Lo Statuto Albertino non viene abrogato." },
+      de:{ date:"28 febbraio – 23 marzo 1933", title:"Cinquantadue giorni",
+        text:"Il decreto seguito all'incendio del Reichstag (28 febbraio) sospende le libertà civili in base all'articolo 48. Il 5 marzo si vota in un clima di intimidazione; il 23 marzo la legge dei pieni poteri trasferisce al governo il potere di legiferare, con i deputati comunisti già arrestati. In meno di due mesi la Costituzione di Weimar è svuotata, senza mai essere formalmente abrogata." },
+      diff:"Stessa tecnica — <strong>svuotare la costituzione senza abrogarla</strong> — in due tempi incomparabili: oltre due anni in Italia, cinquantadue giorni in Germania. Mussolini deve costruire pezzo per pezzo strumenti che non esistevano; Hitler ne trova uno già pronto e collaudato da tre governi precedenti, l'articolo 48, e lo usa per fare in poche settimane ciò che in Italia era costato anni."
+    }
+  ];
+
+  var slider = document.getElementById('phaseSlider');
+  var phasebar = document.getElementById('phasebar');
+  var railIt = document.getElementById('railIt');
+  var railDe = document.getElementById('railDe');
+  var diff = document.getElementById('diff');
+  var itDates = document.getElementById('itDates');
+  var deDates = document.getElementById('deDates');
+  var current = 0;
+
+  function renderBar(){
+    phasebar.innerHTML = '';
+    PHASES.forEach(function(p, i){
+      var d = document.createElement('div');
+      d.className = 'phaseseg' + (i === current ? ' active' : '');
+      d.innerHTML = p.short;
+      d.title = p.label;
+      d.addEventListener('click', function(){ current = i; slider.value = i; render(); });
+      phasebar.appendChild(d);
+    });
+  }
+
+  function rail(country, o){
+    return '<div class="rail-head"><span class="rail-country">'+country+'</span><span class="rail-date">'+o.date+'</span></div>' +
+           '<h2 class="rail-title">'+o.title+'</h2><p class="rail-text">'+o.text+'</p>';
+  }
+
+  function render(){
+    var p = PHASES[current];
+    renderBar();
+    itDates.textContent = p.itDates;
+    deDates.textContent = p.deDates;
+    railIt.innerHTML = rail('Italia', p.it);
+    railDe.innerHTML = rail('Germania', p.de);
+    diff.innerHTML = '<div class="tag">La differenza chiave in questa fase</div><p>'+p.diff+'</p>';
+  }
+
+  slider.addEventListener('input', function(){ current = parseInt(slider.value,10); render(); });
+
+  document.getElementById('downloadBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '(nessuna risposta scritta)';
+    var blob = new Blob(["Due morti a confronto: Roma 1922 / Berlino 1933 — risposta finale\n\n" + txt], {type:'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'due-morti-a-confronto-risposta.txt';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  });
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '';
+    navigator.clipboard && navigator.clipboard.writeText(txt);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

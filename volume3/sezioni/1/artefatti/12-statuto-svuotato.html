@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lo Statuto svuotato</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --lit: #e0b64a; --dark-room: #3b3226;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818;
+      --lit:#d8a93c; --dark-room:#14100a; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1000px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:66ch; margin:0; }
+
+  .layout{ display:grid; grid-template-columns:1fr 300px; gap:22px; margin-top:26px; align-items:start; }
+  @media (max-width:800px){ .layout{ grid-template-columns:1fr; } }
+
+  .building-panel{ background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:20px 22px 22px; }
+  .building-cap{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); text-align:center; margin:0 0 12px; }
+  svg{ width:100%; height:auto; display:block; }
+  .room-rect{ transition:fill .5s ease; cursor:pointer; }
+  .room-label{ font-family:'Gill Sans','Gill Sans MT',Corbel,Calibri,sans-serif; font-size:9px; letter-spacing:.4px; pointer-events:none; transition:fill .5s ease; }
+  @media (prefers-reduced-motion: reduce){ .room-rect,.room-label{ transition:none; } }
+
+  .side{ background:var(--paper-deep); border:1px solid var(--rule); padding:20px 20px 22px; }
+  .side-count{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); }
+  .side-big{ font-family:var(--font-label); font-size:30px; font-weight:700; line-height:1; margin-top:4px; color:var(--accusa); }
+  .side-note{ font-family:var(--font-label); font-size:11px; color:var(--ink-soft); margin-top:6px; line-height:1.45; }
+  .shell{ border-top:1px solid var(--rule); margin-top:16px; padding-top:14px; }
+  .shell .slab{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); }
+  .shell .sval{ font-family:var(--font-label); font-size:15px; font-weight:700; color:var(--auto); margin-top:4px; }
+  .shell .snote{ font-family:var(--font-label); font-size:11px; color:var(--ink-soft); margin-top:6px; line-height:1.45; font-style:italic; }
+
+  .law-panel{ margin-top:20px; background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:24px 26px 26px; }
+  .law-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; border-bottom:1px solid var(--rule-soft); padding-bottom:12px; margin-bottom:16px; }
+  .law-date{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); }
+  .law-title{ font-size:19px; margin:4px 0 0; }
+  .law-step{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); }
+  .law-off{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accusa); font-weight:700; margin:0 0 10px; }
+  .law-text{ font-size:15.5px; line-height:1.62; margin:0 0 14px; }
+  .law-text strong{ color:var(--accusa); }
+  .law-shell{ background:var(--paper-deep); border-left:4px solid var(--auto); padding:11px 15px 13px; }
+  .law-shell .lab{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:10px; color:var(--auto); font-weight:700; }
+  .law-shell p{ margin:5px 0 0; font-size:14px; line-height:1.5; }
+
+  .nav{ display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; align-items:center; }
+  .nav button{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:12px; padding:11px 20px; border:none; cursor:pointer; }
+  .go{ background:var(--ink); color:var(--paper); }
+  .go:hover{ background:var(--ink-soft); }
+  .go[disabled]{ opacity:.35; cursor:not-allowed; }
+  .back{ background:transparent; border:1px solid var(--rule) !important; color:var(--ink); }
+
+  .finale{ margin-top:22px; background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--accusa); padding:22px 26px 24px; display:none; }
+  .finale.on{ display:block; }
+  .finale h2{ font-size:19px; font-weight:400; margin:0 0 10px; }
+  .finale p{ margin:0 0 12px; font-size:15.5px; line-height:1.62; }
+  .finale p:last-child{ margin-bottom:0; }
+  .finale strong{ color:var(--accusa); }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>La facciata resta in piedi. Dentro non c'è più niente.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · Lo Statuto svuotato</p>
+    <h1>Lo Statuto svuotato</h1>
+    <p class="dek">Lo Statuto Albertino come un edificio, con una stanza per ciascuna garanzia costituzionale. Avanza lungo le leggi del 1925-26 e osserva le stanze spegnersi una a una — mentre la facciata resta intatta e nessuna riga dello Statuto viene abrogata.</p>
+  </header>
+
+  <div class="layout">
+    <div class="building-panel">
+      <p class="building-cap">Lo Statuto Albertino (1848) — sei garanzie, sei stanze</p>
+      <svg viewBox="0 0 460 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Edificio dello Statuto con sei stanze che si spengono">
+        <!-- tetto -->
+        <polygon points="230,18 415,80 45,80" fill="none" stroke="var(--rule)" stroke-width="2.5"/>
+        <line x1="230" y1="18" x2="230" y2="80" stroke="var(--rule-soft)" stroke-width="1"/>
+        <!-- corpo -->
+        <rect x="45" y="80" width="370" height="285" fill="none" stroke="var(--rule)" stroke-width="2.5"/>
+        <!-- basamento -->
+        <rect x="30" y="365" width="400" height="16" fill="none" stroke="var(--rule)" stroke-width="2.5"/>
+        <text x="230" y="60" text-anchor="middle" font-family="Gill Sans, sans-serif" font-size="10" letter-spacing="2" fill="var(--ink-soft)">STATUTO ALBERTINO · 1848</text>
+
+        <!-- stanze: 2 colonne x 3 righe -->
+        <g id="rooms"></g>
+
+        <!-- portone -->
+        <rect x="205" y="320" width="50" height="45" fill="none" stroke="var(--rule)" stroke-width="1.5"/>
+        <line x1="230" y1="320" x2="230" y2="365" stroke="var(--rule)" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <div class="side">
+      <div class="side-count">Stanze spente</div>
+      <div class="side-big" id="offCount">0 / 6</div>
+      <div class="side-note" id="offNote">L'edificio è ancora illuminato: tutte le garanzie dello Statuto sono formalmente e sostanzialmente in vigore.</div>
+      <div class="shell">
+        <div class="slab">Articoli dello Statuto abrogati</div>
+        <div class="sval" id="abrogati">nessuno</div>
+        <div class="snote">Questo contatore non cambierà mai. È il punto dell'artefatto.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="law-panel" id="lawPanel"></div>
+
+  <div class="nav">
+    <button class="back" id="backBtn" type="button">← Indietro</button>
+    <button class="go" id="nextBtn" type="button">Legge successiva →</button>
+    <button class="back" id="resetBtn" type="button">↺ Riaccendi tutto</button>
+  </div>
+
+  <div class="finale" id="finale">
+    <h2>L'edificio è intatto. È vuoto.</h2>
+    <p>Tutte e sei le stanze sono buie, ma <strong>non una riga dello Statuto Albertino è stata abrogata</strong>. Formalmente la carta costituzionale del Regno d'Italia resta in vigore: il re è ancora il capo dello Stato, il Parlamento esiste ancora, i suoi articoli si possono ancora leggere così come furono scritti nel 1848.</p>
+    <p>È esattamente questa la specificità italiana rispetto al caso tedesco. In Germania basteranno cinquantadue giorni e due atti — il decreto dell'incendio del Reichstag e la legge dei pieni poteri — per ottenere lo stesso risultato. In Italia serviranno due anni e una decina di leggi ordinarie, ciascuna delle quali, presa da sola, poteva sembrare un provvedimento tecnico di riordino.</p>
+    <p>Lo Statuto Albertino non sarà mai formalmente abrogato dal regime: resterà sulla carta fino alla Costituzione repubblicana del 1948. <strong>Una dittatura può nascere senza strappare la costituzione: basta svuotarla stanza per stanza.</strong></p>
+  </div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Rileggi il titolo di ciascuna legge: quante di esse, dal nome, sembrano provvedimenti di ordinaria amministrazione?
+  </footer>
+</div>
+
+<script>
+(function(){
+  var ROOMS = [
+    { id:'r1', x:70,  y:105, label:'Equilibrio', label2:'dei poteri' },
+    { id:'r2', x:245, y:105, label:'Potere legislativo', label2:'del Parlamento' },
+    { id:'r3', x:70,  y:180, label:'Libertà', label2:'di stampa' },
+    { id:'r4', x:245, y:180, label:'Diritti sindacali', label2:'e sciopero' },
+    { id:'r5', x:70,  y:255, label:'Pluralismo', label2:'dei partiti' },
+    { id:'r6', x:245, y:255, label:'Garanzie', label2:'del dissenso' }
+  ];
+  var RW = 145, RH = 58;
+
+  var LAWS = [
+    {
+      date:"24 dicembre 1925 — legge n. 2263", title:"Attribuzioni e prerogative del Capo del Governo",
+      room:'r1', roomName:"Equilibrio dei poteri",
+      text:"Il presidente del Consiglio diventa «Capo del Governo, Primo Ministro Segretario di Stato»: non è più il primo fra pari, ma il vertice dell'esecutivo, e <strong>risponde del proprio operato soltanto al re</strong>, non più al Parlamento. I ministri sono nominati e revocati su sua proposta e rispondono a lui. Nessun argomento può essere iscritto all'ordine del giorno delle Camere senza il suo consenso.",
+      shell:"Lo Statuto non diceva esplicitamente che il governo dovesse avere la fiducia del Parlamento: quella era una prassi consolidata, non una norma scritta. La legge non abroga nulla — cancella una consuetudine."
+    },
+    {
+      date:"31 gennaio 1926 — legge n. 100", title:"Facoltà del potere esecutivo di emanare norme giuridiche",
+      room:'r2', roomName:"Potere legislativo del Parlamento",
+      text:"Il governo può emanare norme con valore di legge in un'ampia gamma di materie, senza passare dal Parlamento. Il potere legislativo, che lo Statuto attribuiva collettivamente al re e alle due Camere, <strong>si sposta di fatto all'esecutivo</strong>. Il Parlamento continua a riunirsi, ma su ciò che il Capo del Governo decide di sottoporgli.",
+      shell:"Le Camere non vengono sciolte né abolite: continuano a esistere, a votare e a essere convocate. Semplicemente, non sono più il luogo dove si fanno le leggi."
+    },
+    {
+      date:"31 dicembre 1925 — legge n. 2307", title:"Disciplina della stampa periodica",
+      room:'r3', roomName:"Libertà di stampa",
+      text:"Ogni giornale deve avere un direttore responsabile iscritto in un apposito albo e riconosciuto dal prefetto, che può diffidarlo e farlo sostituire. I giornali sgraditi vengono sequestrati, i direttori rimossi, le testate di opposizione costrette alla chiusura. <strong>La censura non ha bisogno di essere proclamata</strong>: basta controllare chi può firmare un giornale.",
+      shell:"L'articolo 28 dello Statuto — «la stampa sarà libera, ma una legge ne reprime gli abusi» — non viene toccato. Il regime si limita a usare la seconda metà della frase."
+    },
+    {
+      date:"3 aprile 1926 — legge n. 563 (legge Rocco)", title:"Disciplina giuridica dei rapporti collettivi di lavoro",
+      room:'r4', roomName:"Diritti sindacali e sciopero",
+      text:"Viene riconosciuto un solo sindacato legalmente valido per ciascuna categoria — quello fascista — con il monopolio della rappresentanza e della contrattazione. Le organizzazioni sindacali libere perdono ogni riconoscimento giuridico. <strong>Lo sciopero e la serrata diventano reati</strong>, puniti penalmente, e le controversie di lavoro passano alla magistratura del lavoro.",
+      shell:"Nessuna norma vieta esplicitamente di associarsi: semplicemente, associarsi fuori dal sindacato unico non produce più alcun effetto giuridico. Il diritto resta, l'esercizio diventa inutile."
+    },
+    {
+      date:"6 novembre 1926 — leggi di pubblica sicurezza", title:"Scioglimento dei partiti e decadenza dei deputati",
+      room:'r5', roomName:"Pluralismo dei partiti",
+      text:"Vengono sciolti tutti i partiti, le associazioni e le organizzazioni che svolgono attività contraria al regime; soppressi i giornali di opposizione; dichiarati decaduti dal mandato i <strong>centoventi deputati aventiniani</strong>, cioè quelli che nel 1924 avevano abbandonato l'aula in segno di protesta. Reintrodotto il confino di polizia, comminato senza processo da una commissione amministrativa.",
+      shell:"Il Parlamento continua a esistere e a riunirsi regolarmente. Ora, però, vi siede un solo partito — e gli unici deputati assenti sono quelli che erano usciti da soli due anni prima."
+    },
+    {
+      date:"25 novembre 1926 — legge n. 2008", title:"Provvedimenti per la difesa dello Stato",
+      room:'r6', roomName:"Garanzie del dissenso",
+      text:"Nasce il <strong>Tribunale Speciale per la Difesa dello Stato</strong>, composto da ufficiali della Milizia e delle forze armate, competente sui reati politici e con procedure sommarie: contro le sue sentenze non è ammesso appello. Viene reintrodotta la pena di morte per i reati contro lo Stato e il sovrano. L'opposizione politica non è più un'attività lecita: è un reato giudicato da un tribunale militare.",
+      shell:"La magistratura ordinaria non viene abolita: continua a funzionare per tutto il resto. Solo, non si occupa più di politica."
+    }
+  ];
+
+  var current = 0; // 0..LAWS.length ; LAWS.length = finale
+  var roomsG = document.getElementById('rooms');
+  var lawPanel = document.getElementById('lawPanel');
+  var offCount = document.getElementById('offCount');
+  var offNote = document.getElementById('offNote');
+  var finale = document.getElementById('finale');
+  var nextBtn = document.getElementById('nextBtn');
+  var backBtn = document.getElementById('backBtn');
+
+  function roomOffAtStep(roomId, step){
+    // una stanza è spenta se la legge che la spegne ha indice < step
+    for(var i=0;i<LAWS.length;i++){
+      if(LAWS[i].room === roomId) return i < step;
+    }
+    return false;
+  }
+
+  function renderBuilding(){
+    roomsG.innerHTML = '';
+    var ns = 'http://www.w3.org/2000/svg';
+    ROOMS.forEach(function(r){
+      var off = roomOffAtStep(r.id, current);
+      var rect = document.createElementNS(ns,'rect');
+      rect.setAttribute('x', r.x); rect.setAttribute('y', r.y);
+      rect.setAttribute('width', RW); rect.setAttribute('height', RH);
+      rect.setAttribute('class','room-rect');
+      rect.setAttribute('fill', off ? 'var(--dark-room)' : 'var(--lit)');
+      rect.setAttribute('fill-opacity', off ? '1' : '.55');
+      rect.setAttribute('stroke','var(--rule)');
+      rect.setAttribute('stroke-width','1.5');
+      roomsG.appendChild(rect);
+
+      var t1 = document.createElementNS(ns,'text');
+      t1.setAttribute('x', r.x + RW/2); t1.setAttribute('y', r.y + 25);
+      t1.setAttribute('text-anchor','middle'); t1.setAttribute('class','room-label');
+      t1.setAttribute('fill', off ? 'var(--rule)' : 'var(--ink)');
+      t1.textContent = r.label;
+      roomsG.appendChild(t1);
+
+      var t2 = document.createElementNS(ns,'text');
+      t2.setAttribute('x', r.x + RW/2); t2.setAttribute('y', r.y + 38);
+      t2.setAttribute('text-anchor','middle'); t2.setAttribute('class','room-label');
+      t2.setAttribute('fill', off ? 'var(--rule)' : 'var(--ink)');
+      t2.textContent = r.label2;
+      roomsG.appendChild(t2);
+    });
+  }
+
+  function renderSide(){
+    var n = Math.min(current, LAWS.length);
+    offCount.textContent = n + ' / 6';
+    if(n === 0){
+      offNote.textContent = "L'edificio è ancora illuminato: tutte le garanzie dello Statuto sono formalmente e sostanzialmente in vigore.";
+    } else if(n < 6){
+      offNote.textContent = "Il contenuto si svuota, ma la struttura esterna dell'edificio non è stata toccata.";
+    } else {
+      offNote.textContent = "Tutte le stanze sono buie. La facciata, il tetto e il basamento sono esattamente quelli del 1848.";
+    }
+  }
+
+  function renderLaw(){
+    if(current >= LAWS.length){
+      lawPanel.style.display = 'none';
+      finale.classList.add('on');
+      nextBtn.disabled = true;
+      nextBtn.textContent = 'Percorso completato';
+      return;
+    }
+    lawPanel.style.display = 'block';
+    finale.classList.remove('on');
+    nextBtn.disabled = false;
+    nextBtn.textContent = (current === LAWS.length - 1) ? 'Vedi il risultato finale →' : 'Legge successiva →';
+
+    var l = LAWS[current];
+    var html = '<div class="law-head"><div><div class="law-date">'+l.date+'</div><h2 class="law-title">'+l.title+'</h2></div>';
+    html += '<div class="law-step">Legge '+(current+1)+' di '+LAWS.length+'</div></div>';
+    html += '<p class="law-off">Stanza che si spegne: '+l.roomName+'</p>';
+    html += '<p class="law-text">'+l.text+'</p>';
+    html += '<div class="law-shell"><div class="lab">Che cosa resta in piedi dello Statuto</div><p>'+l.shell+'</p></div>';
+    lawPanel.innerHTML = html;
+  }
+
+  function render(){
+    renderBuilding(); renderSide(); renderLaw();
+    backBtn.disabled = (current === 0);
+  }
+
+  nextBtn.addEventListener('click', function(){
+    if(current < LAWS.length){ current++; render(); }
+  });
+  backBtn.addEventListener('click', function(){
+    if(current > 0){ current--; render(); }
+  });
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    current = 0; render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

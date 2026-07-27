@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1919-1933: la Repubblica sotto pressione</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1000px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:66ch; margin:0; }
+
+  .timeline-wrap{ padding:38px 0 8px; }
+  .lane-labels{ display:flex; justify-content:space-between; font-family:var(--font-label); text-transform:uppercase;
+    letter-spacing:.12em; font-size:10.5px; color:var(--ink-soft); margin-bottom:8px; }
+  .timeline-scroll{ overflow-x:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch; }
+  .timeline{ position:relative; min-width:900px; height:270px; }
+  .timeline-rule{ position:absolute; left:0; right:0; top:135px; height:2px; background:var(--rule); }
+  .lane-tag{ position:absolute; left:0; font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em;
+    font-size:10px; color:var(--ink-soft); background:var(--paper); padding:2px 6px; border:1px solid var(--rule-soft); }
+  .lane-tag.up{ top:2px; } .lane-tag.down{ bottom:2px; }
+
+  .node{ position:absolute; left:var(--pos); transform:translateX(-50%); display:flex; flex-direction:column; align-items:center;
+    width:max-content; background:none; border:none; padding:0; cursor:pointer; font-family:var(--font-label); }
+  .node--up{ top:0; height:135px; justify-content:flex-end; }
+  .node--down{ top:135px; height:135px; justify-content:flex-start; }
+  .node .stem{ width:1px; height:16px; background:var(--rule); }
+  .node .dot{ width:9px; height:9px; border-radius:50%; background:var(--node-color); border:1.5px solid var(--paper); box-shadow:0 0 0 1.5px var(--node-color); }
+  .node--up .dot{ margin-top:-5px; } .node--down .dot{ margin-bottom:-5px; }
+  .node .card{ background:var(--paper-card); border:1px solid var(--rule); border-top:3px solid var(--node-color);
+    padding:6px 10px 7px; text-align:center; min-width:104px; max-width:132px; box-shadow:var(--shadow); transition:transform .15s ease; }
+  .node--up .card{ margin-bottom:6px; } .node--down .card{ margin-top:6px; }
+  .node .yr{ display:block; font-size:11.5px; font-weight:700; font-variant-numeric:tabular-nums; color:var(--ink); }
+  .node .nm{ display:block; font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin-top:3px; line-height:1.3; }
+  .node:hover .card{ transform:translateY(-2px); }
+  .node:focus-visible .card{ outline:2px solid var(--ink); outline-offset:2px; }
+  .node[aria-pressed="true"] .card{ transform:translateY(-3px); box-shadow:0 4px 0 rgba(0,0,0,.15); }
+  .node[aria-pressed="true"] .dot{ transform:scale(1.3); }
+  .node--sys .card{ border-style:dashed; }
+
+  .outcome-bar{ margin-top:26px; }
+  .outcome-label{ display:flex; justify-content:space-between; font-family:var(--font-label); text-transform:uppercase;
+    letter-spacing:.12em; font-size:10.5px; color:var(--ink-soft); margin-bottom:6px; }
+  .outcome-track{ display:flex; height:14px; border:1px solid var(--rule); }
+  .outcome-seg{ flex:1; background:var(--seg-color); border-right:1px solid var(--paper); cursor:pointer; position:relative; }
+  .outcome-seg:last-child{ border-right:none; }
+  .outcome-seg[data-active="true"]::after{ content:""; position:absolute; inset:-3px -1px; border:2px solid var(--ink); }
+
+  .panel{ margin-top:32px; background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:26px 30px 28px; transition:opacity .18s ease; }
+  @media (prefers-reduced-motion: reduce){ .panel{ transition:none; } }
+  .panel.is-swapping{ opacity:0; }
+  .panel-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    border-bottom:1px solid var(--rule-soft); padding-bottom:12px; margin-bottom:18px; }
+  .panel-title{ font-family:var(--font-body); font-size:20px; margin:0; }
+  .panel-step{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); white-space:nowrap; }
+  .fields{ display:grid; grid-template-columns:180px 1fr; row-gap:18px; column-gap:22px; margin:0; }
+  @media (max-width:640px){ .fields{ grid-template-columns:1fr; row-gap:6px; } .fields dt{ margin-top:14px; } }
+  .fields dt{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11px; color:var(--ink-soft); line-height:1.5; }
+  .fields dd{ margin:0; font-size:15.5px; line-height:1.55; max-width:60ch; }
+  .verdict-badge{ display:inline-block; font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px;
+    padding:4px 10px; border:1px solid var(--badge-color); color:var(--badge-color); background:var(--badge-soft); }
+
+  footer.prompt{ margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12.5px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>Non un declino lineare: una serie di crisi superate, fino a una che non lo fu.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · 1919-1933: la Repubblica sotto pressione</p>
+    <h1>1919-1933: la Repubblica sotto pressione</h1>
+    <p class="dek">Otto momenti in cui la Repubblica di Weimar fu messa alla prova. Sopra l'asse, le minacce da sinistra; sotto, quelle da destra; sull'asse, le crisi economiche e sociali che colpirono il sistema nel suo insieme. Clicca su ciascun momento per vedere chi minacciava, come finì, e chi salvò — o non salvò — la Repubblica.</p>
+  </header>
+
+  <section class="timeline-wrap">
+    <div class="lane-labels"><span>1919</span><span>Otto momenti cliccabili</span><span>1933</span></div>
+    <div class="timeline-scroll">
+      <div class="timeline" id="timeline" role="list" aria-label="Cronologia delle crisi della Repubblica di Weimar">
+        <div class="timeline-rule"></div>
+        <div class="lane-tag up">Minacce da sinistra</div>
+        <div class="lane-tag down">Minacce da destra</div>
+      </div>
+    </div>
+
+    <div class="outcome-bar">
+      <div class="outcome-label">
+        <span>Crisi superata</span>
+        <span>Esito delle otto prove</span>
+        <span>Crisi non superata</span>
+      </div>
+      <div class="outcome-track" id="outcomeTrack"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel" aria-live="polite"></section>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Quante volte è l'esercito a salvare la Repubblica? E che cosa comporta, per una democrazia, doversi affidare ogni volta a chi non la ama?
+  </footer>
+</div>
+
+<script>
+(function(){
+  var META = {
+    superata: { color:'var(--auto)',   soft:'var(--auto-soft)',   label:'Crisi superata' },
+    parziale: { color:'var(--misto)',  soft:'var(--misto-soft)',  label:'Superata, ma a caro prezzo' },
+    fatale:   { color:'var(--accusa)', soft:'var(--accusa-soft)', label:'Crisi non superata' }
+  };
+
+  var NODES = [
+    {
+      id:1, pos:5, lane:'up', year:'gennaio 1919', name:'Rivolta spartachista', place:'Berlino',
+      chi:'La Lega di Spartaco, guidata da Rosa Luxemburg e Karl Liebknecht, insieme all\'ala più radicale del movimento operaio: vogliono trasformare la rivoluzione tedesca in una rivoluzione consiliare sul modello sovietico, contro la repubblica parlamentare appena nata.',
+      fine:'La rivolta viene repressa in pochi giorni. Luxemburg e Liebknecht sono uccisi dopo l\'arresto. La Repubblica sopravvive, ma la frattura tra socialdemocratici e comunisti diventa insanabile: le due sinistre non collaboreranno più, neppure contro il nazismo.',
+      chiSalva:'Il governo socialdemocratico di Friedrich Ebert, che per reprimere la rivolta si affida ai Freikorps, corpi paramilitari di ex combattenti di orientamento nazionalista e antirepubblicano. La Repubblica si salva usando forze che non la amano.',
+      esito:'parziale'
+    },
+    {
+      id:2, pos:16, lane:'down', year:'marzo 1920', name:'Putsch di Kapp', place:'Berlino',
+      chi:'Wolfgang Kapp e il generale von Lüttwitz, alla testa di reparti di Freikorps che rifiutano lo scioglimento imposto dal trattato di Versailles. Occupano Berlino e proclamano un nuovo governo.',
+      fine:'Il colpo di Stato fallisce in pochi giorni, travolto da uno sciopero generale di proporzioni enormi proclamato dai sindacati e dai partiti operai. I congiurati fuggono; le condanne che seguiranno saranno lievissime.',
+      chiSalva:'I lavoratori, non le istituzioni: l\'esercito si era rifiutato di intervenire contro i golpisti («la Reichswehr non spara sulla Reichswehr»). La Repubblica è salvata dalla mobilitazione operaia, mentre la giustizia mostra già la sua indulgenza verso l\'eversione di destra.',
+      esito:'superata'
+    },
+    {
+      id:3, pos:33, lane:'sys', year:'1923', name:'Ruhr e iperinflazione', place:'Germania',
+      chi:'Non un gruppo politico ma una crisi economica e internazionale: Francia e Belgio occupano il bacino della Ruhr per il mancato pagamento delle riparazioni; il governo tedesco risponde con la resistenza passiva, finanziandola stampando moneta.',
+      fine:'L\'inflazione si trasforma in iperinflazione: il marco perde ogni valore, i risparmi del ceto medio si azzerano nel giro di mesi. La crisi è risolta con una riforma monetaria (il Rentenmark) e con il piano Dawes del 1924, che ristruttura le riparazioni.',
+      chiSalva:'Il governo di Gustav Stresemann, che interrompe la resistenza passiva accettando l\'impopolarità della scelta, e la cooperazione internazionale. Ma la classe media impoverita non perdonerà alla Repubblica di averle tolto le sue certezze.',
+      esito:'parziale'
+    },
+    {
+      id:4, pos:41, lane:'down', year:'novembre 1923', name:'Putsch di Monaco', place:'Monaco di Baviera',
+      chi:'Adolf Hitler e il partito nazista, ancora piccolo e regionale, insieme al generale Ludendorff: tentano di marciare su Berlino partendo dalla Baviera, sul modello della marcia su Roma dell\'anno precedente.',
+      fine:'Il tentativo viene fermato dalla polizia bavarese nel giro di poche ore. Hitler è arrestato e processato: condannato a cinque anni, ne sconta poco più di uno, e usa il processo come tribuna politica. In carcere scrive il Mein Kampf.',
+      chiSalva:'La polizia bavarese, insieme alla debolezza del movimento. Ma la magistratura, indulgente come già nel 1920, restituisce alla vita politica un capo che ha appena tentato di rovesciare lo Stato — e che d\'ora in poi sceglierà la via legale per arrivare al potere.',
+      esito:'superata'
+    },
+    {
+      id:5, pos:56, lane:'sys', year:'1924-1929', name:'Anni della stabilizzazione', place:'Germania',
+      chi:'Nessuna minaccia in atto: sono gli anni in cui la Repubblica funziona. Il piano Dawes porta capitali americani, l\'economia riparte, i trattati di Locarno (1925) e l\'ingresso nella Società delle Nazioni (1926) reinseriscono la Germania nel concerto europeo.',
+      fine:'È la fase in cui il partito nazista è politicamente marginale: alle elezioni del 1928 ottiene poco più del 2% dei voti. Ma la ripresa poggia su prestiti americani a breve termine, una base assai più fragile di quanto sembri.',
+      chiSalva:'Non c\'è nulla da salvare: la Repubblica in questi anni ha un consenso reale. È la prova che Weimar non era condannata in partenza — cosa che rende ancora più necessario spiegare che cosa accadde dopo.',
+      esito:'superata'
+    },
+    {
+      id:6, pos:70, lane:'sys', year:'1929', name:'La grande crisi', place:'Germania',
+      chi:'Il crollo di Wall Street e il ritiro improvviso dei capitali americani su cui poggiava la ripresa tedesca. La disoccupazione supera i sei milioni di persone nel giro di tre anni.',
+      fine:'La crisi non viene superata. Nel marzo 1930 cade l\'ultimo governo sostenuto da una maggioranza parlamentare, e da lì in avanti si governa per decreto presidenziale in base all\'articolo 48.',
+      chiSalva:'Nessuno. Il cancelliere Brüning risponde con una politica di rigore e tagli alla spesa pubblica che aggrava la disoccupazione, e che gli varrà il soprannome di «cancelliere della fame».',
+      esito:'fatale'
+    },
+    {
+      id:7, pos:84, lane:'down', year:'1930-1932', name:'Ascesa dell\'NSDAP', place:'Germania',
+      chi:'Il partito nazista, che sfrutta la crisi passando dal 2,6% del 1928 al 18,3% del 1930, fino al 37,3% del luglio 1932: diventa il primo partito del Reichstag. Contemporaneamente cresce anche il partito comunista.',
+      fine:'Nessuna maggioranza parlamentare è più possibile: nazisti e comunisti insieme dispongono dei voti sufficienti a bloccare qualsiasi governo, pur essendo nemici mortali fra loro. Alle elezioni del novembre 1932 i nazisti arretrano al 33,1%, e il partito appare in difficoltà.',
+      chiSalva:'Nessuno prova davvero a farlo. I partiti democratici non trovano un\'intesa; von Papen e von Schleicher governano per decreto; e proprio quando il consenso nazista sta calando, l\'entourage presidenziale decide di trattare con Hitler.',
+      esito:'fatale'
+    },
+    {
+      id:8, pos:95, lane:'down', year:'30 gennaio 1933', name:'Hitler cancelliere', place:'Berlino',
+      chi:'Non un colpo di Stato: una nomina regolare. Il presidente Hindenburg, convinto da von Papen e dai circoli conservatori che Hitler sarebbe stato controllabile in un governo con soli tre ministri nazisti su undici, lo nomina cancelliere.',
+      fine:'La Repubblica non si difende, perché formalmente non c\'è nulla da cui difendersi. Nel giro di due mesi, il decreto seguito all\'incendio del Reichstag sospende le libertà civili e la legge dei pieni poteri (23 marzo) trasferisce al governo il potere legislativo.',
+      chiSalva:'Nessuno. Questa è l\'unica delle otto prove che la Repubblica non supera — e l\'unica in cui la minaccia arriva attraverso le procedure costituzionali invece che contro di esse.',
+      esito:'fatale'
+    }
+  ];
+
+  var timeline = document.getElementById('timeline');
+  var track = document.getElementById('outcomeTrack');
+  var panel = document.getElementById('panel');
+
+  NODES.forEach(function(n){
+    var meta = META[n.esito];
+    var dir = (n.lane === 'up') ? 'up' : 'down';
+    var btn = document.createElement('button');
+    btn.className = 'node node--' + dir + (n.lane === 'sys' ? ' node--sys' : '');
+    btn.style.setProperty('--pos', n.pos + '%');
+    btn.style.setProperty('--node-color', meta.color);
+    btn.type = 'button';
+    btn.setAttribute('role','listitem');
+    btn.setAttribute('aria-pressed','false');
+    btn.setAttribute('data-id', n.id);
+    btn.setAttribute('aria-label', n.year + ' — ' + n.name + '. ' + meta.label + '.');
+    var card = '<span class="card"><span class="yr">'+n.year+'</span><span class="nm">'+n.name+'</span></span>';
+    var pinUp = '<span class="stem"></span><span class="dot"></span>';
+    var pinDown = '<span class="dot"></span><span class="stem"></span>';
+    btn.innerHTML = (dir === 'up') ? (card + pinUp) : (pinDown + card);
+    btn.addEventListener('click', function(){ select(n.id); });
+    timeline.appendChild(btn);
+
+    var seg = document.createElement('div');
+    seg.className = 'outcome-seg';
+    seg.style.setProperty('--seg-color', meta.color);
+    seg.setAttribute('data-id', n.id);
+    seg.title = n.year + ' · ' + meta.label;
+    seg.addEventListener('click', function(){ select(n.id); });
+    track.appendChild(seg);
+  });
+
+  function laneName(l){
+    if(l === 'up') return 'Minaccia da sinistra';
+    if(l === 'down') return 'Minaccia da destra';
+    return 'Crisi sistemica — economica e sociale';
+  }
+
+  function select(id){
+    var n = NODES.find(function(x){ return x.id === id; });
+    var meta = META[n.esito];
+
+    document.querySelectorAll('.node').forEach(function(el){
+      el.setAttribute('aria-pressed', String(Number(el.getAttribute('data-id')) === id));
+    });
+    document.querySelectorAll('.outcome-seg').forEach(function(el){
+      el.setAttribute('data-active', String(Number(el.getAttribute('data-id')) === id));
+    });
+
+    panel.classList.add('is-swapping');
+    setTimeout(function(){
+      panel.innerHTML =
+        '<div class="panel-head">' +
+          '<h2 class="panel-title">'+n.year+' · '+n.name+' · '+n.place+'</h2>' +
+          '<span class="panel-step">Momento '+n.id+' di '+NODES.length+'</span>' +
+        '</div>' +
+        '<dl class="fields">' +
+          '<dt>Tipo di pressione</dt><dd>'+laneName(n.lane)+'</dd>' +
+          '<dt>Chi minacciava</dt><dd>'+n.chi+'</dd>' +
+          '<dt>Come finì</dt><dd>'+n.fine+'</dd>' +
+          '<dt>Chi salvò (o non salvò) la Repubblica</dt><dd>'+n.chiSalva+'</dd>' +
+          '<dt>Esito</dt><dd><span class="verdict-badge" style="--badge-color:'+meta.color+';--badge-soft:'+meta.soft+'">'+meta.label+'</span></dd>' +
+        '</dl>';
+      panel.classList.remove('is-swapping');
+    }, 90);
+  }
+
+  select(1);
+})();
+</script>
+</body>
+</html>

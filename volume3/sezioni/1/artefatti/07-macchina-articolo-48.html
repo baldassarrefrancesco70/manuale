@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La macchina che si inceppa da sola</title>
+<style>
+  :root{
+    --paper: #ece2c8; --paper-deep: #ddcda3; --paper-card: #f2e9d2;
+    --ink: #2a2318; --ink-soft: #5c5136; --rule: #b7a173; --rule-soft: #cfc09a;
+    --auto: #3f5b3f; --auto-soft: #d9e2cf;
+    --accusa: #8c3a26; --accusa-soft: #ecd6c8;
+    --misto: #93701f; --misto-soft: #e9dbb4;
+    --gap: #6b6247; --gap-soft: #e2d9bd;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-deep:#241d13; --paper-card:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --auto:#8fbb84; --auto-soft:#2c3626; --accusa:#dd8767; --accusa-soft:#3a2620;
+      --misto:#d3ac57; --misto-soft:#392f18; --gap:#a89b78; --gap-soft:#2e2818; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:940px; margin:0 auto; padding:0 26px 60px; }
+  .thesis-ribbon{ position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:10px 20px; text-align:center;
+    font-family:var(--font-label); text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; border-bottom:3px double var(--rule); }
+  .thesis-ribbon strong{ font-weight:600; letter-spacing:.12em; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,4vw,38px); line-height:1.15; margin:0 0 12px; }
+  h1 em{ font-style:italic; color:var(--accusa); }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:64ch; margin:0; }
+
+  .govbar{ display:flex; margin-top:26px; border:1px solid var(--rule); }
+  .govseg{ flex:1; padding:9px 6px; text-align:center; font-family:var(--font-label); font-size:10.5px; text-transform:uppercase;
+    letter-spacing:.05em; color:var(--ink-soft); background:var(--paper-card); border-right:1px solid var(--rule); cursor:pointer; line-height:1.3; }
+  .govseg:last-child{ border-right:none; }
+  .govseg.active{ background:var(--ink); color:var(--paper); font-weight:700; }
+
+  .chart{ margin-top:22px; background:var(--paper-card); border:1px solid var(--rule); box-shadow:var(--shadow); padding:24px 26px 26px; }
+  .chart-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px;
+    border-bottom:1px solid var(--rule-soft); padding-bottom:12px; margin-bottom:20px; }
+  .chart-year{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-soft); }
+  .chart-gov{ font-size:20px; margin:4px 0 0; }
+  .chart-step{ font-family:var(--font-label); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); }
+
+  .bar-block{ margin-bottom:20px; }
+  .bar-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .bar-name{ font-family:var(--font-label); font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+  .bar-val{ font-family:var(--font-label); font-size:19px; font-weight:700; color:var(--bar-c); font-variant-numeric:tabular-nums; }
+  .bar-track{ height:20px; background:var(--paper-deep); border:1px solid var(--rule); }
+  .bar-fill{ height:100%; background:var(--bar-c); transition:width .45s ease; }
+  @media (prefers-reduced-motion: reduce){ .bar-fill{ transition:none; } }
+  .bar-sub{ font-family:var(--font-label); font-size:10.5px; color:var(--ink-soft); margin-top:5px; }
+
+  .rate{ border-top:1px dashed var(--rule-soft); padding-top:16px; margin-top:6px; margin-bottom:16px; }
+  .rate-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; flex-wrap:wrap; gap:8px; }
+  .rate-lab{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); }
+  .rate-val{ font-family:var(--font-label); font-size:15px; font-weight:700; color:var(--misto); }
+  .rate-track{ height:12px; background:var(--paper-deep); border:1px solid var(--rule); }
+  .rate-fill{ height:100%; background:var(--misto); transition:width .45s ease; }
+  @media (prefers-reduced-motion: reduce){ .rate-fill{ transition:none; } }
+  .rate-sub{ font-family:var(--font-label); font-size:10.5px; color:var(--ink-soft); margin-top:5px; line-height:1.4; }
+
+  .sitting{ border-top:1px dashed var(--rule-soft); padding-top:14px; margin-top:4px; display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  .sitting-lab{ font-family:var(--font-label); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); }
+  .sitting-val{ font-family:var(--font-label); font-size:15px; font-weight:700; color:var(--gap); }
+
+  .commentary{ margin-top:18px; background:var(--paper-deep); border:1px solid var(--rule); padding:18px 22px 20px; }
+  .commentary p{ margin:0; font-size:15px; line-height:1.6; }
+  .commentary p strong{ color:var(--accusa); }
+
+  .slider-wrap{ margin-top:24px; }
+  .slider-labels{ display:flex; justify-content:space-between; font-family:var(--font-label); font-size:10.5px; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:.06em; }
+  input[type=range]{ width:100%; accent-color:var(--ink); }
+
+  .legend{ display:flex; gap:20px; flex-wrap:wrap; margin-top:16px; font-family:var(--font-label); font-size:11px; color:var(--ink-soft); }
+  .legend span{ display:flex; align-items:center; gap:6px; }
+  .swatch{ width:14px; height:10px; display:inline-block; border:1px solid var(--rule); }
+
+  .closing{ border-top:1px solid var(--rule); margin-top:34px; padding-top:24px; }
+  .closing h2{ font-size:19px; font-weight:400; margin:0 0 6px; }
+  .closing p.q{ font-family:var(--font-label); font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; font-style:italic; }
+  textarea{ width:100%; min-height:120px; font-family:var(--font-body); font-size:14.5px; color:var(--ink); background:var(--paper-card);
+    border:1px solid var(--rule); padding:12px; resize:vertical; }
+  .closing-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .export-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:9px 16px;
+    background:transparent; color:var(--ink); border:1px solid var(--rule); cursor:pointer; }
+  .export-btn:hover{ border-color:var(--ink); }
+
+  footer.prompt{ margin-top:34px; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="thesis-ribbon"><strong>Smontata non contro la Costituzione, ma attraverso di essa.</strong></div>
+
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Artefatto N · La macchina che si inceppa da sola</p>
+    <h1>La macchina che si inceppa <em>da sola</em></h1>
+    <p class="dek">Quante leggi approva il Reichstag, quanti decreti emana il presidente in base all'articolo 48. Muovi il cursore attraverso i governi che si succedono dal 1930 al 1933 e osserva le due barre invertirsi — prima che Hitler arrivi al potere.</p>
+  </header>
+
+  <div class="govbar" id="govbar"></div>
+
+  <div class="chart" id="chart"></div>
+
+  <div class="commentary" id="commentary"></div>
+
+  <div class="slider-wrap">
+    <div class="slider-labels"><span>1930</span><span>1931</span><span>1932</span><span>1933</span></div>
+    <input type="range" id="timeSlider" min="0" max="4" step="1" value="0" aria-label="Anno">
+  </div>
+
+  <div class="legend">
+    <span><i class="swatch" style="background:var(--auto)"></i> Leggi approvate dal Reichstag</span>
+    <span><i class="swatch" style="background:var(--accusa)"></i> Decreti presidenziali (art. 48)</span>
+    <span><i class="swatch" style="background:var(--misto)"></i> Ritmo mensile dei decreti</span>
+    <span><i class="swatch" style="background:var(--gap)"></i> Giorni di seduta del Reichstag</span>
+  </div>
+
+  <div class="closing">
+    <h2>Una domanda, non una verifica</h2>
+    <p class="q">In quale governo la democrazia parlamentare ha di fatto smesso di funzionare? È possibile indicare una data sola?</p>
+    <textarea id="answerBox" placeholder="La tua risposta..."></textarea>
+    <div class="closing-actions">
+      <button class="export-btn" id="downloadBtn" type="button">Scarica la risposta (.txt)</button>
+      <button class="export-btn" id="copyBtn" type="button">Copia negli appunti</button>
+    </div>
+  </div>
+
+  <footer class="prompt">
+    <span>Da provare —</span>Copri con un dito l'ultima tappa: la curva delle due barre lascia prevedere che cosa sarebbe successo?
+  </footer>
+</div>
+
+<script>
+(function(){
+  var MAX = 100; // scala comune per le due barre
+
+  var STEPS = [
+    {
+      year: "1930", gov: "M\u00fcller \u2192 Br\u00fcning", short: "1930<br>M\u00fcller \u2192 Br\u00fcning",
+      leggi: 98, decreti: 5, ritmo: 0.4, periodo: "anno intero",
+      leggiSub: "Il Reichstag legifera ancora normalmente.",
+      decretiSub: "L'articolo 48 comincia a essere usato dopo la caduta della grande coalizione (marzo 1930).",
+      seduteSub: "94 giorni di seduta",
+      comm: "Nel marzo 1930 cade l'ultimo governo sostenuto da una maggioranza parlamentare. Br\u00fcning, nominato dal presidente Hindenburg, governa senza maggioranza propria e ricorre all'articolo 48 quando il Reichstag non approva i suoi provvedimenti. <strong>Il meccanismo d'emergenza entra nell'uso ordinario</strong> \u2014 tre anni prima della nomina di Hitler."
+    },
+    {
+      year: "1931", gov: "Br\u00fcning", short: "1931<br>Br\u00fcning",
+      leggi: 34, decreti: 44, ritmo: 3.7, periodo: "anno intero",
+      leggiSub: "Le leggi parlamentari si riducono a un terzo dell'anno precedente.",
+      decretiSub: "Per la prima volta i decreti presidenziali superano le leggi del Reichstag.",
+      seduteSub: "42 giorni di seduta",
+      comm: "\u00c8 l'anno del sorpasso: <strong>i decreti presidenziali diventano lo strumento normale di governo</strong>, le leggi parlamentari l'eccezione. Il Reichstag si riunisce meno della met\u00e0 dei giorni del 1930. Formalmente nulla \u00e8 violato: l'articolo 48 \u00e8 parte della Costituzione, e Hindenburg \u00e8 un presidente eletto."
+    },
+    {
+      year: "1932", gov: "Br\u00fcning \u2192 von Papen \u2192 von Schleicher", short: "1932<br>Papen \u00b7 Schleicher",
+      leggi: 5, decreti: 60, ritmo: 5.0, periodo: "anno intero",
+      leggiSub: "Il Reichstag approva cinque leggi in tutto l'anno.",
+      decretiSub: "Il governo procede quasi esclusivamente per decreto. (Le fonti oscillano tra 59 e 66: l'ordine di grandezza \u00e8 quello.)",
+      seduteSub: "13 giorni di seduta",
+      comm: "Von Papen e von Schleicher, entrambi nominati da Hindenburg e privi di qualsiasi maggioranza, governano per decreto. Il Reichstag si riunisce tredici giorni in un anno e viene sciolto due volte. <strong>La democrazia parlamentare ha gi\u00e0 smesso di funzionare</strong>, e il partito nazista non \u00e8 ancora al governo."
+    },
+    {
+      year: "30 gennaio \u2013 22 marzo 1933", gov: "Hitler cancelliere", short: "gen.\u2013mar. 1933<br>Hitler",
+      leggi: 0, decreti: 10, ritmo: 5.6, periodo: "meno di otto settimane",
+      leggiSub: "Il Reichstag, sciolto il 1\u00b0 febbraio, non approva alcuna legge.",
+      decretiSub: "Almeno dieci decreti presidenziali in meno di due mesi: commissario per la Prussia (31 gennaio), scioglimento del Reichstag (1\u00b0 febbraio), modifica della legge elettorale (2 febbraio), decreto su stampa e riunioni (4 febbraio), decreto sulla Prussia (6 febbraio), i due decreti del 28 febbraio, altri il 18 e il 21 marzo.",
+      seduteSub: "Reichstag sciolto, poi rieletto il 5 marzo",
+      comm: "Hitler \u00e8 nominato cancelliere secondo la procedura costituzionale, da un presidente eletto, alla guida di un governo di coalizione. <strong>Non c'\u00e8 nessun salto nella curva</strong>: eredita una macchina gi\u00e0 in funzione da tre anni, e la usa subito e pi\u00f9 intensamente. Il ritmo dei decreti (circa 5,6 al mese) \u00e8 la prosecuzione diretta di quello del 1932 sotto von Papen e von Schleicher. Anche il decreto dell'incendio del Reichstag (28 febbraio), che sospende le libert\u00e0 civili, \u00e8 un normale decreto presidenziale in base all'articolo 48."
+    },
+    {
+      year: "dal 23 marzo 1933", gov: "Legge dei pieni poteri", short: "mar. 1933<br>Pieni poteri",
+      leggi: 1, decreti: 0, ritmo: 0, periodo: "dopo la legge dei pieni poteri",
+      leggiSub: "Una sola legge: quella con cui il Reichstag rinuncia a se stesso.",
+      decretiSub: "Il decreto presidenziale diventa superfluo: il governo legifera direttamente, senza pi\u00f9 bisogno n\u00e9 del Reichstag n\u00e9 della firma del presidente.",
+      seduteSub: "Una seduta decisiva",
+      comm: "Con la legge dei pieni poteri (Erm\u00e4chtigungsgesetz), approvata dal Reichstag in assenza dei deputati comunisti gi\u00e0 arrestati, <strong>il parlamento trasferisce al governo il potere di legiferare</strong>. Le due barre si azzerano entrambe non perch\u00e9 la spirale si fermi, ma perch\u00e9 non serve pi\u00f9 nemmeno l'articolo 48: \u00e8 l'ultimo atto di un processo che i governi precedenti avevano gi\u00e0 percorso quasi per intero."
+    }
+  ];
+
+  var slider = document.getElementById('timeSlider');
+  var govbar = document.getElementById('govbar');
+  var chart = document.getElementById('chart');
+  var commentary = document.getElementById('commentary');
+  var current = 0;
+
+  function renderGovbar(){
+    govbar.innerHTML = '';
+    STEPS.forEach(function(s, i){
+      var d = document.createElement('div');
+      d.className = 'govseg' + (i === current ? ' active' : '');
+      d.innerHTML = s.short;
+      d.addEventListener('click', function(){ current = i; slider.value = i; render(); });
+      govbar.appendChild(d);
+    });
+  }
+
+  function bar(name, val, sub, color){
+    var w = Math.max(0, Math.min(100, (val / MAX) * 100));
+    return '<div class="bar-block">' +
+      '<div class="bar-top"><span class="bar-name">'+name+'</span><span class="bar-val" style="--bar-c:'+color+'">'+val+'</span></div>' +
+      '<div class="bar-track"><div class="bar-fill" style="--bar-c:'+color+'; width:'+w+'%"></div></div>' +
+      '<div class="bar-sub">'+sub+'</div></div>';
+  }
+
+  function render(){
+    var s = STEPS[current];
+    renderGovbar();
+    var html = '<div class="chart-head"><div><div class="chart-year">'+s.year+'</div><h2 class="chart-gov">'+s.gov+'</h2></div>' +
+               '<div class="chart-step">Tappa '+(current+1)+' di '+STEPS.length+'</div></div>';
+    html += bar('Leggi approvate dal Reichstag', s.leggi, s.leggiSub, 'var(--auto)');
+    html += bar('Decreti presidenziali (art. 48)', s.decreti, s.decretiSub, 'var(--accusa)');
+    html += '<div class="rate"><div class="rate-top"><span class="rate-lab">Ritmo dei decreti presidenziali &mdash; al mese</span><span class="rate-val">'+(s.ritmo>0 ? s.ritmo.toString().replace('.',',')+' al mese' : 'non pi\u00f9 necessari')+'</span></div>';
+    html += '<div class="rate-track"><div class="rate-fill" style="width:'+Math.min(100,(s.ritmo/6)*100)+'%"></div></div>';
+    html += '<div class="rate-sub">Indicatore comparabile tra periodi di durata diversa: &egrave; qui che si vede la continuit&agrave; della curva. Periodo considerato: '+s.periodo+'.</div></div>';
+    html += '<div class="sitting"><span class="sitting-lab">Giorni di seduta del Reichstag</span><span class="sitting-val">'+s.seduteSub+'</span></div>';
+    chart.innerHTML = html;
+    commentary.innerHTML = '<p>'+s.comm+'</p>';
+  }
+
+  slider.addEventListener('input', function(){ current = parseInt(slider.value,10); render(); });
+
+  document.getElementById('downloadBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '(nessuna risposta scritta)';
+    var blob = new Blob(["La macchina che si inceppa da sola — risposta finale\n\n" + txt], {type:'text/plain'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'articolo-48-risposta.txt';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  });
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var txt = document.getElementById('answerBox').value || '';
+    navigator.clipboard && navigator.clipboard.writeText(txt);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
