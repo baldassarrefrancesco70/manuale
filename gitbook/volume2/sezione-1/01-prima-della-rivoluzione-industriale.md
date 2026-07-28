@@ -45,6 +45,11 @@ Video --- La rivoluzione demografica
 {% endembed %}
 
 
+{% embed url="https://drive.google.com/file/d/12fErc1qfjCLLS-2VEbLmPhpGn9ay6ACu/view" %}
+Video --- Morire di meno, non nascere di più
+{% endembed %}
+
+
 ## 1.2 La rivoluzione agricola inglese
 
 

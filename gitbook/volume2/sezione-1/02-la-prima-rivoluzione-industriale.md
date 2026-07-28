@@ -93,6 +93,11 @@ Video --- Carbone e vapore
 {% endembed %}
 
 
+{% embed url="https://drive.google.com/file/d/1jq8fkNrpVmXNDfkWkQc8qiz5Gha_oONl/view" %}
+Video --- Perché una pompa da miniera cambiò il mondo
+{% endembed %}
+
+
 ### 2.4 Il caso inglese
 
 
@@ -187,6 +192,11 @@ A rendere possibile questa disciplina concorse anche la trasformazione del lavor
 
 {% embed url="https://drive.google.com/file/d/1bDiw6YvjccJpQE3FwRg4mXt2dx2ZXYf-/view" %}
 Video --- Classi e disciplina
+{% endembed %}
+
+
+{% embed url="https://drive.google.com/file/d/1aOnQIr3vHmjp1Zy5BJ4tIPqsPc-8wSlM/view" %}
+Video --- Il tempo dell'orologio
 {% endembed %}
 
 
