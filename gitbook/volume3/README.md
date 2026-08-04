@@ -1,7 +1,5 @@
-# Come muore una democrazia
-
-### Volume 3 --- Sezione 1
+# Volume 3
 
 Manuale di Storia, Liceo Classico G. B. Vico, Chieti.
 
-Vai alla [Sezione 1](sezione-1/README.md).
+- [Sezione 1 --- Come muore una democrazia](sezione-1/README.md)
