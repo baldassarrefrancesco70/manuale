@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tre costituzioni a confronto — Artefatto 16</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .selettore{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; align-items:center; }
+  .crit-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo); padding:9px 15px; border-radius:6px; cursor:pointer; }
+  .crit-btn.active{ background:var(--marrone); color:#fff; }
+  .crit-btn.speciale.active{ background:var(--marrone-scuro); }
+  .separatore-verticale{ width:1px; height:24px; background:var(--bordo); margin:0 6px; }
+  .btn-asse{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--marrone-scuro); color:#fff; border:1px solid var(--marrone-scuro); padding:9px 15px; border-radius:6px; cursor:pointer; }
+
+  .griglia-cost{ display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; max-width:1100px; margin-bottom:14px; }
+  .card-cost{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:18px; }
+  .card-cost.speciale{ background:#e8ddce; border-color:var(--marrone-scuro); }
+  .card-cost h3{ font-size:16px; margin:0 0 4px; font-weight:normal; color:var(--marrone-scuro); }
+  .card-cost .anno-sub{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; color:#8a8578; margin-bottom:10px; }
+  .card-cost p{ font-size:13.5px; margin:0; }
+
+  .asse-wrap{ max-width:900px; margin-bottom:20px; }
+  svg{ display:block; }
+  .asse-etichetta{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; fill:var(--testo); }
+  .asse-anno{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; font-weight:bold; fill:var(--marrone-scuro); }
+
+  .scheda-finale{ max-width:800px; background:var(--bg-card); border:1px solid var(--bordo); border-left:4px solid var(--marrone); border-radius:0 6px 6px 0; padding:18px 22px; margin-top:20px; font-size:14.5px; }
+  .scheda-finale .titolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:8px; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 16</p>
+  <h1>Tre costituzioni a confronto</h1>
+  <p class="sottotitolo">§ 3.6 — La Costituzione del 1793, che non entrò mai in vigore</p>
+</div>
+
+<div class="istruzioni">
+  <p>1791, 1793, 1795: tre soluzioni diverse, non tre tappe di un progresso. Confronta una riga alla volta. L'ultima riga rovescia il senso di tutte le altre.</p>
+</div>
+
+<div class="selettore" id="selettore"></div>
+
+<div class="griglia-cost" id="griglia-cost"></div>
+<div class="asse-wrap" id="asse-wrap" hidden>
+  <svg id="svg-asse" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<div class="scheda-finale" id="scheda-finale" hidden>
+  <p class="titolo">La fortuna ottocentesca del testo del 1793</p>
+  <p>Proprio perché non fu mai applicata, la costituzione dell'anno I non ebbe difetti pratici da rimproverarle, e divenne per tutto l'Ottocento il riferimento dei movimenti democratici, repubblicani e socialisti europei: la si invocò nel 1830, nel 1848 e durante la Comune di Parigi. Un testo applicato genera delusioni; un testo sospeso conserva intatta la propria promessa, e proprio per questo diventa una bandiera.</p>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> I contenuti delle tre colonne sono tratti da § 2.6-2.7 (1791) e § 3.6, 3.12 (1793, 1795).
+  <br><strong>Correzione rispetto al capitolato.</strong> Il capitolato indicava per l'ultima riga «in vigore quattro anni, mai applicata, in vigore quattro anni», ma il capitolo colloca la caduta della costituzione del 1791 il 10 agosto 1792 — meno di un anno dopo la promulgazione del settembre 1791, non quattro. I quattro anni descrivono con precisione solo il 1795 (agosto 1795 - 18 brumaio 1799). Ho corretto la colonna 1791 di conseguenza: verifica se preferisci questa versione o un'altra formulazione.
+</footer>
+
+<script>
+const criteri = [
+  { id:'vota', label:'Chi vota' },
+  { id:'come', label:'Come si vota' },
+  { id:'governa', label:'Chi governa' },
+  { id:'diritti', label:'Quali diritti sono dichiarati' },
+  { id:'fine', label:'Che fine ha fatto il testo', speciale:true }
+];
+
+const costituzioni = [
+  { id:'1791', nome:'1791', ampiezza:2,
+    vota:"Cittadini attivi: maschi di almeno venticinque anni che pagano un'imposta diretta pari almeno a tre giornate di lavoro; esclusi i domestici salariati.",
+    come:"Doppio grado: gli attivi designano elettori di secondo grado, con censo più alto, che scelgono i deputati. Per essere eletti serviva anche una proprietà fondiaria e il marco d'argento, requisito abolito nell'estate 1791.",
+    governa:"Monarchia costituzionale: il re sanziona le leggi o pone un veto sospensivo, superabile solo se due legislature successive la riapprovano — un blocco di circa quattro anni. Il congegno funziona solo se il re collabora.",
+    diritti:"La Dichiarazione dei diritti dell'uomo e del cittadino, agosto 1789: libertà, uguaglianza nei diritti, proprietà «inviolabile e sacra», resistenza all'oppressione. Diritti prevalentemente di libertà, non di prestazione.",
+    fine:"In vigore meno di un anno: promulgata nel settembre 1791, la monarchia che ne era il perno viene sospesa il 10 agosto 1792."
+  },
+  { id:'1793', nome:'1793', ampiezza:3,
+    vota:"Suffragio universale maschile, come da settembre 1792, ma senza soglia di reddito.",
+    come:"Diretto: niente più elettori di secondo grado. Le leggi più importanti sono sottoposte alle assemblee primarie, che possono respingerle — un controllo popolare permanente sull'assemblea.",
+    governa:"Corpo legislativo annuale; esecutivo ridotto a un consiglio di ventiquattro membri nominati dall'assemblea stessa, congegno pensato per rendere impossibile qualunque potere personale.",
+    diritti:"Una dichiarazione più ampia di quella del 1789: i soccorsi pubblici sono «un debito sacro della società», va assicurato lavoro o sussistenza, l'istruzione è un bisogno di tutti. L'art. 35 dichiara l'insurrezione, quando il governo viola i diritti del popolo, «il più sacro dei diritti e il più indispensabile dei doveri».",
+    fine:"Mai applicata. Approvata da quasi due milioni di cittadini nel referendum di luglio, proclamata il 10 agosto, sospesa due mesi dopo quando il governo si dichiara «rivoluzionario fino alla pace»: resta chiusa in una cassa di cedro nell'aula della Convenzione."
+  },
+  { id:'1795', nome:'1795', ampiezza:1,
+    vota:"Il suffragio universale è abolito, torna il censo: un secondo grado così selettivo da ridurre a poche decine di migliaia gli elettori che contano davvero.",
+    come:"Corpo legislativo diviso in due camere: il Consiglio dei Cinquecento propone, il Consiglio degli Anziani approva o respinge.",
+    governa:"Esecutivo affidato a un Direttorio di cinque membri, rinnovabile di un quinto ogni anno; non può sciogliere le camere né proporre leggi. Nessun organo può prevalere sugli altri, e nessuno può risolvere un conflitto.",
+    diritti:"Due dichiarazioni premesse affiancano ai diritti un elenco di doveri: uno di essi enuncia che l'intero ordine sociale riposa sul mantenimento della proprietà. I costituenti dichiararono apertamente che la Francia doveva essere governata dai «migliori», cioè dai più istruiti e dai proprietari.",
+    fine:"In vigore quattro anni: dall'agosto 1795 al 18 brumaio (9 novembre) 1799, quando Bonaparte e Sieyès la sostituiscono con il Consolato."
+  }
+];
+
+let criterioAttivo = 'vota';
+let vistaAsse = false;
+
+function renderSelettore(){
+  const el = document.getElementById('selettore');
+  el.innerHTML = '';
+  criteri.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = 'crit-btn' + (c.speciale?' speciale':'') + (criterioAttivo===c.id && !vistaAsse ? ' active':'');
+    btn.textContent = c.label;
+    btn.onclick = ()=>{ criterioAttivo = c.id; vistaAsse = false; render(); };
+    el.appendChild(btn);
+  });
+  const sep = document.createElement('div'); sep.className='separatore-verticale'; el.appendChild(sep);
+  const btnAsse = document.createElement('button');
+  btnAsse.className = 'btn-asse';
+  btnAsse.textContent = 'Asse di ampiezza democratica';
+  btnAsse.onclick = ()=>{ vistaAsse = true; render(); };
+  el.appendChild(btnAsse);
+}
+
+function renderGriglia(){
+  document.getElementById('griglia-cost').hidden = vistaAsse;
+  document.getElementById('asse-wrap').hidden = !vistaAsse;
+  document.getElementById('scheda-finale').hidden = !(criterioAttivo==='fine' && !vistaAsse);
+  if(vistaAsse) return;
+  const el = document.getElementById('griglia-cost');
+  const speciale = criterioAttivo === 'fine';
+  el.innerHTML = costituzioni.map(c=>`
+    <div class="card-cost${speciale?' speciale':''}">
+      <h3>${c.nome}</h3>
+      <p class="anno-sub"></p>
+      <p>${c[criterioAttivo]}</p>
+    </div>
+  `).join('');
+}
+
+function renderAsse(){
+  const svg = document.getElementById('svg-asse');
+  svg.innerHTML = '';
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); return e; }
+
+  const baseY = 280, topY = 40;
+  const scaleY = (liv)=> baseY - (liv/3)*(baseY-topY);
+
+  svg.appendChild(el('line', { x1:80, y1:baseY, x2:650, y2:baseY, stroke:'#cfc7b8', 'stroke-width':1 }));
+  svg.appendChild(el('line', { x1:80, y1:topY, x2:80, y2:baseY, stroke:'#cfc7b8', 'stroke-width':1 }));
+  const labelAlto = el('text', { x:70, y:topY+5, class:'asse-etichetta', 'text-anchor':'end' }); labelAlto.textContent='ampia';
+  svg.appendChild(labelAlto);
+  const labelBasso = el('text', { x:70, y:baseY, class:'asse-etichetta', 'text-anchor':'end' }); labelBasso.textContent='ristretta';
+  svg.appendChild(labelBasso);
+
+  const xPos = { '1791':230, '1793':420, '1795':570 };
+  costituzioni.forEach(c=>{
+    const x = xPos[c.id];
+    const y = scaleY(c.ampiezza);
+    const applicata = c.id !== '1793';
+    svg.appendChild(el('line', { x1:x, y1:baseY, x2:x, y2:y, stroke:'#8B7355', 'stroke-width':1, 'stroke-dasharray': applicata?'0':'4,3' }));
+    const cerchio = el('circle', { cx:x, cy:y, r:10, fill: applicata?'#8B7355':'#fbf8f2', stroke:'#6b5940', 'stroke-width':2, 'stroke-dasharray': applicata?'0':'3,2' });
+    svg.appendChild(cerchio);
+    const t = el('text', { x:x, y:y-18, class:'asse-anno', 'text-anchor':'middle' }); t.textContent = c.nome;
+    svg.appendChild(t);
+    const t2 = el('text', { x:x, y:baseY+20, class:'asse-etichetta', 'text-anchor':'middle' }); t2.textContent = applicata?'applicata':'mai applicata';
+    svg.appendChild(t2);
+  });
+}
+
+function render(){
+  renderSelettore();
+  renderGriglia();
+  if(vistaAsse) renderAsse();
+}
+
+render();
+</script>
+
+</body>
+</html>

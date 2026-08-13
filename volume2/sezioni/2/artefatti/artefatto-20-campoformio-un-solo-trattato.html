@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campoformio, un solo trattato — Artefatto 20</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6; --blu-diritti:#5b7a8c; --rosso-popoli:#a86b5a;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.6; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .tab-nav{ display:flex; gap:8px; margin-bottom:24px; }
+  .tab-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo); padding:10px 18px; border-radius:6px; cursor:pointer; }
+  .tab-btn.active{ background:var(--marrone); color:#fff; }
+  [hidden]{ display:none !important; }
+
+  .legenda{ display:flex; gap:20px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; margin-bottom:16px; align-items:center; }
+  .legenda span{ display:flex; align-items:center; gap:6px; }
+  .puntino{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .puntino.diritti{ background:var(--blu-diritti); }
+  .puntino.popoli{ background:var(--rosso-popoli); }
+
+  .documento{ max-width:820px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:26px 28px; margin-bottom:20px; }
+  .doc-intestazione{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:16px; }
+  .preambolo{ font-style:italic; font-size:14px; margin-bottom:18px; color:#5a5347; }
+  .clausola{ margin-bottom:16px; }
+  .clausola-numero{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:bold; font-size:12.5px; color:var(--marrone-scuro); margin-bottom:4px; }
+  .frase{ cursor:pointer; padding:1px 2px; border-radius:3px; }
+  .frase:hover{ background:var(--grigio-neutro); }
+  .frase.sel-diritti{ background:#dbe6ea; box-shadow:0 0 0 1px var(--blu-diritti) inset; }
+  .frase.sel-popoli{ background:#f0ddd5; box-shadow:0 0 0 1px var(--rosso-popoli) inset; }
+  .riassunto{ font-size:13px; font-style:italic; color:#8a8578; }
+
+  .bottoni-assegna{ display:flex; gap:8px; margin-bottom:20px; }
+  .btn-assegna{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; border:1px solid var(--bordo); border-radius:6px; padding:9px 14px; cursor:pointer; background:var(--bg-card); color:var(--testo); }
+  .btn-assegna.diritti.attivo{ background:var(--blu-diritti); color:#fff; border-color:var(--blu-diritti); }
+  .btn-assegna.popoli.attivo{ background:var(--rosso-popoli); color:#fff; border-color:var(--rosso-popoli); }
+
+  .nota-coesistenza{ max-width:800px; background:#fbf8f2; border-left:4px solid var(--marrone-scuro); border-radius:0 6px 6px 0; padding:14px 18px; font-size:13.5px; margin-bottom:20px; display:none; }
+  .nota-coesistenza.visibile{ display:block; }
+
+  .timeline-sei-mesi{ display:flex; gap:8px; max-width:900px; margin-bottom:20px; }
+  .mese-blocco{ flex:1; text-align:center; }
+  .mese-nome{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; color:var(--marrone-scuro); margin-bottom:6px; }
+  .mese-cerchio{ width:16px; height:16px; border-radius:50%; background:var(--grigio-neutro); margin:0 auto 8px; }
+  .mese-cerchio.evento{ background:var(--marrone); width:20px; height:20px; }
+  .mese-testo{ font-size:11.5px; color:#5a5347; min-height:60px; }
+
+  .domanda-finale{ max-width:760px; font-size:17px; font-style:italic; border-left:4px solid var(--marrone); background:var(--bg-card); padding:20px 24px; border-radius:0 6px 6px 0; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 20</p>
+  <h1>Campoformio, un solo trattato</h1>
+  <p class="sottotitolo">§ 4.2 — Campoformio</p>
+</div>
+
+<div class="istruzioni">
+  <p>Il documento del 17 ottobre 1797, per intero. Clicca ogni clausola e assegnala: istituisce diritti, oppure dispone di popoli. Le due categorie non si dividono per sezioni del trattato: si alternano, e in un caso coesistono nella stessa clausola.</p>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" id="tab-1" onclick="mostra(1)">Il trattato</button>
+  <button class="tab-btn" id="tab-2" onclick="mostra(2)">Sei mesi</button>
+</nav>
+
+<section id="parte-1">
+  <div class="legenda">
+    <span><span class="puntino diritti"></span> istituisce diritti</span>
+    <span><span class="puntino popoli"></span> dispone di popoli</span>
+  </div>
+
+  <div class="bottoni-assegna">
+    <button type="button" class="btn-assegna diritti" id="btn-diritti" onclick="setModalita('diritti')">Segna come: istituisce diritti</button>
+    <button type="button" class="btn-assegna popoli" id="btn-popoli" onclick="setModalita('popoli')">Segna come: dispone di popoli</button>
+  </div>
+
+  <div class="documento">
+    <p class="doc-intestazione">Trattato di pace definitivo concluso fra la Repubblica francese e l'imperatore dei Romani, re d'Ungheria e di Boemia — 17 ottobre 1797</p>
+    <p class="preambolo">Sua Maestà l'imperatore dei Romani, re d'Ungheria e di Boemia e la Repubblica francese, volendo consolidare la pace le cui basi furono poste con i preliminari sottoscritti a Leoben il 18 aprile 1797, hanno nominato loro Ministri Plenipotenziari, i quali hanno stabilito i seguenti articoli:</p>
+    <div id="clausole"></div>
+  </div>
+
+  <div class="nota-coesistenza" id="nota-coesistenza">
+    <strong>La stessa clausola.</strong> L'articolo 9 dispone del destino di «tutti i paesi ceduti, acquisiti o scambiati» — è disposizione di popoli — e nello stesso respiro istituisce un diritto per i loro abitanti, la protezione dei beni e delle persone. Le due categorie, qui, non si susseguono: coincidono.
+  </div>
+</section>
+
+<section id="parte-2" hidden>
+  <div class="timeline-sei-mesi" id="timeline-sei-mesi"></div>
+  <div class="domanda-finale">
+    Uno Stato che può essere ceduto in cambio di un altro territorio, quali che siano le sue leggi interne, è uno Stato?
+  </div>
+</section>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Il testo del trattato è quello integrale, tradotto in italiano, conservato in fonti storiche pubbliche (fra cui la trascrizione riportata da Wikipedia, che a sua volta cita edizioni novecentesche); il documento originale del 1797 è di pubblico dominio. Gli articoli dal 10 al 16 e dal 21 al 24 sono riportati in forma riassuntiva, come li riassume la fonte da cui ho tratto il testo: non ho ricostruito il loro contenuto articolo per articolo.
+</footer>
+
+<script>
+const clausole = [
+  { num:'Art. 1', testo:"Ci sarà in futuro e per sempre una pace solida ed inviolabile fra Sua Maestà l'imperatore dei Romani e la Repubblica francese. Le parti contraenti presteranno la massima attenzione a mantenere una perfetta intesa, senza permettere che nessuna delle due parti commetta alcun tipo di ostilità per terra o per mare." },
+  { num:'Art. 2', testo:"Le parti contraenti faranno togliere il sequestro posto su tutti i beni, diritti e frutti dei privati residenti sui rispettivi territori, e si obbligano a saldare i debiti prestati da tali privati. Il presente articolo è dichiarato valido anche per la Repubblica cisalpina." },
+  { num:'Art. 3', testo:"Sua Maestà l'imperatore rinuncia per sé e per i suoi successori, in favore della Repubblica francese, a tutti i suoi diritti e titoli sulle ex province belghe. La Repubblica francese possiederà in perpetuo questi paesi, in tutta sovranità e proprietà." },
+  { num:'Artt. 4-5', riassunto:true, testo:"Si regolano le ipoteche precedenti la guerra, e l'imperatore acconsente che la Repubblica francese possieda in tutta sovranità le isole già veneziane del Levante: Corfù, Zante, Cefalonia e le altre." },
+  { num:'Art. 6', testo:"La Repubblica francese acconsente a che Sua Maestà l'imperatore possieda in tutta sovranità e proprietà: l'Istria, la Dalmazia, le isole già veneziane dell'Adriatico, le bocche di Cattaro, la città di Venezia, le lagune e i paesi compresi entro la linea di demarcazione qui descritta." },
+  { num:'Art. 7', testo:"Sua Maestà l'imperatore rinuncia in perpetuo, in favore della Repubblica Cisalpina, a tutti i diritti e titoli che poteva pretendere sui paesi che possedeva prima della guerra e che fanno ora parte della Repubblica Cisalpina, la quale li possiederà in tutta sovranità e proprietà." },
+  { num:'Art. 8', testo:"Sua Maestà l'imperatore riconosce la Repubblica Cisalpina come potenza indipendente. Questa repubblica comprende la ex Lombardia austriaca, il Bergamasco, il Bresciano, il Cremasco, Mantova, la parte degli stati già veneziani a ovest della linea citata nell'art. 6, il Modenese, Massa e Carrara, e le tre legazioni di Bologna, Ferrara e la Romagna." },
+  { num:'Art. 9', testo:"In tutti i paesi ceduti, acquisiti o scambiati con il presente trattato, sarà accordata a tutti gli abitanti e proprietari la rimozione dei sequestri dei loro beni ed effetti, senza che essi possano essere infastiditi nei loro beni o nelle loro persone. Chi vorrà cessare di abitare in questi paesi dovrà dichiararlo entro tre mesi, e avrà tre anni di tempo per vendere i propri beni.", coesistenza:true },
+  { num:'Artt. 10-16', riassunto:true, testo:"Si disciplinano la continuità delle obbligazioni contratte dagli abitanti dei paesi che cambiano sovranità, i diritti di risarcimento per confische o requisizioni di guerra, il trasferimento di archivi e mappe, il ripristino dei trattati commerciali, i diritti di navigazione sui fiumi di confine, e il diritto degli abitanti a non essere perseguiti, nei loro beni o nella loro persona, per le opinioni politiche o l'attività militare svolte durante la guerra." },
+  { num:'Art. 17', testo:"Sua Maestà l'imperatore si obbliga a cedere al duca di Modena, quale indennizzo per i territori che questo principe aveva in Italia, il territorio della Bresgovia, che egli possiederà alle stesse condizioni in cui possedeva il Modenese." },
+  { num:'Art. 20', testo:"Si terrà a Rastatt un congresso, composto dai plenipotenziari dell'impero germanico e della Repubblica francese, per la pacificazione fra le due potenze, da aprirsi entro un mese dalla firma del presente trattato." },
+  { num:'Artt. 21-24', riassunto:true, testo:"Si dispone la liberazione dei prigionieri di guerra entro quaranta giorni, la fine delle forniture di guerra, il cerimoniale fra gli Stati belligeranti e la Repubblica Cisalpina, e si estendono le clausole del trattato alla Repubblica batava." }
+];
+
+let modalitaAttiva = 'diritti';
+let assegnazioni = {};
+
+function setModalita(m){
+  modalitaAttiva = m;
+  document.getElementById('btn-diritti').classList.toggle('attivo', m==='diritti');
+  document.getElementById('btn-popoli').classList.toggle('attivo', m==='popoli');
+}
+
+function assegnaClausola(idx){
+  assegnazioni[idx] = modalitaAttiva;
+  renderClausole();
+  const coesistenzaVista = clausole[idx].coesistenza;
+  if(coesistenzaVista) document.getElementById('nota-coesistenza').classList.add('visibile');
+}
+
+function renderClausole(){
+  const el = document.getElementById('clausole');
+  el.innerHTML = clausole.map((c, i)=>{
+    const sel = assegnazioni[i];
+    const classe = sel ? ` frase sel-${sel}` : ' frase';
+    if(c.riassunto){
+      return `<div class="clausola"><div class="clausola-numero">${c.num}</div><span class="riassunto${sel?' sel-'+sel:''}" data-idx="${i}" style="cursor:pointer;">${c.testo}</span></div>`;
+    }
+    return `<div class="clausola"><div class="clausola-numero">${c.num}</div><span class="${classe.trim()}" data-idx="${i}">${c.testo}</span></div>`;
+  }).join('');
+  el.querySelectorAll('[data-idx]').forEach(span=>{
+    span.addEventListener('click', ()=>assegnaClausola(Number(span.dataset.idx)));
+  });
+}
+
+const seiMesi = [
+  { nome:'Maggio', evento:true, testo:"Fine della costituzione oligarchica veneziana; Bonaparte impone l'insediamento di una municipalità democratica." },
+  { nome:'Giugno', evento:false, testo:"" },
+  { nome:'Luglio', evento:false, testo:"" },
+  { nome:'Agosto', evento:false, testo:"" },
+  { nome:'Settembre', evento:false, testo:"Bonaparte ha bisogno di qualcosa da offrire all'Austria in cambio del Belgio e della riva sinistra del Reno." },
+  { nome:'Ottobre', evento:true, testo:"17 ottobre: Venezia, la terraferma veneta, l'Istria e la Dalmazia sono cedute all'Austria." }
+];
+
+function renderTimeline(){
+  document.getElementById('timeline-sei-mesi').innerHTML = seiMesi.map(m=>`
+    <div class="mese-blocco">
+      <div class="mese-nome">${m.nome}</div>
+      <div class="mese-cerchio${m.evento?' evento':''}"></div>
+      <div class="mese-testo">${m.testo}</div>
+    </div>
+  `).join('');
+}
+
+function mostra(n){
+  document.getElementById('tab-1').classList.toggle('active', n===1);
+  document.getElementById('tab-2').classList.toggle('active', n===2);
+  document.getElementById('parte-1').hidden = n!==1;
+  document.getElementById('parte-2').hidden = n!==2;
+}
+
+setModalita('diritti');
+renderClausole();
+renderTimeline();
+</script>
+
+</body>
+</html>

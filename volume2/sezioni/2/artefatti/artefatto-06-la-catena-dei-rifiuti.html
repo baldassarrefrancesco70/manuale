@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1786-1789, la catena dei rifiuti — Artefatto 6</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8;
+    --grigio-neutro:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --marrone-chiaro:#c9b89e;
+    --testo:#3a332b;
+    --bg-card:#ffffff;
+    --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--beige-focus);
+    color: var(--testo);
+    padding: 28px 24px 48px;
+    line-height:1.5;
+  }
+  .masthead{ border-bottom: 2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width: 980px; }
+  .eyebrow{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  h1{ font-size: 26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width: 800px; font-size:15.5px; margin-bottom: 24px; }
+
+  .layout{
+    display:grid;
+    grid-template-columns: minmax(0,1fr) 340px;
+    gap:24px;
+    align-items:start;
+    max-width: 1300px;
+  }
+  @media (max-width: 880px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+
+  .stepper{
+    display:flex; align-items:flex-start; gap:0; overflow-x:auto;
+    margin-bottom:22px; padding-bottom:8px;
+  }
+  .step{
+    display:flex; flex-direction:column; align-items:center; flex:1; min-width:64px;
+    position:relative; cursor:pointer; background:none; border:none;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+  }
+  .step:not(:last-child)::after{
+    content:''; position:absolute; top:14px; left:50%; width:100%; height:2px;
+    background: var(--bordo); z-index:0;
+  }
+  .step.visitato:not(:last-child)::after{ background: var(--marrone-chiaro); }
+  .step-cerchio{
+    width:28px; height:28px; border-radius:50%; background:var(--bg-card);
+    border:2px solid var(--bordo); display:flex; align-items:center; justify-content:center;
+    font-size:12px; color:var(--testo); z-index:1; margin-bottom:5px;
+  }
+  .step.visitato .step-cerchio{ border-color:var(--marrone-chiaro); background:#fbf8f2; }
+  .step.corrente .step-cerchio{ background:var(--marrone); border-color:var(--marrone); color:#fff; }
+  .step-anno{ font-size:10px; color:#7a7263; text-align:center; white-space:nowrap; }
+
+  .pannello{
+    background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px;
+    padding:22px 24px;
+  }
+  .pannello h2{ font-size:19px; font-weight:normal; margin:0 2px 2px; }
+  .pannello .nodo-anno{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px;
+    color:var(--marrone-scuro); margin:0 0 16px;
+  }
+  .campo{ margin-bottom:16px; }
+  .campo-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px;
+    text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin-bottom:4px;
+  }
+  .campo-testo{ font-size:15px; }
+  .flag-dedotto{ font-size:10.5px; color:#a06a3a; font-style:italic; margin-left:4px; }
+  .nota-speciale{
+    font-size:12.5px; font-style:italic; color:#8a6a4a;
+    border-left:3px solid var(--marrone-chiaro); padding-left:10px; margin-top:14px;
+  }
+  .nav-buttons{ display:flex; justify-content:space-between; margin-top:20px; }
+  .nav-btn{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px;
+    background:var(--bg-card); border:1px solid var(--marrone); color:var(--marrone-scuro);
+    padding:9px 16px; border-radius:6px; cursor:pointer;
+  }
+  .nav-btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .nav-btn.primario{ background:var(--marrone); color:#fff; }
+
+  .sidebar{
+    background:var(--grigio-neutro); border:1px solid var(--bordo); border-radius:6px;
+    padding:20px; position:sticky; top:20px;
+  }
+  .sidebar h3{
+    font-size:15px; font-weight:normal; font-style:italic; margin:0 0 4px;
+  }
+  .sidebar .sidebar-sub{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11.5px;
+    color:var(--marrone-scuro); margin:0 0 16px;
+  }
+  .risposta{
+    background:var(--bg-card); border-left:3px solid var(--marrone); border-radius:0 4px 4px 0;
+    padding:10px 12px; margin-bottom:12px; font-size:13px;
+  }
+  .risposta .origine{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px;
+    text-transform:uppercase; letter-spacing:.4px; color:var(--marrone-scuro); margin-bottom:4px;
+  }
+  .risposta-vuota{
+    background:transparent; border:1px dashed var(--marrone-chiaro); border-radius:4px;
+    padding:12px; font-size:13px; color:#6b6455; font-style:italic;
+  }
+  .sidebar-placeholder{ font-size:13px; color:#8a8578; font-style:italic; }
+
+  footer.nota{
+    margin-top: 30px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:900px;
+  }
+  .step:focus-visible, .nav-btn:focus-visible{ outline:3px solid var(--marrone-scuro); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 6</p>
+  <h1>1786-1789, la catena dei rifiuti</h1>
+  <p class="sottotitolo">§ 1.6 — Il caso francese: perché la strada si chiude</p>
+</div>
+
+<div class="istruzioni">
+  <p>Dieci nodi, dieci tentativi di far accettare un'imposta. Ogni nodo porta le stesse tre informazioni: chi chiede che cosa, chi rifiuta, con quale argomento. Segui la sequenza: la barra a destra accumula, nodo dopo nodo, le risposte date alla domanda che le attraversa tutte — chi ha il diritto di consentire l'imposta.</p>
+</div>
+
+<div class="layout">
+  <div>
+    <nav class="stepper" id="stepper" aria-label="Sequenza dei nodi"></nav>
+    <div class="pannello" id="pannello"></div>
+  </div>
+
+  <aside class="sidebar">
+    <h3>Chi ha il diritto di consentire l'imposta?</h3>
+    <p class="sidebar-sub">Le risposte accumulate nodo dopo nodo</p>
+    <div id="sidebar-lista"></div>
+  </aside>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> I dati dei dieci nodi sono tratti da § 1.6. Il campo «con quale argomento» del nodo 1 (Turgot) non è esplicitato dal capitolo in questo punto ed è contrassegnato <strong>[dedotto]</strong>. Il nodo 2 (Compte rendu) non oppone un vero richiedente a un rifiuto: è segnalato come eccezione alla struttura. Le quattro risposte accumulate in barra laterale sono incompatibili tra loro: non si sciolgono, si sommano.
+</footer>
+
+<script>
+const nodi = [
+  { numero:1, titolo:"Turgot", anno:"1776",
+    chiChiede:"Turgot, controllore generale delle finanze dal 1774, liberalizza il commercio dei grani, sopprime le corporazioni di mestiere e converte le corvées in un'imposta sui proprietari.",
+    chiRifiuta:"La coalizione di parlamenti, corte e ceti colpiti dalle riforme.",
+    argomento:"Non esplicitato dal capitolo in questo punto: verosimilmente la difesa di interessi consolidati toccati dalle misure — corporazioni soppresse, esenzione dalla corvée.",
+    dedotto:true, sidebar:null },
+  { numero:2, titolo:"Compte rendu", anno:"1781",
+    chiChiede:"Necker pubblica un rendiconto delle finanze regie, il Compte rendu au roi, presentando i conti in attivo grazie all'esclusione delle spese di guerra.",
+    chiRifiuta:"Nessuna opposizione istituzionale diretta: l'operazione è però giudicata discutibile sul piano contabile.",
+    argomento:"Per la prima volta le finanze del re diventano oggetto di discussione pubblica: un precedente politico, più che un rifiuto in senso proprio.",
+    dedotto:false, nota:"Questo nodo non oppone un richiedente a un rifiuto: introduce piuttosto un nuovo giudice, l'opinione pubblica.", sidebar:null },
+  { numero:3, titolo:"Piano Calonne", anno:"1786",
+    chiChiede:"Calonne presenta al re un piano il cui perno è la sovvenzione territoriale: un'imposta fondiaria proporzionale al reddito, senza esenzioni per nessun ordine.",
+    chiRifiuta:"Sapendo che i parlamenti rifiuterebbero di registrarla, Calonne li aggira convocando un'Assemblea dei notabili, scelta dal re.",
+    argomento:"Calonne conta sull'autorevolezza dei notabili per far accettare la misura senza passare dai parlamenti.",
+    dedotto:false, sidebar:{ testo:"Un'assemblea di notabili scelta dal re, per la propria autorevolezza, può rendere accettabile una nuova imposta.", origine:"Piano Calonne, 1786" } },
+  { numero:4, titolo:"Assemblea dei notabili", anno:"febbraio 1787",
+    chiChiede:"Il re, tramite Calonne, chiede ai notabili di avallare la sovvenzione territoriale.",
+    chiRifiuta:"I notabili stessi.",
+    argomento:"Non hanno titolo per consentire una nuova imposta: l'unico organo che possa farlo sono gli Stati generali.",
+    dedotto:false, sidebar:{ testo:"Solo gli Stati generali, riuniti come nazione, possono consentire un'imposta permanente.", origine:"Assemblea dei notabili, febbraio 1787" } },
+  { numero:5, titolo:"Parlamento di Parigi", anno:"luglio 1787",
+    chiChiede:"L'arcivescovo Loménie de Brienne, succeduto a Calonne, tenta la registrazione forzata dell'editto.",
+    chiRifiuta:"Il Parlamento di Parigi.",
+    argomento:"Soltanto la nazione riunita in Stati generali può consentire un'imposta permanente — lo stesso argomento dei notabili, ripetuto da un corpo diverso.",
+    dedotto:false, sidebar:{ testo:"Il re può imporre la registrazione anche senza il consenso del parlamento.", origine:"Tentativo di registrazione forzata, luglio 1787" } },
+  { numero:6, titolo:"Esilio a Troyes", anno:"agosto 1787",
+    chiChiede:"La corona esilia a Troyes il Parlamento di Parigi, che ha rifiutato la registrazione.",
+    chiRifiuta:"Il parlamento non recede: richiamato tra le acclamazioni popolari, riprende l'opposizione.",
+    argomento:"Lo stesso argomento del nodo precedente, ora sostenuto anche dal consenso popolare visibile nelle acclamazioni.",
+    dedotto:false, sidebar:null },
+  { numero:7, titolo:"Editti di maggio", anno:"1788",
+    chiChiede:"Il governo emana editti che sottraggono ai parlamenti la registrazione delle leggi.",
+    chiRifiuta:"I parlamenti, la nobiltà provinciale mobilitata, il clero che riduce il proprio contributo volontario.",
+    argomento:"La registrazione passa a una corte plenaria di nomina regia: decide un organo scelto dal re, non i corpi tradizionali.",
+    dedotto:false, sidebar:{ testo:"Una corte plenaria di nomina regia sostituisce i parlamenti nella registrazione.", origine:"Editti di maggio 1788" } },
+  { numero:8, titolo:"Giornata delle tegole", anno:"giugno 1788",
+    chiChiede:"Le truppe regie tentano di allontanare da Grenoble i magistrati del parlamento locale.",
+    chiRifiuta:"La popolazione di Grenoble, che il 7 giugno impedisce l'allontanamento a sassate e tegole dai tetti.",
+    argomento:"Nessun argomento nuovo: un'azione diretta a difesa dei magistrati e, indirettamente, della posizione già espressa contro la corte di nomina regia.",
+    dedotto:false, sidebar:null },
+  { numero:9, titolo:"Sospensione dei pagamenti", anno:"agosto 1788",
+    chiChiede:"Il tesoro, senza più liquidità, sospende i pagamenti: è una bancarotta di fatto.",
+    chiRifiuta:"La corona cede su tutta la linea: Brienne cade, Necker viene richiamato.",
+    argomento:"Nessun argomento nuovo: la corona adotta essa stessa la risposta data un anno prima da notabili e parlamento, e convoca gli Stati generali per la primavera successiva.",
+    dedotto:false, sidebar:null },
+  { numero:10, titolo:"Raddoppio del terzo stato", anno:"dicembre 1788",
+    chiChiede:"Una campagna di opuscoli che ha invaso il regno chiede una migliore rappresentanza del terzo stato.",
+    chiRifiuta:"Il consiglio del re non rifiuta: raddoppia il numero dei deputati del terzo stato, eguagliandolo alla somma degli altri due ordini.",
+    argomento:"Ma tace deliberatamente sul punto decisivo: se il voto si conterà per testa o per ordine. Il silenzio non è un'astuzia, è l'impossibilità di scegliere senza perdere qualcuno.",
+    dedotto:false, sidebar:'EMPTY' }
+];
+
+let corrente = 1;
+let massimoRaggiunto = 1;
+
+function goToNode(n){
+  corrente = n;
+  if(n > massimoRaggiunto) massimoRaggiunto = n;
+  render();
+}
+
+function renderStepper(){
+  const el = document.getElementById('stepper');
+  el.innerHTML = '';
+  nodi.forEach(nd=>{
+    const btn = document.createElement('button');
+    btn.className = 'step' + (nd.numero===corrente?' corrente':'') + (nd.numero<=massimoRaggiunto?' visitato':'');
+    btn.type='button';
+    btn.setAttribute('aria-label', `Nodo ${nd.numero}: ${nd.titolo}, ${nd.anno}`);
+    btn.innerHTML = `<span class="step-cerchio">${nd.numero}</span><span class="step-anno">${nd.anno}</span>`;
+    btn.onclick = ()=>goToNode(nd.numero);
+    el.appendChild(btn);
+  });
+}
+
+function renderPannello(){
+  const nd = nodi[corrente-1];
+  const el = document.getElementById('pannello');
+  el.innerHTML = `
+    <h2>${nd.numero}. ${nd.titolo}</h2>
+    <p class="nodo-anno">${nd.anno}</p>
+    <div class="campo">
+      <div class="campo-label">Chi chiede che cosa</div>
+      <div class="campo-testo">${nd.chiChiede}</div>
+    </div>
+    <div class="campo">
+      <div class="campo-label">Chi rifiuta</div>
+      <div class="campo-testo">${nd.chiRifiuta}</div>
+    </div>
+    <div class="campo">
+      <div class="campo-label">Con quale argomento</div>
+      <div class="campo-testo">${nd.argomento}${nd.dedotto?'<span class="flag-dedotto">[dedotto]</span>':''}</div>
+    </div>
+    ${nd.nota?`<div class="nota-speciale">${nd.nota}</div>`:''}
+    <div class="nav-buttons">
+      <button class="nav-btn" id="btn-prev" ${corrente===1?'disabled':''} onclick="goToNode(${corrente-1})">← Nodo precedente</button>
+      <button class="nav-btn primario" id="btn-next" ${corrente===10?'disabled':''} onclick="goToNode(${corrente+1})">Nodo successivo →</button>
+    </div>
+  `;
+}
+
+function renderSidebar(){
+  const el = document.getElementById('sidebar-lista');
+  el.innerHTML = '';
+  let trovate = 0;
+  for(let i=0; i<massimoRaggiunto; i++){
+    const nd = nodi[i];
+    if(nd.sidebar && nd.sidebar !== 'EMPTY'){
+      trovate++;
+      const div = document.createElement('div');
+      div.className = 'risposta';
+      div.innerHTML = `<div class="origine">${nd.sidebar.origine}</div>${nd.sidebar.testo}`;
+      el.appendChild(div);
+    }
+    if(nd.sidebar === 'EMPTY'){
+      const div = document.createElement('div');
+      div.className = 'risposta-vuota';
+      div.innerHTML = `Casella vuota. La domanda si è spostata: voto per testa o voto per ordine?`;
+      el.appendChild(div);
+    }
+  }
+  if(trovate===0 && massimoRaggiunto < 10){
+    const p = document.createElement('p');
+    p.className='sidebar-placeholder';
+    p.textContent = 'Prosegui nella sequenza: qui compariranno le risposte via via che i nodi le introducono.';
+    el.insertBefore(p, el.firstChild);
+  }
+}
+
+function render(){
+  renderStepper();
+  renderPannello();
+  renderSidebar();
+}
+
+render();
+</script>
+
+</body>
+</html>

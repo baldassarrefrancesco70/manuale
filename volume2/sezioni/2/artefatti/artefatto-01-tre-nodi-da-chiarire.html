@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prima di cominciare: tre nodi da chiarire — Artefatto 1</title>
+<style>
+  :root{
+    --azzurro-prereq:#E8F4F8;
+    --grigio-neutro:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#33383b;
+    --bg-card:#ffffff;
+    --bordo:#cfe0e6;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--azzurro-prereq);
+    color: var(--testo);
+    padding: 28px 24px 48px;
+    line-height:1.55;
+  }
+  .masthead{ border-bottom: 2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width: 860px; }
+  .eyebrow{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  h1{ font-size: 26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width: 760px; font-size:15.5px; margin-bottom: 26px; }
+
+  .situazioni{ display:flex; flex-direction:column; gap:18px; max-width:780px; margin-bottom:34px; }
+  .card-situazione{
+    background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:20px 22px;
+  }
+  .numero-nodo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px;
+    text-transform:uppercase; letter-spacing:1px; color:var(--marrone-scuro); margin:0 0 8px;
+  }
+  .testo-situazione{ font-size:17px; margin:0 0 16px; }
+  .opzioni{ display:flex; flex-direction:column; gap:10px; margin-bottom:4px; }
+  @media (min-width: 560px){ .opzioni{ flex-direction:row; } }
+  .opzione{
+    flex:1; text-align:left; font-family: Georgia, serif; font-size:14px;
+    background:var(--grigio-neutro); border:1px solid var(--bordo); border-radius:6px;
+    padding:12px 14px; cursor:pointer; color:var(--testo);
+  }
+  .opzione .lettera{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px;
+    text-transform:uppercase; letter-spacing:.5px; color:var(--marrone-scuro); display:block; margin-bottom:4px;
+  }
+  .opzione.selezionata{ border-color:var(--marrone); box-shadow:0 0 0 1px var(--marrone) inset; background:#fbf8f2; }
+  .opzione:focus-visible{ outline:3px solid var(--marrone-scuro); outline-offset:2px; }
+
+  .feedback{
+    margin-top:14px; padding:14px 16px; border-left:4px solid var(--marrone);
+    background:#fbf8f2; font-size:14px; border-radius:0 4px 4px 0; display:none;
+  }
+  .feedback.visibile{ display:block; }
+  .feedback .adotta{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px;
+    text-transform:uppercase; letter-spacing:.5px; color:var(--marrone-scuro); margin-bottom:6px;
+  }
+
+  .chiusura{
+    max-width:780px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px;
+    padding:22px 24px;
+  }
+  .chiusura h2{ font-size:18px; font-weight:normal; font-style:italic; margin:0 0 14px; }
+  .parola{ margin-bottom:16px; }
+  .parola-nome{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px;
+    text-transform:uppercase; letter-spacing:1px; color:var(--marrone-scuro); margin-bottom:4px;
+  }
+  .parola-testo{ font-size:14.5px; }
+  .avviso{
+    font-size:13.5px; font-style:italic; color:#5a5347;
+    border-top:1px dashed var(--bordo); padding-top:14px; margin-top:4px;
+  }
+
+  footer.nota{
+    margin-top: 30px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    color:#6b7377; border-top:1px solid var(--bordo); padding-top:12px; max-width:820px;
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 1</p>
+  <h1>Prima di cominciare: tre nodi da chiarire</h1>
+  <p class="sottotitolo">Prerequisiti</p>
+</div>
+
+<div class="istruzioni">
+  <p>Non è un test d'ingresso e non dà un punteggio. Tre situazioni, due letture possibili per ciascuna: quella spontanea e quella che il capitolo userà. Scegli quella che ti convince di più, poi guarda quale delle due il capitolo adotta e perché.</p>
+</div>
+
+<div class="situazioni" id="situazioni"></div>
+
+<div class="chiusura">
+  <h2>Due parole, prima di partire</h2>
+  <div class="parola">
+    <div class="parola-nome">Rivoluzione</div>
+    <div class="parola-testo">Nel lessico che il capitolo eredita, la parola conserva ancora il significato astronomico da cui proviene: il moto di ritorno di un corpo al punto di partenza, un ciclo che si chiude. Chi nel 1688 ne parlava intendeva un ripristino, non un inizio.</div>
+  </div>
+  <div class="parola">
+    <div class="parola-nome">Progresso</div>
+    <div class="parola-testo">Nasce dalla rivoluzione scientifica come fiducia nell'accumulo del sapere, e nel Settecento si trasferisce dal terreno della conoscenza a quello del governo: se le leggi della natura si scoprono, anche quelle della società si possono riformare.</div>
+  </div>
+  <p class="avviso">Il significato che oggi diamo a «rivoluzione» — un processo irreversibile che apre qualcosa di inedito — si forma proprio dentro gli anni che questa sezione racconta. Tieni l'orecchio teso a quando la parola cambia di senso.</p>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le tre situazioni e le relative spiegazioni sono ricavate dai paragrafi del capitolo (privilegio come condizione giuridica; le «macchine di potere» europee; il fallimento di Giuseppe II). Le definizioni di «rivoluzione» e «progresso» riproducono quelle date nei Prerequisiti.
+</footer>
+
+<script>
+const situazioni = [
+  {
+    id: 1,
+    testo: "Un mercante ricchissimo paga più tasse di un nobile squattrinato.",
+    letturaA: "È un'ingiustizia economica.",
+    letturaB: "È la conseguenza normale di un criterio giuridico.",
+    adotta: 'B',
+    spiegazione: "Il capitolo tratta il privilegio come una condizione giuridica, non come una misura di ricchezza. Chi appartiene a un ordine esente non paga, quale che sia il suo patrimonio; chi non vi appartiene paga, per quanto sia ricco. Non è un'anomalia da correggere caso per caso: è il funzionamento ordinario del sistema — lo stesso principio che regola il caso dell'armatore di Bordeaux e del gentiluomo di provincia."
+  },
+  {
+    id: 2,
+    testo: "Federico II di Prussia e Luigi XVI di Francia sono entrambi sovrani assoluti.",
+    letturaA: "Hanno lo stesso tipo di potere.",
+    letturaB: "La stessa parola copre due macchine di potere diverse.",
+    adotta: 'B',
+    spiegazione: "Il capitolo scioglie la parola «assolutismo» chiedendo a ciascuno Stato tre cose: quale regime dichiara, quali ceti lo governano davvero, che cosa persegue fuori dai propri confini. Su queste tre domande Francia e Prussia rispondono in modo opposto, pur dichiarando lo stesso principio di potere illimitato."
+  },
+  {
+    id: 3,
+    testo: "Giuseppe II d'Asburgo non riuscì a riformare il proprio impero.",
+    letturaA: "Incontrò resistenze e inerzie.",
+    letturaB: "Incontrò diritti, opposti legalmente.",
+    adotta: 'B',
+    spiegazione: "Alla sua morte l'Ungheria è in agitazione e i Paesi Bassi in aperta rivolta, e Giuseppe II ha già dovuto revocare gran parte delle proprie misure — non per debolezza sua né per arretratezza dei sudditi, ma perché ogni corpo colpito poteva opporre un titolo giuridico anteriore, e opporlo legalmente."
+  }
+];
+
+let scelte = {};
+
+function render(){
+  const container = document.getElementById('situazioni');
+  container.innerHTML = '';
+  situazioni.forEach(s=>{
+    const card = document.createElement('div');
+    card.className = 'card-situazione';
+    const scelta = scelte[s.id];
+    card.innerHTML = `
+      <p class="numero-nodo">Situazione ${s.id}</p>
+      <p class="testo-situazione">${s.testo}</p>
+      <div class="opzioni">
+        <button type="button" class="opzione${scelta==='A'?' selezionata':''}" data-sit="${s.id}" data-lettura="A">
+          <span class="lettera">Lettura A</span>${s.letturaA}
+        </button>
+        <button type="button" class="opzione${scelta==='B'?' selezionata':''}" data-sit="${s.id}" data-lettura="B">
+          <span class="lettera">Lettura B</span>${s.letturaB}
+        </button>
+      </div>
+      <div class="feedback${scelta?' visibile':''}">
+        <p class="adotta">Il capitolo adotta la lettura ${s.adotta}</p>
+        <p>${s.spiegazione}</p>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  container.querySelectorAll('.opzione').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = Number(btn.dataset.sit);
+      scelte[id] = btn.dataset.lettura;
+      render();
+    });
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>

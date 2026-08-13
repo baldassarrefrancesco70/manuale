@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinque macchine di potere — Artefatto 3</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8;
+    --grigio-neutro:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a332b;
+    --bg-card:#ffffff;
+    --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--beige-focus);
+    color: var(--testo);
+    padding: 28px 24px 48px;
+    line-height:1.5;
+  }
+  .masthead{ border-bottom: 2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width: 940px; }
+  .eyebrow{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  h1{ font-size: 26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width: 780px; font-size:15.5px; margin-bottom: 22px; }
+
+  .selettore{
+    display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; align-items:center;
+  }
+  .crit-btn{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px;
+    background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo);
+    padding:9px 15px; border-radius:6px; cursor:pointer;
+  }
+  .crit-btn.active{ background:var(--marrone); color:#fff; }
+  .separatore-verticale{ width:1px; height:24px; background:var(--bordo); margin:0 6px; }
+  .btn-paradosso{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px;
+    background:var(--marrone-scuro); color:#fff; border:1px solid var(--marrone-scuro);
+    padding:9px 15px; border-radius:6px; cursor:pointer;
+  }
+  .btn-paradosso.active{ box-shadow:0 0 0 2px var(--marrone-scuro), 0 0 0 4px #fff inset; }
+
+  .criterio-titolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    text-transform:uppercase; letter-spacing:1px; color:var(--marrone-scuro); margin-bottom:14px;
+  }
+
+  .griglia-stati{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px;
+    max-width:1300px; margin-bottom:14px;
+  }
+  .card-stato{
+    background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:16px 18px;
+  }
+  .card-stato h3{ font-size:15px; margin:0 0 10px; font-weight:normal; color:var(--marrone-scuro); }
+  .card-stato p{ font-size:13.5px; margin:0; }
+
+  .paradosso-box{ max-width:1300px; margin-bottom:14px; }
+  .paradosso-affianca{
+    display:grid; grid-template-columns: 1fr auto 1fr; gap:16px; align-items:stretch; margin-bottom:16px;
+  }
+  @media (max-width:700px){ .paradosso-affianca{ grid-template-columns:1fr; } }
+  .card-grande{
+    background:var(--bg-card); border:2px solid var(--marrone); border-radius:6px; padding:18px 20px;
+  }
+  .card-grande h3{ font-size:16px; margin:0 0 10px; font-weight:normal; color:var(--marrone-scuro); }
+  .card-grande p{ font-size:14px; margin:0; }
+  .vs-connettore{
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    color:var(--marrone-scuro); font-weight:bold;
+  }
+  .paradosso-frase{
+    font-size:16px; font-style:italic; text-align:center; padding:14px 20px;
+    border-top:1px solid var(--bordo); border-bottom:1px solid var(--bordo);
+    margin-bottom:16px;
+  }
+  .altri-stati-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px;
+    text-transform:uppercase; letter-spacing:.5px; color:#8a8578; margin-bottom:8px;
+  }
+  .griglia-minori{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:10px;
+  }
+  .card-minore{
+    background:var(--grigio-neutro); border:1px solid var(--bordo); border-radius:6px; padding:12px 14px;
+    opacity:.85;
+  }
+  .card-minore h4{ font-size:12.5px; margin:0 0 6px; font-weight:normal; color:#6b6455; }
+  .card-minore p{ font-size:12px; margin:0; color:#5a5347; }
+
+  footer.nota{
+    margin-top: 30px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:900px;
+  }
+  .crit-btn:focus-visible, .btn-paradosso:focus-visible{ outline:3px solid var(--marrone-scuro); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 3</p>
+  <h1>Cinque macchine di potere</h1>
+  <p class="sottotitolo">§ 1.2 — Le potenze europee e la politica dell'equilibrio</p>
+</div>
+
+<div class="istruzioni">
+  <p>La stessa parola, «assolutismo», copre macchine di potere molto diverse. Per scioglierla, il capitolo chiede a ciascuno Stato quattro cose. Scegline una alla volta e confronta le cinque potenze solo su quella — tenerle aperte tutte insieme rischia di confondere più che di chiarire.</p>
+</div>
+
+<div class="selettore" id="selettore"></div>
+
+<p class="criterio-titolo" id="criterio-titolo"></p>
+
+<div id="vista-normale">
+  <div class="griglia-stati" id="griglia-stati"></div>
+</div>
+
+<div id="vista-paradosso" hidden>
+  <div class="paradosso-box">
+    <div class="paradosso-affianca">
+      <div class="card-grande" id="card-francia"></div>
+      <div class="vs-connettore">VS</div>
+      <div class="card-grande" id="card-gb"></div>
+    </div>
+    <p class="paradosso-frase">«Il potere che si dichiara illimitato estrae meno di quello che si dichiara vincolato.»</p>
+    <p class="altri-stati-label">Le altre tre potenze, sullo stesso criterio</p>
+    <div class="griglia-minori" id="griglia-minori"></div>
+  </div>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> I testi dei quattro criteri sono tratti da § 1.2. L'indirizzo internazionale della Francia richiama il «rovesciamento delle alleanze» del 1756, descritto nel paragrafo sull'equilibrio europeo più avanti nello stesso capitolo.
+</footer>
+
+<script>
+const stati = [
+  { id:'francia', nome:'Francia',
+    regime:"Assolutismo di diritto divino: un potere che si dichiara sciolto da ogni vincolo.",
+    ceti:"Nella pratica il re incontra ovunque corpi dotati di diritti propri: i tribunali sovrani (i parlamenti) che devono registrare le sue leggi, e i titolari di cariche vendute che non può revocare. I due ordini privilegiati sono in gran parte al riparo dall'imposta diretta.",
+    indirizzo:"Partecipa alle guerre di successione per mantenere l'equilibrio continentale; dal 1756, nel «rovesciamento delle alleanze», si allea con la storica rivale Austria contro la Prussia sostenuta dalla Gran Bretagna.",
+    estrazione:"È la potenza demografica del continente, ma resta un mosaico: diritto romano al Sud e consuetudini al Nord, province con propri stati provinciali, dogane interne che rendono più caro spedire da Lione a Parigi che da Marsiglia a Genova. È il caso di uno Stato che si proclama assoluto e non riesce a tassare chi ha di più." },
+  { id:'asburgica', nome:'Monarchia asburgica',
+    regime:"Non è nemmeno uno Stato nel senso in cui lo è la Francia: un'aggregazione di corone distinte — austriache, boeme, ungheresi, più Lombardia e Paesi Bassi — tenute insieme dalla persona del sovrano.",
+    ceti:"Ogni territorio parla una lingua diversa e ha una propria dieta nobiliare, proprie leggi, proprie immunità. La Prammatica Sanzione del 1713 deve essere negoziata dieta per dieta, e non basta a evitare, nel 1740, una guerra europea sulla successione di Maria Teresa.",
+    indirizzo:"Il programma dinastico è sempre lo stesso: centralizzare l'amministrazione contro il particolarismo delle province. Il suo avversario non è un nemico esterno ma la struttura stessa dell'impero — governare qui significa in primo luogo tenere insieme.",
+    estrazione:"La capacità di estrarre risorse resta frammentata quanto i territori: ogni dieta tratta per sé, e ciò che vale in Boemia non vale in Ungheria." },
+  { id:'prussia', nome:'Prussia',
+    regime:"Il caso opposto a quello asburgico: territori sparsi e discontinui, popolazione modesta, terre povere, e un esercito sproporzionato rispetto a tutto il resto.",
+    ceti:"Gli Hohenzollern non hanno indebolito la propria nobiltà terriera, come i Borbone: l'hanno assorbita nello Stato. Gli Junker forniscono insieme il corpo ufficiali e i quadri dell'amministrazione civile, e in cambio conservano intatta l'autorità sui contadini delle loro terre, servi della gleba a est dell'Elba.",
+    indirizzo:"La politica estera è aggressiva perché è l'unica risorsa di uno Stato che non ne ha altre.",
+    estrazione:"Lo Stato prussiano è efficiente perché è costruito attorno a una sola funzione, e paga questa efficienza con un blocco sociale che nessuna riforma potrà toccare senza smontare l'esercito." },
+  { id:'russia', nome:'Russia',
+    regime:"La forma più estrema di potere personale, che i contemporanei chiamano autocrazia: fra lo zar e i sudditi non esiste alcun corpo intermedio, nessuna dieta, nessun tribunale sovrano, nessuna assemblea che possa negare qualcosa.",
+    ceti:"Dopo Pietro il Grande la nobiltà terriera è stata trasformata in un ceto di servizio, che deve allo Stato una carriera civile o militare, mentre la stragrande maggioranza della popolazione rurale resta legata alla terra dalla servitù della gleba.",
+    indirizzo:"Due indirizzi procedono insieme: l'occidentalizzazione della corte e dell'amministrazione, e l'espansione militare verso il Baltico e il Mar Nero.",
+    estrazione:"Modernizzazione e irrigidimento sociale non sono in contraddizione, sono la stessa politica: l'estensione dei poteri del proprietario sul contadino accompagna l'espansione e l'occidentalizzazione." },
+  { id:'gb', nome:'Gran Bretagna',
+    regime:"Lo Stato meno assoluto d'Europa: dopo il 1689 il re governa accanto al Parlamento, e non può legiferare né tassare senza di esso. Il vincolo non è scritto in una costituzione unica, ma in un insieme di consuetudini e documenti stratificati, fra cui il Bill of Rights.",
+    ceti:"Aristocrazia terriera e borghesia degli affari non si contendono le istituzioni: le occupano insieme. Questa convergenza produce una stabilità politica che sul continente non ha eguali.",
+    indirizzo:"Due soli obiettivi: impedire che sul continente si formi una potenza egemone, e proteggere le rotte commerciali oceaniche.",
+    estrazione:"È lo Stato che estrae dalla propria popolazione, in proporzione, molto più di quanto riesca a fare la Francia: poiché è il Parlamento a votare le imposte, chi presta denaro alla corona sa che il rimborso è garantito. La Banca d'Inghilterra (1694) e un debito pubblico consolidato permettono di indebitarsi a tassi bassi e per somme enormi." }
+];
+
+const criteri = [
+  { id:'regime', label:'Regime dichiarato' },
+  { id:'ceti', label:'Chi governa davvero' },
+  { id:'indirizzo', label:'Indirizzo internazionale' },
+  { id:'estrazione', label:'Capacità di estrarre risorse' }
+];
+
+let criterioAttivo = 'regime';
+let paradossoAttivo = false;
+
+function renderSelettore(){
+  const el = document.getElementById('selettore');
+  el.innerHTML = '';
+  criteri.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = 'crit-btn' + (criterioAttivo===c.id && !paradossoAttivo ? ' active' : '');
+    btn.textContent = c.label;
+    btn.onclick = ()=>{ criterioAttivo = c.id; paradossoAttivo = false; render(); };
+    el.appendChild(btn);
+  });
+  const sep = document.createElement('div');
+  sep.className = 'separatore-verticale';
+  el.appendChild(sep);
+  const btnP = document.createElement('button');
+  btnP.className = 'btn-paradosso' + (paradossoAttivo ? ' active' : '');
+  btnP.textContent = 'Il paradosso';
+  btnP.onclick = ()=>{ paradossoAttivo = true; criterioAttivo = 'estrazione'; render(); };
+  el.appendChild(btnP);
+}
+
+function renderVistaNormale(){
+  document.getElementById('vista-normale').hidden = false;
+  document.getElementById('vista-paradosso').hidden = true;
+  const griglia = document.getElementById('griglia-stati');
+  griglia.innerHTML = '';
+  stati.forEach(s=>{
+    const card = document.createElement('div');
+    card.className = 'card-stato';
+    card.innerHTML = `<h3>${s.nome}</h3><p>${s[criterioAttivo]}</p>`;
+    griglia.appendChild(card);
+  });
+}
+
+function renderVistaParadosso(){
+  document.getElementById('vista-normale').hidden = true;
+  document.getElementById('vista-paradosso').hidden = false;
+  const francia = stati.find(s=>s.id==='francia');
+  const gb = stati.find(s=>s.id==='gb');
+  document.getElementById('card-francia').innerHTML = `<h3>Francia</h3><p>${francia.estrazione}</p>`;
+  document.getElementById('card-gb').innerHTML = `<h3>Gran Bretagna</h3><p>${gb.estrazione}</p>`;
+  const minori = document.getElementById('griglia-minori');
+  minori.innerHTML = '';
+  stati.filter(s=>s.id!=='francia' && s.id!=='gb').forEach(s=>{
+    const card = document.createElement('div');
+    card.className = 'card-minore';
+    card.innerHTML = `<h4>${s.nome}</h4><p>${s.estrazione}</p>`;
+    minori.appendChild(card);
+  });
+}
+
+function render(){
+  renderSelettore();
+  document.getElementById('criterio-titolo').textContent =
+    paradossoAttivo ? 'Capacità di estrarre risorse — il confronto che conta' : criteri.find(c=>c.id===criterioAttivo).label;
+  if(paradossoAttivo) renderVistaParadosso(); else renderVistaNormale();
+}
+
+render();
+</script>
+
+</body>
+</html>

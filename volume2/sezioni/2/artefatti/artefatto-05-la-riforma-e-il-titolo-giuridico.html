@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La riforma e il titolo giuridico — Artefatto 5</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8;
+    --grigio-neutro:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a332b;
+    --bg-card:#ffffff;
+    --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--beige-focus);
+    color: var(--testo);
+    padding: 28px 24px 48px;
+    line-height:1.5;
+  }
+  .masthead{ border-bottom: 2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width: 960px; }
+  .eyebrow{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  h1{ font-size: 26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width: 800px; font-size:15.5px; margin-bottom: 22px; }
+
+  .tabella-wrap{ overflow-x:auto; margin-bottom:24px; max-width: 1200px; }
+  table.matrice{ border-collapse:collapse; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; }
+  table.matrice th, table.matrice td{ padding:6px; text-align:center; }
+  table.matrice thead th{
+    font-size:11.5px; font-weight:normal; color:var(--marrone-scuro);
+    vertical-align:bottom; padding-bottom:10px; max-width:100px;
+  }
+  table.matrice th.riga-label{
+    font-size:12.5px; text-align:left; color:var(--testo); max-width:180px; padding-right:12px;
+    font-family: Georgia, serif;
+  }
+  .cella-btn{
+    width:64px; height:44px; border-radius:6px; border:1px solid var(--bordo);
+    background:var(--bg-card); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .cella-btn:focus-visible{ outline:3px solid var(--marrone-scuro); outline-offset:2px; }
+  .cella-btn.selezionata{ border:2px solid var(--marrone-scuro); }
+  .puntino{ width:11px; height:11px; border-radius:50%; }
+  .puntino.piena{ background:var(--marrone); }
+  .puntino.vuota{ border:2px solid var(--bordo); background:transparent; }
+
+  .legenda{
+    display:flex; gap:20px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    color:#6b6455; margin-bottom:26px; align-items:center;
+  }
+  .legenda span{ display:flex; align-items:center; gap:6px; }
+
+  .dettaglio{
+    max-width:800px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px;
+    padding:22px 24px; margin-bottom:26px; min-height:100px;
+  }
+  .dettaglio.attuata{ border-left:4px solid var(--marrone); }
+  .dettaglio.vuota{ border-left:4px dashed var(--marrone); }
+  .dettaglio-placeholder{ font-size:14px; color:#8a8578; font-style:italic; }
+  .dettaglio-titolo{ font-size:17px; margin:0 0 4px; }
+  .dettaglio-stato{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin:0 0 16px;
+  }
+  .campo{ margin-bottom:12px; }
+  .campo-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px;
+    text-transform:uppercase; letter-spacing:.5px; color:var(--marrone-scuro); margin-bottom:3px;
+  }
+  .campo-testo{ font-size:14.5px; }
+  .flag-dedotto{ font-size:10.5px; color:#a06a3a; font-style:italic; margin-left:4px; }
+
+  .impasse{
+    max-width:780px; font-size:15px; font-style:italic;
+    border-left:4px solid var(--marrone); background:var(--bg-card);
+    padding:16px 20px; border-radius:0 6px 6px 0;
+  }
+
+  footer.nota{
+    margin-top: 30px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px;
+    color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:900px;
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 5</p>
+  <h1>La riforma e il titolo giuridico</h1>
+  <p class="sottotitolo">§ 1.4-1.5 — L'età delle riforme e i suoi ostacoli</p>
+</div>
+
+<div class="istruzioni">
+  <p>Sei misure, sei Stati: non tutte le combinazioni esistono, e le caselle vuote sono istruttive quanto quelle piene. Scegli una cella della griglia: l'oggetto restituisce chi si oppose, con quale titolo giuridico, e che cosa accadde davvero.</p>
+</div>
+
+<div class="legenda">
+  <span><span class="puntino piena"></span> misura attuata (o tentata)</span>
+  <span><span class="puntino vuota"></span> casella vuota</span>
+</div>
+
+<div class="tabella-wrap">
+  <table class="matrice" id="tabella"></table>
+</div>
+
+<div class="dettaglio" id="dettaglio">
+  <p class="dettaglio-placeholder">Seleziona una cella della griglia per vedere il dettaglio.</p>
+</div>
+
+<div class="impasse">
+  Per abolire i privilegi il sovrano deve agire contro il diritto vigente; se rispetta il diritto vigente, non riforma nulla.
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> I dati sono tratti da § 1.4-1.5. Dove il capitolo attribuisce un'opposizione a più corpi nel loro insieme, senza isolare quale abbia contestato una singola misura, la cella è contrassegnata <strong>[dedotto]</strong>. La risposta del Regno di Sardegna è la stessa per tutte le misure, per il motivo indicato nel capitolo.
+</footer>
+
+<script>
+const misure = [
+  { id:'catasto', nome:'Catasto e imposta fondiaria senza esenzioni' },
+  { id:'tolleranza', nome:'Tolleranza religiosa' },
+  { id:'servitu', nome:'Abolizione della servitù personale' },
+  { id:'soppressione', nome:'Soppressione di ordini religiosi' },
+  { id:'commercio', nome:'Libertà del commercio dei grani' },
+  { id:'tortura', nome:'Abolizione della tortura' }
+];
+
+const stati = [
+  { id:'asburgica', nome:'Monarchia asburgica' },
+  { id:'prussia', nome:'Prussia' },
+  { id:'russia', nome:'Russia' },
+  { id:'toscana', nome:'Toscana' },
+  { id:'francia', nome:'Francia' },
+  { id:'sardegna', nome:'Regno di Sardegna' }
+];
+
+const sardegnaTesto = "Non tentata — non per l'opposizione di corpi privilegiati, ma per scelta politica. Il Regno di Sardegna sceglie deliberatamente la strada opposta: un modello autoritario e militare che diffida dell'Illuminismo e riforma pochissimo. È il controesempio del capitolo: dimostra che nel Settecento riformare era una scelta, non una necessità del tempo.";
+
+const matrice = {
+  catasto: {
+    asburgica:{stato:'attuata', chiOppone:"Il capitolo non ne registra una esplicita.", titolo:"—", accadde:"Maria Teresa introduce il catasto per far entrare anche la nobiltà nel prelievo fiscale, nel quadro di un programma di riforme graduali che costruisce una burocrazia centrale."},
+    prussia:{stato:'vuota', nota:"Il capitolo non documenta un catasto prussiano: parla invece di dazi protettivi, bonifica delle paludi e colonizzazione delle province orientali."},
+    russia:{stato:'vuota', nota:"Il capitolo non menziona un catasto russo."},
+    toscana:{stato:'vuota', nota:"Il capitolo non menziona un catasto toscano: il modello europeo citato è quello della Lombardia austriaca, completato attorno al 1760."},
+    francia:{stato:'attuata', chiOppone:"I parlamenti, che Calonne prevede pronti a rifiutare la registrazione; poi l'Assemblea dei notabili, che si dichiara priva di titolo.", titolo:"Solo gli Stati generali, riuniti come nazione, possono consentire un'imposta permanente.", accadde:"Il piano di Calonne (1786) — una sovvenzione territoriale, imposta fondiaria proporzionale al reddito e senza esenzioni per nessun ordine — non viene mai registrato: il tentativo di aggirare i parlamenti tramite i notabili porta invece alla richiesta di convocare gli Stati generali."},
+    sardegna:{stato:'vuota', nota: sardegnaTesto}
+  },
+  tolleranza: {
+    asburgica:{stato:'attuata', chiOppone:"Il capitolo non registra un'opposizione esplicita.", titolo:"—", accadde:"Con la Patente di tolleranza del 1781, Giuseppe II concede libertà di culto e diritti civili a protestanti, ortodossi ed ebrei."},
+    prussia:{stato:'attuata', chiOppone:"Il capitolo non registra un'opposizione esplicita.", titolo:"—", accadde:"Federico II, che ospita Voltaire alla propria corte, pratica la tolleranza religiosa come ragion di Stato."},
+    russia:{stato:'vuota', nota:"Il capitolo non parla di tolleranza religiosa per la Russia: descrive invece l'incameramento dei beni della Chiesa ortodossa per risanare il bilancio, una misura fiscale più che di libertà di culto."},
+    toscana:{stato:'vuota', nota:"Il capitolo non menziona provvedimenti toscani sulla tolleranza religiosa."},
+    francia:{stato:'vuota', nota:"Il capitolo non tratta la tolleranza religiosa per la Francia in questo paragrafo."},
+    sardegna:{stato:'vuota', nota: sardegnaTesto}
+  },
+  servitu: {
+    asburgica:{stato:'attuata', chiOppone:"Tra i corpi che vi si oppongono con successo, il capitolo cita la dieta ungherese, gli stati brabantini e il clero — senza isolare quale contestò specificamente questa misura.", titolo:"Un titolo giuridico anteriore, opposto legalmente da ciascun corpo colpito.", accadde:"Nel 1781 Giuseppe II abolisce la servitù personale e i residui feudali. Alla sua morte, nel 1790, l'Ungheria è in agitazione e i Paesi Bassi in aperta rivolta: gran parte delle misure viene revocata.", dedotto:true},
+    prussia:{stato:'vuota', nota:"Non fu nemmeno tentata: liberare i contadini a est dell'Elba avrebbe tolto ai proprietari nobili la base economica del servizio militare che rendono allo Stato — cioè avrebbe smontato l'esercito su cui la Prussia esiste. Federico II lascia intatta la servitù della gleba, e non per distrazione."},
+    russia:{stato:'attuata', chiOppone:"La nobiltà, dopo la rivolta contadina di Pugačëv (1773-1775), chiede garanzie — e le ottiene.", titolo:"—", accadde:"Caterina II convoca nel 1767 una commissione legislativa con un'Istruzione che riprende Montesquieu e Beccaria, ma la commissione si scioglie senza produrre alcun codice. Dopo Pugačëv, la Carta del 1785 conferma e amplia i poteri dei proprietari sui servi della gleba: la stagione delle riforme si chiude con un rafforzamento della servitù."},
+    toscana:{stato:'vuota', nota:"La misura non è pertinente al contesto toscano: il capitolo non tratta la Toscana in relazione alla servitù della gleba."},
+    francia:{stato:'vuota', nota:"Il contadino francese non è un servo della gleba: è giuridicamente libero e in molti casi proprietario della terra che lavora. La misura non si applica al caso francese negli stessi termini."},
+    sardegna:{stato:'vuota', nota: sardegnaTesto}
+  },
+  soppressione: {
+    asburgica:{stato:'attuata', chiOppone:"Tra i corpi che si oppongono, il capitolo cita il clero.", titolo:"Un titolo giuridico anteriore, opposto legalmente.", accadde:"Giuseppe II sopprime centinaia di conventi di ordini contemplativi giudicati inutili allo Stato, e ne destina i beni a scuole e ospedali.", dedotto:true},
+    prussia:{stato:'vuota', nota:"Il capitolo non tratta soppressioni di ordini religiosi per la Prussia."},
+    russia:{stato:'attuata', chiOppone:"Il capitolo non registra un'opposizione esplicita.", titolo:"—", accadde:"Caterina II incamera i beni della Chiesa ortodossa per risanare il bilancio — non una soppressione di ordini nel senso asburgico, ma un provvedimento di segno affine."},
+    toscana:{stato:'vuota', nota:"Il capitolo attribuisce alla Toscana l'abolizione delle corporazioni di mestiere, non la soppressione di ordini religiosi: sono misure diverse."},
+    francia:{stato:'attuata', chiOppone:"Un papato che, per il capitolo, «non può resistere» al mutato rapporto di forza.", titolo:"—", accadde:"La soppressione della Compagnia di Gesù nel 1773 viene ottenuta dalle corti borboniche — tra cui la Francia — contro Roma."},
+    sardegna:{stato:'vuota', nota: sardegnaTesto}
+  },
+  commercio: {
+    asburgica:{stato:'vuota', nota:"Il capitolo non tratta la libertà del commercio dei grani per la monarchia asburgica."},
+    prussia:{stato:'vuota', nota:"Il capitolo non descrive una liberalizzazione: parla invece di dazi protettivi a sostegno delle manifatture — una direzione opposta a quella della misura."},
+    russia:{stato:'vuota', nota:"Il capitolo non tratta la libertà del commercio dei grani per la Russia."},
+    toscana:{stato:'attuata', chiOppone:"Il capitolo non registra un'opposizione esplicita.", titolo:"—", accadde:"Il Granducato di Toscana di Pietro Leopoldo è il primo Stato a liberalizzare interamente il commercio dei cereali, insieme all'abolizione delle corporazioni di mestiere."},
+    francia:{stato:'attuata', chiOppone:"La coalizione di parlamenti, corte e ceti colpiti dalle riforme.", titolo:"Non esplicitato dal capitolo in questo punto.", accadde:"Turgot liberalizza il commercio dei grani nel 1774; nel 1776 la coalizione lo fa cadere e i provvedimenti vengono revocati quasi tutti.", dedotto:true},
+    sardegna:{stato:'vuota', nota: sardegnaTesto}
+  },
+  tortura: {
+    asburgica:{stato:'attuata', chiOppone:"Il capitolo non registra un'opposizione esplicita.", titolo:"—", accadde:"Con il codice penale del 1787, Giuseppe II abolisce la tortura e stabilisce che la pena sia identica per tutti, quale che sia il ceto di chi ha commesso il reato."},
+    prussia:{stato:'attuata', chiOppone:"Il capitolo non registra un'opposizione esplicita.", titolo:"—", accadde:"Federico II abolisce la tortura."},
+    russia:{stato:'vuota', nota:"Il capitolo non tratta l'abolizione della tortura per la Russia."},
+    toscana:{stato:'attuata', chiOppone:"Il capitolo non registra un'opposizione esplicita.", titolo:"—", accadde:"Con la Leopoldina del 1786, la Toscana è il primo Stato al mondo ad abolire insieme la tortura e la pena di morte, traducendo in codice l'argomentazione di Beccaria."},
+    francia:{stato:'vuota', nota:"Il capitolo non tratta l'abolizione della tortura per la Francia in questo paragrafo."},
+    sardegna:{stato:'vuota', nota: sardegnaTesto}
+  }
+};
+
+let selezione = null;
+
+function buildTable(){
+  const table = document.getElementById('tabella');
+  const thead = document.createElement('thead');
+  const trH = document.createElement('tr');
+  trH.appendChild(document.createElement('th'));
+  stati.forEach(s=>{
+    const th = document.createElement('th');
+    th.textContent = s.nome;
+    trH.appendChild(th);
+  });
+  thead.appendChild(trH);
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  misure.forEach(m=>{
+    const tr = document.createElement('tr');
+    const thRiga = document.createElement('th');
+    thRiga.className = 'riga-label';
+    thRiga.textContent = m.nome;
+    tr.appendChild(thRiga);
+    stati.forEach(s=>{
+      const td = document.createElement('td');
+      const cella = matrice[m.id][s.id];
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cella-btn';
+      btn.id = `cella-${m.id}-${s.id}`;
+      btn.setAttribute('aria-label', `${m.nome} — ${s.nome}`);
+      btn.innerHTML = `<span class="puntino ${cella.stato==='attuata'?'piena':'vuota'}"></span>`;
+      btn.onclick = ()=>{ selezione = {misura:m.id, stato:s.id}; render(); };
+      td.appendChild(btn);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+}
+
+function renderDettaglio(){
+  const el = document.getElementById('dettaglio');
+  if(!selezione){
+    el.className = 'dettaglio';
+    el.innerHTML = '<p class="dettaglio-placeholder">Seleziona una cella della griglia per vedere il dettaglio.</p>';
+    return;
+  }
+  const m = misure.find(x=>x.id===selezione.misura);
+  const s = stati.find(x=>x.id===selezione.stato);
+  const cella = matrice[selezione.misura][selezione.stato];
+
+  document.querySelectorAll('.cella-btn').forEach(b=>b.classList.remove('selezionata'));
+  document.getElementById(`cella-${selezione.misura}-${selezione.stato}`).classList.add('selezionata');
+
+  if(cella.stato==='attuata'){
+    el.className = 'dettaglio attuata';
+    el.innerHTML = `
+      <p class="dettaglio-titolo">${m.nome}</p>
+      <p class="dettaglio-stato">${s.nome}</p>
+      <div class="campo"><div class="campo-label">Chi si oppone</div><div class="campo-testo">${cella.chiOppone}</div></div>
+      <div class="campo"><div class="campo-label">Con quale titolo giuridico</div><div class="campo-testo">${cella.titolo}${cella.dedotto?'<span class="flag-dedotto">[dedotto]</span>':''}</div></div>
+      <div class="campo"><div class="campo-label">Che cosa accadde davvero</div><div class="campo-testo">${cella.accadde}</div></div>
+    `;
+  } else {
+    el.className = 'dettaglio vuota';
+    el.innerHTML = `
+      <p class="dettaglio-titolo">${m.nome}</p>
+      <p class="dettaglio-stato">${s.nome} — casella vuota</p>
+      <div class="campo"><div class="campo-testo">${cella.nota}</div></div>
+    `;
+  }
+}
+
+function render(){
+  renderDettaglio();
+}
+
+buildTable();
+render();
+</script>
+
+</body>
+</html>

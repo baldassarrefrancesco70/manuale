@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leggere un cahier — Artefatto 7</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.6; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .tab-nav{ display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; }
+  .tab-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo); padding:9px 16px; border-radius:6px; cursor:pointer; }
+  .tab-btn.active{ background:var(--marrone); color:#fff; }
+
+  .quaderno{ max-width:820px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:24px 26px; margin-bottom:20px; }
+  .provenienza{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin-bottom:16px; }
+  .testo-cahier{ font-size:16px; }
+  .frase{ cursor:pointer; padding:1px 2px; border-radius:3px; }
+  .frase:hover{ background:var(--grigio-neutro); }
+  .frase.selezionata{ background:#e8ddce; box-shadow:0 0 0 1px var(--marrone-scuro) inset; }
+  .frase.punto-arresto-rivelato{ background:#e8ddce; border-bottom:2px solid var(--marrone-scuro); }
+
+  .rivelazione{
+    margin-top:18px; padding:16px 18px; border-left:4px solid var(--marrone); background:#fbf8f2;
+    border-radius:0 6px 6px 0; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13.5px; display:none;
+  }
+  .rivelazione.visibile{ display:block; }
+  .rivelazione .titolo-riv{ text-transform:uppercase; font-size:11px; letter-spacing:.5px; color:var(--marrone-scuro); margin-bottom:8px; }
+  .rivelazione p{ font-family:Georgia,serif; font-size:14.5px; margin:0 0 8px; }
+  .flag-nota{ font-size:11px; color:#a06a3a; font-style:italic; }
+
+  .riflessione{
+    max-width:800px; font-size:15px; font-style:italic; border-left:4px solid var(--marrone);
+    background:var(--bg-card); padding:18px 22px; border-radius:0 6px 6px 0; margin-top:8px; display:none;
+  }
+  .riflessione.visibile{ display:block; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 7</p>
+  <h1>Leggere un cahier</h1>
+  <p class="sottotitolo">§ 2.1 — I cahiers de doléances</p>
+</div>
+
+<div class="istruzioni">
+  <p><strong>Che cosa fare.</strong> Scegli uno dei quattro quaderni dalle schede qui sotto e leggilo per intero: sono testi autentici, non riassunti. In ognuno, a un certo punto, chi scrive chiede meno di quanto la sua stessa premessa farebbe pensare — arretra, concede un'eccezione, oppure smette di parlare in prima persona. Trovato quel punto, clicca sulla frase per selezionarla.</p>
+  <p><strong>Che cosa succede dopo.</strong> Non è un quiz: qualunque frase tu scelga, comparirà il punto individuato dagli storici, evidenziato nel testo, con la spiegazione del perché è proprio lì che il documento si trattiene. Confronta la tua scelta con la loro.</p>
+  <p><strong>Prima di chiudere.</strong> Dopo aver letto almeno un quaderno, in fondo alla pagina trovi la domanda a cui questo esercizio serve a rispondere: che cosa questa fonte dimostra, e che cosa non può dimostrare per come è fatta. Prova a rispondere per iscritto, anche solo per te stesso, prima di passare al quaderno successivo.</p>
+</div>
+
+<nav class="tab-nav" id="tab-nav"></nav>
+<div id="area-quaderno"></div>
+
+<div class="riflessione" id="riflessione">
+  Che cosa questa fonte dimostra, e che cosa non può dimostrare per come è fatta?
+</div>
+
+<script>
+const quaderni = [
+  {
+    id:'langres', titolo:'Langres', provenienza:"I tre ordini del distretto di Langres — sull'uguaglianza fiscale",
+    puntoArrestoVerificato:false,
+    frasi:[
+      "È giunto il tempo, Sire, di porre le basi di una giusta ripartizione delle imposte tra tutti i cittadini.",
+      "Questa giustizia, da lungo tempo misconosciuta, ha infine dissipato le nubi che da secoli la coprivano a causa dei pregiudizi, delle pretese, degli interessi.",
+      "Essa è apparsa ai nostri occhi, in seno alle nostre disgrazie, come la nostra risorsa; e in mezzo al fermento che agita e divide gli spiriti, li ha tutti riuniti intorno a essa.",
+      "Ebbene sì, Sire, tutti i vostri sudditi, di ogni condizione e rango, rendono ora omaggio a questa grande verità, che l'eguaglianza proporzionale deve essere la legge dei tributi.",
+      "Essi riconoscono unanimemente che tutte le proprietà devono concorrere egualmente al mantenimento del potere pubblico, che li protegge e li difende, e che, poiché l'alleggerimento per gli uni determina necessariamente l'aggravio per gli altri, appesantire il fardello dei più poveri per alleviare quello dei più ricchi è contrario sia ai principi dell'equità, sia ai sentimenti dell'umanità.",
+      { testo:"Un grido generale s'innalza in tutto il regno per rivendicare questa preziosa eguaglianza: i principi del vostro sangue hanno portato questo voto ai piedi del vostro trono, i pari del vostro Regno l'hanno ripetuto, ha echeggiato in tutte le province ove gli ordini hanno avuto la facoltà di riunirsi.", arresto:true },
+      "E noi, Sire, non appena ci raduniamo secondo i vostri ordini, ci premuriamo di unire insieme le nostre voci a tutte queste voci che vi sollecitano, ben sicuri d'interessare il vostro cuore implorando nel contempo la vostra giustizia e la vostra munificenza."
+    ],
+    spiegazioneArresto:"Il quaderno chiede l'eguaglianza fiscale, ma non la chiede come un diritto della nazione: la legittima citando che i principi del sangue reale e i pari del Regno l'hanno già chiesta prima. L'uguaglianza si presenta appoggiata all'autorità della più alta nobiltà, non rivendicata in proprio nome — e l'intero quaderno resta nel registro della supplica, chiuso non a caso invocando «la vostra giustizia e la vostra munificenza»."
+  },
+  {
+    id:'beaumont', titolo:'Beaumont-le-Roger', provenienza:"Quaderno normanno — sulle lettres de cachet",
+    frasi:[
+      "La libertà è senza dubbio, dopo l'onore, il bene più prezioso dell'uomo; egli deve esserne privato solo quando le sue deviazioni turbano l'ordine della società e spetta solo a quest'ultima di mettervi freno per mezzo delle leggi che la governano.",
+      "Il monarca, con tutta la sua potenza, viola egli stesso i diritti del cittadino se estende il suo potere fino a privarlo di questa libertà che gli è così cara, senza essere determinato da altra esigenza che dalla sua sola volontà.",
+      "Le lettres de cachet sono l'effetto più immediato del potere dispotico.",
+      "Sono un abuso dell'autorità che infonde turbamento nell'ordine sociale, senza ovviare ai suoi mali.",
+      { testo:"Vi sono tuttavia dei casi in cui le lettres de cachet tendono a prevenire i crimini e a epurare la società dai membri che ne turbano l'armonia e a rinchiudere nel segreto delle famiglie le tracce della loro cattiva condotta.", arresto:true },
+      "Ma poiché è ingiusto punire chicchessia senza averlo ascoltato, sarebbe necessario che colui che viene colpito dalla lettre de cachet avesse la libertà di usare dei mezzi atti alla sua giustificazione…"
+    ],
+    spiegazioneArresto:"Dopo aver definito le lettres de cachet «l'effetto più immediato del potere dispotico», il testo si corregge: concede che in certi casi servono a prevenire i crimini e a custodire dentro la famiglia le tracce di una cattiva condotta. La richiesta finale non sarà l'abolizione, ma che chi ne è colpito possa difendersi: lo strumento più simbolico dell'arbitrio regio viene criticato chiedendone la procedura, non la fine."
+  },
+  {
+    id:'poitou', titolo:'Poitou', provenienza:"Pamproux (Saint-Maixent) — sui braccianti giornalieri",
+    frasi:[
+      "C'è ancora un'altra categoria di uomini assoggettati al duro e penoso lavoro della campagna: sono i miserabili braccianti giornalieri, la classe più indigente del Regno, che non hanno che le loro braccia per vivere e sono spesso gravati da una numerosa famiglia, che non possono lavorare nei periodi difficili, ai quali bisognerebbe alleggerire il peso delle imposte.",
+      { testo:"Abbiamo un chiaro esempio di questa verità nel triste inverno che abbiamo appena trascorso, in cui la maggior parte di questi miserabili era ridotta alla miseria più nera, distesi nei loro casolari sopra un pugno di paglia, privati di tutte le cose necessarie alla vita, mentre i grandi e i ricchi si godevano nelle loro camere dorate le dolcezze di una temperatura costante.", arresto:true }
+    ],
+    spiegazioneArresto:"Chi scrive dice «abbiamo appena trascorso» questo inverno — condivide dunque la stessa stagione — ma parla dei braccianti sempre in terza persona: «questi miserabili», «i loro casolari». Nella stessa frase compaiono un «noi» che osserva e un «loro» che è osservato: la miseria dei più poveri viene descritta da altri, non raccontata da chi la vive. In quell'assemblea i braccianti non hanno scritto nulla."
+  },
+  {
+    id:'serignac', titolo:'Serignac', provenienza:"Serignac (Tarn-et-Garonne, Rivière-Verdun) — sul forziere a tre chiavi",
+    frasi:[
+      { testo:"La comunità di Serignac, subendo attualmente gli effetti più crudeli che la miseria può produrre in tutta la provincia di Guascogna, desidera ardentemente che il re, questo caro e tenero padre del suo popolo, inviti i signori grandi decimatori a dare in futuro la ventesima parte delle entrate prodotte dalle loro decime ai detentori di una cassa costituita all'uopo in ogni parrocchia.", arresto:true },
+      "Questi ventesimi resteranno in deposito; un ventesimo sulla capitazione sarà inoltre istituito per provvedere ai bisogni degli indigenti in caso di grandine e di cattive annate.",
+      "Proponiamo, per la sicurezza di questo deposito, che dovrà essere considerato sacro dal re e dai suoi sudditi, che ne siano guardiani i curati delle parrocchie, per mezzo di un forziere chiuso con tre chiavi, di cui una conservata dal curato, l'altra dal primo pubblico ufficiale e la terza dal sindaco.",
+      "In caso di grandine, di carestia e di cattivo raccolto, sei notabili con i tre detentori delle chiavi andranno a prelevare al deposito i fondi raccolti, per acquistare grano comune al miglior prezzo.",
+      "Una simile istituzione farebbe onore alla nazione e garantirebbe una risorsa ai coltivatori indigenti, e farebbe risparmiare milioni alle casse del re."
+    ],
+    spiegazioneArresto:"Il quaderno non chiede che la decima sia ridotta per diritto, né che i grandi decimatori siano obbligati: chiede che il re li «inviti» a cederne volontariamente un ventesimo. La decima resta intatta; il rimedio è una cassa parrocchiale amministrata da tre persone di fiducia locale — curato, ufficiale pubblico, sindaco — non una riforma del prelievo. È il rimedio locale, amministrativo e paternalistico che questo genere di fonte produce quasi sempre."
+  }
+];
+
+let quadernoAttivo = 'langres';
+let selezioni = {}; // { quadernoId: indiceFraseSelezionata }
+let almenoUnaScelta = false;
+
+function vaiQuaderno(id){
+  quadernoAttivo = id;
+  render();
+}
+
+function selezionaFrase(quadernoId, indice){
+  selezioni[quadernoId] = indice;
+  almenoUnaScelta = true;
+  render();
+}
+
+function renderTabNav(){
+  const el = document.getElementById('tab-nav');
+  el.innerHTML = quaderni.map(q=>`<button type="button" class="tab-btn${quadernoAttivo===q.id?' active':''}" data-id="${q.id}">${q.titolo}</button>`).join('');
+  el.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click', ()=>vaiQuaderno(btn.dataset.id)));
+}
+
+function renderQuaderno(){
+  const q = quaderni.find(x=>x.id===quadernoAttivo);
+  const selIndice = selezioni[q.id];
+  const el = document.getElementById('area-quaderno');
+
+  const testoHTML = q.frasi.map((f, i)=>{
+    const isObj = typeof f === 'object';
+    const testo = isObj ? f.testo : f;
+    const isArresto = isObj && f.arresto;
+    let classi = 'frase';
+    if(selIndice === i) classi += ' selezionata';
+    if(selIndice !== undefined && isArresto) classi += ' punto-arresto-rivelato';
+    return `<span class="${classi}" data-indice="${i}">${testo}</span> `;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="quaderno">
+      <p class="provenienza">${q.provenienza}</p>
+      <div class="testo-cahier">${testoHTML}</div>
+      <div class="rivelazione${selIndice!==undefined?' visibile':''}">
+        <p class="titolo-riv">Il punto individuato dagli storici</p>
+        <p>${q.frasi.find(f=>typeof f==='object' && f.arresto).testo}</p>
+        ${q.spiegazioneArresto}
+        ${!q.puntoArrestoVerificato===false ? '' : ''}
+      </div>
+    </div>
+  `;
+  el.querySelectorAll('.frase').forEach(span=>{
+    span.addEventListener('click', ()=>selezionaFrase(q.id, Number(span.dataset.indice)));
+  });
+
+  document.getElementById('riflessione').classList.toggle('visibile', almenoUnaScelta);
+}
+
+function render(){
+  renderTabNav();
+  renderQuaderno();
+}
+
+render();
+</script>
+
+</body>
+</html>

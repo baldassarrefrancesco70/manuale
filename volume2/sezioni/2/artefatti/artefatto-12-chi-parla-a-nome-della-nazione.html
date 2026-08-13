@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi parla a nome della nazione — Artefatto 12</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:24px; }
+
+  h2.sezione-titolo{ font-size:19px; font-weight:normal; font-style:italic; margin:0 0 4px; }
+  .sezione-sub{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; color:var(--marrone-scuro); margin:0 0 16px; }
+
+  .due-colonne{ display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:1300px; margin-bottom:36px; }
+  @media (max-width:800px){ .due-colonne{ grid-template-columns:1fr; } }
+  .colonna-titolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin-bottom:12px; }
+  .scheda{ background:var(--bg-card); border:1px solid var(--bordo); border-left:4px solid var(--marrone); border-radius:0 6px 6px 0; padding:16px 18px; margin-bottom:14px; }
+  .scheda h3{ font-size:15.5px; margin:0 0 8px; }
+  .campo{ font-size:13px; margin-bottom:6px; }
+  .campo-label{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px; text-transform:uppercase; color:var(--marrone-scuro); }
+  .valore-legale{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; padding:2px 8px; border-radius:10px; display:inline-block; margin-top:4px; }
+  .valore-legale.si{ background:var(--marrone); color:#fff; }
+  .valore-legale.no{ background:var(--grigio-neutro); color:#6b6455; border:1px solid var(--bordo); }
+  .flag-nota{ font-size:10.5px; color:#a06a3a; font-style:italic; }
+
+  .gioco{ max-width:800px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:22px 24px; margin-bottom:24px; }
+  .deputato-nome{ font-size:19px; margin:0 0 14px; }
+  .assegna-riga{ margin-bottom:16px; }
+  .assegna-label{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--marrone-scuro); margin-bottom:6px; }
+  .opzioni-riga{ display:flex; flex-wrap:wrap; gap:8px; }
+  .opzione-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; background:var(--grigio-neutro); border:1px solid var(--bordo); border-radius:6px; padding:8px 14px; cursor:pointer; color:var(--testo); }
+  .opzione-btn.selezionato{ border-color:var(--marrone-scuro); box-shadow:0 0 0 1px var(--marrone-scuro) inset; background:#fbf8f2; }
+  .btn-verifica{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--marrone); color:#fff; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; margin-top:6px; }
+  .btn-verifica:disabled{ background:#c9c2b3; cursor:not-allowed; }
+  .esito-gioco{ margin-top:16px; padding:14px 16px; background:var(--grigio-neutro); border-radius:6px; font-size:14px; display:none; }
+  .esito-gioco.visibile{ display:block; }
+  .nav-deputato{ display:flex; gap:10px; margin-top:16px; }
+  .nav-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--marrone-scuro); padding:8px 14px; border-radius:6px; cursor:pointer; }
+
+  footer.nota{ margin-top:20px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 12</p>
+  <h1>Chi parla a nome della nazione</h1>
+  <p class="sottotitolo">§ 2.8 — I club</p>
+</div>
+
+<div class="istruzioni">
+  <p>Le decisioni si prendevano in aula. Si preparavano altrove, e l'altrove non aveva alcuno statuto giuridico. Due colonne per non confonderli: associazioni da un lato, assemblee e istituzioni dall'altro.</p>
+</div>
+
+<div class="due-colonne">
+  <div>
+    <p class="colonna-titolo">Associazioni</p>
+    <div id="col-associazioni"></div>
+  </div>
+  <div>
+    <p class="colonna-titolo">Assemblee e istituzioni</p>
+    <div id="col-istituzioni"></div>
+  </div>
+</div>
+
+<h2 class="sezione-titolo">Un club e un banco</h2>
+<p class="sezione-sub">Assegna a ciascun deputato un club e uno schieramento in aula</p>
+
+<div class="gioco" id="gioco"></div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le schede sono tratte da § 2.8. La funzione delle sezioni parigine e della Comune insurrezionale, meno dettagliata nel capitolo rispetto ai club, è ricostruita entro i limiti di ciò che il testo dice esplicitamente e segnalata dove incompleta.
+</footer>
+
+<script>
+const associazioni = [
+  { nome:"Giacobini", sottotitolo:"Società degli amici della Costituzione",
+    nasce:"Dicembre 1789, dalle riunioni informali dei deputati bretoni a Versailles; prende il nome dall'ex convento domenicano in cui si insedia a Parigi.",
+    chiEntra:"Quota di iscrizione di ventiquattro lire, non simbolica: fino al 1792 tiene fuori chi vive di salario. Associazione di borghesi e nobili liberali.",
+    cheDecide:"Nessuna legge: riceve indirizzi, mozioni e resoconti da centinaia di società affiliate (circa 450 entro il 1791), collegate da corrispondenza regolare — la prima rete politica nazionale della storia europea.",
+    valoreLegale:false },
+  { nome:"Cordiglieri", sottotitolo:"Società degli amici dei diritti dell'uomo e del cittadino",
+    nasce:"Luglio 1790, nel convento francescano della riva sinistra da cui prende il nome.",
+    chiEntra:"Quote basse o nulle, reclutamento assai più largo, radicamento profondo nei quartieri artigiani della capitale.",
+    cheDecide:"Nessuna legge: la funzione dichiarata è la sorveglianza permanente sugli eletti, più che la preparazione dei lavori parlamentari.",
+    valoreLegale:false },
+  { nome:"Foglianti", sottotitolo:"Scissione moderata dai giacobini",
+    nasce:"Dopo Varennes (giugno 1791), quando i giacobini si dividono sulla petizione per la decadenza del re: la componente moderata esce, guidata da La Fayette e Bailly, e si insedia in un altro convento vuoto.",
+    chiEntra:"Porta con sé gran parte dei deputati giacobini, lasciando ai rimasti il nome e la rete.",
+    cheDecide:"Nessuna legge: stessa natura di club di orientamento politico, non organo parlamentare.",
+    valoreLegale:false },
+  { nome:"Società del 1789", sottotitolo:null,
+    nasce:"Non datata con precisione dal capitolo.",
+    chiEntra:"Quote altissime: riunisce i notabili che ritengono la rivoluzione conclusa.",
+    cheDecide:"Nessuna legge.",
+    valoreLegale:false }
+];
+
+const istituzioni = [
+  { nome:"Assemblea nazionale costituente", sottotitolo:null,
+    nasce:"9 luglio 1789, quando l'Assemblea nazionale (autoproclamata il 17 giugno) assume questo nome.",
+    chiEntra:"I deputati eletti agli Stati generali del 1789.",
+    cheDecide:"Il potere costituente e legislativo fino al 1791: abolizione del regime feudale, Dichiarazione dei diritti, Costituzione civile del clero, Costituzione del 1791.",
+    valoreLegale:true },
+  { nome:"Assemblea legislativa", sottotitolo:null,
+    nasce:"Ottobre 1791, prevista dalla Costituzione dello stesso anno.",
+    chiEntra:"Settecentoquarantacinque deputati eletti per due anni, a suffragio ristretto e in due gradi — nessuno dei quali aveva partecipato a scrivere la costituzione, per la scelta di autoesclusione voluta da Robespierre.",
+    cheDecide:"Unica titolare dell'iniziativa legislativa. Durò di fatto undici mesi, non i due anni previsti.",
+    valoreLegale:true },
+  { nome:"Convenzione nazionale", sottotitolo:null,
+    nasce:"Convocata dall'Assemblea legislativa dopo la sospensione del re, il 10 agosto 1792.",
+    chiEntra:"Eletta a suffragio universale maschile, la prima assemblea della storia scelta con questo criterio — da circa un decimo degli aventi diritto.",
+    cheDecide:"Assume l'intero potere costituente e legislativo; il 21 settembre 1792 abolisce la monarchia.",
+    valoreLegale:true },
+  { nome:"Sezioni parigine", sottotitolo:null,
+    nasce:"Le quarantotto circoscrizioni amministrative in cui è divisa Parigi.",
+    chiEntra:"I cittadini del quartiere, riuniti in assemblea.",
+    cheDecide:"Il 3 agosto 1792 quarantasette sezioni su quarantotto chiedono formalmente la destituzione del re; partecipano, con la Comune, all'organizzazione dell'assalto alle Tuileries del 10 agosto.",
+    valoreLegale:false,
+    nota:"Il capitolo non specifica un potere legislativo proprio delle sezioni: la loro azione è politica e organizzativa, non normativa in senso stretto." },
+  { nome:"Comune insurrezionale", sottotitolo:null,
+    nasce:"Nella notte fra il 9 e il 10 agosto 1792, quando si impadronisce del municipio di Parigi.",
+    chiEntra:"Non un organo eletto secondo le forme costituzionali: nasce dall'insurrezione stessa.",
+    cheDecide:"Dirige, con le sezioni e i federati, l'assalto alle Tuileries; rinchiude poi la famiglia reale nella prigione del Temple.",
+    valoreLegale:false,
+    nota:"Esercita un potere di fatto, non fondato su alcuna procedura costituzionale." }
+];
+
+function schedaHTML(item){
+  return `
+    <div class="scheda">
+      <h3>${item.nome}</h3>
+      ${item.sottotitolo?`<div class="flag-nota" style="margin-bottom:8px;">${item.sottotitolo}</div>`:''}
+      <div class="campo"><span class="campo-label">Quando nasce — </span>${item.nasce}</div>
+      <div class="campo"><span class="campo-label">Chi può entrarci — </span>${item.chiEntra}</div>
+      <div class="campo"><span class="campo-label">Che cosa può decidere — </span>${item.cheDecide}</div>
+      <span class="valore-legale ${item.valoreLegale?'si':'no'}">${item.valoreLegale?'Valore legale':'Nessun valore legale'}</span>
+      ${item.nota?`<div class="flag-nota" style="margin-top:6px;">${item.nota}</div>`:''}
+    </div>
+  `;
+}
+
+document.getElementById('col-associazioni').innerHTML = associazioni.map(schedaHTML).join('');
+document.getElementById('col-istituzioni').innerHTML = istituzioni.map(schedaHTML).join('');
+
+/* ---------- Gioco: club e banco ---------- */
+const deputati = [
+  { nome:"Robespierre", club:"Giacobini", banco:"Montagna",
+    spiegazione:"Robespierre fu presidente del club dei giacobini già nel marzo del 1790. Nella Convenzione si schiererà con la Montagna." },
+  { nome:"Brissot", club:"Giacobini", banco:"Gironda",
+    spiegazione:"Brissot fu tra i membri più ascoltati del club dei giacobini. Nella Convenzione, però, è proprio il gruppo che si raccoglie attorno a lui a dare il nome allo schieramento della Gironda: stesso club, banco diverso da quello di Robespierre." }
+];
+const opzioniClub = ["Giacobini","Cordiglieri","Foglianti","Società del 1789"];
+const opzioniBanco = ["Montagna","Gironda","Pianura"];
+
+let indiceDeputato = 0;
+let sceltaClub = null;
+let sceltaBanco = null;
+
+function selezionaClub(c){ sceltaClub = c; renderGioco(); }
+function selezionaBanco(b){ sceltaBanco = b; renderGioco(); }
+
+function verificaGioco(){ renderGioco(true); }
+
+function vaiDeputato(i){
+  if(i<0 || i>=deputati.length) return;
+  indiceDeputato = i;
+  sceltaClub = null; sceltaBanco = null;
+  renderGioco();
+}
+
+function renderGioco(mostraEsito){
+  const d = deputati[indiceDeputato];
+  const el = document.getElementById('gioco');
+  el.innerHTML = `
+    <p class="deputato-nome">${d.nome}</p>
+    <div class="assegna-riga">
+      <div class="assegna-label">Club</div>
+      <div class="opzioni-riga">${opzioniClub.map(c=>`<button type="button" class="opzione-btn${sceltaClub===c?' selezionato':''}" data-tipo="club" data-val="${c}">${c}</button>`).join('')}</div>
+    </div>
+    <div class="assegna-riga">
+      <div class="assegna-label">Banco in aula (schieramento nella Convenzione)</div>
+      <div class="opzioni-riga">${opzioniBanco.map(b=>`<button type="button" class="opzione-btn${sceltaBanco===b?' selezionato':''}" data-tipo="banco" data-val="${b}">${b}</button>`).join('')}</div>
+    </div>
+    <button class="btn-verifica" ${(!sceltaClub||!sceltaBanco)?'disabled':''} onclick="verificaGioco()">Verifica</button>
+    <div class="esito-gioco${mostraEsito?' visibile':''}">
+      <strong>Club: ${d.club} · Banco: ${d.banco}</strong><br>${d.spiegazione}
+    </div>
+    <div class="nav-deputato">
+      <button class="nav-btn" onclick="vaiDeputato(${indiceDeputato-1})" ${indiceDeputato===0?'disabled':''}>← Deputato precedente</button>
+      <button class="nav-btn" onclick="vaiDeputato(${indiceDeputato+1})" ${indiceDeputato===deputati.length-1?'disabled':''}>Deputato successivo →</button>
+    </div>
+  `;
+  el.querySelectorAll('.opzione-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(btn.dataset.tipo==='club') selezionaClub(btn.dataset.val);
+      else selezionaBanco(btn.dataset.val);
+    });
+  });
+}
+
+renderGioco();
+</script>
+
+</body>
+</html>

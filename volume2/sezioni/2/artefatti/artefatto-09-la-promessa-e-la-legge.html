@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La promessa e la legge — Artefatto 9</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:20px; }
+
+  .toolbar{ margin-bottom:22px; }
+  .btn-secondario{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; background:var(--bg-card); border:1px solid var(--marrone); color:var(--marrone-scuro); padding:9px 16px; border-radius:6px; cursor:pointer; font-size:13px; }
+
+  .coppie{ display:flex; flex-direction:column; gap:20px; max-width:1000px; margin-bottom:28px; }
+  .coppia-card{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:20px 22px; }
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:16px; }
+  @media (max-width:640px){ .split{ grid-template-columns:1fr; } }
+  .lato{ padding:14px 16px; border-radius:6px; }
+  .lato.dichiarazione{ background:var(--grigio-neutro); }
+  .lato.legge{ background:#fbf8f2; border:1px solid var(--bordo); }
+  .lato-label{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin-bottom:5px; }
+  .lato-testo{ font-size:14px; }
+
+  .bottoni{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+  .bottone-scelta{
+    flex:1; min-width:150px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px;
+    background:var(--grigio-neutro); border:1px solid var(--bordo); border-radius:6px; padding:10px 12px; cursor:pointer; color:var(--testo);
+  }
+  .bottone-scelta.selezionato{ border-color:var(--marrone-scuro); box-shadow:0 0 0 1px var(--marrone-scuro) inset; background:#fbf8f2; }
+
+  .lettura-capitolo{
+    margin-top:12px; padding:12px 14px; border-left:3px solid var(--marrone); background:#fbf8f2; border-radius:0 4px 4px 0;
+    font-size:13px; display:none;
+  }
+  .lettura-capitolo.visibile{ display:block; }
+  .lettura-capitolo .badge{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:5px; }
+
+  .chiusura{
+    max-width:780px; font-size:16px; font-style:italic; border-left:4px solid var(--marrone);
+    background:var(--bg-card); padding:18px 22px; border-radius:0 6px 6px 0; display:none;
+  }
+  .chiusura.visibile{ display:block; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:900px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 9</p>
+  <h1>La promessa e la legge</h1>
+  <p class="sottotitolo">§ 2.3 e § 2.6 — La Dichiarazione dei diritti · Cittadini attivi e cittadini passivi</p>
+</div>
+
+<div class="istruzioni">
+  <p>A sinistra un articolo della Dichiarazione del 26 agosto 1789; a destra un provvedimento approvato dalla stessa assemblea entro pochi mesi. Per ciascuna coppia scegli: la legge contraddice l'articolo, la legge lo specifica legittimamente, oppure il testo non basta a deciderlo.</p>
+</div>
+
+<div class="toolbar">
+  <button class="btn-secondario" onclick="toggleLettura()">Mostra la lettura del capitolo</button>
+</div>
+
+<div class="coppie" id="coppie"></div>
+
+<div class="chiusura" id="chiusura">
+  La distanza fra i due lati dello schermo non è un'incoerenza da rilevare: è la forma che il nuovo ordine ha preso.
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> I testi sono tratti da § 2.3 (la Dichiarazione) e § 2.6 (i provvedimenti sulla cittadinanza). La lettura del capitolo per le prime due coppie si fonda sul passaggio che osserva come la Dichiarazione rimetta esplicitamente alla legge la definizione di chi sia cittadino.
+  <br><strong>Nota per il progetto LaTeX.</strong> Questo artefatto è richiamato da due punti del testo (§ 2.3 e § 2.6): il contatore per ordine di apparizione va istruito a stampare due volte lo stesso numero.
+</footer>
+
+<script>
+const coppie = [
+  {
+    id: 'art1',
+    dichiarazione: "Art. 1 — Gli uomini nascono e restano liberi e uguali nei diritti.",
+    legge: "Decreto del dicembre 1789: distinzione fra cittadini attivi (che votano) e cittadini passivi (che conservano i diritti civili ma non votano), su base fiscale.",
+    lettura: 'non-basta',
+    spiegazione: "La Dichiarazione non stabilisce chi sia cittadino: enuncia i diritti del cittadino e lascia alla legge il compito di dirlo. Una legge che escluda qualcuno dalla cittadinanza non contraddice quindi formalmente l'articolo, che quella competenza le aveva rimessa — ma contraddice la premessa universale che l'articolo ha appena affermato."
+  },
+  {
+    id: 'art6',
+    dichiarazione: "Art. 6 — Tutti i cittadini hanno diritto di concorrere, personalmente o per mezzo di rappresentanti, alla formazione della legge.",
+    legge: "Gli attivi non eleggono direttamente i deputati: designano elettori di secondo grado, con un censo più alto; per essere eletti serve inoltre una proprietà fondiaria e il marco d'argento (abolito nell'estate 1791).",
+    lettura: 'non-basta',
+    spiegazione: "Stesso meccanismo dell'articolo 1: la Dichiarazione parla di «cittadini», categoria che la legge definisce a valle. La contraddizione formale non c'è; c'è una restrizione via via più stretta di chi rientra in quella categoria."
+  },
+  {
+    id: 'proprieta',
+    dichiarazione: "Artt. 2 e 17 — La proprietà è fra i diritti naturali dell'uomo; è inviolabile e sacra.",
+    legge: "Dopo il 4 agosto 1789, i diritti reali (censi e canoni sulla terra) sono trattati come proprietà legittima: i contadini devono riscattarli pagando un capitale al signore, invece di vederli aboliti senza indennizzo come i diritti personali.",
+    lettura: 'specifica-legittimamente',
+    spiegazione: "Il capitolo lo dice esplicitamente: la coerenza con l'articolo 17 è perfetta. Trattare i diritti reali come proprietà e richiederne il riscatto, invece dell'abolizione gratuita, applica proprio il principio dell'indennizzo previsto dall'articolo stesso."
+  },
+  {
+    id: 'colonie',
+    dichiarazione: "Il testo parla degli «uomini», non dei francesi: nessuna delle sue formule contiene un limite geografico.",
+    legge: "Le colonie sono rette da leggi particolari e la Dichiarazione non vi si applica; la schiavitù resta in vigore.",
+    lettura: 'contraddice',
+    spiegazione: "Qui non si tratta di una competenza che la Dichiarazione avesse rimesso alla legge, come per la cittadinanza: il testo si rivolge esplicitamente al genere umano, senza limite geografico. Escludere le colonie e mantenere la schiavitù è una contraddizione sostanziale, non una specificazione tecnica."
+  },
+  {
+    id: 'donne',
+    dichiarazione: "Nessun articolo della Dichiarazione qualifica «l'uomo» o «il cittadino» per sesso.",
+    legge: "L'esclusione delle donne dai diritti politici fu totale e non fu mai messa ai voti come questione, nonostante gli argomenti pubblici di Condorcet (1790) e la Dichiarazione dei diritti della donna di Olympe de Gouges (1791).",
+    lettura: 'contraddice',
+    spiegazione: "A differenza del censo, per l'esclusione delle donne il capitolo non registra un ragionamento giuridico equivalente offerto dall'assemblea: fu totale e data per scontata. Gli argomenti per l'inclusione furono formulati pubblicamente, nella stessa lingua della Dichiarazione, e respinti — non il limite implicito di un'epoca che non se lo poneva."
+  }
+];
+
+let scelte = {};
+let letturaVisibile = false;
+
+const etichetteBottoni = [
+  { key:'contraddice', label:'La legge contraddice l\'articolo' },
+  { key:'specifica-legittimamente', label:'La legge lo specifica legittimamente' },
+  { key:'non-basta', label:'Il testo non basta a deciderlo' }
+];
+const etichetteBadge = {
+  'contraddice':'La legge contraddice l\'articolo',
+  'specifica-legittimamente':'La legge lo specifica legittimamente',
+  'non-basta':'Il testo non basta a deciderlo'
+};
+
+function toggleLettura(){
+  letturaVisibile = !letturaVisibile;
+  render();
+}
+
+function scegli(id, key){
+  scelte[id] = key;
+  render();
+}
+
+function render(){
+  const el = document.getElementById('coppie');
+  el.innerHTML = '';
+  coppie.forEach(c=>{
+    const card = document.createElement('div');
+    card.className = 'coppia-card';
+    const scelta = scelte[c.id];
+    card.innerHTML = `
+      <div class="split">
+        <div class="lato dichiarazione"><div class="lato-label">Dichiarazione, 26 agosto 1789</div><div class="lato-testo">${c.dichiarazione}</div></div>
+        <div class="lato legge"><div class="lato-label">Legge</div><div class="lato-testo">${c.legge}</div></div>
+      </div>
+      <div class="bottoni">
+        ${etichetteBottoni.map(b=>`<button type="button" class="bottone-scelta${scelta===b.key?' selezionato':''}" data-id="${c.id}" data-key="${b.key}">${b.label}</button>`).join('')}
+      </div>
+      <div class="lettura-capitolo${letturaVisibile?' visibile':''}">
+        <div class="badge">Lettura del capitolo: ${etichetteBadge[c.lettura]}</div>
+        ${c.spiegazione}
+      </div>
+    `;
+    el.appendChild(card);
+  });
+  el.querySelectorAll('.bottone-scelta').forEach(btn=>{
+    btn.addEventListener('click', ()=>scegli(btn.dataset.id, btn.dataset.key));
+  });
+
+  const tutteFatte = coppie.every(c=>scelte[c.id]);
+  document.getElementById('chiusura').classList.toggle('visibile', tutteFatte);
+}
+
+render();
+</script>
+
+</body>
+</html>

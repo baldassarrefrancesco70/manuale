@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi è cittadino nel 1791 — Artefatto 10</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .griglia{ display:grid; grid-template-columns:repeat(auto-fit, minmax(270px,1fr)); gap:16px; max-width:1400px; }
+  .card{ background:var(--bg-card); border:1px solid var(--bordo); border-top:4px solid var(--marrone); border-radius:4px; padding:18px; }
+  .card.perno{ border-top-color:var(--marrone-scuro); box-shadow:0 0 0 1px var(--marrone-scuro); }
+  .card .badge{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--marrone-scuro); font-weight:bold; margin-bottom:6px; }
+  .card h2{ font-size:16px; margin:0 0 6px; font-weight:normal; }
+  .card .descr{ font-size:12.5px; color:#5a5347; margin-bottom:14px; font-style:italic; }
+
+  .criterio{ margin-bottom:10px; padding-bottom:10px; border-bottom:1px dashed var(--bordo); }
+  .criterio:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .criterio-riga{ display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+  .criterio-nome{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:var(--testo); }
+  .stato-chip{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.5px; padding:2px 8px; border-radius:10px; }
+  .stato-chip.si{ background:var(--marrone); color:#fff; }
+  .stato-chip.no{ background:var(--grigio-neutro); color:#6b6455; border:1px solid var(--bordo); }
+  .stato-chip.dipende{ background:#c9a869; color:#fff; }
+  .criterio-ragione{ font-size:12px; color:#5a5347; }
+  .flag-dedotto{ font-size:10px; color:#a06a3a; font-style:italic; }
+
+  footer.nota{ margin-top:28px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 10</p>
+  <h1>Chi è cittadino nel 1791</h1>
+  <p class="sottotitolo">§ 2.6 — Cittadini attivi e cittadini passivi</p>
+</div>
+
+<div class="istruzioni">
+  <p>Otto profili, quattro caselle ciascuno: cittadino attivo, elettore di secondo grado, eleggibile, ammesso alla guardia nazionale. Accanto a ogni casella chiusa, la ragione che si dava allora — non un commento nostro. Stessa interfaccia dell'Artefatto 2 sul prelievo fiscale: allora contava l'ordine di appartenenza, ora conta il censo, e in entrambi i casi non conta la persona.</p>
+</div>
+
+<div class="griglia" id="griglia"></div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Criteri, soglie e casi (marco d'argento, esclusione delle donne, liberi di colore, ebrei di Bordeaux) sono tratti da § 2.6. Dove il profilo richiede un'ipotesi su un patrimonio o un censo non specificato dal testo per un individuo generico, la voce è contrassegnata <strong>[ipotesi]</strong>.
+  <br><strong>Correzione rispetto al capitolato.</strong> Il capitolato prevedeva che il mercante ebreo cambiasse stato nel settembre 1791; il capitolo distingue però gli ebrei di Bordeaux e di Avignone (cittadini già dal gennaio 1790) dal resto degli ebrei di Francia (settembre 1791). Il profilo qui riflette la cronologia del capitolo: verificare se il caso "Bordeaux" fosse quello inteso, o se convenga spostarlo su un mercante ebreo di una diversa città francese per ottenere il cambiamento di stato nel 1791.
+</footer>
+
+<script>
+const profili = [
+  {
+    id:'avvocato', nome:'Un avvocato di Parigi', gruppo:'Uomo',
+    descrizione:"Professionista affermato, verosimilmente proprietario o comunque benestante.",
+    criteri:{
+      attivo:{stato:'si', ragione:"Assumendo un'imposta diretta pari almeno a tre giornate di lavoro, verosimile per un professionista affermato.", dedotto:true},
+      elettore:{stato:'si', ragione:"Il censo per gli elettori di secondo grado era assai più alto: ipotizziamo che un avvocato affermato lo raggiunga.", dedotto:true},
+      eleggibile:{stato:'si', ragione:"Richiedeva proprietà fondiaria e il pagamento del marco d'argento — requisito abolito nell'estate del 1791 dopo la campagna condotta, fra gli altri, da Robespierre.", dedotto:true},
+      guardia:{stato:'si', ragione:"Milizia di cittadini attivi in armi.", dedotto:true}
+    }
+  },
+  {
+    id:'bottegaia', nome:'Una bottegaia vedova che paga le imposte', gruppo:'Donna',
+    descrizione:"Paga le proprie imposte dirette, gestisce un'attività.",
+    criteri:{
+      attivo:{stato:'no', ragione:"L'esclusione delle donne fu totale e non richiese alcun criterio, indipendentemente da quante imposte paghi."},
+      elettore:{stato:'no', ragione:"Stessa ragione: nessun criterio la riguarda, essendo esclusa a monte."},
+      eleggibile:{stato:'no', ragione:"Stessa ragione."},
+      guardia:{stato:'no', ragione:"Stessa ragione."}
+    }
+  },
+  {
+    id:'domestico', nome:'Un domestico salariato al servizio di una famiglia agiata', gruppo:'Uomo',
+    descrizione:"Vive e lavora alle dipendenze salariali della famiglia che serve.",
+    criteri:{
+      attivo:{stato:'no', ragione:"Escluso esplicitamente dal criterio stesso: si riteneva che chi vive nella casa altrui come domestico non fosse padrone della propria volontà e votasse secondo quella di chi lo mantiene."},
+      elettore:{stato:'no', ragione:"Consegue dall'esclusione dalla cittadinanza attiva."},
+      eleggibile:{stato:'no', ragione:"Consegue dall'esclusione dalla cittadinanza attiva."},
+      guardia:{stato:'no', ragione:"Consegue dall'esclusione dalla cittadinanza attiva.", dedotto:true}
+    }
+  },
+  {
+    id:'contadino', nome:'Un contadino proprietario', gruppo:'Uomo',
+    descrizione:"Possiede la terra che lavora.",
+    criteri:{
+      attivo:{stato:'si', ragione:"Assumendo un'imposta diretta pari almeno a tre giornate di lavoro, verosimile per chi possiede la terra che lavora.", dedotto:true},
+      elettore:{stato:'no', ragione:"Il censo per gli elettori di secondo grado era assai più alto: ipotizziamo che un contadino proprietario comune non lo raggiunga.", dedotto:true},
+      eleggibile:{stato:'no', ragione:"Richiedeva proprietà fondiaria e il marco d'argento: ipotizziamo un patrimonio insufficiente a raggiungerlo.", dedotto:true},
+      guardia:{stato:'si', ragione:"Cittadino attivo, arruolabile.", dedotto:true}
+    }
+  },
+  {
+    id:'bracciante', nome:'Un bracciante senza terra', gruppo:'Uomo',
+    descrizione:"Vive del proprio lavoro salariato, senza terra propria.",
+    criteri:{
+      attivo:{stato:'no', ragione:"Non è escluso da una clausola esplicita come il domestico, ma dalla soglia fiscale stessa: senza terra né salario sufficiente, non raggiunge verosimilmente l'imposta minima richiesta.", dedotto:true},
+      elettore:{stato:'no', ragione:"Consegue dall'esclusione dalla cittadinanza attiva."},
+      eleggibile:{stato:'no', ragione:"Consegue dall'esclusione dalla cittadinanza attiva."},
+      guardia:{stato:'no', ragione:"Consegue dall'esclusione dalla cittadinanza attiva.", dedotto:true}
+    }
+  },
+  {
+    id:'proprietaria', nome:'Una proprietaria terriera ricca', gruppo:'Donna', perno:true,
+    descrizione:"Paga più imposte del bottegaio che vota.",
+    criteri:{
+      attivo:{stato:'no', ragione:"Paga più imposte del bottegaio che vota: soddisfa abbondantemente il criterio fiscale dichiarato. Resta esclusa comunque, perché l'esclusione delle donne non richiedeva alcun criterio."},
+      elettore:{stato:'no', ragione:"Stessa ragione."},
+      eleggibile:{stato:'no', ragione:"Stessa ragione."},
+      guardia:{stato:'no', ragione:"Stessa ragione."}
+    }
+  },
+  {
+    id:'libero-colore', nome:'Un libero di colore di Santo Domingo', gruppo:'Uomo, nato libero',
+    descrizione:"Spesso proprietario, talvolta a sua volta padrone di schiavi. Chiedeva solo l'applicazione dello stesso censo già in vigore per tutti.",
+    criteri:{
+      attivo:{stato:'dipende', ragione:"Un decreto del maggio 1791 concesse i diritti politici a una parte dei liberi di colore — quelli che soddisfacevano il censo già in vigore. Fu revocato quattro mesi dopo, in settembre, sotto la pressione del partito coloniale, sostenuto dai porti atlantici e dagli interessi dello zucchero."},
+      elettore:{stato:'no', ragione:"Il capitolo non tratta questo livello per il caso specifico: con la revoca di settembre 1791 la questione decade comunque."},
+      eleggibile:{stato:'no', ragione:"Come sopra: non documentato, e superato dalla revoca di settembre 1791."},
+      guardia:{stato:'no', ragione:"Non documentato dal capitolo per questo caso."}
+    }
+  },
+  {
+    id:'ebreo-bordeaux', nome:'Un mercante ebreo di Bordeaux', gruppo:'Uomo',
+    descrizione:"Comunità sefardita di Bordeaux, integrata nel commercio atlantico.",
+    criteri:{
+      attivo:{stato:'si', ragione:"Cittadino già dal gennaio 1790: gli ebrei di Bordeaux e di Avignone ottennero la piena cittadinanza un anno e mezzo prima del resto degli ebrei di Francia (settembre 1791)."},
+      elettore:{stato:'si', ragione:"Assumendo un censo sufficiente, verosimile per un mercante.", dedotto:true},
+      eleggibile:{stato:'si', ragione:"Con la stessa nota sul marco d'argento, abolito nell'estate del 1791.", dedotto:true},
+      guardia:{stato:'si', ragione:"Cittadino attivo, arruolabile.", dedotto:true}
+    }
+  }
+];
+
+const nomiCriteri = { attivo:'Cittadino attivo', elettore:'Elettore di secondo grado', eleggibile:'Eleggibile', guardia:'Ammesso alla guardia nazionale' };
+
+function render(){
+  const el = document.getElementById('griglia');
+  el.innerHTML = '';
+  profili.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'card' + (p.perno?' perno':'');
+    let criteriHTML = '';
+    ['attivo','elettore','eleggibile','guardia'].forEach(k=>{
+      const c = p.criteri[k];
+      const chipClass = c.stato==='si'?'si':(c.stato==='dipende'?'dipende':'no');
+      const chipLabel = c.stato==='si'?'Sì':(c.stato==='dipende'?'Dipende':'No');
+      criteriHTML += `
+        <div class="criterio">
+          <div class="criterio-riga">
+            <span class="criterio-nome">${nomiCriteri[k]}</span>
+            <span class="stato-chip ${chipClass}">${chipLabel}</span>
+          </div>
+          <div class="criterio-ragione">${c.ragione}${c.dedotto?' <span class="flag-dedotto">[ipotesi]</span>':''}</div>
+        </div>`;
+    });
+    card.innerHTML = `
+      <div class="badge">${p.gruppo}</div>
+      <h2>${p.nome}</h2>
+      <div class="descr">${p.descrizione}</div>
+      ${criteriHTML}
+    `;
+    el.appendChild(card);
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>

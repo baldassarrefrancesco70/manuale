@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maggio-ottobre 1789: chi tiene in piedi l'assemblea — Artefatto 8</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6; --rosso-basso:#a86b5a;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .contatore{
+    display:inline-flex; align-items:center; gap:10px; background:var(--grigio-neutro);
+    border:1px solid var(--bordo); border-radius:6px; padding:10px 16px; margin-bottom:22px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13.5px;
+  }
+  .contatore .numero{ font-size:20px; color:var(--marrone-scuro); font-family:Georgia,serif; }
+
+  .timeline-wrap{ overflow-x:auto; margin-bottom:22px; }
+  .timeline{
+    display:grid; grid-template-columns: repeat(10, 122px); grid-template-rows: auto auto auto; gap:8px 6px;
+    min-width:1240px;
+  }
+  .corsia-label{
+    grid-column:1/-1; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px;
+    text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin-top:4px;
+  }
+  .nodo{
+    border:1px solid var(--bordo); border-radius:6px; background:var(--bg-card); padding:8px 10px;
+    cursor:pointer; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11.5px;
+    min-height:70px; display:flex; flex-direction:column; justify-content:center; text-align:left;
+  }
+  .nodo.bassa{ border-color:var(--rosso-basso); }
+  .nodo .data{ font-size:10px; color:var(--marrone-scuro); margin-bottom:3px; }
+  .nodo.corrente{ border-width:2px; box-shadow:0 0 0 2px var(--marrone-scuro) inset; }
+  .nodo.non-visitato{ opacity:.5; }
+  .nodo .stato-tag{
+    font-size:9px; text-transform:uppercase; letter-spacing:.4px; margin-top:4px; padding:1px 5px;
+    border-radius:3px; display:inline-block; align-self:flex-start;
+  }
+  .stato-tag.sospeso{ background:#e8ddce; color:var(--marrone-scuro); }
+  .stato-tag.vigore{ background:var(--marrone); color:#fff; }
+
+  .dettaglio{
+    max-width:800px; background:var(--bg-card); border:1px solid var(--bordo); border-left:4px solid var(--marrone);
+    border-radius:0 6px 6px 0; padding:20px 22px; margin-bottom:20px; min-height:90px;
+  }
+  .dettaglio.bassa{ border-left-color:var(--rosso-basso); }
+  .dettaglio h2{ font-size:18px; margin:0 0 4px; }
+  .dettaglio .corsia-nome{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; text-transform:uppercase; color:var(--marrone-scuro); margin:0 0 14px; }
+  .dettaglio p{ font-size:14.5px; margin:0; }
+
+  .nav-buttons{ display:flex; gap:10px; max-width:800px; margin-bottom:26px; }
+  .nav-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--marrone-scuro); padding:9px 16px; border-radius:6px; cursor:pointer; }
+  .nav-btn.primario{ background:var(--marrone); color:#fff; }
+  .nav-btn:disabled{ opacity:.4; cursor:not-allowed; }
+
+  footer.nota{ margin-top:20px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:900px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 8</p>
+  <h1>Maggio-ottobre 1789: chi tiene in piedi l'assemblea</h1>
+  <p class="sottotitolo">§ 2.2 — Da assemblea fiscale ad Assemblea nazionale</p>
+</div>
+
+<div class="istruzioni">
+  <p>Due corsie: in alto gli atti legali dell'assemblea, in basso gli interventi che nessuna legge prevedeva. Avanza nodo per nodo. Osserva che cosa succede ai decreti del 4 agosto e alla Dichiarazione del 26 agosto finché non arrivi all'ultimo nodo della corsia bassa.</p>
+</div>
+
+<div class="contatore" id="contatore"></div>
+
+<div class="timeline-wrap">
+  <div class="timeline" id="timeline"></div>
+</div>
+
+<div class="dettaglio" id="dettaglio"></div>
+
+<div class="nav-buttons">
+  <button class="nav-btn" id="btn-prev" onclick="vai(indiceCorrente-1)">← Precedente</button>
+  <button class="nav-btn primario" id="btn-next" onclick="vai(indiceCorrente+1)">Successivo →</button>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> I dieci nodi e le rispettive date sono tratti da § 2.2. Il conteggio delle "volte in cui l'assemblea è stata rimessa in moto" segue tre momenti che il capitolo lega esplicitamente a un intervento non previsto da alcuna legge: la Bastiglia, la Grande Paura (che precipita i decreti della notte del 4 agosto) e la marcia di ottobre.
+</footer>
+
+<script>
+const nodi = [
+  { col:1, corsia:'alta', titolo:'Apertura degli Stati generali', data:'5 maggio 1789',
+    testo:"I deputati entrano a Versailles divisi per ordine e vestiti secondo l'ordine: il clero in paramenti, la nobiltà con seta e spada, il terzo stato in nero, in fondo alla sala. Il cerimoniale è già la questione politica resa visibile." },
+  { col:2, corsia:'alta', titolo:'Autoproclamazione in Assemblea nazionale', data:'17 giugno 1789',
+    testo:"Su proposta di Sieyès, i deputati del terzo stato, con alcuni parroci, si dichiarano Assemblea nazionale: rappresentanti non di un ordine ma della nazione intera. Non una rivolta: una ridefinizione di chi rappresenta chi, compiuta con un voto." },
+  { col:3, corsia:'alta', titolo:'Giuramento della Pallacorda', data:'20 giugno 1789',
+    testo:"Trovata la sala chiusa, i deputati si riuniscono in una sala da gioco vicina e giurano, sotto la presidenza di Bailly, di non separarsi prima di aver dato una costituzione al regno." },
+  { col:4, corsia:'alta', titolo:'Unione dei tre ordini', data:'23-27 giugno 1789',
+    testo:"Il 23 giugno il re annulla le deliberazioni e ordina la separazione degli ordini: l'assemblea non si muove. Il 27 giugno è il re a cedere, ordinando ai tre ordini di riunirsi in una sola camera." },
+  { col:5, corsia:'alta', titolo:'Assemblea nazionale costituente', data:'9 luglio 1789',
+    testo:"L'assemblea assume il nome di Assemblea nazionale costituente, dichiarando di avere un mandato che nessuno le aveva conferito." },
+  { col:6, corsia:'bassa', titolo:'Presa della Bastiglia', data:'14 luglio 1789',
+    testo:"Una folla di artigiani, bottegai e lavoranti assalta la fortezza. Ciò che la giornata dimostra non è la liberazione di prigionieri, pochi e non politici, ma che il re non può usare l'esercito contro la propria capitale. Necker è richiamato, si forma la guardia nazionale.",
+    contatore:true },
+  { col:7, corsia:'bassa', titolo:'Grande Paura', data:'fine luglio - inizio agosto 1789',
+    testo:"Un panico collettivo corre le campagne: si temono bande di briganti al soldo dei nobili. I contadini si armano e, non trovando briganti, si rivolgono ai castelli, bruciando gli archivi signorili — i registri dei diritti. Bruciato il documento, il diritto diventa indimostrabile.",
+    contatore:true },
+  { col:8, corsia:'alta', titolo:'Decreti sull\'abolizione del regime feudale', data:'notte del 4 agosto 1789',
+    testo:"Per arginare l'ondata della Grande Paura, l'Assemblea vota l'abolizione del regime feudale.", sospeso:true },
+  { col:9, corsia:'alta', titolo:'Dichiarazione dei diritti', data:'26 agosto 1789',
+    testo:"L'Assemblea approva la Dichiarazione dei diritti dell'uomo e del cittadino.", sospeso:true },
+  { col:10, corsia:'bassa', titolo:'Marcia delle donne su Versailles', data:'5 ottobre 1789',
+    testo:"Un corteo composto in maggioranza da donne parigine marcia su Versailles chiedendo pane. Nella notte una parte dei manifestanti entra nel palazzo, e il re firma i decreti del 4 agosto e la Dichiarazione, sospesi da settimane per il suo rifiuto.",
+    contatore:true, sblocca:true }
+];
+
+let indiceCorrente = 0;
+let massimoRaggiunto = 0;
+
+function vai(i){
+  if(i<0 || i>=nodi.length) return;
+  indiceCorrente = i;
+  if(i>massimoRaggiunto) massimoRaggiunto = i;
+  render();
+}
+
+function statoNodo(n){
+  if(!n.sospeso) return null;
+  return massimoRaggiunto >= 9 ? 'vigore' : 'sospeso'; // indice 9 = nodo 10, "5 ottobre"
+}
+
+function renderTimeline(){
+  const el = document.getElementById('timeline');
+  el.innerHTML = '';
+  el.appendChild(Object.assign(document.createElement('div'), {className:'corsia-label', textContent:'Atti legali'}));
+  el.style.gridTemplateRows = 'auto auto auto';
+
+  // riga alta
+  nodi.forEach((n, idx)=>{
+    if(n.corsia!=='alta') return;
+    const btn = document.createElement('button');
+    btn.type='button';
+    btn.className = 'nodo' + (idx===indiceCorrente?' corrente':'') + (idx>massimoRaggiunto?' non-visitato':'');
+    btn.style.gridColumn = n.col;
+    btn.style.gridRow = 2;
+    const stato = statoNodo(n);
+    btn.innerHTML = `<span class="data">${n.data}</span>${n.titolo}` + (stato?`<span class="stato-tag ${stato==='vigore'?'vigore':'sospeso'}">${stato==='vigore'?'in vigore':'sospeso'}</span>`:'');
+    btn.onclick = ()=>vai(idx);
+    el.appendChild(btn);
+  });
+
+  const labelBassa = document.createElement('div');
+  labelBassa.className = 'corsia-label'; labelBassa.style.gridRow = 3; labelBassa.textContent = 'Interventi non previsti da alcuna legge';
+  el.appendChild(labelBassa);
+
+  nodi.forEach((n, idx)=>{
+    if(n.corsia!=='bassa') return;
+    const btn = document.createElement('button');
+    btn.type='button';
+    btn.className = 'nodo bassa' + (idx===indiceCorrente?' corrente':'') + (idx>massimoRaggiunto?' non-visitato':'');
+    btn.style.gridColumn = n.col;
+    btn.style.gridRow = 4;
+    btn.innerHTML = `<span class="data">${n.data}</span>${n.titolo}`;
+    btn.onclick = ()=>vai(idx);
+    el.appendChild(btn);
+  });
+  el.style.gridTemplateRows = 'auto auto auto auto';
+}
+
+function renderDettaglio(){
+  const n = nodi[indiceCorrente];
+  const el = document.getElementById('dettaglio');
+  el.className = 'dettaglio' + (n.corsia==='bassa'?' bassa':'');
+  const stato = statoNodo(n);
+  el.innerHTML = `
+    <h2>${n.titolo}</h2>
+    <p class="corsia-nome">${n.data} — ${n.corsia==='alta'?'Atto legale':'Intervento non previsto da alcuna legge'}${stato?` · ${stato==='vigore'?'ORA IN VIGORE':'SOSPESO'}`:''}</p>
+    <p>${n.testo}</p>
+  `;
+}
+
+function renderContatore(){
+  const count = nodi.slice(0, massimoRaggiunto+1).filter(n=>n.contatore).length;
+  document.getElementById('contatore').innerHTML =
+    `<span>Quante volte l'assemblea è stata rimessa in moto da chi non la eleggeva:</span><span class="numero">${count}</span>`;
+  document.getElementById('btn-prev').disabled = indiceCorrente===0;
+  document.getElementById('btn-next').disabled = indiceCorrente===nodi.length-1;
+}
+
+function render(){
+  renderTimeline();
+  renderDettaglio();
+  renderContatore();
+}
+
+render();
+</script>
+
+</body>
+</html>

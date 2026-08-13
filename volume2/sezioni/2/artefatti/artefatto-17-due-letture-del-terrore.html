@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Due letture del Terrore — Artefatto 17</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .tesi-affianco{ display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:1000px; margin-bottom:26px; }
+  @media (max-width:700px){ .tesi-affianco{ grid-template-columns:1fr; } }
+  .tesi-box{ background:var(--bg-card); border:1px solid var(--bordo); border-top:4px solid var(--marrone); border-radius:0 0 6px 6px; padding:18px 20px; }
+  .tesi-label{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin-bottom:8px; }
+  .tesi-testo{ font-size:15px; }
+
+  .tab-nav{ display:flex; gap:8px; margin-bottom:24px; }
+  .tab-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo); padding:10px 18px; border-radius:6px; cursor:pointer; }
+  .tab-btn.active{ background:var(--marrone); color:#fff; }
+  [hidden]{ display:none !important; }
+
+  .chips-pool{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; min-height:44px; padding:12px; background:var(--grigio-neutro); border-radius:6px; border:1px dashed var(--bordo); }
+  .chip{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; text-align:left; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:9px 12px; max-width:320px; cursor:pointer; color:var(--testo); line-height:1.35; }
+  .chip.selezionato{ border-color:var(--marrone-scuro); box-shadow:0 0 0 2px var(--marrone-scuro) inset; background:#fbf8f2; }
+
+  .zone-container{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; margin-bottom:18px; }
+  .zona{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:14px; min-height:120px; }
+  .zona.zone-armed{ box-shadow:0 0 0 2px var(--marrone-scuro) inset; cursor:pointer; }
+  .zona-grande{ grid-column:1/-1; background:var(--grigio-neutro); }
+  .zona h3{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.5px; margin:0 0 10px; display:flex; justify-content:space-between; align-items:center; color:var(--marrone-scuro); }
+  .btn-colloca{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; background:var(--marrone); color:#fff; border:none; border-radius:4px; padding:5px 10px; cursor:pointer; }
+  .btn-colloca:disabled{ background:#c9c2b3; cursor:not-allowed; }
+  .zona-items{ display:flex; flex-wrap:wrap; gap:8px; min-height:20px; }
+
+  .tesi-opzioni{ display:flex; flex-direction:column; gap:12px; max-width:780px; margin-bottom:22px; }
+  .tesi-opzione{ text-align:left; background:var(--bg-card); border:1px solid var(--bordo); border-left:4px solid var(--bordo); border-radius:6px; padding:14px 16px; cursor:pointer; font-family:Georgia, serif; }
+  .tesi-opzione.selezionata{ border-left-color:var(--marrone); background:#fbf8f2; }
+  .tesi-opzione .tesi-titolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:5px; }
+  .tesi-opzione .tesi-opzione-testo{ font-size:14.5px; }
+
+  .chiusura-msg{ max-width:720px; font-size:15px; font-style:italic; border-left:4px solid var(--marrone); padding:14px 18px; background:var(--bg-card); border-radius:0 6px 6px 0; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 17</p>
+  <h1>Due letture del Terrore</h1>
+  <p class="sottotitolo">§ 3.8 — Il Terrore: due letture</p>
+</div>
+
+<div class="istruzioni">
+  <p>Due tesi, pari spazio, pari cura. Quattordici carte-prova da distribuire: sostiene la prima, sostiene la seconda, non decide fra le due. Poi, una calibratura: quale formulazione le prove ti autorizzano a sostenere.</p>
+</div>
+
+<div class="tesi-affianco">
+  <div class="tesi-box">
+    <p class="tesi-label">Prima lettura — le circostanze</p>
+    <p class="tesi-testo">Il Terrore fu il prezzo della sopravvivenza di uno Stato aggredito. Nel 1793 la Repubblica era invasa su tutte le frontiere, tradita dai propri generali, percorsa da una guerra civile e da una rivolta di sessanta dipartimenti, priva di ogni risorsa amministrativa ordinaria. In quella situazione, un governo qualunque avrebbe adottato misure eccezionali.</p>
+  </div>
+  <div class="tesi-box">
+    <p class="tesi-label">Seconda lettura — la logica interna</p>
+    <p class="tesi-testo">Il Terrore fu lo sviluppo coerente di premesse già presenti nel 1792, e forse prima. Se la volontà generale è una e indivisibile, chi dissente non esprime un'opinione diversa ma si colloca fuori dal corpo politico: non è un avversario da battere alle urne, è un elemento estraneo da eliminare.</p>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" id="tab-1" onclick="showTempo(1)">Pesare</button>
+  <button class="tab-btn" id="tab-2" onclick="showTempo(2)">Calibrare</button>
+</nav>
+
+<section id="tempo-1">
+  <div class="chips-pool" id="pool"></div>
+  <div class="zone-container">
+    <div class="zona" id="zona-prima">
+      <h3>Sostiene la prima <span id="count-prima">(0)</span><button class="btn-colloca" id="btn-prima" onclick="colloca('prima')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-prima"></div>
+    </div>
+    <div class="zona" id="zona-seconda">
+      <h3>Sostiene la seconda <span id="count-seconda">(0)</span><button class="btn-colloca" id="btn-seconda" onclick="colloca('seconda')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-seconda"></div>
+    </div>
+    <div class="zona zona-grande" id="zona-nessuna">
+      <h3>Non decide fra le due <span id="count-nessuna">(0)</span><button class="btn-colloca" id="btn-nessuna" onclick="colloca('nessuna')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-nessuna"></div>
+    </div>
+  </div>
+</section>
+
+<section id="tempo-2" hidden>
+  <p class="istruzioni" style="margin-bottom:16px;">Nessuna delle quattro è marcata come giusta.</p>
+  <div class="tesi-opzioni" id="tesi-opzioni"></div>
+  <div class="chiusura-msg" id="chiusura-msg" hidden>
+    Le prove non vincono né perdono una tesi: la costringono a restringersi. Che cosa si accetterebbe come prova che un insieme di idee ha causato un esito politico resta, dopo quattordici carte, una domanda aperta più che una domanda chiusa.
+  </div>
+</section>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le carte sono tratte da § 3.7-3.8. Due — «la maggioranza dei condannati appartiene al terzo stato» e «le misure furono dichiarate temporanee» — sono gli esempi indicati per il terzo contenitore; la seconda, nel corpo del capitolo, compare invece fra le prove della prima lettura, e qui è stata ricollocata seguendo l'istruzione specifica per questo artefatto. Ho verificato che le due tesi e le carte siano bilanciate per numero (4 e 4, più sei nel terzo contenitore) e per lunghezza approssimativa: vale comunque la pena un controllo finale a righe, come da tua indicazione.
+</footer>
+
+<script>
+const carte = [
+  { id:'p1', testo:"La geografia della repressione coincide con quella della guerra civile: si uccide dove si combatte.", tipo:'prima' },
+  { id:'s1', testo:"Le categorie usate non sono giuridiche ma morali — sospetti, virtù, corruzione, nemici del popolo — e nessuna descrive un atto.", tipo:'seconda' },
+  { id:'n1', testo:"La maggioranza dei condannati appartiene al terzo stato.", tipo:'nessuna' },
+  { id:'p2', testo:"La cronologia dei provvedimenti segue le sconfitte: ogni inasprimento arriva dopo una crisi militare o una defezione.", tipo:'prima' },
+  { id:'s2', testo:"La fase più sanguinosa a Parigi comincia quando il pericolo militare è già superato: la legge che sopprime la difesa è del 10 giugno 1794, sedici giorni prima di Fleurus.", tipo:'seconda' },
+  { id:'n2', testo:"Le misure furono dichiarate temporanee.", tipo:'nessuna' },
+  { id:'p3', testo:"Le stesse misure produssero il risultato per cui erano state prese: entro un anno la Francia era salva.", tipo:'prima' },
+  { id:'s3', testo:"Nella primavera del 1794 furono ghigliottinati Hébert, poi Danton e Desmoulins: rivoluzionari della prima ora, uomini che avevano votato la morte del re.", tipo:'seconda' },
+  { id:'n3', testo:"Le condanne dei tribunali rivoluzionari furono fra le sedici e le diciassettemila in tutta la Francia, di cui 2.639 a Parigi.", tipo:'nessuna' },
+  { id:'p4', testo:"Fuori dai territori di guerra civile, il Terrore si tradusse in qualche decina di arresti e in nessuna condanna capitale.", tipo:'prima' },
+  { id:'s4', testo:"La legge dei sospetti dichiara sospetto chi non abbia «costantemente manifestato» il proprio attaccamento alla rivoluzione: non descrive un comportamento, descrive un'impressione.", tipo:'seconda' },
+  { id:'n4', testo:"Gli arresti come sospetti oscillano fra le trecentomila e le cinquecentomila persone.", tipo:'nessuna' },
+  { id:'n5', testo:"Le perdite demografiche della Vandea, valutate fra le 170.000 e le 250.000 persone, restano un conto separato da quello dei tribunali.", tipo:'nessuna' },
+  { id:'n6', testo:"Il governo dichiarò che sarebbe rimasto rivoluzionario fino alla pace, sospendendo l'entrata in vigore della costituzione appena ratificata.", tipo:'nessuna' }
+];
+
+let placement = {};
+let selected = null;
+let currentTab = 1;
+
+function showTempo(n){
+  currentTab = n;
+  document.getElementById('tab-1').classList.toggle('active', n===1);
+  document.getElementById('tab-2').classList.toggle('active', n===2);
+  document.getElementById('tempo-1').hidden = n!==1;
+  document.getElementById('tempo-2').hidden = n!==2;
+  if(n===2) renderCalibratura();
+}
+
+function onChipClick(id){
+  if(placement[id]){ placement[id] = null; selected = null; }
+  else { selected = (selected===id) ? null : id; }
+  renderPesare();
+}
+
+function colloca(zona){
+  if(selected){
+    placement[selected] = zona;
+    selected = null;
+    renderPesare();
+  }
+}
+
+function renderPesare(){
+  const pool = document.getElementById('pool');
+  const zP = document.getElementById('items-prima');
+  const zS = document.getElementById('items-seconda');
+  const zN = document.getElementById('items-nessuna');
+  pool.innerHTML=''; zP.innerHTML=''; zS.innerHTML=''; zN.innerHTML='';
+  let cp=0, cs=0, cn=0;
+  carte.forEach(c=>{
+    const chip = document.createElement('button');
+    chip.type='button';
+    chip.className = 'chip' + (selected===c.id?' selezionato':'');
+    chip.textContent = c.testo;
+    chip.onclick = (e)=>{ e.stopPropagation(); onChipClick(c.id); };
+    const loc = placement[c.id];
+    if(!loc){ pool.appendChild(chip); }
+    else if(loc==='prima'){ zP.appendChild(chip); cp++; }
+    else if(loc==='seconda'){ zS.appendChild(chip); cs++; }
+    else { zN.appendChild(chip); cn++; }
+  });
+  document.getElementById('count-prima').textContent = `(${cp})`;
+  document.getElementById('count-seconda').textContent = `(${cs})`;
+  document.getElementById('count-nessuna').textContent = `(${cn})`;
+  ['prima','seconda','nessuna'].forEach(z=>{
+    document.getElementById('zona-'+z).classList.toggle('zone-armed', !!selected);
+    document.getElementById('btn-'+z).disabled = !selected;
+  });
+}
+
+const opzioniCalibratura = [
+  { id:'a', titolo:'La più forte per la prima', testo:"Il Terrore fu integralmente una risposta all'emergenza: senza guerra esterna, guerra civile e rivolte, non ci sarebbe stato." },
+  { id:'b', titolo:'Una prima lettura cauta', testo:"Le circostanze spiegano la maggior parte del Terrore, ma non la sua fase finale, quando il pericolo militare era già superato." },
+  { id:'c', titolo:'Una seconda lettura cauta', testo:"La logica della sovranità indivisibile spiega perché il Terrore abbia potuto rivolgersi contro chiunque, comprese le proprie file, ma non spiega da sola perché sia esploso proprio nel 1793." },
+  { id:'d', titolo:'La più forte per la seconda', testo:"Il Terrore fu integralmente lo sviluppo di un'idea di sovranità: la guerra fu l'occasione, non la causa." }
+];
+let calibSelezionata = null;
+
+function renderCalibratura(){
+  const el = document.getElementById('tesi-opzioni');
+  el.innerHTML = opzioniCalibratura.map(op=>`
+    <button type="button" class="tesi-opzione${calibSelezionata===op.id?' selezionata':''}" data-id="${op.id}">
+      <div class="tesi-titolo">${op.titolo}</div>
+      <div class="tesi-opzione-testo">${op.testo}</div>
+    </button>
+  `).join('');
+  el.querySelectorAll('.tesi-opzione').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      calibSelezionata = btn.dataset.id;
+      renderCalibratura();
+      document.getElementById('chiusura-msg').hidden = false;
+    });
+  });
+}
+
+renderPesare();
+</script>
+
+</body>
+</html>

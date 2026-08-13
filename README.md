@@ -28,6 +28,7 @@ manuale/
 ## Volumi e sezioni
 
 - [Volume 2 · Sezione 1](volume2/sezioni/1/README.md) — 22 immagini, 15 artefatti
+- [Volume 2 · Sezione 2](volume2/sezioni/2/README.md) — 24 artefatti (immagini/infografiche non ancora caricate)
 - [Volume 3 · Sezione 1](volume3/sezioni/1/README.md) — immagini, infografiche, artefatti
 
 ## Video Volume 2 · Sezione 1 (Google Drive)

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quattro crisi, un anno — Artefatto 15</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+  h2.sezione{ font-size:19px; font-weight:normal; font-style:italic; margin:32px 0 4px; }
+  .sezione-sub{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; color:var(--marrone-scuro); margin:0 0 16px; }
+
+  .corsie-wrap{ overflow-x:auto; max-width:1300px; margin-bottom:8px; }
+  table.corsie{ border-collapse:collapse; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; }
+  table.corsie th, table.corsie td{ padding:3px; text-align:center; }
+  table.corsie th.mese{ font-weight:normal; color:var(--marrone-scuro); width:60px; }
+  table.corsie th.corsia-label{ text-align:left; font-size:12px; color:var(--testo); padding-right:10px; white-space:nowrap; }
+  .cella-mese{ width:60px; height:24px; border-radius:3px; background:var(--grigio-neutro); }
+  .cella-mese.accesa{ background:var(--marrone); }
+  .conteggio-riga{ font-size:10px; color:var(--marrone-scuro); }
+
+  .eventi{ display:flex; flex-direction:column; gap:16px; max-width:900px; margin-top:20px; }
+  .evento-card{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:18px 20px; }
+  .evento-titolo{ font-size:16px; margin:0 0 12px; }
+  .corsie-scelta{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+  .btn-corsia{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; background:var(--grigio-neutro); border:1px solid var(--bordo); border-radius:16px; padding:7px 14px; cursor:pointer; color:var(--testo); }
+  .btn-corsia.attiva{ background:var(--marrone); color:#fff; border-color:var(--marrone); }
+  .btn-mostra{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--marrone-scuro); padding:7px 14px; border-radius:6px; cursor:pointer; }
+  .risposta{ margin-top:12px; padding:12px 14px; background:var(--grigio-neutro); border-radius:6px; font-size:13px; display:none; }
+  .risposta.visibile{ display:block; }
+  .risposta-riga{ margin-bottom:5px; }
+  .risposta-riga b{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; }
+  .flag-dedotto{ font-size:10.5px; color:#a06a3a; font-style:italic; }
+
+  .chiusura{ max-width:800px; font-size:16px; font-style:italic; border-left:4px solid var(--marrone); background:var(--bg-card); padding:18px 22px; border-radius:0 6px 6px 0; margin-top:24px; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 15</p>
+  <h1>Quattro crisi, un anno</h1>
+  <p class="sottotitolo">§ 3.4 — Il 1793: le condizioni</p>
+</div>
+
+<div class="istruzioni">
+  <p>Quattro corsie sullo stesso anno. Guarda come gennaio è quasi vuoto e giugno è saturo. Poi, per sei eventi, indica quali corsie li spiegano e quali no: nessuna corsia spiega tutto, e nessun evento è spiegato da una sola.</p>
+</div>
+
+<h2 class="sezione">Le quattro corsie, mese per mese</h2>
+<p class="sezione-sub">1793</p>
+<div class="corsie-wrap">
+  <table class="corsie" id="tabella-corsie"></table>
+</div>
+
+<h2 class="sezione">Sei eventi da spiegare</h2>
+<p class="sezione-sub">Per ciascuno, seleziona le corsie che lo spiegano — puoi selezionarne più di una, o nessuna</p>
+<div class="eventi" id="eventi"></div>
+
+<div class="chiusura">
+  Ciò che le quattro crisi hanno in comune è soltanto il calendario. La loro simultaneità produce un effetto che nessuna avrebbe prodotto da sola: la convinzione, in chi governa, che il paese sia percorso da un'unica trama.
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le corsie mensili sono ricostruite dalle date esplicite di § 3.4 (leva di febbraio, insurrezione di marzo, epurazione di giugno, resa di Tolone in agosto) e proseguono fino a dicembre poiché il capitolo colloca la loro risoluzione nell'estate del 1794. Per i sei eventi, i legami segnalati <strong>[dedotto]</strong> non sono affermati punto per punto nel testo ma ricostruiti per coerenza con il resto del capitolo — in particolare il legame fra la leva in massa e la repressione interna, e il clima che porta all'epurazione del 2 giugno.
+</footer>
+
+<script>
+const mesi = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+const corsie = [
+  { nome:'Guerra esterna', mesi:[0,1,1,1,1,1,1,1,1,1,1,1] },
+  { nome:'Vandea', mesi:[0,0,1,1,1,1,1,1,1,1,1,1] },
+  { nome:'Rivolte federaliste', mesi:[0,0,0,0,0,1,1,1,1,1,1,1] },
+  { nome:'Crisi economica', mesi:[0,1,1,1,1,1,1,1,1,1,1,1] }
+];
+
+function renderCorsie(){
+  const t = document.getElementById('tabella-corsie');
+  let html = '<thead><tr><th></th>' + mesi.map(m=>`<th class="mese">${m}</th>`).join('') + '</tr></thead><tbody>';
+  corsie.forEach(c=>{
+    html += `<tr><th class="corsia-label">${c.nome}</th>` + c.mesi.map(v=>`<td><div class="cella-mese${v?' accesa':''}"></div></td>`).join('') + '</tr>';
+  });
+  html += '<tr><th class="corsia-label conteggio-riga">Corsie attive</th>';
+  for(let i=0;i<12;i++){
+    const n = corsie.reduce((s,c)=>s+c.mesi[i],0);
+    html += `<td class="conteggio-riga">${n}/4</td>`;
+  }
+  html += '</tr></tbody>';
+  t.innerHTML = html;
+}
+
+const nomiCorsie = ['Guerra esterna','Vandea','Rivolte federaliste','Crisi economica'];
+
+const eventi = [
+  {
+    titolo: "L'insurrezione dell'Ovest",
+    corrette: { 'Guerra esterna':'si', 'Vandea':'na', 'Rivolte federaliste':'no', 'Crisi economica':'no' },
+    spiegazione: "La leva di trecentomila uomini, decretata in febbraio per la guerra esterna, fu la scintilla nell'Ovest, dove da due anni si difendevano i preti refrattari e i beni della Chiesa erano stati comprati dalla borghesia delle città. La corsia «Vandea» non è qui una spiegazione indipendente: è il nome che diamo a questo stesso evento."
+  },
+  {
+    titolo: "La caduta di Tolone",
+    corrette: { 'Guerra esterna':'no', 'Vandea':'no', 'Rivolte federaliste':'si', 'Crisi economica':'no' },
+    spiegazione: "Il capitolo lo dice esplicitamente: la leva (guerra esterna) «non spiega Tolone». Tolone si consegna alla flotta britannica in agosto come conseguenza delle rivolte federaliste seguite all'epurazione dei girondini di giugno."
+  },
+  {
+    titolo: "Il tradimento di Dumouriez",
+    corrette: { 'Guerra esterna':'si', 'Vandea':'no', 'Rivolte federaliste':'no', 'Crisi economica':'no' },
+    spiegazione: "Dumouriez era il generale della Repubblica sul fronte del Belgio: il suo tentativo di marciare su Parigi e il successivo passaggio agli austriaci, in aprile, appartengono per intero alla crisi della guerra esterna."
+  },
+  {
+    titolo: "Il massimo dei prezzi",
+    corrette: { 'Guerra esterna':'si', 'Vandea':'no', 'Rivolte federaliste':'no', 'Crisi economica':'si' },
+    spiegazione: "È insieme la manifestazione della crisi economica e uno strumento bellico: il calmiere servì a evitare le sommosse per il pane e, insieme, a rifornire un esercito enorme."
+  },
+  {
+    titolo: "L'epurazione del 2 giugno",
+    corrette: { 'Guerra esterna':'dedotto', 'Vandea':'dedotto', 'Rivolte federaliste':'no', 'Crisi economica':'no' },
+    spiegazione: "Il capitolo non attribuisce l'epurazione a una causa precisa fra le quattro: la colloca dopo una serie di sconfitte e nel pieno della rivolta vandeana, che avevano convinto la Pianura — decisiva sui numeri — a spostarsi sulla linea dura. Il legame con guerra e Vandea è quindi plausibile ma ricostruito, non affermato riga per riga. Le rivolte federaliste sono piuttosto una conseguenza dell'epurazione, non una sua causa."
+  },
+  {
+    titolo: "La leva in massa",
+    corrette: { 'Guerra esterna':'si', 'Vandea':'dedotto', 'Rivolte federaliste':'dedotto', 'Crisi economica':'no' },
+    spiegazione: "Decretata in agosto, nasce esplicitamente dalla guerra esterna. Il legame con la repressione di Vandea e rivolte federaliste è ricostruito: il capitolo, più avanti, dice che entro l'estate del 1794 «la Vandea era stata schiacciata, le città federaliste riconquistate»; è verosimile che l'esercito ingrandito dalla leva in massa sia stato impiegato anche lì, ma il collegamento non è affermato esplicitamente in questo paragrafo."
+  }
+];
+
+let selezioni = eventi.map(()=> ({}));
+
+function toggleCorsia(evIdx, corsia){
+  const sel = selezioni[evIdx];
+  sel[corsia] = !sel[corsia];
+  render();
+}
+
+function mostraRisposta(evIdx){
+  selezioni[evIdx]._mostra = true;
+  render();
+}
+
+function render(){
+  const el = document.getElementById('eventi');
+  el.innerHTML = eventi.map((ev, i)=>{
+    const sel = selezioni[i];
+    const mostra = sel._mostra;
+    return `
+      <div class="evento-card">
+        <p class="evento-titolo">${ev.titolo}</p>
+        <div class="corsie-scelta">
+          ${nomiCorsie.map(c=>`<button type="button" class="btn-corsia${sel[c]?' attiva':''}" data-ev="${i}" data-corsia="${c}">${c}</button>`).join('')}
+        </div>
+        <button type="button" class="btn-mostra" data-mostra="${i}">Mostra la lettura del capitolo</button>
+        <div class="risposta${mostra?' visibile':''}">
+          ${nomiCorsie.map(c=>{
+            const v = ev.corrette[c];
+            const label = v==='si' ? 'Sì' : v==='no' ? 'No' : v==='na' ? 'Non applicabile' : 'Sì [dedotto]';
+            return `<div class="risposta-riga"><b>${c}:</b> ${label}</div>`;
+          }).join('')}
+          <p style="margin-top:8px;">${ev.spiegazione}</p>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  el.querySelectorAll('.btn-corsia').forEach(btn=>{
+    btn.addEventListener('click', ()=>toggleCorsia(Number(btn.dataset.ev), btn.dataset.corsia));
+  });
+  el.querySelectorAll('[data-mostra]').forEach(btn=>{
+    btn.addEventListener('click', ()=>mostraRisposta(Number(btn.dataset.mostra)));
+  });
+}
+
+renderCorsie();
+render();
+</script>
+
+</body>
+</html>

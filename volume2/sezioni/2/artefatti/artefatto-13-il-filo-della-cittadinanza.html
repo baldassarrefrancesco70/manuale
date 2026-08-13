@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il filo della cittadinanza, 1789-1799 — Artefatto 13</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .controlli{ display:flex; flex-wrap:wrap; gap:16px; margin-bottom:20px; }
+  .toggle-wrap{ display:flex; align-items:center; gap:9px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--grigio-neutro); padding:9px 14px; border-radius:6px; border:1px solid var(--bordo); }
+  .switch{ position:relative; width:38px; height:20px; background:#ccc; border-radius:10px; cursor:pointer; border:none; padding:0; flex-shrink:0; }
+  .switch[aria-checked="true"]{ background:var(--marrone); }
+  .switch::after{ content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; background:#fff; border-radius:50%; transition:transform .2s; }
+  .switch[aria-checked="true"]::after{ transform:translateX(18px); }
+
+  .diagramma-wrap{ max-width:1300px; overflow-x:auto; margin-bottom:10px; }
+  svg{ display:block; min-width:1100px; }
+  .etichetta-nodo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; fill:var(--testo); }
+  .etichetta-data{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10px; fill:var(--marrone-scuro); font-weight:bold; }
+  .etichetta-donne{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; fill:var(--marrone-scuro); font-style:italic; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 13</p>
+  <h1>Il filo della cittadinanza, 1789-1799</h1>
+  <p class="sottotitolo">§ 3.1 — La Convenzione e il suffragio universale maschile</p>
+</div>
+
+<div class="istruzioni">
+  <p>Non è una linea che avanza. La larghezza della banda rappresenta l'ampiezza del corpo politico in ciascun momento: guarda come si allarga e si restringe lungo i dieci anni.</p>
+</div>
+
+<div class="controlli">
+  <div class="toggle-wrap">
+    <label for="toggle-carta">Mostra ciò che restò solo sulla carta</label>
+    <button class="switch" id="toggle-carta" role="switch" aria-checked="false" onclick="toggleCarta()"></button>
+  </div>
+  <div class="toggle-wrap">
+    <label for="toggle-donne">Sovrapponi la banda delle donne</label>
+    <button class="switch" id="toggle-donne" role="switch" aria-checked="false" onclick="toggleDonne()"></button>
+  </div>
+</div>
+
+<div class="diagramma-wrap">
+  <svg id="svg-diagramma" viewBox="0 0 1080 420" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le larghezze sono relative, non percentuali esatte: il capitolo non fornisce una cifra nazionale per ogni tappa (fa eccezione l'agosto 1795, «poche decine di migliaia» di elettori che contano davvero). L'ordine delle ampiezze segue quanto il testo dichiara esplicitamente — il settembre 1792 è «il punto più esteso di tutta la vicenda» — e le distanze fra i livelli sono una mia costruzione grafica. Il febbraio 1794 riguarda una popolazione diversa (le colonie, non la Francia metropolitana) e per questo è segnalato a parte, non fuso nella banda principale.
+</footer>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs){
+  const e = document.createElementNS(NS, tag);
+  for(const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+const baseline = 210;
+
+// livello -> mezza-larghezza in px
+const livello = { 1:9, 2:24, 3:40, 4:65, 5:95 };
+
+// nodi applicati (fanno parte della banda continua)
+const nodiApplicati = [
+  { x:40,   liv:3, data:'1789',          etichetta:'Stati generali per ordine' },
+  { x:110,  liv:2, data:'dic. 1789',     etichetta:'Attivi e passivi' },
+  { x:300,  liv:2, data:'1791',          etichetta:'Marco d\\'argento e secondo grado' },
+  { x:470,  liv:5, data:'sett. 1792',    etichetta:'Suffragio universale maschile' },
+  { x:640,  liv:5, data:'feb. 1794',     etichetta:'(prosegue, v. nota colonie)' },
+  { x:830,  liv:1, data:'ag. 1795',      etichetta:'Ritorno del censo' },
+  { x:1050, liv:1, data:'1799',          etichetta:'' }
+];
+
+// nodo mai applicato, sospeso
+const nodo1793 = { x:555, liv:5, data:'giu. 1793', etichetta:'Suffragio diretto — mai applicato' };
+// nodo colonie, popolazione diversa
+const nodo1794col = { x:640, data:'4 feb. 1794', etichetta:'Schiavitù abolita nelle colonie: cittadinanza estesa senza distinzione di colore' };
+
+function costruisciBandaPrincipale(){
+  const top = nodiApplicati.map(n => `${n.x},${baseline - livello[n.liv]}`);
+  const bottom = nodiApplicati.slice().reverse().map(n => `${n.x},${baseline + livello[n.liv]}`);
+  return top.concat(bottom).join(' ');
+}
+
+function render(){
+  const svg = document.getElementById('svg-diagramma');
+  svg.innerHTML = '';
+
+  // asse
+  svg.appendChild(el('line', { x1:20, y1:baseline, x2:1060, y2:baseline, stroke:'#cfc7b8', 'stroke-width':1, 'stroke-dasharray':'2,3' }));
+
+  // banda principale
+  svg.appendChild(el('polygon', { points: costruisciBandaPrincipale(), fill:'#8B7355', 'fill-opacity':'0.85' }));
+
+  // banda donne (toggle)
+  const donneVisibile = document.getElementById('toggle-donne').getAttribute('aria-checked') === 'true';
+  if(donneVisibile){
+    const rect = el('rect', { x:20, y:baseline-3, width:1040, height:6, fill:'#6b5940' });
+    svg.appendChild(rect);
+    const lbl = el('text', { x:1000, y:baseline-10, class:'etichetta-donne', 'text-anchor':'end' });
+    lbl.textContent = 'le donne — nessuna variazione, mai una data';
+    svg.appendChild(lbl);
+  }
+
+  // nodo 1793 (toggle "resta sulla carta")
+  const cartaVisibile = document.getElementById('toggle-carta').getAttribute('aria-checked') === 'true';
+  if(cartaVisibile){
+    const cy = baseline - 190;
+    const hw = livello[nodo1793.liv];
+    svg.appendChild(el('line', { x1:nodo1793.x, y1:baseline, x2:nodo1793.x, y2:cy+35, stroke:'#8B7355', 'stroke-width':1, 'stroke-dasharray':'3,3' }));
+    svg.appendChild(el('rect', { x:nodo1793.x-90, y:cy-hw, width:180, height:hw*2, rx:10, fill:'#e8ddce', stroke:'#6b5940', 'stroke-width':1.5, 'stroke-dasharray':'5,4' }));
+    const t1 = el('text', { x:nodo1793.x, y:cy-hw-10, class:'etichetta-data', 'text-anchor':'middle' }); t1.textContent = nodo1793.data;
+    svg.appendChild(t1);
+    const t2 = el('text', { x:nodo1793.x, y:cy+hw+16, class:'etichetta-nodo', 'text-anchor':'middle' }); t2.textContent = nodo1793.etichetta;
+    svg.appendChild(t2);
+  }
+
+  // marcatore colonie 1794
+  const my = baseline - livello[5] - 26;
+  svg.appendChild(el('line', { x1:nodo1794col.x, y1: baseline - livello[5], x2:nodo1794col.x, y2:my+6, stroke:'#a06a3a', 'stroke-width':1 }));
+  svg.appendChild(el('circle', { cx:nodo1794col.x, cy:my, r:4, fill:'#a06a3a' }));
+  const colLbl = el('text', { x:nodo1794col.x+8, y:my-4, class:'etichetta-nodo', style:'font-style:italic;fill:#a06a3a;' });
+  colLbl.textContent = nodo1794col.data + ' — colonie: schiavitù abolita';
+  svg.appendChild(colLbl);
+
+  // etichette nodi applicati
+  nodiApplicati.forEach(n=>{
+    if(!n.data) return;
+    const t1 = el('text', { x:n.x, y: baseline + livello[n.liv] + 20, class:'etichetta-data', 'text-anchor':'middle' }); t1.textContent = n.data;
+    svg.appendChild(t1);
+    const t2 = el('text', { x:n.x, y: baseline + livello[n.liv] + 34, class:'etichetta-nodo', 'text-anchor':'middle' });
+    const parole = n.etichetta.split(' ');
+    t2.textContent = n.etichetta.length > 22 ? parole.slice(0, Math.ceil(parole.length/2)).join(' ') : n.etichetta;
+    svg.appendChild(t2);
+    if(n.etichetta.length > 22){
+      const t3 = el('text', { x:n.x, y: baseline + livello[n.liv] + 47, class:'etichetta-nodo', 'text-anchor':'middle' });
+      const parole2 = n.etichetta.split(' ');
+      t3.textContent = parole2.slice(Math.ceil(parole2.length/2)).join(' ');
+      svg.appendChild(t3);
+    }
+  });
+}
+
+function toggleCarta(){
+  const btn = document.getElementById('toggle-carta');
+  const stato = btn.getAttribute('aria-checked') === 'true';
+  btn.setAttribute('aria-checked', !stato);
+  render();
+}
+function toggleDonne(){
+  const btn = document.getElementById('toggle-donne');
+  const stato = btn.getAttribute('aria-checked') === 'true';
+  btn.setAttribute('aria-checked', !stato);
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>

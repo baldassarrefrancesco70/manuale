@@ -16,3 +16,7 @@ Le pagine GitBook generate da `strumenti/md_to_gitbook.py` (dentro `Sezione 1` d
 ## Sezione 1 — Come nasce l'economia del mondo moderno
 
 Vedi `sezioni/1/README.md` per l'elenco di tutte le immagini e gli artefatti già pubblicati. I 23 video della sezione restano su Google Drive (link nel `README.md` alla radice del repo).
+
+## Sezione 2 — Come nasce la politica del mondo moderno
+
+Vedi `sezioni/2/README.md` per l'elenco dei 24 artefatti già pubblicati. Le 22 immagini/cartine e le infografiche non sono ancora state caricate (in attesa di verifica umana sulla numerazione delle infografiche, vedi `strumenti/sezioni/volume2_sezione2_politica.py`). I video restano su YouTube (link in `tabella-conversione-video-volume2.csv`, non replicati qui).

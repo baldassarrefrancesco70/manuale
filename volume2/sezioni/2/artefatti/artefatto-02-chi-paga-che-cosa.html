@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi paga che cosa — Artefatto 2</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8;
+    --grigio-neutro:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a332b;
+    --bg-card:#ffffff;
+    --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--beige-focus);
+    color: var(--testo);
+    padding: 28px 24px 40px;
+    line-height:1.5;
+  }
+  .masthead{
+    border-bottom: 2px solid var(--marrone);
+    padding-bottom:12px;
+    margin-bottom:20px;
+    max-width: 900px;
+  }
+  .eyebrow{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  h1{
+    font-size: 27px;
+    margin:0 0 4px;
+    font-weight:normal;
+    font-style:italic;
+  }
+  .sottotitolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:14px;
+    color:var(--marrone-scuro);
+    margin:0;
+  }
+  .istruzioni{
+    max-width: 760px;
+    font-size:15.5px;
+    margin-bottom: 22px;
+  }
+  .controlli{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+    margin-bottom: 26px;
+  }
+  .segmented{
+    display:inline-flex;
+    border:1px solid var(--marrone);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .segmented button{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    background: var(--bg-card);
+    border:none;
+    padding:10px 16px;
+    font-size:14px;
+    cursor:pointer;
+    color:var(--testo);
+    border-right:1px solid var(--marrone);
+  }
+  .segmented button:last-child{ border-right:none; }
+  .segmented button.active{
+    background:var(--marrone);
+    color:#fff;
+  }
+  .segmented button:focus-visible,
+  .switch:focus-visible,
+  .card:focus-visible{
+    outline: 3px solid var(--marrone-scuro);
+    outline-offset:2px;
+  }
+  .toggle-sim-wrap{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:13px;
+    background:var(--grigio-neutro);
+    padding:9px 14px;
+    border-radius: 6px;
+    border:1px solid var(--bordo);
+  }
+  .switch{
+    position:relative;
+    width:38px;
+    height:20px;
+    background:#ccc;
+    border-radius:10px;
+    cursor:pointer;
+    border:none;
+    padding:0;
+    flex-shrink:0;
+  }
+  .switch[aria-checked="true"]{ background:var(--marrone); }
+  .switch::after{
+    content:'';
+    position:absolute;
+    top:2px; left:2px;
+    width:16px; height:16px;
+    background:#fff;
+    border-radius:50%;
+    transition: transform .25s;
+  }
+  .switch[aria-checked="true"]::after{ transform: translateX(18px); }
+  .sim-tag{
+    font-size:11px;
+    background:var(--marrone-scuro);
+    color:#fff;
+    padding:2px 7px;
+    border-radius:4px;
+    display:none;
+  }
+  .sim-tag.visible{ display:inline; }
+
+  .griglia{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap:16px;
+    max-width: 1400px;
+  }
+  .card{
+    background: var(--bg-card);
+    border:1px solid var(--bordo);
+    border-top: 4px solid var(--ordine-color, var(--marrone));
+    border-radius: 4px;
+    padding:18px;
+    cursor:pointer;
+  }
+  .card .badge{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color: var(--ordine-color, var(--marrone));
+    font-weight:bold;
+    margin-bottom:6px;
+  }
+  .card h2{
+    font-size:17px;
+    margin: 0 0 6px;
+    font-weight:normal;
+  }
+  .card .descr{
+    font-size:13px;
+    color:#5a5347;
+    margin-bottom:14px;
+    font-style:italic;
+  }
+  .indicatore{ margin-bottom:10px; }
+  .indicatore-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:3px;
+    color:#5a5347;
+  }
+  .barre{ display:flex; gap:3px; }
+  .barra{
+    height:8px;
+    flex:1;
+    background: var(--grigio-neutro);
+    border-radius:2px;
+  }
+  .barra.attiva{ background: var(--marrone); }
+  .barra.simulata{ background: var(--marrone-scuro); }
+
+  .dettagli-toggle{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:12px;
+    color: var(--marrone-scuro);
+    margin-top:8px;
+    text-decoration: underline;
+  }
+  .prelievi{
+    margin-top:12px;
+    border-top:1px dashed var(--bordo);
+    padding-top:10px;
+    display:none;
+  }
+  .prelievi.aperto{ display:block; }
+  .prelievo{
+    font-size:12.5px;
+    margin-bottom:9px;
+    padding-left:10px;
+    border-left:3px solid var(--grigio-neutro);
+  }
+  .prelievo.esito-si{ border-left-color: var(--marrone); }
+  .prelievo.esito-no{ border-left-color: #cfc7b8; }
+  .prelievo.esito-beneficiario{ border-left-color: #a9895e; }
+  .prelievo.esito-parziale{ border-left-color: #c9a869; }
+  .prelievo-tipo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:bold;
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .esito-tag{ font-weight:normal; text-transform:uppercase; font-size:10px; letter-spacing:.5px; }
+  .fonte-flag{
+    font-size:10px;
+    color:#a06a3a;
+    font-style:italic;
+    white-space:nowrap;
+  }
+  footer.nota{
+    margin-top: 30px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:12px;
+    color:#7a7263;
+    border-top:1px solid var(--bordo);
+    padding-top:12px;
+    max-width:780px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .card, .barra, .switch::after{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 2</p>
+  <h1>Chi paga che cosa</h1>
+  <p class="sottotitolo">Il prelievo in una parrocchia francese — § 1.1, Una società di ordini</p>
+</div>
+
+<div class="istruzioni">
+  <p>Sei abitanti della stessa parrocchia versano imposte molto diverse, per ragioni che non dipendono da quanto possiedono. Ordina le sei figure per ricchezza, poi per carico fiscale: le due sequenze non coincidono. Clicca su una carta per vedere quali prelievi la riguardano e con quale titolo giuridico.</p>
+</div>
+
+<div class="controlli">
+  <div class="segmented" role="group" aria-label="Criterio di ordinamento">
+    <button id="btn-ricchezza" class="active" onclick="reorder('ricchezza')">Ordina per ricchezza</button>
+    <button id="btn-fiscale" onclick="reorder('fiscale')">Ordina per carico fiscale</button>
+  </div>
+  <div class="toggle-sim-wrap">
+    <label for="sim-switch" id="sim-label">Simula: imposta unica proporzionale al reddito, senza esenzioni</label>
+    <button id="sim-switch" class="switch" role="switch" aria-checked="false" aria-labelledby="sim-label" onclick="toggleSim()"></button>
+    <span class="sim-tag" id="sim-tag">simulazione</span>
+  </div>
+</div>
+
+<div class="griglia" id="cardsContainer"></div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> I dati su taille, gabella, decima e diritti feudali sono tratti dal capitolo. Le voci contrassegnate <span class="fonte-flag">[dedotto]</span> non sono esplicitate nel testo ma ricostruite per coerenza logica con quanto descritto nel paragrafo: da verificare prima della pubblicazione. Il comando di simulazione mostra un'ipotesi di calcolo, non un dato storico: si ispira alla sovvenzione territoriale proposta da Calonne nel 1786, un'imposta fondiaria proporzionale al reddito e senza esenzioni per nessun ordine.
+</footer>
+
+<script>
+const ordineLabel = { clero:'Clero', nobilta:'Nobiltà', terzo:'Terzo Stato' };
+const ordineColor = { clero:'#A9895E', nobilta:'#8B7355', terzo:'#6B7A8C' };
+
+const data = [
+  {
+    id:'armatore', nome:"L'armatore di Bordeaux", ordine:'terzo',
+    ricchezza:5, fiscale:4,
+    descrizione:"Possiede navi, magazzini e un patrimonio che nessun gentiluomo di provincia si sogna.",
+    prelievi:[
+      {tipo:'Taille', esito:'si', motivo:"Grava sui non privilegiati: appartenendo al terzo stato, la paga per intero.", fonte:'testo'},
+      {tipo:'Gabella sul sale', esito:'si', motivo:"Imposta di consumo che varia da provincia a provincia; riguarda chiunque acquisti sale.", fonte:'dedotto'},
+      {tipo:'Decima', esito:'no', motivo:"Colpisce i raccolti agricoli: un'attività portuale non ne produce.", fonte:'dedotto'},
+      {tipo:'Diritti feudali', esito:'no', motivo:"Legati alla terra coltivata e alla signoria rurale: non si applicano a un armatore.", fonte:'dedotto'}
+    ]
+  },
+  {
+    id:'vescovo', nome:'Il vescovo', ordine:'clero',
+    ricchezza:5, fiscale:1,
+    descrizione:"Di famiglia aristocratica. La distanza dal curato di campagna, dentro lo stesso ordine, sarà decisiva nel 1789.",
+    prelievi:[
+      {tipo:'Taille', esito:'no', motivo:"Il clero ne è esente in quanto ordine privilegiato.", fonte:'testo'},
+      {tipo:'Gabella sul sale', esito:'si', motivo:"Imposta di consumo che varia da provincia a provincia; riguarda chiunque acquisti sale.", fonte:'dedotto'},
+      {tipo:'Decima', esito:'beneficiario', motivo:"Il clero la riscuote sui raccolti: non la versa, la incassa.", fonte:'testo'},
+      {tipo:'Diritti feudali', esito:'parziale', motivo:"Se titolare di terre con giurisdizione signorile, ne è eventualmente il percettore, non il debitore.", fonte:'dedotto'}
+    ]
+  },
+  {
+    id:'curato', nome:'Il curato di campagna', ordine:'clero',
+    ricchezza:1, fiscale:1,
+    descrizione:"Vive come i suoi parrocchiani, pur appartenendo allo stesso ordine del vescovo.",
+    prelievi:[
+      {tipo:'Taille', esito:'no', motivo:"Esente per appartenenza al clero, indipendentemente dal reddito personale reale.", fonte:'testo'},
+      {tipo:'Gabella sul sale', esito:'si', motivo:"Imposta di consumo che varia da provincia a provincia; riguarda chiunque acquisti sale.", fonte:'dedotto'},
+      {tipo:'Decima', esito:'beneficiario', motivo:"Spetta al clero come ordine, ma la sua distribuzione interna è ineguale: al curato arriva assai meno che al vescovo.", fonte:'dedotto'},
+      {tipo:'Diritti feudali', esito:'no', motivo:"Non risulta titolare di una signoria.", fonte:'dedotto'}
+    ]
+  },
+  {
+    id:'gentiluomo', nome:'Il gentiluomo di provincia', ordine:'nobilta',
+    ricchezza:2, fiscale:1,
+    descrizione:"Nobile dal patrimonio modesto, ma titolare degli stessi privilegi giuridici della grande nobiltà.",
+    prelievi:[
+      {tipo:'Taille', esito:'no', motivo:"Esente per appartenenza alla nobiltà, a prescindere dal patrimonio effettivo.", fonte:'testo'},
+      {tipo:'Gabella sul sale', esito:'si', motivo:"Imposta di consumo che varia da provincia a provincia; riguarda chiunque acquisti sale.", fonte:'dedotto'},
+      {tipo:'Decima', esito:'no', motivo:"Non risulta dal capitolo che la nobiltà versi la decima sui propri raccolti.", fonte:'dedotto'},
+      {tipo:'Diritti feudali', esito:'parziale', motivo:"Se titolare di una signoria, ne è eventualmente il percettore, non il debitore.", fonte:'dedotto'}
+    ]
+  },
+  {
+    id:'contadino', nome:'Il contadino proprietario', ordine:'terzo',
+    ricchezza:3, fiscale:5,
+    descrizione:"Giuridicamente libero e proprietario della terra che lavora: i contadini francesi possiedono nell'insieme una quota rilevante del suolo del regno.",
+    prelievi:[
+      {tipo:'Taille', esito:'si', motivo:"Allo Stato, come tutti i non privilegiati.", fonte:'testo'},
+      {tipo:'Gabella sul sale', esito:'si', motivo:"Imposta di consumo che varia da provincia a provincia.", fonte:'dedotto'},
+      {tipo:'Decima', esito:'si', motivo:"Alla Chiesa, sui raccolti.", fonte:'testo'},
+      {tipo:'Diritti feudali', esito:'si', motivo:"Censi, canoni, monopoli signorili e corvée al signore: pesano anche su chi possiede la terra che lavora.", fonte:'testo'}
+    ]
+  },
+  {
+    id:'bracciante', nome:'Il bracciante senza terra', ordine:'terzo',
+    ricchezza:1, fiscale:3,
+    descrizione:"Senza terra propria, vive del proprio lavoro; appartiene comunque al terzo stato.",
+    prelievi:[
+      {tipo:'Taille', esito:'si', motivo:"Allo Stato, come tutti i non privilegiati: la paga anche chi non possiede terra.", fonte:'testo'},
+      {tipo:'Gabella sul sale', esito:'si', motivo:"Imposta di consumo che varia da provincia a provincia.", fonte:'dedotto'},
+      {tipo:'Decima', esito:'no', motivo:"Colpisce i raccolti: non avendone di propri, non vi è materia su cui si applichi direttamente.", fonte:'dedotto'},
+      {tipo:'Diritti feudali', esito:'parziale', motivo:"I monopoli signorili su mulino e forno valgono per chi risiede nella signoria, a prescindere dalla terra posseduta; censi e canoni, legati al possesso fondiario, non lo riguardano.", fonte:'dedotto'}
+    ]
+  }
+];
+
+let simAttiva = false;
+let currentSort = 'ricchezza';
+
+function livelloLabel(v){
+  return ['', 'Molto bassa', 'Bassa', 'Media', 'Alta', 'Molto alta'][v];
+}
+
+function barreHTML(val, sim){
+  let out = '';
+  for (let i = 1; i <= 5; i++){
+    out += `<div class="barra ${i <= val ? (sim ? 'simulata' : 'attiva') : ''}"></div>`;
+  }
+  return out;
+}
+
+const esitoLabelMap = { si:'SÌ', no:'NO', beneficiario:'BENEFICIARIO', parziale:'PARZIALE' };
+
+function prelievoHTML(p){
+  return `<div class="prelievo esito-${p.esito}">
+    <div class="prelievo-tipo"><span>${p.tipo}</span><span class="esito-tag">${esitoLabelMap[p.esito]}</span></div>
+    <div>${p.motivo} ${p.fonte === 'dedotto' ? '<span class="fonte-flag">[dedotto]</span>' : ''}</div>
+  </div>`;
+}
+
+function buildCardInnerHTML(fig){
+  const fiscaleVal = simAttiva ? fig.ricchezza : fig.fiscale;
+  return `
+    <div class="badge">${ordineLabel[fig.ordine]}</div>
+    <h2>${fig.nome}</h2>
+    <div class="descr">${fig.descrizione}</div>
+    <div class="indicatore">
+      <div class="indicatore-label"><span>Ricchezza</span><span>${livelloLabel(fig.ricchezza)}</span></div>
+      <div class="barre">${barreHTML(fig.ricchezza, false)}</div>
+    </div>
+    <div class="indicatore">
+      <div class="indicatore-label"><span>Carico fiscale${simAttiva ? ' (simulato)' : ''}</span><span>${livelloLabel(fiscaleVal)}</span></div>
+      <div class="barre">${barreHTML(fiscaleVal, simAttiva)}</div>
+    </div>
+    <div class="dettagli-toggle">Vedi i prelievi ↓</div>
+    <div class="prelievi" id="prelievi-${fig.id}">
+      ${fig.prelievi.map(prelievoHTML).join('')}
+    </div>
+  `;
+}
+
+function initCards(order){
+  const container = document.getElementById('cardsContainer');
+  order.forEach(fig => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.id = 'card-' + fig.id;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-expanded', 'false');
+    card.style.setProperty('--ordine-color', ordineColor[fig.ordine]);
+    card.innerHTML = buildCardInnerHTML(fig);
+    card.addEventListener('click', () => toggleDettagli(fig.id));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleDettagli(fig.id); }
+    });
+    container.appendChild(card);
+  });
+}
+
+function toggleDettagli(id){
+  const el = document.getElementById('prelievi-' + id);
+  const card = document.getElementById('card-' + id);
+  const toggleLabel = card.querySelector('.dettagli-toggle');
+  const aperto = el.classList.toggle('aperto');
+  card.setAttribute('aria-expanded', aperto);
+  toggleLabel.textContent = aperto ? 'Nascondi i prelievi ↑' : 'Vedi i prelievi ↓';
+}
+
+function refreshFiscaleDisplays(){
+  data.forEach(fig => {
+    const card = document.getElementById('card-' + fig.id);
+    const fiscaleVal = simAttiva ? fig.ricchezza : fig.fiscale;
+    const fiscaleIndicatore = card.querySelectorAll('.indicatore')[1];
+    fiscaleIndicatore.querySelector('.indicatore-label').innerHTML =
+      `<span>Carico fiscale${simAttiva ? ' (simulato)' : ''}</span><span>${livelloLabel(fiscaleVal)}</span>`;
+    fiscaleIndicatore.querySelector('.barre').innerHTML = barreHTML(fiscaleVal, simAttiva);
+  });
+}
+
+function toggleSim(){
+  simAttiva = !simAttiva;
+  const btn = document.getElementById('sim-switch');
+  btn.setAttribute('aria-checked', simAttiva);
+  document.getElementById('sim-tag').classList.toggle('visible', simAttiva);
+  refreshFiscaleDisplays();
+  if (currentSort === 'fiscale') reorder('fiscale', true);
+}
+
+function reorder(key, skipButtonUpdate){
+  currentSort = key;
+  if (!skipButtonUpdate){
+    document.getElementById('btn-ricchezza').classList.toggle('active', key === 'ricchezza');
+    document.getElementById('btn-fiscale').classList.toggle('active', key === 'fiscale');
+  }
+  const container = document.getElementById('cardsContainer');
+  const cards = Array.from(container.children);
+  const firstRects = new Map();
+  cards.forEach(c => firstRects.set(c.id, c.getBoundingClientRect()));
+
+  const sorted = [...data].sort((a, b) => {
+    const va = key === 'fiscale' ? (simAttiva ? a.ricchezza : a.fiscale) : a.ricchezza;
+    const vb = key === 'fiscale' ? (simAttiva ? b.ricchezza : b.fiscale) : b.ricchezza;
+    return vb - va || a.nome.localeCompare(b.nome);
+  });
+  sorted.forEach(fig => container.appendChild(document.getElementById('card-' + fig.id)));
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  Array.from(container.children).forEach(c => {
+    const first = firstRects.get(c.id);
+    const last = c.getBoundingClientRect();
+    const dx = first.left - last.left, dy = first.top - last.top;
+    if (dx || dy){
+      c.style.transition = 'none';
+      c.style.transform = `translate(${dx}px,${dy}px)`;
+      requestAnimationFrame(() => {
+        c.style.transition = 'transform .45s ease';
+        c.style.transform = '';
+      });
+    }
+  });
+}
+
+window.onload = function(){
+  const initialOrder = [...data].sort((a, b) => b.ricchezza - a.ricchezza || a.nome.localeCompare(b.nome));
+  initCards(initialOrder);
+};
+</script>
+
+</body>
+</html>

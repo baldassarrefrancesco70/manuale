@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esportazione o dominio — Artefatto 24</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .tesi-affianco{ display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:1000px; margin-bottom:26px; }
+  @media (max-width:700px){ .tesi-affianco{ grid-template-columns:1fr; } }
+  .tesi-box{ background:var(--bg-card); border:1px solid var(--bordo); border-top:4px solid var(--marrone); border-radius:0 0 6px 6px; padding:18px 20px; }
+  .tesi-label{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); margin-bottom:8px; }
+  .tesi-testo{ font-size:15px; }
+
+  .tab-nav{ display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+  .tab-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo); padding:10px 18px; border-radius:6px; cursor:pointer; }
+  .tab-btn.active{ background:var(--marrone); color:#fff; }
+  [hidden]{ display:none !important; }
+
+  .chips-pool{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; min-height:44px; padding:12px; background:var(--grigio-neutro); border-radius:6px; border:1px dashed var(--bordo); }
+  .chip{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; text-align:left; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:9px 12px; max-width:300px; cursor:pointer; color:var(--testo); line-height:1.35; }
+  .chip.selezionato{ border-color:var(--marrone-scuro); box-shadow:0 0 0 2px var(--marrone-scuro) inset; background:#fbf8f2; }
+
+  .zone-container{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; margin-bottom:18px; }
+  .zona{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:14px; min-height:120px; }
+  .zona.zone-armed{ box-shadow:0 0 0 2px var(--marrone-scuro) inset; cursor:pointer; }
+  .zona-grande{ grid-column:1/-1; background:var(--grigio-neutro); }
+  .zona h3{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.5px; margin:0 0 10px; display:flex; justify-content:space-between; align-items:center; color:var(--marrone-scuro); }
+  .btn-colloca{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; background:var(--marrone); color:#fff; border:none; border-radius:4px; padding:5px 10px; cursor:pointer; }
+  .btn-colloca:disabled{ background:#c9c2b3; cursor:not-allowed; }
+  .zona-items{ display:flex; flex-wrap:wrap; gap:8px; min-height:20px; }
+
+  .tesi-opzioni{ display:flex; flex-direction:column; gap:12px; max-width:800px; margin-bottom:22px; }
+  .tesi-opzione{ text-align:left; background:var(--bg-card); border:1px solid var(--bordo); border-left:4px solid var(--bordo); border-radius:6px; padding:14px 16px; cursor:pointer; font-family:Georgia, serif; }
+  .tesi-opzione.selezionata{ border-left-color:var(--marrone); background:#fbf8f2; }
+  .tesi-opzione .tesi-titolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:5px; }
+
+  .chiusura-msg{ max-width:780px; font-size:15px; font-style:italic; border-left:4px solid var(--marrone); padding:14px 18px; background:var(--bg-card); border-radius:0 6px 6px 0; }
+
+  .geografia-blocco{ max-width:800px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:20px 22px; margin-bottom:16px; }
+  .geografia-riga{ margin-bottom:14px; font-size:14px; }
+  .geografia-riga b{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; display:block; font-size:11px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:3px; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 24</p>
+  <h1>Esportazione o dominio</h1>
+  <p class="sottotitolo">§ 4.13 — Napoleone esportò la Rivoluzione o costruì un dominio?</p>
+</div>
+
+<div class="istruzioni">
+  <p>Ultimo oggetto della famiglia argomentativa: stessa interfaccia del 4, del 9, del 17. Sedici carte-prova, poi una calibratura a quattro formulazioni, sempre più ristrette.</p>
+</div>
+
+<div class="tesi-affianco">
+  <div class="tesi-box">
+    <p class="tesi-label">Prima lettura — l'esportazione</p>
+    <p class="tesi-testo">Il sistema napoleonico diffuse in Europa i risultati irreversibili del 1789. Il criterio implicito di questa lettura è la durata: si guarda che cosa restava nel 1830, e ciò che restava veniva da lì.</p>
+  </div>
+  <div class="tesi-box">
+    <p class="tesi-label">Seconda lettura — il dominio</p>
+    <p class="tesi-testo">Si trattò di un dominio imperiale che usò il linguaggio dei principi. Il criterio implicito di questa lettura è il consenso: si guarda chi decideva, e la risposta è sempre la stessa.</p>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" id="tab-1" onclick="showTempo(1)">Pesare</button>
+  <button class="tab-btn" id="tab-2" onclick="showTempo(2)">Calibrare</button>
+  <button class="tab-btn" id="tab-3" onclick="showTempo(3)">Geografia delle interpretazioni</button>
+</nav>
+
+<section id="tempo-1">
+  <div class="chips-pool" id="pool"></div>
+  <div class="zone-container">
+    <div class="zona" id="zona-prima">
+      <h3>Sostiene la prima <span id="count-prima">(0)</span><button class="btn-colloca" id="btn-prima" onclick="colloca('prima')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-prima"></div>
+    </div>
+    <div class="zona" id="zona-seconda">
+      <h3>Sostiene la seconda <span id="count-seconda">(0)</span><button class="btn-colloca" id="btn-seconda" onclick="colloca('seconda')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-seconda"></div>
+    </div>
+    <div class="zona zona-grande" id="zona-nessuna">
+      <h3>Non decide fra le due <span id="count-nessuna">(0)</span><button class="btn-colloca" id="btn-nessuna" onclick="colloca('nessuna')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-nessuna"></div>
+    </div>
+  </div>
+</section>
+
+<section id="tempo-2" hidden>
+  <p class="istruzioni" style="margin-bottom:16px;">Quattro formulazioni, non due tesi: dalla più ampia alla più ristretta. Nessuna è marcata come giusta, ma la quarta è quella che il capitolo suggerisce senza imporla.</p>
+  <div class="tesi-opzioni" id="tesi-opzioni"></div>
+  <div class="chiusura-msg" id="chiusura-msg" hidden>
+    Le prove non vincono né perdono una tesi: la costringono a restringersi.
+  </div>
+</section>
+
+<section id="tempo-3" hidden>
+  <div class="geografia-blocco">
+    <div class="geografia-riga"><b>In Francia</b>Prevale la prima lettura: il criterio della durata, applicato da chi vede soprattutto ciò che le istituzioni hanno lasciato.</div>
+    <div class="geografia-riga"><b>Nei paesi occupati</b>Prevale la seconda lettura: il criterio del consenso, applicato da chi vede soprattutto chi decideva.</div>
+    <div class="geografia-riga"><b>In Spagna, Russia e Germania</b>La memoria della resistenza è parte di un'identità nazionale costruita nell'Ottocento, il che rende la seconda lettura ancora più radicata.</div>
+    <div class="geografia-riga"><b>Che cosa significa</b>Registrarlo non squalifica nessuna delle due posizioni, ma obbliga a chiedersi, leggendo un contributo storiografico, da dove guardi chi scrive.</div>
+  </div>
+</section>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le carte sono tratte da § 4.13 (nodo storiografico). Il capitolato indicava quattro carte per la prima lettura; il paragrafo del capitolo ne offre sei (ho aggiunto amministrazioni/catasti/tribunali ed ebrei fuori dai ghetti), pareggiando le sei della seconda lettura per rispettare il vincolo di simmetria. Le quattro carte del terzo contenitore sono costruite incrociando § 4.13 con gli esempi individuali di § 4.9.
+</footer>
+
+<script>
+const carte = [
+  { id:'p1', testo:"La feudalità non tornò dopo il 1815, dove i francesi erano arrivati.", tipo:'prima' },
+  { id:'s1', testo:"Nessun territorio poté scegliere se ricevere le riforme.", tipo:'seconda' },
+  { id:'n1', testo:"Un avvocato milanese guadagnava dall'uguaglianza giuridica e dai tribunali funzionanti, e pagava con la coscrizione del figlio.", tipo:'nessuna' },
+  { id:'p2', testo:"Il Codice civile fu adottato o imitato in mezza Europa e sopravvisse alla Restaurazione.", tipo:'prima' },
+  { id:'s2', testo:"Le contribuzioni di guerra trasferirono risorse verso la Francia in modo sistematico.", tipo:'seconda' },
+  { id:'n2', testo:"Un contadino napoletano smetteva di dovere prestazioni al barone e cominciava a essere chiamato alle armi da uno Stato che prima non lo raggiungeva.", tipo:'nessuna' },
+  { id:'p3', testo:"Amministrazioni uniformi, catasti, stato civile laico e tribunali regolari furono introdotti stabilmente.", tipo:'prima' },
+  { id:'s3', testo:"La coscrizione prese uomini in tutta Europa per guerre decise a Parigi.", tipo:'seconda' },
+  { id:'n3', testo:"La caduta dei vincoli che immobilizzavano la proprietà nobiliare rese la terra vendibile e divisibile: una misura tecnica, fra le più corrosive per l'ordine antico.", tipo:'nessuna' },
+  { id:'p4', testo:"Gli ebrei uscirono dai ghetti in diversi Stati.", tipo:'prima' },
+  { id:'s4', testo:"I troni furono distribuiti a parenti e fedelissimi.", tipo:'seconda' },
+  { id:'n4', testo:"Le riforme non furono sottoposte a votazione dove arrivarono, ma furono mantenute, imitate o rimpiante da molti dopo il 1815.", tipo:'nessuna' },
+  { id:'p5', testo:"In Germania la mappa politica fu semplificata in modo irreversibile.", tipo:'prima' },
+  { id:'s5', testo:"Venezia, Stato indipendente da undici secoli, fu ceduta come merce di scambio a Campoformio.", tipo:'seconda' },
+  { id:'p6', testo:"Un ceto di funzionari e giuristi si formò dentro quelle istituzioni e vi restò a lavorare sotto i sovrani restaurati.", tipo:'prima' },
+  { id:'s6', testo:"Nel 1802 fu ripristinata per legge la schiavitù nelle colonie.", tipo:'seconda' }
+];
+
+let placement = {};
+let selected = null;
+
+function showTempo(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('tab-'+i).classList.toggle('active', i===n);
+    document.getElementById('tempo-'+i).hidden = i!==n;
+  });
+}
+
+function onChipClick(id){
+  if(placement[id]){ placement[id] = null; selected = null; }
+  else { selected = (selected===id) ? null : id; }
+  renderPesare();
+}
+function colloca(zona){
+  if(selected){ placement[selected] = zona; selected = null; renderPesare(); }
+}
+
+function renderPesare(){
+  const pool = document.getElementById('pool');
+  const zP = document.getElementById('items-prima');
+  const zS = document.getElementById('items-seconda');
+  const zN = document.getElementById('items-nessuna');
+  pool.innerHTML=''; zP.innerHTML=''; zS.innerHTML=''; zN.innerHTML='';
+  let cp=0, cs=0, cn=0;
+  carte.forEach(c=>{
+    const chip = document.createElement('button');
+    chip.type='button';
+    chip.className = 'chip' + (selected===c.id?' selezionato':'');
+    chip.textContent = c.testo;
+    chip.onclick = (e)=>{ e.stopPropagation(); onChipClick(c.id); };
+    const loc = placement[c.id];
+    if(!loc){ pool.appendChild(chip); }
+    else if(loc==='prima'){ zP.appendChild(chip); cp++; }
+    else if(loc==='seconda'){ zS.appendChild(chip); cs++; }
+    else { zN.appendChild(chip); cn++; }
+  });
+  document.getElementById('count-prima').textContent = `(${cp})`;
+  document.getElementById('count-seconda').textContent = `(${cs})`;
+  document.getElementById('count-nessuna').textContent = `(${cn})`;
+  ['prima','seconda','nessuna'].forEach(z=>{
+    document.getElementById('zona-'+z).classList.toggle('zone-armed', !!selected);
+    document.getElementById('btn-'+z).disabled = !selected;
+  });
+}
+
+const opzioniCalibratura = [
+  { id:'a', titolo:'La più ampia — prima lettura', testo:"Napoleone esportò irreversibilmente i principi del 1789: le istituzioni che ne derivano sopravvivono ovunque sia passato, indipendentemente da come vi furono portate." },
+  { id:'b', titolo:'Ampia — seconda lettura', testo:"Napoleone costruì un dominio imperiale che usò il linguaggio dei principi per mascherare l'estrazione sistematica di uomini e risorse dai territori occupati." },
+  { id:'c', titolo:'Più ristretta', testo:"Le riforme furono reali e in parte durature, ma nessun territorio le scelse: quale delle due letture sembra vincere dipende dal criterio — la durata o il consenso — con cui si giudica il periodo." },
+  { id:'d', titolo:'La più ristretta — quella che il capitolo suggerisce', testo:"Non esiste un bilancio complessivo da tirare: la stessa dominazione fu, per la stessa persona, un guadagno da una colonna e un costo dall'altra. È a questo livello individuale, non a quello del giudizio storico complessivo, che la domanda trova una risposta." }
+];
+let calibSelezionata = null;
+
+function renderCalibratura(){
+  const el = document.getElementById('tesi-opzioni');
+  el.innerHTML = opzioniCalibratura.map(op=>`
+    <button type="button" class="tesi-opzione${calibSelezionata===op.id?' selezionata':''}" data-id="${op.id}">
+      <div class="tesi-titolo">${op.titolo}</div>
+      <div>${op.testo}</div>
+    </button>
+  `).join('');
+  el.querySelectorAll('.tesi-opzione').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      calibSelezionata = btn.dataset.id;
+      renderCalibratura();
+      document.getElementById('chiusura-msg').hidden = false;
+    });
+  });
+}
+
+renderPesare();
+renderCalibratura();
+</script>
+
+</body>
+</html>

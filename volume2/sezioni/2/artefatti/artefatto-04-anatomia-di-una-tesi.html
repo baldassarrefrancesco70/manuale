@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomia di una tesi: la «guerra limitata» — Artefatto 4</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8;
+    --grigio-neutro:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a332b;
+    --bg-card:#ffffff;
+    --bordo:#d8d2c6;
+    --verde-sost:#7a8c6b;
+    --rosso-diff:#a86b5a;
+    --grigio-nd:#8a8578;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--beige-focus);
+    color: var(--testo);
+    padding: 28px 24px 48px;
+    line-height:1.5;
+  }
+  .masthead{
+    border-bottom: 2px solid var(--marrone);
+    padding-bottom:12px;
+    margin-bottom:20px;
+    max-width: 940px;
+  }
+  .eyebrow{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  h1{ font-size: 26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:14px; color:var(--marrone-scuro); margin:0;
+  }
+  .istruzioni{ max-width: 780px; font-size:15.5px; margin-bottom: 22px; }
+
+  .tab-nav{
+    display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap;
+  }
+  .tab-btn{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    background:var(--bg-card);
+    border:1px solid var(--marrone);
+    color:var(--testo);
+    padding:10px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .tab-btn.active{ background:var(--marrone); color:#fff; }
+  .tab-btn:focus-visible, .chip:focus-visible, .btn-colloca:focus-visible,
+  .tesi-opzione:focus-visible, .btn-secondario:focus-visible{
+    outline:3px solid var(--marrone-scuro); outline-offset:2px;
+  }
+
+  .tempo-section h2{ font-size:20px; font-weight:normal; margin:0 0 6px; }
+  .tempo-istruzioni{ max-width:760px; font-size:14.5px; color:#4a4438; margin-bottom:18px; }
+
+  .blocco-prosa{
+    background:var(--bg-card);
+    border:1px solid var(--bordo);
+    border-left:4px solid var(--marrone);
+    padding:18px 20px;
+    max-width:780px;
+    font-size:14.5px;
+    margin-bottom:22px;
+    color:#4a4438;
+  }
+
+  .chips-pool{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-bottom:20px;
+    min-height:44px;
+    padding:12px;
+    background:var(--grigio-neutro);
+    border-radius:6px;
+    border:1px dashed var(--bordo);
+  }
+  .chip{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:12.5px;
+    text-align:left;
+    background:var(--bg-card);
+    border:1px solid var(--bordo);
+    border-radius:6px;
+    padding:9px 12px;
+    max-width:340px;
+    cursor:pointer;
+    color:var(--testo);
+    line-height:1.35;
+  }
+  .chip.selezionato{
+    border-color:var(--marrone-scuro);
+    box-shadow: 0 0 0 2px var(--marrone-scuro) inset;
+    background:#fbf8f2;
+  }
+
+  .zone-container{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .zona{
+    background:var(--bg-card);
+    border:1px solid var(--bordo);
+    border-radius:6px;
+    padding:14px;
+    min-height:120px;
+    transition: box-shadow .2s;
+  }
+  .zona.zone-armed{ box-shadow: 0 0 0 2px var(--marrone-scuro) inset; cursor:pointer; }
+  .zona-grande{ grid-column: 1 / -1; background: var(--grigio-neutro); }
+  .zona h3{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:13px; text-transform:uppercase; letter-spacing:.5px;
+    margin:0 0 10px; display:flex; justify-content:space-between; align-items:center;
+    color:var(--marrone-scuro);
+  }
+  .btn-colloca{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;
+    background:var(--marrone);
+    color:#fff;
+    border:none;
+    border-radius:4px;
+    padding:5px 10px;
+    cursor:pointer;
+  }
+  .btn-colloca:disabled{ background:#c9c2b3; cursor:not-allowed; }
+  .zona-items{ display:flex; flex-wrap:wrap; gap:8px; min-height:20px; }
+
+  .btn-secondario{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    background:var(--bg-card);
+    border:1px solid var(--marrone);
+    color:var(--marrone-scuro);
+    padding:9px 16px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+    margin-bottom:16px;
+  }
+
+  .confronto{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+    max-width:900px;
+    margin-bottom: 20px;
+  }
+  .confronto-col{
+    background:var(--bg-card);
+    border:1px solid var(--bordo);
+    border-radius:6px;
+    padding:14px;
+  }
+  .confronto-col h4{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:12px; text-transform:uppercase; color:var(--marrone-scuro);
+    margin:0 0 10px;
+  }
+  .confronto-col p{ font-size:13px; margin:0 0 8px; }
+
+  .badge-tipo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:9px; text-transform:uppercase; letter-spacing:.5px;
+    color:#fff; border-radius:3px; padding:2px 6px; margin-left:6px; white-space:nowrap;
+  }
+  .badge-sostiene{ background:var(--verde-sost); }
+  .badge-difficolta{ background:var(--rosso-diff); }
+  .badge-non-decide{ background:var(--grigio-nd); }
+  .chip-nota{ font-size:10.5px; font-style:italic; color:#8a6a4a; display:block; margin-top:4px; }
+
+  .recap{
+    max-width:760px; font-size:14px; background:var(--grigio-neutro);
+    border-radius:6px; padding:14px 16px; margin-bottom:22px;
+  }
+  .tesi-opzioni{ display:flex; flex-direction:column; gap:12px; max-width:780px; margin-bottom:22px; }
+  .tesi-opzione{
+    text-align:left;
+    background:var(--bg-card);
+    border:1px solid var(--bordo);
+    border-left:4px solid var(--bordo);
+    border-radius:6px;
+    padding:14px 16px;
+    cursor:pointer;
+    font-family: Georgia, serif;
+  }
+  .tesi-opzione.selezionata{ border-left-color:var(--marrone); background:#fbf8f2; }
+  .tesi-opzione .tesi-titolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:12px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:5px;
+  }
+  .tesi-opzione .tesi-testo{ font-size:14.5px; }
+  .tesi-opzione .tesi-nota{ font-size:11px; font-style:italic; color:#8a6a4a; margin-top:6px; }
+
+  .chiusura-msg{
+    max-width:720px; font-size:15px; font-style:italic;
+    border-left:4px solid var(--marrone);
+    padding:14px 18px; background:var(--bg-card); border-radius: 0 6px 6px 0;
+  }
+
+  footer.nota{
+    margin-top: 30px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:12px; color:#7a7263;
+    border-top:1px solid var(--bordo);
+    padding-top:12px; max-width:820px;
+  }
+  [hidden]{ display:none !important; }
+  @media (prefers-reduced-motion: reduce){ .zona{ transition:none; } }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 4</p>
+  <h1>Anatomia di una tesi: la «guerra limitata»</h1>
+  <p class="sottotitolo">§ 1.3 — La guerra nel Settecento: una tesi da verificare</p>
+</div>
+
+<div class="istruzioni">
+  <p>«Guerra limitata» non è una constatazione: è una tesi, con premesse e una conclusione, sostenuta da alcune prove e messa in difficoltà da altre. In tre tempi: prima la smonti, poi ne pesi le prove, infine decidi quale formulazione le prove che hai pesato ti autorizzano a sostenere. Nessun passaggio è valutato: ogni tempo si può rivedere e confrontare con la versione del capitolo.</p>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" id="tab-1" onclick="showTempo(1)">1 · Smontare</button>
+  <button class="tab-btn" id="tab-2" onclick="showTempo(2)">2 · Pesare</button>
+  <button class="tab-btn" id="tab-3" onclick="showTempo(3)">3 · Calibrare</button>
+</nav>
+
+<!-- TEMPO 1 -->
+<section class="tempo-section" id="tempo-1">
+  <h2>Primo tempo — Smontare</h2>
+  <p class="tempo-istruzioni">Il capitolo presenta la tesi come un blocco unico di prosa. Leggilo, poi separa le sei frasi qui sotto in due caselle: cinque sono premesse, una è la conclusione. Clicca una frase per selezionarla, poi clicca «Colloca qui» nella casella scelta.</p>
+
+  <div class="blocco-prosa">
+    Le premesse sono cinque. La guerra non è concepita come uno scontro totale ma come la prosecuzione della diplomazia con altri mezzi, uno strumento per regolare una contesa dinastica o spostare un confine: chi la dichiara ha già in mente il tavolo a cui si tornerà a sedere. Gli eserciti sono professionali e permanenti, con divise, caserme e vettovagliamento organizzato, e un soldato addestrato costa così tanto che il comandante evita di rischiarlo: si manovra per costringere l'avversario a ritirarsi, e la battaglia campale è l'eccezione, non la regola. Il reclutamento è per definizione parziale, perché nessuno immagina di mobilitare una popolazione: si arruola chi si può arruolare e chi si offre, e il resto del paese continua a fare altro. I rifornimenti dipendono da magazzini fissi, il che lega le colonne a poche giornate di marcia dai depositi, impone la stagionalità delle campagne e rende impossibili le operazioni lunghe e profonde. Gli ufficiali, infine, appartengono a un'aristocrazia europea che condivide lingua, codici e un galateo bellico codificato fin nelle regole della resa di una fortezza. La conclusione che se ne trae è che la guerra settecentesca sia un affare tra gabinetti, con regole, e sostanzialmente estranea alle popolazioni.
+  </div>
+
+  <div class="chips-pool" id="t1-pool"></div>
+
+  <div class="zone-container">
+    <div class="zona" id="zona-premesse">
+      <h3>Premesse <span id="count-premesse">(0)</span><button class="btn-colloca" id="btn-premesse" onclick="placeInZone('t1','premesse')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-premesse"></div>
+    </div>
+    <div class="zona" id="zona-conclusione">
+      <h3>Conclusione <span id="count-conclusione">(0)</span><button class="btn-colloca" id="btn-conclusione" onclick="placeInZone('t1','conclusione')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-conclusione"></div>
+    </div>
+  </div>
+
+  <button class="btn-secondario" onclick="toggleConfronto()">Confronta con la versione del capitolo</button>
+  <div class="confronto" id="confronto" hidden>
+    <div class="confronto-col">
+      <h4>La tua versione</h4>
+      <p><strong>Premesse:</strong></p>
+      <div id="confronto-tue-premesse"></div>
+      <p><strong>Conclusione:</strong></p>
+      <div id="confronto-tua-conclusione"></div>
+    </div>
+    <div class="confronto-col">
+      <h4>La versione del capitolo</h4>
+      <p><strong>Premesse:</strong></p>
+      <div id="confronto-vere-premesse"></div>
+      <p><strong>Conclusione:</strong></p>
+      <div id="confronto-vera-conclusione"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPO 2 -->
+<section class="tempo-section" id="tempo-2" hidden>
+  <h2>Secondo tempo — Pesare</h2>
+  <p class="tempo-istruzioni">Dodici carte-prova, tratte dal paragrafo e dai due successivi. Distribuiscile in tre contenitori: quelle che sostengono la tesi, quelle che la mettono in difficoltà, quelle che non la decidono — vere, ma estranee alla domanda se la guerra fosse limitata o no. Il terzo contenitore è quello che conta di più: non scartare una carta lì per pigrizia.</p>
+
+  <div class="chips-pool" id="t2-pool"></div>
+
+  <div class="zone-container">
+    <div class="zona" id="zona-sostiene">
+      <h3>La sostiene <span id="count-sostiene">(0)</span><button class="btn-colloca" id="btn-sostiene" onclick="placeInZone('t2','sostiene')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-sostiene"></div>
+    </div>
+    <div class="zona" id="zona-difficolta">
+      <h3>La mette in difficoltà <span id="count-difficolta">(0)</span><button class="btn-colloca" id="btn-difficolta" onclick="placeInZone('t2','difficolta')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-difficolta"></div>
+    </div>
+    <div class="zona zona-grande" id="zona-non-decide">
+      <h3>Non la decide <span id="count-non-decide">(0)</span><button class="btn-colloca" id="btn-non-decide" onclick="placeInZone('t2','non-decide')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-non-decide"></div>
+    </div>
+  </div>
+
+  <button class="btn-secondario" onclick="toggleSoluzioneT2()">Mostra la classificazione del capitolo</button>
+</section>
+
+<!-- TEMPO 3 -->
+<section class="tempo-section" id="tempo-3" hidden>
+  <h2>Terzo tempo — Calibrare</h2>
+  <p class="tempo-istruzioni">Nessuna delle tre formulazioni è marcata come giusta. Scegli quella che le prove appena pesate ti autorizzano a sostenere.</p>
+
+  <div class="recap" id="recap-t2">Nel secondo tempo non hai ancora collocato nessuna carta.</div>
+
+  <div class="tesi-opzioni" id="tesi-opzioni"></div>
+
+  <div class="chiusura-msg" id="chiusura-msg" hidden>
+    Le prove non vincono né perdono una tesi: la costringono a restringersi.
+  </div>
+</section>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le premesse, la conclusione e le otto carte-prova contrassegnate «testo» riproducono il contenuto del paragrafo e dei due successivi. Le carte «gli ufficiali si scambiano cortesie» e «la Francia perde il Canada» sono gli esempi indicati per il terzo contenitore. La carta sul rovesciamento delle alleanze del 1756 è <strong>[dedotto]</strong>: presa da un paragrafo precedente del capitolo, non dai due indicati per questo artefatto — verificarne l'opportunità. La terza formulazione della tesi, quella opposta, è costruita per l'esercizio e non compare nel capitolo.
+</footer>
+
+<script>
+/* ---------- Dati ---------- */
+const t1Items = [
+  {id:'p1', testo:"La guerra non è concepita come uno scontro totale, ma come la prosecuzione della diplomazia con altri mezzi: chi la dichiara ha già in mente il tavolo a cui si tornerà a sedere.", tipo:'premesse'},
+  {id:'p2', testo:"Gli eserciti sono professionali e permanenti; un soldato addestrato costa così tanto che il comandante evita di rischiarlo, e la battaglia campale è l'eccezione, non la regola.", tipo:'premesse'},
+  {id:'p3', testo:"Il reclutamento è per definizione parziale: si arruola chi si può arruolare e chi si offre, e il resto del paese continua a fare altro.", tipo:'premesse'},
+  {id:'p4', testo:"I rifornimenti dipendono da magazzini fissi, il che impone la stagionalità delle campagne e rende impossibili le operazioni lunghe e profonde.", tipo:'premesse'},
+  {id:'p5', testo:"Gli ufficiali appartengono a un'aristocrazia europea che condivide lingua, codici e un galateo bellico comune.", tipo:'premesse'},
+  {id:'c1', testo:"La guerra settecentesca è un affare tra gabinetti, con regole, sostanzialmente estraneo alle popolazioni.", tipo:'conclusione'}
+];
+
+const t2Items = [
+  {id:'s1', testo:"Le campagne si interrompono davvero d'inverno.", tipo:'sostiene', fonte:'testo'},
+  {id:'s2', testo:"I mesi di marcia superano di gran lunga le ore di combattimento.", tipo:'sostiene', fonte:'testo'},
+  {id:'s3', testo:"Le paci scambiano province come si scambiano poste in un negoziato.", tipo:'sostiene', fonte:'testo'},
+  {id:'s4', testo:"Nessuna delle grandi guerre del secolo si chiude con l'annientamento di un contendente.", tipo:'sostiene', fonte:'testo'},
+  {id:'m1', testo:"La guerra dei sette anni devasta la Sassonia per sette campagne consecutive e riduce la popolazione prussiana di circa un decimo.", tipo:'difficolta', fonte:'testo'},
+  {id:'m2', testo:"A Zorndorf e a Kunersdorf si registrano percentuali di perdite che nulla hanno di limitato.", tipo:'difficolta', fonte:'testo'},
+  {id:'m3', testo:"È il primo conflitto combattuto contemporaneamente su cinque continenti: dal Bengala ai Caraibi, dalle coste africane alle Filippine.", tipo:'difficolta', fonte:'testo'},
+  {id:'m4', testo:"A Plassey (1757) e sul San Lorenzo, con la caduta di Quebec (1759): fuori d'Europa la posta è l'egemonia mondiale, non un confine dinastico.", tipo:'difficolta', fonte:'testo'},
+  {id:'n1', testo:"Gli ufficiali di eserciti nemici si scambiano cortesie prima della battaglia.", tipo:'non-decide', fonte:'esempio', nota:"Aneddotico: non riguarda la portata del conflitto."},
+  {id:'n2', testo:"Nel 1763 la Francia perde il Canada.", tipo:'non-decide', fonte:'esempio', nota:"Dice l'esito della guerra, non la sua natura."},
+  {id:'n3', testo:"Nel 1756 avviene il «rovesciamento delle alleanze»: Francia e Austria si alleano contro la Prussia.", tipo:'non-decide', fonte:'dedotto', nota:"Vero, ma è diplomazia: non risponde alla domanda se la guerra fu limitata."},
+  {id:'n4', testo:"Gli ufficiali condividono lingua, codici e un galateo bellico comune fin nelle regole della resa di una fortezza.", tipo:'non-decide', fonte:'testo', nota:"È una premessa della tesi, non una prova indipendente."}
+];
+
+const t3Opzioni = [
+  {id:'a', titolo:'La tesi di partenza', testo:"Il Settecento è il secolo della guerra limitata: uno scontro tra gabinetti, con regole condivise, sostanzialmente estraneo alle popolazioni."},
+  {id:'b', titolo:'La tesi ristretta al teatro continentale', testo:"Sul teatro continentale europeo, e per gli obiettivi dinastici che vi si perseguono, il Settecento è il secolo della guerra limitata; altrove, e per chi la subisce sul terreno, non lo è."},
+  {id:'c', titolo:'La tesi opposta', testo:"Il Settecento non conosce alcuna guerra realmente limitata: anche il conflitto più regolato produce devastazioni di massa e si combatte, fuori d'Europa, per l'egemonia sul mondo intero.", nota:"Formulazione costruita per l'esercizio, non presente nel capitolo."}
+];
+
+/* ---------- Stato ---------- */
+let t1Placement = {};
+let t1Selected = null;
+let t2Placement = {};
+let t2Selected = null;
+let t2SoluzioneVisibile = false;
+let t3Selected = null;
+
+/* ---------- Tab ---------- */
+function showTempo(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('tempo-'+i).hidden = (i!==n);
+    document.getElementById('tab-'+i).classList.toggle('active', i===n);
+  });
+  if(n===3) updateRecap();
+}
+
+/* ---------- Tempo 1 ---------- */
+function renderT1(){
+  const pool = document.getElementById('t1-pool');
+  const zP = document.getElementById('items-premesse');
+  const zC = document.getElementById('items-conclusione');
+  pool.innerHTML=''; zP.innerHTML=''; zC.innerHTML='';
+  let cp=0, cc=0;
+  t1Items.forEach(it=>{
+    const chip = document.createElement('button');
+    chip.type='button';
+    chip.className='chip'+(t1Selected===it.id?' selezionato':'');
+    chip.textContent=it.testo;
+    chip.onclick=(e)=>{ e.stopPropagation(); onChipClick('t1', it.id); };
+    const loc = t1Placement[it.id];
+    if(!loc){ pool.appendChild(chip); }
+    else if(loc==='premesse'){ zP.appendChild(chip); cp++; }
+    else { zC.appendChild(chip); cc++; }
+  });
+  document.getElementById('count-premesse').textContent = `(${cp})`;
+  document.getElementById('count-conclusione').textContent = `(${cc})`;
+  document.getElementById('zona-premesse').classList.toggle('zone-armed', !!t1Selected);
+  document.getElementById('zona-conclusione').classList.toggle('zone-armed', !!t1Selected);
+  document.getElementById('btn-premesse').disabled = !t1Selected;
+  document.getElementById('btn-conclusione').disabled = !t1Selected;
+}
+
+function onChipClick(phase, id){
+  if(phase==='t1'){
+    if(t1Placement[id]){ t1Placement[id]=null; t1Selected=null; }
+    else { t1Selected = (t1Selected===id) ? null : id; }
+    renderT1();
+  } else {
+    if(t2Placement[id]){ t2Placement[id]=null; t2Selected=null; }
+    else { t2Selected = (t2Selected===id) ? null : id; }
+    renderT2();
+  }
+}
+
+function placeInZone(phase, zona){
+  if(phase==='t1' && t1Selected){
+    t1Placement[t1Selected]=zona; t1Selected=null; renderT1();
+  } else if(phase==='t2' && t2Selected){
+    t2Placement[t2Selected]=zona; t2Selected=null; renderT2();
+  }
+}
+
+function toggleConfronto(){
+  const box = document.getElementById('confronto');
+  box.hidden = !box.hidden;
+  if(!box.hidden){
+    const tuePremesse = t1Items.filter(it=>t1Placement[it.id]==='premesse');
+    const tuaConclusione = t1Items.filter(it=>t1Placement[it.id]==='conclusione');
+    const verePremesse = t1Items.filter(it=>it.tipo==='premesse');
+    const veraConclusione = t1Items.filter(it=>it.tipo==='conclusione');
+    document.getElementById('confronto-tue-premesse').innerHTML = tuePremesse.length ? tuePremesse.map(i=>`<p>— ${i.testo}</p>`).join('') : '<p><em>(nessuna collocata)</em></p>';
+    document.getElementById('confronto-tua-conclusione').innerHTML = tuaConclusione.length ? tuaConclusione.map(i=>`<p>— ${i.testo}</p>`).join('') : '<p><em>(nessuna collocata)</em></p>';
+    document.getElementById('confronto-vere-premesse').innerHTML = verePremesse.map(i=>`<p>— ${i.testo}</p>`).join('');
+    document.getElementById('confronto-vera-conclusione').innerHTML = veraConclusione.map(i=>`<p>— ${i.testo}</p>`).join('');
+  }
+}
+
+/* ---------- Tempo 2 ---------- */
+function renderT2(){
+  const pool = document.getElementById('t2-pool');
+  const zS = document.getElementById('items-sostiene');
+  const zD = document.getElementById('items-difficolta');
+  const zN = document.getElementById('items-non-decide');
+  pool.innerHTML=''; zS.innerHTML=''; zD.innerHTML=''; zN.innerHTML='';
+  let cs=0, cd=0, cn=0;
+  t2Items.forEach(it=>{
+    const chip = document.createElement('button');
+    chip.type='button';
+    chip.className='chip'+(t2Selected===it.id?' selezionato':'');
+    chip.innerHTML = it.testo + (t2SoluzioneVisibile ? badgeHTML(it) : '') + (t2SoluzioneVisibile && it.nota ? `<span class="chip-nota">${it.nota}</span>` : '');
+    chip.onclick=(e)=>{ e.stopPropagation(); onChipClick('t2', it.id); };
+    const loc = t2Placement[it.id];
+    if(!loc){ pool.appendChild(chip); }
+    else if(loc==='sostiene'){ zS.appendChild(chip); cs++; }
+    else if(loc==='difficolta'){ zD.appendChild(chip); cd++; }
+    else { zN.appendChild(chip); cn++; }
+  });
+  document.getElementById('count-sostiene').textContent = `(${cs})`;
+  document.getElementById('count-difficolta').textContent = `(${cd})`;
+  document.getElementById('count-non-decide').textContent = `(${cn})`;
+  ['sostiene','difficolta','non-decide'].forEach(z=>{
+    document.getElementById('zona-'+z).classList.toggle('zone-armed', !!t2Selected);
+    document.getElementById('btn-'+z).disabled = !t2Selected;
+  });
+}
+
+function badgeHTML(it){
+  const map = {sostiene:['La sostiene','badge-sostiene'], difficolta:['La mette in difficoltà','badge-difficolta'], 'non-decide':['Non la decide','badge-non-decide']};
+  const [label, cls] = map[it.tipo];
+  return `<span class="badge-tipo ${cls}">${label}</span>`;
+}
+
+function toggleSoluzioneT2(){
+  t2SoluzioneVisibile = !t2SoluzioneVisibile;
+  renderT2();
+}
+
+/* ---------- Tempo 3 ---------- */
+function renderT3(){
+  const box = document.getElementById('tesi-opzioni');
+  box.innerHTML='';
+  t3Opzioni.forEach(op=>{
+    const el = document.createElement('button');
+    el.type='button';
+    el.className='tesi-opzione'+(t3Selected===op.id?' selezionata':'');
+    el.innerHTML = `<div class="tesi-titolo">${op.titolo}</div><div class="tesi-testo">${op.testo}</div>${op.nota?`<div class="tesi-nota">${op.nota}</div>`:''}`;
+    el.onclick = ()=>{ t3Selected = op.id; renderT3(); document.getElementById('chiusura-msg').hidden=false; };
+    box.appendChild(el);
+  });
+}
+
+function updateRecap(){
+  const counts = {sostiene:0, difficolta:0, 'non-decide':0, libere:0};
+  t2Items.forEach(it=>{
+    const loc = t2Placement[it.id];
+    if(loc) counts[loc]++; else counts.libere++;
+  });
+  const el = document.getElementById('recap-t2');
+  if(counts.sostiene+counts.difficolta+counts['non-decide']===0){
+    el.textContent = "Nel secondo tempo non hai ancora collocato nessuna carta.";
+  } else {
+    el.textContent = `Nel secondo tempo hai collocato ${counts.sostiene} carte in «la sostiene», ${counts.difficolta} in «la mette in difficoltà», ${counts['non-decide']} in «non la decide»` + (counts.libere ? `, ${counts.libere} restano da collocare.` : '.');
+  }
+}
+
+/* ---------- Avvio ---------- */
+renderT1();
+renderT2();
+renderT3();
+</script>
+
+</body>
+</html>

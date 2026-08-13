@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il congegno del 1791 — Artefatto 11</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .tab-nav{ display:flex; gap:8px; margin-bottom:24px; }
+  .tab-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo); padding:10px 18px; border-radius:6px; cursor:pointer; }
+  .tab-btn.active{ background:var(--marrone); color:#fff; }
+
+  .pannello{ max-width:900px; }
+
+  .scelta-percorso{ display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+  .btn-percorso{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--marrone-scuro); padding:10px 16px; border-radius:6px; cursor:pointer; }
+  .btn-percorso.active{ background:var(--marrone); color:#fff; }
+
+  .calendario{ display:flex; gap:4px; margin-bottom:16px; }
+  .anno-blocco{
+    flex:1; height:52px; border:1px solid var(--bordo); border-radius:4px; background:var(--grigio-neutro);
+    display:flex; align-items:center; justify-content:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px; text-align:center; color:#6b6455; padding:2px;
+  }
+  .anno-blocco.sospeso{ background:#e8ddce; color:var(--marrone-scuro); }
+  .anno-blocco.vigore{ background:var(--marrone); color:#fff; }
+
+  .esito-box{
+    background:var(--bg-card); border:1px solid var(--bordo); border-left:4px solid var(--marrone); border-radius:0 6px 6px 0;
+    padding:16px 20px; margin-bottom:20px; font-size:14.5px;
+  }
+
+  .provvedimenti{ display:flex; flex-direction:column; gap:14px; margin-bottom:20px; }
+  .provvedimento-card{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:16px 18px; }
+  .provvedimento-titolo{ font-size:15px; margin:0 0 8px; }
+  .btn-azione{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--marrone); color:#fff; border:none; padding:9px 16px; border-radius:6px; cursor:pointer; }
+  .btn-azione:disabled{ background:#c9c2b3; cursor:not-allowed; }
+  .risultato{ margin-top:10px; font-size:13.5px; padding:10px 12px; background:var(--grigio-neutro); border-radius:4px; display:none; }
+  .risultato.visibile{ display:block; }
+
+  .contatore-tempo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--grigio-neutro);
+    border:1px solid var(--bordo); border-radius:6px; padding:10px 16px; margin-bottom:20px; display:inline-block;
+  }
+
+  .chiusura{ max-width:780px; font-size:15px; font-style:italic; border-left:4px solid var(--marrone); background:var(--bg-card); padding:16px 20px; border-radius:0 6px 6px 0; display:none; }
+  .chiusura.visibile{ display:block; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:900px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 11</p>
+  <h1>Il congegno del 1791</h1>
+  <p class="sottotitolo">§ 2.7 — La Costituzione del 1791</p>
+</div>
+
+<div class="istruzioni">
+  <p>La costituzione separa i poteri: l'assemblea legifera, il re sanziona o pone il veto. Due modalità per vedere come funziona la macchina — e quando si inceppa.</p>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" id="tab-oss" onclick="mostraModalita('osservazione')">Modalità osservazione</button>
+  <button class="tab-btn" id="tab-gov" onclick="mostraModalita('governo')">Modalità governo</button>
+</nav>
+
+<div class="pannello" id="pannello-osservazione"></div>
+<div class="pannello" id="pannello-governo" hidden></div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Il meccanismo del veto sospensivo e la durata di quattro anni sono descritti in § 2.7. La durata reale dell'Assemblea legislativa (undici mesi anziché due anni) e il tentativo di fuga del re nel giugno 1791 sono anch'essi tratti dal capitolo.
+</footer>
+
+<script>
+/* ---------- Modalità osservazione ---------- */
+let percorsoOss = null;
+
+function mostraModalita(m){
+  document.getElementById('tab-oss').classList.toggle('active', m==='osservazione');
+  document.getElementById('tab-gov').classList.toggle('active', m==='governo');
+  document.getElementById('pannello-osservazione').hidden = m!=='osservazione';
+  document.getElementById('pannello-governo').hidden = m!=='governo';
+}
+
+function sceglipercorso(p){
+  percorsoOss = p;
+  renderOsservazione();
+}
+
+function renderOsservazione(){
+  const el = document.getElementById('pannello-osservazione');
+  let calendarioHTML = '';
+  if(percorsoOss==='sanzione'){
+    calendarioHTML = `
+      <div class="calendario">
+        <div class="anno-blocco vigore">Anno 1<br>Legge votata<br>e sanzionata</div>
+      </div>
+      <div class="esito-box">Il re sanziona subito: la legge entra in vigore nello stesso anno. Nessun blocco.</div>
+    `;
+  } else if(percorsoOss==='veto'){
+    calendarioHTML = `
+      <div class="calendario">
+        <div class="anno-blocco sospeso">Anno 1-2<br>Legislatura I<br>Veto del re</div>
+        <div class="anno-blocco sospeso">Anno 3-4<br>Legislatura II<br>Riapprovata</div>
+        <div class="anno-blocco vigore">Anno 5-6<br>Legislatura III<br>In vigore</div>
+      </div>
+      <div class="esito-box">Il re pone il veto. Perché la legge entri in vigore comunque, due legislature successive devono riapprovarla: la Legislatura II la riapprova, la Legislatura III la riapprova di nuovo, e solo allora entra in vigore — circa quattro anni di blocco dal momento del veto.</div>
+    `;
+  }
+  el.innerHTML = `
+    <div class="scelta-percorso">
+      <button class="btn-percorso${percorsoOss==='sanzione'?' active':''}" onclick="sceglipercorso('sanzione')">Il re sanziona</button>
+      <button class="btn-percorso${percorsoOss==='veto'?' active':''}" onclick="sceglipercorso('veto')">Il re pone il veto</button>
+    </div>
+    ${calendarioHTML}
+  `;
+}
+
+/* ---------- Modalità governo ---------- */
+const provvedimenti = [
+  { id:1, titolo:"Provvedimento 1", testo:"Fai approvare dall'assemblea un provvedimento contro il clero refrattario." },
+  { id:2, titolo:"Provvedimento 2", testo:"Fai approvare un secondo provvedimento sulla gestione dei beni nazionali." },
+  { id:3, titolo:"Provvedimento 3", testo:"Fai approvare un terzo provvedimento sull'organizzazione dell'esercito." }
+];
+let tentativi = {};
+
+function tentaProvvedimento(id){
+  tentativi[id] = true;
+  renderGoverno();
+}
+
+function renderGoverno(){
+  const el = document.getElementById('pannello-governo');
+  const numTentati = Object.keys(tentativi).length;
+  el.innerHTML = `
+    <p style="max-width:760px;font-size:14.5px;margin-bottom:16px;">Sei l'Assemblea legislativa, eletta nell'ottobre 1791. Disponi solo degli strumenti che la costituzione ti dà: proponi e fai votare. Prova a far passare tre provvedimenti contro un re che pone il veto.</p>
+    <div class="contatore-tempo">Tempo simulato trascorso: ${numTentati} tentativo/i su una legislatura di due anni (sulla carta)</div>
+    <div class="provvedimenti">
+      ${provvedimenti.map(p=>`
+        <div class="provvedimento-card">
+          <p class="provvedimento-titolo">${p.titolo}</p>
+          <p>${p.testo}</p>
+          <button class="btn-azione" ${tentativi[p.id]?'disabled':''} onclick="tentaProvvedimento(${p.id})">${tentativi[p.id]?'Tentato':'Fai approvare dall\\'assemblea'}</button>
+          <div class="risultato${tentativi[p.id]?' visibile':''}">Il re pone il veto sospensivo. Per entrare in vigore comunque, il provvedimento dovrà attendere che due legislature successive lo riapprovino — circa quattro anni che questa legislatura, da sola, non ha a disposizione.</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="chiusura${numTentati===3?' visibile':''}">
+      Non ce l'hai fatta, e non perché il gioco fosse truccato: perché il congegno non lo prevede. Nemmeno il tempo pieno di una legislatura sarebbe bastato — sulla carta due anni, ma quella eletta nell'ottobre 1791 durò in realtà undici mesi. Questa macchina funziona soltanto se il re collabora, e nel giugno di quello stesso anno il re aveva già tentato di andarsene.
+    </div>
+  `;
+}
+
+renderOsservazione();
+renderGoverno();
+</script>
+
+</body>
+</html>

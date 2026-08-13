@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Codice civile, due colonne — Artefatto 21</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .tab-nav{ display:flex; gap:8px; margin-bottom:24px; }
+  .tab-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--testo); padding:10px 18px; border-radius:6px; cursor:pointer; }
+  .tab-btn.active{ background:var(--marrone); color:#fff; }
+  [hidden]{ display:none !important; }
+
+  .chips-pool{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; min-height:44px; padding:12px; background:var(--grigio-neutro); border-radius:6px; border:1px dashed var(--bordo); max-width:1000px; }
+  .chip{ font-family: Georgia, serif; font-size:13px; text-align:left; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:9px 12px; max-width:340px; cursor:pointer; color:var(--testo); line-height:1.35; }
+  .chip.selezionato{ border-color:var(--marrone-scuro); box-shadow:0 0 0 2px var(--marrone-scuro) inset; background:#fbf8f2; }
+
+  .zone-container{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px; max-width:1000px; }
+  @media (max-width:700px){ .zone-container{ grid-template-columns:1fr; } }
+  .zona{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:14px; min-height:140px; }
+  .zona.zone-armed{ box-shadow:0 0 0 2px var(--marrone-scuro) inset; cursor:pointer; }
+  .zona h3{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:.5px; margin:0 0 10px; display:flex; justify-content:space-between; align-items:center; color:var(--marrone-scuro); }
+  .btn-colloca{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; background:var(--marrone); color:#fff; border:none; border-radius:4px; padding:5px 10px; cursor:pointer; }
+  .btn-colloca:disabled{ background:#c9c2b3; cursor:not-allowed; }
+  .zona-items{ display:flex; flex-wrap:wrap; gap:8px; min-height:20px; }
+
+  table.tre-stati{ border-collapse:collapse; max-width:1100px; margin-bottom:10px; }
+  table.tre-stati th, table.tre-stati td{ border:1px solid var(--bordo); padding:12px 14px; font-size:13.5px; vertical-align:top; text-align:left; }
+  table.tre-stati th{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; text-transform:uppercase; color:var(--marrone-scuro); background:var(--grigio-neutro); }
+  table.tre-stati td.istituto{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:bold; background:var(--grigio-neutro); }
+  td.regresso{ background:#f5e9db; }
+  .tag-regresso{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10px; text-transform:uppercase; color:#a06a3a; display:block; margin-top:6px; font-weight:bold; }
+  .flag-dedotto{ font-size:10.5px; color:#a06a3a; font-style:italic; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 21</p>
+  <h1>Il Codice civile, due colonne</h1>
+  <p class="sottotitolo">§ 4.6 — Il Codice civile</p>
+</div>
+
+<div class="istruzioni">
+  <p>Articoli reali del Codice, uno alla volta. Assegna ciascuno a una colonna: abolisce un privilegio d'antico regime, oppure istituisce una gerarchia nuova.</p>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" id="tab-1" onclick="mostra(1)">Due colonne</button>
+  <button class="tab-btn" id="tab-2" onclick="mostra(2)">Tre stati, tre istituti</button>
+</nav>
+
+<section id="parte-1">
+  <div class="chips-pool" id="pool"></div>
+  <div class="zone-container">
+    <div class="zona" id="zona-abolisce">
+      <h3>Abolisce un privilegio d'antico regime <span id="count-abolisce">(0)</span><button class="btn-colloca" id="btn-abolisce" onclick="colloca('abolisce')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-abolisce"></div>
+    </div>
+    <div class="zona" id="zona-istituisce">
+      <h3>Istituisce una gerarchia nuova <span id="count-istituisce">(0)</span><button class="btn-colloca" id="btn-istituisce" onclick="colloca('istituisce')">Colloca qui</button></h3>
+      <div class="zona-items" id="items-istituisce"></div>
+    </div>
+  </div>
+</section>
+
+<section id="parte-2" hidden>
+  <p style="max-width:800px;font-size:14.5px;margin-bottom:16px;">Su almeno due dei tre istituti, il 1804 sta indietro rispetto alla legislazione rivoluzionaria di dieci anni prima: non è un residuo dimenticato, è un arretramento consapevole.</p>
+  <table class="tre-stati" id="tabella-tre-stati"></table>
+</section>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Gli articoli e i confronti fra Codice 1804 e legislazione rivoluzionaria sono tratti da § 4.6. Le voci «prima del 1789» sono in parte <strong>[dedotto]</strong>: il capitolo non descrive in questo paragrafo la condizione giuridica d'antico regime istituto per istituto; per il divorzio l'assenza prima del 1792 è desumibile dal capitolo stesso («introdotto nel 1792»），per le successioni dai vincoli nobiliari citati in § 4.9, per la capacità della donna sposata è una ricostruzione generale da verificare.
+</footer>
+
+<script>
+const articoli = [
+  { id:'a1', testo:"Uguaglianza di tutti i cittadini davanti alla legge civile.", tipo:'abolisce' },
+  { id:'a2', testo:"La moglie deve obbedienza al marito, il marito protezione alla moglie.", tipo:'istituisce' },
+  { id:'a3', testo:"Libertà di coscienza.", tipo:'abolisce' },
+  { id:'a4', testo:"La donna sposata non può stare in giudizio, accettare un'eredità, comparire in un atto o disporre dei propri beni senza l'autorizzazione del marito.", tipo:'istituisce' },
+  { id:'a5', testo:"Carattere laico dello stato civile.", tipo:'abolisce' },
+  { id:'a6', testo:"Il domicilio della famiglia è quello scelto dal marito.", tipo:'istituisce' },
+  { id:'a7', testo:"La proprietà come diritto pieno, liberata dai vincoli feudali.", tipo:'abolisce' },
+  { id:'a8', testo:"In materia di adulterio la moglie è punibile con la reclusione, il marito solo se mantiene la concubina nella casa coniugale.", tipo:'istituisce' },
+  { id:'a9', testo:"Libertà contrattuale.", tipo:'abolisce' },
+  { id:'a10', testo:"La ricerca della paternità è vietata.", tipo:'istituisce' },
+  { id:'a11', testo:"Abolizione definitiva di ogni privilegio di nascita.", tipo:'abolisce' },
+  { id:'a12', testo:"Nelle successioni, divisione obbligatoria fra i figli.", tipo:'abolisce' },
+  { id:'a13', testo:"Il divorzio, introdotto nel 1792, viene mantenuto ma reso assai più difficile.", tipo:'istituisce' }
+];
+
+let placement = {};
+let selected = null;
+
+function onChipClick(id){
+  if(placement[id]){ placement[id] = null; selected = null; }
+  else { selected = (selected===id) ? null : id; }
+  renderColonne();
+}
+function colloca(zona){
+  if(selected){ placement[selected] = zona; selected = null; renderColonne(); }
+}
+
+function renderColonne(){
+  const pool = document.getElementById('pool');
+  const zA = document.getElementById('items-abolisce');
+  const zI = document.getElementById('items-istituisce');
+  pool.innerHTML=''; zA.innerHTML=''; zI.innerHTML='';
+  let ca=0, ci=0;
+  articoli.forEach(a=>{
+    const chip = document.createElement('button');
+    chip.type='button';
+    chip.className = 'chip' + (selected===a.id?' selezionato':'');
+    chip.textContent = a.testo;
+    chip.onclick = (e)=>{ e.stopPropagation(); onChipClick(a.id); };
+    const loc = placement[a.id];
+    if(!loc){ pool.appendChild(chip); }
+    else if(loc==='abolisce'){ zA.appendChild(chip); ca++; }
+    else { zI.appendChild(chip); ci++; }
+  });
+  document.getElementById('count-abolisce').textContent = `(${ca})`;
+  document.getElementById('count-istituisce').textContent = `(${ci})`;
+  ['abolisce','istituisce'].forEach(z=>{
+    document.getElementById('zona-'+z).classList.toggle('zone-armed', !!selected);
+    document.getElementById('btn-'+z).disabled = !selected;
+  });
+}
+
+const treStati = [
+  { istituto:"Capacità di disporre dei propri beni", regresso:true,
+    prima:"Regime variabile per regione; in generale la donna sposata agiva sotto la potestà del marito.",
+    rivoluzione:"Capacità civile più ampia riconosciuta alle donne.",
+    codice:"Non può stare in giudizio, accettare un'eredità, comparire in un atto o disporre dei propri beni senza l'autorizzazione del marito.",
+    dedottoPrima:true },
+  { istituto:"Divorzio", regresso:true,
+    prima:"Non esisteva: il matrimonio era indissolubile, era possibile solo la separazione.",
+    rivoluzione:"Introdotto nel 1792, ammesso anche per mutuo consenso.",
+    codice:"Mantenuto, ma reso assai più difficile.",
+    dedottoPrima:true },
+  { istituto:"Successioni", regresso:false,
+    prima:"Vincoli che proteggevano il patrimonio nobiliare dalla divisione: maggiorascati e fedecommessi.",
+    rivoluzione:"Figli parificati nelle successioni.",
+    codice:"Divisione obbligatoria fra i figli: conferma e generalizza il principio rivoluzionario, non arretra.",
+    dedottoPrima:false }
+];
+
+function renderTreStati(){
+  const el = document.getElementById('tabella-tre-stati');
+  el.innerHTML = `
+    <tr><th></th><th>Prima del 1789</th><th>Legislazione rivoluzionaria, anni '90</th><th>Codice civile, 1804</th></tr>
+    ${treStati.map(r=>`
+      <tr>
+        <td class="istituto">${r.istituto}</td>
+        <td>${r.prima}${r.dedottoPrima?' <span class="flag-dedotto">[dedotto]</span>':''}</td>
+        <td>${r.rivoluzione}</td>
+        <td class="${r.regresso?'regresso':''}">${r.codice}${r.regresso?'<span class="tag-regresso">Arretramento rispetto agli anni \\'90</span>':''}</td>
+      </tr>
+    `).join('')}
+  `;
+}
+
+function mostra(n){
+  document.getElementById('tab-1').classList.toggle('active', n===1);
+  document.getElementById('tab-2').classList.toggle('active', n===2);
+  document.getElementById('parte-1').hidden = n!==1;
+  document.getElementById('parte-2').hidden = n!==2;
+}
+
+renderColonne();
+renderTreStati();
+</script>
+
+</body>
+</html>

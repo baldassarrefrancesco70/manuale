@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La griglia dei territori — Artefatto 19</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .selettori{ display:flex; flex-wrap:wrap; gap:24px; margin-bottom:26px; }
+  .selettore-gruppo{ display:flex; flex-direction:column; gap:6px; }
+  .selettore-label{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--marrone-scuro); }
+  .selettore-opzioni{ display:flex; flex-wrap:wrap; gap:6px; max-width:560px; }
+  .opz-btn{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:16px; padding:7px 13px; cursor:pointer; color:var(--testo); }
+  .opz-btn.attiva{ background:var(--marrone); color:#fff; border-color:var(--marrone); }
+
+  .intestazione-scelta{ font-size:18px; font-style:italic; margin:8px 0 18px; }
+  .nota-luogo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:var(--marrone-scuro); background:var(--grigio-neutro); padding:10px 14px; border-radius:6px; max-width:760px; margin-bottom:18px; }
+  .nota-anomalia{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; color:#a06a3a; background:#f5e9db; border:1px solid #d9b98a; padding:10px 14px; border-radius:6px; max-width:760px; margin-bottom:18px; }
+
+  .tre-colonne{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; max-width:1300px; margin-bottom:8px; }
+  @media (max-width:800px){ .tre-colonne{ grid-template-columns:1fr; } }
+  .colonna{ background:var(--bg-card); border:1px solid var(--bordo); border-top:4px solid var(--marrone); border-radius:0 0 6px 6px; padding:16px 18px; }
+  .colonna.non-ottiene{ border-top-color:#8a8578; }
+  .colonna h3{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--marrone-scuro); margin:0 0 12px; }
+  .voce{ font-size:13.5px; margin-bottom:12px; padding-bottom:12px; border-bottom:1px dashed var(--bordo); }
+  .voce:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .voce .voce-data{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px; color:#8a8578; display:block; margin-bottom:2px; }
+  .voce .voce-atto{ font-style:italic; font-size:12px; color:#5a5347; }
+  .colonna-vuota{ font-size:12.5px; color:#8a8578; font-style:italic; }
+
+  .chiusura{ max-width:800px; font-size:16px; font-style:italic; border-left:4px solid var(--marrone); background:var(--bg-card); padding:18px 22px; border-radius:0 6px 6px 0; margin-top:24px; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 19</p>
+  <h1>La griglia dei territori</h1>
+  <p class="sottotitolo">§ 4.9 — Che cosa arriva davvero nei territori</p>
+</div>
+
+<div class="istruzioni">
+  <p>Scegli una persona e un luogo. Non c'è un saldo: guadagni e perdite non sono grandezze omogenee, e la stessa persona può guadagnare da una colonna e pagare l'altra.</p>
+</div>
+
+<div class="selettori">
+  <div class="selettore-gruppo">
+    <span class="selettore-label">Persona</span>
+    <div class="selettore-opzioni" id="sel-persone"></div>
+  </div>
+  <div class="selettore-gruppo">
+    <span class="selettore-label">Luogo</span>
+    <div class="selettore-opzioni" id="sel-luoghi"></div>
+  </div>
+</div>
+
+<p class="intestazione-scelta" id="intestazione-scelta"></p>
+<div id="nota-luogo-wrap"></div>
+<div id="nota-anomalia-wrap"></div>
+
+<div class="tre-colonne" id="tre-colonne"></div>
+
+<div class="chiusura">
+  Il bilancio non si somma. Guadagni e perdite non sono grandezze omogenee, e non esistono i favorevoli e i contrari come due gruppi separati: esiste, per moltissimi, un bilancio individuale che non si chiude.
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Le voci sono generate da un insieme di regole tratte da § 4.9, incrociate con i tre statuti di § "L'Impero e l'Europa napoleonica" e con i dettagli di §§ Codice civile, coscrizione, Concordato. Non sono elenchi scritti caso per caso nel capitolo: sono applicazioni sistematiche delle stesse regole generali a ciascuna combinazione, il che è dichiarato in ogni voce dalla colonna «atto».
+  <br><strong>Due correzioni rispetto al capitolato.</strong> Milano era la capitale del Regno d'Italia, quindi <strong>Stato satellite</strong>, non territorio annesso. Varsavia, per la classificazione formale del capitolo, è un <strong>alleato vincolato per trattato</strong> (la Francia "non legiferava"), non uno Stato satellite — anche se un passaggio precedente dello stesso capitolo la chiama informalmente "satellite". Ho corretto entrambe le collocazioni.
+  <br><strong>Un'anomalia storica.</strong> La combinazione «ebreo di una città con ghetto» + Madrid è problematica: dal 1492 non esistevano comunità ebraiche con ghetto in Spagna. L'ho segnalata invece di inventare un dato.
+</footer>
+
+<script>
+const persone = [
+  { id:'avvocato', nome:'Un avvocato', tags:['professionista','uomo','non-nobile','ha-figlio'] },
+  { id:'piccolo-prop', nome:'Un piccolo proprietario terriero', tags:['popolano','proprietario','uomo','non-nobile','ha-figlio'] },
+  { id:'bracciante', nome:'Un bracciante senza terra', tags:['popolano','senza-terra','uomo','non-nobile','coscrivibile-diretto'] },
+  { id:'mercante', nome:'Un mercante che vive di traffici marittimi', tags:['professionista','mercante','uomo','non-nobile','ha-figlio'] },
+  { id:'parroco', nome:'Un parroco', tags:['clero','uomo','non-nobile'] },
+  { id:'nobile', nome:'Un nobile di antica famiglia', tags:['nobile','proprietario','uomo','ha-figlio'] },
+  { id:'donna', nome:'Una donna sposata con beni propri', tags:['donna','sposata','proprietaria'] },
+  { id:'ebreo', nome:'Un ebreo di una città con ghetto', tags:['ebreo','uomo','non-nobile','ha-figlio'] }
+];
+
+const luoghi = [
+  { id:'milano', nome:'Milano', statuto:'satellite', nota:"Capitale del Regno d'Italia, con Napoleone re: le riforme arrivano per decreto del sovrano locale." },
+  { id:'napoli', nome:'Napoli', statuto:'satellite', nota:"Regno di Napoli, affidato a Giuseppe Bonaparte e poi a Murat." },
+  { id:'amburgo', nome:'Amburgo', statuto:'annesso', nota:"Annessa all'Impero nel 1810 (Dipartimento delle Bocche dell'Elba) [dedotto, non nominata esplicitamente nell'elenco del capitolo, ma coerente con l'annessione dell'Olanda e dei territori del Nord nello stesso anno]." },
+  { id:'varsavia', nome:'Varsavia', statuto:'alleato', nota:"Ducato di Varsavia, nato da Tilsit nel 1807: alleato vincolato per trattato. La Francia non vi legiferava.", speciale:"promessa-nazionale" },
+  { id:'monaco', nome:'Monaco di Baviera', statuto:'alleato', nota:"Stato della Confederazione del Reno: alleato vincolato per trattato. La Francia chiedeva contingenti e adesione al blocco, non legiferava." },
+  { id:'madrid', nome:'Madrid', statuto:'satellite', nota:"Spagna, affidata a Giuseppe Bonaparte nel 1808: satellite, ma in guerra aperta dal 2 maggio 1808.", guerra:true }
+];
+
+// Regole: ciascuna restituisce {colonna, testo, data, atto} oppure null se non applicabile
+const regole = [
+  (p,l)=> (l.statuto!=='alleato' && !p.tags.includes('nobile')) ? {colonna:'guadagna', testo:"Uguaglianza davanti alla legge, abolizione dei privilegi di nascita.", data:"variabile, sul modello 1789-1804", atto:"Costituzioni e codici sul modello francese"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('nobile')) ? {colonna:'paga', testo:"Perde i propri privilegi di nascita: l'uguaglianza davanti alla legge non fa eccezioni.", data:"variabile, sul modello 1789-1804", atto:"Costituzioni e codici sul modello francese"} : null,
+
+  (p,l)=> (l.statuto!=='alleato' && (p.tags.includes('popolano'))) ? {colonna:'guadagna', testo:"Fine delle giurisdizioni signorili e delle prestazioni personali.", data:"es. 1806 a Napoli", atto:"Decreto di abolizione della feudalità"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('nobile')) ? {colonna:'paga', testo:"Perde le giurisdizioni signorili e le prestazioni che gli erano dovute.", data:"es. 1806 a Napoli", atto:"Decreto di abolizione della feudalità"} : null,
+
+  (p,l)=> (l.statuto!=='alleato' && !p.tags.includes('nobile') && !p.tags.includes('donna')) ? {colonna:'guadagna', testo:"Proprietà liberata dai vincoli feudali, libertà contrattuale.", data:"marzo 1804", atto:"Codice civile (o codice modellato su di esso)"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('nobile')) ? {colonna:'paga', testo:"La successione obbligatoriamente divisa fra i figli smonta il patrimonio nobiliare; cadono maggiorascati e fedecommessi.", data:"marzo 1804", atto:"Codice civile"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('donna') && p.tags.includes('sposata')) ? {colonna:'paga', testo:"Obbedienza al marito, autorizzazione maritale per stare in giudizio o disporre dei propri beni, divieto di ricerca della paternità.", data:"marzo 1804", atto:"Codice civile, artt. sulla famiglia"} : null,
+
+  (p,l)=> (l.statuto!=='alleato') ? {colonna:'guadagna', testo:"Stato civile laico, sottratto alle parrocchie.", data:"variabile", atto:"Applicazione del Codice civile"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('clero') && l.id!=='amburgo') ? {colonna:'paga', testo:"Il conflitto con la Chiesa tocca le pratiche quotidiane: perdita di funzioni sullo stato civile, riorganizzazione del clero.", data:"1801 in Francia (Concordato), variabile altrove", atto:"Concordato e sue applicazioni locali"} : null,
+
+  (p,l)=> (l.statuto!=='alleato' && (p.tags.includes('professionista') || p.tags.includes('popolano'))) ? {colonna:'guadagna', testo:"Amministrazioni uniformi, catasti, sistema fiscale funzionante, strade.", data:"variabile", atto:"Riforma amministrativa sul modello francese"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('nobile')) ? {colonna:'paga', testo:"Perde l'esclusiva sulle cariche pubbliche: carriere aperte a chi non è nobile.", data:"variabile", atto:"Riforma amministrativa sul modello francese"} : null,
+  (p,l)=> (l.statuto!=='alleato' && (p.tags.includes('professionista') || (p.tags.includes('popolano') && p.id==='avvocato'))) ? {colonna:'guadagna', testo:"Carriere aperte nell'amministrazione e nell'esercito, prima riservate ai nobili.", data:"variabile", atto:"Riforma amministrativa sul modello francese"} : null,
+
+  (p,l)=> (p.tags.includes('ebreo') && l.statuto!=='alleato' && l.id!=='madrid') ? {colonna:'guadagna', testo:"Emancipazione ed eventuale abolizione del ghetto, dove il territorio la applica.", data:"variabile per Stato", atto:"Provvedimenti locali di emancipazione"} : null,
+  (p,l)=> (p.tags.includes('ebreo') && l.statuto!=='alleato' && l.id!=='madrid') ? {colonna:'non-ottiene', testo:"Un'emancipazione piena e uniforme: resta «in diversi Stati», non ovunque e non sempre allo stesso modo.", data:"variabile per Stato", atto:"—"} : null,
+
+  (p,l)=> (l.statuto==='alleato') ? {colonna:'paga', testo:"Contingenti militari richiesti per trattato.", data:"dal 1806-1807", atto:"Trattati di alleanza (Confederazione del Reno, Tilsit)"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('coscrivibile-diretto')) ? {colonna:'paga', testo:"Soggetto diretto alla coscrizione: sorteggio, e se il numero è basso, la partenza o il costo di un sostituto.", data:"dal 1798, legge Jourdan", atto:"Coscrizione, diretta nei territori annessi, per decreto locale negli Stati satelliti"} : null,
+  (p,l)=> (l.statuto!=='alleato' && p.tags.includes('ha-figlio')) ? {colonna:'paga', testo:"La coscrizione del figlio: sorteggio, e se il numero è basso, la partenza o il costo di un sostituto.", data:"dal 1798, legge Jourdan", atto:"Coscrizione, diretta nei territori annessi, per decreto locale negli Stati satelliti"} : null,
+
+  (p,l)=> (p.id==='mercante') ? {colonna:'paga', testo:"Rovinato dal blocco continentale: i porti perdono il commercio con l'Inghilterra.", data:"dal 1806", atto:"Decreto del blocco continentale"} : null,
+  (p,l)=> (p.tags.includes('proprietario') || p.tags.includes('professionista') || p.tags.includes('nobile')) ? {colonna:'paga', testo:"Contribuzioni di guerra e imposte straordinarie.", data:"variabile", atto:"Imposizioni fiscali dell'amministrazione francese o del sovrano locale"} : null,
+  (p,l)=> (p.tags.includes('popolano')) ? {colonna:'paga', testo:"Requisizioni di viveri, bestiame, alloggi per le truppe.", data:"variabile", atto:"Requisizioni militari"} : null,
+
+  (p,l)=> (l.statuto!=='alleato') ? {colonna:'non-ottiene', testo:"L'indipendenza: la politica estera resta subordinata a quella francese.", data:"—", atto:"—"} : null,
+  (p,l)=> {colonna:'non-ottiene', testo:"La sovranità popolare in senso politico: si vota poco, si vota male, e i parlamenti locali, dove esistono, sono consultivi.", data:"—", atto:"—"},
+  (p,l)=> (l.statuto!=='alleato') ? {colonna:'non-ottiene', testo:"La libertà di stampa.", data:"—", atto:"—"} : null,
+  (p,l)=> (p.tags.includes('popolano') && l.id==='napoli') ? {colonna:'non-ottiene', testo:"Una riforma agraria: esce dalla feudalità senza uscire dalla povertà.", data:"—", atto:"—"} : null,
+  (p,l)=> (p.tags.includes('donna')) ? {colonna:'non-ottiene', testo:"L'uguaglianza civile piena: il Codice la realizza per gli uomini adulti, e porta con sé un confine interno preciso.", data:"marzo 1804", atto:"Codice civile"} : null,
+
+  (p,l)=> (l.speciale==='promessa-nazionale') ? {colonna:'non-ottiene', testo:"La resurrezione nazionale promessa: per la Francia il Ducato è uno strumento ai confini orientali, non un progetto da soddisfare.", data:"1807", atto:"Trattato di Tilsit"} : null,
+  (p,l)=> (l.guerra) ? {colonna:'paga', testo:"Il costo di sei anni di guerra e di occupazione: requisizioni intensificate, distruzioni, colonne militari sul territorio.", data:"dal 1808", atto:"Guerra di Spagna"} : null
+];
+
+let personaAttiva = 'avvocato';
+let luogoAttivo = 'milano';
+
+function renderSelettori(){
+  const selP = document.getElementById('sel-persone');
+  selP.innerHTML = persone.map(p=>`<button type="button" class="opz-btn${personaAttiva===p.id?' attiva':''}" data-p="${p.id}">${p.nome}</button>`).join('');
+  selP.querySelectorAll('button').forEach(b=>b.addEventListener('click', ()=>{ personaAttiva=b.dataset.p; render(); }));
+
+  const selL = document.getElementById('sel-luoghi');
+  selL.innerHTML = luoghi.map(l=>`<button type="button" class="opz-btn${luogoAttivo===l.id?' attiva':''}" data-l="${l.id}">${l.nome}</button>`).join('');
+  selL.querySelectorAll('button').forEach(b=>b.addEventListener('click', ()=>{ luogoAttivo=b.dataset.l; render(); }));
+}
+
+function render(){
+  renderSelettori();
+  const p = persone.find(x=>x.id===personaAttiva);
+  const l = luoghi.find(x=>x.id===luogoAttivo);
+  document.getElementById('intestazione-scelta').textContent = `${p.nome} — ${l.nome}`;
+  document.getElementById('nota-luogo-wrap').innerHTML = `<div class="nota-luogo">${l.nota}</div>`;
+
+  const anomalia = (p.id==='ebreo' && l.id==='madrid');
+  document.getElementById('nota-anomalia-wrap').innerHTML = anomalia
+    ? `<div class="nota-anomalia">Combinazione storicamente anomala: dal 1492 non esistevano comunità ebraiche con ghetto in Spagna. La scheda sotto non viene generata per questa coppia.</div>` : '';
+
+  const voci = { guadagna:[], paga:[], 'non-ottiene':[] };
+  if(!anomalia){
+    regole.forEach(r=>{
+      const res = r(p,l);
+      if(res) voci[res.colonna].push(res);
+    });
+  }
+
+  const titoli = { guadagna:'Che cosa guadagna', paga:'Che cosa paga', 'non-ottiene':'Che cosa non ottiene' };
+  const el = document.getElementById('tre-colonne');
+  el.innerHTML = ['guadagna','paga','non-ottiene'].map(col=>`
+    <div class="colonna${col==='non-ottiene'?' non-ottiene':''}">
+      <h3>${titoli[col]}</h3>
+      ${voci[col].length ? voci[col].map(v=>`
+        <div class="voce">
+          ${v.data!=='—'?`<span class="voce-data">${v.data}</span>`:''}
+          ${v.testo}
+          ${v.atto!=='—'?`<div class="voce-atto">${v.atto}</div>`:''}
+        </div>
+      `).join('') : '<p class="colonna-vuota">(nessuna voce per questa combinazione)</p>'}
+    </div>
+  `).join('');
+}
+
+render();
+</script>
+
+</body>
+</html>

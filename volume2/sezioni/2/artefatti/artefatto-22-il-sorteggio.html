@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il sorteggio — Artefatto 22</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:22px; }
+
+  .scheda{ max-width:640px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:26px 28px; margin-bottom:20px; }
+  .profilo-riga{ font-size:14.5px; margin-bottom:8px; }
+  .profilo-riga b{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--marrone-scuro); display:block; margin-bottom:2px; }
+
+  .btn-estrai{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; background:var(--marrone); color:#fff; border:none; padding:12px 22px; border-radius:6px; cursor:pointer; margin-top:10px; }
+
+  .esito-sorteggio{ margin-top:18px; padding-top:18px; border-top:1px dashed var(--bordo); display:none; }
+  .esito-sorteggio.visibile{ display:block; }
+  .numero-estratto{ font-size:15px; margin-bottom:14px; }
+
+  .domanda-box{ background:var(--grigio-neutro); border-radius:6px; padding:16px 18px; margin-top:10px; }
+  .domanda-box p{ margin:0 0 12px; font-size:14.5px; }
+  .confronto-prezzo{ display:flex; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
+  .prezzo-box{ background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:10px 14px; font-size:13px; }
+  .prezzo-box b{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; display:block; font-size:10.5px; text-transform:uppercase; color:var(--marrone-scuro); margin-bottom:3px; }
+
+  .scelta-riga{ display:flex; gap:10px; }
+  .btn-scelta{ flex:1; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:12px; cursor:pointer; color:var(--testo); }
+  .btn-scelta.selezionata{ border-color:var(--marrone-scuro); background:#fbf8f2; box-shadow:0 0 0 1px var(--marrone-scuro) inset; }
+  .btn-scelta:disabled{ opacity:.45; cursor:not-allowed; background:var(--grigio-neutro); }
+  .nota-non-attivabile{ font-size:11px; color:#8a8578; font-style:italic; margin-top:4px; }
+
+  .chiusura{ max-width:700px; font-size:16px; font-style:italic; border-left:4px solid var(--marrone); background:var(--bg-card); padding:18px 22px; border-radius:0 6px 6px 0; margin-top:20px; display:none; }
+  .chiusura.visibile{ display:block; }
+
+  .btn-secondo-giro{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:13px; background:var(--bg-card); border:1px solid var(--marrone); color:var(--marrone-scuro); padding:9px 16px; border-radius:6px; cursor:pointer; margin-top:20px; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 22</p>
+  <h1>Il sorteggio</h1>
+  <p class="sottotitolo">§ 4.10 — La coscrizione</p>
+</div>
+
+<div class="istruzioni">
+  <p>Il profilo non lo scegli tu. Nome, mestiere del padre, reddito familiare annuo — ricevuto, non selezionato. Poi si estrae.</p>
+</div>
+
+<div class="scheda" id="scheda"></div>
+
+<div class="btn-secondo-giro" id="btn-secondo-giro-wrap" style="display:none;">
+  <button class="btn-secondo-giro" onclick="avviaSecondoGiro()">Secondo giro, facoltativo: l'altro lato</button>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Il meccanismo (iscrizione, sorteggio, sostituzione legale a prezzo di mercato) è tratto da § 4.10. Il capitolo dà il prezzo del rimpiazzo solo in forma relativa — «diverse annate di salario di un bracciante nei periodi peggiori» — non in cifre assolute: i redditi e i prezzi qui sono espressi nella stessa unità relativa, non in franchi, per non inventare cifre che il capitolo non fornisce. La variazione del prezzo fra un anno migliore e uno peggiore riproduce quanto il testo dice sull'andamento del prezzo di mercato.
+</footer>
+
+<script>
+const profiliPool = [
+  { nome:'Jean-Baptiste', padre:'avvocato', redditoAnnate:20 },
+  { nome:'Louis', padre:'piccolo proprietario terriero', redditoAnnate:8 },
+  { nome:'Pierre', padre:'bracciante', redditoAnnate:1 },
+  { nome:'Antoine', padre:'mercante', redditoAnnate:15 },
+  { nome:'Jacques', padre:'artigiano', redditoAnnate:3 },
+  { nome:'Étienne', padre:'nobile di provincia', redditoAnnate:30 },
+  { nome:'Michel', padre:'bracciante', redditoAnnate:1 },
+  { nome:'François', padre:'piccolo bottegaio', redditoAnnate:4 }
+];
+
+let profiloCorrente = null;
+let annoCorrente = null;
+let prezzoCorrente = null;
+let numeroEstratto = null;
+let chiamato = null;
+let sceltaFatta = null;
+let modalitaSecondoGiro = false;
+
+function nuovoProfilo(){
+  profiloCorrente = profiloPool_pesca();
+  annoCorrente = 1800 + Math.floor(Math.random()*14);
+  const annoDifficile = (annoCorrente >= 1812) || Math.random() < 0.25;
+  prezzoCorrente = annoDifficile ? (5 + Math.floor(Math.random()*3)) : (3 + Math.floor(Math.random()*2));
+  numeroEstratto = null; chiamato = null; sceltaFatta = null;
+  renderScheda();
+}
+
+function profiloPool_pesca(){
+  const p = profiliPool[Math.floor(Math.random()*profiliPool.length)];
+  return p;
+}
+
+function estrai(){
+  numeroEstratto = 1 + Math.floor(Math.random()*100);
+  chiamato = numeroEstratto <= 55; // numero basso = chiamato
+  sceltaFatta = null;
+  renderScheda();
+}
+
+function scegli(opzione){
+  sceltaFatta = opzione;
+  renderScheda();
+}
+
+function renderScheda(){
+  const p = profiloCorrente;
+  const puoPagare = p.redditoAnnate >= prezzoCorrente;
+  const el = document.getElementById('scheda');
+
+  let html = `
+    <div class="profilo-riga"><b>Nome</b>${p.nome}</div>
+    <div class="profilo-riga"><b>Mestiere del padre</b>${p.padre}</div>
+    <div class="profilo-riga"><b>Reddito familiare annuo</b>${p.redditoAnnate} annate di salario di un bracciante</div>
+    <div class="profilo-riga"><b>Anno della leva</b>${annoCorrente}</div>
+  `;
+
+  if(numeroEstratto===null){
+    html += `<button class="btn-estrai" onclick="estrai()">Estrai il numero</button>`;
+  } else {
+    html += `<div class="esito-sorteggio visibile">
+      <p class="numero-estratto">Numero estratto: <b>${numeroEstratto}</b> su 100.</p>`;
+    if(!chiamato){
+      html += `<p>Numero alto: non sei chiamato. Non c'è altra domanda.</p>`;
+    } else {
+      html += `<div class="domanda-box">
+        <p>Numero basso: sei chiamato. Paga un sostituto al prezzo di mercato di quest'anno, oppure parti.</p>
+        <div class="confronto-prezzo">
+          <div class="prezzo-box"><b>Reddito familiare</b>${p.redditoAnnate} annate</div>
+          <div class="prezzo-box"><b>Prezzo del sostituto, ${annoCorrente}</b>${prezzoCorrente} annate</div>
+        </div>
+        <div class="scelta-riga">
+          <button class="btn-scelta${sceltaFatta==='paga'?' selezionata':''}" ${!puoPagare?'disabled':''} onclick="scegli('paga')">Paga un sostituto</button>
+          <button class="btn-scelta${sceltaFatta==='parte'?' selezionata':''}" onclick="scegli('parte')">Parte</button>
+        </div>
+        ${!puoPagare?'<p class="nota-non-attivabile">La casella «paga» è visibile ma non attivabile: il prezzo supera il reddito familiare di un anno intero.</p>':''}
+      </div>`;
+    }
+    html += `</div>`;
+  }
+
+  el.innerHTML = html;
+
+  const fineRaggiunta = (numeroEstratto!==null) && (!chiamato || sceltaFatta);
+  document.getElementById('btn-secondo-giro-wrap').style.display = (fineRaggiunta && !modalitaSecondoGiro) ? 'block' : 'none';
+
+  if(fineRaggiunta){
+    const chiusura = document.createElement('div');
+    chiusura.className = 'chiusura visibile';
+    chiusura.textContent = "La legge era uguale per tutti, il rischio di morire no, e il privilegio non era più scritto nella legge ma nel prezzo.";
+    el.parentElement.insertBefore(chiusura, document.getElementById('btn-secondo-giro-wrap'));
+  }
+}
+
+function avviaSecondoGiro(){
+  modalitaSecondoGiro = true;
+  const poveri = profiliPool.filter(p=>p.redditoAnnate <= 4);
+  profiloCorrente = poveri[Math.floor(Math.random()*poveri.length)];
+  annoCorrente = 1800 + Math.floor(Math.random()*14);
+  prezzoCorrente = 4 + Math.floor(Math.random()*3);
+  numeroEstratto = null; chiamato = null; sceltaFatta = null;
+
+  const el = document.getElementById('scheda');
+  el.innerHTML = `
+    <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;text-transform:uppercase;color:var(--marrone-scuro);margin-bottom:10px;">Secondo giro — l'altro lato</p>
+    <div class="profilo-riga"><b>Nome</b>${profiloCorrente.nome}</div>
+    <div class="profilo-riga"><b>Mestiere del padre</b>${profiloCorrente.padre}</div>
+    <div class="profilo-riga"><b>Reddito familiare annuo</b>${profiloCorrente.redditoAnnate} annate di salario di un bracciante</div>
+    <div class="domanda-box" style="margin-top:14px;">
+      <p>Qualcun altro, chiamato ed estratto con un numero basso, ti offre denaro perché tu parta al suo posto. La somma servirebbe a sfamare la famiglia.</p>
+      <div class="scelta-riga">
+        <button class="btn-scelta" data-opz="accetta" onclick="sceltaSecondoGiro('accetta')">Accetta di sostituirlo</button>
+        <button class="btn-scelta" data-opz="rifiuta" onclick="sceltaSecondoGiro('rifiuta')">Rifiuta</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('btn-secondo-giro-wrap').style.display = 'none';
+}
+
+function sceltaSecondoGiro(opz){
+  document.querySelectorAll('#scheda .btn-scelta').forEach(b=>{
+    b.classList.toggle('selezionata', b.dataset.opz===opz);
+    b.disabled = true;
+  });
+  const chiusura = document.createElement('div');
+  chiusura.className = 'chiusura visibile';
+  chiusura.textContent = "La legge era uguale per tutti, il rischio di morire no, e il privilegio non era più scritto nella legge ma nel prezzo.";
+  document.getElementById('scheda').appendChild(chiusura);
+}
+
+nuovoProfilo();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tre statuti, una mappa — Artefatto 23</title>
+<style>
+  :root{
+    --beige-focus:#F5F0E8; --grigio-neutro:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940;
+    --testo:#3a332b; --bg-card:#ffffff; --bordo:#d8d2c6;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Georgia, 'Times New Roman', serif; background:var(--beige-focus); color:var(--testo); padding:28px 24px 48px; line-height:1.5; }
+  .masthead{ border-bottom:2px solid var(--marrone); padding-bottom:12px; margin-bottom:20px; max-width:980px; }
+  .eyebrow{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; text-transform:uppercase; letter-spacing:2px; font-size:12px; color:var(--marrone-scuro); margin:0 0 6px; }
+  h1{ font-size:26px; margin:0 0 4px; font-weight:normal; font-style:italic; }
+  .sottotitolo{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:14px; color:var(--marrone-scuro); margin:0; }
+  .istruzioni{ max-width:800px; font-size:15.5px; margin-bottom:8px; }
+  .avviso-schematica{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:var(--marrone-scuro); background:var(--grigio-neutro); display:inline-block; padding:6px 12px; border-radius:6px; margin-bottom:20px; }
+
+  .legenda{ display:flex; flex-wrap:wrap; gap:18px; margin-bottom:20px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12.5px; }
+  .legenda span{ display:flex; align-items:center; gap:7px; }
+  .campione{ width:22px; height:16px; border:1px solid var(--marrone-scuro); border-radius:3px; }
+  .campione.annesso{ background:var(--marrone); }
+  .campione.satellite{ background:repeating-linear-gradient(45deg, var(--marrone), var(--marrone) 4px, #fff 4px, #fff 8px); }
+  .campione.alleato{ background-color:#fbf8f2; background-image:radial-gradient(var(--marrone) 1.5px, transparent 1.5px); background-size:7px 7px; }
+
+  .mappa-grid{ display:grid; grid-template-columns:repeat(6, 110px); grid-template-rows:repeat(6, 60px); gap:6px; max-width:800px; margin-bottom:24px; }
+  .territorio{
+    border:1px solid var(--marrone-scuro); border-radius:5px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px; color:#fff; padding:4px;
+    line-height:1.2;
+  }
+  .territorio.annesso{ background:var(--marrone); }
+  .territorio.satellite{ background:repeating-linear-gradient(45deg, var(--marrone), var(--marrone) 4px, #a08363 4px, #a08363 8px); }
+  .territorio.alleato{ background-color:#c9b89e; background-image:radial-gradient(#6b5940 1.5px, transparent 1.5px); background-size:8px 8px; color:#3a332b; }
+  .territorio.selezionato{ outline:3px solid var(--marrone-scuro); outline-offset:2px; }
+  .territorio:focus-visible{ outline:3px solid #3a332b; outline-offset:2px; }
+
+  .scheda{ max-width:640px; background:var(--bg-card); border:1px solid var(--bordo); border-radius:6px; padding:22px 24px; }
+  .scheda-placeholder{ font-size:14px; color:#8a8578; font-style:italic; }
+  .scheda h2{ font-size:19px; margin:0 0 4px; }
+  .scheda .statuto-sub{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; text-transform:uppercase; color:var(--marrone-scuro); margin:0 0 16px; }
+  .campo{ margin-bottom:12px; font-size:14px; }
+  .campo b{ font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; display:block; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--marrone-scuro); margin-bottom:3px; }
+  .nota-speciale{ font-size:12.5px; font-style:italic; color:#a06a3a; margin-top:12px; border-top:1px dashed var(--bordo); padding-top:10px; }
+
+  footer.nota{ margin-top:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:12px; color:#7a7263; border-top:1px solid var(--bordo); padding-top:12px; max-width:920px; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">Artefatto 23</p>
+  <h1>Tre statuti, una mappa</h1>
+  <p class="sottotitolo">§ 4.8 — L'Impero e l'Europa napoleonica</p>
+</div>
+
+<div class="istruzioni">
+  <p>Seleziona un territorio: chi vi governa, quale legge vi si applica, se vi si applica la coscrizione francese, se è vincolato al blocco continentale. Senza questa mappa, la griglia dell'Artefatto 19 resta astratta.</p>
+</div>
+<div class="avviso-schematica">Disposizione geografica semplificata, non in scala — la funzione di questa mappa è interrogabile, non cartografica: per una resa cartografica precisa vedi la cartina dell'atlante.</div>
+
+<div class="legenda">
+  <span><span class="campione annesso"></span> Territorio annesso</span>
+  <span><span class="campione satellite"></span> Stato satellite</span>
+  <span><span class="campione alleato"></span> Alleato per trattato</span>
+</div>
+
+<div class="mappa-grid" id="mappa"></div>
+
+<div class="scheda" id="scheda">
+  <p class="scheda-placeholder">Seleziona un territorio sulla mappa.</p>
+</div>
+
+<footer class="nota">
+  <strong>Nota metodologica.</strong> Statuti e territori sono tratti da § 4.8. Le quattro voci per territorio (chi governa, quale legge, coscrizione francese, blocco continentale) applicano le regole generali dettate dal capitolo per ciascuno statuto; le note speciali (Olanda, Stato Pontificio, Spagna, Austria e Russia) seguono le precisazioni esplicite del testo.
+</footer>
+
+<script>
+const territori = [
+  { id:'danimarca', nome:'Danimarca', statuto:'alleato', col:4, row:1 },
+  { id:'olanda', nome:'Olanda', statuto:'annesso', col:2, row:2, nota:"Satellite sotto Luigi Bonaparte fino al 1810, poi annessa direttamente all'Impero." },
+  { id:'confed-reno', nome:'Confederazione del Reno', statuto:'alleato', col:3, row:2 },
+  { id:'varsavia', nome:'Ducato di Varsavia', statuto:'alleato', col:5, row:2, nota:"Nato dal trattato di Tilsit (1807): per i patrioti polacchi la promessa di una resurrezione nazionale, per la Francia uno strumento ai confini orientali." },
+  { id:'belgio', nome:'Belgio', statuto:'annesso', col:2, row:3 },
+  { id:'riva-reno', nome:'Riva sinistra del Reno', statuto:'annesso', col:3, row:3 },
+  { id:'vestfalia', nome:'Vestfalia', statuto:'satellite', col:4, row:3, nota:"Affidata a Girolamo Bonaparte." },
+  { id:'piemonte', nome:'Piemonte', statuto:'annesso', col:2, row:4 },
+  { id:'liguria', nome:'Liguria', statuto:'annesso', col:3, row:4 },
+  { id:'regno-italia', nome:"Regno d'Italia", statuto:'satellite', col:4, row:4, nota:"Napoleone stesso è re; capitale Milano." },
+  { id:'illirico', nome:'Province illiriche', statuto:'annesso', col:5, row:4 },
+  { id:'toscana', nome:'Toscana', statuto:'annesso', col:2, row:5 },
+  { id:'pontificio', nome:'Stato Pontificio', statuto:'annesso', col:3, row:5, nota:"Annesso solo dopo il 1809." },
+  { id:'napoli', nome:'Regno di Napoli', statuto:'satellite', col:4, row:5, nota:"Affidato a Giuseppe Bonaparte, poi a Murat." },
+  { id:'spagna', nome:'Spagna', statuto:'satellite', col:2, row:6, nota:"Affidata a Giuseppe Bonaparte nel 1808. Dal 2 maggio 1808, satellite in guerra aperta: la guerriglia impedì mai un controllo stabile del territorio.", guerra:true },
+  { id:'austria-russia', nome:'Austria e Russia', statuto:'alleato', col:5, row:6, nota:"Alleate solo a fasi alterne, non stabilmente: la loro posizione cambia più volte fra il 1805 e il 1812." }
+];
+
+const regolePerStatuto = {
+  annesso: { governa:"Amministrazione francese diretta: prefetti nominati da Parigi.", legge:"Legge francese diretta, Codice civile compreso.", coscrizione:"Sì, diretta.", blocco:"Sì, come parte integrante dell'Impero." },
+  satellite: { governa:"Un sovrano locale, spesso parente o fedelissimo di Napoleone.", legge:"Leggi proprie, decretate dal sovrano locale sul modello francese: applicazione diseguale.", coscrizione:"Non diretta: introdotta per decreto del sovrano locale, con uniformi e retorica patriottica proprie.", blocco:"Sì, vincolante." },
+  alleato: { governa:"Un sovrano proprio, formalmente indipendente.", legge:"Legge propria: la Francia non vi legifera.", coscrizione:"No: si richiedono contingenti militari per trattato, non coscrizione francese.", blocco:"Sì, per adesione richiesta dal trattato di alleanza." }
+};
+
+const nomiStatuto = { annesso:'Territorio annesso', satellite:'Stato satellite', alleato:'Alleato per trattato' };
+
+let selezionato = null;
+
+function renderMappa(){
+  const el = document.getElementById('mappa');
+  el.innerHTML = '';
+  territori.forEach(t=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = `territorio ${t.statuto}${selezionato===t.id?' selezionato':''}`;
+    btn.style.gridColumn = t.col;
+    btn.style.gridRow = t.row;
+    btn.textContent = t.nome;
+    btn.onclick = ()=>{ selezionato = t.id; render(); };
+    el.appendChild(btn);
+  });
+}
+
+function renderScheda(){
+  const el = document.getElementById('scheda');
+  if(!selezionato){ el.innerHTML = '<p class="scheda-placeholder">Seleziona un territorio sulla mappa.</p>'; return; }
+  const t = territori.find(x=>x.id===selezionato);
+  const r = regolePerStatuto[t.statuto];
+  el.innerHTML = `
+    <h2>${t.nome}</h2>
+    <p class="statuto-sub">${nomiStatuto[t.statuto]}</p>
+    <div class="campo"><b>Chi vi governa</b>${r.governa}</div>
+    <div class="campo"><b>Quale legge vi si applica</b>${r.legge}</div>
+    <div class="campo"><b>Coscrizione francese</b>${r.coscrizione}</div>
+    <div class="campo"><b>Blocco continentale</b>${r.blocco}</div>
+    ${t.nota?`<div class="nota-speciale">${t.nota}</div>`:''}
+  `;
+}
+
+function render(){
+  renderMappa();
+  renderScheda();
+}
+
+render();
+</script>
+
+</body>
+</html>
