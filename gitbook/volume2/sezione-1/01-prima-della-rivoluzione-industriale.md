@@ -40,12 +40,12 @@ Risorsa digitale --- La popolazione che cresce
 {% endembed %}
 
 
-{% embed url="https://drive.google.com/file/d/10L07MGym36VNdaXs6E3ZCfAxkH9yX8GH/view" %}
+{% embed url="https://youtu.be/Nbttq5rhOl4" %}
 Video --- La rivoluzione demografica
 {% endembed %}
 
 
-{% embed url="https://drive.google.com/file/d/12fErc1qfjCLLS-2VEbLmPhpGn9ay6ACu/view" %}
+{% embed url="https://youtu.be/4mV_WWeoFcE" %}
 Video --- Morire di meno, non nascere di più
 {% endembed %}
 
@@ -73,7 +73,7 @@ Da questa somma di fattori venne un **balzo produttivo senza precedenti**, che a
 
 La stessa campagna che il capitale stava riorganizzando restava, nel frattempo, il luogo dove si produceva anche ciò che non era cibo, dentro le case, nelle pause del lavoro dei campi.
 
-{% embed url="https://drive.google.com/file/d/1UALQKSu3FYhqTPYN8a1Pwj6Ze0C5NJg1/view" %}
+{% embed url="https://youtu.be/p5pGu9Pt8YM" %}
 Video --- Le enclosures
 {% endembed %}
 
@@ -101,7 +101,7 @@ C'è anche una lettura di più largo respiro. Secondo storici come **Eric Hobsba
 
 Eppure il sistema portava dentro di sé il proprio limite. Alla vigilia della rivoluzione industriale la popolazione cresceva e i mercati si allargavano, e la domanda di merci finì per superare quanto il lavoro a domicilio potesse produrre. Le operazioni manuali erano lente, e i mercanti faticavano a controllare tempi e qualità di una manodopera sparsa per le campagne. Da questa strozzatura, e dalla spinta ad abbassare ancora i costi, nascerà l'idea di riunire macchine più grandi in un solo luogo, mosse da un'unica fonte di energia, l'acqua prima, il vapore poi. È la soglia della fabbrica, e con essa comincia un'altra storia, in cui il tessitore a mano, un tempo la più abile e indipendente delle figure del lavoro, sarà travolto.
 
-{% embed url="https://drive.google.com/file/d/1VjBgaFoVKWclTWSusDpb4TUHY2ZO01n1/view" %}
+{% embed url="https://youtu.be/Vog9V9EmdlU" %}
 Video --- La manifattura prima della fabbrica
 {% endembed %}
 
@@ -125,7 +125,7 @@ Risorsa digitale --- Da dove viene la ricchezza
 {% endembed %}
 
 
-{% embed url="https://drive.google.com/file/d/1Ti8GlXJ0_SV0WxFOHWWya0THFeYfry83/view" %}
+{% embed url="https://youtu.be/QJZjAw117Vw" %}
 Video --- Da dove viene la ricchezza
 {% endembed %}
 
@@ -160,7 +160,7 @@ Il mondo che precede la rivoluzione industriale sembra la parte meno controversa
 
 Dei fatti si è già detto nel capitolo: le recinzioni privatizzarono le terre comuni, le nuove tecniche fecero salire le rese, e nel farlo sradicarono una parte della popolazione rurale. Ma come vada giudicato quell'insieme di fatti è oggetto di un dibattito antico. Per una lunga tradizione di storia economica, le enclosures furono anzitutto una modernizzazione necessaria: aumentarono la produttività, permisero di nutrire una popolazione crescente e crearono l'agricoltura capitalistica, e i costi sociali, per quanto reali, furono il prezzo di un progresso complessivo. Per un'altra tradizione, che ha in Edward Thompson e prima ancora nei coniugi Hammond i suoi rappresentanti più autorevoli, la recinzione fu invece una spoliazione, una «rapina di classe» ai danni dei poveri delle campagne, la distruzione di una economia comunitaria e dei diritti d'uso su cui si reggeva la sopravvivenza di molti.
 
-Le due letture non si escludono così nettamente come sembrano, e la ricerca più recente le ha entrambe complicate. Robert Allen ha mostrato che una parte cospicua dell'aumento di produttività vennе prima delle recinzioni parlamentari e si dovette ai piccoli coltivatori indipendenti, non solo alle grandi tenute recintate, il che scardina l'equazione automatica tra recinzione e progresso agrario; e altri studiosi hanno ridimensionato la portata dello sradicamento, distinguendo tra le molte forme che la recinzione assunse. Vale però la pena chiedersi perché la lettura dell'esproprio abbia una presa così tenace, al di là della sua fondatezza. La ragione è che si salda a un racconto potente, quello marxiano dell'«accumulazione originaria», per cui il capitalismo nasce da una violenza fondativa, la separazione dei produttori dai loro mezzi: le enclosures come peccato d'origine dell'età industriale. È un racconto che dà alla rivoluzione un colpevole e un'origine, e per questo resiste. La ricerca storica non lo ha demolito, ma lo ha reso più complicato: probabilmente le recinzioni furono progresso *e* esproprio insieme, e la vera domanda non è quale delle due cose siano state, ma per chi furono l'uno e per chi l'altro.
+Le due letture non si escludono così nettamente come sembrano, e la ricerca più recente le ha entrambe complicate. Robert Allen ha mostrato che una parte cospicua dell'aumento di produttività venne prima delle recinzioni parlamentari e si dovette ai piccoli coltivatori indipendenti, non solo alle grandi tenute recintate, il che scardina l'equazione automatica tra recinzione e progresso agrario; e altri studiosi hanno ridimensionato la portata dello sradicamento, distinguendo tra le molte forme che la recinzione assunse. Vale però la pena chiedersi perché la lettura dell'esproprio abbia una presa così tenace, al di là della sua fondatezza. La ragione è che si salda a un racconto potente, quello marxiano dell'«accumulazione originaria», per cui il capitalismo nasce da una violenza fondativa, la separazione dei produttori dai loro mezzi: le enclosures come peccato d'origine dell'età industriale. È un racconto che dà alla rivoluzione un colpevole e un'origine, e per questo resiste. La ricerca storica non lo ha demolito, ma lo ha reso più complicato: probabilmente le recinzioni furono progresso *e* esproprio insieme, e la vera domanda non è quale delle due cose siano state, ma per chi furono l'uno e per chi l'altro.
 
 ### Una soglia o un lento scivolamento?
 

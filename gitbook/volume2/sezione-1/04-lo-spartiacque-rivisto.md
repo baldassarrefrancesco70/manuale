@@ -10,6 +10,6 @@ C'è però un lato che i contemporanei non potevano vedere, e che noi vediamo pe
 
 Resta un'ultima domanda, ed è quella che uno studente di oggi ha il diritto di porsi. Se la rivoluzione industriale fu uno spartiacque non necessario, fatto di scelte e non di destino, che cosa dire del nostro presente? Viviamo anche noi una trasformazione che ha l'aria dell'inevitabile, **quella digitale**, e che come allora cambia il modo di lavorare, di comunicare, di desiderare, e come allora si presenta con la retorica della marcia inarrestabile. La storia non predice il futuro, e non offre lezioni pronte. Ma insegna una cosa, e questa sezione ha cercato di mostrarla a ogni pagina: che ciò che appare inevitabile mentre accade è quasi sempre, guardato da vicino, il risultato di scelte umane, che avrebbero potuto essere altre e che possono ancora esserlo. Riconoscerlo per l'Ottocento serve a non subire il nostro tempo come un destino. Lo spartiacque, allora come oggi, non è una linea tracciata dalla natura delle cose: è il punto in cui degli uomini, spesso senza saperlo, **hanno scelto da che parte far scorrere l'acqua**.
 
-{% embed url="https://drive.google.com/file/d/1Pb6lSstX2k7IjDzuHRtyIMlh2otycELj/view" %}
+{% embed url="https://www.youtube.com/watch?v=YkBEb_IrKCo" %}
 Video --- Lo spartiacque, rivisto
 {% endembed %}

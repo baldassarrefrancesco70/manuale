@@ -37,7 +37,7 @@ Il **Giappone**, infine, è il caso più eccezionale, l'unica economia extra-eur
 
 Cinque paesi, cinque strade, e nessuna che ricalchi quella inglese. È la prova, ancor prima di entrare nel merito dei nuovi settori, che il modello britannico non era un destino universale: era una delle forme possibili dell'industrializzazione, la prima, non la necessaria. E che il primato, come si vedrà, era già in movimento.
 
-{% embed url="https://drive.google.com/file/d/1neR86iuxs24QXr9eJ_lV5AoVvk-s7Fqh/view" %}
+{% embed url="https://youtu.be/d7G02tfTvPA" %}
 Video --- Arrivare dopo
 {% endembed %}
 
@@ -57,7 +57,7 @@ La lezione del sorpasso è la più chiara conferma di un filo che percorre l'int
 {% endhint %}
 
 
-{% embed url="https://drive.google.com/file/d/1ZiCGm0l_g-zNEbUpuZ5SAHFJoU0ZbPyc/view" %}
+{% embed url="https://youtu.be/ec6g5RC0pH4" %}
 Video --- Il sorpasso
 {% endembed %}
 
@@ -84,7 +84,7 @@ Risorsa digitale --- Atlante delle invenzioni
 
 Questi settori non crebbero isolati. Richiedevano impianti giganteschi, capitali enormi, competenze che nessun imprenditore solitario poteva più possedere: e nel farlo trasformarono non solo ciò che si produceva, ma il modo stesso di fare impresa. È la trasformazione a cui conviene guardare ora.
 
-{% embed url="https://drive.google.com/file/d/1g2zTsIZgsODHDZ-TcdQeas5gzObLYszv/view" %}
+{% embed url="https://youtu.be/kNTF__6V9XA" %}
 Video --- Scienza e industria
 {% endembed %}
 
@@ -111,7 +111,7 @@ Perché mai i prezzi caddero così a lungo? Per due ragioni che convergevano, e 
 
 Fu di fronte a questa lunga emorragia dei prezzi che il capitalismo occidentale cambiò pelle, e cominciò ad abbandonare i princìpi del liberismo classico che lo avevano guidato per un secolo. Le reazioni furono diverse e convergenti, e da esse nasce buona parte del mondo di fine secolo. Gli Stati tornarono a proteggere i propri mercati con i dazi, rompendo il dogma del libero scambio; le imprese, capendo che la guerra dei prezzi le stava dissanguando tutte, smisero di combattersi e cominciarono ad allearsi e a fondersi, dando origine alle grandi concentrazioni; e insieme al capitale bancario, come si è visto, l'industria strinse quel legame che avrebbe chiamato capitalismo finanziario. Sul piano sociale, la rovina delle campagne spinse milioni di persone a lasciare la terra, alimentando un'emigrazione di massa verso le città e verso le Americhe che alla fine del secolo avrebbe superato il milione di partenze all'anno. E, sullo sfondo, la combinazione tra mercati chiusi dai dazi e capacità produttive enormi spinse le potenze a cercare fuori dall'Europa gli sbocchi che dentro non trovavano più, alimentando la corsa imperialistica. Ciascuna di queste reazioni ha una sua storia. La prima a cui guardare, perché fu la risposta più diretta delle imprese alla caduta dei prezzi, è la fine della libera concorrenza.
 
-{% embed url="https://drive.google.com/file/d/1aLgBVCpzdoPe5dwMIn87Qr3cxJ-4TjAI/view" %}
+{% embed url="" %}
 Video --- Una depressione senza crollo
 {% endembed %}
 
@@ -134,7 +134,7 @@ Ma su chi eseguiva, il prezzo fu pesantissimo. Nasceva la figura dell'**operaio 
 
 Concentrazione del capitale e concentrazione del controllo sul lavoro erano il volto interno del nuovo capitalismo. Ma le stesse forze che lo spingevano a concentrarsi in casa lo spingevano anche a guardare fuori: i mercati chiusi dai dazi e la capacità produttiva ormai enorme cercavano sbocchi oltre i confini nazionali. È da qui, dalla protezione dei mercati e dalla ricerca di spazi nuovi, che prende le mosse l'ultimo passaggio.
 
-{% embed url="https://drive.google.com/file/d/1BVRUKOktyscbuiBAD5PaU_6Lqx1Pt2pj/view" %}
+{% embed url="https://youtu.be/uilqt_JKaHc" %}
 Video --- La metamorfosi del capitalismo
 {% endembed %}
 
@@ -195,7 +195,7 @@ La lettura liberale nega che esista una simile legge. Le crisi, in questa prospe
 
 Il dibattito è antico e non si è mai chiuso, e vale la pena riconoscere che pesa, su entrambe le posizioni, qualcosa che va oltre le prove. La lettura strutturale ha una presa fortissima perché sembra confermata dai fatti successivi, il 1929, le crisi ricorrenti del Novecento e del nostro secolo, che danno l'impressione di un sistema periodicamente in panne; e perché offre una spiegazione potente, che collega la crisi al cuore del meccanismo invece che al caso. Ma proprio la sua forza è il suo rischio: una teoria che prevede crisi ricorrenti trova sempre conferme, perché le crisi, prima o poi, arrivano, e questo la rende difficile da falsificare. La lettura congiunturale, all'opposto, ha il pregio della prudenza empirica, guarda ogni crisi nella sua specificità invece di ricondurla a una legge unica; ma rischia di non vedere ciò che le crisi hanno in comune, e di ridurre a serie di incidenti ciò che forse ha una radice. Non è un caso, va detto con franchezza, che la posizione di ciascun interprete su questo punto tenda a coincidere con la sua collocazione politica: raramente una questione storiografica è stata così intrecciata alle convinzioni di chi la discute. Ed è proprio per questo che vale la pena studiarla, perché insegna a distinguere ciò che le prove mostrano da ciò che noi vorremmo che mostrassero.
 
-{% embed url="https://drive.google.com/file/d/1m88pEZG3UXUZdWOT-pzTuroBfVcQRrAX/view" %}
+{% embed url="" %}
 Video --- La storia è discussa: i consumi e le crisi
 {% endembed %}
 

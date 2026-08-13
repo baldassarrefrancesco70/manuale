@@ -8,6 +8,6 @@ Ed è qui che si annida il rischio. Riconoscere a un evento una portata epocale 
 
 Le pagine che seguono raccontano perciò una rottura senza cedere alla tentazione di leggerla a ritroso. Prima il mondo che non sapeva di essere sul punto di finire, poi la rottura, nel paese e nel settore in cui prese forma, infine la sua seconda ondata, quando la scienza si legò sistematicamente alla produzione e nuove potenze soppiantarono la prima. Non la strada obbligata verso il presente, ma **la trama contingente di come il presente è diventato possibile**.
 
-{% embed url="https://drive.google.com/file/d/1jheMfskcWfBn5rGWkNsPCXueseCNCkDi/view" %}
+{% embed url="" %}
 Video --- Lo spartiacque
 {% endembed %}
