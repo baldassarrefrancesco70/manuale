@@ -1,10 +1,44 @@
 # Riepilogo materiali caricati — manuale/volume2/sezioni/2
 
-_Aggiornato automaticamente — 24 artefatti_
+_Aggiornato automaticamente — 29 immagini, 24 artefatti_
 
 Sito pubblicato (GitHub Pages): https://baldassarrefrancesco70.github.io/manuale/
 
-La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale nel tuo sito personale (pagine HTML con link diretto o `<iframe>`).
+La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale nel tuo sito personale (immagini con `<img src=...>`, pagine HTML con link diretto o `<iframe>`).
+
+## Immagini (`img/`)
+
+| File | Link esteso (sito pubblicato) | Pagina GitHub |
+|---|---|---|
+| info 7_Le_quattro_assemblee_rivoluzionarie.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info%207_Le_quattro_assemblee_rivoluzionarie.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info%207_Le_quattro_assemblee_rivoluzionarie.png) |
+| info10_Crollo_monarchia_francese_1791-1792.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info10_Crollo_monarchia_francese_1791-1792.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info10_Crollo_monarchia_francese_1791-1792.png) |
+| info11_Potere_Rivoluzionario__1791_vs_1792.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info11_Potere_Rivoluzionario__1791_vs_1792.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info11_Potere_Rivoluzionario__1791_vs_1792.png) |
+| info12_Geografia_della_Convenzione_del_1792.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info12_Geografia_della_Convenzione_del_1792.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info12_Geografia_della_Convenzione_del_1792.png) |
+| info13_Le_vittime_del_Terrore_francese.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info13_Le_vittime_del_Terrore_francese.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info13_Le_vittime_del_Terrore_francese.png) |
+| info14_Analisi_delle_vittime_del_Terrore.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info14_Analisi_delle_vittime_del_Terrore.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info14_Analisi_delle_vittime_del_Terrore.png) |
+| info15_Calendario_Repubblicano_della_Ragione.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info15_Calendario_Repubblicano_della_Ragione.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info15_Calendario_Repubblicano_della_Ragione.png) |
+| info16_Macchina_del_Governo_Rivoluzionario_(1793-1794).png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info16_Macchina_del_Governo_Rivoluzionario_%281793-1794%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info16_Macchina_del_Governo_Rivoluzionario_%281793-1794%29.png) |
+| info17_Direttorio_Francese.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info17_Direttorio_Francese.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info17_Direttorio_Francese.png) |
+| info18_Effetti_della_dominazione_napoleonica.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info18_Effetti_della_dominazione_napoleonica.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info18_Effetti_della_dominazione_napoleonica.png) |
+| info19_Coscrizione_e_rimpiazzo_militare.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info19_Coscrizione_e_rimpiazzo_militare.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info19_Coscrizione_e_rimpiazzo_militare.png) |
+| info1_Gerarchia_sociale_dell_Antico_Regime.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info1_Gerarchia_sociale_dell_Antico_Regime.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info1_Gerarchia_sociale_dell_Antico_Regime.png) |
+| info20_Condizione_giuridica_femminile_1789-1804.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info20_Condizione_giuridica_femminile_1789-1804.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info20_Condizione_giuridica_femminile_1789-1804.png) |
+| info21_Statuti_dell_Europa_napoleonica.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info21_Statuti_dell_Europa_napoleonica.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info21_Statuti_dell_Europa_napoleonica.png) |
+| info22_Due_letture_su_Napoleone.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info22_Due_letture_su_Napoleone.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info22_Due_letture_su_Napoleone.png) |
+| info2_Sistema_fiscale_sui_contadini_francesi.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info2_Sistema_fiscale_sui_contadini_francesi.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info2_Sistema_fiscale_sui_contadini_francesi.png) |
+| info3_La_guerra_limitata_nel_Settecento.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info3_La_guerra_limitata_nel_Settecento.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info3_La_guerra_limitata_nel_Settecento.png) |
+| info4_Meccanismo_della_Rivoluzione_Francese.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info4_Meccanismo_della_Rivoluzione_Francese.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info4_Meccanismo_della_Rivoluzione_Francese.png) |
+| info5_La_Catena_del_Pane_(1788-1789).png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info5_La_Catena_del_Pane_%281788-1789%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info5_La_Catena_del_Pane_%281788-1789%29.png) |
+| info6_Francia_1788__Crisi_del_Debito.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info6_Francia_1788__Crisi_del_Debito.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info6_Francia_1788__Crisi_del_Debito.png) |
+| info7_La_Fine_del_Feudalesimo.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info7_La_Fine_del_Feudalesimo.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info7_La_Fine_del_Feudalesimo.png) |
+| info8_Il_Ciclo_dell_Assegnato.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info8_Il_Ciclo_dell_Assegnato.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info8_Il_Ciclo_dell_Assegnato.png) |
+| info9_Democrazia_a_Imbuto_(1789-1791).png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info9_Democrazia_a_Imbuto_%281789-1791%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info9_Democrazia_a_Imbuto_%281789-1791%29.png) |
+| cartine/europa-napoleonica-1812.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/europa-napoleonica-1812.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/europa-napoleonica-1812.png) |
+| cartine/europa-potenze-1740.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/europa-potenze-1740.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/europa-potenze-1740.png) |
+| cartine/francia-1793.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/francia-1793.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/francia-1793.png) |
+| cartine/francia-antico-regime.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/francia-antico-regime.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/francia-antico-regime.png) |
+| cartine/grande-paura-1789.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/grande-paura-1789.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/grande-paura-1789.png) |
+| cartine/spartizioni-polonia.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/spartizioni-polonia.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/spartizioni-polonia.png) |
 
 ## Artefatti (`artefatti/`)
 

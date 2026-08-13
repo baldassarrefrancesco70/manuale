@@ -19,4 +19,4 @@ Vedi `sezioni/1/README.md` per l'elenco di tutte le immagini e gli artefatti gi�
 
 ## Sezione 2 — Come nasce la politica del mondo moderno
 
-Vedi `sezioni/2/README.md` per l'elenco dei 24 artefatti già pubblicati. Le 22 immagini/cartine e le infografiche non sono ancora state caricate (in attesa di verifica umana sulla numerazione delle infografiche, vedi `strumenti/sezioni/volume2_sezione2_politica.py`). I video restano su YouTube (link in `tabella-conversione-video-volume2.csv`, non replicati qui).
+Vedi `sezioni/2/README.md` per l'elenco dei 24 artefatti e delle 29 immagini (6 cartine + 23 infografiche) già pubblicati. Le infografiche sono caricate come file grezzi ma non ancora wired nella configurazione della sezione (`strumenti/sezioni/volume2_sezione2_politica.py`): 24 marcatori nel `.md` contro 23 file, richiede verifica umana prima di popolare `INFOGRAFICA_FILES`. I video restano su YouTube (link in `tabella-conversione-video-volume2.csv`, non replicati qui).
