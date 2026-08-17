@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il tavolo di Francoforte</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --contra:#B06A4A; --coer:#4A7A5C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:920px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:700px;}
+
+  .progress-wrap{background:var(--brown-dark);padding:.65rem 2rem;display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:#EFE4D4;}
+  .progress-track{flex:1;height:5px;background:rgba(0,0,0,.2);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:#D9C6A5;width:0%;transition:width .4s ease;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .decisions-log{margin-bottom:1.4rem;}
+  .log-item{display:flex;gap:.6rem;align-items:flex-start;background:var(--paper);border-left:3px solid var(--brown);border-radius:4px;padding:.5rem .7rem;margin-bottom:.4rem;font-size:.78rem;line-height:1.5;}
+  .log-item.contra{border-left-color:var(--contra);background:#FBF0EC;}
+  .log-q{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;color:var(--brown-dark);font-weight:600;min-width:140px;}
+
+  .question-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1.3rem 1.5rem;}
+  .q-num{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.5rem;}
+  .q-text{font-size:1rem;line-height:1.5;margin-bottom:1.1rem;}
+  .q-opts{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem;}
+  .q-opt{text-align:left;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.7rem .9rem;font-family:Georgia,serif;font-size:.88rem;cursor:pointer;}
+  .q-opt:hover{border-color:var(--brown);}
+  .q-opt.chosen{border-color:var(--brown);background:#FBF0DD;}
+  .q-opt[disabled]{cursor:default;}
+
+  .consequence{display:none;padding:.9rem 1rem;border-radius:5px;font-size:.86rem;line-height:1.6;margin-bottom:1rem;}
+  .consequence.show{display:block;}
+  .consequence.contra{background:#FBF0EC;border-left:3px solid var(--contra);}
+  .consequence.coer{background:#EAF2EA;border-left:3px solid var(--coer);}
+  .flag{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:#fff;padding:2px 8px;border-radius:3px;margin-bottom:.5rem;}
+  .flag.contra{background:var(--contra);}
+  .flag.coer{background:var(--coer);}
+
+  .next-btn{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;background:var(--brown);color:var(--paper);border:none;border-radius:4px;padding:.6rem 1.2rem;cursor:pointer;}
+  .next-btn:hover{background:var(--brown-dark);}
+
+  .final{display:none;}
+  .final.show{display:block;}
+  .final-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.4rem 1.6rem;}
+  .final-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.9rem;}
+  .final-text{font-size:.9rem;line-height:1.65;margin-bottom:.9rem;}
+  .contra-count{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.85rem;color:var(--contra);font-weight:600;margin-bottom:1rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">La costruzione degli Stati nazionali · Artefatto 14</div>
+    <div class="header-title">Il tavolo di Francoforte</div>
+    <div class="header-sub">Sei domande, nell'ordine in cui l'assemblea del 1848 le affrontò davvero. Ogni tua decisione vincola le successive: quando una nuova scelta contraddice un criterio già adottato, l'oggetto te lo mostra.</div>
+  </div>
+
+  <div class="progress-wrap">
+    <span>Decisioni prese</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span id="progressCount">0 / 6</span>
+  </div>
+
+  <div class="main">
+    <div class="decisions-log" id="decisionsLog"></div>
+    <div id="questionWrap"></div>
+
+    <div class="final" id="final">
+      <div class="final-card">
+        <div class="final-title">Il confronto con l'assemblea reale</div>
+        <div class="contra-count" id="contraCount"></div>
+        <div class="final-text">
+          L'assemblea reale scelse la posizione piccolo-tedesca — non perché avesse argomenti migliori sul terreno dei criteri di appartenenza, ma perché era l'unica che indicasse uno Stato realmente costruibile. Invitò comunque i cechi di Boemia, che rifiutarono per bocca di František Palacký. Offrì la corona a Federico Guglielmo IV di Prussia, che la rifiutò: una corona offerta da un'assemblea nata da un'insurrezione avrebbe fondato il suo potere sulla sovranità della nazione, non sul diritto dinastico — il principio che il sistema del 1815 esisteva per negare.
+        </div>
+        <div class="final-text" style="font-style:italic;">L'assemblea reale si arenò esattamente nei punti in cui ti sei arenato tu: non esiste un percorso attraverso queste sei domande che non produca almeno una contraddizione con un criterio già adottato.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    key:'austria', text:'Includere l\'Austria — e l\'intera Confederazione germanica che presiede — nella Germania unita?',
+    opts:[
+      {label:'Sì: tutta la Confederazione, Austria compresa (posizione grande-tedesca)', val:'si'},
+      {label:'No: uno Stato più compatto, costruito attorno alla Prussia (posizione piccolo-tedesca)', val:'no'}
+    ],
+    consequence:(ans, log)=>{
+      if(ans==='si') return {type:'coer', text:'È la posizione coerente con il criterio linguistico: non lasci fuori i tedeschi d\'Austria. Ma porti con te un problema che le prossime domande renderanno esplicito.'};
+      return {type:'coer', text:'Rinunci volontariamente a una parte della nazione di lingua tedesca. È una scelta di praticabilità politica, non di coerenza linguistica — tienila a mente.'};
+    }
+  },
+  {
+    key:'popolazioni', text:'Che fare delle popolazioni non tedesche dell\'Impero d\'Austria — cechi, ungheresi, croati, italiani?',
+    opts:[
+      {label:'Includerle come cittadine della nuova Germania', val:'includi'},
+      {label:'Escluderle, smembrando l\'Impero asburgico per tenere solo le parti tedesche', val:'smembra'}
+    ],
+    consequence:(ans, log)=>{
+      const austriaSi = log.austria === 'si';
+      if(austriaSi && ans==='includi') return {type:'contra', text:'Hai appena rinunciato al criterio linguistico che usavi per giustificare l\'inclusione dell\'Austria: milioni di cechi, ungheresi, croati e italiani entrano in una "Germania" che la lingua non definisce più.'};
+      if(austriaSi && ans==='smembra') return {type:'contra', text:'Per tenere l\'Austria tedesca dovresti smembrare l\'Impero — cioè distruggere l\'assetto che l\'intera Europa considera necessario all\'equilibrio continentale. Nessuna potenza lo accetterebbe: è la stessa ragione per cui la posizione grande-tedesca "poteva funzionare soltanto smembrando l\'Impero".'};
+      return {type:'coer', text:'Avendo escluso l\'Austria, quelle popolazioni restano fuori insieme ai tedeschi d\'Austria stessi. Nota però che l\'esclusione non è mai stata decisa in base alla lingua: è stata decisa per praticabilità.'};
+    }
+  },
+  {
+    key:'boemia', text:'Invitare i cechi di Boemia a partecipare ai lavori dell\'assemblea di Francoforte?',
+    opts:[
+      {label:'Sì, la Boemia apparteneva alla vecchia Confederazione', val:'si'},
+      {label:'No, non sono di lingua tedesca', val:'no'}
+    ],
+    consequence:(ans, log)=>{
+      const austriaSi = log.austria === 'si';
+      if(!austriaSi && ans==='si') return {type:'contra', text:'Hai appena invitato una popolazione non di lingua tedesca in nome della vecchia appartenenza alla Confederazione — lo stesso argomento, esattamente, con cui avresti potuto giustificare l\'inclusione dell\'Austria, che invece a suo tempo hai escluso.'};
+      if(!austriaSi && ans==='no') return {type:'coer', text:'Coerente con il criterio linguistico che avevi scelto escludendo l\'Austria. Ma la minoranza tedesca di Boemia resta fuori insieme alla maggioranza ceca: nessun confine può separare l\'una dall\'altra senza inglobare l\'altra.'};
+      if(austriaSi && ans==='si') return {type:'coer', text:'Coerente con l\'impianto multinazionale che avevi già accettato includendo l\'Austria.'};
+      return {type:'contra', text:'Hai incluso l\'Austria — un impero multinazionale — ma escludi i cechi di Boemia, che di quell\'impero fanno parte. Non puoi avere l\'una cosa senza l\'altra.'};
+    }
+  },
+  {
+    key:'schleswig', text:'Che fare dello Schleswig, ducato con popolazione mista tedesca e danese, conteso con la Danimarca?',
+    opts:[
+      {label:'Includerlo nella Germania, per la sua componente tedesca', val:'includi'},
+      {label:'Lasciarlo alla Danimarca', val:'lascia'}
+    ],
+    consequence:(ans, log)=>{
+      if(ans==='includi') return {type:'contra', text:'Se lo includi per la componente tedesca presente, apri lo stesso precedente della Boemia: una popolazione mista non si lascia dividere pulitamente da nessun confine, qualunque cosa tu abbia deciso lì.'};
+      return {type:'contra', text:'Rinunci a un\'altra porzione di popolazione tedesca. È la stessa rinuncia, in scala minore, che hai fatto o non fatto per l\'Austria — e il criterio con cui la giustifichi qui dovrebbe valere anche là.'};
+    }
+  },
+  {
+    key:'polonia', text:'Le province polacche della Prussia entrano nella nuova Germania?',
+    opts:[
+      {label:'Sì, perché sono prussiane', val:'si'},
+      {label:'No, la popolazione è polacca', val:'no'}
+    ],
+    consequence:(ans, log)=>{
+      if(ans==='si') return {type:'contra', text:'Hai incluso territorio non tedesco in nome dell\'appartenenza statale — sono della Prussia — non della lingua. È lo stesso argomento "storico-istituzionale" che useresti per includere l\'Austria nella Confederazione.'};
+      return {type:'contra', text:'Ma la Prussia è la base stessa del tuo Stato piccolo-tedesco: pretendere che ceda le proprie province orientali è politicamente irrealizzabile quanto smembrare l\'Austria per tenerne solo le parti tedesche.'};
+    }
+  },
+  {
+    key:'corona', text:'A chi offrire la corona imperiale tedesca?',
+    opts:[
+      {label:'Al re di Prussia, Federico Guglielmo IV', val:'prussia'},
+      {label:'A nessun monarca: una repubblica fondata sulla sovranità dell\'assemblea', val:'repubblica'}
+    ],
+    consequence:(ans, log)=>{
+      if(ans==='prussia') return {type:'contra', text:'Un\'assemblea nata dalla sovranità popolare che offre una corona a un sovrano dinastico gli chiede di accettare un potere fondato sulla nazione, non sul diritto divino — esattamente ciò che, nella logica legittimista, priverebbe quella corona di ogni valore.'};
+      return {type:'contra', text:'Coerente con la sovranità popolare su cui l\'assemblea si fonda. Ma nessuno dei sovrani tedeschi esistenti accetterebbe di sciogliersi in una repubblica, e l\'assemblea non dispone di alcuna forza per imporglielo.'};
+    }
+  }
+];
+
+let current = 0;
+const log = {};
+let contraCount = 0;
+
+function renderLog(){
+  const el = document.getElementById('decisionsLog');
+  el.innerHTML = '';
+  Object.keys(log).forEach(k=>{
+    const q = questions.find(qq=>qq.key===k);
+    const opt = q.opts.find(o=>o.val===log[k]);
+    const item = document.createElement('div');
+    item.className = 'log-item' + (log[k+'_type']==='contra' ? ' contra' : '');
+    item.innerHTML = `<span class="log-q">${q.text.split('?')[0]}</span><span>${opt.label}</span>`;
+    el.appendChild(item);
+  });
+}
+
+function renderQuestion(){
+  const wrap = document.getElementById('questionWrap');
+  if(current >= questions.length){
+    wrap.innerHTML = '';
+    document.getElementById('final').classList.add('show');
+    document.getElementById('contraCount').textContent = `Le tue sei decisioni hanno prodotto ${contraCount} contraddizioni su 6 passaggi.`;
+    return;
+  }
+  const q = questions[current];
+  const optsHtml = q.opts.map((o,i)=>`<button class="q-opt" onclick="answer(${i})">${o.label}</button>`).join('');
+  wrap.innerHTML = `
+    <div class="question-card">
+      <div class="q-num">Domanda ${current+1} di 6</div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-opts" id="qopts">${optsHtml}</div>
+      <div class="consequence" id="consequence"></div>
+      <button class="next-btn" id="nextBtn" style="display:none;" onclick="nextQuestion()">Prossima domanda →</button>
+    </div>
+  `;
+}
+
+function answer(i){
+  const q = questions[current];
+  const val = q.opts[i].val;
+  document.querySelectorAll('#qopts .q-opt').forEach((b,idx)=>{
+    b.disabled = true;
+    if(idx===i) b.classList.add('chosen');
+  });
+
+  const result = q.consequence(val, log);
+  log[q.key] = val;
+  log[q.key+'_type'] = result.type;
+  if(result.type==='contra') contraCount++;
+
+  const cons = document.getElementById('consequence');
+  cons.classList.add('show', result.type);
+  cons.innerHTML = `<span class="flag ${result.type}">${result.type==='contra' ? 'Contraddizione' : 'Coerente, per ora'}</span><div>${result.text}</div>`;
+
+  document.getElementById('nextBtn').style.display = 'inline-block';
+
+  document.getElementById('progressFill').style.width = ((current+1)/questions.length*100)+'%';
+  document.getElementById('progressCount').textContent = (current+1)+' / '+questions.length;
+}
+
+function nextQuestion(){
+  renderLog();
+  current++;
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>

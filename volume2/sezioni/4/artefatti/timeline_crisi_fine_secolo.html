@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La crisi di fine secolo — Timeline interattiva</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #FAF7F2;
+    color: #2C2C2A;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #2C2C2A;
+    padding: 1.4rem 2.5rem;
+    border-bottom: 4px solid #8B7355;
+  }
+  .header-title {
+    font-size: 1.15rem;
+    font-weight: normal;
+    color: #F0EBE0;
+    line-height: 1.4;
+  }
+  .header-title em { color: #C2A882; font-style: italic; }
+  .header-sub {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.78rem;
+    color: #888070;
+    margin-top: 0.35rem;
+  }
+
+  /* ── LEGEND ── */
+  .legend-bar {
+    background: #FFFDF8;
+    border-bottom: 1px solid #D4C9B8;
+    padding: 0.65rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .legend-label {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888070;
+    margin-right: 0.25rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    color: #5C4A2A;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-eco  { background: #5B7FA6; }
+  .dot-soc  { background: #4A6741; }
+  .dot-pol  { background: #7A2E1A; }
+
+  /* ── TIMELINE SCROLL AREA ── */
+  .tl-outer {
+    overflow-x: auto;
+    padding: 2.5rem 2.5rem 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tl-inner {
+    position: relative;
+    min-width: 860px;
+    height: 220px;
+    margin-bottom: 0;
+  }
+
+  /* horizontal line */
+  .tl-line {
+    position: absolute;
+    top: 90px;
+    left: 40px;
+    right: 40px;
+    height: 3px;
+    background: linear-gradient(to right, #C8BBA8, #8B7355, #C8BBA8);
+    border-radius: 2px;
+  }
+
+  /* year labels on the line */
+  .tl-year {
+    position: absolute;
+    top: 100px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    color: #B0A090;
+    transform: translateX(-50%);
+  }
+
+  /* event node */
+  .ev-node {
+    position: absolute;
+    top: 90px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .ev-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 3px solid #FAF7F2;
+    box-shadow: 0 0 0 2px currentColor;
+    transition: transform 0.18s, box-shadow 0.18s;
+    margin: 0 auto;
+  }
+
+  .ev-node:hover .ev-dot,
+  .ev-node.active .ev-dot {
+    transform: scale(1.35);
+    box-shadow: 0 0 0 3px currentColor, 0 2px 8px rgba(0,0,0,0.18);
+  }
+
+  .ev-label {
+    position: absolute;
+    width: 100px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10.5px;
+    line-height: 1.35;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #5C4A2A;
+  }
+
+  /* labels alternate above/below */
+  .ev-node.above .ev-label { bottom: 28px; }
+  .ev-node.below .ev-label { top: 28px; }
+
+  .ev-date {
+    font-weight: 600;
+    color: #2C2C2A;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* connector tick */
+  .ev-tick {
+    position: absolute;
+    left: 50%;
+    width: 1.5px;
+    background: #C8BBA8;
+    transform: translateX(-50%);
+  }
+  .ev-node.above .ev-tick { bottom: 11px; height: 16px; }
+  .ev-node.below .ev-tick { top: 11px; height: 16px; }
+
+  /* ── INFO PANEL ── */
+  .info-wrap {
+    margin: 0 2.5rem 1.5rem;
+    min-height: 180px;
+  }
+
+  .info-panel {
+    display: none;
+    background: #FFFDF8;
+    border-radius: 6px;
+    border: 1.5px solid #C8BBA8;
+    overflow: hidden;
+    animation: fadeUp 0.22s ease;
+  }
+  .info-panel.show { display: flex; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .info-stripe {
+    width: 6px;
+    flex-shrink: 0;
+  }
+
+  .info-body {
+    padding: 1.1rem 1.4rem;
+    flex: 1;
+  }
+
+  .info-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.55rem;
+    flex-wrap: wrap;
+  }
+
+  .info-date {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #2C2C2A;
+  }
+
+  .info-type-badge {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    color: #fff;
+  }
+
+  .info-title {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #2C2C2A;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+  }
+
+  .info-text {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.84rem;
+    color: #2C2C2A;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .info-nav {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid #E8E0D2;
+    margin-top: 0.5rem;
+  }
+
+  .conn-block {
+    flex: 1;
+    padding: 0.55rem 0.85rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.79rem;
+    line-height: 1.5;
+    color: #5C4A2A;
+    border-left: 1px solid #E8E0D2;
+  }
+  .conn-block:first-child { border-left: none; }
+  .conn-block strong {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #888070;
+    margin-bottom: 3px;
+  }
+
+  .info-prompt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.85rem;
+    color: #B0A090;
+    font-style: italic;
+  }
+
+  /* color classes */
+  .c-eco { color: #5B7FA6; }
+  .c-soc { color: #4A6741; }
+  .c-pol { color: #7A2E1A; }
+  .bg-eco { background: #5B7FA6; }
+  .bg-soc { background: #4A6741; }
+  .bg-pol { background: #7A2E1A; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title"><em>La crisi di fine secolo</em> — Timeline interattiva (1893–1900)</div>
+  <div class="header-sub">Clicca su un evento per leggere la descrizione e le connessioni con gli eventi precedente e successivo</div>
+</div>
+
+<div class="legend-bar">
+  <span class="legend-label">Tipo di evento</span>
+  <div class="legend-item"><div class="legend-dot dot-eco"></div>Economico-finanziario</div>
+  <div class="legend-item"><div class="legend-dot dot-soc"></div>Sociale</div>
+  <div class="legend-item"><div class="legend-dot dot-pol"></div>Politico-istituzionale</div>
+</div>
+
+<div class="tl-outer">
+  <div class="tl-inner" id="tlInner">
+    <div class="tl-line"></div>
+    <!-- year ticks injected by JS -->
+  </div>
+</div>
+
+<div class="info-wrap">
+  <div class="info-prompt" id="infoPrompt">Seleziona un evento sulla timeline</div>
+  <div class="info-panel" id="infoPanel">
+    <div class="info-stripe" id="infoStripe"></div>
+    <div class="info-body">
+      <div class="info-meta">
+        <span class="info-date" id="infoDate"></span>
+        <span class="info-type-badge" id="infoBadge"></span>
+      </div>
+      <div class="info-title" id="infoTitle"></div>
+      <div class="info-text"  id="infoText"></div>
+      <div class="info-nav" id="infoNav"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const EVENTS = [
+  {
+    id: 0,
+    year: 1893,
+    month: null,
+    dateLabel: '1893',
+    type: 'eco',
+    typeLabel: 'Economico-finanziario',
+    title: 'Scandalo della Banca Romana e dimissioni di Giolitti',
+    text: 'La Banca Romana, incaricata di emettere moneta per lo Stato, viene scoperta ad aver stampato illegalmente enormi quantità di banconote, duplicando alcune serie di numerazione, e ad aver concesso prestiti occulti a politici e giornalisti per comprarsi protezione. Il governo di Giovanni Giolitti, accusato di aver taciuto le irregolarità, è costretto alle dimissioni nel novembre. Francesco Crispi — a conoscenza dei fatti fin dal 1889 — riesce a sviare l\'attenzione pubblica dalle proprie responsabilità e a cavalcare lo scandalo come rampa di lancio per il suo secondo mandato.',
+    prev: null,
+    next: 'Il ritorno di Crispi al governo coincide con l\'esplosione dei Fasci siciliani: la crisi economica e quella sociale si intrecciano.'
+  },
+  {
+    id: 1,
+    year: 1893.5,
+    month: null,
+    dateLabel: '1893–1894',
+    type: 'soc',
+    typeLabel: 'Sociale',
+    title: 'Fasci siciliani e repressione crispina',
+    text: 'I Fasci siciliani — un movimento di contadini e operai che rivendicavano condizioni di vita e di lavoro dignitose — mostrano la misura di quanto sia esplosiva la situazione nel Mezzogiorno. Crispi risponde proclamando lo stato d\'assedio, inviando trentamila soldati nell\'isola, istituendo tribunali militari e facendo arrestare migliaia di persone, tra cui i dirigenti del movimento. Promulga anche leggi antianarchiche che limitano la libertà di stampa e di associazione, e arriva a sciogliere il Partito Socialista.',
+    prev: 'Lo scandalo della Banca Romana ha già indebolito la fiducia nelle istituzioni: la repressione crispina accentua il distacco tra Stato e classi popolari.',
+    next: 'Mentre reprime il dissenso sociale, il governo deve anche affrontare le conseguenze dello scandalo bancario con una riforma del sistema creditizio.'
+  },
+  {
+    id: 2,
+    year: 1894,
+    month: null,
+    dateLabel: '1894',
+    type: 'eco',
+    typeLabel: 'Economico-finanziario',
+    title: 'Fondazione della Banca d\'Italia',
+    text: 'I fallimenti bancari seguiti allo scandalo della Banca Romana, aggravati dalla più ampia crisi economica internazionale, rendono inevitabile una riforma radicale del sistema creditizio. Nel 1894 viene fondata la Banca d\'Italia come istituto centrale unico per l\'emissione di cartamoneta, sottraendo quella funzione alla pluralità di istituti privati che l\'avevano gestita con troppa autonomia e troppo poco controllo. Parallelamente è incoraggiata la nascita di nuove banche miste — la Banca Commerciale Italiana e il Credito Italiano — destinate a finanziare lo sviluppo industriale nei decenni successivi.',
+    prev: 'La riforma nasce direttamente dallo scandalo del 1893 e dalla necessità di impedire che si ripetano le irregolarità della Banca Romana.',
+    next: 'La stabilizzazione del sistema creditizio non risolve le tensioni sociali: nel 1896 la disfatta di Adua precipita la crisi politica di Crispi.'
+  },
+  {
+    id: 3,
+    year: 1896,
+    month: null,
+    dateLabel: '1896',
+    type: 'pol',
+    typeLabel: 'Politico-istituzionale',
+    title: 'Disfatta di Adua e dimissioni di Crispi',
+    text: 'Il 1° marzo 1896, nella conca di Adua, l\'esercito italiano guidato dal generale Baratieri — circa sedicimila uomini tra italiani ed ascari eritrei alleati — viene travolto dall\'armata etiope di Menelik II, forte di oltre settantamila effettivi. La disfatta è catastrofica: tra quattromila e seimila morti italiani, circa millecinquecento feriti, quasi duemila prigionieri. Nelle piazze esplodono manifestazioni di protesta; l\'opposizione radicale e socialista grida «Viva Menelik!». Crispi è costretto a dimettersi, chiudendo per sempre la sua carriera politica. Il 26 ottobre 1896 l\'Italia firma la pace e riconosce formalmente la piena indipendenza dell\'Etiopia.',
+    prev: 'La crisi coloniale si intreccia con quella interna: Crispi aveva usato l\'espansione africana per distogliere l\'attenzione dai problemi sociali rimasti irrisolti.',
+    next: 'La caduta di Crispi non stabilizza il sistema politico: le tensioni sociali accumulatesi per anni esplodono nel 1898 con le proteste del pane.'
+  },
+  {
+    id: 4,
+    year: 1898,
+    month: null,
+    dateLabel: '1898',
+    type: 'soc',
+    typeLabel: 'Sociale',
+    title: 'Proteste dello stomaco e strage di Bava Beccaris',
+    text: 'Cattivi raccolti in tutta Europa e il blocco delle esportazioni di grano americano causano un intollerabile rincaro del pane. Esplode in tutta la penisola la "protesta dello stomaco": manifestazioni spontanee, dettate dalla fame, che partono dal Sud e raggiungono le città industriali del Nord. A Milano, dove le manifestazioni sono più intense, il governo Di Rudinì proclama lo stato d\'assedio e affida i pieni poteri al generale Fiorenzo Bava Beccaris. Tra il 6 e il 9 maggio Bava Beccaris ordina all\'esercito di usare i cannoni contro la folla disarmata: i morti sono decine, i feriti centinaia. Seguono arresti di massa: Filippo Turati viene condannato a dodici anni. Umberto I decora Bava Beccaris con la medaglia d\'oro al valor militare.',
+    prev: 'La "protesta dello stomaco" è il punto di arrivo di una crisi accumulatasi per anni: dazi sul grano, guerra doganale con la Francia, miseria strutturale del Mezzogiorno.',
+    next: 'La violenza di Stato apre la strada al progetto di involuzione istituzionale: Pelloux tenta di tradurre in legge la risposta repressiva del governo.'
+  },
+  {
+    id: 5,
+    year: 1899,
+    month: null,
+    dateLabel: '1899',
+    type: 'pol',
+    typeLabel: 'Politico-istituzionale',
+    title: 'Leggi liberticide di Pelloux e ostruzionismo parlamentare',
+    text: 'Il generale Luigi Pelloux, molto gradito agli ambienti di corte, presenta in Parlamento un pacchetto di norme destinate a limitare drasticamente la libertà di stampa, di associazione, di insegnamento e il diritto di sciopero. L\'opposizione risponde in modo inatteso: socialisti, repubblicani, radicali e liberali di Zanardelli e Giolitti si uniscono e ricorrono per la prima volta alla tecnica dell\'ostruzionismo — discorsi lunghissimi, interruzioni sistematiche, richieste continue di voto per appello nominale — fino a rendere impossibile il normale svolgimento dei lavori parlamentari. Pelloux tenta di aggirare l\'ostacolo promulgando le leggi per decreto regio.',
+    prev: 'La risposta alle proteste del 1898 non si limita alla repressione militare: la classe dirigente conservatrice elabora un progetto organico di involuzione istituzionale.',
+    next: 'Il tentativo di Pelloux si scontra con un limite costituzionale insuperabile: la Corte di Cassazione annulla il decreto nel febbraio 1900.'
+  },
+  {
+    id: 6,
+    year: 1900.1,
+    month: 'febbraio',
+    dateLabel: 'Feb. 1900',
+    type: 'pol',
+    typeLabel: 'Politico-istituzionale',
+    title: 'Sentenza della Corte di Cassazione',
+    text: 'Nel febbraio 1900 la Corte di Cassazione annulla il decreto con cui Pelloux aveva tentato di promulgare le leggi liberticide per via regia, dichiarandone l\'incostituzionalità. È una sconfitta su tutti i fronti per il fronte conservatore: il tentativo di aggirare il Parlamento si è rivelato non solo politicamente fallimentare — bloccato dall\'ostruzionismo dell\'opposizione — ma anche giuridicamente illegittimo. La sentenza ristabilisce il primato del Parlamento e chiude la stagione dei tentativi di involuzione istituzionale.',
+    prev: 'La sentenza è la conclusione logica dell\'ostruzionismo parlamentare del 1899: l\'opposizione ha tenuto duro abbastanza a lungo da costringere Pelloux a cercare una via alternativa, che si rivela incostituzionale.',
+    next: 'Il fallimento istituzionale del fronte conservatore viene confermato dalle elezioni di giugno, che sanciscono la svolta politica.'
+  },
+  {
+    id: 7,
+    year: 1900.4,
+    month: 'giugno',
+    dateLabel: 'Giu. 1900',
+    type: 'pol',
+    typeLabel: 'Politico-istituzionale',
+    title: 'Elezioni: avanzata delle forze progressiste',
+    text: 'Le elezioni del giugno 1900 registrano una forte avanzata dei liberal-democratici e dei socialisti, i cui deputati passano da diciassette a trentatré. Il risultato sancisce la sconfitta politica del fronte conservatore e costringe Pelloux alle dimissioni. È il primo segnale che il sistema politico italiano è in grado di correggere se stesso attraverso le urne — almeno in condizioni normali. Vittorio Emanuele III, salito al trono dopo l\'assassinio del padre, prende atto della sconfitta conservatrice e affida il governo a Zanardelli e Giolitti.',
+    prev: 'Le elezioni traducono in voti la sconfitta istituzionale del fronte Pelloux: la doppia bocciatura — parlamentare e giudiziaria — si trasforma in sconfitta elettorale.',
+    next: 'Prima che il nuovo governo possa insediarsi stabilmente, l\'assassinio di Umberto I scuote il paese e accelera la transizione politica.'
+  },
+  {
+    id: 8,
+    year: 1900.55,
+    month: 'luglio',
+    dateLabel: 'Lug. 1900',
+    type: 'pol',
+    typeLabel: 'Politico-istituzionale',
+    title: 'Assassinio di Umberto I',
+    text: 'Il 29 luglio 1900 l\'anarchico Gaetano Bresci, rientrato appositamente dagli Stati Uniti, uccide Umberto I a Monza. Bresci dichiara di voler vendicare i morti di Milano del 1898: la decorazione di Bava Beccaris con la medaglia d\'oro era rimasta per molti un simbolo insopportabile della connivenza tra la monarchia e la repressione. Il nuovo re Vittorio Emanuele III non segue la linea del padre: prende atto della sconfitta conservatrice e affida il governo a Zanardelli e Giolitti, aprendo una stagione nuova che avrebbe dovuto rispondere alle domande che la crisi di fine secolo aveva reso impossibile ignorare.',
+    prev: 'L\'assassinio è la risposta più estrema alla violenza di Stato del 1898: Bresci non agisce in modo casuale ma come esecutore di una sentenza politica.',
+    next: null
+  }
+];
+
+// ── LAYOUT ───────────────────────────────────────────────────────────────
+const TL_LEFT = 60;
+const TL_RIGHT_MARGIN = 60;
+const TL_WIDTH = 860 - TL_LEFT - TL_RIGHT_MARGIN;
+const YEAR_MIN = 1893;
+const YEAR_MAX = 1900.8;
+
+function yearToX(y) {
+  return TL_LEFT + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * TL_WIDTH;
+}
+
+// Build year ticks
+const tlInner = document.getElementById('tlInner');
+for (let y = 1893; y <= 1900; y++) {
+  const x = yearToX(y);
+  const tick = document.createElement('div');
+  tick.className = 'tl-year';
+  tick.style.left = x + 'px';
+  tick.textContent = y;
+  tlInner.appendChild(tick);
+}
+
+// Color map
+const COLOR = { eco: '#5B7FA6', soc: '#4A6741', pol: '#7A2E1A' };
+
+// Alternate above/below
+const positions = ['above','below','above','below','above','below','above','below','above'];
+
+// Build nodes
+EVENTS.forEach((ev, i) => {
+  const x = yearToX(ev.year);
+  const pos = positions[i];
+
+  const node = document.createElement('div');
+  node.className = `ev-node ${pos}`;
+  node.style.left = x + 'px';
+  node.dataset.id = i;
+
+  const dot = document.createElement('div');
+  dot.className = 'ev-dot';
+  dot.style.background = COLOR[ev.type];
+  dot.style.color = COLOR[ev.type];
+
+  const tick = document.createElement('div');
+  tick.className = 'ev-tick';
+
+  const label = document.createElement('div');
+  label.className = 'ev-label';
+  label.innerHTML = `<span class="ev-date">${ev.dateLabel}</span>${ev.title.split(':')[0].split('e ')[0].split('e\u00a0')[0]}`;
+  if (ev.title.length > 35) {
+    const words = ev.title.split(' ');
+    const half = Math.ceil(words.length / 2);
+    label.innerHTML = `<span class="ev-date">${ev.dateLabel}</span>${words.slice(0, half).join(' ')}<br>${words.slice(half).join(' ')}`;
+  }
+
+  node.appendChild(tick);
+  node.appendChild(dot);
+  node.appendChild(label);
+  node.addEventListener('click', () => showEvent(i));
+  tlInner.appendChild(node);
+});
+
+// ── SHOW EVENT ────────────────────────────────────────────────────────────
+let activeId = null;
+
+function showEvent(id) {
+  const ev = EVENTS[id];
+
+  // deactivate old
+  if (activeId !== null) {
+    const old = tlInner.querySelector(`[data-id="${activeId}"]`);
+    if (old) old.classList.remove('active');
+  }
+  activeId = id;
+  const node = tlInner.querySelector(`[data-id="${id}"]`);
+  node.classList.add('active');
+
+  document.getElementById('infoPrompt').style.display = 'none';
+
+  const panel = document.getElementById('infoPanel');
+  panel.classList.remove('show');
+  void panel.offsetWidth; // reflow for animation
+  panel.classList.add('show');
+
+  document.getElementById('infoStripe').style.background = COLOR[ev.type];
+  document.getElementById('infoDate').textContent = ev.dateLabel;
+
+  const badge = document.getElementById('infoBadge');
+  badge.textContent = ev.typeLabel;
+  badge.style.background = COLOR[ev.type];
+
+  document.getElementById('infoTitle').textContent = ev.title;
+  document.getElementById('infoText').textContent = ev.text;
+
+  // nav connections
+  const nav = document.getElementById('infoNav');
+  nav.innerHTML = '';
+
+  if (ev.prev) {
+    const b = document.createElement('div');
+    b.className = 'conn-block';
+    b.innerHTML = `<strong>← Dall'evento precedente</strong>${ev.prev}`;
+    nav.appendChild(b);
+  }
+  if (ev.next) {
+    const b = document.createElement('div');
+    b.className = 'conn-block';
+    b.innerHTML = `<strong>All'evento successivo →</strong>${ev.next}`;
+    nav.appendChild(b);
+  }
+  if (!ev.prev && !ev.next) {
+    nav.style.display = 'none';
+  } else {
+    nav.style.display = '';
+  }
+}
+</script>
+</body>
+</html>

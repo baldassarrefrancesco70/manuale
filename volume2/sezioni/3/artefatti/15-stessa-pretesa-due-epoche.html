@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La stessa pretesa, due epoche</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --e1:#4A6B5C; --e2:#8B4A3E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1000px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:.6rem;}
+  .method-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;color:var(--brown);margin-bottom:1.2rem;line-height:1.5;}
+
+  .progress-wrap{display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:var(--brown-dark);margin-bottom:1.2rem;}
+  .progress-track{flex:1;height:5px;background:#E3DACB;border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--brown);width:0%;transition:width .4s ease;}
+
+  .stmt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1.4rem;}
+  .stmt-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:.8rem .95rem;}
+  .stmt-text{font-size:.85rem;line-height:1.5;font-style:italic;margin-bottom:.6rem;}
+  .stmt-opts{display:flex;gap:.5rem;}
+  .stmt-opt{flex:1;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.68rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:4px;padding:.4rem .3rem;cursor:pointer;text-align:center;}
+  .stmt-opt.chosen.e1{background:#E4EDE7;border-color:var(--e1);color:var(--e1);font-weight:600;}
+  .stmt-opt.chosen.e2{background:#F3E1DA;border-color:var(--e2);color:var(--e2);font-weight:600;}
+  .stmt-opt[disabled]{cursor:default;}
+  .stmt-real{display:none;font-size:.7rem;color:var(--ink-soft);margin-top:.5rem;padding-top:.5rem;border-top:1px dashed #DCD2BE;}
+  .stmt-real.show{display:block;}
+  .real-tag{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:600;text-transform:uppercase;font-size:8.5px;letter-spacing:.4px;}
+
+  .btn-primary{display:block;margin:0 auto 1.4rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.85rem;background:var(--brown);color:var(--paper);border:none;border-radius:4px;padding:.7rem 1.6rem;cursor:pointer;}
+  .btn-primary[disabled]{background:#D9D2C4;cursor:default;}
+  .btn-primary:not([disabled]):hover{background:var(--brown-dark);}
+
+  .closing{display:none;}
+  .closing.show{display:block;}
+  .closing-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.4rem 1.6rem;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.9rem;}
+  .score-line{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.9rem;margin-bottom:1rem;}
+  .closing-text{font-size:.9rem;line-height:1.65;margin-bottom:1rem;}
+  .closing-q{font-style:italic;font-size:.95rem;line-height:1.6;padding-top:1rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Dal nazionalismo romantico al nazionalismo aggressivo · Artefatto 15</div>
+    <div class="header-title">La stessa pretesa, due epoche</div>
+    <div class="header-sub">Venti affermazioni sulla nazione. Attribuisci ciascuna al primo terzo del secolo (1815-1848 circa) o all'ultimo (1870-1900 circa). Nessuna contiene una data: dovrai riconoscere l'epoca da qualcos'altro, se puoi.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Tutte le venti affermazioni condividono la stessa struttura logica: una comunità ha diritto a esistere come tale, e questo diritto precede le istituzioni che la governano. È deliberato: il principio invocato non basta a distinguere le due epoche.</div>
+    <div class="method-note">[Affermazioni costruite sul testo del percorso — episodi reali come il messianismo di Mazzini, il messianismo polacco, l'affare Dreyfus, la missione di civiltà coloniale, il Kulturkampf — riformulate in forma generica, non citazioni dirette.]</div>
+
+    <div class="progress-wrap">
+      <span>Affermazioni classificate</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressCount">0 / 20</span>
+    </div>
+
+    <div class="stmt-grid" id="stmtGrid"></div>
+
+    <button class="btn-primary" id="revealBtn" disabled onclick="showClosing()">Vedi le attribuzioni reali</button>
+
+    <div class="closing" id="closing">
+      <div class="closing-card">
+        <div class="closing-title">Che cosa distingue davvero le due epoche</div>
+        <div class="score-line" id="scoreLine"></div>
+        <div class="closing-text">Non è il principio invocato — in entrambe le epoche è lo stesso: una comunità ha diritto a esistere come tale, e questo diritto precede le istituzioni. Quello che cambia è <strong>l'oggetto contro cui la pretesa è rivolta</strong>. Nel primo terzo del secolo, quasi sempre un impero dinastico da abbattere o un potere straniero da cui liberarsi. Nell'ultimo terzo, sempre più spesso un vicino da tenere fuori, un concittadino da trattare come estraneo, un popolo da governare perché ritenuto meno progredito.</div>
+        <div class="closing-q">Se la continuità del principio è totale, con quali strumenti si distingue ancora una rivendicazione di liberazione da una campagna di esclusione? È la stessa domanda che una rivendicazione anticoloniale del Novecento, fondata esattamente sullo stesso principio, costringerà a porsi di nuovo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const statements = [
+  {text:'Il nostro popolo esiste da prima dello Stato che lo governa, e ha diritto a darsi un governo proprio.', era:'e1', note:'Rivolta contro un potere dinastico esterno — nello spirito delle rivendicazioni degli anni Venti e Trenta.'},
+  {text:'Nessun trattato firmato da altri può togliere a un popolo il diritto di esistere come nazione.', era:'e1', note:'Nello spirito delle rivendicazioni greche e polacche contro le decisioni del 1815.'},
+  {text:'Un popolo sottomesso da un potere straniero ha il diritto, e forse il dovere, di insorgere.', era:'e1', note:'Logica insurrezionale della prima ondata, anni 1820-21.'},
+  {text:'La nostra nazione porta dentro di sé una missione che la destina a guidare le altre verso la libertà.', era:'e1', note:'Nello spirito del messianismo mazziniano: una vocazione a guidare, non ancora a dominare.'},
+  {text:'Non riconosciamo legittimità a un governo che non discende dalla volontà della nazione.', era:'e1', note:'Formula tipica del costituzionalismo liberale, 1830 e dintorni.'},
+  {text:'La nostra sofferenza come popolo sacrificato ci dà un titolo morale che nessun altro popolo può vantare.', era:'e1', note:'Nello spirito del messianismo polacco — la nazione sacrificata per la redenzione altrui.'},
+  {text:'Un impero che governa popoli diversi senza il loro consenso non ha alcun diritto a durare.', era:'e1', note:'Retorica anti-asburgica del 1848.'},
+  {text:'Rivendichiamo per la nostra lingua lo stesso rispetto che si accorda a quelle già riconosciute come nazionali.', era:'e1', note:'Nello spirito delle "nazioni non storiche" — cechi, slovacchi, finlandesi.'},
+  {text:'Il nostro spirito nazionale, la nostra tradizione, il nostro carattere ci distinguono e ci uniscono più di qualunque confine tracciato da un trattato.', era:'e1', note:'Formula romantica, area tedesca, prima metà del secolo.'},
+  {text:'Chi condivide la nostra lingua e la nostra storia appartiene a noi, qualunque sia il confine in cui si trova oggi.', era:'e1', note:'Rivendicazione dell\'unità nazionale contro la frammentazione dinastica — non ancora rivolta contro un vicino.'},
+  {text:'Il nostro popolo esiste da prima dello Stato che lo governa, e nessuno può privarlo del diritto di difendersi da chi non gli appartiene.', era:'e2', note:'Stessa premessa della prima affermazione, ma rivolta verso l\'interno: difendersi da un concittadino, non da un impero.'},
+  {text:'Nessuna legge scritta da altri può obbligarci ad accogliere come nostri concittadini persone che non condividono la nostra origine.', era:'e2', note:'Logica dell\'appartenenza per discendenza, fine secolo.'},
+  {text:'Un popolo che vede il proprio onore nazionale messo in discussione ha il diritto, e forse il dovere, di difenderlo anche a costo della giustizia verso un singolo.', era:'e2', note:'Nello spirito dell\'argomento anti-Dreyfusard.'},
+  {text:'La nostra nazione porta dentro di sé una superiorità che la destina a guidare i popoli meno progrediti verso la civiltà.', era:'e2', note:'Missione di civiltà coloniale, anni Ottanta e Novanta.'},
+  {text:'Non riconosciamo piena appartenenza a chi non discende dal nostro stesso sangue, qualunque sia la sua cittadinanza formale.', era:'e2', note:'Appartenenza biologica, non più culturale — criterio di fine secolo.'},
+  {text:'La nostra grandezza passata ci dà un titolo che nessun altro popolo, oggi più debole di noi, può vantare.', era:'e2', note:'Inversione del messianismo polacco: non più sofferenza che redime, ma superiorità che legittima a dominare.'},
+  {text:'Uno Stato che governa una popolazione diversa dalla nostra per lingua e discendenza ha il dovere di correggerla, non di rappresentarla.', era:'e2', note:'Logica assimilazionista, prossima a quella del Kulturkampf.'},
+  {text:'Rivendichiamo per la nostra lingua una posizione che nessun\'altra lingua parlata entro i nostri confini può contendere.', era:'e2', note:'Non più richiesta di riconoscimento, ma pretesa di esclusività — fine secolo.'},
+  {text:'Il nostro spirito nazionale, la nostra tradizione, il nostro carattere ci distinguono da chi vive tra noi senza condividerli, per quanto ne porti la cittadinanza.', era:'e2', note:'Stessa formula romantica della nona affermazione, ma rivolta contro chi vive dentro i confini, non contro chi li impone dall\'esterno.'},
+  {text:'Un popolo che ha già ottenuto il proprio Stato ha il diritto di reclamare chi, per lingua e discendenza, gli appartiene ma vive ancora fuori dai suoi confini.', era:'e2', note:'Irredentismo di fine secolo, conseguenza diretta del criterio della discendenza.'}
+];
+
+let classified = 0;
+const choices = [];
+
+function renderStatements(){
+  const grid = document.getElementById('stmtGrid');
+  statements.forEach((s,i)=>{
+    const card = document.createElement('div');
+    card.className = 'stmt-card';
+    card.innerHTML = `
+      <div class="stmt-text">«${s.text}»</div>
+      <div class="stmt-opts" id="opts${i}">
+        <button class="stmt-opt" onclick="choose(${i},'e1')">Primo terzo del secolo</button>
+        <button class="stmt-opt" onclick="choose(${i},'e2')">Ultimo terzo del secolo</button>
+      </div>
+      <div class="stmt-real" id="real${i}"></div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function choose(i, pick){
+  if(choices[i]) return;
+  choices[i] = pick;
+  document.querySelectorAll('#opts'+i+' .stmt-opt').forEach((b,idx)=>{
+    b.disabled = true;
+    if((idx===0 && pick==='e1') || (idx===1 && pick==='e2')) b.classList.add('chosen', pick);
+  });
+  classified++;
+  document.getElementById('progressFill').style.width = (classified/statements.length*100)+'%';
+  document.getElementById('progressCount').textContent = classified+' / '+statements.length;
+  if(classified === statements.length) document.getElementById('revealBtn').disabled = false;
+}
+
+function showClosing(){
+  let correct = 0;
+  statements.forEach((s,i)=>{
+    const real = document.getElementById('real'+i);
+    const eraLabel = s.era==='e1' ? 'Primo terzo del secolo' : 'Ultimo terzo del secolo';
+    real.classList.add('show');
+    real.innerHTML = `<span class="real-tag" style="color:var(--${s.era});">${eraLabel}</span><br>${s.note}`;
+    if(choices[i]===s.era) correct++;
+  });
+  document.getElementById('scoreLine').textContent = `Hai classificato correttamente ${correct} affermazioni su 20 — un risultato che, per costruzione dell'oggetto, si attesta tipicamente attorno al caso.`;
+  document.getElementById('closing').classList.add('show');
+  document.getElementById('closing').scrollIntoView({behavior:'smooth'});
+}
+
+renderStatements();
+</script>
+</body>
+</html>

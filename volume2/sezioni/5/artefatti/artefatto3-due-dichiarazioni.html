@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Due dichiarazioni a confronto</title>
+<style>
+  :root{
+    --beige: #F5F0E8;
+    --gray: #F2F2F2;
+    --brown: #8B7355;
+    --brown-dark: #6B5A42;
+    --petrol: #2C4A52;
+    --petrol-dark: #1E363D;
+    --petrol-tint: #E3EDEE;
+    --petrol-tint-2: #CFE0E2;
+    --ink: #2A2620;
+    --ink-soft: #55504A;
+    --paper: #FBF8F3;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139,115,85,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(44,74,82,0.05), transparent 45%);
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 30px 44px;
+  }
+
+  header{
+    border-bottom: 2px solid var(--petrol);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--petrol);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: normal;
+  }
+
+  .intro{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 780px;
+    margin: 0;
+  }
+
+  .toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0 22px;
+  }
+
+  .status{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .status strong{ color: var(--petrol); }
+
+  .btn{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    border: 1.5px solid var(--brown);
+    background: transparent;
+    color: var(--brown-dark);
+    padding: 7px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .btn:hover{ background: var(--brown); color: #fff; }
+
+  .columns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+
+  .doc-col{
+    border: 1px solid #E0DDD6;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .doc-head{
+    background: var(--petrol);
+    color: #fff;
+    padding: 12px 16px;
+  }
+
+  .doc-head .doc-title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    margin: 0;
+  }
+
+  .doc-head .doc-sub{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    opacity: 0.85;
+    margin: 2px 0 0;
+  }
+
+  .doc-body{ padding: 14px 16px 18px; }
+
+  .bank-label{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brown-dark);
+    margin: 0 0 6px;
+  }
+
+  .bank{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 40px;
+    padding: 10px;
+    background: var(--gray);
+    border: 1px solid #E0DDD6;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+
+  .bank:empty::after{
+    content: "Tutti gli estratti sono stati collocati.";
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  .card{
+    font-size: 13px;
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 10px;
+    cursor: pointer;
+    max-width: 100%;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    user-select: none;
+  }
+
+  .card:hover{ box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+
+  .card.selected{
+    border-color: var(--petrol);
+    background: var(--petrol-tint);
+    box-shadow: 0 0 0 2px var(--petrol-tint-2);
+  }
+
+  .block{
+    background: var(--beige);
+    border: 1.5px solid var(--brown);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .block.targetable{
+    border-color: var(--petrol);
+    box-shadow: 0 0 0 3px var(--petrol-tint);
+  }
+
+  .block-head{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 12.5px;
+    color: var(--petrol-dark);
+    margin: 0 0 6px;
+  }
+
+  .block-items{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .placed{
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+
+  .placed:hover{ box-shadow: 0 2px 5px rgba(0,0,0,0.07); }
+
+  .placed .feedback{
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #E4DFD5;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: var(--petrol-dark);
+    line-height: 1.4;
+  }
+
+  .placed .feedback .label{
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 9.5px;
+    color: var(--brown-dark);
+    margin-bottom: 3px;
+  }
+
+  .synthesis{
+    margin-top: 30px;
+    background: var(--petrol-tint);
+    border: 1.5px solid var(--petrol);
+    border-radius: 8px;
+    padding: 20px 22px;
+    display: none;
+  }
+
+  .synthesis.show{ display: block; }
+
+  .synthesis h2{
+    font-family: Georgia, serif;
+    font-weight: normal;
+    font-size: 17px;
+    color: var(--petrol-dark);
+    margin: 0 0 10px;
+  }
+
+  .synthesis p{
+    font-size: 14.5px;
+    margin: 0 0 10px;
+  }
+
+  .synthesis p:last-child{ margin-bottom: 0; }
+
+  @media (max-width: 860px){
+    .columns{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Schiavitù, Haiti e colonialismo — Artefatto 3</p>
+    <h1>Due dichiarazioni a confronto</h1>
+    <p class="intro">La Dichiarazione d'indipendenza americana del 1776 e l'Atto d'indipendenza di Haiti del 1804 condividono la stessa impalcatura logica in tre tempi. Classifica gli estratti di ciascun documento nel blocco corretto, come hai già fatto nell'Artefatto 1: quando avrai completato entrambe le colonne, comparirà il confronto tra i due testi.</p>
+  </header>
+
+  <div class="toolbar">
+    <p class="status">Estratti collocati: <strong id="count">0</strong> di <span id="total">20</span></p>
+    <button class="btn" id="resetBtn">Ricomincia</button>
+  </div>
+
+  <div class="columns">
+
+    <div class="doc-col" data-doc="us">
+      <div class="doc-head">
+        <p class="doc-title">Dichiarazione d'indipendenza americana</p>
+        <p class="doc-sub">Filadelfia, 4 luglio 1776</p>
+      </div>
+      <div class="doc-body">
+        <p class="bank-label">Estratti da classificare</p>
+        <div class="bank" data-bank="us"></div>
+
+        <div class="block" data-doc="us" data-cat="premessa">
+          <p class="block-head">Premessa filosofica</p>
+          <div class="block-items"></div>
+        </div>
+        <div class="block" data-doc="us" data-cat="torti">
+          <p class="block-head">Elenco dei torti</p>
+          <div class="block-items"></div>
+        </div>
+        <div class="block" data-doc="us" data-cat="rottura">
+          <p class="block-head">Atto di rottura</p>
+          <div class="block-items"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-col" data-doc="ht">
+      <div class="doc-head">
+        <p class="doc-title">Atto d'indipendenza di Haiti</p>
+        <p class="doc-sub">Gonaïves, 1° gennaio 1804</p>
+      </div>
+      <div class="doc-body">
+        <p class="bank-label">Estratti da classificare</p>
+        <div class="bank" data-bank="ht"></div>
+
+        <div class="block" data-doc="ht" data-cat="premessa">
+          <p class="block-head">Premessa filosofica</p>
+          <div class="block-items"></div>
+        </div>
+        <div class="block" data-doc="ht" data-cat="torti">
+          <p class="block-head">Elenco dei torti</p>
+          <div class="block-items"></div>
+        </div>
+        <div class="block" data-doc="ht" data-cat="rottura">
+          <p class="block-head">Atto di rottura</p>
+          <div class="block-items"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="synthesis" id="synthesis">
+    <h2>Stessa struttura, due esclusioni opposte</h2>
+    <p>Entrambi i testi seguono la stessa impalcatura in tre tempi: un principio dichiarato prima dei fatti, un elenco dei torti subiti, un atto performativo che dichiara la rottura. È lo stesso lessico dei diritti naturali, attinto alla stessa temperie intellettuale che aveva attraversato l'Atlantico nell'ultimo quarto del Settecento.</p>
+    <p>Ciò che cambia è chi tiene in mano la penna. Il testo del 1776 proclama l'uguaglianza di "tutti gli uomini", ma è firmato anche da proprietari di schiavi, e la condanna della tratta fu rimossa dalla bozza per non urtare gli interessi dei piantatori del Sud. Il testo del 1804 è scritto da chi quell'esclusione l'aveva subita: si rivolge esplicitamente contro la Francia coloniale e contro il principio di supremazia su cui il sistema delle piantagioni si reggeva. La stessa grammatica dei diritti naturali produce, a ventotto anni di distanza, due documenti che si assomigliano nella forma e si oppongono in ciò che ciascuno dei due include.</p>
+  </div>
+
+</div>
+
+<script>
+  const catLabels = {
+    premessa: "Premessa filosofica",
+    torti: "Elenco dei torti",
+    rottura: "Atto di rottura"
+  };
+
+  const docLabels = {
+    us: "Dichiarazione americana, 1776",
+    ht: "Atto d'indipendenza haitiano, 1804"
+  };
+
+  const statements = [
+    // --- Dichiarazione americana, 1776 (stessi estratti dell'Artefatto 1) ---
+    {
+      id: 'us1', doc: 'us', cat: 'premessa',
+      text: "Alcune verità sono presentate come autoevidenti, prima ancora di esporre un solo fatto concreto.",
+      feedback: "Stabilisce un principio prima di qualunque fatto: è il fondamento teorico da cui discende tutta l'argomentazione che segue."
+    },
+    {
+      id: 'us2', doc: 'us', cat: 'premessa',
+      text: "Tutti gli uomini nascono uguali e possiedono diritti che nessuno può togliere loro: vita, libertà, ricerca della felicità.",
+      feedback: "Definisce ciò che ogni essere umano possiede per natura, indipendentemente dagli eventi: è materiale filosofico, non racconto di fatti."
+    },
+    {
+      id: 'us3', doc: 'us', cat: 'premessa',
+      text: "Un governo è legittimo solo se fondato sul consenso di chi è governato.",
+      feedback: "Pone la condizione di legittimità che il testo dovrà poi dimostrare violata: senza questo principio l'elenco di accuse non avrebbe valore probatorio."
+    },
+    {
+      id: 'us4', doc: 'us', cat: 'premessa',
+      text: "Quando un governo viola sistematicamente questi diritti, il popolo ha non solo la facoltà ma il dovere di modificarlo o distruggerlo.",
+      feedback: "Traduce il principio in conseguenza pratica: è la cerniera logica che apre la strada all'elenco dei torti."
+    },
+    {
+      id: 'us5', doc: 'us', cat: 'torti',
+      text: "Il sovrano ha rifiutato di approvare leggi necessarie e utili al bene pubblico.",
+      feedback: "È il primo fatto concreto di una serie costruita per dimostrare un pattern di comportamento, non un torto isolato."
+    },
+    {
+      id: 'us6', doc: 'us', cat: 'torti',
+      text: "Assemblee elettive sono state sciolte per essersi opposte con fermezza alle sue ingerenze.",
+      feedback: "Aggiunge un secondo fatto alla stessa dimostrazione: ogni accusa rincalza la precedente nel costruire un quadro sistematico."
+    },
+    {
+      id: 'us7', doc: 'us', cat: 'torti',
+      text: "I tribunali sono stati sottratti al controllo popolare.",
+      feedback: "Documenta un'ulteriore violazione concreta, nello stesso registro quasi processuale delle altre accuse."
+    },
+    {
+      id: 'us8', doc: 'us', cat: 'torti',
+      text: "Truppe sono state mantenute tra i coloni in tempo di pace, senza il consenso delle assemblee locali.",
+      feedback: "Fa parte dello stesso elenco: dimostra che la violazione dei diritti annunciata nella premessa non è un'ipotesi, ma è già accaduta."
+    },
+    {
+      id: 'us9', doc: 'us', cat: 'torti',
+      text: "Sono state imposte tasse senza il consenso dei rappresentanti eletti dal popolo.",
+      feedback: "Chiude idealmente la serie di accuse riportando il tema fiscale che aveva aperto la crisi, ora trasformato in capo d'accusa formale."
+    },
+    {
+      id: 'us10', doc: 'us', cat: 'rottura',
+      text: "Le colonie unite sono dichiarate, e di diritto devono essere, Stati liberi e indipendenti.",
+      feedback: "È l'atto performativo che il testo compie, non solo descrive: dichiarare, in questo punto, equivale a fare."
+    },
+    {
+      id: 'us11', doc: 'us', cat: 'rottura',
+      text: "Ogni fedeltà alla corona britannica viene sciolta con un atto formale, non con un semplice appello.",
+      feedback: "Conclude il documento con un atto formale: dopo premessa e accuse, il testo non chiede nulla, dichiara un fatto compiuto."
+    },
+
+    // --- Atto d'indipendenza haitiano, 1804 (traduzione italiana dal testo francese originale) ---
+    {
+      id: 'ht1', doc: 'ht', cat: 'premessa',
+      text: "Bisogna infine vivere indipendenti o morire.",
+      feedback: "Apre il discorso come principio non negoziabile, nella stessa posizione strutturale in cui il testo del 1776 pone le verità autoevidenti: prima di ogni fatto, la condizione che renderà necessario tutto il resto."
+    },
+    {
+      id: 'ht2', doc: 'ht', cat: 'premessa',
+      text: "Abbiamo osato essere liberi: osiamo esserlo da noi stessi e per noi stessi.",
+      feedback: "Enuncia il principio dell'autodeterminazione: la libertà non è concessa da altri, ma esercitata da chi la rivendica. È la base teorica dell'intero discorso."
+    },
+    {
+      id: 'ht3', doc: 'ht', cat: 'premessa',
+      text: "Quale disonorante assurdità vincere per restare schiavi.",
+      feedback: "Pone in termini di principio la condizione che il resto del discorso dovrà dimostrare violata: la sola vittoria militare non basta, se non si traduce in libertà piena."
+    },
+    {
+      id: 'ht4', doc: 'ht', cat: 'torti',
+      text: "Tutto qui rievoca ancora il ricordo delle crudeltà di questo popolo barbaro: le nostre leggi, i nostri costumi, le nostre città portano ancora l'impronta francese.",
+      feedback: "È il primo di una serie di fatti richiamati per giustificare la rottura, nello stesso registro quasi processuale dell'elenco di accuse del 1776."
+    },
+    {
+      id: 'ht5', doc: 'ht', cat: 'torti',
+      text: "Vittime per quattordici anni della nostra credulità e della nostra indulgenza, vinti non da eserciti francesi, ma dalla misera eloquenza dei proclami dei loro agenti.",
+      feedback: "Documenta un torto specifico protratto nel tempo, aggiungendo un elemento alla dimostrazione di un pattern sistematico di inganno."
+    },
+    {
+      id: 'ht6', doc: 'ht', cat: 'torti',
+      text: "Che cosa abbiamo in comune con questo popolo di carnefici?",
+      feedback: "Rafforza l'elenco dei torti attraverso una domanda retorica che nega ogni possibile continuità tra i due popoli."
+    },
+    {
+      id: 'ht7', doc: 'ht', cat: 'torti',
+      text: "La sua crudeltà, paragonata alla nostra paziente moderazione; il suo colore, al nostro; l'ampiezza dei mari che ci separano; il nostro clima vendicatore: tutto ci dice che non sono nostri fratelli, e che non lo diventeranno mai.",
+      feedback: "Chiude idealmente la serie di accuse istituendo una differenza netta, funzionale a giustificare la rottura definitiva."
+    },
+    {
+      id: 'ht8', doc: 'ht', cat: 'rottura',
+      text: "Giuriamo all'universo intero, alla posterità, a noi stessi, di rinunciare per sempre alla Francia, e di morire piuttosto che vivere sotto la sua dominazione.",
+      feedback: "È l'atto performativo che il testo compie: giurare, in questo punto, equivale a rendere irrevocabile la rottura, come la dichiarazione di Stati liberi e indipendenti nel 1776."
+    },
+    {
+      id: 'ht9', doc: 'ht', cat: 'rottura',
+      text: "Fatto ai Gonaïves, il primo gennaio milleottocento quattro, e il primo giorno dell'indipendenza d'Haiti.",
+      feedback: "Chiude il documento con la formula di rito che sancisce, non solo annuncia, l'atto compiuto: la stessa funzione della formula conclusiva della Dichiarazione americana."
+    }
+  ];
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i+1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const docs = ['us', 'ht'];
+  let order = {};
+  docs.forEach(d => {
+    order[d] = shuffle(statements.filter(s => s.doc === d).map(s => s.id));
+  });
+
+  let placements = {}; // id -> cat chosen
+  let selected = {}; // doc -> selected id
+
+  const countEl = document.getElementById('count');
+  const totalEl = document.getElementById('total');
+  totalEl.textContent = statements.length;
+
+  function getStatement(id){
+    return statements.find(s => s.id === id);
+  }
+
+  function render(){
+    docs.forEach(doc => {
+      const bank = document.querySelector(`.bank[data-bank="${doc}"]`);
+      bank.innerHTML = '';
+      order[doc].forEach(id => {
+        if(placements[id]) return;
+        const st = getStatement(id);
+        const card = document.createElement('div');
+        card.className = 'card' + (selected[doc] === id ? ' selected' : '');
+        card.textContent = st.text;
+        card.addEventListener('click', () => {
+          selected[doc] = (selected[doc] === id) ? null : id;
+          render();
+        });
+        bank.appendChild(card);
+      });
+
+      document.querySelectorAll(`.block[data-doc="${doc}"]`).forEach(block => {
+        const cat = block.dataset.cat;
+        const itemsWrap = block.querySelector('.block-items');
+        itemsWrap.innerHTML = '';
+        Object.keys(placements)
+          .filter(id => placements[id] === cat && getStatement(id).doc === doc)
+          .forEach(id => {
+            const st = getStatement(id);
+            const div = document.createElement('div');
+            div.className = 'placed';
+            div.innerHTML = `<div>${st.text}</div>
+              <div class="feedback">
+                <span class="label">Posizione nel testo: ${catLabels[st.cat]}</span>
+                ${st.feedback}
+              </div>`;
+            div.addEventListener('click', () => {
+              delete placements[id];
+              selected[doc] = id;
+              render();
+            });
+            itemsWrap.appendChild(div);
+          });
+
+        block.classList.toggle('targetable', !!selected[doc]);
+      });
+    });
+
+    countEl.textContent = Object.keys(placements).length;
+
+    const synthesis = document.getElementById('synthesis');
+    synthesis.classList.toggle('show', Object.keys(placements).length === statements.length);
+  }
+
+  document.querySelectorAll('.block').forEach(block => {
+    block.addEventListener('click', (e) => {
+      const doc = block.dataset.doc;
+      if(!selected[doc]) return;
+      if(e.target.closest('.placed')) return;
+      placements[selected[doc]] = block.dataset.cat;
+      selected[doc] = null;
+      render();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    placements = {};
+    selected = {};
+    docs.forEach(d => {
+      order[d] = shuffle(statements.filter(s => s.doc === d).map(s => s.id));
+    });
+    render();
+  });
+
+  render();
+</script>
+
+</body>
+</html>

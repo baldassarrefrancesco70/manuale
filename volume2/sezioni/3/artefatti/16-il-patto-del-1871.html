@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il patto del 1871</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1000px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1rem;}
+  .instruction{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.8rem;color:var(--brown-dark);margin-bottom:1rem;min-height:1.2em;}
+  .instruction.active{font-weight:600;}
+
+  .tray{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.4rem;}
+  .chip{background:var(--paper);border:1.5px solid #C8BBA8;border-radius:5px;padding:.55rem .8rem;font-size:.8rem;line-height:1.4;max-width:280px;cursor:pointer;}
+  .chip:hover{border-color:var(--brown);background:#FFFDF8;}
+  .chip.selected{border-color:var(--brown);background:#FBF0DD;box-shadow:0 0 0 2px rgba(139,115,85,.25);}
+
+  .grid{display:grid;grid-template-columns:170px 1fr 1fr;gap:2px;background:var(--brown);border:2px solid var(--brown);border-radius:6px;overflow:hidden;margin-bottom:1.2rem;}
+  .grid-head{background:var(--brown-dark);color:var(--paper);font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;padding:.6rem .7rem;}
+  .grid-label{background:var(--brown-dark);color:var(--paper);font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.78rem;padding:.7rem;display:flex;align-items:center;}
+  .grid-cell{background:#FBF9F4;padding:.6rem;min-height:80px;cursor:pointer;transition:background .2s;}
+  .grid-cell.drop-ready{background:#F3E9DC;}
+  .placed-chip{background:var(--paper);border:1px solid var(--brown);border-radius:4px;padding:.4rem .55rem;font-size:.74rem;line-height:1.35;margin-bottom:.4rem;}
+
+  .summary{display:none;margin-top:1.5rem;}
+  .summary.show{display:block;}
+  .summary-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.3rem 1.5rem;}
+  .summary-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .summary-text{font-size:.9rem;line-height:1.65;margin-bottom:1rem;}
+  .closing-q{font-style:italic;font-size:.92rem;line-height:1.6;padding-top:.9rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">La costruzione degli Stati nazionali · Artefatto 16</div>
+    <div class="header-title">Il patto del 1871</div>
+    <div class="header-sub">Quattro gruppi che avevano interesse nella questione tedesca. Per ciascuno, colloca ciò che ottiene e ciò a cui rinuncia — poi confronta con l'assetto reale.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Seleziona una voce dal basso, poi clicca sulla cella del gruppo e della colonna a cui pensi che vada collocata.</div>
+    <div class="instruction" id="instructionLine">Seleziona una voce.</div>
+
+    <div class="grid" id="grid">
+      <div class="grid-head"></div>
+      <div class="grid-head">Che cosa ottiene</div>
+      <div class="grid-head">A che cosa rinuncia</div>
+    </div>
+
+    <div class="tray" id="tray"></div>
+
+    <div class="summary" id="summary">
+      <div class="summary-card">
+        <div class="summary-title">La simmetria del meccanismo</div>
+        <div class="summary-text">Ogni gruppo riceve la <strong>forma</strong> di ciò che chiedeva — la corona costituzionale per gli Junker, il mercato per la borghesia, lo Stato nazionale per i nazionalisti, il voto per le masse — e cede la <strong>sostanza</strong> del potere: nessuno dei quattro controlla davvero le decisioni che contano. Gli Junker mantengono corona, esercito, diplomazia e alta burocrazia dentro una cornice che si presenta come moderna; la borghesia ottiene il mercato ma rinuncia alla direzione politica; i nazionalisti ottengono lo Stato ma non la nazione completa che il criterio linguistico prometteva; le masse ottengono il voto ma non il potere di rovesciare un governo.</div>
+        <div class="closing-q">Chi, tra i quattro, ha concluso l'affare migliore?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const groups = [
+  {id:'junker', name:'Junker (aristocrazia terriera prussiana)'},
+  {id:'borghesia', name:'Borghesia industriale'},
+  {id:'nazionalisti', name:'Nazionalisti'},
+  {id:'masse', name:'Masse'}
+];
+
+const items = [
+  {id:1, group:'junker', col:'ottiene', text:'Il controllo della corona, dell\'esercito, della diplomazia e dell\'alta burocrazia — il nucleo effettivo del potere.'},
+  {id:2, group:'junker', col:'rinuncia', text:'Alla forma pura dell\'assolutismo dinastico: deve operare dentro uno Stato che si presenta come moderno, con un Reichstag eletto a suffragio universale.'},
+  {id:3, group:'borghesia', col:'ottiene', text:'Mercato unificato su scala imperiale, codici commerciali omogenei, moneta e infrastrutture comuni: un decollo industriale senza precedenti in Europa continentale.'},
+  {id:4, group:'borghesia', col:'rinuncia', text:'Alla direzione politica dello Stato.'},
+  {id:5, group:'nazionalisti', col:'ottiene', text:'Lo Stato nazionale tedesco.'},
+  {id:6, group:'nazionalisti', col:'rinuncia', text:'Al criterio linguistico che avevano invocato per rivendicarlo: milioni di tedeschi restano fuori dai confini del nuovo Stato.'},
+  {id:7, group:'masse', col:'ottiene', text:'Il suffragio universale maschile per l\'elezione del Reichstag.'},
+  {id:8, group:'masse', col:'rinuncia', text:'Al potere reale del voto: il parlamento eletto non può formare né rovesciare il governo, che risponde all\'imperatore.'}
+];
+
+let selectedId = null;
+const placed = {};
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  groups.forEach(g=>{
+    const label = document.createElement('div');
+    label.className = 'grid-label';
+    label.textContent = g.name;
+    grid.appendChild(label);
+
+    ['ottiene','rinuncia'].forEach(col=>{
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      cell.id = 'cell-'+g.id+'-'+col;
+      cell.onclick = ()=>placeItem(g.id, col);
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function renderTray(){
+  const tray = document.getElementById('tray');
+  tray.innerHTML = '';
+  items.forEach(it=>{
+    if(placed[it.id]) return;
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.id = 'chip'+it.id;
+    chip.textContent = it.text;
+    chip.onclick = ()=>selectChip(it.id);
+    tray.appendChild(chip);
+  });
+}
+
+function selectChip(id){
+  selectedId = id;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('chip'+id).classList.add('selected');
+  const instr = document.getElementById('instructionLine');
+  instr.textContent = 'Ora clicca sulla cella del gruppo e della colonna corretti.';
+  instr.classList.add('active');
+}
+
+function placeItem(groupId, col){
+  if(selectedId === null) return;
+  const it = items.find(x=>x.id===selectedId);
+  placed[it.id] = {groupId, col};
+
+  const cell = document.getElementById('cell-'+groupId+'-'+col);
+  const chipDiv = document.createElement('div');
+  chipDiv.className = 'placed-chip';
+  const correct = it.group===groupId && it.col===col;
+  chipDiv.textContent = it.text + (correct ? '' : '  [la collocazione più coerente col testo è altrove — verifica il gruppo e la colonna]');
+  cell.appendChild(chipDiv);
+
+  selectedId = null;
+  const instr = document.getElementById('instructionLine');
+  instr.classList.remove('active');
+  const remaining = items.length - Object.keys(placed).length;
+  instr.textContent = remaining > 0 ? 'Seleziona un\'altra voce.' : 'Tutte le voci sono state collocate.';
+
+  renderTray();
+  if(remaining === 0){
+    document.getElementById('summary').classList.add('show');
+    document.getElementById('summary').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+renderGrid();
+renderTray();
+</script>
+</body>
+</html>

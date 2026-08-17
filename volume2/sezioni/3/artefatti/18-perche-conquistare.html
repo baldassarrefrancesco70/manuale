@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perché conquistare</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --mat:#4E7A93; --ide:#9C5B3C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1000px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1rem;}
+  .instruction{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.8rem;color:var(--brown-dark);margin-bottom:1rem;min-height:1.2em;}
+  .instruction.active{font-weight:600;}
+
+  .legend{display:flex;gap:1rem;margin-bottom:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  .docs{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.4rem;}
+  .doc-col{background:var(--paper);border:2px dashed #D4CFC4;border-radius:6px;padding:.9rem;min-height:220px;cursor:pointer;}
+  .doc-col.drop-ready{border-color:var(--brown);background:#FBF6EC;}
+  .doc-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.7rem;}
+  .placed-chip{background:var(--gray);border:1px solid #C8BBA8;border-radius:4px;padding:.4rem .55rem;font-size:.76rem;line-height:1.35;margin-bottom:.4rem;}
+  .placed-chip.mat{border-left:3px solid var(--mat);}
+  .placed-chip.ide{border-left:3px solid var(--ide);}
+
+  .tray{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.4rem;}
+  .chip{background:var(--paper);border:1.5px solid #C8BBA8;border-radius:5px;padding:.55rem .8rem;font-size:.8rem;line-height:1.4;max-width:260px;cursor:pointer;}
+  .chip:hover{border-color:var(--brown);background:#FFFDF8;}
+  .chip.selected{border-color:var(--brown);background:#FBF0DD;box-shadow:0 0 0 2px rgba(139,115,85,.25);}
+  .chip.mat{border-top:3px solid var(--mat);}
+  .chip.ide{border-top:3px solid var(--ide);}
+
+  .closing{display:none;}
+  .closing.show{display:block;}
+  .closing-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.3rem 1.5rem;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .closing-text{font-size:.9rem;line-height:1.65;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Dal nazionalismo romantico al nazionalismo aggressivo · Artefatto 18</div>
+    <div class="header-title">Perché conquistare</div>
+    <div class="header-sub">Sei un governo europeo degli anni Ottanta dell'Ottocento e devi decidere se occupare un territorio. Hai dodici argomenti a disposizione. Colloca ciascuno nel documento a cui pensi che appartenga: la giustificazione pubblica, o la nota riservata al consiglio dei ministri.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Nessuno dei dodici argomenti è falso. La domanda non è quale sia vero, ma quale documento userà ciascuno.</div>
+    <div class="legend">
+      <span><i style="background:var(--mat);"></i>argomento materiale</span>
+      <span><i style="background:var(--ide);"></i>argomento ideologico</span>
+    </div>
+    <div class="instruction" id="instructionLine">Seleziona un argomento dal basso.</div>
+
+    <div class="docs">
+      <div class="doc-col" id="doc-pubblica" onclick="placeArg('pubblica')">
+        <div class="doc-title">Giustificazione pubblica</div>
+        <div id="list-pubblica"></div>
+      </div>
+      <div class="doc-col" id="doc-riservata" onclick="placeArg('riservata')">
+        <div class="doc-title">Nota riservata al Consiglio dei ministri</div>
+        <div id="list-riservata"></div>
+      </div>
+    </div>
+
+    <div class="tray" id="tray"></div>
+
+    <div class="closing" id="closing">
+      <div class="closing-card">
+        <div class="closing-title">Perché nessuna delle due è falsa</div>
+        <div class="closing-text">Storicamente, gli argomenti materiali — materie prime, sbocchi commerciali esclusivi, basi navali, prestigio relativo, occupazione già di fatto in atto, pressione dei gruppi d'interesse — tendevano a restare nelle note riservate, dove contavano i calcoli di convenienza. Gli argomenti ideologici — missione di civiltà, dovere di educazione, superiorità evolutiva, vocazione religiosa secolarizzata, progresso tecnico, difesa dei connazionali all'estero — tendevano a comparire nella giustificazione pubblica, spesso proprio perché più presentabili. Ma le ragioni ideologiche non erano un ornamento di quelle materiali, e non erano nemmeno un'alternativa a esse: chi le formulava le credeva. La conquista aveva, per chi la decideva, entrambe le facce insieme.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const args = [
+  {text:'Le nostre industrie hanno bisogno di materie prime che l\'Europa non possiede.', type:'mat'},
+  {text:'Uno sbocco commerciale esclusivo ci garantirebbe mercati che i concorrenti non potrebbero contendere.', type:'mat'},
+  {text:'Il controllo di quella costa ci darebbe una base navale strategica.', type:'mat'},
+  {text:'Se non occupiamo noi quel territorio, lo farà una potenza rivale, e perderemmo prestigio relativo.', type:'mat'},
+  {text:'Le nostre truppe presidiano già di fatto l\'area: l\'occupazione formalizzerebbe una situazione esistente.', type:'mat'},
+  {text:'I gruppi commerciali e industriali interessati fanno pressione perché si proceda.', type:'mat'},
+  {text:'Abbiamo il dovere di portare la civiltà a popolazioni che ne sono prive.', type:'ide'},
+  {text:'Abbiamo il dovere di educare popolazioni che, lasciate a sé stesse, non potrebbero progredire.', type:'ide'},
+  {text:'La nostra superiorità evolutiva ci assegna naturalmente un ruolo guida su quei popoli.', type:'ide'},
+  {text:'Portiamo avanti, in forma laica, una vocazione che un tempo sarebbe stata missionaria.', type:'ide'},
+  {text:'Il progresso tecnico che rappresentiamo va esteso a chi ancora non ne beneficia.', type:'ide'},
+  {text:'Dobbiamo proteggere i nostri connazionali già residenti in quel territorio.', type:'ide'}
+];
+
+let selectedId = null;
+const placed = {};
+
+function renderTray(){
+  const tray = document.getElementById('tray');
+  tray.innerHTML = '';
+  args.forEach((a,i)=>{
+    if(placed[i]!==undefined) return;
+    const chip = document.createElement('div');
+    chip.className = 'chip '+a.type;
+    chip.id = 'chip'+i;
+    chip.textContent = a.text;
+    chip.onclick = (e)=>{ e.stopPropagation(); selectChip(i); };
+    tray.appendChild(chip);
+  });
+}
+
+function selectChip(i){
+  selectedId = i;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('chip'+i).classList.add('selected');
+  const instr = document.getElementById('instructionLine');
+  instr.textContent = 'Ora clicca sul documento in cui useresti questo argomento.';
+  instr.classList.add('active');
+}
+
+function placeArg(doc){
+  if(selectedId === null) return;
+  const a = args[selectedId];
+  placed[selectedId] = doc;
+
+  const list = document.getElementById('list-'+doc);
+  const chip = document.createElement('div');
+  chip.className = 'placed-chip '+a.type;
+  chip.textContent = a.text;
+  list.appendChild(chip);
+
+  selectedId = null;
+  const instr = document.getElementById('instructionLine');
+  instr.classList.remove('active');
+  const remaining = args.length - Object.keys(placed).length;
+  instr.textContent = remaining > 0 ? 'Seleziona un altro argomento.' : 'Tutti gli argomenti sono stati collocati.';
+
+  renderTray();
+  if(remaining === 0){
+    document.getElementById('closing').classList.add('show');
+    document.getElementById('closing').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+renderTray();
+</script>
+</body>
+</html>

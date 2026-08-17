@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mappa della sezione — Come nasce l'Italia</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --c1:#5c7343; --c2:#9d4a2b; --c3:#3d5566; --c4:#b0872e; --c5:#6b5545; --c6:#7c5570;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif)}
+  body{padding:16px 14px 26px;line-height:1.4}
+  .wrap{max-width:760px;margin:0 auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.66rem;color:var(--ink-soft);text-align:center}
+  h1{font-size:1.24rem;font-weight:600;margin:.14rem 0 10px;text-align:center}
+
+  .toolbar{display:flex;justify-content:center;gap:14px;margin-bottom:12px;font-family:var(--sans);font-size:.72rem}
+  .toolbar button{appearance:none;border:0;background:none;color:var(--ink-soft);text-decoration:underline;
+    cursor:pointer;font-family:var(--sans);font-size:.72rem;padding:2px}
+  .toolbar button:hover{color:var(--ink)}
+
+  .root-row{display:flex;justify-content:center}
+  .root{
+    background:var(--paper-2);border:1px solid #8a7a52;border-radius:3px;
+    padding:10px 22px;text-align:center;max-width:520px;
+  }
+  .root .k{font-family:var(--sans);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:2px}
+  .root h2{margin:0;font-size:1.05rem;font-weight:600}
+
+  .trunk{width:1px;height:16px;background:var(--rule);margin:0 auto}
+
+  .tree{max-width:660px;margin:0 auto;position:relative}
+
+  .chnode{width:100%}
+  .connector{width:100%;height:18px;position:relative}
+  .connector svg{display:block;width:100%;height:100%}
+  .stub-mobile{display:none;width:1px;height:16px;background:var(--rule);margin:0 auto}
+
+  .chbtn{
+    font-family:var(--sans);border:1px solid var(--rule);border-left-width:4px;border-radius:3px;
+    background:var(--paper-2);padding:9px 12px;cursor:pointer;text-align:left;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .chbtn:hover{background:#e1d9c4}
+  .chbtn[aria-expanded="true"]{background:#e6ddc3}
+  .chbtn .tag{display:block;font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px}
+  .chbtn .ttl{font-size:.85rem;font-weight:600;color:var(--ink);line-height:1.22}
+  .chbtn .chev{font-size:.72rem;color:var(--ink-soft);flex:0 0 auto;transition:transform .15s ease}
+  .chbtn[aria-expanded="true"] .chev{transform:rotate(90deg)}
+
+  .ch-c1{border-left-color:var(--c1)} .ch-c1 .tag{color:var(--c1)}
+  .ch-c2{border-left-color:var(--c2)} .ch-c2 .tag{color:var(--c2)}
+  .ch-c3{border-left-color:var(--c3)} .ch-c3 .tag{color:var(--c3)}
+  .ch-c4{border-left-color:var(--c4)} .ch-c4 .tag{color:var(--c4)}
+  .ch-c5{border-left-color:var(--c5)} .ch-c5 .tag{color:var(--c5)}
+  .ch-c6{border-left-color:var(--c6)} .ch-c6 .tag{color:var(--c6)}
+
+  .children{max-height:0;overflow:hidden;transition:max-height .28s ease}
+  .children.open{max-height:3000px}
+
+  .lvl2{list-style:none;margin:6px 0 4px;padding:0 0 2px 14px;border-left:1px dashed var(--rule)}
+  .lvl2>li{margin:0 0 6px}
+  .item-row{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+    font-size:.87rem;color:var(--ink);padding:2px 0;
+  }
+  .item-row .txt{flex:1 1 auto}
+  .item-row .txt strong{font-weight:700}
+  .item-toggle{
+    appearance:none;border:0;background:none;cursor:pointer;color:var(--ink-soft);
+    font-family:var(--sans);font-size:.7rem;flex:0 0 auto;padding:3px 6px;transition:transform .15s ease
+  }
+  .item-toggle[aria-expanded="true"]{transform:rotate(90deg)}
+  .item-toggle.hidden{visibility:hidden}
+
+  .lvl3{list-style:none;margin:4px 0 2px;padding:0 0 2px 16px;border-left:1px dotted var(--line)}
+  .lvl3>li{font-size:.81rem;color:var(--ink-soft);padding:2px 0;position:relative}
+  .lvl3>li::before{content:"–";margin-right:5px;color:var(--rule)}
+  .lvl3>li strong{color:var(--ink);font-weight:700}
+
+  .nodo .txt{font-style:italic}
+  .nodo .lbl{font-family:var(--sans);font-style:normal;font-size:.6rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:1px}
+
+  .foot-note{font-family:var(--sans);font-size:.7rem;color:var(--ink-soft);text-align:center;margin-top:16px}
+
+  @media (max-width:700px){
+    .chbtn{width:100% !important;margin-left:0 !important;max-width:380px;margin-inline:auto !important}
+    .connector{display:none}
+    .stub-mobile{display:block}
+    .lvl2{padding-left:10px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Come nasce l'Italia &middot; Apparati</div>
+  <h1>Mappa della sezione</h1>
+
+  <div class="toolbar">
+    <button type="button" id="expandAll">Espandi tutto</button>
+    <button type="button" id="collapseAll">Comprimi tutto</button>
+  </div>
+
+  <div class="root-row">
+    <div class="root">
+      <span class="k">Sezione</span>
+      <h2>Come nasce l'Italia</h2>
+    </div>
+  </div>
+  <div class="trunk"></div>
+  <div class="tree" id="tree"></div>
+
+  <p class="foot-note">Clicca un capitolo per aprirlo, clicca la freccia di un passaggio per vederne il dettaglio.</p>
+</div>
+
+<script>
+(function(){
+  var NODE_W = 460, CASCADE_W = 660;
+
+  var DATA = [
+    {
+      id:"cap1", tag:"Capitolo 1", title:"L'Italia napoleonica e la Restaurazione", col:"c1", offset:0,
+      items:[
+        {t:"<strong>Occupazione francese (1796-1814)</strong>: modernizzazione amministrativa + sfruttamento fiscale", sub:[
+          "Codice civile, catasto, uguaglianza giuridica",
+          "Requisizioni, coscrizione obbligatoria, tributi di guerra"
+        ]},
+        {t:"<strong>Insorgenze contadine</strong>: il popolo si ribella contro le riforme che i patrioti celebrano", sub:[
+          "Pasque veronesi (1797), «Viva Maria» (1799), sanfedisti",
+          "<strong>Cuoco</strong>: la Repubblica partenopea come «rivoluzione passiva»"
+        ]},
+        {t:"<strong>Restaurazione (1815)</strong>: confini ripristinati, amministrazione no", sub:[
+          "I sovrani reazionari conservano polizia e fisco napoleonici"
+        ]},
+        {t:"<strong>Censura e società segrete</strong>: il dissenso liberale si organizza in clandestinità", sub:[
+          "Carboneria: obiettivo Costituzione + indipendenza"
+        ]},
+        {t:"<strong>Moti 1820-21 e 1830-31</strong>: due fallimenti, lo stesso schema", sub:[
+          "Isolamento dalle masse popolari",
+          "Fiducia mal riposta in sovrani stranieri",
+          "Repressione austriaca decisiva in entrambi i casi"
+        ]},
+        {nodo:true, t:"Nodo storiografico — Chi combatteva contro i francesi, e in nome di che cosa?"}
+      ]
+    },
+    {
+      id:"cap2", tag:"Capitolo 2", title:"Il dibattito sull'unità e la prova del 1848", col:"c2", offset:42,
+      items:[
+        {t:"<strong>Frattura fondativa</strong>: democratici contro moderati sul metodo", sub:[
+          "Insurrezione dal basso contro riforma dall'alto"
+        ]},
+        {t:"<strong>Mazzini, Giovine Italia (1831)</strong>: educazione delle masse + insurrezione popolare", sub:[
+          "Rifiuto della segretezza carbonara",
+          "Obiettivo: Italia «una, indipendente, sovrana, repubblicana»"
+        ]},
+        {t:"<strong>Critiche da sinistra</strong>: Cattaneo, Ferrari, Pisacane", sub:[
+          "<strong>Cattaneo</strong>: federalismo, la libertà prima dell'unità",
+          "<strong>Ferrari</strong>: irreligione + legge agraria",
+          "<strong>Pisacane</strong>: le masse contadine come forza rivoluzionaria"
+        ]},
+        {t:"<strong>Moderati</strong>: riforma graduale, rifiuto della rivoluzione", sub:[
+          "<strong>Gioberti</strong>: confederazione guidata dal Papa",
+          "<strong>Balbo</strong>: confederazione guidata dai Savoia",
+          "<strong>D'Azeglio</strong>: opinione pubblica, non cospirazione"
+        ]},
+        {t:"<strong>Biennio 1848-49</strong>: tutti i programmi messi alla prova insieme", sub:[
+          "Statuti concessi per prevenire i moti, non per assecondarli",
+          "<strong>Novara (1849)</strong>: sconfitta piemontese, ma lo Statuto resta",
+          "Repubblica romana e Repubblica veneta: sconfitte"
+        ]},
+        {nodo:true, t:"Nodo storiografico — Il federalismo di Cattaneo era una strada percorribile?"}
+      ]
+    },
+    {
+      id:"cap3", tag:"Capitolo 3", title:"Cavour e la costruzione del Regno", col:"c3", offset:12,
+      items:[
+        {t:"<strong>Cavour</strong>: il Piemonte come laboratorio liberale e base diplomatica", sub:[
+          "Leggi Siccardi (1850), «Connubio» (1852)",
+          "Rete ferroviaria, trattati di libero scambio"
+        ]},
+        {t:"<strong>Ogni acquisizione ha un prezzo negoziato</strong>", sub:[
+          "<strong>Crimea (1855)</strong> → un posto al tavolo di Parigi",
+          "<strong>Plombières (1858)</strong> → Nizza e Savoia in cambio dell'alleanza francese",
+          "<strong>Villafranca (1859)</strong> → solo la Lombardia, non il Veneto"
+        ]},
+        {t:"<strong>Fallimenti democratici</strong>: Milano 1853, Sapri 1857", sub:[
+          "Confluenza verso la Società Nazionale Italiana (1857)"
+        ]},
+        {t:"<strong>Spedizione dei Mille (1860)</strong>: sei mesi contro dieci anni di diplomazia", sub:[
+          "Marsala, Calatafimi, Milazzo, Napoli",
+          "<strong>Bronte</strong>: repressione delle rivolte contadine"
+        ]},
+        {t:"<strong>Regno d'Italia (17 marzo 1861)</strong>: proclamato, non completo", sub:[
+          "Restano fuori Veneto, Trentino, Roma"
+        ]},
+        {nodo:true, t:"Nodo storiografico — Cavour e Garibaldi: collaborazione o conflitto?"}
+      ]
+    },
+    {
+      id:"cap4", tag:"Capitolo 4", title:"I problemi dello Stato unitario e la Destra storica", col:"c4", offset:74,
+      items:[
+        {t:"<strong>Cinque problemi ereditati insieme</strong>", sub:[
+          "Confini incompleti: Veneto, Trentino, Roma fuori",
+          "Amministrazione disomogenea fra sette ex Stati",
+          "Arretratezza economica e infrastrutturale",
+          "Analfabetismo diffuso e frammentazione linguistica",
+          "Divario strutturale fra Nord e Sud"
+        ]},
+        {t:"<strong>Risposta della Destra</strong>: accentramento + piemontesizzazione", sub:[
+          "Statuto e codici estesi per decreto",
+          "Prefetti di nomina governativa"
+        ]},
+        {t:"<strong>Rigore fiscale</strong>: pareggio di bilancio nel 1875", sub:[
+          "<strong>Tassa sul macinato (1868)</strong>: il provvedimento più impopolare",
+          "<strong>Corso forzoso (1866)</strong>"
+        ]},
+        {t:"<strong>Brigantaggio (1861-65)</strong>: guerra civile, non solo criminalità", sub:[
+          "120.000 soldati impiegati",
+          "<strong>Legge Pica (1863)</strong>: stato d'eccezione con regole proprie",
+          "Finanziamento esterno: Borbone in esilio, Stato Pontificio"
+        ]},
+        {t:"<strong>Questione romana</strong>: bloccata dalla protezione militare francese", sub:[
+          "Sillabo (1864), Non expedit (1874)",
+          "<strong>Sedan (1870)</strong> → Breccia di Porta Pia"
+        ]},
+        {nodo:true, t:"Nodo storiografico — Le politiche verso il Mezzogiorno erano le uniche possibili?"}
+      ]
+    },
+    {
+      id:"cap5", tag:"Capitolo 5", title:"Gli anni della Sinistra storica", col:"c5", offset:28,
+      items:[
+        {t:"<strong>«Rivoluzione parlamentare» (1876)</strong>: un voto sulle ferrovie, non un'elezione"},
+        {t:"<strong>Trasformismo</strong>: maggioranze costruite con favori, non con programmi", sub:[
+          "Depretis: il «Connubio» diventa sistema permanente di governo"
+        ]},
+        {t:"<strong>Riforma elettorale (1882)</strong>: dal 2% al 7%, non ancora suffragio universale"},
+        {t:"<strong>Protezionismo (1887)</strong>: il patto «ferro e grano»", sub:[
+          "Industria del Nord + latifondo del Sud, stesso dazio",
+          "<strong>Guerra doganale con la Francia (1888)</strong>: danno alle esportazioni meridionali"
+        ]},
+        {t:"<strong>Colonialismo</strong>: prestigio + nuovi mercati + emigrazione da dirottare", sub:[
+          "Assab (1882), Massaua (1885), Dogali (1887)"
+        ]},
+        {nodo:true, t:"Nodo storiografico — Il trasformismo: degenerazione o necessità sistemica?"}
+      ]
+    },
+    {
+      id:"cap6", tag:"Capitolo 6", title:"L'età crispina e la crisi di fine secolo", col:"c6", offset:100,
+      items:[
+        {t:"<strong>Crispi</strong>: riforme moderne + metodi autoritari nello stesso governo", sub:[
+          "<strong>Codice Zanardelli (1889)</strong>: abolita la pena di morte",
+          "<strong>Fasci siciliani (1893-94)</strong>: stato d'assedio, 30.000 soldati"
+        ]},
+        {t:"<strong>Modello bismarckiano</strong>: Stato forte, sviluppo guidato dall'alto"},
+        {t:"<strong>Adua (1896)</strong>: disfatta coloniale e fine della carriera di Crispi"},
+        {t:"<strong>Crisi di fine secolo</strong>: scandali finanziari + repressione", sub:[
+          "Scandalo della Banca Romana (1893)",
+          "<strong>Bava Beccaris</strong> a Milano (maggio 1898)"
+        ]},
+        {t:"<strong>«Torniamo allo Statuto» (Sonnino, 1897)</strong>: il governo sganciato dal Parlamento"},
+        {t:"<strong>Regicidio (1900)</strong>: Bresci uccide Umberto I"},
+        {nodo:true, t:"Nodo storiografico — Crispi: autoritario o modernizzatore?"}
+      ]
+    }
+  ];
+
+  var ARROW_LINE = function(x1,x2){
+    return '<svg viewBox="0 0 ' + CASCADE_W + ' 18" preserveAspectRatio="none" aria-hidden="true">' +
+      '<line x1="' + x1 + '" y1="0" x2="' + x2 + '" y2="18" stroke="#b7ab8d" stroke-width="1.2"/>' +
+      '</svg>';
+  };
+
+  var tree = document.getElementById('tree');
+
+  function renderItem(item){
+    var li = document.createElement('li');
+    var row = document.createElement('div');
+    row.className = 'item-row' + (item.nodo ? ' nodo' : '');
+
+    var txt = document.createElement('span');
+    txt.className = 'txt';
+    if (item.nodo){
+      var parts = item.t.split(' — ');
+      txt.innerHTML = '<span class="lbl">' + parts[0] + '</span>' + parts[1];
+    } else {
+      txt.innerHTML = item.t;
+    }
+    row.appendChild(txt);
+
+    var hasSub = item.sub && item.sub.length;
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'item-toggle' + (hasSub ? '' : ' hidden');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.textContent = '\u25B8';
+    toggle.setAttribute('aria-label', hasSub ? 'Mostra il dettaglio' : '');
+    row.appendChild(toggle);
+
+    li.appendChild(row);
+
+    if (hasSub){
+      var childWrap = document.createElement('div');
+      childWrap.className = 'children';
+      var ul3 = document.createElement('ul');
+      ul3.className = 'lvl3';
+      item.sub.forEach(function(s){
+        var li3 = document.createElement('li');
+        li3.innerHTML = s;
+        ul3.appendChild(li3);
+      });
+      childWrap.appendChild(ul3);
+      li.appendChild(childWrap);
+
+      toggle.addEventListener('click', function(){
+        var open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+        childWrap.classList.toggle('open', !open);
+      });
+    }
+    return li;
+  }
+
+  function renderChapter(node){
+    var wrap = document.createElement('div');
+    wrap.className = 'chnode';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chbtn ch-' + node.col;
+    btn.style.width = NODE_W + 'px';
+    btn.style.marginLeft = node.offset + 'px';
+    btn.setAttribute('aria-expanded','false');
+    btn.innerHTML =
+      '<span><span class="tag">' + node.tag + '</span>' +
+      '<span class="ttl">' + node.title + '</span></span>' +
+      '<span class="chev">\u25B8</span>';
+
+    var childWrap = document.createElement('div');
+    childWrap.className = 'children';
+    var ul2 = document.createElement('ul');
+    ul2.className = 'lvl2';
+    node.items.forEach(function(item){
+      ul2.appendChild(renderItem(item));
+    });
+    childWrap.appendChild(ul2);
+
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      childWrap.classList.toggle('open', !open);
+    });
+
+    wrap.appendChild(btn);
+    wrap.appendChild(childWrap);
+    return wrap;
+  }
+
+  DATA.forEach(function(node, idx){
+    if (idx > 0){
+      var prev = DATA[idx-1];
+      var connSlot = document.createElement('div');
+      connSlot.className = 'connector';
+      var x1 = prev.offset + NODE_W/2;
+      var x2 = node.offset + NODE_W/2;
+      connSlot.innerHTML = ARROW_LINE(x1, x2);
+      tree.appendChild(connSlot);
+
+      var stub = document.createElement('div');
+      stub.className = 'stub-mobile';
+      tree.appendChild(stub);
+    }
+    tree.appendChild(renderChapter(node));
+  });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    document.querySelectorAll('.chbtn, .item-toggle:not(.hidden)').forEach(function(b){
+      b.setAttribute('aria-expanded','true');
+    });
+    document.querySelectorAll('.children').forEach(function(c){ c.classList.add('open'); });
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    document.querySelectorAll('.chbtn, .item-toggle:not(.hidden)').forEach(function(b){
+      b.setAttribute('aria-expanded','false');
+    });
+    document.querySelectorAll('.children').forEach(function(c){ c.classList.remove('open'); });
+  });
+})();
+</script>
+</body>
+</html>

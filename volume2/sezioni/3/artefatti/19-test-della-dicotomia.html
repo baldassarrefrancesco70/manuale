@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il test della dicotomia</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --civ:#4E7A93; --etn:#9C5B3C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:960px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:.6rem;}
+  .method-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;color:var(--brown);margin-bottom:1.3rem;line-height:1.5;}
+
+  .policy-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1rem 1.2rem;margin-bottom:1rem;}
+  .policy-text{font-size:.92rem;line-height:1.55;margin-bottom:.8rem;}
+  .policy-opts{display:flex;gap:.6rem;margin-bottom:.8rem;}
+  .policy-opt{flex:1;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.6rem;cursor:pointer;text-align:center;}
+  .policy-opt:hover{border-color:var(--brown);}
+  .policy-opt.civ.chosen{background:#E4EDF2;border-color:var(--civ);color:var(--civ);font-weight:600;}
+  .policy-opt.etn.chosen{background:#F0E4DB;border-color:var(--etn);color:var(--etn);font-weight:600;}
+  .policy-opt[disabled]{cursor:default;}
+
+  .reveal{display:none;padding:.8rem .9rem;border-radius:5px;font-size:.84rem;line-height:1.55;background:#FBF6EC;border-left:3px solid var(--brown);}
+  .reveal.show{display:block;}
+  .reveal-place{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--brown-dark);display:block;margin-bottom:.4rem;}
+
+  .progress-wrap{display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:var(--brown-dark);margin-bottom:1.2rem;}
+  .progress-track{flex:1;height:5px;background:#E3DACB;border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--brown);width:0%;transition:width .4s ease;}
+
+  .closing{display:none;margin-top:.6rem;}
+  .closing.show{display:block;}
+  .closing-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.3rem 1.5rem;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .closing-text{font-size:.9rem;line-height:1.65;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Dal nazionalismo romantico al nazionalismo aggressivo · Artefatto 19</div>
+    <div class="header-title">Il test della dicotomia</div>
+    <div class="header-sub">Sei politiche statali reali, senza indicazione di paese o data. Classifica ciascuna come civica o etnica, poi guarda a chi appartiene davvero.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">La dicotomia tra nazionalismo civico ed etnico è uno strumento di analisi utile. Qui la mettiamo alla prova su casi reali, per vedere se regge come strumento di giudizio.</div>
+    <div class="method-note">[Le sei politiche sono reali; i paesi e le date non vengono da nazioni.md — sono dati storico-giuridici generali, esterni al capitolo.]</div>
+
+    <div class="progress-wrap">
+      <span>Politiche classificate</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressCount">0 / 6</span>
+    </div>
+
+    <div id="policiesWrap"></div>
+
+    <div class="closing" id="closing">
+      <div class="closing-card">
+        <div class="closing-title">Uno strumento, non un giudizio</div>
+        <div class="closing-text">Gli Stati Uniti compaiono due volte in questo elenco, agli antipodi: il caso da manuale della cittadinanza civica (per nascita sul territorio) e una delle più dure leggi di esclusione etnica del secolo. La Francia, il modello per eccellenza del nazionalismo civico e repubblicano, ha imposto un'assimilazione linguistica scolastica severa e una naturalizzazione coloniale condizionata alla rinuncia allo statuto personale. La dicotomia civico/etnico resta utile come strumento di analisi. Diventa fuorviante nel momento in cui si usa come giudizio di valore — perché ogni nazione tende a riconoscersi nel proprio modello civico e a collocare quello etnico presso gli altri, e i fatti, come questi sei casi mostrano, non si allineano così ordinatamente.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const policies = [
+  {
+    text:'Assimilazione linguistica obbligatoria nelle scuole pubbliche, con soppressione delle lingue regionali.',
+    place:'Francia, Terza Repubblica, dagli anni 1880 (leggi scolastiche di Jules Ferry e politica linguistica successiva)',
+    note:'Formalmente uno Stato-modello del nazionalismo civico e repubblicano: eppure impone un\'assimilazione linguistica dura verso bretone, occitano e le altre lingue regionali.'
+  },
+  {
+    text:'Cittadinanza attribuita per discendenza (diritto di sangue), indipendentemente dal luogo di nascita.',
+    place:'Germania, legge sulla cittadinanza del 1913',
+    note:'Il caso da manuale del nazionalismo etnico — rimasta sostanzialmente in vigore fino al 2000.'
+  },
+  {
+    text:'Cittadinanza attribuita per nascita sul territorio, indipendentemente dall\'origine dei genitori.',
+    place:'Stati Uniti, XIV emendamento, 1868',
+    note:'Il caso da manuale del nazionalismo civico — ma lo stesso paese, nello stesso periodo, applicava la politica seguente.'
+  },
+  {
+    text:'Esclusione legale di un intero gruppo dall\'immigrazione e dalla naturalizzazione, in base all\'origine.',
+    place:'Stati Uniti, Chinese Exclusion Act, 1882',
+    note:'Promulgata dallo stesso Stato che, quattordici anni prima, aveva sancito la cittadinanza per nascita sul territorio: la coerenza formalmente civica convive con un\'esclusione dichiaratamente etnica.'
+  },
+  {
+    text:'Naturalizzazione piena concessa solo a condizione di rinunciare al proprio statuto giuridico e religioso di origine.',
+    place:'Francia coloniale, Algeria, Senatus-consulte del 1865',
+    note:'La cittadinanza è aperta a tutti, in linea di principio — ma a condizione di diventare, sul piano giuridico e religioso, indistinguibili dai francesi metropolitani.'
+  },
+  {
+    text:'Riconoscimento costituzionale di più lingue nazionali, con pari statuto ufficiale.',
+    place:'Svizzera, riconoscimento costituzionale del multilinguismo',
+    note:'Un caso relativamente aperto e pluralista, spesso preso a modello — ma costruito su una logica diversa da entrambe le altre: non l\'appartenenza a una nazione unica, ma la coabitazione di più comunità linguistiche riconosciute.'
+  }
+];
+
+let classified = 0;
+const choices = [];
+
+function renderPolicies(){
+  const wrap = document.getElementById('policiesWrap');
+  policies.forEach((p,i)=>{
+    const card = document.createElement('div');
+    card.className = 'policy-card';
+    card.innerHTML = `
+      <div class="policy-text">${p.text}</div>
+      <div class="policy-opts" id="popts${i}">
+        <button class="policy-opt civ" onclick="classify(${i},'civ')">Civica</button>
+        <button class="policy-opt etn" onclick="classify(${i},'etn')">Etnica</button>
+      </div>
+      <div class="reveal" id="preveal${i}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function classify(i, pick){
+  if(choices[i]) return;
+  choices[i] = pick;
+  document.querySelectorAll('#popts'+i+' .policy-opt').forEach(b=>{
+    b.disabled = true;
+    if(b.classList.contains(pick)) b.classList.add('chosen');
+  });
+
+  const p = policies[i];
+  const rev = document.getElementById('preveal'+i);
+  rev.classList.add('show');
+  rev.innerHTML = `<span class="reveal-place">${p.place}</span>${p.note}`;
+
+  classified++;
+  document.getElementById('progressFill').style.width = (classified/policies.length*100)+'%';
+  document.getElementById('progressCount').textContent = classified+' / '+policies.length;
+  if(classified === policies.length){
+    document.getElementById('closing').classList.add('show');
+    document.getElementById('closing').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+renderPolicies();
+</script>
+</body>
+</html>

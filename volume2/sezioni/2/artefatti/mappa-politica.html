@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mappa della sezione — Come nasce la politica del mondo moderno</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --c1:#5c7343; --c2:#9d4a2b; --c3:#3d5566; --c4:#b0872e; --frame:#8a7a52;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif)}
+  body{padding:16px 16px 30px;line-height:1.4}
+  .wrap{max-width:1000px;margin:0 auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.66rem;color:var(--ink-soft);text-align:center}
+  h1{font-size:1.22rem;font-weight:600;margin:.12rem 0 10px;text-align:center}
+
+  .toolbar{display:flex;justify-content:center;gap:14px;margin-bottom:10px;font-family:var(--sans);font-size:.72rem}
+  .toolbar button{appearance:none;border:0;background:none;color:var(--ink-soft);text-decoration:underline;
+    cursor:pointer;font-family:var(--sans);font-size:.72rem;padding:2px}
+  .toolbar button:hover{color:var(--ink)}
+
+  .root-row{display:flex;justify-content:center}
+  .root{
+    background:var(--paper-2);border:1px solid var(--frame);border-radius:3px;
+    padding:8px 22px;text-align:center;max-width:520px;
+  }
+  .root .k{font-family:var(--sans);font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:2px}
+  .root h2{margin:0;font-size:1.02rem;font-weight:600}
+
+  .trunk{width:1px;height:14px;background:var(--rule);margin:0 auto}
+
+  /* --- cascata verticale a scalare, come nel modello di riferimento --- */
+  .cascade{width:680px;max-width:100%;margin:0 auto;position:relative}
+  .row-slot{position:relative}
+  .row-slot .node{width:230px;margin-left:0}
+  .connector{width:100%;height:20px;position:relative}
+  .connector svg{display:block;width:100%;height:100%}
+  .stub-mobile{display:none;width:1px;height:20px;background:var(--rule);margin:0 auto}
+
+  .node{
+    font-family:var(--sans);border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);
+    padding:8px 11px;cursor:pointer;text-align:left;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:6px;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .node:hover{background:#e1d9c4}
+  .node[aria-expanded="true"]{border-color:var(--ink);background:#e6ddc3}
+  .node .lbl{font-size:.78rem;line-height:1.22;color:var(--ink)}
+  .node .tag{display:block;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+  .node .chev{font-size:.66rem;color:var(--ink-soft);flex:0 0 auto;margin-top:1px;transition:transform .15s ease}
+  .node[aria-expanded="true"] .chev{transform:rotate(90deg)}
+
+  .frame-item .node{border-style:dashed;padding:7px 10px}
+  .frame-item .node .lbl{font-style:italic}
+
+  .col-c1 .tag{color:var(--c1)} .col-c1 .node[aria-expanded="true"]{border-color:var(--c1)}
+  .col-c2 .tag{color:var(--c2)} .col-c2 .node[aria-expanded="true"]{border-color:var(--c2)}
+  .col-c3 .tag{color:var(--c3)} .col-c3 .node[aria-expanded="true"]{border-color:var(--c3)}
+  .col-c4 .tag{color:var(--c4)} .col-c4 .node[aria-expanded="true"]{border-color:var(--c4)}
+  .col-fr .tag{color:var(--frame)}
+
+  @media (max-width:760px){
+    .row-slot .node{margin-left:0 !important;margin-right:0 !important;margin-inline:auto !important}
+    .connector{display:none}
+    .stub-mobile{display:block}
+  }
+
+  strong{font-weight:700}
+
+  .panels{margin-top:12px}
+  .panel{max-height:0;overflow:hidden;transition:max-height .28s ease;border-radius:0 0 4px 4px}
+  .panel.open{max-height:5000px;margin-top:10px;margin-bottom:2px}
+  .panel-inner{border:1px solid var(--rule);border-left-width:4px;border-radius:3px;background:var(--paper-2);
+    padding:12px 16px 13px}
+  .panel-inner.pc1{border-left-color:var(--c1)}
+  .panel-inner.pc2{border-left-color:var(--c2)}
+  .panel-inner.pc3{border-left-color:var(--c3)}
+  .panel-inner.pc4{border-left-color:var(--c4)}
+  .panel-inner.pfr{border-left-color:var(--frame);border-left-style:dashed}
+
+  .panel-head{font-family:var(--sans);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:9px}
+  .panel-head b{color:var(--ink);font-weight:600;text-transform:none;letter-spacing:0;font-size:.86rem;
+    font-family:var(--serif);margin-left:6px}
+
+  /* liste per apertura/chiusura (frame) */
+  .frame-list{list-style:none;margin:0;padding:0;max-width:680px}
+  .frame-list li{font-size:.87rem;padding:7px 0;border-top:1px solid var(--line)}
+  .frame-list li:first-child{border-top:0}
+
+  /* albero L2/L3 dentro un capitolo */
+  .branch-list{list-style:none;margin:0;padding:0}
+  .branch-list > li{border-top:1px solid var(--line)}
+  .branch-list > li:first-child{border-top:0}
+  .branch-list > li{padding:3px 0}
+
+  /* nodo ESPANDIBILE (L2 con figli): affordance marcata */
+  .branch{appearance:none;border:0;border-left:3px solid var(--rule);background:rgba(32,29,24,.045);
+    width:100%;text-align:left;cursor:pointer;border-radius:0 3px 3px 0;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+    padding:8px 10px 8px 9px;font-family:var(--serif);color:var(--ink);
+    transition:background .15s ease, border-color .15s ease}
+  .branch:hover{background:rgba(32,29,24,.09)}
+  .branch[aria-expanded="true"]{background:rgba(32,29,24,.11);border-left-color:var(--ink)}
+  .branch .btxt{font-size:.88rem;line-height:1.36}
+  .branch .chev{font-family:var(--sans);font-size:.62rem;color:var(--ink-soft);flex:0 0 auto;margin-top:2px;
+    display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;
+    border:1px solid var(--rule);border-radius:3px;background:var(--paper);
+    transition:transform .15s ease, border-color .15s ease, color .15s ease}
+  .branch[aria-expanded="true"] .chev{transform:rotate(90deg);border-color:var(--ink);color:var(--ink)}
+
+  .col-c1 .branch[aria-expanded="true"]{border-left-color:var(--c1)}
+  .col-c2 .branch[aria-expanded="true"]{border-left-color:var(--c2)}
+  .col-c3 .branch[aria-expanded="true"]{border-left-color:var(--c3)}
+  .col-c4 .branch[aria-expanded="true"]{border-left-color:var(--c4)}
+
+  /* nodo FOGLIA (senza figli): nessuna affordance di click */
+  .leaf-row{padding:8px 10px 8px 12px;font-size:.88rem;line-height:1.36;color:var(--ink)}
+
+  .subpanel{max-height:0;overflow:hidden;transition:max-height .25s ease}
+  .subpanel.open{max-height:1200px;padding:4px 0 8px}
+  .leaf-list{list-style:none;margin:2px 0 2px 12px;padding:0 0 0 14px;border-left:2px solid var(--line)}
+  .leaf-list li{font-size:.81rem;color:var(--ink-soft);line-height:1.42;padding:4px 0}
+  .leaf-list li strong{color:var(--ink)}
+
+  .pill{display:inline-block;margin-top:5px;font-family:var(--sans);font-size:.6rem;color:var(--ink-soft);
+    border:1px dashed var(--rule);border-radius:9px;padding:1px 7px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Come nasce la politica del mondo moderno &middot; Mappa di apertura</div>
+  <h1>Mappa della sezione</h1>
+
+  <div class="toolbar">
+    <button type="button" id="expandAll">Espandi tutto</button>
+    <button type="button" id="collapseAll">Comprimi tutto</button>
+  </div>
+
+  <div class="root-row">
+    <div class="root">
+      <span class="k">Sezione</span>
+      <h2>Come nasce la politica del mondo moderno</h2>
+    </div>
+  </div>
+  <div class="trunk"></div>
+  <div class="cascade" id="cascade"></div>
+  <div class="panels" id="panels"></div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+  {
+    "id": "apertura",
+    "tag": "Apertura di sezione",
+    "title": "Il fondamento e il confine",
+    "frame": true,
+    "offset": 225,
+    "items": [
+      {
+        "t": "Il **fondamento del potere** passa da Dio alla **nazione**."
+      },
+      {
+        "t": "La **sovranità nazionale** deve tracciare un confine: chi ne fa parte."
+      },
+      {
+        "t": "La **cittadinanza** si allarga nel 1792 e si restringe nel 1795: non è una linea che avanza.",
+        "pill": "verificato in: Chiusura"
+      },
+      {
+        "t": "La **schiavitù** viene abolita nel 1794 e ripristinata per legge nel 1802.",
+        "pill": "verificato in: Chiusura"
+      },
+      {
+        "t": "Le **donne** restano fuori dal corpo politico in ogni fase del periodo.",
+        "pill": "verificato in: Chiusura"
+      },
+      {
+        "t": "Il **Terrore** nasce dalla stessa domanda sui limiti della sovranità, non da una degenerazione improvvisa."
+      }
+    ]
+  },
+  {
+    "id": "cap1",
+    "tag": "Capitolo 1",
+    "col": "c1",
+    "offset": 70,
+    "title": "L'Europa del Settecento e la crisi dell'antico regime",
+    "branches": [
+      {
+        "t": "Il **privilegio** è una condizione giuridica, non di ricchezza.",
+        "children": [
+          {
+            "t": "Il **terzo stato** paga le imposte; **nobiltà** e **clero** ne sono in gran parte esenti."
+          },
+          {
+            "t": "Un mercante ricco resta terzo stato; un nobile povero conserva i privilegi."
+          },
+          {
+            "t": "I contadini subiscono tre prelievi insieme: **Stato**, **Chiesa**, **signore**."
+          }
+        ]
+      },
+      {
+        "t": "Sotto la parola **assolutismo** si nascondono cinque macchine di potere diverse.",
+        "children": [
+          {
+            "t": "La **Francia** si dichiara assoluta e non riesce a tassare i propri privilegiati."
+          },
+          {
+            "t": "La **Gran Bretagna**, meno assoluta di tutte, estrae più risorse delle altre."
+          },
+          {
+            "t": "La **Prussia** integra la nobiltà nello Stato; la **Russia** elimina ogni corpo intermedio."
+          }
+        ]
+      },
+      {
+        "t": "La **guerra limitata** è una tesi da verificare, non un fatto acquisito.",
+        "pill": "↔ Cap. 3 · La coscrizione del 1793",
+        "children": [
+          {
+            "t": "Le premesse reggono per il teatro europeo e per gli obiettivi dinastici."
+          },
+          {
+            "t": "Non reggono per i costi umani della **guerra dei sette anni** né per la sua dimensione globale."
+          }
+        ]
+      },
+      {
+        "t": "L'**Illuminismo** è un metodo critico, non un insieme di risposte condivise.",
+        "children": [
+          {
+            "t": "Propone tre risposte incompatibili alla domanda sul fondamento del potere."
+          },
+          {
+            "t": "Si divide sulla schiavitù: la denuncia esiste e non si traduce in politica."
+          }
+        ]
+      },
+      {
+        "t": "Le **riforme** del secolo incontrano diritti scritti, non un'inerzia da vincere.",
+        "children": [
+          {
+            "t": "Il **Regno di Sardegna** dimostra che riformare era una scelta, non un obbligo del tempo."
+          },
+          {
+            "t": "Per abolire un privilegio il sovrano deve violare il diritto vigente."
+          }
+        ]
+      },
+      {
+        "t": "La **crisi del 1788** somma un blocco istituzionale e una crisi materiale.",
+        "children": [
+          {
+            "t": "La convocazione degli **Stati generali** si spiega senza il cattivo raccolto."
+          },
+          {
+            "t": "Gli eventi dell'estate 1789 non si spiegano affatto senza di esso."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cap2",
+    "tag": "Capitolo 2",
+    "col": "c2",
+    "offset": 380,
+    "title": "L'apertura della Rivoluzione",
+    "branches": [
+      {
+        "t": "I **cahiers de doléances** chiedono riforme, non la fine della monarchia.",
+        "children": [
+          {
+            "t": "L'**uguaglianza fiscale** è già un luogo comune, sostenuto anche da nobili e clero."
+          },
+          {
+            "t": "Nessun quaderno chiede la **sovranità della nazione** o l'uguaglianza dei diritti politici."
+          }
+        ]
+      },
+      {
+        "t": "Il Terzo Stato si proclama **Assemblea nazionale** il 17 giugno 1789.",
+        "children": [
+          {
+            "t": "Non è una rivolta: è una ridefinizione di chi rappresenta chi, decisa con un voto."
+          },
+          {
+            "t": "L'assemblea viene salvata due volte, a luglio e a ottobre, da chi non la eleggeva."
+          }
+        ]
+      },
+      {
+        "t": "La **Dichiarazione dei diritti** non concede: dichiara che i diritti esistono già.",
+        "children": [
+          {
+            "t": "Sposta la sovranità dal re alla nazione senza mai nominare il re."
+          },
+          {
+            "t": "Parla degli **uomini**, non dei francesi, e lascia alla legge il compito di dire chi è cittadino."
+          }
+        ]
+      },
+      {
+        "t": "L'Assemblea rifà la Francia in due anni: **dipartimenti**, mercato unico, **beni nazionali**.",
+        "children": [
+          {
+            "t": "Il decentramento elettivo del 1790 diventerà il più efficace strumento di accentramento della storia francese."
+          },
+          {
+            "t": "La vendita dei beni della Chiesa crea un ceto di proprietari legato alla tenuta della Rivoluzione."
+          }
+        ]
+      },
+      {
+        "t": "Il **giuramento del clero** spacca il paese sulla religione, non sulle tasse.",
+        "children": [
+          {
+            "t": "Sette vescovi su centotrenta giurano fedeltà alla nazione."
+          },
+          {
+            "t": "La geografia del rifiuto anticipa la geografia della **guerra civile** del 1793."
+          }
+        ]
+      },
+      {
+        "t": "Il decreto di dicembre 1789 distingue **cittadini attivi** e **cittadini passivi**.",
+        "pill": "↔ Cap. 4 · Il Codice civile",
+        "children": [
+          {
+            "t": "Il **censo** non misura la ricchezza: pretende di misurare l'indipendenza di giudizio."
+          },
+          {
+            "t": "**Condorcet** e **Olympe de Gouges** chiedono l'inclusione delle donne e vengono respinti con un voto."
+          }
+        ]
+      },
+      {
+        "t": "La guerra del 1792 nasce da quattro previsioni opposte, e quasi tutte sbagliate.",
+        "children": [
+          {
+            "t": "**Girondini**, corte e **La Fayette** la vogliono per ragioni fra loro incompatibili."
+          },
+          {
+            "t": "Il **10 agosto** un'insurrezione abbatte una monarchia che l'assemblea legale non aveva deciso di abolire."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cap3",
+    "tag": "Capitolo 3",
+    "col": "c3",
+    "offset": 70,
+    "title": "La Repubblica, il Terrore, il Direttorio",
+    "branches": [
+      {
+        "t": "La **Convenzione** concentra tutti i poteri in un'unica assemblea.",
+        "children": [
+          {
+            "t": "È eletta a **suffragio universale maschile** e votata da un decimo degli aventi diritto."
+          },
+          {
+            "t": "Il congegno del 1791 viene sostituito eliminando la separazione dei poteri, non correggendola."
+          }
+        ]
+      },
+      {
+        "t": "Il **processo al re**, nel gennaio 1793, divide l'assemblea in modo diverso a ogni votazione.",
+        "children": [
+          {
+            "t": "La colpevolezza raccoglie una maggioranza schiacciante; la pena di morte passa per pochi voti."
+          },
+          {
+            "t": "Chi vota la morte del re lega la propria sopravvivenza a quella della Repubblica."
+          }
+        ]
+      },
+      {
+        "t": "Nel 1793 quattro crisi arrivano insieme: guerra, **Vandea**, rivolte federaliste, fame.",
+        "children": [
+          {
+            "t": "Nessuna delle quattro spiega da sola tutti gli eventi dell'anno."
+          },
+          {
+            "t": "La loro **simultaneità** produce la convinzione che il paese sia percorso da un'unica trama."
+          }
+        ]
+      },
+      {
+        "t": "Le **misure eccezionali** si dichiarano temporanee e intanto funzionano.",
+        "children": [
+          {
+            "t": "La **legge dei sospetti** definisce non un comportamento ma un'impressione."
+          },
+          {
+            "t": "Entro l'estate 1794 la Vandea è piegata e le città federaliste riconquistate."
+          }
+        ]
+      },
+      {
+        "t": "La **costituzione** più democratica del decennio non entra mai in vigore.",
+        "children": [
+          {
+            "t": "È approvata da quasi due milioni di cittadini e sospesa quattro mesi dopo dagli stessi uomini."
+          },
+          {
+            "t": "Diventerà per un secolo il riferimento dei movimenti democratici europei, proprio perché non fu mai applicata."
+          }
+        ]
+      },
+      {
+        "t": "Il **Terrore** ammette due letture opposte, e nessuna delle due basta da sola.",
+        "children": [
+          {
+            "t": "La lettura delle **circostanze** non spiega perché le esecuzioni accelerino quando il pericolo militare è già passato."
+          },
+          {
+            "t": "La lettura della **logica ideologica** rischia di leggere Rousseau attraverso il 1794."
+          },
+          {
+            "t": "Oltre l'ottanta per cento dei condannati appartiene al **terzo stato**: il dispositivo colpisce chi diceva di difendere."
+          }
+        ]
+      },
+      {
+        "t": "La **coscrizione** del 1793 è il rovescio della cittadinanza.",
+        "pill": "↔ Cap. 1 · La guerra limitata",
+        "children": [
+          {
+            "t": "La nazione può chiedere ai propri membri la vita, cosa che un re non poteva chiedere ai sudditi."
+          }
+        ]
+      },
+      {
+        "t": "Il 4 febbraio 1794 la Convenzione ratifica un'**emancipazione** decisa sul campo.",
+        "children": [
+          {
+            "t": "Due commissari a **Santo Domingo** avevano proclamato la libertà senza autorizzazione, per necessità militare."
+          }
+        ]
+      },
+      {
+        "t": "**Termidoro** abbatte Robespierre per paura, non per rigetto del Terrore.",
+        "children": [
+          {
+            "t": "A eliminarlo sono uomini che il Terrore lo avevano applicato quanto lui."
+          },
+          {
+            "t": "L'immagine del **tiranno sanguinario** nasce nelle settimane successive alla sua morte."
+          }
+        ]
+      },
+      {
+        "t": "Il **Direttorio** chiama l'esercito a risolvere ogni crisi istituzionale.",
+        "children": [
+          {
+            "t": "Nessuna via legale esiste per un conflitto fra camere e governo."
+          },
+          {
+            "t": "In quattro anni annulla elezioni di destra e di sinistra, sempre con l'aiuto dei generali."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cap4",
+    "tag": "Capitolo 4",
+    "col": "c4",
+    "offset": 380,
+    "title": "L'Europa di Napoleone",
+    "branches": [
+      {
+        "t": "A **Campoformio** la stessa mano firma l'uguaglianza giuridica e il baratto di uno Stato.",
+        "children": [
+          {
+            "t": "La **Cisalpina** riceve una costituzione; **Venezia** viene ceduta all'Austria nella stessa settimana."
+          },
+          {
+            "t": "Le due cose non si succedono nel tempo: avvengono insieme."
+          }
+        ]
+      },
+      {
+        "t": "Il **18 brumaio** conserva le forme repubblicane e le svuota.",
+        "children": [
+          {
+            "t": "Non viene sciolta l'assemblea: viene fatta votare da un numero ridotto di deputati sotto minaccia."
+          },
+          {
+            "t": "La costituzione dell'**anno VIII** fa votare i cittadini senza far eleggere loro nessuno."
+          }
+        ]
+      },
+      {
+        "t": "Il **Consolato** offre pace, ordine e sicurezza della proprietà.",
+        "children": [
+          {
+            "t": "Il **Concordato** del 1801 mette al sicuro i titoli di chi ha comprato beni nazionali."
+          },
+          {
+            "t": "Ogni **plebiscito** riduce lo spazio in cui si può legittimamente dissentire."
+          }
+        ]
+      },
+      {
+        "t": "Il **Codice civile** realizza l'uguaglianza e traccia un confine interno.",
+        "pill": "↔ Cap. 2 · Cittadini attivi e passivi",
+        "children": [
+          {
+            "t": "Abolisce i privilegi di nascita e restringe la capacità giuridica della **donna sposata**."
+          },
+          {
+            "t": "Su alcuni istituti arretra rispetto alla legislazione rivoluzionaria di dieci anni prima."
+          }
+        ]
+      },
+      {
+        "t": "Nel 1802 la Francia **ripristina** per legge la schiavitù abolita nel 1794.",
+        "children": [
+          {
+            "t": "Diventa l'unico paese ad averla dovuta abolire due volte."
+          }
+        ]
+      },
+      {
+        "t": "L'Europa napoleonica ha **tre statuti giuridici** diversi, non uno.",
+        "children": [
+          {
+            "t": "**Territori annessi**, **Stati satelliti** e **alleati per trattato** ricevono la legge francese in modi diversi."
+          },
+          {
+            "t": "La stessa persona può guadagnare da uno di questi statuti e pagare il prezzo di un altro."
+          }
+        ]
+      },
+      {
+        "t": "La **coscrizione** è uguale per legge e diseguale nel rischio.",
+        "children": [
+          {
+            "t": "Il **rimpiazzo** legale permette a chi ha denaro di pagare un sostituto al proprio posto."
+          }
+        ]
+      },
+      {
+        "t": "La **Spagna** resiste a Napoleone in nome del re legittimo, non della libertà.",
+        "children": [
+          {
+            "t": "Nasce la parola **guerriglia**, spesso confusa con una resistenza di segno progressista."
+          },
+          {
+            "t": "A **Cadice**, nello stesso anno, un'assemblea proclama una costituzione liberale in nome dello stesso re."
+          }
+        ]
+      },
+      {
+        "t": "Il **crollo** del 1812-1815 chiude un sistema costruito sulla guerra che si autofinanzia."
+      }
+    ]
+  },
+  {
+    "id": "chiusura",
+    "tag": "Chiusura di sezione",
+    "title": "Il fondamento e il confine, rivisti",
+    "frame": true,
+    "offset": 225,
+    "items": [
+      {
+        "t": "Il fondamento del potere cambia per sempre: nessun regime potrà più giustificarsi solo con la **nascita**.",
+        "pill": "risponde a: Apertura"
+      },
+      {
+        "t": "Il confine della **cittadinanza** resta un problema aperto: il Congresso di Vienna non lo chiude.",
+        "pill": "risponde a: Apertura"
+      },
+      {
+        "t": "La cittadinanza politica si è allargata e ristretta più volte: non è stata una linea che avanza.",
+        "pill": "risponde a: Apertura"
+      },
+      {
+        "t": "La parola **nazione** erediterà lo stesso problema nel secolo successivo."
+      }
+    ]
+  }
+];
+  var NODE_W = 230, CASCADE_W = 680;
+
+  function boldify(text){
+    var esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return esc.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  }
+
+  var ARROW = null; // non usato: le connessioni sono linee semplici, come nel modello
+
+  function connectorSVG(prevOffset, nextOffset){
+    var x1 = prevOffset + NODE_W/2;
+    var x2 = nextOffset + NODE_W/2;
+    return '<svg viewBox="0 0 ' + CASCADE_W + ' 20" preserveAspectRatio="none" aria-hidden="true">' +
+      '<line x1="' + x1 + '" y1="0" x2="' + x2 + '" y2="20" stroke="#b7ab8d" stroke-width="1.3"/>' +
+      '</svg>';
+  }
+
+  var cascade = document.getElementById('cascade');
+  var panelsWrap = document.getElementById('panels');
+  var allToggles = [];
+
+  function registerToggle(btn, panel){ allToggles.push({btn:btn, panel:panel}); }
+  function setOpen(btn, panel, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    panel.classList.toggle('open', open);
+  }
+
+  function buildFrameList(items){
+    var ul = document.createElement('ul');
+    ul.className = 'frame-list';
+    items.forEach(function(it){
+      var li = document.createElement('li');
+      var span = document.createElement('span');
+      span.innerHTML = boldify(it.t);
+      li.appendChild(span);
+      if (it.pill){
+        li.appendChild(document.createElement('br'));
+        var pill = document.createElement('span');
+        pill.className = 'pill';
+        pill.textContent = it.pill;
+        li.appendChild(pill);
+      }
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function buildBranchList(branches){
+    var ul = document.createElement('ul');
+    ul.className = 'branch-list';
+    branches.forEach(function(b){
+      var li = document.createElement('li');
+      var hasKids = b.children && b.children.length;
+
+      if (hasKids){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'branch';
+        btn.setAttribute('aria-expanded','false');
+        var txt = document.createElement('span');
+        txt.className = 'btxt';
+        txt.innerHTML = boldify(b.t);
+        var chev = document.createElement('span');
+        chev.className = 'chev';
+        chev.textContent = '\u25B8';
+        btn.appendChild(txt);
+        btn.appendChild(chev);
+        li.appendChild(btn);
+
+        var sub = document.createElement('div');
+        sub.className = 'subpanel';
+        var lul = document.createElement('ul');
+        lul.className = 'leaf-list';
+        b.children.forEach(function(c){
+          var cli = document.createElement('li');
+          cli.innerHTML = boldify(c.t);
+          lul.appendChild(cli);
+        });
+        sub.appendChild(lul);
+        li.appendChild(sub);
+
+        btn.addEventListener('click', function(){
+          var open = btn.getAttribute('aria-expanded') === 'true';
+          setOpen(btn, sub, !open);
+        });
+        registerToggle(btn, sub);
+      } else {
+        var row = document.createElement('div');
+        row.className = 'leaf-row';
+        row.innerHTML = boldify(b.t);
+        li.appendChild(row);
+      }
+
+      if (b.pill){
+        var pill2 = document.createElement('span');
+        pill2.className = 'pill';
+        pill2.style.display = 'block';
+        pill2.style.marginLeft = hasKids ? '12px' : '12px';
+        pill2.textContent = b.pill;
+        li.appendChild(pill2);
+      }
+
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  DATA.forEach(function(node, idx){
+    if (idx > 0){
+      var prev = DATA[idx - 1];
+      var connSlot = document.createElement('div');
+      connSlot.className = 'connector';
+      connSlot.innerHTML = connectorSVG(prev.offset, node.offset);
+      cascade.appendChild(connSlot);
+
+      var stubM = document.createElement('div');
+      stubM.className = 'stub-mobile';
+      cascade.appendChild(stubM);
+    }
+
+    var slot = document.createElement('div');
+    slot.className = 'row-slot' + (node.frame ? ' frame-item col-fr' : ' col-' + node.col);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'node';
+    btn.style.marginLeft = node.offset + 'px';
+    btn.setAttribute('aria-expanded','false');
+    btn.setAttribute('aria-controls','panel-' + node.id);
+    btn.innerHTML = '<span class="lbl"><span class="tag">' + node.tag + '</span>' + node.title + '</span>' +
+                     '<span class="chev">\u25B8</span>';
+    slot.appendChild(btn);
+    cascade.appendChild(slot);
+
+    var panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.id = 'panel-' + node.id;
+    var inner = document.createElement('div');
+    inner.className = 'panel-inner ' + (node.frame ? 'pfr' : 'p' + node.col);
+    var head = document.createElement('div');
+    head.className = 'panel-head';
+    head.innerHTML = node.tag + '<b>' + node.title + '</b>';
+    inner.appendChild(head);
+    inner.appendChild(node.frame ? buildFrameList(node.items) : buildBranchList(node.branches));
+    panel.appendChild(inner);
+    panelsWrap.appendChild(panel);
+
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      setOpen(btn, panel, !open);
+    });
+    registerToggle(btn, panel);
+  });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    allToggles.forEach(function(pair){ setOpen(pair.btn, pair.panel, true); });
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    allToggles.forEach(function(pair){ setOpen(pair.btn, pair.panel, false); });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il tavolo di Vienna — simulatore decisionale</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+    --leg:#7A5C42; --equ:#4A6B5C; --nes:#8B4A4A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:900px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:700px;}
+
+  .progress-wrap{background:var(--brown-dark);padding:.65rem 2rem;display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:#EFE4D4;}
+  .progress-track{flex:1;height:5px;background:rgba(0,0,0,.2);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:#D9C6A5;width:0%;transition:width .4s ease;}
+
+  .case-nav{display:flex;background:var(--paper);border-bottom:1px solid #DCD2BE;padding:0 2rem;overflow-x:auto;}
+  .case-dot{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;padding:.75rem 1rem;color:#A8A090;border-bottom:3px solid transparent;white-space:nowrap;cursor:pointer;}
+  .case-dot.active{color:var(--brown-dark);border-bottom-color:var(--brown);font-weight:600;}
+  .case-dot.done{color:var(--brown);}
+
+  .main{padding:1.8rem 2rem 2.5rem;}
+  .case-page{display:none;}
+  .case-page.active{display:block;}
+
+  .case-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1.4rem 1.6rem;}
+  .case-title{font-size:1.15rem;color:var(--brown-dark);margin-bottom:.2rem;}
+  .case-source-tag{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9px;letter-spacing:.6px;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-bottom:.8rem;}
+  .tag-testo{background:#E4EFE7;color:#3B6B4C;}
+  .tag-integr{background:#EFE7D8;color:var(--brown-dark);}
+  .tag-ipotesi{background:#F5E0D8;color:#8B4A2A;}
+
+  .case-situation{font-size:.92rem;line-height:1.65;margin-bottom:1.2rem;color:var(--ink);}
+
+  .options{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem;}
+  .opt-btn{
+    text-align:left;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;
+    padding:.7rem .9rem;font-family:Georgia,serif;font-size:.88rem;line-height:1.5;
+    cursor:pointer;color:var(--ink);
+  }
+  .opt-btn:hover{border-color:var(--brown);}
+  .opt-btn.chosen{border-color:var(--brown);background:#FBF0DD;}
+  .opt-btn[disabled]{cursor:default;}
+
+  .reveal{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid #DCD2BE;}
+  .reveal.show{display:block;}
+  .reveal-row{display:flex;gap:.8rem;margin-bottom:.7rem;align-items:flex-start;}
+  .reveal-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--brown-dark);min-width:150px;padding-top:.15rem;}
+  .reveal-text{font-size:.85rem;line-height:1.55;flex:1;}
+  .principle-chip{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.4px;padding:2px 8px;border-radius:3px;color:#fff;margin-right:.4rem;}
+  .p-legittimita{background:var(--leg);}
+  .p-equilibrio{background:var(--equ);}
+  .p-nessuno{background:var(--nes);}
+
+  .case-footer{display:flex;justify-content:space-between;margin-top:1.2rem;}
+  .nav-btn{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.8rem;background:var(--brown);color:var(--paper);border:none;border-radius:4px;padding:.55rem 1.1rem;cursor:pointer;}
+  .nav-btn:hover{background:var(--brown-dark);}
+  .nav-btn[disabled]{background:#D9D2C4;cursor:default;}
+  .nav-btn.ghost{background:transparent;color:var(--brown-dark);border:1px solid var(--brown);}
+
+  /* PROFILE */
+  .profile{display:none;}
+  .profile.active{display:block;}
+  .profile-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.6rem 1.8rem;}
+  .profile-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:1rem;}
+  .compare-table{width:100%;border-collapse:collapse;margin-bottom:1.2rem;font-size:.85rem;}
+  .compare-table th{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--brown-dark);text-align:left;padding:.4rem .6rem;border-bottom:2px solid var(--brown);}
+  .compare-table td{padding:.5rem .6rem;border-bottom:1px solid #E3DACB;}
+  .bar-cell{display:flex;align-items:center;gap:.5rem;}
+  .bar-track{flex:1;height:10px;background:#EAE2D2;border-radius:5px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:5px;}
+  .profile-question{font-style:italic;font-size:.95rem;line-height:1.6;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Vienna e il principio di nazionalità · Artefatto 2</div>
+    <div class="header-title">Il tavolo di Vienna</div>
+    <div class="header-sub">Cinque casi reali affidati alla tua decisione. Per ciascuno, scegli una soluzione: poi scopri quale principio hai applicato — legittimità, equilibrio, o nessuno dei due — e quale fu la decisione reale del Congresso.</div>
+  </div>
+
+  <div class="progress-wrap">
+    <span>Casi decisi</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span id="progressCount">0 / 5</span>
+  </div>
+
+  <div class="case-nav" id="caseNav"></div>
+
+  <div class="main">
+    <div id="casesWrap"></div>
+
+    <div class="profile" id="profile">
+      <div class="profile-card">
+        <div class="profile-title">Il tuo profilo al tavolo di Vienna</div>
+        <table class="compare-table">
+          <tr><th></th><th>Le tue scelte</th><th>Il Congresso reale</th></tr>
+          <tr>
+            <td>Legittimità</td>
+            <td class="bar-cell"><span id="userLeg">0</span><div class="bar-track"><div class="bar-fill" id="userLegBar" style="background:var(--leg);"></div></div></td>
+            <td class="bar-cell"><span id="realLeg">0</span><div class="bar-track"><div class="bar-fill" id="realLegBar" style="background:var(--leg);"></div></div></td>
+          </tr>
+          <tr>
+            <td>Equilibrio</td>
+            <td class="bar-cell"><span id="userEqu">0</span><div class="bar-track"><div class="bar-fill" id="userEquBar" style="background:var(--equ);"></div></div></td>
+            <td class="bar-cell"><span id="realEqu">0</span><div class="bar-track"><div class="bar-fill" id="realEquBar" style="background:var(--equ);"></div></div></td>
+          </tr>
+          <tr>
+            <td>Nessuno dei due</td>
+            <td class="bar-cell"><span id="userNes">0</span><div class="bar-track"><div class="bar-fill" id="userNesBar" style="background:var(--nes);"></div></div></td>
+            <td class="bar-cell"><span id="realNes">0</span><div class="bar-track"><div class="bar-fill" id="realNesBar" style="background:var(--nes);"></div></div></td>
+          </tr>
+        </table>
+        <p style="font-size:.88rem;line-height:1.6;">Su cinque casi reali, il Congresso applicò l'equilibrio quattro volte e la legittimità una sola volta — pur avendo proclamato entrambi i principi come fondativi. Non fu incoerenza episodica: fu il metodo.</p>
+        <div class="profile-question">L'incoerenza tra i principi dichiarati e le decisioni prese fu un difetto del sistema di Vienna — o la condizione che gli permise di funzionare per quarant'anni?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cases = [
+  {
+    id:'francia', title:'La Francia sconfitta', tag:'testo',
+    situation:'Napoleone è stato sconfitto due volte. Le potenze vincitrici devono decidere che cosa fare della Francia: trattarla come l\'aggressore che ha insanguinato l\'Europa per vent\'anni, o come uno Stato la cui dinastia legittima è semplicemente tornata al proprio posto.',
+    options:[
+      {text:'Smembrare la Francia, riducendone il territorio, per impedire ogni futura rivincita.', principle:'equilibrio'},
+      {text:'Restaurare i confini francesi preesistenti, in nome della continuità dinastica dei Borbone.', principle:'legittimita'},
+      {text:'Mantenere la Francia integra ma indebolita, come tassello utile all\'equilibrio complessivo.', principle:'equilibrio'}
+    ],
+    real:1,
+    realNote:'Talleyrand impose l\'argomento della legittimità dinastica: se il diritto dei Borbone era legittimo, la Francia restaurata non poteva essere trattata come una nazione colpevole da smembrare. La Francia mantenne i confini prima della rivoluzione, e fu riammessa tra le grandi potenze già nel 1818.'
+  },
+  {
+    id:'sassonia', title:'La Sassonia', tag:'integr',
+    situation:'La Sassonia era stata alleata di Napoleone fino alla fine. Il suo sovrano, per diritto dinastico, ne è ancora il legittimo re. La Prussia, che ha contribuito in modo decisivo alla vittoria, rivendica compensazioni territoriali proprio in quell\'area.',
+    options:[
+      {text:'Restaurare il Regno di Sassonia nei confini precedenti, in nome della continuità dinastica del suo sovrano.', principle:'legittimita'},
+      {text:'Cedere una parte consistente del territorio sassone alla Prussia, per bilanciare i pesi geopolitici nella Germania.', principle:'equilibrio'}
+    ],
+    real:1,
+    realNote:'La Sassonia perse circa la metà del proprio territorio a favore della Prussia — un compromesso pensato per bilanciare i pesi geopolitici nella regione tedesca, non per applicare un principio di diritto dinastico. Il resto dello Stato sopravvisse, ma ridotto. [Integrazione fornita da Francesco, non presente in nazioni.md]'
+  },
+  {
+    id:'genova', title:'La Repubblica di Genova', tag:'testo',
+    situation:'Genova è un\'antica repubblica indipendente, con una legittimità storica che risale a secoli prima della rivoluzione. È anche, però, un territorio piccolo e utile a rafforzare il contenimento intorno alla Francia.',
+    options:[
+      {text:'Ripristinare la Repubblica di Genova come Stato indipendente, riconoscendone la legittimità storica.', principle:'legittimita'},
+      {text:'Sopprimere la Repubblica e assorbirne il territorio in uno Stato più grande, a rafforzo del contenimento della Francia.', principle:'equilibrio'}
+    ],
+    real:1,
+    realNote:'La Repubblica di Genova scomparve dall\'atlante europeo senza che la sua legittimità storica contasse: il riassetto rispose all\'equilibrio, non alla continuità dinastica o repubblicana, e fu condotto senza alcun riguardo per la volontà degli abitanti. [ipotesi] Il territorio passò al Regno di Sardegna — dato storicamente documentato ma non esplicitato in nazioni.md, che cita il Regno di Sardegna solo a proposito della restaurazione legislativa di Vittorio Emanuele I.'
+  },
+  {
+    id:'paesibassi', title:'I Paesi Bassi', tag:'testo',
+    situation:'Olanda e Belgio avevano avuto, in passato, dinastie e assetti politici distinti. Nessuna casata ha mai regnato sull\'insieme dei due territori. Le potenze vincitrici devono decidere come sistemare quest\'area, a ridosso della Francia.',
+    options:[
+      {text:'Restaurare Olanda e Belgio separatamente, secondo le rispettive dinastie legittime preesistenti.', principle:'legittimita'},
+      {text:'Unire Belgio e Olanda in un unico Regno dei Paesi Bassi, come Stato cuscinetto intorno alla Francia.', principle:'equilibrio'}
+    ],
+    real:1,
+    realNote:'Nacque il Regno dei Paesi Bassi, che univa Belgio e Olanda in un\'unica compagine costruita apposta per la funzione di contenimento — anche se nessuna dinastia legittima aveva mai regnato su quell\'insieme.'
+  },
+  {
+    id:'polonia', title:'La Polonia', tag:'ipotesi',
+    situation:'Il territorio polacco era già stato diviso più volte nel Settecento tra le potenze vicine. Alla fine delle guerre napoleoniche, la questione si riapre: che fare di un territorio a cui una comunità storica, di lingua e memoria proprie, potrebbe rivendicare un diritto — ma che nessun trattato riconosce ancora come tale.',
+    options:[
+      {text:'Ricostituire un Regno di Polonia pienamente indipendente, riconoscendo la nazione polacca come soggetto storico.', principle:'nessuno'},
+      {text:'Dividere nuovamente il territorio polacco tra le potenze, assegnando la parte maggiore alla Russia in unione personale con lo zar.', principle:'equilibrio'}
+    ],
+    real:1,
+    realNote:'[ipotesi — ricostruito da conoscenza storica generale, assente sia da nazioni.md sia dai materiali forniti] Nacque il cosiddetto "Regno del Congresso": la maggior parte del territorio polacco fu unita alla Russia in unione personale sotto lo zar Alessandro I, mentre Prussia e Austria mantennero le rispettive porzioni. Non fu un riconoscimento della nazione polacca come soggetto politico, ma una nuova spartizione tra le potenze.'
+  }
+];
+
+let currentCase = 0;
+const answered = {};
+
+function renderNav(){
+  const nav = document.getElementById('caseNav');
+  nav.innerHTML = '';
+  cases.forEach((c,i)=>{
+    const d = document.createElement('div');
+    d.className = 'case-dot' + (i===currentCase?' active':'') + (answered[i]!==undefined?' done':'');
+    d.textContent = (i+1)+'. '+c.title;
+    d.onclick = ()=>goToCase(i);
+    d.id = 'navdot'+i;
+    nav.appendChild(d);
+  });
+}
+
+function tagLabel(tag){
+  return {testo:['tag-testo','fonte: nazioni.md'], integr:['tag-integr','fonte integrativa'], ipotesi:['tag-ipotesi','[ipotesi]']}[tag];
+}
+
+function renderCases(){
+  const wrap = document.getElementById('casesWrap');
+  wrap.innerHTML = '';
+  cases.forEach((c,i)=>{
+    const [cls,label] = tagLabel(c.tag);
+    const page = document.createElement('div');
+    page.className = 'case-page' + (i===0?' active':'');
+    page.id = 'case'+i;
+    const optsHtml = c.options.map((o,oi)=>`<button class="opt-btn" onclick="chooseOption(${i},${oi})">${o.text}</button>`).join('');
+    page.innerHTML = `
+      <div class="case-card">
+        <div class="case-title">${c.title}</div>
+        <span class="case-source-tag ${cls}">${label}</span>
+        <div class="case-situation">${c.situation}</div>
+        <div class="options" id="opts${i}">${optsHtml}</div>
+        <div class="reveal" id="reveal${i}">
+          <div class="reveal-row">
+            <div class="reveal-label">La tua scelta</div>
+            <div class="reveal-text" id="userPrinciple${i}"></div>
+          </div>
+          <div class="reveal-row">
+            <div class="reveal-label">Decisione reale</div>
+            <div class="reveal-text" id="realText${i}"></div>
+          </div>
+        </div>
+        <div class="case-footer">
+          <button class="nav-btn ghost" onclick="goToCase(${i-1})" ${i===0?'disabled':''}>← Caso precedente</button>
+          <button class="nav-btn" onclick="goToCase(${i+1})" ${i===cases.length-1?'disabled':''}>Caso successivo →</button>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(page);
+  });
+}
+
+function goToCase(i){
+  if(i<0 || i>=cases.length) return;
+  document.getElementById('case'+currentCase).classList.remove('active');
+  currentCase = i;
+  document.getElementById('case'+currentCase).classList.add('active');
+  renderNav();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+const principleLabel = {legittimita:'Legittimità', equilibrio:'Equilibrio', nessuno:'Nessuno dei due'};
+const principleClass = {legittimita:'p-legittimita', equilibrio:'p-equilibrio', nessuno:'p-nessuno'};
+
+function chooseOption(ci, oi){
+  if(answered[ci]!==undefined) return;
+  const c = cases[ci];
+  answered[ci] = oi;
+
+  document.querySelectorAll('#opts'+ci+' .opt-btn').forEach((b,idx)=>{
+    b.disabled = true;
+    if(idx===oi) b.classList.add('chosen');
+  });
+
+  const chosenPrinciple = c.options[oi].principle;
+  const realPrinciple = c.options[c.real].principle;
+
+  document.getElementById('userPrinciple'+ci).innerHTML =
+    `<span class="principle-chip ${principleClass[chosenPrinciple]}">${principleLabel[chosenPrinciple]}</span>` + c.options[oi].text;
+  document.getElementById('realText'+ci).innerHTML =
+    `<span class="principle-chip ${principleClass[realPrinciple]}">${principleLabel[realPrinciple]}</span>` + c.realNote;
+  document.getElementById('reveal'+ci).classList.add('show');
+
+  renderNav();
+  updateProgress();
+}
+
+function updateProgress(){
+  const n = Object.keys(answered).length;
+  document.getElementById('progressFill').style.width = (n/cases.length*100)+'%';
+  document.getElementById('progressCount').textContent = n+' / '+cases.length;
+  if(n===cases.length) showProfile();
+}
+
+function showProfile(){
+  const counts = {user:{legittimita:0,equilibrio:0,nessuno:0}, real:{legittimita:0,equilibrio:0,nessuno:0}};
+  cases.forEach((c,i)=>{
+    const chosen = c.options[answered[i]].principle;
+    const real = c.options[c.real].principle;
+    counts.user[chosen]++;
+    counts.real[real]++;
+  });
+  const max = cases.length;
+  document.getElementById('userLeg').textContent = counts.user.legittimita;
+  document.getElementById('userEqu').textContent = counts.user.equilibrio;
+  document.getElementById('userNes').textContent = counts.user.nessuno;
+  document.getElementById('realLeg').textContent = counts.real.legittimita;
+  document.getElementById('realEqu').textContent = counts.real.equilibrio;
+  document.getElementById('realNes').textContent = counts.real.nessuno;
+  document.getElementById('userLegBar').style.width = (counts.user.legittimita/max*100)+'%';
+  document.getElementById('userEquBar').style.width = (counts.user.equilibrio/max*100)+'%';
+  document.getElementById('userNesBar').style.width = (counts.user.nessuno/max*100)+'%';
+  document.getElementById('realLegBar').style.width = (counts.real.legittimita/max*100)+'%';
+  document.getElementById('realEquBar').style.width = (counts.real.equilibrio/max*100)+'%';
+  document.getElementById('realNesBar').style.width = (counts.real.nessuno/max*100)+'%';
+
+  setTimeout(()=>{
+    document.getElementById('profile').classList.add('active');
+    document.getElementById('profile').scrollIntoView({behavior:'smooth'});
+  }, 400);
+}
+
+renderNav();
+renderCases();
+</script>
+</body>
+</html>

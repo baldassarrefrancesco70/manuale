@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi può far cadere un governo</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1020px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:.6rem;}
+  .method-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;color:var(--brown);margin-bottom:1.3rem;line-height:1.5;}
+
+  .rank-zone{display:flex;gap:.7rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .country-chip{flex:1;min-width:190px;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:6px;padding:.8rem .9rem;cursor:pointer;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;text-align:center;}
+  .country-chip:hover{border-color:var(--brown);}
+  .country-chip.ranked{background:#FBF0DD;border-color:var(--brown);color:#A8977E;cursor:default;}
+  .rank-num{display:block;font-family:Georgia,serif;font-size:1.3rem;color:var(--brown-dark);margin-bottom:.2rem;}
+
+  .ranking-display{display:none;background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:.9rem 1.1rem;margin-bottom:1.2rem;font-size:.85rem;}
+  .ranking-display.show{display:block;}
+  .ranking-display ol{padding-left:1.3rem;}
+  .ranking-display li{margin-bottom:.3rem;}
+
+  table.compare{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;overflow:hidden;font-size:.82rem;margin-top:1rem;}
+  table.compare th, table.compare td{padding:.6rem .7rem;text-align:left;vertical-align:top;border-bottom:1px solid #EAE2D2;line-height:1.5;}
+  table.compare th{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--paper);background:var(--brown);}
+  table.compare td.row-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;font-weight:600;color:var(--brown-dark);background:var(--gray);}
+  table.compare tr.germania td{background:#FBF0DD;}
+  .src-flag{display:block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:8.5px;color:var(--brown);margin-top:.2rem;}
+
+  .closing{display:none;margin-top:1.3rem;background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.2rem 1.4rem;}
+  .closing.show{display:block;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.7rem;}
+  .closing-text{font-size:.9rem;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">La costruzione degli Stati nazionali · Artefatto 17</div>
+    <div class="header-title">Chi può far cadere un governo</div>
+    <div class="header-sub">Quattro ordinamenti coevi. Prima ordinali dal più al meno democratico usando un solo criterio — l'ampiezza del suffragio — poi guarda il resto della tabella.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Clicca i quattro ordinamenti nell'ordine, dal suffragio più ampio al più ristretto.</div>
+    <div class="method-note">[Il testo del capitolo copre in dettaglio solo il caso dell'Impero tedesco; i dati su Regno Unito, Terza Repubblica francese e Regno d'Italia vengono da conoscenza costituzionale generale, non da nazioni.md, e sono etichettati come tali in tabella.]</div>
+
+    <div class="rank-zone" id="rankZone"></div>
+    <div class="ranking-display" id="rankingDisplay"></div>
+
+    <table class="compare" id="compareTable" style="display:none;"></table>
+
+    <div class="closing" id="closing">
+      <div class="closing-title">Il criterio non regge</div>
+      <div class="closing-text">L'Impero tedesco ha il suffragio più ampio dei quattro — suffragio universale maschile diretto per il Reichstag, «una concessione che nessuno Stato liberale dell'Europa occidentale aveva ancora fatto» — ed è però quello in cui il parlamento conta meno: non può formare né rovesciare il governo, che risponde solo all'imperatore. Ampiezza del voto e potere del voto sono due variabili indipendenti: la prima misura chi entra nell'arena, la seconda misura che cosa l'arena permette di fare.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const countries = [
+  {
+    id:'germania', name:'Impero tedesco, 1871',
+    suffragio:'Universale maschile diretto per il Reichstag — il più ampio dei quattro.',
+    nominaGov:'L\'imperatore, tramite il cancelliere che nomina personalmente.',
+    rovesciare:'Il Reichstag non può formare né rovesciare il governo: il cancelliere risponde solo all\'imperatore.',
+    esercito:'L\'imperatore, comandante supremo.',
+    src:'fonte — nazioni.md',
+    suffragioRank:1
+  },
+  {
+    id:'francia', name:'Terza Repubblica francese',
+    suffragio:'Universale maschile, ereditato dal 1848.',
+    nominaGov:'Il Presidente della Repubblica nomina il capo del governo, ma serve la fiducia della Camera.',
+    rovesciare:'La Camera dei Deputati può rovesciare il governo con un voto di sfiducia — e lo fa spesso: è il regime europeo con la maggiore instabilità ministeriale del periodo.',
+    esercito:'Formalmente il Presidente della Repubblica, nella prassi il governo responsabile davanti al parlamento.',
+    src:'[conoscenza generale, non da nazioni.md]',
+    suffragioRank:2
+  },
+  {
+    id:'regnounito', name:'Regno Unito',
+    suffragio:'Maschile allargato dalle riforme del 1867 e del 1884, ma non ancora universale in questo periodo.',
+    nominaGov:'Il monarca nomina formalmente il Primo Ministro, ma per convenzione sceglie il leader della maggioranza ai Comuni.',
+    rovesciare:'La Camera dei Comuni può far cadere il governo con un voto di sfiducia: potere pieno e consolidato.',
+    esercito:'Formalmente la Corona, il controllo effettivo passa dal governo responsabile al parlamento.',
+    src:'[conoscenza generale, non da nazioni.md]',
+    suffragioRank:3
+  },
+  {
+    id:'italia', name:'Regno d\'Italia',
+    suffragio:'Censitario e per istruzione, tra i più ristretti d\'Europa fino alla riforma del 1882 — e anche dopo, una minoranza della popolazione.',
+    nominaGov:'Il re nomina il presidente del Consiglio; la necessità della fiducia parlamentare si consolida nella prassi, non è scritta nello Statuto.',
+    rovesciare:'La Camera può votare la sfiducia, prassi consolidata dagli anni 1860-70, ma meno istituzionalizzata che in Francia o Gran Bretagna.',
+    esercito:'Il re, capo supremo delle forze di terra e di mare per Statuto.',
+    src:'[conoscenza generale, non da nazioni.md]',
+    suffragioRank:4
+  }
+];
+
+let currentRank = 0;
+const userOrder = [];
+
+function renderRankZone(){
+  const zone = document.getElementById('rankZone');
+  countries.forEach(c=>{
+    const chip = document.createElement('div');
+    chip.className = 'country-chip';
+    chip.id = 'rc-'+c.id;
+    chip.textContent = c.name;
+    chip.onclick = ()=>rank(c.id);
+    zone.appendChild(chip);
+  });
+}
+
+function rank(id){
+  if(userOrder.includes(id)) return;
+  currentRank++;
+  userOrder.push(id);
+  const chip = document.getElementById('rc-'+id);
+  chip.classList.add('ranked');
+  chip.innerHTML = `<span class="rank-num">${currentRank}</span>${chip.textContent}`;
+
+  if(userOrder.length === countries.length) showRanking();
+}
+
+function showRanking(){
+  const disp = document.getElementById('rankingDisplay');
+  disp.classList.add('show');
+  const items = userOrder.map(id=>countries.find(c=>c.id===id).name);
+  disp.innerHTML = '<strong>Il tuo ordine, dal suffragio più ampio al più ristretto:</strong><ol>' + items.map(i=>`<li>${i}</li>`).join('') + '</ol>';
+  showTable();
+}
+
+function showTable(){
+  const table = document.getElementById('compareTable');
+  const rows = [
+    {label:'Chi elegge la camera bassa', key:'suffragio'},
+    {label:'Chi nomina il governo', key:'nominaGov'},
+    {label:'Chi può rovesciarlo', key:'rovesciare'},
+    {label:'Chi comanda l\'esercito', key:'esercito'}
+  ];
+  let html = '<tr><th></th>' + countries.map(c=>`<th>${c.name}</th>`).join('') + '</tr>';
+  rows.forEach(r=>{
+    html += `<tr class="${r.key==='suffragio'?'':''}">` + `<td class="row-label">${r.label}</td>` +
+      countries.map(c=>`<td class="${c.id==='germania'?'germania':''}">${c[r.key]}<span class="src-flag">${c.src}</span></td>`).join('') + '</tr>';
+  });
+  table.innerHTML = html;
+  table.style.display = 'table';
+  document.getElementById('closing').classList.add('show');
+  table.scrollIntoView({behavior:'smooth'});
+}
+
+renderRankZone();
+</script>
+</body>
+</html>

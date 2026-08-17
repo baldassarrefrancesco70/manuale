@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La parola nazione — linea semantica</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1000px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:700px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.88rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1.6rem;}
+
+  .word-strip{display:flex;justify-content:center;margin-bottom:.4rem;}
+  .word-strip span{font-family:Georgia,serif;font-style:italic;font-size:1.7rem;color:var(--brown-dark);}
+
+  .stations{display:flex;gap:.9rem;overflow-x:auto;padding-bottom:1rem;margin-bottom:1rem;}
+  .station-card{
+    flex:0 0 260px;
+    background:var(--paper);
+    border:1px solid #DCD2BE;
+    border-radius:6px;
+    overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .station-card.done{border-color:var(--brown);}
+  .st-head{background:var(--gray);padding:.6rem .8rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--brown-dark);}
+  .st-body{padding:.8rem;flex:1;}
+  .st-context{font-size:.82rem;line-height:1.5;margin-bottom:.8rem;color:var(--ink);}
+  .st-source{font-size:.74rem;font-style:italic;color:var(--ink-soft);margin-bottom:.8rem;padding-left:.6rem;border-left:2px solid var(--brown);}
+  .st-options{display:flex;flex-direction:column;gap:.4rem;}
+  .st-opt{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:.72rem;text-align:left;
+    background:var(--gray);border:1px solid #D4CFC4;border-radius:4px;
+    padding:.45rem .6rem;cursor:pointer;color:var(--ink-soft);
+  }
+  .st-opt:hover{border-color:var(--brown);}
+  .st-opt.correct-pick{background:#EAF2EA;border-color:#4A7A5C;color:var(--ink);}
+  .st-opt.wrong-pick{background:#F7E9E4;border-color:#B06A4A;color:var(--ink);}
+  .st-opt.reveal-correct{background:#EAF2EA;border-color:#4A7A5C;color:var(--ink);font-weight:600;}
+  .st-opt[disabled]{cursor:default;}
+  .st-explain{display:none;font-size:.75rem;line-height:1.5;margin-top:.6rem;padding:.5rem .6rem;background:#FBF3E5;border-radius:4px;color:var(--ink);}
+  .st-explain.show{display:block;}
+  .st-marker{margin-top:.6rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--brown);text-align:right;}
+
+  .progress-wrap{display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:var(--brown-dark);margin-bottom:1.4rem;}
+  .progress-track{flex:1;height:5px;background:#E3DACB;border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--brown);width:0%;transition:width .4s ease;}
+
+  .closing{display:none;background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.4rem 1.6rem;margin-top:1rem;}
+  .closing.show{display:block;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .closing-chart{display:flex;gap:.4rem;margin:1rem 0;flex-wrap:wrap;}
+  .cc-item{flex:1;min-width:130px;text-align:center;}
+  .cc-word{font-style:italic;color:var(--brown-dark);font-size:1.1rem;}
+  .cc-arrow{color:#C8BBA8;}
+  .cc-meaning{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.7rem;color:var(--ink-soft);margin-top:.3rem;line-height:1.4;}
+  .closing-text{font-size:.9rem;line-height:1.65;margin-top:.8rem;}
+  .closing-text strong{color:var(--brown-dark);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Vienna e il principio di nazionalità · Artefatto 5</div>
+    <div class="header-title">La parola nazione</div>
+    <div class="header-sub">Prima di essere un principio politico, "nazione" è una parola. Per gran parte della sua storia non ha significato nulla di politico. Segui sei momenti reali in cui la parola viene usata, e per ciascuno scegli che cosa sta designando in quel contesto.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Non è una linea di progresso: la parola resta identica in ogni stazione. Quello che cambia — e che devi individuare — è ciò a cui si riferisce.</div>
+
+    <div class="word-strip"><span>nazione</span></div>
+
+    <div class="progress-wrap">
+      <span>Stazioni completate</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressCount">0 / 6</span>
+    </div>
+
+    <div class="stations" id="stations"></div>
+
+    <div class="closing" id="closing">
+      <div class="closing-title">La parola non si muove. Il significato sì.</div>
+      <div class="closing-chart" id="closingChart"></div>
+      <div class="closing-text">Da quando, con l'articolo 3 della Dichiarazione del 1789, la nazione diventa <strong>titolare del potere</strong>, un titolo di legittimità è diventato un argomento — e un argomento chiunque può usarlo. Finché la sovranità si fondava sulla discendenza dinastica, chi poteva invocarla era un insieme chiuso e noto. Da quando si fonda sull'esistenza di un popolo, resta da stabilire <strong>chi conti come popolo</strong> — e la risposta non è scritta da nessuna parte. È la domanda che attraversa il resto del capitolo, nelle due direzioni opposte in cui può essere rivolta.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const optionSet = [
+  {key:'luogo', label:'Un luogo d\'origine'},
+  {key:'potere', label:'Il titolare del potere / della sovranità'},
+  {key:'corpo', label:'Il corpo collettivo dei cittadini'},
+  {key:'lingua', label:'Una comunità di lingua, senza Stato proprio'},
+  {key:'minaccia', label:'Un gruppo che, dall\'interno, non vi appartiene'}
+];
+
+const stations = [
+  {
+    period:'Uso medievale',
+    context:'Nelle università, le nationes erano le corporazioni che raggruppavano gli studenti per provenienza geografica.',
+    source:'«Una nazione era un dato anagrafico.»',
+    correct:'luogo',
+    explain:'Nell\'uso medievale e di antico regime, "nazione" indica semplicemente il luogo d\'origine di un gruppo — senza alcuna rivendicazione politica.'
+  },
+  {
+    period:'1789',
+    context:'Articolo 3 della Dichiarazione dei diritti dell\'uomo e del cittadino.',
+    source:'«Il principio di ogni sovranità risiede essenzialmente nella nazione.»',
+    correct:'potere',
+    explain:'Qui la parola cambia statuto, non grado: smette di descrivere una provenienza e comincia a designare chi detiene la sovranità.'
+  },
+  {
+    period:'Identificazione rivoluzionaria',
+    context:'L\'identificazione tra popolo e nazione sposta la fonte della legittimità politica.',
+    source:'«Il potere non discende più dall\'alto per diritto divino, ma risiede nel corpo collettivo dei cittadini.»',
+    correct:'corpo',
+    explain:'È la conseguenza diretta dell\'art. 3: la nazione non è più un\'astrazione giuridica, è l\'insieme concreto dei cittadini che la compongono.'
+  },
+  {
+    period:'Prima metà Ottocento',
+    context:'Cechi, slovacchi, finlandesi: comunità senza uno Stato passato da richiamare né un ceto dirigente proprio.',
+    source:'La storiografia le ha chiamate nazioni "non storiche".',
+    correct:'lingua',
+    explain:'Per queste comunità la rivendicazione si appoggia su ciò che possiedono davvero: una lingua propria, distinta da un semplice dialetto.'
+  },
+  {
+    period:'Prima metà Ottocento',
+    context:'La pubblicazione del primo dizionario, della prima grammatica, della prima raccolta di canti popolari.',
+    source:'Funziona «come una dichiarazione di esistenza».',
+    correct:'lingua',
+    explain:'Filologi, lessicografi e raccoglitori di tradizioni popolari dimostrano, con questi strumenti, che una lingua — e quindi un popolo — esiste come soggetto a sé.'
+  },
+  {
+    period:'Uso tardo-ottocentesco',
+    context:'La stessa formula, "in nome del popolo", comincia a servire anche a un\'altra operazione.',
+    source:'«Dichiarare che un popolo è minacciato e che qualcuno dentro i suoi confini non gli appartiene.»',
+    correct:'minaccia',
+    explain:'Lo stesso titolo di legittimità che serve a rivendicare l\'indipendenza si rivolge, più tardi, in direzione opposta: verso chi sta dentro i confini ma viene dichiarato estraneo alla nazione.'
+  }
+];
+
+let completed = 0;
+
+function renderStations(){
+  const wrap = document.getElementById('stations');
+  stations.forEach((st,i)=>{
+    const card = document.createElement('div');
+    card.className = 'station-card';
+    card.id = 'card'+i;
+    const optsHtml = optionSet.map(o=>`<button class="st-opt" data-key="${o.key}" onclick="pick(${i},'${o.key}')">${o.label}</button>`).join('');
+    card.innerHTML = `
+      <div class="st-head">${st.period}</div>
+      <div class="st-body">
+        <div class="st-context">${st.context}</div>
+        <div class="st-source">${st.source}</div>
+        <div class="st-options">${optsHtml}</div>
+        <div class="st-explain" id="exp${i}"></div>
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function pick(i,key){
+  const st = stations[i];
+  const card = document.getElementById('card'+i);
+  if(card.dataset.answered) return;
+  card.dataset.answered = 'true';
+  card.classList.add('done');
+
+  card.querySelectorAll('.st-opt').forEach(btn=>{
+    btn.disabled = true;
+    if(btn.dataset.key === st.correct) btn.classList.add('reveal-correct');
+    else if(btn.dataset.key === key) btn.classList.add('wrong-pick');
+  });
+
+  const exp = document.getElementById('exp'+i);
+  exp.textContent = st.explain;
+  exp.classList.add('show');
+
+  completed++;
+  document.getElementById('progressFill').style.width = (completed/stations.length*100)+'%';
+  document.getElementById('progressCount').textContent = completed+' / '+stations.length;
+  if(completed === stations.length) showClosing();
+}
+
+function showClosing(){
+  const chart = document.getElementById('closingChart');
+  const labelMap = {};
+  optionSet.forEach(o=>labelMap[o.key]=o.label);
+  chart.innerHTML = stations.map((st,i)=>
+    `<div class="cc-item"><div class="cc-word">nazione</div><div class="cc-meaning">${st.period}<br>${labelMap[st.correct]}</div></div>`
+  ).join('<div class="cc-arrow">·</div>');
+  document.getElementById('closing').classList.add('show');
+  document.getElementById('closing').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+renderStations();
+</script>
+</body>
+</html>

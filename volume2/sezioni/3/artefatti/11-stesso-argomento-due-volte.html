@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lo stesso argomento, due volte</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:900px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:700px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .step{display:none;}
+  .step.active{display:block;}
+
+  .step-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .subject-banner{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.8rem 1.1rem;font-size:.9rem;margin-bottom:1.3rem;}
+
+  .premise-bank{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.3rem;}
+  .premise-card{background:var(--gray);border:1.5px solid #D4CFC4;border-radius:6px;padding:.8rem 1rem;font-size:.88rem;line-height:1.5;cursor:pointer;transition:all .15s;}
+  .premise-card:hover{border-color:var(--brown);}
+  .premise-card.added{background:#FBF0DD;border-color:var(--brown);cursor:default;}
+  .premise-card .pc-num{display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--brown);color:var(--paper);text-align:center;line-height:22px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;margin-right:.6rem;visibility:hidden;}
+  .premise-card.added .pc-num{visibility:visible;}
+
+  .argument-chain{display:none;background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.1rem 1.3rem;margin-bottom:1.3rem;}
+  .argument-chain.show{display:block;}
+  .chain-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.7rem;}
+  .chain-item{font-size:.86rem;line-height:1.55;margin-bottom:.5rem;padding-left:1.3rem;position:relative;}
+  .chain-item::before{content:counter(item);counter-increment:item;position:absolute;left:0;color:var(--brown);font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.8rem;}
+  .chain-list{counter-reset:item;}
+  .chain-conclusion{margin-top:.8rem;padding-top:.8rem;border-top:1px dashed #D9C6A0;font-weight:600;font-size:.9rem;}
+
+  .btn{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;background:var(--brown);color:var(--paper);border:none;border-radius:4px;padding:.6rem 1.2rem;cursor:pointer;}
+  .btn:hover{background:var(--brown-dark);}
+  .btn[disabled]{background:#D9D2C4;cursor:default;}
+
+  .validity-tag{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.5px;text-transform:uppercase;background:#4A7A5C;color:#fff;padding:3px 9px;border-radius:3px;margin-top:.8rem;}
+
+  .final-reveal{display:none;margin-top:1.5rem;background:#FBF3E5;border:1.5px solid var(--brown);border-radius:6px;padding:1.3rem 1.5rem;}
+  .final-reveal.show{display:block;}
+  .final-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .final-text{font-size:.9rem;line-height:1.65;margin-bottom:1rem;}
+  .final-q{font-style:italic;font-size:.95rem;line-height:1.6;padding-top:.9rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Moti e nazionalismo romantico · Artefatto 11</div>
+    <div class="header-title">Lo stesso argomento, due volte</div>
+    <div class="header-sub">Costruisci la rivendicazione ungherese verso Vienna scegliendo le premesse, una alla volta. Poi guarda che cosa succede quando lo stesso argomento, identico, viene rivolto verso l'Ungheria stessa.</div>
+  </div>
+
+  <div class="main">
+
+    <div class="step active" id="step1">
+      <div class="step-label">Passo 1 · Costruisci l'argomento ungherese verso Vienna</div>
+      <div class="subject-banner">Soggetto che rivendica: <strong>l'Ungheria</strong>. Soggetto a cui la rivendicazione è rivolta: <strong>Vienna</strong>.</div>
+      <div class="premise-bank" id="premiseBank1"></div>
+      <div class="argument-chain" id="chain1">
+        <div class="chain-title">L'argomento che hai costruito</div>
+        <div class="chain-list" id="chainList1"></div>
+        <div class="chain-conclusion" id="chainConclusion1"></div>
+        <span class="validity-tag" id="validityTag1" style="display:none;">Argomento valido</span>
+      </div>
+      <button class="btn" id="toStep2Btn" style="display:none;" onclick="goToStep(2)">Ora riapplica lo stesso argomento →</button>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-label">Passo 2 · Lo stesso argomento, gli stessi passaggi, altri soggetti</div>
+      <div class="subject-banner">Soggetto che rivendica: <strong>croati, serbi, slovacchi, rumeni e ucraini</strong> — circa il 60% della popolazione dei territori rivendicati dall'Ungheria. Soggetto a cui la rivendicazione è rivolta: <strong>Budapest</strong>.</div>
+      <div class="argument-chain show" id="chain2">
+        <div class="chain-title">Nessuna premessa è cambiata, solo i nomi</div>
+        <div class="chain-list" id="chainList2"></div>
+        <div class="chain-conclusion" id="chainConclusion2"></div>
+        <span class="validity-tag">Argomento ugualmente valido</span>
+      </div>
+      <button class="btn" onclick="goToStep(3)">Vedi che cosa accadde davvero →</button>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-label">Passo 3 · Quello che accadde</div>
+      <div class="final-reveal show">
+        <div class="final-title">La risposta reale</div>
+        <div class="final-text">
+          L'aristocrazia terriera magiara rifiutò qualunque concessione nazionale alle minoranze croate, serbe, slovacche, rumene e ucraine, e impose una politica di <strong>magiarizzazione</strong>. Chiedeva per sé, in nome del principio di nazionalità, esattamente ciò che negava agli altri in nome dell'integrità del regno.<br><br>
+          Vienna non dovette inventare nulla: le bastò offrire alle minoranze ciò che Budapest rifiutava. Fu l'esercito croato del <strong>bano Josip Jelačić</strong> ad attaccare l'Ungheria. La rivoluzione ungherese fu piegata, con l'aiuto delle truppe russe nell'agosto 1849; Kossuth andò in esilio.
+        </div>
+        <div class="final-q">Hai costruito lo stesso argomento due volte, con le stesse premesse, e in entrambi i casi è risultato valido. Il problema, allora, sta nell'argomento — cioè nel principio di nazionalità in sé — o sta in chi lo usa, cioè nel fatto che l'Ungheria lo invocò per sé e lo negò agli altri?</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const premises = [
+  {id:'p1', text:'Una comunità di lingua e storia comuni ha diritto a governarsi da sé.'},
+  {id:'p2', text:'I confini imposti dai trattati non fondano da soli una legittimità politica.'},
+  {id:'p3', text:"L'appartenenza a un popolo si eredita, non si concede dall'alto."}
+];
+
+const premisesHungary = premises.map(p=>p.text);
+const conclusionHungary = "L'Ungheria, in quanto comunità di lingua e storia proprie, ha diritto a governarsi indipendentemente da Vienna, qualunque cosa stabilisca il trattato che la lega all'Impero.";
+
+const premisesMinorities = [
+  'Una comunità di lingua e storia comuni ha diritto a governarsi da sé.',
+  'I confini imposti dai trattati (o dal Regno d\'Ungheria) non fondano da soli una legittimità politica.',
+  "L'appartenenza a un popolo si eredita, non si concede dall'alto."
+];
+const conclusionMinorities = "Croati, serbi, slovacchi, rumeni e ucraini, in quanto comunità di lingua e storia proprie, hanno diritto a governarsi indipendentemente da Budapest, qualunque cosa stabilisca il Regno d'Ungheria che li comprende.";
+
+let addedCount = 0;
+
+function renderPremiseBank(){
+  const bank = document.getElementById('premiseBank1');
+  premises.forEach((p,i)=>{
+    const card = document.createElement('div');
+    card.className = 'premise-card';
+    card.id = 'pcard'+i;
+    card.innerHTML = `<span class="pc-num"></span>${p.text}`;
+    card.onclick = ()=>addPremise(i);
+    bank.appendChild(card);
+  });
+}
+
+function addPremise(i){
+  const card = document.getElementById('pcard'+i);
+  if(card.classList.contains('added')) return;
+  addedCount++;
+  card.classList.add('added');
+  card.querySelector('.pc-num').textContent = addedCount;
+
+  const chainList = document.getElementById('chainList1');
+  const item = document.createElement('div');
+  item.className = 'chain-item';
+  item.textContent = premises[i].text;
+  chainList.appendChild(item);
+
+  document.getElementById('chain1').classList.add('show');
+
+  if(addedCount === premises.length){
+    document.getElementById('chainConclusion1').textContent = 'Quindi: ' + conclusionHungary;
+    document.getElementById('validityTag1').style.display = 'inline-block';
+    document.getElementById('toStep2Btn').style.display = 'inline-block';
+  }
+}
+
+function renderStep2(){
+  const chainList = document.getElementById('chainList2');
+  chainList.innerHTML = '';
+  premisesMinorities.forEach(t=>{
+    const item = document.createElement('div');
+    item.className = 'chain-item';
+    item.textContent = t;
+    chainList.appendChild(item);
+  });
+  document.getElementById('chainConclusion2').textContent = 'Quindi: ' + conclusionMinorities;
+}
+
+function goToStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  if(n===2) renderStep2();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+renderPremiseBank();
+</script>
+</body>
+</html>

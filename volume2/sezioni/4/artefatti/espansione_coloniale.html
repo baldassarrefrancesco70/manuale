@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'espansione coloniale italiana</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #FAF7F2;
+    color: #2C2C2A;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #2C2C2A;
+    padding: 1.4rem 2.5rem;
+    border-bottom: 4px solid #8B7355;
+  }
+  .header-title {
+    font-size: 1.15rem;
+    font-weight: normal;
+    color: #F0EBE0;
+  }
+  .header-title em { color: #C2A882; font-style: italic; }
+  .header-sub {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.78rem;
+    color: #888070;
+    margin-top: 0.35rem;
+  }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    background: #FFFDF8;
+    border-bottom: 1px solid #D4C9B8;
+    display: flex;
+    padding: 0 2rem;
+  }
+  .tab-btn {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    padding: 0.9rem 1.3rem;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: #888070;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: #2C2C2A; }
+  .tab-btn.active {
+    color: #2C2C2A;
+    border-bottom-color: #8B7355;
+    font-weight: 600;
+  }
+
+  /* ── SECTIONS ── */
+  .section { display: none; padding: 2rem 2.5rem; }
+  .section.active { display: block; }
+
+  /* ══════════════════════════════════════════
+     SECTION 1 — TIMELINE VERTICALE
+  ══════════════════════════════════════════ */
+  .tl-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .tl-list {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  /* vertical spine */
+  .tl-list::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(to bottom, #C8BBA8, #8B5E3C, #7A2E1A, #C8BBA8);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 0.1rem;
+  }
+
+  .tl-dot-wrap {
+    position: absolute;
+    left: -2rem;
+    top: 12px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tl-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid #FAF7F2;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 0 0 1.5px currentColor;
+  }
+
+  .tl-dot:hover,
+  .tl-item.active .tl-dot {
+    transform: scale(1.3);
+    box-shadow: 0 0 0 2.5px currentColor, 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .dot-dipl  { background: #5B7FA6; color: #5B7FA6; }
+  .dot-mil   { background: #7A2E1A; color: #7A2E1A; }
+  .dot-terr  { background: #4A6741; color: #4A6741; }
+  .dot-tratt { background: #8B5E3C; color: #8B5E3C; }
+
+  .tl-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.65rem 0.9rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.15s;
+  }
+  .tl-btn:hover { background: #F0EBE0; }
+  .tl-item.active .tl-btn { background: #F0EBE0; }
+
+  .tl-year {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #8B7355;
+    margin-bottom: 2px;
+  }
+  .tl-title {
+    font-size: 0.9rem;
+    color: #2C2C2A;
+    line-height: 1.35;
+  }
+  .tl-tag {
+    display: inline-block;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+    color: #fff;
+    margin-top: 3px;
+  }
+  .tag-dipl  { background: #5B7FA6; }
+  .tag-mil   { background: #7A2E1A; }
+  .tag-terr  { background: #4A6741; }
+  .tag-tratt { background: #8B5E3C; }
+
+  /* ── INFO CARD (right column) ── */
+  .tl-info-card {
+    background: #FFFDF8;
+    border: 1.5px solid #C8BBA8;
+    border-radius: 6px;
+    overflow: hidden;
+    position: sticky;
+    top: 1rem;
+  }
+
+  .info-card-stripe { height: 5px; }
+  .stripe-dipl  { background: #5B7FA6; }
+  .stripe-mil   { background: #7A2E1A; }
+  .stripe-terr  { background: #4A6741; }
+  .stripe-tratt { background: #8B5E3C; }
+
+  .info-card-body { padding: 1.1rem 1.25rem; }
+
+  .info-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .info-card-year {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #8B7355;
+  }
+  .info-card-badge {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    color: #fff;
+  }
+  .info-card-title {
+    font-size: 1rem;
+    color: #2C2C2A;
+    line-height: 1.4;
+    margin-bottom: 0.65rem;
+  }
+  .info-card-text {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.83rem;
+    color: #2C2C2A;
+    line-height: 1.7;
+  }
+  .info-card-prompt {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.82rem;
+    color: #B0A090;
+    font-style: italic;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+
+  /* type legend */
+  .tl-legend {
+    margin-top: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: #FFFDF8;
+    border: 1.5px solid #D4C9B8;
+    border-radius: 5px;
+  }
+  .tl-legend-title {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888070;
+    margin-bottom: 0.5rem;
+  }
+  .leg-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 4px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: #5C4A2A;
+  }
+  .leg-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ══════════════════════════════════════════
+     SECTION 2 — ADUA
+  ══════════════════════════════════════════ */
+  .adua-header {
+    background: #1A0A06;
+    border-radius: 6px;
+    padding: 1.4rem 1.75rem;
+    margin-bottom: 1.5rem;
+    border-left: 5px solid #7A2E1A;
+  }
+  .adua-date {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8B5E3C;
+    margin-bottom: 0.4rem;
+  }
+  .adua-title {
+    font-size: 1.3rem;
+    color: #F0EBE0;
+    font-weight: normal;
+    line-height: 1.35;
+    margin-bottom: 0.4rem;
+  }
+  .adua-sub {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.82rem;
+    color: #888070;
+    line-height: 1.5;
+  }
+
+  .adua-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .adua-grid-full {
+    margin-bottom: 0.85rem;
+  }
+
+  .adua-card {
+    background: #FFFDF8;
+    border: 1.5px solid #C8BBA8;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .adua-card-head {
+    padding: 0.65rem 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .ah-premesse   { background: #5B4A3A; }
+  .ah-svolg      { background: #7A2E1A; }
+  .ah-cons-ita   { background: #4A6741; }
+  .ah-cons-etiop { background: #3A5C7A; }
+
+  .adua-card-body {
+    padding: 0.9rem 1.1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.83rem;
+    color: #2C2C2A;
+    line-height: 1.7;
+  }
+
+  .adua-card-body p { margin-bottom: 0.6rem; }
+  .adua-card-body p:last-child { margin-bottom: 0; }
+
+  .adua-figures {
+    display: flex;
+    gap: 1rem;
+    margin: 0.75rem 0 0.25rem;
+    flex-wrap: wrap;
+  }
+  .fig-block {
+    background: #F5F0E8;
+    border-radius: 4px;
+    padding: 0.45rem 0.75rem;
+    text-align: center;
+    min-width: 90px;
+  }
+  .fig-num {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    color: #7A2E1A;
+    font-weight: normal;
+    line-height: 1.1;
+  }
+  .fig-label {
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 9.5px;
+    color: #888070;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* storiographic note */
+  .storio-card {
+    background: #FFFDF8;
+    border: 1.5px solid #C8BBA8;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.85rem;
+  }
+  .storio-head {
+    padding: 0.65rem 1rem;
+    background: #2C2C2A;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #C2A882;
+  }
+  .storio-body {
+    padding: 0.9rem 1.1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.83rem;
+    color: #2C2C2A;
+    line-height: 1.7;
+  }
+
+  /* continuity note */
+  .cont-note {
+    background: #1A0A06;
+    border-radius: 6px;
+    border-left: 5px solid #8B5E3C;
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .cont-note-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .cont-note-body { flex: 1; }
+  .cont-note-title {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8B5E3C;
+    margin-bottom: 0.4rem;
+  }
+  .cont-note-text {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.82rem;
+    color: #C8BBA8;
+    line-height: 1.7;
+  }
+  .cont-note-text strong { color: #E8D4B8; }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(-4px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title"><em>L'espansione coloniale italiana</em> (1881–1896)</div>
+  <div class="header-sub">Due sezioni navigabili · Clicca sugli eventi per leggere le descrizioni</div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(0,this)">I · Le tappe dell'espansione</button>
+  <button class="tab-btn" onclick="switchTab(1,this)">II · Adua</button>
+</div>
+
+<!-- ══ SECTION 1 ══════════════════════════════════════════════════════ -->
+<div class="section active" id="s0">
+  <div class="tl-layout">
+
+    <!-- left: timeline -->
+    <div>
+      <div class="tl-list" id="tlList">
+
+        <!-- items injected by JS -->
+
+      </div>
+      <div class="tl-legend">
+        <div class="tl-legend-title">Tipo di evento</div>
+        <div class="leg-row"><div class="leg-dot" style="background:#5B7FA6"></div>Diplomatico</div>
+        <div class="leg-row"><div class="leg-dot" style="background:#7A2E1A"></div>Militare</div>
+        <div class="leg-row"><div class="leg-dot" style="background:#4A6741"></div>Territoriale</div>
+        <div class="leg-row"><div class="leg-dot" style="background:#8B5E3C"></div>Trattato / accordo</div>
+      </div>
+    </div>
+
+    <!-- right: info card -->
+    <div>
+      <div class="tl-info-card" id="infoCard">
+        <div class="info-card-stripe" id="infoStripe"></div>
+        <div class="info-card-body" id="infoBody">
+          <div class="info-card-prompt">Seleziona un evento dalla timeline</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SECTION 2 — ADUA ══════════════════════════════════════════════ -->
+<div class="section" id="s1">
+
+  <div class="adua-header">
+    <div class="adua-date">1° marzo 1896 · Adua, Etiopia settentrionale</div>
+    <div class="adua-title">La battaglia di Adua</div>
+    <div class="adua-sub">La prima grande sconfitta di un esercito coloniale europeo per mano di uno Stato africano sovrano nella storia del colonialismo moderno.</div>
+  </div>
+
+  <div class="adua-grid">
+
+    <div class="adua-card">
+      <div class="adua-card-head ah-premesse">Le premesse</div>
+      <div class="adua-card-body">
+        <p>Il Trattato di Uccialli (1889), stipulato da Crispi con il negus Menelik II, conteneva una fatale ambiguità linguistica: la versione italiana sanciva un protettorato italiano sull'Etiopia, quella in lingua amarica no. Menelik non aveva alcuna intenzione di rinunciare alla propria sovranità.</p>
+        <p>Quando contestò formalmente il trattato e lo revocò, Crispi decise di ricorrere alla forza. Alla base della decisione c'era una sopravvalutazione sistematica delle proprie forze e una sottovalutazione altrettanto sistematica dell'avversario, nutrita dal pregiudizio coloniale che considerava gli eserciti africani nemici di seconda categoria.</p>
+      </div>
+    </div>
+
+    <div class="adua-card">
+      <div class="adua-card-head ah-svolg">Lo svolgimento</div>
+      <div class="adua-card-body">
+        <p>Il corpo di spedizione italiano del generale Baratieri si trovò di fronte un'armata etiopica guidata personalmente da Menelik e dai suoi ras, forte di oltre settantamila effettivi ben armati — in parte con forniture europee.</p>
+        <p>La battaglia si concluse in poche ore con una catastrofe. La brutalità si abbatté anche sugli ascari eritrei fatti prigionieri: molti subirono l'amputazione della mano destra e del piede sinistro, punizione riservata a chi aveva combattuto contro il proprio paese per conto dello straniero.</p>
+        <div class="adua-figures">
+          <div class="fig-block">
+            <div class="fig-num">~16.000</div>
+            <div class="fig-label">soldati italiani<br>e ascari</div>
+          </div>
+          <div class="fig-block">
+            <div class="fig-num">>70.000</div>
+            <div class="fig-label">effettivi<br>etiopi</div>
+          </div>
+          <div class="fig-block">
+            <div class="fig-num">4.000–6.000</div>
+            <div class="fig-label">morti<br>italiani</div>
+          </div>
+          <div class="fig-block">
+            <div class="fig-num">~2.000</div>
+            <div class="fig-label">prigionieri<br>italiani</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="adua-card">
+      <div class="adua-card-head ah-cons-ita">Conseguenze per l'Italia</div>
+      <div class="adua-card-body">
+        <p>Nelle piazze esplosero manifestazioni di protesta; l'opposizione radicale e socialista gridò «Viva Menelik!» e cercò di bloccare le partenze dei rinforzi. Crispi fu costretto a dimettersi, chiudendo per sempre la sua carriera politica.</p>
+        <p>Sul piano diplomatico, il 26 ottobre 1896 l'Italia firmò la pace e riconobbe formalmente la piena indipendenza dell'Etiopia: una delle prime volte nella storia del colonialismo moderno in cui una potenza europea si vedeva costretta a un simile riconoscimento.</p>
+        <p>Nel trauma della memoria popolare Adua divenne un incubo, fissato nei canti dell'epoca. Negli ambienti nazionalisti si sedimentò invece come un'umiliazione da vendicare — un debito aperto con la storia.</p>
+      </div>
+    </div>
+
+    <div class="adua-card">
+      <div class="adua-card-head ah-cons-etiop">Conseguenze per l'Etiopia</div>
+      <div class="adua-card-body">
+        <p>Per l'Etiopia Adua fu qualcosa di più di una vittoria militare: divenne un simbolo. Menelik II era riuscito a unire sotto la propria guida una coalizione di signori regionali in conflitto tra loro e a sconfiggere un esercito europeo in campo aperto.</p>
+        <p>La notizia si diffuse rapidamente in tutto il continente africano e nei Caraibi, alimentando nei movimenti di resistenza anticoloniale una speranza concreta che il dominio europeo non fosse invincibile.</p>
+        <p>La storiografia africana e afroamericana ha riconosciuto ad Adua un significato che va ben oltre le vicende italiane: fu la prima grande sconfitta del colonialismo europeo moderno per mano di uno Stato africano sovrano.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="adua-grid-full">
+    <div class="storio-card">
+      <div class="storio-head">Il significato storiografico</div>
+      <div class="storio-body">
+        Adua non è solo un episodio militare: è il momento in cui si rivelano insieme le ambizioni e i limiti del primo colonialismo italiano, e le sue conseguenze si sarebbero sentite per decenni. La storiografia italiana ha a lungo trattato la disfatta come un incidente di percorso — avventure mal organizzate, generali incompetenti — oscurando due cose. Prima: che la violenza esercitata sulle popolazioni colonizzate non cominciò ad Adua e non finì lì. Seconda: che il colonialismo italiano non finì con Adua ma riprese, con metodi ancora più brutali, nel 1911 e nel 1935–36. Angelo Del Boca, che dedicò decenni a documentare questi crimini, dovette aspettare il 1996 prima che il governo italiano riconoscesse ufficialmente l'uso di gas tossici in Etiopia durante la conquista fascista: vent'anni di battaglia storiografica per far accettare un fatto documentato negli archivi.
+      </div>
+    </div>
+  </div>
+
+  <div class="cont-note">
+    <div class="cont-note-icon">→</div>
+    <div class="cont-note-body">
+      <div class="cont-note-title">Il colonialismo italiano non finì con Adua</div>
+      <div class="cont-note-text">
+        Le ambizioni espansionistiche italiane si bloccarono per circa quindici anni, poi ripresero. <strong>Nel 1911–12</strong> Giolitti conquistò la Libia con metodi che includevano esecuzioni sommarie e deportazioni di massa della popolazione araba. <strong>Nel 1935–36</strong> Mussolini conquistò l'Etiopia — la rivincita di Adua che il nazionalismo italiano aveva coltivato per quarant'anni — con l'uso sistematico di armi chimiche (iprite e fosgene) su popolazioni civili e combattenti. Adua non fu l'epilogo del colonialismo italiano: ne fu, in un senso tragico, il prologo.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── TIMELINE DATA ──────────────────────────────────────────────────
+const EVENTS = [
+  {
+    year: '1881',
+    title: 'Lo «schiaffo di Tunisi»',
+    type: 'dipl',
+    typeLabel: 'Diplomatico',
+    text: 'La Francia occupa militarmente la Tunisia, territorio che l\'Italia considera una naturale area di espansione data la prossimità geografica e la presenza di una vasta comunità di emigrati siciliani. L\'umiliazione è doppia: diplomatica, perché rivela quanto sia pericoloso l\'isolamento italiano in Europa; economica, perché arriva mentre la guerra doganale con Parigi sta già danneggiando le esportazioni meridionali. L\'episodio è il fattore scatenante del riposizionamento internazionale italiano del 1882.'
+  },
+  {
+    year: '1882',
+    title: 'Triplice Alleanza con Germania e Austria-Ungheria',
+    type: 'dipl',
+    typeLabel: 'Diplomatico',
+    text: 'In risposta allo «schiaffo di Tunisi», l\'Italia sigla la Triplice Alleanza con la Germania di Bismarck e l\'Impero austro-ungarico: un accordo difensivo che obbliga i tre paesi a prestarsi soccorso militare reciproco in caso di attacco. Il prezzo è alto: unendosi a Vienna, l\'Italia deve tacitamente rinunciare alle rivendicazioni irredentiste su Trento e Trieste, suscitando lo sdegno dei radicali e dei repubblicani. Il giovane irredentista triestino Guglielmo Oberdan viene condannato a morte nel 1882 per aver progettato un attentato contro l\'imperatore Francesco Giuseppe.'
+  },
+  {
+    year: '1882',
+    title: 'Acquisizione della baia di Assab',
+    type: 'terr',
+    typeLabel: 'Territoriale',
+    text: 'Il primo avamposto coloniale italiano è la baia di Assab, sul Mar Rosso. I diritti di scalo erano stati acquistati dall\'armatore genovese Rubattino e vengono rilevati ufficialmente dallo Stato nel 1882. È un\'acquisizione quasi in sordina, lontana dalla retorica imperialista che accompagnerà le imprese successive: un punto d\'appoggio commerciale più che una vera presenza militare. Diventerà però il punto di partenza per la penetrazione italiana nell\'Eritrea.'
+  },
+  {
+    year: '1885',
+    title: 'Occupazione di Massaua',
+    type: 'terr',
+    typeLabel: 'Territoriale',
+    text: 'Approfittando dell\'assenso inglese — interessata a controbilanciare la presenza francese nella regione — il governo Depretis invia un contingente militare per occupare il porto di Massaua, in Eritrea. L\'obiettivo dichiarato è penetrare progressivamente nell\'entroterra etiope. Massaua diventa il centro logistico dell\'espansione italiana nel Corno d\'Africa e il punto di partenza per le successive operazioni militari verso l\'interno.'
+  },
+  {
+    year: '1887',
+    title: 'Disfatta di Dogali',
+    type: 'mil',
+    typeLabel: 'Militare',
+    text: 'Nel gennaio 1887 le truppe del ras locale Alula intercettano e massacrano un contingente di circa cinquecento soldati italiani a Dogali. Lo shock è enorme. È in quest\'occasione che il leader socialista Andrea Costa pronuncia in Parlamento la frase destinata a restare: «Né un uomo, né un soldo» per l\'impresa africana. Il governo incassa la sconfitta, ma non abbandona il progetto espansionistico: la morte di Depretis nel 1887 lascia il campo a Francesco Crispi, che lo rilancerà con ben altra energia.'
+  },
+  {
+    year: '1889',
+    title: 'Trattato di Uccialli con Menelik II',
+    type: 'tratt',
+    typeLabel: 'Trattato',
+    text: 'Crispi stipula il Trattato di Uccialli con il nuovo imperatore etiope, il negus Menelik II. L\'accordo contiene una fatale ambiguità linguistica: la versione italiana sancisce un vero e proprio protettorato sull\'Etiopia, quella in lingua amarica non lo prevede. Menelik — che ha unificato l\'Etiopia sotto la propria guida e non ha alcuna intenzione di cedere sovranità — contesterà il trattato non appena avrà consolidato il proprio potere. Quella ambiguità sarà la premessa diretta della disfatta di Adua.'
+  },
+  {
+    year: '1890',
+    title: 'Proclamazione della Colonia Eritrea',
+    type: 'terr',
+    typeLabel: 'Territoriale',
+    text: 'Forte del Trattato di Uccialli, Crispi proclama ufficialmente la nascita della Colonia Eritrea: il primo dominio coloniale italiano in Africa. La costruzione della colonia non è un\'operazione amministrativa neutrale: comporta espropriazioni di terre, lavoro coatto, discriminazioni sistematiche codificate in leggi razziali che precedono di decenni quelle del 1938. Gli ascari eritrei vengono reclutati in un sistema che non lascia loro molte alternative: combatteranno per l\'Italia fino ad Adua.'
+  },
+  {
+    year: '1896',
+    title: 'Battaglia di Adua',
+    type: 'mil',
+    typeLabel: 'Militare',
+    text: 'Il 1° marzo 1896, nella conca di Adua, l\'esercito italiano guidato dal generale Baratieri viene travolto dall\'armata etiope di Menelik: tra quattromila e seimila morti italiani, circa millecinquecento feriti, quasi duemila prigionieri. È una delle sconfitte più pesanti mai inflitte da forze africane a un esercito coloniale europeo. Crispi è costretto a dimettersi. Il 26 ottobre 1896 l\'Italia firma la pace e riconosce formalmente la piena indipendenza dell\'Etiopia. Per approfondire: vedi la sezione «Adua».'
+  }
+];
+
+const COLOR = { dipl: '#5B7FA6', mil: '#7A2E1A', terr: '#4A6741', tratt: '#8B5E3C' };
+const DOT_CLASS = { dipl: 'dot-dipl', mil: 'dot-mil', terr: 'dot-terr', tratt: 'dot-tratt' };
+const TAG_CLASS = { dipl: 'tag-dipl', mil: 'tag-mil', terr: 'tag-terr', tratt: 'tag-tratt' };
+const STRIPE_CLASS = { dipl: 'stripe-dipl', mil: 'stripe-mil', terr: 'stripe-terr', tratt: 'stripe-tratt' };
+
+// Build timeline
+const tlList = document.getElementById('tlList');
+let activeIdx = null;
+
+EVENTS.forEach((ev, i) => {
+  const item = document.createElement('div');
+  item.className = 'tl-item';
+  item.dataset.idx = i;
+
+  const dotWrap = document.createElement('div');
+  dotWrap.className = 'tl-dot-wrap';
+  const dot = document.createElement('div');
+  dot.className = `tl-dot ${DOT_CLASS[ev.type]}`;
+  dotWrap.appendChild(dot);
+
+  const btn = document.createElement('button');
+  btn.className = 'tl-btn';
+  btn.innerHTML = `
+    <div class="tl-year">${ev.year}</div>
+    <div class="tl-title">${ev.title}</div>
+    <span class="tl-tag ${TAG_CLASS[ev.type]}">${ev.typeLabel}</span>
+  `;
+
+  item.appendChild(dotWrap);
+  item.appendChild(btn);
+  item.addEventListener('click', () => showEvent(i));
+  tlList.appendChild(item);
+});
+
+function showEvent(i) {
+  const ev = EVENTS[i];
+
+  // deactivate previous
+  if (activeIdx !== null) {
+    tlList.querySelectorAll('.tl-item')[activeIdx].classList.remove('active');
+  }
+  activeIdx = i;
+  tlList.querySelectorAll('.tl-item')[i].classList.add('active');
+
+  // update card
+  const stripe = document.getElementById('infoStripe');
+  stripe.className = `info-card-stripe ${STRIPE_CLASS[ev.type]}`;
+
+  const body = document.getElementById('infoBody');
+  body.innerHTML = `
+    <div class="info-card-meta">
+      <span class="info-card-year">${ev.year}</span>
+      <span class="info-card-badge ${TAG_CLASS[ev.type]}">${ev.typeLabel}</span>
+    </div>
+    <div class="info-card-title">${ev.title}</div>
+    <div class="info-card-text">${ev.text}</div>
+  `;
+}
+
+// Tab switching
+function switchTab(idx, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('s' + idx).classList.add('active');
+}
+</script>
+</body>
+</html>

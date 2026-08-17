@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perché questo moto riesce e quello no</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --si:#4A7A5C; --no:#B06A4A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1040px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.86rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1.4rem;}
+
+  .case-tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+  .case-tab{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.8rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.5rem .9rem;cursor:pointer;color:var(--ink-soft);}
+  .case-tab.active{border-color:var(--brown);background:#FBF0DD;color:var(--ink);font-weight:600;}
+  .case-tab.done::after{content:' ✓';color:var(--brown);}
+
+  .case-card{display:none;background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1.3rem 1.5rem;}
+  .case-card.active{display:block;}
+  .case-title{font-size:1.1rem;color:var(--brown-dark);margin-bottom:.9rem;}
+
+  .param-row{display:grid;grid-template-columns:190px 1fr;gap:.8rem;margin-bottom:.7rem;align-items:start;}
+  .param-name{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.78rem;color:var(--brown-dark);padding-top:.3rem;}
+  .param-value{font-size:.86rem;line-height:1.5;background:var(--gray);border-radius:4px;padding:.5rem .7rem;}
+
+  .predict-row{margin:1.2rem 0;}
+  .predict-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:var(--ink-soft);margin-bottom:.6rem;}
+  .predict-opts{display:flex;gap:.6rem;}
+  .predict-btn{flex:1;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.6rem;cursor:pointer;}
+  .predict-btn:hover{border-color:var(--brown);}
+  .predict-btn.chosen{border-color:var(--brown);background:#FBF0DD;}
+  .predict-btn[disabled]{cursor:default;}
+
+  .reveal{display:none;margin-top:1rem;padding:.9rem 1rem;border-radius:5px;font-size:.86rem;line-height:1.6;}
+  .reveal.show{display:block;}
+  .reveal.correct-guess{background:#EAF2EA;border-left:3px solid var(--si);}
+  .reveal.wrong-guess{background:#F7E9E4;border-left:3px solid var(--no);}
+
+  .summary{display:none;margin-top:1.5rem;}
+  .summary.show{display:block;}
+  .summary-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.9rem;}
+  table.summary-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;overflow:hidden;font-size:.8rem;}
+  table.summary-table th{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.4px;text-transform:uppercase;background:var(--brown);color:var(--paper);padding:.6rem .7rem;text-align:left;}
+  table.summary-table td{padding:.55rem .7rem;border-bottom:1px solid #EAE2D2;vertical-align:top;line-height:1.45;}
+  table.summary-table tr.diff-row td{background:#FBF0DD;font-weight:600;}
+  .esito-si{color:var(--si);font-weight:600;}
+  .esito-no{color:var(--no);font-weight:600;}
+
+  .closing-q{margin-top:1.2rem;font-style:italic;font-size:.92rem;line-height:1.6;background:var(--gray);border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Moti e nazionalismo romantico · Artefatto 8</div>
+    <div class="header-title">Perché questo moto riesce e quello no</div>
+    <div class="header-sub">Quattro insurrezioni, stessi cinque parametri. Guarda i primi quattro, poi prova a prevedere l'esito prima di scoprirlo.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Per ciascun caso trovi quattro parametri e poi una previsione da fare. Solo dopo aver deciso vedrai l'esito reale — e, alla fine, il confronto fra tutti e quattro i casi insieme.</div>
+
+    <div class="case-tabs" id="caseTabs"></div>
+    <div id="casesWrap"></div>
+
+    <div class="summary" id="summary">
+      <div class="summary-title">I quattro casi affiancati</div>
+      <table class="summary-table" id="summaryTable"></table>
+      <div class="closing-q">Se a decidere l'esito è quasi soltanto la posizione delle grandi potenze, che cosa resta di storicamente rilevante nell'azione degli insorti stessi?</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cases = [
+  {
+    id:'grecia', title:'Grecia, 1821-1829',
+    params:{
+      sociale:'Borghesia mercantile della diaspora, clefti delle montagne, basso clero ortodosso — una composizione eterogenea, tenuta insieme più dalla religione che da un programma comune.',
+      militare:'Debole sul campo: la controffensiva egiziana di Mohammed Ali riduce lo spazio degli insorti prima dell\'intervento esterno.',
+      programma:'Indipendenza dall\'Impero ottomano, letta dagli intellettuali della diaspora come rivendicazione pan-ellenica.'
+    },
+    potenzePreview:'L\'Impero ottomano non rientra nell\'area di tutela della Santa Alleanza: sostenere una rivolta contro di esso non viola formalmente il principio di legittimità.',
+    esitoSi:true,
+    realNote:'Russia, Gran Bretagna e Francia convergono (Trattato di Londra 1827, Navarino, Adrianopoli 1829): la Grecia diventa Stato indipendente, sia pure con confini ristretti e un re imposto dall\'esterno.'
+  },
+  {
+    id:'belgio', title:'Belgio, 1830-1831',
+    params:{
+      sociale:'Insurrezione urbana, composizione sociale simile agli altri moti del decennio.',
+      militare:'Non decisiva: l\'esito non dipende dalla forza militare degli insorti.',
+      programma:'Indipendenza dall\'unione con l\'Olanda decisa a Vienna nel 1815.'
+    },
+    potenzePreview:'La Francia appena diventata liberale e la Gran Bretagna si oppongono a qualunque intervento militare di Prussia, Austria o Russia in un\'area troppo sensibile per lasciarvi entrare gli imperi orientali.',
+    esitoSi:true,
+    realNote:'La Conferenza di Londra riconosce l\'indipendenza belga e impone la neutralità, condizione del consenso britannico.'
+  },
+  {
+    id:'polonia', title:'Polonia, 1830-1831',
+    params:{
+      sociale:'Insurrezione con composizione sociale simile agli altri moti del decennio.',
+      militare:'Non decisiva: l\'esito non dipende dalla forza militare degli insorti.',
+      programma:'Indipendenza dal dominio russo.'
+    },
+    potenzePreview:'Francia e Gran Bretagna considerano la questione un affare interno russo, per non compromettere i rapporti con lo zar: qui non c\'è alcuna divergenza da sfruttare.',
+    esitoSi:false,
+    realNote:'Nessun intervento esterno a sostegno. I polacchi sono sconfitti nel 1831 e sottoposti a una politica sistematica di russificazione.'
+  },
+  {
+    id:'italiacentrale', title:'Italia centrale, 1831',
+    params:{
+      sociale:'Moti guidati da figure come Ciro Menotti nei ducati emiliani e nelle Legazioni pontificie, composizione sociale simile agli altri moti del decennio.',
+      militare:'Non decisiva: l\'esito non dipende dalla forza militare degli insorti.',
+      programma:'Costituzione e indipendenza dall\'influenza austriaca, contando sul principio di non intervento proclamato dal governo di Luigi Filippo.'
+    },
+    potenzePreview:'La Francia orleanista non ha alcuna intenzione di affrontare l\'Austria per una rivolta oltre confine, e considera la penisola un affare interno austriaco: gli insorti hanno frainteso il non intervento come una promessa di protezione.',
+    esitoSi:false,
+    realNote:'Le truppe austriache rioccupano le città senza incontrare ostacoli internazionali. Ciro Menotti è impiccato a Modena.'
+  }
+];
+
+let current = 0;
+const predicted = {};
+
+function renderTabs(){
+  const tabs = document.getElementById('caseTabs');
+  tabs.innerHTML = '';
+  cases.forEach((c,i)=>{
+    const b = document.createElement('button');
+    b.className = 'case-tab' + (i===current?' active':'') + (predicted[i]!==undefined?' done':'');
+    b.textContent = c.title;
+    b.id = 'tab'+i;
+    b.onclick = ()=>goTo(i);
+    tabs.appendChild(b);
+  });
+}
+
+function goTo(i){
+  document.querySelectorAll('.case-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('card'+i).classList.add('active');
+  current = i;
+  renderTabs();
+}
+
+function renderCases(){
+  const wrap = document.getElementById('casesWrap');
+  cases.forEach((c,i)=>{
+    const card = document.createElement('div');
+    card.className = 'case-card' + (i===0?' active':'');
+    card.id = 'card'+i;
+    card.innerHTML = `
+      <div class="case-title">${c.title}</div>
+      <div class="param-row"><div class="param-name">Composizione sociale</div><div class="param-value">${c.params.sociale}</div></div>
+      <div class="param-row"><div class="param-name">Forza militare</div><div class="param-value">${c.params.militare}</div></div>
+      <div class="param-row"><div class="param-name">Programma</div><div class="param-value">${c.params.programma}</div></div>
+      <div class="param-row"><div class="param-name">Posizione delle potenze</div><div class="param-value">${c.potenzePreview}</div></div>
+      <div class="predict-row">
+        <div class="predict-label">In base a questi elementi: il moto riesce?</div>
+        <div class="predict-opts" id="opts${i}">
+          <button class="predict-btn" onclick="predict(${i}, true)">Riesce</button>
+          <button class="predict-btn" onclick="predict(${i}, false)">Fallisce</button>
+        </div>
+      </div>
+      <div class="reveal" id="reveal${i}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function predict(i, guessSi){
+  if(predicted[i]!==undefined) return;
+  predicted[i] = guessSi;
+  const c = cases[i];
+
+  document.querySelectorAll('#opts'+i+' .predict-btn').forEach((b,idx)=>{
+    b.disabled = true;
+    if((idx===0)===guessSi) b.classList.add('chosen');
+  });
+
+  const correct = guessSi === c.esitoSi;
+  const rev = document.getElementById('reveal'+i);
+  rev.classList.add('show', correct?'correct-guess':'wrong-guess');
+  rev.innerHTML = `<strong>Esito reale: il moto ${c.esitoSi?'riesce':'fallisce'}.</strong><br>${c.realNote}`;
+
+  renderTabs();
+  if(Object.keys(predicted).length === cases.length) showSummary();
+}
+
+function showSummary(){
+  const table = document.getElementById('summaryTable');
+  let html = '<tr><th></th>' + cases.map(c=>`<th>${c.title}</th>`).join('') + '</tr>';
+  html += '<tr><td>Composizione sociale</td>' + cases.map(c=>`<td>${c.params.sociale.split('.')[0]}.</td>`).join('') + '</tr>';
+  html += '<tr><td>Forza militare</td>' + cases.map(c=>`<td>${c.params.militare.split('.')[0]}.</td>`).join('') + '</tr>';
+  html += '<tr><td>Programma</td>' + cases.map(c=>`<td>${c.params.programma.split('.')[0]}.</td>`).join('') + '</tr>';
+  html += '<tr class="diff-row"><td>Posizione delle potenze</td>' + cases.map(c=>`<td>${c.potenzePreview}</td>`).join('') + '</tr>';
+  html += '<tr><td>Esito</td>' + cases.map(c=>`<td class="${c.esitoSi?'esito-si':'esito-no'}">${c.esitoSi?'Riesce':'Fallisce'}</td>`).join('') + '</tr>';
+  table.innerHTML = html;
+  document.getElementById('summary').classList.add('show');
+  document.getElementById('summary').scrollIntoView({behavior:'smooth'});
+}
+
+renderTabs();
+renderCases();
+</script>
+</body>
+</html>

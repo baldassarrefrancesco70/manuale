@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sette programmi, quattro domande</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1040px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .tabs{background:var(--paper);border-bottom:1px solid #DCD2BE;display:flex;padding:0 2rem;}
+  .tab-btn{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12.5px;padding:.8rem 1.2rem;border:none;background:transparent;color:#8A8478;cursor:pointer;border-bottom:3px solid transparent;}
+  .tab-btn.active{color:var(--brown-dark);border-bottom-color:var(--brown);font-weight:600;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  .axis-select{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+  .axis-btn{flex:1;min-width:180px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.78rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.6rem;cursor:pointer;text-align:center;}
+  .axis-btn.active{border-color:var(--brown);background:#FBF0DD;font-weight:600;}
+
+  .order-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem;}
+  .order-item{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:5px;padding:.7rem .9rem;}
+  .order-item b{color:var(--brown-dark);}
+  .order-item .oi-pos{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;color:var(--ink-soft);display:block;margin-top:.3rem;}
+
+  .compare-select{display:flex;gap:.6rem;margin-bottom:1.2rem;}
+  .compare-select select{flex:1;font-family:Georgia,serif;font-size:.85rem;padding:.5rem;border:1.5px solid #D4CFC4;border-radius:5px;background:var(--paper);}
+
+  .compare-result{display:none;}
+  .compare-result.show{display:block;}
+  table.compare-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;overflow:hidden;font-size:.83rem;}
+  table.compare-table th{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10.5px;text-transform:uppercase;background:var(--brown);color:var(--paper);padding:.6rem .7rem;text-align:left;}
+  table.compare-table td{padding:.6rem .7rem;border-bottom:1px solid #EAE2D2;vertical-align:top;line-height:1.5;}
+  td.agree{background:#EAF2EA;}
+  td.disagree{background:#F7E9E4;}
+
+  .accessory{margin-top:1.6rem;}
+  .accessory-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .accessory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;}
+  .accessory-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:.8rem .9rem;}
+  .accessory-card .ac-name{color:var(--brown-dark);font-size:.9rem;margin-bottom:.4rem;}
+  .accessory-card .ac-tag{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9px;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-bottom:.5rem;}
+  .ac-tag.ottenuto{background:#E4EFE6;color:#3B6B4C;}
+  .ac-tag.diversa{background:#F3E9D8;color:var(--brown-dark);}
+  .ac-tag.non{background:#F7E4DC;color:#8B4A2A;}
+  .accessory-card .ac-note{font-size:.76rem;line-height:1.5;color:var(--ink-soft);}
+
+  .closing-q{margin-top:1.6rem;font-style:italic;font-size:.92rem;line-height:1.6;background:var(--gray);border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Il dibattito sull'unità e la prova del 1848 · Artefatto 2</div>
+    <div class="header-title">Sette programmi, quattro domande</div>
+    <div class="header-sub">Mazzini, Cattaneo, Ferrari, Pisacane, Gioberti, Balbo, D'Azeglio. Stesse quattro domande per ciascuno. Cambia l'asse, e gli schieramenti cambiano composizione.</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabBtn1" onclick="showTab(1)">1 · Ordina lungo un asse</button>
+    <button class="tab-btn" id="tabBtn2" onclick="showTab(2)">2 · Confronta due programmi</button>
+  </div>
+
+  <div class="main">
+
+    <div class="panel active" id="panel1">
+      <div class="axis-select" id="axisSelect"></div>
+      <div class="order-list" id="orderList"></div>
+    </div>
+
+    <div class="panel" id="panel2">
+      <div class="compare-select">
+        <select id="selA" onchange="updateCompare()"></select>
+        <select id="selB" onchange="updateCompare()"></select>
+      </div>
+      <div class="compare-result" id="compareResult">
+        <table class="compare-table" id="compareTable"></table>
+      </div>
+    </div>
+
+    <div class="accessory">
+      <div class="accessory-title">Che cosa ne restò nel 1861</div>
+      <div class="accessory-grid" id="accessoryGrid"></div>
+    </div>
+
+    <div class="closing-q">La classificazione bipolare fra democratici e moderati, storiograficamente consolidata, non basta appena si aggiunge un asse in più. Questo la rende inutile, oppure ogni classificazione storica funziona così — utile solo finché non le si chiedono troppe domande insieme?</div>
+  </div>
+</div>
+
+<script>
+const programs = [
+  {
+    id:'mazzini', name:'Mazzini',
+    chiFa:"Il popolo, attraverso l'educazione delle masse e l'insurrezione dal basso.",
+    forma:'Repubblica unitaria — «Una, Indipendente, Sovrana» e Repubblicana.',
+    regime:'Repubblica.',
+    masse:'Protagoniste: interclassismo esplicito, rivoluzione compiuta dall\'intero popolo. In pratica rivolto più ai ceti popolari urbani che alle masse contadine, ritenute ancora troppo estranee alla vita politica.',
+    esito:'non', esitoNote:'La repubblica non fu mai raggiunta: l\'Italia unita nacque monarchia.'
+  },
+  {
+    id:'cattaneo', name:'Cattaneo',
+    chiFa:'Le città e i comuni, mossi dalla borghesia imprenditoriale — non i governi esistenti, ma nemmeno le masse popolari in senso mazziniano.',
+    forma:'Federazione di repubbliche, sul modello di Svizzera e Stati Uniti.',
+    regime:'Repubblica (una federazione di repubbliche).',
+    masse:'Ruolo marginale rispetto alle autonomie locali e alla borghesia imprenditoriale, che restano il vero soggetto del progetto.',
+    esito:'non', esitoNote:'Il federalismo non fu mai adottato: nel 1861 Minghetti propose un ordinamento regionale e fu respinto per scelta politica.'
+  },
+  {
+    id:'ferrari', name:'Ferrari',
+    chiFa:'Le masse, ma attraverso una rivoluzione sociale, non solo politica.',
+    forma:'Soluzione federale, con impronta radicale e socialista.',
+    regime:'Repubblica federale — ma con diffidenza esplicita verso il suffragio universale, temuto strumento nelle mani di tiranni o demagoghi.',
+    masse:'Centrali in teoria — «irreligione e legge agraria», redistribuzione delle ricchezze — ma con sfiducia dichiarata nella loro capacità di voto consapevole.',
+    esito:'non', esitoNote:'Nessuna rivoluzione sociale, nessuna legge agraria: la proprietà privata restò intatta.'
+  },
+  {
+    id:'pisacane', name:'Pisacane',
+    chiFa:'Le masse contadine povere, spinte all\'insurrezione dai propri bisogni materiali — non la borghesia.',
+    forma:'Libera associazione di comuni democraticamente autogestiti.',
+    regime:'Comunalista, con abolizione della proprietà privata.',
+    masse:'Massime: la vera forza rivoluzionaria, secondo Pisacane, risiede proprio nelle masse contadine.',
+    esito:'non', esitoNote:'Pisacane morì a Sapri nel 1857; nessuna abolizione della proprietà, nessuna redistribuzione delle terre — il caso Bronte del 1860 mostrerà l\'esatto contrario.'
+  },
+  {
+    id:'gioberti', name:'Gioberti',
+    chiFa:'I sovrani esistenti e il Papa, dall\'alto.',
+    forma:'Confederazione degli Stati italiani già esistenti, sotto la presidenza del Papa.',
+    regime:'Monarchico-pontificio.',
+    masse:'Nessun ruolo: rifiuto esplicito della rivoluzione popolare.',
+    esito:'non', esitoNote:'Nessuna confederazione, nessuna presidenza papale: la Questione romana sarà anzi un conflitto aperto con lo Stato unitario.'
+  },
+  {
+    id:'balbo', name:'Balbo',
+    chiFa:'I sovrani esistenti, in particolare casa Savoia, tramite la diplomazia europea.',
+    forma:'Confederazione degli Stati italiani, sotto guida sabauda anziché papale.',
+    regime:'Monarchico.',
+    masse:'Nessun ruolo: la liberazione doveva venire dalla diplomazia, non dall\'insurrezione.',
+    esito:'diversa', esitoNote:'La guida sabauda si realizzò, ma come Stato unitario e non come confederazione; e il Veneto arrivò per via bellica (Terza guerra d\'indipendenza, Sadowa), non per il ritiro pacifico dell\'Austria che Balbo immaginava.'
+  },
+  {
+    id:'dazeglio', name:"D'Azeglio",
+    chiFa:'Un\'opinione pubblica nazionale moderata, che dialoga con i sovrani per spingerli a riformare — «la congiura al chiaro di sole».',
+    forma:'Non un progetto istituzionale definito: il metodo conta più della forma finale.',
+    regime:'Monarchia riformata gradualmente.',
+    masse:'Nessun ruolo diretto: rifiuto esplicito di cospirazioni e insurrezioni popolari.',
+    esito:'ottenuto', esitoNote:'Il metodo moderato, graduale e dialogante — non rivoluzionario — fu in sostanza quello che prevalse nel percorso reale verso il 1861.'
+  }
+];
+
+const axes = [
+  {key:'chiFa', label:'Chi deve fare l\'Italia'},
+  {key:'forma', label:'Quale forma deve avere lo Stato'},
+  {key:'regime', label:'Quale regime'},
+  {key:'masse', label:'Quale ruolo alle masse popolari'}
+];
+
+function showTab(n){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel'+n).classList.add('active');
+  document.getElementById('tabBtn'+n).classList.add('active');
+}
+
+function renderAxisSelect(){
+  const wrap = document.getElementById('axisSelect');
+  axes.forEach((a,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'axis-btn';
+    btn.id = 'axisbtn'+i;
+    btn.textContent = a.label;
+    btn.onclick = ()=>selectAxis(i);
+    wrap.appendChild(btn);
+  });
+}
+
+function selectAxis(i){
+  document.querySelectorAll('.axis-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('axisbtn'+i).classList.add('active');
+  const axis = axes[i];
+  const list = document.getElementById('orderList');
+  list.innerHTML = programs.map(p=>`
+    <div class="order-item"><b>${p.name}</b>
+      <span class="oi-pos">${p[axis.key]}</span>
+    </div>
+  `).join('');
+}
+
+function renderCompareSelects(){
+  const selA = document.getElementById('selA');
+  const selB = document.getElementById('selB');
+  programs.forEach((p,i)=>{
+    selA.innerHTML += `<option value="${i}">${p.name}</option>`;
+    selB.innerHTML += `<option value="${i}">${p.name}</option>`;
+  });
+  selB.value = 1;
+}
+
+function updateCompare(){
+  const a = programs[document.getElementById('selA').value];
+  const b = programs[document.getElementById('selB').value];
+  if(a.id === b.id){
+    document.getElementById('compareResult').classList.remove('show');
+    return;
+  }
+  const table = document.getElementById('compareTable');
+  let html = `<tr><th>${axes.length? '' : ''}</th><th>${a.name}</th><th>${b.name}</th></tr>`;
+  axes.forEach(ax=>{
+    const agree = a[ax.key] === b[ax.key];
+    html += `<tr><td><strong>${ax.label}</strong></td><td class="${agree?'agree':'disagree'}">${a[ax.key]}</td><td class="${agree?'agree':'disagree'}">${b[ax.key]}</td></tr>`;
+  });
+  table.innerHTML = html;
+  document.getElementById('compareResult').classList.add('show');
+}
+
+function renderAccessory(){
+  const grid = document.getElementById('accessoryGrid');
+  const tagLabel = {ottenuto:'Ottenuto', diversa:'Ottenuto in forma diversa', non:'Non ottenuto'};
+  programs.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'accessory-card';
+    card.innerHTML = `
+      <div class="ac-name">${p.name}</div>
+      <span class="ac-tag ${p.esito}">${tagLabel[p.esito]}</span>
+      <div class="ac-note">${p.esitoNote}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+renderAxisSelect();
+selectAxis(0);
+renderCompareSelects();
+updateCompare();
+renderAccessory();
+</script>
+</body>
+</html>

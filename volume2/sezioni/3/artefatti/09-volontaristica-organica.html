@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volontaristica o organica</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --vol:#4E7A93; --org:#9C5B3C; --amb:#8B6BA0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1000px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.86rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1rem;}
+  .cases-legend{display:flex;gap:.8rem;margin-bottom:1.4rem;flex-wrap:wrap;}
+  .case-chip{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;background:var(--gray);border-radius:5px;padding:.4rem .7rem;color:var(--ink-soft);}
+
+  .progress-wrap{display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:var(--brown-dark);margin-bottom:1.2rem;}
+  .progress-track{flex:1;height:5px;background:#E3DACB;border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--brown);width:0%;transition:width .4s ease;}
+
+  .def-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1rem 1.2rem;margin-bottom:.9rem;}
+  .def-num{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;color:var(--brown);letter-spacing:.5px;margin-bottom:.3rem;}
+  .def-text{font-size:.95rem;line-height:1.55;margin-bottom:.4rem;font-style:italic;}
+  .def-src{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.7rem;color:var(--brown);margin-bottom:.8rem;}
+
+  .choice-row{display:flex;gap:.6rem;margin-bottom:.8rem;}
+  .choice-btn{flex:1;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.8rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.55rem;cursor:pointer;}
+  .choice-btn.vol{border-color:var(--vol);}
+  .choice-btn.org{border-color:var(--org);}
+  .choice-btn.vol.chosen{background:#E4EDF2;color:var(--vol);font-weight:600;}
+  .choice-btn.org.chosen{background:#F0E4DB;color:var(--org);font-weight:600;}
+  .choice-btn[disabled]{cursor:default;}
+
+  .reveal{display:none;padding-top:.8rem;border-top:1px solid #DCD2BE;}
+  .reveal.show{display:block;}
+  .reveal.ambiguous{background:#F5F0F8;border-radius:5px;padding:.7rem .9rem;border-top:none;}
+  .ambig-flag{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9px;letter-spacing:.5px;text-transform:uppercase;background:var(--amb);color:#fff;padding:2px 7px;border-radius:3px;margin-bottom:.5rem;}
+  .concept-tag{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-bottom:.6rem;color:#fff;}
+  .concept-tag.vol{background:var(--vol);}
+  .concept-tag.org{background:var(--org);}
+
+  .cases-outcome{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.5rem;}
+  .case-outcome{background:var(--gray);border-radius:4px;padding:.5rem .6rem;font-size:.75rem;line-height:1.4;}
+  .case-outcome .co-name{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9.5px;letter-spacing:.3px;text-transform:uppercase;color:var(--brown-dark);display:block;margin-bottom:.25rem;}
+  .co-inc{color:#4A7A5C;font-weight:600;}
+  .co-esc{color:#B06A4A;font-weight:600;}
+  .co-na{color:var(--ink-soft);font-style:italic;}
+
+  .amb-text{font-size:.85rem;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Moti e nazionalismo romantico · Artefatto 9</div>
+    <div class="header-title">Volontaristica o organica</div>
+    <div class="header-sub">Dodici definizioni di nazione. Per ciascuna, scegli a quale concezione appartiene: poi vedi che cosa cambierebbe, applicandola davvero, per tre persone concrete.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Non è un punteggio: qualunque scelta tu faccia, l'oggetto ti mostra la conseguenza pratica della definizione applicata a tre casi. Alcune definizioni sono costruite sul testo più che citate alla lettera; è indicato per ciascuna.</div>
+
+    <div class="cases-legend">
+      <span class="case-chip">Caso A — un abitante di lingua tedesca a Praga</span>
+      <span class="case-chip">Caso B — un ebreo di Varsavia</span>
+      <span class="case-chip">Caso C — un contadino bretone in Francia</span>
+    </div>
+
+    <div class="progress-wrap">
+      <span>Definizioni valutate</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressCount">0 / 12</span>
+    </div>
+
+    <div id="defsWrap"></div>
+  </div>
+</div>
+
+<script>
+const defs = [
+  {
+    text:"La nazione è un'associazione di cittadini fondata su un atto politico.",
+    src:"fonte — concezione rivoluzionaria francese",
+    concept:'vol',
+    outcomes:{a:'incluso', b:'incluso', c:'incluso'},
+    note:"Se l'appartenenza è un atto politico, conta l'adesione alla comunità civica: lingua e origine non sono criteri di esclusione."
+  },
+  {
+    text:"Il principio di ogni sovranità risiede essenzialmente nella nazione.",
+    src:"fonte — Dichiarazione dei diritti dell'uomo e del cittadino, art. 3, 1789",
+    concept:'vol',
+    outcomes:{a:'incluso', b:'incluso', c:'incluso'},
+    note:"La nazione è qui il corpo dei cittadini titolare della sovranità: non è definita per lingua o discendenza."
+  },
+  {
+    text:"Re dei francesi per volontà della nazione.",
+    src:"fonte — formula della monarchia di Luigi Filippo, 1830",
+    concept:'vol',
+    outcomes:{a:'incluso', b:'incluso', c:'incluso'},
+    note:"La legittimità viene dalla volontà della nazione intesa come corpo politico, non da un'appartenenza etnica o linguistica."
+  },
+  {
+    text:"Un tedesco può diventare cittadino francese se accetta la Costituzione e le leggi della Repubblica.",
+    src:"[dedotto — costruita per illustrare la logica volontaristica applicata a un caso concreto]",
+    concept:'vol',
+    outcomes:{a:'incluso, se sceglie di diventarlo', b:'incluso, se sceglie di diventarlo', c:'incluso (è già cittadino francese)'},
+    note:"L'inclusione dipende da una scelta, non da un'origine: è la logica opposta a quella organica."
+  },
+  {
+    text:"L'appartenenza nazionale è un plebiscito di tutti i giorni.",
+    src:"[fonte esterna — Ernest Renan, citato in bibliografia del capitolo precedente, non svolto nel corpo del testo]",
+    concept:'vol',
+    outcomes:{a:'incluso, se lo desidera ogni giorno', b:'incluso, se lo desidera ogni giorno', c:'incluso, se lo desidera ogni giorno'},
+    note:"L'inclusione non è mai definitiva: dipende da un consenso che va rinnovato, non da un dato di nascita."
+  },
+  {
+    text:"La nazione è un organismo naturale e spirituale che precede gli individui e non dipende dalle loro decisioni.",
+    src:"fonte — Herder, Fichte",
+    concept:'org',
+    outcomes:{a:'escluso dalla nazione ceca, incluso in quella tedesca', b:'escluso dalla nazione polacca', c:'escluso dalla nazione francese'},
+    note:"Se la nazione precede le decisioni individuali, nessuno può scegliere di entrarvi: vale anche al contrario, nessuno può scegliere di uscirne."
+  },
+  {
+    text:"Lingua, carattere e spirito del popolo sono dati costitutivi, non attributi acquisiti.",
+    src:"fonte",
+    concept:'org',
+    outcomes:{a:'escluso dalla nazione ceca', b:'escluso dalla nazione polacca', c:'escluso dalla nazione francese'},
+    note:"Un dato costitutivo non si acquisisce con l'istruzione o la residenza: chi non lo possiede dalla nascita resta fuori."
+  },
+  {
+    text:"Non si sceglie: si nasce dentro una nazione e se ne porta l'impronta ovunque.",
+    src:"fonte",
+    concept:'org',
+    outcomes:{a:'escluso dalla nazione ceca', b:'escluso dalla nazione polacca', c:'escluso dalla nazione francese'},
+    note:"L'appartenenza segue la nascita, non la residenza né la cittadinanza politica."
+  },
+  {
+    text:"La lingua non è uno strumento di comunicazione ma l'anima stessa della comunità.",
+    src:"fonte",
+    concept:'org',
+    outcomes:{a:'escluso dalla nazione ceca', b:'escluso dalla nazione polacca', c:'escluso dalla nazione francese'},
+    note:"Se la lingua è l'anima della comunità, chi ne parla un'altra ne è escluso indipendentemente da ogni altro legame."
+  },
+  {
+    text:"Chi parla un'altra lingua non può entrare nella nazione neanche volendo.",
+    src:"fonte — conseguenza esplicitata nel capitolo",
+    concept:'org',
+    outcomes:{a:'escluso, senza possibilità di scelta', b:'escluso, senza possibilità di scelta', c:'escluso, senza possibilità di scelta'},
+    note:"È la formula più netta: nega esplicitamente ciò che la concezione volontaristica presuppone, cioè che l'appartenenza si possa scegliere."
+  },
+  {
+    text:"L'appartenenza a un popolo si eredita con il sangue e la stirpe, non si acquisisce con un giuramento.",
+    src:"[dedotto — estensione della logica organica oltre il criterio linguistico esplicito nel testo, fino al criterio di discendenza]",
+    concept:'org',
+    outcomes:{a:'escluso dalla nazione ceca per discendenza', b:'escluso dalla nazione polacca per discendenza', c:'incluso nella nazione francese per discendenza, ma è comunque il criterio più rigido dei dodici'},
+    note:"È la forma più radicale del criterio organico: non basta la lingua, conta la stirpe. Nessun giuramento di fedeltà potrebbe compensarla."
+  },
+  {
+    text:"Un popolo che pubblica per la prima volta una propria grammatica dimostra di essere un soggetto storico a sé.",
+    src:"fonte — sezione sulle nazioni «non storiche»",
+    concept:'ambiguous',
+    outcomes:null,
+    note:"Non si applica in modo pulito ai tre casi: qui l'appartenenza sembra già data (organica, la lingua esiste prima della grammatica), ma la dichiarazione che la rende visibile è un atto deliberato, pubblico, quindi politico. È esattamente il tipo di caso che la dicotomia netta non riesce a contenere."
+  },
+  {
+    text:"Il popolo greco esiste perché la sua storia collega ininterrottamente l'antichità classica, Bisanzio e il presente.",
+    src:"fonte — la costruzione storiografica di Paparrigopoulos",
+    concept:'ambiguous',
+    outcomes:null,
+    note:"Rivendica una continuità organica, quasi naturale, di un popolo nel tempo — ma quella continuità è essa stessa una costruzione storiografica deliberata, elaborata a posteriori per uno scopo politico dichiarato, la Megale Idea. Organica nel contenuto, volontaristica nell'operazione che la produce."
+  }
+];
+
+let evaluated = 0;
+
+function renderDefs(){
+  const wrap = document.getElementById('defsWrap');
+  defs.forEach((d,i)=>{
+    const card = document.createElement('div');
+    card.className = 'def-card';
+    card.innerHTML = `
+      <div class="def-num">Definizione ${i+1} di 12</div>
+      <div class="def-text">«${d.text}»</div>
+      <div class="def-src">${d.src}</div>
+      <div class="choice-row" id="choice${i}">
+        <button class="choice-btn vol" onclick="choose(${i},'vol')">Concezione volontaristica e soggettiva</button>
+        <button class="choice-btn org" onclick="choose(${i},'org')">Concezione naturalistica e oggettiva</button>
+      </div>
+      <div class="reveal" id="reveal${i}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function choose(i, pick){
+  if(document.getElementById('choice'+i).dataset.done) return;
+  document.getElementById('choice'+i).dataset.done = 'true';
+  const d = defs[i];
+
+  document.querySelectorAll('#choice'+i+' .choice-btn').forEach(b=>b.disabled = true);
+  document.querySelector('#choice'+i+' .'+pick).classList.add('chosen');
+
+  const rev = document.getElementById('reveal'+i);
+  rev.classList.add('show');
+
+  if(d.concept === 'ambiguous'){
+    rev.classList.add('ambiguous');
+    rev.innerHTML = `<span class="ambig-flag">Item deliberatamente ambiguo</span><div class="amb-text">${d.note}</div>`;
+  } else {
+    const tagClass = d.concept;
+    const tagLabel = d.concept==='vol' ? 'Volontaristica' : 'Naturalistica-organica';
+    rev.innerHTML = `
+      <span class="concept-tag ${tagClass}">Nel capitolo: ${tagLabel}</span>
+      <div style="font-size:.85rem;line-height:1.55;margin-bottom:.6rem;">${d.note}</div>
+      <div class="cases-outcome">
+        <div class="case-outcome"><span class="co-name">Caso A — tedesco a Praga</span><span class="${outcomeClass(d.outcomes.a)}">${d.outcomes.a}</span></div>
+        <div class="case-outcome"><span class="co-name">Caso B — ebreo di Varsavia</span><span class="${outcomeClass(d.outcomes.b)}">${d.outcomes.b}</span></div>
+        <div class="case-outcome"><span class="co-name">Caso C — contadino bretone</span><span class="${outcomeClass(d.outcomes.c)}">${d.outcomes.c}</span></div>
+      </div>
+    `;
+  }
+
+  evaluated++;
+  document.getElementById('progressFill').style.width = (evaluated/defs.length*100)+'%';
+  document.getElementById('progressCount').textContent = evaluated+' / '+defs.length;
+}
+
+function outcomeClass(text){
+  if(text.startsWith('incluso')) return 'co-inc';
+  if(text.startsWith('escluso')) return 'co-esc';
+  return 'co-na';
+}
+
+renderDefs();
+</script>
+</body>
+</html>

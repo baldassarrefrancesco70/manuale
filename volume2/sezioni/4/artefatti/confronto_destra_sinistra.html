@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Destra e Sinistra storica — Confronto</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #FAF7F2;
+    color: #2C2C2A;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #2C2C2A;
+    padding: 1.4rem 2.5rem;
+    border-bottom: 4px solid #8B7355;
+  }
+  .header-title {
+    font-size: 1.15rem;
+    font-weight: normal;
+    color: #F0EBE0;
+    line-height: 1.4;
+  }
+  .header-title em { color: #C2A882; font-style: italic; }
+  .header-sub {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.78rem;
+    color: #888070;
+    margin-top: 0.35rem;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    background: #FFFDF8;
+    border-bottom: 1px solid #D4C9B8;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-label {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888070;
+    margin-right: 0.25rem;
+  }
+  .filter-btn {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid #C8BBA8;
+    background: transparent;
+    color: #5C4A2A;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .filter-btn:hover { border-color: #8B7355; background: #F5F0E8; }
+  .filter-btn.active {
+    background: #2C2C2A;
+    border-color: #2C2C2A;
+    color: #F0EBE0;
+  }
+  .filter-btn.cont-btn.active {
+    background: #8B7355;
+    border-color: #8B7355;
+    color: #F0EBE0;
+  }
+
+  /* ── COLUMN HEADERS ── */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 0;
+    margin: 1.5rem 2rem 0;
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
+    border: 1.5px solid #C8BBA8;
+    border-bottom: none;
+  }
+  .col-h {
+    padding: 0.85rem 1.1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .col-h-axis {
+    background: #2C2C2A;
+    color: #888070;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .col-h-destra { background: #4A6741; color: #EEF5EC; }
+  .col-h-sinistra {
+    background: #5B7FA6;
+    color: #EEF3F9;
+    border-left: 1px solid rgba(255,255,255,0.15);
+  }
+  .col-h-destra span, .col-h-sinistra span {
+    display: block;
+    font-size: 10px;
+    font-weight: normal;
+    opacity: 0.75;
+    margin-top: 2px;
+    letter-spacing: 0;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    margin: 0 2rem;
+    border: 1.5px solid #C8BBA8;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    overflow: hidden;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    border-top: 1px solid #E8E0D2;
+    transition: opacity 0.25s;
+  }
+  .row:first-child { border-top: none; }
+  .row.hidden { display: none; }
+
+  .cell {
+    padding: 0.9rem 1.1rem;
+    border-left: 1px solid #E8E0D2;
+  }
+  .cell:first-child { border-left: none; }
+
+  .cell-axis {
+    background: #F5F0E8;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #5C4A2A;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+
+  .cell-content {
+    background: #FFFDF8;
+    cursor: pointer;
+  }
+  .cell-content:hover { background: #F7F3EC; }
+  .cell-content.destra-cell { background: #FAFDF9; }
+  .cell-content.destra-cell:hover { background: #EEF5EE; }
+  .cell-content.sinistra-cell { background: #FAFCFF; }
+  .cell-content.sinistra-cell:hover { background: #EEF3F9; }
+
+  .cell-summary {
+    font-size: 0.88rem;
+    color: #2C2C2A;
+    line-height: 1.6;
+  }
+
+  .expand-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 0.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: #8B7355;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .expand-btn:hover { color: #2C2C2A; }
+
+  .cell-detail {
+    display: none;
+    margin-top: 0.6rem;
+    padding: 0.7rem 0.85rem;
+    background: #F2EDE4;
+    border-left: 3px solid #8B7355;
+    border-radius: 0 4px 4px 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.82rem;
+    color: #2C2C2A;
+    line-height: 1.65;
+    animation: fadeIn 0.2s ease;
+  }
+  .destra-cell .cell-detail { border-left-color: #4A6741; background: #EAF0E8; }
+  .sinistra-cell .cell-detail { border-left-color: #5B7FA6; background: #E8EFF8; }
+  .cell-detail.open { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(-4px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── CONTINUITÀ ROW ── */
+  .cont-row {
+    display: none;
+    border-top: 1px solid #E8E0D2;
+  }
+  .cont-row.visible { display: block; }
+
+  .cont-cell-full {
+    padding: 1.25rem 1.5rem;
+    background: #F5F0E8;
+  }
+
+  .cont-header-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .cont-badge {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: #8B7355;
+    color: #FAF7F2;
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+  .cont-title {
+    font-size: 0.95rem;
+    color: #2C2C2A;
+    font-weight: normal;
+  }
+
+  .cont-nota {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.83rem;
+    color: #5C4A2A;
+    line-height: 1.65;
+    background: #FFFDF8;
+    border-left: 4px solid #8B7355;
+    padding: 0.75rem 1rem;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 1rem;
+  }
+  .cont-nota strong { color: #2C2C2A; }
+
+  .cont-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .cont-card {
+    background: #FFFDF8;
+    border: 1.5px solid #C8BBA8;
+    border-top: 3px solid #8B7355;
+    border-radius: 0 0 5px 5px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+  }
+  .cont-card:hover { background: #EDE8E0; }
+
+  .cont-card-title {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2C2C2A;
+    margin-bottom: 0.4rem;
+  }
+  .cont-card-text {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.81rem;
+    color: #5C4A2A;
+    line-height: 1.6;
+  }
+  .cont-detail {
+    display: none;
+    margin-top: 0.6rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.8rem;
+    color: #2C2C2A;
+    line-height: 1.65;
+    padding-top: 0.5rem;
+    border-top: 1px solid #D4C9B8;
+    animation: fadeIn 0.2s ease;
+  }
+  .cont-detail.open { display: block; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title"><em>Destra e Sinistra storica</em> — Schema di confronto</div>
+  <div class="header-sub">Filtra per asse tematico · Clicca su una cella per leggere l'approfondimento</div>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Mostra</span>
+  <button class="filter-btn active" onclick="filter('all', this)">Tutti gli assi</button>
+  <button class="filter-btn" onclick="filter('sociale', this)">Composizione sociale</button>
+  <button class="filter-btn" onclick="filter('ideologia', this)">Cultura politica</button>
+  <button class="filter-btn" onclick="filter('economia', this)">Politica economica</button>
+  <button class="filter-btn" onclick="filter('chiesa', this)">Rapporto con la Chiesa</button>
+  <button class="filter-btn" onclick="filter('masse', this)">Rapporto con le masse</button>
+  <button class="filter-btn" onclick="filter('provvedimenti', this)">Principali provvedimenti</button>
+  <button class="filter-btn cont-btn" onclick="filter('continuita', this)">Continuità</button>
+</div>
+
+<div class="col-headers" id="colHeaders">
+  <div class="col-h col-h-axis">Asse tematico</div>
+  <div class="col-h col-h-destra">Destra storica <span>1861 – 1876</span></div>
+  <div class="col-h col-h-sinistra">Sinistra storica <span>1876 – 1887</span></div>
+</div>
+
+<div class="table-wrap" id="tableWrap">
+
+  <!-- ROW 1: Composizione sociale -->
+  <div class="row" data-axis="sociale">
+    <div class="cell cell-axis">Composizione sociale</div>
+    <div class="cell cell-content destra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Aristocrazia liberale, grandi proprietari fondiari, imprenditori agricoli, alta borghesia degli affari. Base geografica prevalentemente centro-settentrionale.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">Era uno schieramento di notabili legati tra loro non da una struttura organizzata ma da reti di relazioni personali, influenze locali e clientele. Governava in nome di una nazione la cui stragrande maggioranza non aveva diritto di voto. Il suffragio era limitato a circa il 2% della popolazione, selezionata per censo e istruzione: non un'anomalia da correggere, ma una scelta coerente con la visione del mondo della Destra.</div>
+    </div>
+    <div class="cell cell-content sinistra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Piccola e media borghesia urbana, professionisti, borghesia industriale del Nord. Base elettorale solida al Sud: agrari e latifondisti meridionali rimasti ai margini del potere sotto la Destra.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">Un'alleanza sociologicamente contraddittoria — industriali del Nord e latifondisti del Sud — tenuta insieme più dagli interessi contingenti che da una visione comune. I leader provenivano quasi tutti dalla tradizione del Partito d'Azione: ex mazziniani, repubblicani, garibaldini che per arrivare al governo si erano convertiti alla monarchia sabauda e al riformismo graduale.</div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Cultura politica -->
+  <div class="row" data-axis="ideologia">
+    <div class="cell cell-axis">Cultura politica e ideologia</div>
+    <div class="cell cell-content destra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Liberalismo conservatore: fedeltà alla monarchia costituzionale, laicità dello Stato, liberismo economico. Privilegiava la libertà sull'uguaglianza. Il progresso doveva venire dall'alto, guidato da un'élite illuminata.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">La Destra si considerava l'erede legittima di Cavour. Il suo "etico pedagogismo" — la convinzione che il compito della classe dirigente fosse educare e guidare le masse, non rappresentarle — si traduceva in un atteggiamento paternalistico verso le classi subalterne. Qualsiasi intervento redistributivo dello Stato era escluso in linea di principio; il rifiuto del mazzinianesimo e della lotta di classe non era solo tattico ma ideologico.</div>
+    </div>
+    <div class="cell cell-content sinistra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Riformismo graduale per allargare le basi dello Stato. Anticlericalismo radicato (con substrato massonico diffuso). Abbandono del liberismo in favore del protezionismo e di un intervento più attivo dello Stato.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">Gli ideali risorgimentali sopravvissero quanto bastava per dare alla Sinistra una retorica riformatrice, non quanto bastava per tenerla al riparo dalle tentazioni del compromesso. Crispi sintetizzò la resa pragmatica con una formula destinata a restare: «La monarchia ci unisce, la repubblica ci divide». I tre capisaldi — riformismo, anticlericalismo, protezionismo — produssero tutti contraddizioni che i promotori non avevano previsto.</div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Politica economica -->
+  <div class="row" data-axis="economia">
+    <div class="cell cell-axis">Politica economica</div>
+    <div class="cell cell-content destra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Liberismo e rigore fiscale. Mercato nazionale unificato, investimenti nelle ferrovie, tassazione pesante sulle imposte indirette. Obiettivo: pareggio di bilancio a qualunque costo. Raggiunto nel 1875.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">Le tariffe piemontesi — tra le più basse d'Europa — furono estese all'intera penisola, esponendo le deboli manifatture meridionali alla concorrenza francese e inglese. La tassa sul macinato (1868) fu il provvedimento più impopolare: colpiva il pane, base dell'alimentazione dei più poveri. La vendita dei beni ecclesiastici, che avrebbe dovuto favorire la piccola proprietà rurale, finì per arricchire ulteriormente la borghesia agraria e i grandi latifondisti.</div>
+    </div>
+    <div class="cell cell-content sinistra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Abbandono del liberismo. Tariffe doganali protezionistiche (1878 e 1887) a difesa dell'industria tessile, siderurgica e della produzione cerealicola. Lo Stato diventa il principale finanziatore e committente dell'industria nazionale.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">Il protezionismo non fu solo una politica economica: fu il momento in cui si definì il rapporto strutturale tra Stato, banche e grande industria. I dazi del 1887 salvarono i bilanci dei grandi proprietari ma fecero salire il prezzo del pane; scatenarono la guerra doganale con la Francia che rovinò le esportazioni meridionali. Il "patto ferro e grano" protesse simultaneamente l'industria del Nord e i latifondisti del Sud.</div>
+    </div>
+  </div>
+
+  <!-- ROW 4: Rapporto con la Chiesa -->
+  <div class="row" data-axis="chiesa">
+    <div class="cell cell-axis">Rapporto con la Chiesa</div>
+    <div class="cell cell-content destra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Laicità dello Stato nel solco cavouriano ("Libera Chiesa in libero Stato"). Approccio diplomatico al conflitto con Roma. La Legge delle Guarentigie (1871) tentò una regolazione unilaterale del rapporto con la Santa Sede.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">La Convenzione di settembre (1864) impegnò l'Italia a rispettare i confini dello Stato Pontificio in cambio del ritiro delle truppe francesi: un compromesso fragile. La Breccia di Porta Pia (1870) fu possibile solo grazie alla guerra franco-prussiana. Pio IX respinse la Legge delle Guarentigie e promulgò il Non expedit (1874), vietando ai cattolici la partecipazione alla vita politica — privando il sistema liberale di una quota enorme del suo potenziale elettorale.</div>
+    </div>
+    <div class="cell cell-content sinistra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Anticlericalismo più radicale, nutrito da un substrato massonico diffuso tra i suoi esponenti. Difesa intransigente della laicità dello Stato. I settori radicali alimentarono una campagna anticlericale accesa.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">Il luglio 1881 offrì un'istantanea emblematica: il corteo funebre di Pio IX fu attaccato da dimostranti che minacciarono di gettare la salma nel Tevere. I tentativi di conciliazione sotto Crispi (1887) fallirono. Una svolta parziale arrivò con la Rerum Novarum (1891) di Leone XIII, che pose le basi per un movimento cattolico organizzato — ma il rientro dei cattolici nella vita politica italiana rimase a lungo un progetto incompiuto.</div>
+    </div>
+  </div>
+
+  <!-- ROW 5: Rapporto con le masse -->
+  <div class="row" data-axis="masse">
+    <div class="cell cell-axis">Rapporto con le masse popolari</div>
+    <div class="cell cell-content destra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Paternalistico ed escludente. Le masse erano oggetto di educazione e governo, non soggetti politici. Il suffragio al 2% non era un'anomalia da correggere ma una scelta di sistema.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">La risposta alle rivendicazioni popolari fu quasi sempre la repressione militare: il brigantaggio meridionale fu affrontato con fino a 120.000 soldati e la legge Pica (1863), che sospese le garanzie costituzionali nelle province colpite. Non esisteva alcun canale istituzionale attraverso cui le masse potessero far valere le proprie richieste. La leva militare e le nuove tasse furono vissute al Sud come imposizioni di un potere estraneo.</div>
+    </div>
+    <div class="cell cell-content sinistra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Apertura retorica e riforme parziali. La Sinistra si proponeva di allargare le basi sociali dello Stato, ma il trasformismo e il protezionismo finirono per tutelare i ceti che già avevano rappresentanza politica.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">La riforma elettorale del 1882 triplicò il corpo elettorale (dal 2% al 7%) — un passo avanti reale, ma lontanissimo dal suffragio universale. L'abolizione della tassa sul macinato (1884) fu la misura più attesa dalle classi popolari. Ma quando i Fasci siciliani (1893–94) portarono le rivendicazioni contadine in piazza, la risposta fu lo stato d'assedio e trentamila soldati: lo stesso Crispi che aveva firmato il Codice Zanardelli.</div>
+    </div>
+  </div>
+
+  <!-- ROW 6: Principali provvedimenti -->
+  <div class="row" data-axis="provvedimenti">
+    <div class="cell cell-axis">Principali provvedimenti</div>
+    <div class="cell cell-content destra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Unificazione dei codici (1865) · Leva militare obbligatoria · Legge Casati sull'istruzione · Legge Pica (1863) · Legge delle Guarentigie (1871) · Tassa sul macinato (1868) · Pareggio di bilancio (1875).</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">L'unificazione istituzionale avvenne per decreto: nel 1865 furono emanati codice civile, codice di procedura civile, codice di commercio e di navigazione — tutti di impianto sabaudo. L'unica eccezione fu il diritto penale (la Toscana aveva abolito la pena di morte), irrisolta fino al Codice Zanardelli del 1889. I grandi investimenti nelle ferrovie — la rete quasi triplicò tra il 1861 e il 1870 — furono l'eredità infrastrutturale più duratura.</div>
+    </div>
+    <div class="cell cell-content sinistra-cell" onclick="toggleDetail(this)">
+      <div class="cell-summary">Legge Coppino (1877) · Riforma elettorale (1882) · Abolizione tassa sul macinato (1884) · Tariffe protezionistiche (1878 e 1887) · Codice Zanardelli (1889) · Riforma amministrativa (1888) · Prime leggi di legislazione sociale.</div>
+      <button class="expand-btn">▸ Approfondisci</button>
+      <div class="cell-detail">Il Codice Zanardelli (1889) fu uno dei codici penali più avanzati d'Europa: abolì la pena di morte, depenalizzò lo sciopero, attenuò le pene per i reati contro la proprietà. La riforma amministrativa del 1888 rese elettiva la carica di sindaco nei capoluoghi e nei comuni con più di diecimila abitanti. Le prime misure di legislazione sociale: Cassa Nazionale per gli infortuni (1883), divieto di lavoro minorile sotto i nove anni (1886), leggi sull'igiene pubblica (1888–90).</div>
+    </div>
+  </div>
+
+  <!-- ROW CONTINUITÀ (full-width) -->
+  <div class="cont-row" id="contRow">
+    <div class="cont-cell-full">
+      <div class="cont-header-row">
+        <span class="cont-badge">Continuità</span>
+        <div class="cont-title">Cosa accomuna i due schieramenti</div>
+      </div>
+      <div class="cont-nota">
+        <strong>Attenzione terminologica.</strong> «Destra» e «Sinistra» storica non corrispondono alla Destra e alla Sinistra nel senso che questi termini hanno assunto nel Novecento. Entrambi gli schieramenti si muovono nell'orizzonte del liberalismo ottocentesco: la Destra ne esprime la variante conservatrice — ordine, élite, rigore — la Sinistra quella progressista — riforme, allargamento della partecipazione, anticlericalismo. Nessuno dei due mette in discussione la monarchia, la proprietà privata o l'esclusione delle classi subalterne dal governo effettivo del paese. Il confronto tra i due riguarda <em>come</em> gestire il sistema liberale, non <em>se</em> mantenerlo.
+      </div>
+      <div class="cont-grid">
+
+        <div class="cont-card" onclick="toggleCont(this)">
+          <div class="cont-card-title">Suffragio ristretto</div>
+          <div class="cont-card-text">Entrambi governarono con un elettorato minimo. La Sinistra lo triplicò (dal 2% al 7%) ma non lo estese oltre.</div>
+          <div class="cont-detail">La riforma elettorale del 1882 fu presentata come una svolta democratica, ma il suffragio universale rimase fuori discussione. Chi decise di fermarsi al 7% non lo fece per mancanza di fantasia: lo fece perché un elettorato più largo avrebbe prodotto un Parlamento più difficile da gestire con gli strumenti del trasformismo. Era una contraddizione che il sistema portava dentro di sé. Il suffragio universale maschile sarebbe arrivato solo nel 1912, sotto Giolitti.</div>
+        </div>
+
+        <div class="cont-card" onclick="toggleCont(this)">
+          <div class="cont-card-title">Gestione notabilare della politica</div>
+          <div class="cont-card-text">In entrambi i periodi la politica fu gestita attraverso reti personali e clientele, non attraverso partiti organizzati.</div>
+          <div class="cont-detail">La Destra era aggregata attorno a grandi personalità legate da relazioni personali, proprietà e contatti. La Sinistra non costruì partiti nel senso moderno del termine: il trasformismo di Depretis sostituì le coalizioni programmatiche con accordi personali e scambi di favori. Gramsci ha descritto il trasformismo come il meccanismo con cui la classe dirigente moderata assorbiva progressivamente le personalità più dinamiche dell'opposizione, svuotandola della sua funzione critica.</div>
+        </div>
+
+        <div class="cont-card" onclick="toggleCont(this)">
+          <div class="cont-card-title">Esclusione delle masse</div>
+          <div class="cont-card-text">Nessuno dei due aprì canali reali di partecipazione per le classi subalterne. La risposta alle rivendicazioni popolari fu quasi sempre la repressione.</div>
+          <div class="cont-detail">La Destra represse il brigantaggio con lo stato d'eccezione e la legge Pica. La Sinistra, quando i Fasci siciliani portarono le rivendicazioni contadine in piazza, rispose con lo stato d'assedio e trentamila soldati. In entrambi i casi, le cause strutturali — miseria, latifondo, esclusione politica — non furono toccate. La tensione tra il «paese legale» e il «paese reale» non fu mai affrontata alla radice da nessuno dei due schieramenti.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- end table-wrap -->
+
+<script>
+function filter(axis, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const contRow = document.getElementById('contRow');
+  const colHeaders = document.getElementById('colHeaders');
+
+  if (axis === 'continuita') {
+    document.querySelectorAll('.row').forEach(r => r.classList.add('hidden'));
+    contRow.classList.add('visible');
+    colHeaders.style.display = 'none';
+  } else {
+    contRow.classList.remove('visible');
+    colHeaders.style.display = '';
+    document.querySelectorAll('.row').forEach(row => {
+      if (axis === 'all' || row.dataset.axis === axis) {
+        row.classList.remove('hidden');
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+  }
+}
+
+function toggleDetail(cell) {
+  const detail = cell.querySelector('.cell-detail');
+  const btn = cell.querySelector('.expand-btn');
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open');
+  btn.textContent = isOpen ? '▸ Approfondisci' : '▾ Chiudi';
+}
+
+function toggleCont(card) {
+  card.querySelector('.cont-detail').classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misurare le forze</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:980px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.86rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1.4rem;}
+
+  .actor-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1.1rem 1.3rem;margin-bottom:1rem;}
+  .actor-title{font-size:1rem;color:var(--brown-dark);margin-bottom:.3rem;}
+  .actor-desc{font-size:.82rem;line-height:1.5;color:var(--ink-soft);margin-bottom:.9rem;}
+
+  .rating-row{margin-bottom:.8rem;}
+  .rating-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.78rem;color:var(--brown-dark);margin-bottom:.4rem;}
+  .rating-opts{display:flex;gap:.5rem;}
+  .rating-btn{flex:1;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.78rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.5rem;cursor:pointer;text-align:center;}
+  .rating-btn:hover{border-color:var(--brown);}
+  .rating-btn.chosen{border-color:var(--brown);background:#FBF0DD;font-weight:600;}
+  .rating-btn[disabled]{cursor:default;}
+
+  .btn-primary{display:block;margin:1.2rem auto 0;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.85rem;background:var(--brown);color:var(--paper);border:none;border-radius:4px;padding:.7rem 1.6rem;cursor:pointer;}
+  .btn-primary:hover{background:var(--brown-dark);}
+  .btn-primary[disabled]{background:#D9D2C4;cursor:default;}
+
+  .results{display:none;margin-top:1.5rem;}
+  .results.show{display:block;}
+  .results-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.9rem;}
+
+  table.results-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;overflow:hidden;font-size:.83rem;margin-bottom:1.2rem;}
+  table.results-table th{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;text-transform:uppercase;background:var(--brown);color:var(--paper);padding:.55rem .7rem;text-align:left;}
+  table.results-table td{padding:.55rem .7rem;border-bottom:1px solid #EAE2D2;vertical-align:top;line-height:1.5;}
+  .match{color:#4A7A5C;font-weight:600;}
+  .mismatch{color:#B06A4A;font-weight:600;}
+
+  .outcome-panel{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.3rem 1.5rem;}
+  .outcome-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .outcome-text{font-size:.9rem;line-height:1.65;margin-bottom:1rem;}
+  .closing-q{font-style:italic;font-size:.92rem;line-height:1.6;padding-top:.9rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">La costruzione degli Stati nazionali · Artefatto 15</div>
+    <div class="header-title">Misurare le forze</div>
+    <div class="header-sub">1862, conflitto costituzionale prussiano. Sei nella posizione del governo: per ciascun attore, stima quanto dichiara di volere e quanto è disposto a rischiare per ottenerlo. Sono due grandezze distinte.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">La Dieta prussiana, a maggioranza liberale, si oppone alla riforma militare voluta dal sovrano e blocca il bilancio. È il momento di decidere: chi tra questi quattro attori userà davvero la propria forza, e chi si limiterà a dichiararla?</div>
+
+    <div id="actorsWrap"></div>
+
+    <button class="btn-primary" id="resolveBtn" onclick="resolve()" disabled>Svolgi la partita</button>
+
+    <div class="results" id="results">
+      <div class="results-title">Le tue stime contro i fatti</div>
+      <table class="results-table" id="resultsTable"></table>
+
+      <div class="outcome-panel">
+        <div class="outcome-title">Che cos'è la Realpolitik</div>
+        <div class="outcome-text">Bismarck governò senza approvazione parlamentare, riscosse comunque le imposte, attuò la riforma militare — e verificò sul campo ciò che aveva intuito: l'opposizione liberale minacciava e non agiva. La Realpolitik non consiste nel disprezzare i principi: consiste nel misurare le forze effettive di cui ciascun attore dispone, e nel non attribuire a una posizione politica un peso maggiore di quello che i suoi sostenitori sono disposti a esercitare.</div>
+        <div class="closing-q">È una tecnica particolare di governo, oppure è semplicemente una descrizione accurata di come funziona ogni politica?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const actors = [
+  {
+    id:'dieta', name:'Maggioranza liberale della Dieta',
+    desc:'Si oppone alla riforma militare e blocca l\'approvazione del bilancio: è, sulla carta, il terreno su cui la forza liberale è massima, perché senza denaro nessun governo può funzionare.',
+    realDich:'alto', realRisc:'basso',
+    note:'Dichiara con forza il controllo parlamentare della spesa. Ma imprenditori, funzionari e docenti che la compongono non sono disposti a chiamare in piazza le forze sociali che potrebbero sostenerli: temono quelle forze più del governo.'
+  },
+  {
+    id:'borghesia', name:'Borghesia industriale',
+    desc:'Vuole mercato unificato, sicurezza dei contratti, infrastrutture, libertà d\'impresa — obiettivi economici concreti, non necessariamente il controllo politico dello Stato.',
+    realDich:'medio', realRisc:'basso',
+    note:'Sulle proprie richieste economiche è determinata; sul potere politico in sé, molto meno. Scoprirà — come i suoi omologhi in tutta Europa nel 1848-49 — che quelle richieste possono essere soddisfatte anche da un governo autoritario, purché garantisca ordine e proprietà.'
+  },
+  {
+    id:'masse', name:'Masse urbane',
+    desc:'Operai, artigiani, lavoratori delle città: la forza sociale che la borghesia liberale teme di dover chiamare in proprio soccorso.',
+    realDich:'medio', realRisc:'alto',
+    note:'Le loro rivendicazioni non coincidono con il controllo parlamentare del bilancio militare che chiedono i liberali — sono sociali più che costituzionali. Ma la loro capacità di mobilitazione reale è alta, ed è proprio quella capacità a spaventare la borghesia, non il programma liberale in sé.'
+  },
+  {
+    id:'corona', name:'Corona (Guglielmo I e il governo)',
+    desc:'Vuole la riforma militare e ha chiamato Bismarck a guidarla contro l\'opposizione della Dieta.',
+    realDich:'alto', realRisc:'alto',
+    note:'È l\'unico attore in cui dichiarazione e azione coincidono pienamente: governa senza approvazione parlamentare, riscuote comunque le imposte, attua la riforma. Non si limita a dichiarare — esercita.'
+  }
+];
+
+const estimates = {};
+
+function renderActors(){
+  const wrap = document.getElementById('actorsWrap');
+  actors.forEach(a=>{
+    const card = document.createElement('div');
+    card.className = 'actor-card';
+    card.innerHTML = `
+      <div class="actor-title">${a.name}</div>
+      <div class="actor-desc">${a.desc}</div>
+      <div class="rating-row">
+        <div class="rating-label">Quanto dichiara di volere</div>
+        <div class="rating-opts" id="dich-${a.id}">
+          <button class="rating-btn" onclick="setEstimate('${a.id}','dich','basso')">Basso</button>
+          <button class="rating-btn" onclick="setEstimate('${a.id}','dich','medio')">Medio</button>
+          <button class="rating-btn" onclick="setEstimate('${a.id}','dich','alto')">Alto</button>
+        </div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label">Quanto è disposto a rischiare per ottenerlo</div>
+        <div class="rating-opts" id="risc-${a.id}">
+          <button class="rating-btn" onclick="setEstimate('${a.id}','risc','basso')">Basso</button>
+          <button class="rating-btn" onclick="setEstimate('${a.id}','risc','medio')">Medio</button>
+          <button class="rating-btn" onclick="setEstimate('${a.id}','risc','alto')">Alto</button>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function setEstimate(actorId, dim, val){
+  estimates[actorId+'_'+dim] = val;
+  document.querySelectorAll('#'+dim+'-'+actorId+' .rating-btn').forEach(b=>{
+    b.classList.toggle('chosen', b.textContent.toLowerCase()===val);
+  });
+  checkComplete();
+}
+
+function checkComplete(){
+  const total = actors.length * 2;
+  const done = Object.keys(estimates).length;
+  document.getElementById('resolveBtn').disabled = done < total;
+}
+
+const labelMap = {basso:'Basso', medio:'Medio', alto:'Alto'};
+
+function resolve(){
+  const table = document.getElementById('resultsTable');
+  let html = '<tr><th>Attore</th><th>La tua stima</th><th>La realtà</th><th></th></tr>';
+  actors.forEach(a=>{
+    const yourDich = estimates[a.id+'_dich'], yourRisc = estimates[a.id+'_risc'];
+    const matchDich = yourDich === a.realDich, matchRisc = yourRisc === a.realRisc;
+    html += `<tr>
+      <td><strong>${a.name}</strong><br><span style="font-size:.76rem;color:var(--ink-soft);">${a.note}</span></td>
+      <td>Dichiarato: ${labelMap[yourDich]}<br>Rischio: ${labelMap[yourRisc]}</td>
+      <td>Dichiarato: ${labelMap[a.realDich]}<br>Rischio: ${labelMap[a.realRisc]}</td>
+      <td><span class="${matchDich?'match':'mismatch'}">D ${matchDich?'✓':'✗'}</span><br><span class="${matchRisc?'match':'mismatch'}">R ${matchRisc?'✓':'✗'}</span></td>
+    </tr>`;
+  });
+  table.innerHTML = html;
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+renderActors();
+</script>
+</body>
+</html>

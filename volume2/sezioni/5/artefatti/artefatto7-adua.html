@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perché ad Adua sì e altrove no</title>
+<style>
+  :root{
+    --beige: #F5F0E8;
+    --gray: #F2F2F2;
+    --brown: #8B7355;
+    --brown-dark: #6B5A42;
+    --petrol: #2C4A52;
+    --petrol-dark: #1E363D;
+    --petrol-tint: #E3EDEE;
+    --petrol-tint-2: #CFE0E2;
+    --ink: #2A2620;
+    --ink-soft: #55504A;
+    --paper: #FBF8F3;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139,115,85,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(44,74,82,0.05), transparent 45%);
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 30px 44px;
+  }
+
+  header{
+    border-bottom: 2px solid var(--petrol);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--petrol);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: normal;
+  }
+
+  .intro{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0;
+  }
+
+  .conditions{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 22px 0 22px;
+  }
+
+  .cond-card{
+    background: var(--beige);
+    border: 1.5px solid var(--brown);
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+
+  .cond-card.off{
+    opacity: 0.55;
+    border-style: dashed;
+  }
+
+  .cond-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .cond-title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--petrol-dark);
+  }
+
+  .switch{
+    position: relative;
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .switch input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider{
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--brown);
+    border-radius: 22px;
+    transition: background 0.2s ease;
+  }
+
+  .slider::before{
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+  }
+
+  input:checked + .slider{ background: var(--petrol); }
+  input:checked + .slider::before{ transform: translateX(18px); }
+
+  .cond-desc{
+    font-size: 13.5px;
+    margin: 0;
+  }
+
+  .scenario-box{
+    background: var(--gray);
+    border: 1px solid #E0DDD6;
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 22px;
+  }
+
+  .scenario-title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--brown-dark);
+    margin: 0 0 12px;
+  }
+
+  .scenario-item{
+    font-size: 14px;
+    margin: 0 0 10px;
+    padding-left: 14px;
+    border-left: 3px solid var(--brown);
+  }
+
+  .scenario-item:last-child{ margin-bottom: 0; }
+
+  .scenario-item.complete{
+    border-left-color: var(--petrol);
+  }
+
+  .synthesis{
+    background: var(--petrol-tint);
+    border: 1.5px solid var(--petrol);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: none;
+  }
+
+  .synthesis.show{ display: block; }
+
+  .synthesis p{
+    font-size: 14px;
+    margin: 0;
+    color: var(--petrol-dark);
+  }
+
+  @media (max-width: 640px){
+    .conditions{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Due casi: India britannica ed Etiopia — Artefatto 7</p>
+    <h1>Perché ad Adua sì, e altrove no</h1>
+    <p class="intro">Quattro condizioni si combinarono ad Adua, nel 1896. Disattivane una o più per vedere quale ruolo giocava ciascuna: le descrizioni restano condizionali, riferite a ciò che accadde in contesti comparabili, non predizioni su come sarebbe andata l'Etiopia senza di esse.</p>
+  </header>
+
+  <div class="conditions">
+    <div class="cond-card" data-cond="stato">
+      <div class="cond-head">
+        <p class="cond-title">Stato centralizzato</p>
+        <label class="switch">
+          <input type="checkbox" checked data-cond="stato">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <p class="cond-desc">Menelik II aveva ridotto sotto la propria autorità i ras regionali, potendo mobilitare le forze dell'intero impero.</p>
+    </div>
+
+    <div class="cond-card" data-cond="armamento">
+      <div class="cond-head">
+        <p class="cond-title">Armamento moderno</p>
+        <label class="switch">
+          <input type="checkbox" checked data-cond="armamento">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <p class="cond-desc">Fucili e artiglieria acquistati in Europa, sfruttando la concorrenza tra Francia, Russia e la stessa Italia.</p>
+    </div>
+
+    <div class="cond-card" data-cond="terreno">
+      <div class="cond-head">
+        <p class="cond-title">Terreno d'altopiano</p>
+        <label class="switch">
+          <input type="checkbox" checked data-cond="terreno">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <p class="cond-desc">Un altopiano lontano dalla costa, difficile da rifornire, penalizzava chi attaccava.</p>
+    </div>
+
+    <div class="cond-card" data-cond="avversario">
+      <div class="cond-head">
+        <p class="cond-title">Avversario meno attrezzato</p>
+        <label class="switch">
+          <input type="checkbox" checked data-cond="avversario">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <p class="cond-desc">L'Italia era, tra le potenze coloniali europee, quella con minori risorse per l'impresa e il sostegno interno più incerto.</p>
+    </div>
+  </div>
+
+  <div class="scenario-box">
+    <p class="scenario-title">Che cosa cambia</p>
+    <div id="scenarioList"></div>
+  </div>
+
+  <div class="synthesis" id="synthesis">
+    <p>Nessuna delle quattro condizioni, presa da sola, sarebbe bastata. La loro combinazione spiega perché l'eccezione si sia verificata una volta, e perché sia rimasta un'eccezione: nello stesso ventennio la resistenza fu tentata in decine di contesti diversi, dal Sudan mahdista all'Africa sud-occidentale tedesca, e quasi ovunque fu schiacciata.</p>
+  </div>
+
+</div>
+
+<script>
+  const conditions = {
+    stato: {
+      title: "Stato centralizzato",
+      onText: "Presente: uno Stato in grado di mobilitare risorse su vasta scala, non una federazione di autorità locali.",
+      offText: "In contesti privi di uno Stato centralizzato, le resistenze documentate furono quasi sempre coalizioni fragili di autorità locali, che il colonizzatore poteva dividere una alla volta."
+    },
+    armamento: {
+      title: "Armamento moderno",
+      onText: "Presente: fucili e artiglieria di livello europeo, non armi tradizionali.",
+      offText: "In contesti privi di armamento moderno paragonabile a quello dell'avversario europeo, il dislivello tecnologico decise le battaglie, come già mostrato nei casi di resistenza schiacciata trattati nel capitolo precedente."
+    },
+    terreno: {
+      title: "Terreno d'altopiano",
+      onText: "Presente: un altopiano lontano dalla costa e difficile da rifornire, che penalizzava chi attaccava.",
+      offText: "Senza questo vantaggio geografico, la difesa avrebbe dovuto affidarsi soltanto alla mobilitazione di uomini e all'armamento acquistato, senza il vantaggio supplementare di un terreno sfavorevole all'avanzata nemica."
+    },
+    avversario: {
+      title: "Avversario meno attrezzato",
+      onText: "Presente: l'Italia era, tra le potenze coloniali europee, la meno attrezzata per l'impresa.",
+      offText: "Di fronte a una potenza coloniale meglio equipaggiata e con un sostegno interno più solido, le altre tre condizioni avrebbero dovuto colmare da sole un divario di risorse complessivamente maggiore."
+    }
+  };
+
+  const scenarioList = document.getElementById('scenarioList');
+  const synthesis = document.getElementById('synthesis');
+  let interacted = false;
+
+  function render(){
+    scenarioList.innerHTML = '';
+    let allOn = true;
+
+    Object.keys(conditions).forEach(key => {
+      const input = document.querySelector(`input[data-cond="${key}"]`);
+      const card = document.querySelector(`.cond-card[data-cond="${key}"]`);
+      const on = input.checked;
+      if(!on) allOn = false;
+      card.classList.toggle('off', !on);
+
+      const p = document.createElement('p');
+      p.className = 'scenario-item' + (on ? ' complete' : '');
+      p.textContent = (on ? conditions[key].onText : conditions[key].offText);
+      scenarioList.appendChild(p);
+    });
+
+    synthesis.classList.toggle('show', interacted);
+  }
+
+  document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+    input.addEventListener('change', () => {
+      interacted = true;
+      render();
+    });
+  });
+
+  render();
+</script>
+
+</body>
+</html>

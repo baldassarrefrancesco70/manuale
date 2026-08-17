@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mappa della sezione — Come nasce l'economia del mondo moderno</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --c1:#5c7343; --c2:#9d4a2b; --c3:#3d5566; --frame:#8a7a52;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif)}
+  body{padding:18px 16px 30px;line-height:1.42}
+  .wrap{max-width:1280px;margin:0 auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;color:var(--ink-soft);text-align:center}
+  h1{font-size:1.32rem;font-weight:600;margin:.15rem 0 12px;text-align:center}
+
+  .toolbar{display:flex;justify-content:center;gap:14px;margin-bottom:14px;font-family:var(--sans);font-size:.74rem}
+  .toolbar button{appearance:none;border:0;background:none;color:var(--ink-soft);text-decoration:underline;
+    cursor:pointer;font-family:var(--sans);font-size:.74rem;padding:2px}
+  .toolbar button:hover{color:var(--ink)}
+
+  .root-row{display:flex;justify-content:center}
+  .root{
+    background:var(--paper-2);border:1px solid var(--frame);border-radius:3px;
+    padding:12px 26px;text-align:center;max-width:560px;
+  }
+  .root .k{font-family:var(--sans);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:3px}
+  .root h2{margin:0;font-size:1.12rem;font-weight:600}
+
+  .trunk{width:1px;height:20px;background:var(--rule);margin:0 auto}
+
+  .cascade{width:680px;max-width:100%;margin:0 auto;position:relative}
+  .row-slot{position:relative}
+  .row-slot .node{width:230px;margin-left:0}
+  .connector{width:100%;height:26px;position:relative}
+  .connector svg{display:block;width:100%;height:100%}
+  .stub-mobile{display:none;width:1px;height:26px;background:var(--rule);margin:0 auto}
+
+  .node{
+    font-family:var(--sans);border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);
+    padding:9px 12px;cursor:pointer;text-align:left;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .node:hover{background:#e1d9c4}
+  .node[aria-expanded="true"]{border-color:var(--ink);background:#e6ddc3}
+  .node .lbl{font-size:.82rem;line-height:1.25;color:var(--ink)}
+  .node .tag{display:block;font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px}
+  .node .chev{font-size:.7rem;color:var(--ink-soft);flex:0 0 auto;margin-top:1px;transition:transform .15s ease}
+  .node[aria-expanded="true"] .chev{transform:rotate(90deg)}
+
+  .frame-col .node{border-style:dashed;padding:7px 11px}
+  .frame-col .node .lbl{font-size:.76rem;font-style:italic}
+
+  .col-c1 .tag{color:var(--c1)} .col-c1 .node[aria-expanded="true"]{border-color:var(--c1)}
+  .col-c2 .tag{color:var(--c2)} .col-c2 .node[aria-expanded="true"]{border-color:var(--c2)}
+  .col-c3 .tag{color:var(--c3)} .col-c3 .node[aria-expanded="true"]{border-color:var(--c3)}
+  .col-fr .tag{color:var(--frame)} .col-fr .node[aria-expanded="true"]{border-color:var(--frame)}
+
+  @media (max-width:760px){
+    .row-slot .node{margin-left:0 !important;margin-right:0 !important;margin-inline:auto !important}
+    .connector{display:none}
+    .stub-mobile{display:block}
+  }
+
+  .panels{margin-top:14px}
+  .panel{
+    max-height:0;overflow:hidden;transition:max-height .28s ease;
+    border-radius:0 0 4px 4px;
+  }
+  .panel.open{max-height:2000px;margin-top:10px;margin-bottom:2px}
+  .panel-inner{
+    border:1px solid var(--rule);border-left-width:4px;border-radius:3px;background:var(--paper-2);
+    padding:12px 16px 14px;
+  }
+  .panel-inner.pc1{border-left-color:var(--c1)}
+  .panel-inner.pc2{border-left-color:var(--c2)}
+  .panel-inner.pc3{border-left-color:var(--c3)}
+  .panel-inner.pfr{border-left-color:var(--frame);border-left-style:dashed}
+
+  .panel-head{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:8px}
+  .panel-head b{color:var(--ink);font-weight:600;text-transform:none;letter-spacing:0;font-size:.86rem;
+    font-family:var(--serif);margin-left:6px}
+
+  .cluster-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+  .cluster{flex:1 1 220px;min-width:200px;border:1px solid var(--rule);border-radius:3px;background:var(--paper);padding:10px 13px}
+  .cluster h4{margin:0 0 6px;font-family:var(--sans);font-size:.68rem;letter-spacing:.03em;color:var(--ink-soft);text-transform:uppercase;font-weight:600}
+  .cluster ul{list-style:none;margin:0;padding:0}
+  .cluster li{font-size:.83rem;line-height:1.36;padding:6px 0;border-top:1px solid var(--line)}
+  .cluster li:first-child{border-top:0}
+  .cluster li strong{font-weight:700;color:var(--ink)}
+
+  .arrow-wrap{display:flex;align-items:center;justify-content:center;flex:0 0 36px;align-self:center}
+  .arrow-wrap svg{display:block}
+
+  .pill{display:inline-block;margin-top:4px;font-family:var(--sans);font-size:.62rem;color:var(--ink-soft);
+    border:1px dashed var(--rule);border-radius:9px;padding:1px 7px}
+
+  .nodi-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:11px;padding-top:11px;border-top:1px dashed var(--rule)}
+  .nodo-card{flex:1 1 220px;min-width:200px}
+  .nodo-card .from{display:block;font-family:var(--sans);font-style:normal;font-size:.6rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+  .nodo-card .q{font-size:.78rem;font-style:italic;line-height:1.34}
+
+  .frame-list{list-style:none;margin:0;padding:0;max-width:640px}
+  .frame-list li{font-size:.85rem;padding:7px 0;border-top:1px solid var(--line)}
+  .frame-list li:first-child{border-top:0}
+  .frame-list li strong{font-weight:700}
+
+  @media (max-width:900px){
+    .arrow-wrap{transform:rotate(90deg);flex-basis:100%;margin:2px 0}
+    .cluster-row{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Volume 2 &middot; Sezione</div>
+  <h1>Mappa della sezione</h1>
+
+  <div class="toolbar">
+    <button type="button" id="expandAll">Espandi tutto</button>
+    <button type="button" id="collapseAll">Comprimi tutto</button>
+  </div>
+
+  <div class="root-row">
+    <div class="root">
+      <span class="k">Sezione</span>
+      <h2>Come nasce l'economia del mondo moderno</h2>
+    </div>
+  </div>
+  <div class="trunk"></div>
+  <div class="cascade" id="cascade"></div>
+  <div class="panels" id="panels"></div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    {
+      id:"apertura", tag:"Apertura", title:"Lo spartiacque", frame:true, offset:225,
+      items:[
+        {html:"<strong>Portata paragonabile alla rivoluzione neolitica</strong>", mirror:"verificato in: Chiusura"},
+        {html:"<strong>Portata ≠ necessità</strong>: l'ampiezza non è un destino", mirror:"verificato in: Chiusura"},
+        {html:"<strong>Metodo</strong>: raccontare la rottura senza leggerla a ritroso"}
+      ]
+    },
+    {
+      id:"cap1", tag:"Capitolo 1", title:"Prima della Rivoluzione industriale", col:"c1", offset:125,
+      clusters:[
+        { title:"Il mondo bloccato", items:[
+          {html:"<strong>Tetto demografico</strong> + <strong>scarsità di energia</strong> → crescita trattenuta"}
+        ]},
+        { title:"Due trasformazioni silenziose", items:[
+          {html:"<strong>Demografia</strong>: cala la mortalità, non aumentano le nascite"},
+          {html:"<strong>Enclosures</strong>: proprietà privata + manodopera libera per il mercato"}
+        ]},
+        { title:"Il lavoro prima della fabbrica", items:[
+          {html:"<strong>Protoindustria</strong>: lavoro a domicilio, limite di produttività"}
+        ]},
+        { title:"Tre risposte sulla ricchezza", items:[
+          {html:"<strong>Mercantilismo</strong> → oro e commercio"},
+          {html:"<strong>Fisiocrazia</strong> → la terra"},
+          {html:"<strong>Liberismo</strong> → il lavoro"}
+        ]}
+      ],
+      nodi:[
+        {q:"Le enclosures: progresso o esproprio?", from:"Due trasformazioni silenziose"},
+        {q:"La rottura: soglia netta o lento scivolamento?", from:"Attraversa l'intero capitolo"}
+      ]
+    },
+    {
+      id:"cap2", tag:"Capitolo 2", title:"La prima rivoluzione industriale", col:"c2", offset:285,
+      clusters:[
+        { title:"La rottura tecnico-economica", items:[
+          {html:"<strong>Quattro vincoli cedono insieme</strong>: energia, strumenti, tempo, scala"},
+          {html:"<strong>Tessile = settore trainante</strong> → trascina metallurgia, carbone, trasporti"},
+          {html:"<strong>Carbone + vapore</strong>: ciclo che si autoalimenta"},
+          {html:"<strong>Primato inglese</strong>: simultaneità di condizioni, non un solo fattore"},
+          {html:"<strong>Cotone e schiavitù</strong>: stessa catena, due capi", pill:"↔ Atlante · cartina 4"}
+        ]},
+        { title:"La società industriale", items:[
+          {html:"<strong>Ordini → classi</strong>: la nascita conta meno dell'economia"},
+          {html:"<strong>Tempo di fabbrica</strong>: l'orologio, non più le stagioni", pill:"↔ Cap. 3 · La concentrazione"},
+          {html:"<strong>Questione sociale</strong>: la miseria urbana come problema da spiegare"},
+          {html:"<strong>Luddismo → sindacati</strong>: dalla protesta all'organizzazione"}
+        ]},
+        { title:"Le risposte ideologiche", items:[
+          {html:"<strong>Fede nel progresso</strong>: liberismo + positivismo + darwinismo sociale"},
+          {html:"<strong>Socialismo</strong>: critica radicale, il progresso va organizzato"},
+          {html:"<strong>Stesso determinismo</strong>: liberismo e socialismo condividono l'ottimismo"}
+        ]}
+      ],
+      nodi:[
+        {q:"Il primato inglese: merito o fortuna?", from:"La rottura tecnico-economica"},
+        {q:"Quanto pesò la schiavitù nell'industrializzazione?", from:"La rottura tecnico-economica"},
+        {q:"Le condizioni di vita: migliorarono o peggiorarono?", from:"La società industriale"}
+      ]
+    },
+    {
+      id:"cap3", tag:"Capitolo 3", title:"La seconda rivoluzione industriale", col:"c3", offset:195,
+      clusters:[
+        { title:"Arrivare dopo", items:[
+          {html:"<strong>Chi arriva dopo non copia</strong>: strade diverse dal modello inglese"}
+        ]},
+        { title:"Scienza e industria", items:[
+          {html:"<strong>Scienza + produzione</strong>: acciaio, chimica, elettricità, motore a scoppio"}
+        ]},
+        { title:"Il nuovo capitalismo", items:[
+          {html:"<strong>Capitalismo finanziario e manageriale</strong>: banca e industria si fondono"},
+          {html:"<strong>Grande depressione</strong>: crisi dei profitti, non della produzione"},
+          {html:"<strong>Concentrazione doppia</strong>: mercato (cartelli/trust) e fabbrica (taylorismo)", pill:"↔ Cap. 2 · La disciplina del tempo"}
+        ]},
+        { title:"Lo Stato e il mondo", items:[
+          {html:"<strong>Ritorno dello Stato</strong>: dazi, protezione dei mercati"},
+          {html:"<strong>Grandi magazzini</strong>: fabbricano il desiderio, primo spazio pubblico alle donne"}
+        ]}
+      ],
+      nodi:[
+        {q:"La sovrapproduzione: difetto del sistema o incidente?", from:"Il nuovo capitalismo"},
+        {q:"I consumi di massa: liberazione o manipolazione?", from:"Lo Stato e il mondo"}
+      ]
+    },
+    {
+      id:"chiusura", tag:"Chiusura", title:"Lo spartiacque, rivisto", frame:true, offset:225,
+      items:[
+        {html:"<strong>Nessun passaggio era necessario</strong>: contingenza, non destino", mirror:"risponde a: Apertura"},
+        {html:"<strong>Due volti tenuti insieme</strong>: abbondanza e prezzo umano"},
+        {html:"<strong>Conto ecologico</strong>: il rapporto uomo-natura si capovolge"},
+        {html:"<strong>Domanda al presente</strong>: anche le trasformazioni di oggi sono scelte", mirror:"risponde a: Apertura"}
+      ]
+    }
+  ];
+
+  var NODE_W = 230, CASCADE_W = 680;
+
+  var ARROW_SVG =
+    '<svg viewBox="0 0 36 16" width="36" height="16" aria-hidden="true">' +
+    '<line x1="2" y1="8" x2="27" y2="8" stroke="#5b5346" stroke-width="1.4"/>' +
+    '<polyline points="20,2.5 29,8 20,13.5" fill="none" stroke="#5b5346" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+
+  function connectorSVG(prevOffset, nextOffset){
+    var x1 = prevOffset + NODE_W/2;
+    var x2 = nextOffset + NODE_W/2;
+    return '<svg viewBox="0 0 ' + CASCADE_W + ' 26" preserveAspectRatio="none" aria-hidden="true">' +
+      '<line x1="' + x1 + '" y1="0" x2="' + x2 + '" y2="26" stroke="#b7ab8d" stroke-width="1.3"/>' +
+      '</svg>';
+  }
+
+  var cascade = document.getElementById('cascade');
+  var panelsWrap = document.getElementById('panels');
+
+  function buildFramePanelInner(node){
+    var ul = document.createElement('ul');
+    ul.className = 'frame-list';
+    node.items.forEach(function(it){
+      var li = document.createElement('li');
+      li.innerHTML = it.html;
+      if (it.mirror){
+        var br = document.createElement('br');
+        li.appendChild(br);
+        var pill = document.createElement('span');
+        pill.className = 'pill';
+        pill.textContent = it.mirror;
+        li.appendChild(pill);
+      }
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function buildClusterPanelInner(node){
+    var frag = document.createDocumentFragment();
+
+    var crow = document.createElement('div');
+    crow.className = 'cluster-row';
+    node.clusters.forEach(function(cl, i){
+      if (i > 0){
+        var arrWrap = document.createElement('div');
+        arrWrap.className = 'arrow-wrap';
+        arrWrap.innerHTML = ARROW_SVG;
+        crow.appendChild(arrWrap);
+      }
+      var box = document.createElement('div');
+      box.className = 'cluster';
+      var h4 = document.createElement('h4');
+      h4.textContent = cl.title;
+      box.appendChild(h4);
+      var ul = document.createElement('ul');
+      cl.items.forEach(function(it){
+        var li = document.createElement('li');
+        li.innerHTML = it.html;
+        if (it.pill){
+          var br = document.createElement('br');
+          li.appendChild(br);
+          var pill = document.createElement('span');
+          pill.className = 'pill';
+          pill.textContent = it.pill;
+          li.appendChild(pill);
+        }
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+      crow.appendChild(box);
+    });
+    frag.appendChild(crow);
+
+    if (node.nodi && node.nodi.length){
+      var nrow = document.createElement('div');
+      nrow.className = 'nodi-row';
+      node.nodi.forEach(function(n){
+        var card = document.createElement('div');
+        card.className = 'nodo-card';
+        var from = document.createElement('span');
+        from.className = 'from';
+        from.textContent = 'Nodo storiografico · ' + n.from;
+        var q = document.createElement('span');
+        q.className = 'q';
+        q.textContent = n.q;
+        card.appendChild(from);
+        card.appendChild(q);
+        nrow.appendChild(card);
+      });
+      frag.appendChild(nrow);
+    }
+
+    return frag;
+  }
+
+  DATA.forEach(function(node, idx){
+    if (idx > 0){
+      var prev = DATA[idx - 1];
+      var connSlot = document.createElement('div');
+      connSlot.className = 'connector';
+      connSlot.innerHTML = connectorSVG(prev.offset, node.offset);
+      cascade.appendChild(connSlot);
+
+      var stubM = document.createElement('div');
+      stubM.className = 'stub-mobile';
+      cascade.appendChild(stubM);
+    }
+
+    var slot = document.createElement('div');
+    slot.className = 'row-slot' + (node.frame ? ' frame-col col-fr' : ' col-' + node.col);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'node';
+    btn.style.marginLeft = node.offset + 'px';
+    btn.setAttribute('aria-expanded','false');
+    btn.setAttribute('aria-controls','panel-' + node.id);
+    btn.innerHTML = '<span class="lbl"><span class="tag">' + node.tag + '</span>' + node.title + '</span><span class="chev">\u25B8</span>';
+    slot.appendChild(btn);
+    cascade.appendChild(slot);
+
+    var panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.id = 'panel-' + node.id;
+    var inner = document.createElement('div');
+    inner.className = 'panel-inner ' + (node.frame ? 'pfr' : 'p' + node.col);
+    var head = document.createElement('div');
+    head.className = 'panel-head';
+    head.innerHTML = node.tag + '<b>' + node.title + '</b>';
+    inner.appendChild(head);
+    inner.appendChild(node.frame ? buildFramePanelInner(node) : buildClusterPanelInner(node));
+    panel.appendChild(inner);
+    panelsWrap.appendChild(panel);
+
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      panel.classList.toggle('open', !open);
+    });
+  });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    cascade.querySelectorAll('.node').forEach(function(b){ b.setAttribute('aria-expanded','true'); });
+    panelsWrap.querySelectorAll('.panel').forEach(function(p){ p.classList.add('open'); });
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    cascade.querySelectorAll('.node').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+    panelsWrap.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('open'); });
+  });
+})();
+</script>
+</body>
+</html>

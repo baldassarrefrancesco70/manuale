@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il laboratorio della gerarchia</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:920px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:700px;}
+
+  .progress-wrap{background:var(--brown-dark);padding:.65rem 2rem;display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:#EFE4D4;}
+  .progress-track{flex:1;height:5px;background:rgba(0,0,0,.2);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:#D9C6A5;width:0%;transition:width .4s ease;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .log{margin-bottom:1.2rem;}
+  .log-item{background:var(--paper);border-left:3px solid var(--brown);border-radius:4px;padding:.45rem .7rem;margin-bottom:.35rem;font-size:.78rem;}
+  .log-item b{color:var(--brown-dark);}
+
+  .step-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1.3rem 1.5rem;}
+  .step-num{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.5rem;}
+  .step-q{font-size:1rem;line-height:1.5;margin-bottom:1.1rem;}
+  .step-opts{display:flex;flex-direction:column;gap:.6rem;}
+  .step-opt{text-align:left;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.7rem .9rem;font-family:Georgia,serif;font-size:.86rem;line-height:1.45;cursor:pointer;}
+  .step-opt:hover{border-color:var(--brown);}
+
+  .final{display:none;}
+  .final.show{display:block;}
+  .final-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.4rem 1.6rem;}
+  .final-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.9rem;}
+  .fake-result{background:var(--paper);border:1px solid #DCD2BE;border-radius:5px;padding:.9rem 1.1rem;font-size:.88rem;line-height:1.6;margin-bottom:1.1rem;font-style:italic;}
+  .breakdown-item{background:var(--paper);border-left:3px solid var(--brown);border-radius:4px;padding:.6rem .8rem;margin-bottom:.5rem;font-size:.82rem;line-height:1.5;}
+  .breakdown-item b{color:var(--brown-dark);display:block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.4px;text-transform:uppercase;margin-bottom:.2rem;}
+  .closing-text{font-size:.9rem;line-height:1.65;margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Dal nazionalismo romantico al nazionalismo aggressivo · Artefatto 17</div>
+    <div class="header-title">Il laboratorio della gerarchia</div>
+    <div class="header-sub">Conduci uno studio antropometrico di fine Ottocento. Cinque scelte, tutte plausibili e documentate per l'epoca. Nessuna, presa da sola, è una frode.</div>
+  </div>
+
+  <div class="progress-wrap">
+    <span>Scelte prese</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span id="progressCount">0 / 5</span>
+  </div>
+
+  <div class="main">
+    <div class="log" id="log"></div>
+    <div id="stepWrap"></div>
+
+    <div class="final" id="final">
+      <div class="final-card">
+        <div class="final-title">Il risultato</div>
+        <div class="fake-result" id="fakeResult"></div>
+        <div id="breakdown"></div>
+        <div class="closing-text">Nessuna delle cinque scelte, presa da sola, costituisce una frode: sono tutte procedure che uno studioso dell'epoca avrebbe potuto giustificare senza imbarazzo. È la loro combinazione a produrre, in modo pressoché garantito, la conferma dell'ipotesi di partenza. L'apparato formale della scienza — misure, tabelle, pubblicazioni, discussione tra pari — può essere messo al servizio di una conclusione decisa in anticipo, e per i contemporanei questo non era evidente nella misura in cui lo è oggi a chi ripercorre le cinque scelte una per una.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const steps = [
+  {
+    key:'ipotesi', label:'Ipotesi da verificare',
+    q:'Scegli l\'ipotesi che il tuo studio dovrà verificare.',
+    opts:[
+      {text:'I gruppi europei settentrionali hanno una capacità cranica superiore alla media.', note:'Il punto di partenza fissa già la conclusione attesa: qualunque dato ambiguo verrà letto alla luce di questa aspettativa.'},
+      {text:'I gruppi mediterranei presentano tratti fisici associabili a uno stadio evolutivo meno avanzato.', note:'Come sopra: la direzione della ricerca è decisa prima di raccogliere qualunque dato.'},
+      {text:'Le popolazioni colonizzate mostrano tratti fisici tipici di uno stadio di sviluppo precedente.', note:'Come sopra: l\'ipotesi anticipa esattamente ciò che lo studio "scoprirà".'}
+    ]
+  },
+  {
+    key:'campione', label:'Campione',
+    q:'Scegli come costituire il campione da misurare.',
+    opts:[
+      {text:'Crani raccolti in ospedali psichiatrici e prigioni.', note:'Sovra-rappresenta condizioni patologiche e sociali specifiche, che il campione poi attribuirà erroneamente al gruppo intero.'},
+      {text:'Crani di soldati caduti in battaglia, disponibili nei musei militari.', note:'Sovra-rappresenta una popolazione giovane, maschile, di un\'estrazione sociale ristretta.'},
+      {text:'Un campione volontario raccolto tra i visitatori di un\'esposizione universale.', note:'Fortemente auto-selezionato: chi visita un\'esposizione non rappresenta la popolazione generale.'}
+    ]
+  },
+  {
+    key:'misura', label:'Misura da rilevare',
+    q:'Scegli la misura su cui costruire la classificazione.',
+    opts:[
+      {text:'Volume cranico assoluto.', note:'Favorisce le corporature più grandi indipendentemente da qualunque capacità, ma viene letto come indicatore di essa.'},
+      {text:'Indice cefalico — il rapporto tra larghezza e lunghezza del cranio.', note:'Realmente usato per classificare "dolicocefali" e "brachicefali" secondo una gerarchia di valore arbitraria.'},
+      {text:'Angolo facciale.', note:'Misura pseudo-scientifica realmente impiegata, associata acriticamente a una scala di "evoluzione".'}
+    ]
+  },
+  {
+    key:'scarto', label:'Criterio di scarto dei dati anomali',
+    q:'Scegli come trattare i dati che non confermano lo schema atteso.',
+    opts:[
+      {text:'Escludere i casi che si discostano di oltre una soglia statistica dalla media del proprio gruppo.', note:'La soglia è arbitraria e può essere fissata, anche in buona fede, in modo da escludere selettivamente i controesempi.'},
+      {text:'Escludere i casi provenienti da individui di età o condizioni di salute atipiche.', note:'Criterio ragionevole in astratto, ma applicato in modo asimmetrico tra i gruppi che si vogliono confrontare.'},
+      {text:'Trattare come affidabili solo i casi coerenti con la letteratura scientifica già pubblicata.', note:'Circolarità esplicita: si scartano i dati nuovi in nome di conclusioni vecchie.'}
+    ]
+  },
+  {
+    key:'presentazione', label:'Presentazione dei risultati',
+    q:'Scegli come presentare i risultati dello studio.',
+    opts:[
+      {text:'Tabelle comparative con le medie di ciascun gruppo, senza indicare la dispersione interna.', note:'Nasconde quanto i gruppi si sovrappongano realmente: le medie sembrano nette, i dati individuali non lo sono.'},
+      {text:'Grafici a scala relativa, che amplificano visivamente differenze piccole in termini assoluti.', note:'Trasforma una differenza minima in un\'evidenza visiva sproporzionata.'},
+      {text:'Pubblicazione su una rivista specializzata, con revisione tra pari dello stesso circolo di studiosi.', note:'La revisione non è indipendente: valuta lo studio chi condivide già lo stesso paradigma.'}
+    ]
+  }
+];
+
+let current = 0;
+const choices = [];
+
+function renderStep(){
+  const wrap = document.getElementById('stepWrap');
+  if(current >= steps.length){
+    wrap.innerHTML = '';
+    showFinal();
+    return;
+  }
+  const s = steps[current];
+  const optsHtml = s.opts.map((o,i)=>`<button class="step-opt" onclick="choose(${i})">${o.text}</button>`).join('');
+  wrap.innerHTML = `
+    <div class="step-card">
+      <div class="step-num">Passo ${current+1} di 5 — ${s.label}</div>
+      <div class="step-q">${s.q}</div>
+      <div class="step-opts">${optsHtml}</div>
+    </div>
+  `;
+}
+
+function choose(i){
+  const s = steps[current];
+  choices.push({step:s.label, opt:s.opts[i]});
+
+  const log = document.getElementById('log');
+  const item = document.createElement('div');
+  item.className = 'log-item';
+  item.innerHTML = `<b>${s.label}:</b> ${s.opts[i].text}`;
+  log.appendChild(item);
+
+  current++;
+  document.getElementById('progressFill').style.width = (current/steps.length*100)+'%';
+  document.getElementById('progressCount').textContent = current+' / '+steps.length;
+  renderStep();
+}
+
+function showFinal(){
+  document.getElementById('fakeResult').textContent = 'Lo studio, elaborato secondo le cinque scelte compiute, conferma pienamente l\'ipotesi di partenza: le differenze rilevate risultano coerenti, sistematiche e statisticamente significative.';
+
+  const breakdown = document.getElementById('breakdown');
+  breakdown.innerHTML = choices.map(c=>`<div class="breakdown-item"><b>${c.step}</b>${c.opt.note}</div>`).join('');
+
+  document.getElementById('final').classList.add('show');
+  document.getElementById('final').scrollIntoView({behavior:'smooth'});
+}
+
+renderStep();
+</script>
+</body>
+</html>

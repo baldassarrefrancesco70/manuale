@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi entra nella nazione</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --inc:#4A7A5C; --esc:#B06A4A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1040px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:.6rem;}
+  .method-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;color:var(--brown);margin-bottom:1.2rem;line-height:1.5;}
+
+  .criteria-tabs{display:flex;gap:.6rem;margin-bottom:1.3rem;flex-wrap:wrap;}
+  .crit-btn{flex:1;min-width:150px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:6px;padding:.7rem;cursor:pointer;text-align:center;}
+  .crit-btn:hover{border-color:var(--brown);}
+  .crit-btn.active{border-color:var(--brown);background:#FBF0DD;font-weight:600;}
+
+  .consequence-panel{background:#FBF6EC;border:1px solid var(--brown);border-radius:5px;padding:.8rem 1rem;font-size:.82rem;line-height:1.55;margin-bottom:1.3rem;}
+
+  .people-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.4rem;}
+  .person-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:.9rem 1.05rem;position:relative;}
+  .person-name{font-size:.95rem;color:var(--brown-dark);margin-bottom:.4rem;}
+  .person-attrs{font-size:.74rem;line-height:1.6;color:var(--ink-soft);margin-bottom:.6rem;}
+  .person-attrs b{color:var(--ink);}
+  .verdict{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;padding:.35rem .7rem;border-radius:4px;}
+  .verdict.inc{background:#E4EFE6;color:var(--inc);}
+  .verdict.esc{background:#F7E4DC;color:var(--esc);}
+
+  .closing{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.3rem 1.5rem;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .closing-text{font-size:.9rem;line-height:1.65;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Dal nazionalismo romantico al nazionalismo aggressivo · Artefatto 16</div>
+    <div class="header-title">Chi entra nella nazione</div>
+    <div class="header-sub">Otto persone, descritte per attributi verificabili. Applica un criterio alla volta e osserva come cambia chi risulta incluso — rispetto alla nazione con cui ciascuna è in tensione.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Ogni persona è messa in relazione con una nazione di riferimento specifica — quella discussa nel suo caso. Cambia il criterio con cui giudichi l'appartenenza, e osserva: nessuno degli otto casi risulta incluso o escluso da tutti e quattro i criteri.</div>
+    <div class="method-note">[Otto profili costruiti per l'esercizio, ispirati a situazioni reali discusse nel percorso — Alsazia-Lorena, la Boemia tedesca, gli ebrei di Varsavia, l'irredentismo, l'emigrazione, le minoranze interne — non persone storiche nominate.]</div>
+
+    <div class="criteria-tabs" id="criteriaTabs"></div>
+    <div class="consequence-panel" id="consequencePanel">Seleziona un criterio per vedere chi risulta incluso.</div>
+
+    <div class="people-grid" id="peopleGrid"></div>
+
+    <div class="closing">
+      <div class="closing-title">Una differenza di statuto</div>
+      <div class="closing-text">La lingua e l'adesione volontaria sono criteri che si possono soddisfare imparando qualcosa: si studia una lingua, si presta un giuramento. La discendenza è un criterio che non si può soddisfare in nessun modo, per definizione: o la si ha, o non la si avrà mai. È la stessa differenza che il capitolo sulla nazione romantica aveva già isolato — «una lingua si può imparare, un antenato no» — e che qui si vede applicata caso per caso, non più come principio astratto.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const people = [
+  {
+    name:'Un uomo nato in Alsazia prima del 1871',
+    refNation:'la Francia',
+    attrs:'Lingua materna: francese · Residenza: Alsazia (territorio tedesco dal 1871) · Discendenza: francese · Cittadinanza formale: tedesca (imposta dall\'annessione) · Volontà dichiarata: si sente francese',
+    verdicts:{residenza:'esc', lingua:'inc', discendenza:'inc', volonta:'inc'}
+  },
+  {
+    name:'Un uomo di lingua tedesca nato a Praga',
+    refNation:'la nazione ceca',
+    attrs:'Lingua materna: tedesco · Residenza: Praga (maggioranza ceca) · Discendenza: tedesca · Cittadinanza formale: austriaca · Volontà dichiarata: si sente boemo, non prende posizione tra le due nazionalità',
+    verdicts:{residenza:'inc', lingua:'esc', discendenza:'esc', volonta:'esc'}
+  },
+  {
+    name:'Una donna ebrea nata a Varsavia',
+    refNation:'la nazione polacca',
+    attrs:'Lingua materna: yiddish (parla anche polacco) · Residenza: Varsavia, da generazioni · Discendenza: ebraica · Cittadinanza formale: russa (Regno del Congresso) · Volontà dichiarata: si sente polacca',
+    verdicts:{residenza:'inc', lingua:'esc', discendenza:'esc', volonta:'inc'}
+  },
+  {
+    name:'Un uomo tedesco emigrato in Argentina da vent\'anni',
+    refNation:'la Germania',
+    attrs:'Lingua materna: tedesco · Residenza: Argentina · Discendenza: tedesca · Cittadinanza formale: ancora tedesca · Volontà dichiarata: si sente ancora tedesco',
+    verdicts:{residenza:'esc', lingua:'inc', discendenza:'inc', volonta:'inc'}
+  },
+  {
+    name:'Un uomo nato in Francia da genitori italiani',
+    refNation:'la Francia',
+    attrs:'Lingua materna: italiano in famiglia, francese fuori casa · Residenza: Francia, da sempre · Discendenza: italiana · Cittadinanza formale: francese per nascita sul territorio · Volontà dichiarata: si sente francese',
+    verdicts:{residenza:'inc', lingua:'esc', discendenza:'esc', volonta:'inc'}
+  },
+  {
+    name:'Un contadino bretone',
+    refNation:'la Francia',
+    attrs:'Lingua materna: bretone · Residenza: Bretagna, territorio francese da secoli · Discendenza: bretone · Cittadinanza formale: francese · Volontà dichiarata: non si è mai posto la domanda, si sente della sua parrocchia più che della nazione',
+    verdicts:{residenza:'inc', lingua:'esc', discendenza:'esc', volonta:'esc'}
+  },
+  {
+    name:'Un funzionario ungherese residente a Zagabria',
+    refNation:'la nazione croata',
+    attrs:'Lingua materna: ungherese · Residenza: Zagabria, territorio croato sotto la corona ungherese · Discendenza: magiara · Cittadinanza formale: del Regno d\'Ungheria · Volontà dichiarata: rivendica la superiorità della propria cultura su quella locale',
+    verdicts:{residenza:'inc', lingua:'esc', discendenza:'esc', volonta:'esc'}
+  },
+  {
+    name:'Una donna italiana nata e residente a Trieste',
+    refNation:'l\'Italia',
+    attrs:'Lingua materna: italiano · Residenza: Trieste, territorio austriaco · Discendenza: italiana · Cittadinanza formale: austriaca · Volontà dichiarata: si sente italiana, pur non avendo mai vissuto in Italia',
+    verdicts:{residenza:'esc', lingua:'inc', discendenza:'inc', volonta:'inc'}
+  }
+];
+
+const criteria = [
+  {key:'residenza', label:'Residenza', consequence:'Il censimento conta chi vive nel territorio, indipendentemente dalla lingua. La cittadinanza tende a seguire il luogo di residenza stabile. Le rivendicazioni irredentiste non trovano fondamento in questo criterio: anzi lo contraddicono, perché chi vive fuori dal territorio nazionale semplicemente non ne fa parte.'},
+  {key:'lingua', label:'Lingua', consequence:'Il censimento linguistico diventa lo strumento politico centrale — e contestato, perché dipende da come ciascuno si dichiara. La cittadinanza può essere condizionata all\'apprendimento della lingua nazionale. Le rivendicazioni irredentiste trovano fondamento ovunque si parli la lingua, a prescindere dai confini.'},
+  {key:'discendenza', label:'Discendenza', consequence:'Il censimento diventa un dato che nessuna istruzione può correggere: si nasce con l\'appartenenza, non la si acquisisce. La cittadinanza per discendenza esclude chi nasce sul territorio da genitori stranieri e include chi vive da generazioni all\'estero. Le rivendicazioni irredentiste si estendono a chiunque condivida il sangue, ovunque si trovi.'},
+  {key:'volonta', label:'Adesione volontaria', consequence:'Il censimento diventerebbe una dichiarazione soggettiva, difficile da verificare con dati oggettivi. La naturalizzazione diventa possibile indipendentemente da lingua o origine. Le rivendicazioni irredentiste si indeboliscono, perché dipendono dalla volontà di ciascuno, non da un dato collettivo automatico.'}
+];
+
+function renderTabs(){
+  const tabs = document.getElementById('criteriaTabs');
+  criteria.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = 'crit-btn';
+    btn.id = 'crit-'+c.key;
+    btn.textContent = c.label;
+    btn.onclick = ()=>selectCriterion(c.key);
+    tabs.appendChild(btn);
+  });
+}
+
+function renderPeople(){
+  const grid = document.getElementById('peopleGrid');
+  people.forEach((p,i)=>{
+    const card = document.createElement('div');
+    card.className = 'person-card';
+    card.id = 'person'+i;
+    card.innerHTML = `
+      <div class="person-name">${p.name}</div>
+      <div class="person-attrs">${p.attrs}<br><b>Nazione di riferimento: ${p.refNation}</b></div>
+      <div id="verdict${i}"></div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function selectCriterion(key){
+  document.querySelectorAll('.crit-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('crit-'+key).classList.add('active');
+
+  const crit = criteria.find(c=>c.key===key);
+  document.getElementById('consequencePanel').textContent = crit.consequence;
+
+  people.forEach((p,i)=>{
+    const v = p.verdicts[key];
+    const label = v==='inc' ? 'Incluso' : 'Escluso';
+    document.getElementById('verdict'+i).innerHTML = `<span class="verdict ${v}">${label} — ${p.refNation}</span>`;
+  });
+}
+
+renderTabs();
+renderPeople();
+selectCriterion('residenza');
+</script>
+</body>
+</html>

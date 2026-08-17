@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Grecia in tre strati</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+    --l1:#6E8C4E; --l2:#4E7A93; --l3:#B23B3B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1020px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.86rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1.2rem;}
+
+  .layer-toggles{display:flex;gap:.8rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+  .layer-btn{
+    flex:1;min-width:220px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;
+    background:var(--gray);border:2px solid #D4CFC4;border-radius:6px;
+    padding:.7rem .9rem;cursor:pointer;text-align:left;color:var(--ink-soft);
+  }
+  .layer-btn .lb-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.5rem;vertical-align:middle;}
+  .layer-btn.l1.active{border-color:var(--l1);background:#EAF0E3;color:var(--ink);}
+  .layer-btn.l2.active{border-color:var(--l2);background:#E4EDF2;color:var(--ink);}
+  .layer-btn.l3.active{border-color:var(--l3);background:#F5E4E2;color:var(--ink);}
+
+  .map-area{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1rem;margin-bottom:1.2rem;}
+  svg{width:100%;height:auto;display:block;}
+  .land{fill:#EFE9DC;stroke:#C8BBA8;stroke-width:1.5;}
+  .sea-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;fill:#A8B8C2;font-style:italic;}
+  .place-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;fill:var(--ink);}
+  .place-dot{fill:#8A8478;}
+
+  .l1-zone{fill:var(--l1);opacity:0;transition:opacity .3s;}
+  .l1-zone.on{opacity:.28;}
+  .l1-marker{opacity:0;transition:opacity .3s;}
+  .l1-marker.on{opacity:1;}
+
+  .l2-zone{fill:var(--l2);opacity:0;transition:opacity .3s;}
+  .l2-zone.on{opacity:.22;}
+  .l2-marker{opacity:0;transition:opacity .3s;}
+  .l2-marker.on{opacity:1;}
+
+  .l3-outline{fill:none;stroke:var(--l3);stroke-width:2.5;opacity:0;transition:opacity .3s;}
+  .l3-outline.on{opacity:.85;}
+  .l3-outline.dashed{stroke-dasharray:6,4;}
+  .l3-label{opacity:0;transition:opacity .3s;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;fill:var(--brown-dark);}
+  .l3-label.on{opacity:1;}
+
+  .panels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;}
+  .panel{background:var(--gray);border-radius:6px;padding:.8rem .9rem;opacity:.35;transition:opacity .3s;}
+  .panel.on{opacity:1;}
+  .panel.l1{border-top:3px solid var(--l1);}
+  .panel.l2{border-top:3px solid var(--l2);}
+  .panel.l3{border-top:3px solid var(--l3);}
+  .panel-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.5rem;}
+  .panel ul{padding-left:1.1rem;font-size:.78rem;line-height:1.55;}
+  .panel li{margin-bottom:.4rem;}
+
+  .insight{display:none;margin-top:1.2rem;background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1rem 1.2rem;font-size:.9rem;line-height:1.6;}
+  .insight.show{display:block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Moti e nazionalismo romantico · Artefatto 7</div>
+    <div class="header-title">La Grecia in tre strati</div>
+    <div class="header-sub">Tre domande diverse sulla stessa carta: chi ha combattuto, chi ha deciso l'esito, quale passato lo Stato ha poi rivendicato. Attiva gli strati uno alla volta, poi tutti insieme.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Ogni strato risponde a una domanda diversa. Attivali insieme e osserva che le zone che si illuminano non coincidono: chi ha combattuto, chi ha deciso, e ciò che lo Stato ha poi rivendicato come proprio non sono la stessa area né gli stessi soggetti.</div>
+
+    <div class="layer-toggles">
+      <button class="layer-btn l1" id="btn-l1" onclick="toggleLayer('l1')"><span class="lb-dot" style="background:var(--l1);"></span>Strato 1 — Chi combatte</button>
+      <button class="layer-btn l2" id="btn-l2" onclick="toggleLayer('l2')"><span class="lb-dot" style="background:var(--l2);"></span>Strato 2 — Chi decide</button>
+      <button class="layer-btn l3" id="btn-l3" onclick="toggleLayer('l3')"><span class="lb-dot" style="background:var(--l3);"></span>Strato 3 — Quale passato</button>
+    </div>
+
+    <div class="map-area">
+      <svg viewBox="0 0 800 480">
+        <!-- base landmasses (schematic, non geograficamente precisa) -->
+        <path class="land" d="M240,180 L340,140 L400,170 L390,230 L330,260 L260,240 Z"/> <!-- Grecia centrale -->
+        <path class="land" d="M230,250 L330,270 L360,340 L300,400 L230,390 L200,320 Z"/> <!-- Peloponneso -->
+        <path class="land" d="M330,60 L420,50 L440,110 L370,140 L320,110 Z"/> <!-- Tessaglia -->
+        <ellipse class="land" cx="330" cy="440" rx="55" ry="18"/> <!-- Creta -->
+        <circle class="land" cx="560" cy="200" r="14"/> <!-- Scio -->
+        <text x="560" y="200" class="place-label" text-anchor="middle" dy="28">Scio</text>
+        <circle class="place-dot" cx="640" cy="120" r="5"/>
+        <text x="650" y="118" class="place-label">Costantinopoli</text>
+        <path class="land" d="M600,60 L780,50 L780,300 L640,320 L610,180 Z" fill="#F5F0E6" stroke="#C8BBA8" stroke-width="1"/> <!-- Asia Minore, tono più tenue -->
+        <text x="700" y="230" class="sea-label">Asia Minore</text>
+        <text x="470" y="260" class="sea-label">Mar Egeo</text>
+        <circle class="place-dot" cx="470" cy="220" r="4"/>
+        <circle class="place-dot" cx="510" cy="290" r="4"/>
+        <circle class="place-dot" cx="440" cy="330" r="4"/>
+        <text x="480" y="200" class="place-label">Isole dell'Egeo</text>
+
+        <circle class="place-dot" cx="215" cy="300" r="4"/>
+        <text x="175" y="298" class="place-label">Navarino</text>
+        <circle class="place-dot" cx="300" cy="200" r="4"/>
+        <text x="255" y="198" class="place-label">Missolungi</text>
+        <circle class="place-dot" cx="290" cy="310" r="4"/>
+        <text x="245" y="330" class="place-label">Epidauro</text>
+
+        <!-- Strato 1: chi combatte -->
+        <path class="l1-zone" id="l1-a" d="M240,180 L340,140 L400,170 L390,230 L330,260 L260,240 Z"/>
+        <path class="l1-zone" id="l1-b" d="M230,250 L330,270 L360,340 L300,400 L230,390 L200,320 Z"/>
+        <circle class="l1-marker" id="l1-clefti" cx="280" cy="310" r="7" fill="var(--l1)" stroke="#fff" stroke-width="1.5"/>
+        <text class="l1-marker place-label" id="l1-clefti-lbl" x="292" y="313">clefti (montagne)</text>
+        <circle class="l1-marker" id="l1-clero" cx="330" cy="230" r="7" fill="var(--l1)" stroke="#fff" stroke-width="1.5"/>
+        <text class="l1-marker place-label" id="l1-clero-lbl" x="342" y="233">basso clero</text>
+
+        <!-- Strato 2: chi decide -->
+        <circle class="l2-marker" id="l2-navarino" cx="215" cy="300" r="11" fill="none" stroke="var(--l2)" stroke-width="3"/>
+        <text class="l2-marker l3-label" id="l2-navarino-lbl" x="120" y="330" fill="var(--l2)">Navarino, ott. 1827</text>
+        <path class="l2-marker" id="l2-fleets" d="M100,340 L215,300 M120,400 L215,300 M60,280 L215,300" stroke="var(--l2)" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+        <text class="l2-marker l3-label" id="l2-fleets-lbl" x="40" y="270" fill="var(--l2)">flotte russa · britannica · francese</text>
+        <path class="l2-marker" id="l2-egypt" d="M330,440 L280,340" stroke="var(--l2)" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+        <text class="l2-marker l3-label" id="l2-egypt-lbl" x="300" y="450" fill="var(--l2)">esercito egiziano</text>
+
+        <!-- Strato 3: quale passato -->
+        <path class="l3-outline" id="l3-1830" d="M235,175 L345,138 L398,168 L392,232 L358,338 L300,398 L228,388 L198,318 L228,248 Z"/>
+        <text class="l3-label" id="l3-1830-lbl" x="260" y="420" fill="var(--l3)">confini dello Stato, 1830</text>
+        <path class="l3-outline dashed" id="l3-megale" d="M320,45 L440,45 L620,60 L780,50 L780,300 L640,330 L560,420 L330,450 L200,400 L180,300 L200,240 L235,175 L320,110 Z"/>
+        <text class="l3-label" id="l3-megale-lbl" x="560" y="410" fill="var(--l3)">spazio rivendicato dalla Megale Idea</text>
+      </svg>
+    </div>
+
+    <div class="panels">
+      <div class="panel l1" id="panel-l1">
+        <div class="panel-title">Chi combatte</div>
+        <ul>
+          <li>Diaspora mercantile (Trieste, Venezia, Vienna): dove circolano le idee del liberalismo europeo.</li>
+          <li>Etairía, fondata a Odessa nel 1814: pianifica l'insurrezione.</li>
+          <li>Clefti sulle montagne: resistenza locale contro qualunque autorità fiscale, non per una nazione.</li>
+          <li>Basso clero ortodosso: trasforma la liturgia in mobilitazione contro il sovrano musulmano.</li>
+        </ul>
+      </div>
+      <div class="panel l2" id="panel-l2">
+        <div class="panel-title">Chi decide</div>
+        <ul>
+          <li>Esercito egiziano di Mohammed Ali: rafforza il sultano, riduce lo spazio degli insorti.</li>
+          <li>Trattato di Londra, luglio 1827: Russia, Gran Bretagna, Francia si accordano.</li>
+          <li>Battaglia di Navarino, ottobre 1827: le flotte alleate distruggono quella turco-egiziana.</li>
+          <li>Pace di Adrianopoli, 1829: riconosce l'indipendenza greca.</li>
+        </ul>
+      </div>
+      <div class="panel l3" id="panel-l3">
+        <div class="panel-title">Quale passato</div>
+        <ul>
+          <li>Confini del 1830: ristretti, escludono Tessaglia, Creta, gran parte delle isole.</li>
+          <li>Re imposto dall'esterno: Ottone di Baviera, diciottenne, rifiuta a lungo una costituzione.</li>
+          <li>Obiezione storiografica europea: discontinuità con la Grecia antica, per le stratificazioni slave, avare e albanesi.</li>
+          <li>Risposta di Paparrigopoulos (anni 1850): integra Bisanzio, fonda la Megale Idea.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight" id="insight">
+      <strong>I tre strati non coincidono.</strong> Chi ha combattuto — clefti, basso clero, diaspora — non è chi ha deciso l'esito sul campo, cioè le flotte delle grandi potenze a Navarino. E lo Stato che ne è uscito, con i suoi confini ristretti del 1830, non coincide nemmeno con il passato che avrebbe poi rivendicato come proprio: uno spazio bizantino molto più ampio, costruito storiograficamente dopo, non conquistato nel 1830.
+    </div>
+  </div>
+</div>
+
+<script>
+const layers = {l1:false, l2:false, l3:false};
+
+function toggleLayer(l){
+  layers[l] = !layers[l];
+  document.getElementById('btn-'+l).classList.toggle('active', layers[l]);
+  document.getElementById('panel-'+l).classList.toggle('on', layers[l]);
+
+  document.querySelectorAll('.'+l+'-zone, .'+l+'-marker').forEach(el=>el.classList.toggle('on', layers[l]));
+  if(l==='l3'){
+    document.querySelectorAll('.l3-outline, .l3-label').forEach(el=>el.classList.toggle('on', layers.l3));
+  }
+
+  const allOn = layers.l1 && layers.l2 && layers.l3;
+  document.getElementById('insight').classList.toggle('show', allOn);
+}
+</script>
+</body>
+</html>

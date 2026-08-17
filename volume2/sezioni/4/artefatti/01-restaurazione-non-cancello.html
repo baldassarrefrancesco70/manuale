@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Che cosa la Restaurazione non poté cancellare</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1040px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:.6rem;}
+  .method-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;color:var(--brown);margin-bottom:1.2rem;line-height:1.5;}
+
+  .instruction{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.8rem;color:var(--brown-dark);margin-bottom:1rem;min-height:1.2em;}
+  .instruction.active{font-weight:600;}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--brown);border:2px solid var(--brown);border-radius:6px;overflow:hidden;margin-bottom:1.4rem;}
+  .col-head{background:var(--brown-dark);color:var(--paper);font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:.4px;text-transform:uppercase;padding:.7rem .6rem;text-align:center;}
+  .col-body{background:#FBF9F4;padding:.6rem;min-height:260px;}
+  .placed-chip{background:var(--paper);border:1px solid var(--brown);border-radius:4px;padding:.5rem .6rem;font-size:.72rem;line-height:1.4;margin-bottom:.5rem;}
+  .placed-chip .pc-note{display:block;margin-top:.3rem;color:var(--ink-soft);font-size:.68rem;}
+  .placed-chip .pc-src{display:inline-block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:8px;letter-spacing:.4px;text-transform:uppercase;color:var(--brown);margin-top:.3rem;}
+
+  .tray{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.4rem;}
+  .chip{background:var(--paper);border:1.5px solid #C8BBA8;border-radius:5px;padding:.55rem .8rem;font-size:.82rem;line-height:1.4;cursor:pointer;}
+  .chip:hover{border-color:var(--brown);background:#FFFDF8;}
+  .chip.selected{border-color:var(--brown);background:#FBF0DD;box-shadow:0 0 0 2px rgba(139,115,85,.25);}
+
+  .progress-wrap{display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:var(--brown-dark);margin-bottom:1.2rem;}
+  .progress-track{flex:1;height:5px;background:#E3DACB;border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--brown);width:0%;transition:width .4s ease;}
+
+  .closing{display:none;}
+  .closing.show{display:block;}
+  .closing-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.3rem 1.5rem;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.8rem;}
+  .closing-text{font-size:.9rem;line-height:1.65;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">L'Italia napoleonica e la Restaurazione · Artefatto 1</div>
+    <div class="header-title">Che cosa la Restaurazione non poté cancellare</div>
+    <div class="header-sub">Quattordici elementi introdotti o riorganizzati dall'amministrazione napoleonica. Colloca ciascuno in una delle tre colonne: abolito dai sovrani restaurati, conservato, conservato ma cambiato di padrone.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Seleziona un elemento dal basso, poi clicca sulla colonna in cui pensi che vada collocato.</div>
+    <div class="method-note">[Cinque collocazioni vengono direttamente dal testo (polizia, riscossione delle imposte, libertà di stampa, parità di culto, titoli nobiliari). Le altre nove sono dedotte dal criterio generale che il testo enuncia, o da conoscenza storico-amministrativa generale sulla Restaurazione italiana — marcato caso per caso.]</div>
+
+    <div class="instruction" id="instructionLine">Seleziona un elemento.</div>
+
+    <div class="grid">
+      <div class="col-head">Abolito</div>
+      <div class="col-head">Conservato</div>
+      <div class="col-head">Conservato, ma cambiato di padrone</div>
+      <div class="col-body" id="col-abolito" onclick="place('abolito')"></div>
+      <div class="col-body" id="col-conservato" onclick="place('conservato')"></div>
+      <div class="col-body" id="col-cambiato" onclick="place('cambiato')"></div>
+    </div>
+
+    <div class="progress-wrap">
+      <span>Elementi collocati</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressCount">0 / 14</span>
+    </div>
+
+    <div class="tray" id="tray"></div>
+
+    <div class="closing" id="closing">
+      <div class="closing-card">
+        <div class="closing-title">Il criterio effettivo</div>
+        <div class="closing-text">Nove elementi su quattordici sopravvivono, in una forma o nell'altra. I sovrani restaurati non cancellarono l'amministrazione napoleonica: la usarono. Abolirono ciò che limitava il proprio potere — l'uguaglianza davanti alla legge, la libertà di stampa, la parità di culto — e conservarono, spesso senza dirlo, ciò che rendeva quel potere esercitabile: la polizia, il fisco, il catasto, i registri. La terza colonna è la più istruttiva: strumenti identici nella forma, che cambiano soltanto padrone. Se lo Stato restaurato era amministrativamente più efficiente di quello che aveva preceduto la Rivoluzione, in che senso si può parlare di ritorno all'antico regime — e che cosa, esattamente, si stava restaurando?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const items = [
+  {text:'Uguaglianza dei cittadini davanti alla legge', col:'abolito', src:'dedotto',
+   note:'Il testo attesta che i sovrani restaurati ripristinarono i privilegi di aristocrazia e clero: un privilegio riconosciuto è, per definizione, un\'eccezione all\'eguaglianza giuridica.'},
+  {text:'Abolizione dei diritti feudali', col:'conservato', src:'ipotesi',
+   note:'La giurisdizione feudale — il potere dei nobili di amministrare giustizia e riscuotere tributi propri — non fu quasi ovunque ripristinata: sarebbe stato amministrativamente troppo oneroso disfarla. Furono i titoli onorifici a tornare, non il potere giurisdizionale.'},
+  {text:'Vendita dei beni ecclesiastici', col:'conservato', src:'dedotto',
+   note:'Le vendite già concluse non furono generalmente annullate: avrebbe significato espropriare i nuovi proprietari, spesso nobili e borghesi influenti che avevano comprato quelle terre.'},
+  {text:'Coscrizione obbligatoria', col:'abolito', src:'ipotesi',
+   note:'Gli Stati restaurati non avevano più bisogno di eserciti di massa per le guerre continentali napoleoniche, e la coscrizione era fra le misure più odiate dalla popolazione: fu in gran parte abbandonata o ridotta.'},
+  {text:'Catasto', col:'conservato', src:'ipotesi',
+   note:'Uno strumento indispensabile per riscuotere le imposte: rientra in ciò che i sovrani conservarono perché rendeva esercitabile il proprio potere fiscale, esattamente come il sistema di riscossione.'},
+  {text:'Codice civile', col:'cambiato', src:'ipotesi',
+   note:'Alcuni Stati, come il Regno delle Due Sicilie, mantennero codici di impianto vicino a quello napoleonico; il Piemonte tornò a forme più tradizionali. Dove sopravvisse, la struttura restò ma l\'ispirazione cambiò.'},
+  {text:'Prefetture (amministrazione centralizzata del territorio)', col:'cambiato', src:'ipotesi',
+   note:'L\'apparato di controllo centralizzato del territorio restò utile ai nuovi sovrani, anche dove cambiò nome. Cambiarono soprattutto gli uomini: funzionari scelti per fedeltà dinastica invece che per merito amministrativo.'},
+  {text:'Corpo di polizia centralizzato', col:'conservato', src:'fonte',
+   note:'Il testo lo dice esplicitamente: i sovrani reazionari scelsero di mantenere in vita gli efficienti sistemi polizieschi creati da Napoleone.'},
+  {text:'Sistema di riscossione delle imposte', col:'conservato', src:'fonte',
+   note:'Come sopra: la fonte attesta esplicitamente che il sistema fiscale napoleonico fu mantenuto in vita.'},
+  {text:'Libertà di stampa', col:'abolito', src:'fonte',
+   note:'La censura fu reintrodotta ovunque tranne che in Piemonte dopo il 1848: il testo lo attesta a più riprese, fino a definire quella libertà "un\'eccezione" nel panorama italiano.'},
+  {text:'Parità di culto', col:'abolito', src:'fonte',
+   note:'Il testo attesta esplicitamente la reintroduzione di vecchie discriminazioni contro le minoranze religiose, come ebrei e valdesi.'},
+  {text:'Titoli nobiliari', col:'abolito', src:'fonte',
+   note:'L\'abolizione napoleonica dei titoli nobiliari fu essa stessa abolita: il testo attesta il ripristino dei privilegi dell\'aristocrazia.'},
+  {text:'Tribunali ordinari', col:'cambiato', src:'fonte indiretta',
+   note:'Che il foro ecclesiastico fosse stato reintrodotto lo dimostra il fatto che Cavour dovette abolirlo di nuovo con le Leggi Siccardi del 1850: un tribunale speciale per il clero, sottratto alla giustizia ordinaria, era tornato in mezzo.'},
+  {text:'Registro dello stato civile', col:'conservato', src:'dedotto',
+   note:'Come il catasto, un registro anagrafico centralizzato è uno strumento di controllo e di prelievo fiscale utile a qualunque sovrano, indipendentemente dai suoi principi politici.'}
+];
+
+const srcLabel = {fonte:'fonte', dedotto:'dedotto', ipotesi:'ipotesi', 'fonte indiretta':'fonte indiretta'};
+
+let selectedId = null;
+const placed = {};
+
+function renderTray(){
+  const tray = document.getElementById('tray');
+  tray.innerHTML = '';
+  items.forEach((it,i)=>{
+    if(placed[i]!==undefined) return;
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.id = 'chip'+i;
+    chip.textContent = it.text;
+    chip.onclick = (e)=>{ e.stopPropagation(); selectChip(i); };
+    tray.appendChild(chip);
+  });
+}
+
+function selectChip(i){
+  selectedId = i;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('chip'+i).classList.add('selected');
+  const instr = document.getElementById('instructionLine');
+  instr.textContent = 'Ora clicca sulla colonna in cui pensi che vada collocato.';
+  instr.classList.add('active');
+}
+
+function place(col){
+  if(selectedId === null) return;
+  const it = items[selectedId];
+  placed[selectedId] = col;
+
+  const target = document.getElementById('col-'+col);
+  const chipDiv = document.createElement('div');
+  chipDiv.className = 'placed-chip';
+  chipDiv.innerHTML = `${it.text}<span class="pc-note">${it.note}</span><span class="pc-src">[${srcLabel[it.src]}]</span>`;
+  target.appendChild(chipDiv);
+
+  selectedId = null;
+  const instr = document.getElementById('instructionLine');
+  instr.classList.remove('active');
+  const remaining = items.length - Object.keys(placed).length;
+  instr.textContent = remaining > 0 ? 'Seleziona un altro elemento.' : 'Tutti gli elementi sono stati collocati.';
+
+  document.getElementById('progressFill').style.width = ((items.length-remaining)/items.length*100)+'%';
+  document.getElementById('progressCount').textContent = (items.length-remaining)+' / '+items.length;
+
+  renderTray();
+  if(remaining === 0){
+    document.getElementById('closing').classList.add('show');
+    document.getElementById('closing').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+renderTray();
+</script>
+</body>
+</html>

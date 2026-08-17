@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vecchio colonialismo, nuovo imperialismo</title>
+<style>
+  :root{
+    --beige: #F5F0E8;
+    --gray: #F2F2F2;
+    --brown: #8B7355;
+    --brown-dark: #6B5A42;
+    --petrol: #2C4A52;
+    --petrol-dark: #1E363D;
+    --petrol-tint: #E3EDEE;
+    --petrol-tint-2: #CFE0E2;
+    --ink: #2A2620;
+    --ink-soft: #55504A;
+    --paper: #FBF8F3;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139,115,85,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(44,74,82,0.05), transparent 45%);
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 30px 44px;
+  }
+
+  header{
+    border-bottom: 2px solid var(--petrol);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--petrol);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: normal;
+  }
+
+  .intro{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 780px;
+    margin: 0;
+  }
+
+  .toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0 22px;
+  }
+
+  .status{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .status strong{ color: var(--petrol); }
+
+  .btn{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    border: 1.5px solid var(--brown);
+    background: transparent;
+    color: var(--brown-dark);
+    padding: 7px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .btn:hover{ background: var(--brown); color: #fff; }
+
+  .bank-label{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brown-dark);
+    margin: 0 0 8px;
+  }
+
+  #bank{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    min-height: 44px;
+    padding: 12px;
+    background: var(--gray);
+    border: 1px solid #E0DDD6;
+    border-radius: 6px;
+    margin-bottom: 26px;
+  }
+
+  #bank:empty::after{
+    content: "Tutte le situazioni sono state collocate: la tabella qui sotto è completa.";
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--petrol-dark);
+  }
+
+  .card{
+    font-size: 13px;
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 11px;
+    cursor: pointer;
+    max-width: 280px;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    user-select: none;
+  }
+
+  .card:hover{ box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+
+  .card.selected{
+    border-color: var(--petrol);
+    background: var(--petrol-tint);
+    box-shadow: 0 0 0 2px var(--petrol-tint-2);
+  }
+
+  .axis-section{
+    margin-bottom: 18px;
+  }
+
+  .axis-title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--petrol-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed var(--brown);
+  }
+
+  .axis-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .cell{
+    background: var(--beige);
+    border: 1.5px solid var(--brown);
+    border-radius: 6px;
+    padding: 10px 12px;
+    min-height: 64px;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .cell.targetable{
+    border-color: var(--petrol);
+    box-shadow: 0 0 0 3px var(--petrol-tint);
+  }
+
+  .cell-head{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--brown-dark);
+    margin: 0 0 6px;
+  }
+
+  .cell-items{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .placed{
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+
+  .placed:hover{ box-shadow: 0 2px 5px rgba(0,0,0,0.07); }
+
+  .placed .feedback{
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #E4DFD5;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: var(--petrol-dark);
+    line-height: 1.4;
+  }
+
+  .col-headers{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .col-headers .colh{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+    background: var(--petrol);
+    border-radius: 5px;
+    padding: 7px 0;
+  }
+
+  @media (max-width: 620px){
+    .axis-row, .col-headers{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Dal colonialismo all'imperialismo di fine Ottocento — Artefatto 4</p>
+    <h1>Vecchio colonialismo, nuovo imperialismo</h1>
+    <p class="intro">Il capitolo distingue due modelli coloniali su cinque assi. Seleziona una situazione dal banco qui sotto, poi collocala nella casella corretta: dovrai decidere sia a quale modello appartiene, sia su quale asse si gioca la differenza. Man mano che classifichi, la tabella sottostante si costruisce da sola.</p>
+  </header>
+
+  <div class="toolbar">
+    <p class="status">Collocate: <strong id="count">0</strong> di <span id="total">12</span></p>
+    <button class="btn" id="resetBtn">Ricomincia</button>
+  </div>
+
+  <p class="bank-label">Situazioni da classificare</p>
+  <div id="bank"></div>
+
+  <div class="col-headers">
+    <div class="colh">Vecchio colonialismo</div>
+    <div class="colh">Nuovo imperialismo</div>
+  </div>
+
+  <div id="grid"></div>
+
+</div>
+
+<script>
+  const axes = [
+    { id: 'protagonisti', label: 'Protagonisti' },
+    { id: 'controllo', label: 'Natura del controllo' },
+    { id: 'economia', label: 'Contesto economico' },
+    { id: 'ideologia', label: 'Giustificazione ideologica' },
+    { id: 'velocita', label: 'Velocità' }
+  ];
+
+  const situations = [
+    {
+      id: 's1', side: 'vecchio', axis: 'protagonisti',
+      text: "Una compagnia mercantile privata, come la Compagnia delle Indie orientali, negozia autonomamente l'apertura di un emporio costiero.",
+      feedback: "Riguarda l'asse dei protagonisti: nel vecchio colonialismo l'iniziativa è di imprese private, con ampia autonomia rispetto ai governi che le avevano autorizzate."
+    },
+    {
+      id: 's2', side: 'nuovo', axis: 'protagonisti',
+      text: "Il possesso coloniale diventa un obiettivo dichiarato di politica nazionale, assunto direttamente dai governi.",
+      feedback: "Riguarda lo stesso asse: nel nuovo imperialismo l'iniziativa passa direttamente nelle mani degli Stati, non più delle compagnie private."
+    },
+    {
+      id: 's3', side: 'nuovo', axis: 'protagonisti',
+      text: "Stati di recente unificazione, come la Germania e l'Italia, entrano per la prima volta nella competizione coloniale.",
+      feedback: "Ancora l'asse dei protagonisti: alla competizione partecipano ora Stati che nel modello precedente non avevano avuto parte."
+    },
+    {
+      id: 's4', side: 'vecchio', axis: 'controllo',
+      text: "Il controllo si limita a scali marittimi e basi strategiche lungo le coste, senza necessità di amministrare l'entroterra.",
+      feedback: "Riguarda la natura del controllo: il vecchio colonialismo cerca la penetrazione commerciale, non il controllo territoriale."
+    },
+    {
+      id: 's5', side: 'nuovo', axis: 'controllo',
+      text: "Un governo annette militarmente un entroterra e vi installa un'amministrazione centralizzata.",
+      feedback: "Riguarda lo stesso asse: il nuovo imperialismo non si accontenta degli scali costieri, ma conquista, annette e amministra direttamente i territori."
+    },
+    {
+      id: 's6', side: 'vecchio', axis: 'economia',
+      text: "L'economia coloniale è orientata all'accaparramento di spezie e metalli preziosi.",
+      feedback: "Riguarda il contesto economico: è la domanda tipica di un'economia preindustriale e mercantilistica."
+    },
+    {
+      id: 's7', side: 'vecchio', axis: 'economia',
+      text: "I profitti derivano dalle piantagioni, in un'economia preindustriale e mercantilistica.",
+      feedback: "Appartiene allo stesso asse: lo stesso modello economico preindustriale già visto per spezie e metalli preziosi."
+    },
+    {
+      id: 's8', side: 'nuovo', axis: 'economia',
+      text: "La domanda riguarda ora caucciù, petrolio e metalli non ferrosi per le nuove tecnologie industriali.",
+      feedback: "Riguarda lo stesso asse: è la domanda prodotta dalla seconda rivoluzione industriale, che l'Europa non possiede in quantità sufficiente."
+    },
+    {
+      id: 's9', side: 'vecchio', axis: 'ideologia',
+      text: "La presenza europea viene legittimata attraverso l'evangelizzazione e la conversione religiosa delle popolazioni indigene.",
+      feedback: "Riguarda la giustificazione ideologica: è l'argomento con cui i missionari e le corone cattoliche legittimavano la presenza europea nei secoli precedenti."
+    },
+    {
+      id: 's10', side: 'nuovo', axis: 'ideologia',
+      text: "La conquista viene giustificata attraverso una presunta gerarchia biologica tra le razze umane.",
+      feedback: "Riguarda lo stesso asse: è l'argomento usato allora per legittimare la conquista — una costruzione pseudoscientifica dell'epoca, non una descrizione di fatto."
+    },
+    {
+      id: 's11', side: 'vecchio', axis: 'velocita',
+      text: "L'espansione territoriale procede lentamente, distribuita lungo l'arco di più secoli.",
+      feedback: "Riguarda l'asse della velocità: il vecchio colonialismo si sviluppa su tempi lunghi e progressivi."
+    },
+    {
+      id: 's12', side: 'nuovo', axis: 'velocita',
+      text: "In circa quarant'anni il controllo europeo su un intero continente passa da un decimo a oltre nove decimi della sua superficie.",
+      feedback: "Riguarda lo stesso asse: è il segno più evidente della differenza di ritmo tra i due fenomeni."
+    }
+  ];
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i+1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  let order = shuffle(situations.map(s => s.id));
+  let placements = {}; // id -> { side, axis } chosen
+  let selectedId = null;
+
+  const bank = document.getElementById('bank');
+  const countEl = document.getElementById('count');
+  const totalEl = document.getElementById('total');
+  const gridEl = document.getElementById('grid');
+  totalEl.textContent = situations.length;
+
+  function getSituation(id){
+    return situations.find(s => s.id === id);
+  }
+
+  // build static grid skeleton
+  axes.forEach(axis => {
+    const section = document.createElement('div');
+    section.className = 'axis-section';
+    section.innerHTML = `
+      <p class="axis-title">${axis.label}</p>
+      <div class="axis-row">
+        <div class="cell" data-axis="${axis.id}" data-side="vecchio">
+          <p class="cell-head">Vecchio colonialismo</p>
+          <div class="cell-items"></div>
+        </div>
+        <div class="cell" data-axis="${axis.id}" data-side="nuovo">
+          <p class="cell-head">Nuovo imperialismo</p>
+          <div class="cell-items"></div>
+        </div>
+      </div>
+    `;
+    gridEl.appendChild(section);
+  });
+
+  function render(){
+    bank.innerHTML = '';
+    order.forEach(id => {
+      if(placements[id]) return;
+      const st = getSituation(id);
+      const card = document.createElement('div');
+      card.className = 'card' + (selectedId === id ? ' selected' : '');
+      card.textContent = st.text;
+      card.addEventListener('click', () => {
+        selectedId = (selectedId === id) ? null : id;
+        render();
+      });
+      bank.appendChild(card);
+    });
+
+    document.querySelectorAll('.cell').forEach(cell => {
+      const axis = cell.dataset.axis;
+      const side = cell.dataset.side;
+      const itemsWrap = cell.querySelector('.cell-items');
+      itemsWrap.innerHTML = '';
+      Object.keys(placements)
+        .filter(id => placements[id].axis === axis && placements[id].side === side)
+        .forEach(id => {
+          const st = getSituation(id);
+          const div = document.createElement('div');
+          div.className = 'placed';
+          div.innerHTML = `<div>${st.text}</div>
+            <div class="feedback">${st.feedback}</div>`;
+          div.addEventListener('click', () => {
+            delete placements[id];
+            selectedId = id;
+            render();
+          });
+          itemsWrap.appendChild(div);
+        });
+
+      cell.classList.toggle('targetable', !!selectedId);
+    });
+
+    countEl.textContent = Object.keys(placements).length;
+  }
+
+  document.querySelectorAll('.cell').forEach(cell => {
+    cell.addEventListener('click', (e) => {
+      if(!selectedId) return;
+      if(e.target.closest('.placed')) return;
+      placements[selectedId] = { axis: cell.dataset.axis, side: cell.dataset.side };
+      selectedId = null;
+      render();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    placements = {};
+    selectedId = null;
+    order = shuffle(situations.map(s => s.id));
+    render();
+  });
+
+  render();
+</script>
+
+</body>
+</html>

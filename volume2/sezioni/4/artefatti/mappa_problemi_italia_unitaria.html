@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mappa — I problemi dell'Italia post-unitaria</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #FAF7F2;
+    color: #2C2C2A;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    background: #7A2E1A;
+    padding: 1.5rem 2.5rem;
+    border-bottom: 3px solid #A84030;
+  }
+
+  .header-title {
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #F5EDE8;
+    line-height: 1.4;
+  }
+
+  .header-title em { color: #E8B89A; font-style: italic; }
+
+  .header-sub {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.78rem;
+    color: #C4806A;
+    margin-top: 0.35rem;
+  }
+
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 620px;
+    padding: 2rem 1rem 1rem;
+  }
+
+  svg#mapsvg {
+    display: block;
+    width: 100%;
+    height: 620px;
+  }
+
+  /* SVG node styles */
+  .node-center rect {
+    fill: #7A2E1A;
+    rx: 8;
+  }
+  .node-center text {
+    fill: #F5EDE8;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .node-l2 rect {
+    fill: #A84030;
+    cursor: pointer;
+    transition: fill 0.2s;
+  }
+  .node-l2 rect:hover { fill: #C45040; }
+  .node-l2.active rect { fill: #7A2E1A; }
+  .node-l2 text {
+    fill: #F5EDE8;
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 11.5px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+  }
+
+  .node-l3 rect {
+    fill: #E8B89A;
+    cursor: pointer;
+    transition: fill 0.2s;
+    opacity: 0;
+    transition: opacity 0.3s, fill 0.2s;
+  }
+  .node-l3.visible rect { opacity: 1; }
+  .node-l3 rect:hover { fill: #D4896A; }
+  .node-l3.selected rect { fill: #A84030; }
+  .node-l3 text {
+    fill: #5C2010;
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 10.5px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .node-l3.visible text { opacity: 1; }
+  .node-l3.selected text { fill: #F5EDE8; }
+
+  .edge {
+    stroke: #C4806A;
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .edge.visible { opacity: 1; }
+  .edge-center {
+    stroke: #A84030;
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  /* Info panel */
+  .info-panel {
+    display: none;
+    background: #FFFDF8;
+    border-left: 4px solid #A84030;
+    border-radius: 0 6px 6px 0;
+    margin: 0 2rem 1.5rem;
+    padding: 1rem 1.25rem;
+    max-width: 700px;
+    animation: fadeIn 0.25s ease;
+  }
+
+  .info-panel.show { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .info-label {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #A84030;
+    margin-bottom: 0.4rem;
+  }
+
+  .info-title {
+    font-size: 1rem;
+    color: #5C2010;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+  }
+
+  .info-text {
+    font-size: 0.88rem;
+    color: #2C2C2A;
+    line-height: 1.7;
+  }
+
+  .close-btn {
+    float: right;
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 11px;
+    color: #C4806A;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .close-btn:hover { color: #7A2E1A; }
+
+  .legend {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: #A87060;
+    text-align: center;
+    padding: 0.5rem 1rem 1.25rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title"><em>I problemi dell'Italia post-unitaria</em> — Mappa concettuale</div>
+  <div class="header-sub">Clicca sui nodi di secondo livello per espandere · Clicca sui nodi di terzo livello per leggere</div>
+</div>
+
+<div class="map-wrap">
+  <svg id="mapsvg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="dot" markerWidth="4" markerHeight="4" refX="2" refY="2">
+        <circle cx="2" cy="2" r="1.5" fill="#C4806A"/>
+      </marker>
+    </defs>
+
+    <!-- Center edges to L2 -->
+    <line class="edge-center" x1="400" y1="300" x2="400" y2="130"/>
+    <line class="edge-center" x1="400" y1="300" x2="620" y2="205"/>
+    <line class="edge-center" x1="400" y1="300" x2="620" y2="400"/>
+    <line class="edge-center" x1="400" y1="300" x2="400" y2="475"/>
+    <line class="edge-center" x1="400" y1="300" x2="178" y2="205"/>
+
+    <!-- L2→L3 edges (hidden initially, shown by JS) -->
+    <!-- Territoriale -->
+    <line class="edge" id="e-ter-1" x1="400" y1="108" x2="260" y2="42"/>
+    <line class="edge" id="e-ter-2" x1="400" y1="108" x2="400" y2="36"/>
+    <line class="edge" id="e-ter-3" x1="400" y1="108" x2="540" y2="42"/>
+    <!-- Economico -->
+    <line class="edge" id="e-eco-1" x1="638" y1="195" x2="720" y2="130"/>
+    <line class="edge" id="e-eco-2" x1="638" y1="195" x2="748" y2="205"/>
+    <!-- Nord-Sud -->
+    <line class="edge" id="e-ns-1" x1="638" y1="408" x2="720" y2="476"/>
+    <line class="edge" id="e-ns-2" x1="638" y1="408" x2="748" y2="390"/>
+    <!-- Meridionale/Culturale -->
+    <line class="edge" id="e-cul-1" x1="400" y1="494" x2="302" y2="556"/>
+    <line class="edge" id="e-cul-2" x1="400" y1="494" x2="500" y2="556"/>
+    <!-- Amministrativo -->
+    <line class="edge" id="e-amm-1" x1="160" y1="195" x2="72" y2="130"/>
+    <line class="edge" id="e-amm-2" x1="160" y1="195" x2="52" y2="205"/>
+
+    <!-- CENTER NODE -->
+    <g class="node-center">
+      <rect x="310" y="265" width="180" height="70" rx="8" fill="#7A2E1A"/>
+      <text x="400" y="293" fill="#F5EDE8" font-family="Georgia,serif" font-size="12" text-anchor="middle">I problemi</text>
+      <text x="400" y="310" fill="#F5EDE8" font-family="Georgia,serif" font-size="12" text-anchor="middle">dell'Italia</text>
+      <text x="400" y="327" fill="#E8B89A" font-family="Georgia,serif" font-size="10.5" text-anchor="middle" font-style="italic">post-unitaria</text>
+    </g>
+
+    <!-- L2: Territoriale (top) -->
+    <g class="node-l2" id="l2-ter" onclick="toggleL2('ter')" transform="translate(400,108)">
+      <rect x="-82" y="-22" width="164" height="44" rx="6"/>
+      <text x="0" y="-4">Problema</text>
+      <text x="0" y="12">territoriale</text>
+    </g>
+
+    <!-- L2: Economico (top-right) -->
+    <g class="node-l2" id="l2-eco" onclick="toggleL2('eco')" transform="translate(638,195)">
+      <rect x="-82" y="-22" width="164" height="44" rx="6"/>
+      <text x="0" y="-4">Problema</text>
+      <text x="0" y="12">economico</text>
+    </g>
+
+    <!-- L2: Nord-Sud (bottom-right) -->
+    <g class="node-l2" id="l2-ns" onclick="toggleL2('ns')" transform="translate(638,408)">
+      <rect x="-82" y="-22" width="164" height="44" rx="6"/>
+      <text x="0" y="-4">Divario</text>
+      <text x="0" y="12">Nord-Sud</text>
+    </g>
+
+    <!-- L2: Culturale (bottom) -->
+    <g class="node-l2" id="l2-cul" onclick="toggleL2('cul')" transform="translate(400,494)">
+      <rect x="-82" y="-22" width="164" height="44" rx="6"/>
+      <text x="0" y="-4">Problema</text>
+      <text x="0" y="12">culturale</text>
+    </g>
+
+    <!-- L2: Amministrativo (top-left) -->
+    <g class="node-l2" id="l2-amm" onclick="toggleL2('amm')" transform="translate(160,195)">
+      <rect x="-82" y="-22" width="164" height="44" rx="6"/>
+      <text x="0" y="-4">Problema</text>
+      <text x="0" y="12">amministrativo</text>
+    </g>
+
+    <!-- L3: Territoriale children -->
+    <g class="node-l3" id="l3-ter-1" data-key="roma" onclick="showInfo('roma')" transform="translate(260,42)">
+      <rect x="-64" y="-18" width="128" height="36" rx="4"/>
+      <text x="0" y="6">Roma</text>
+    </g>
+    <g class="node-l3" id="l3-ter-2" data-key="veneto" onclick="showInfo('veneto')" transform="translate(400,36)">
+      <rect x="-72" y="-18" width="144" height="36" rx="4"/>
+      <text x="0" y="6">Veneto e Trentino</text>
+    </g>
+    <g class="node-l3" id="l3-ter-3" data-key="questrom" onclick="showInfo('questrom')" transform="translate(540,42)">
+      <rect x="-72" y="-18" width="144" height="36" rx="4"/>
+      <text x="0" y="6">Questione romana</text>
+    </g>
+
+    <!-- L3: Economico children -->
+    <g class="node-l3" id="l3-eco-1" data-key="debito" onclick="showInfo('debito')" transform="translate(720,118)">
+      <rect x="-68" y="-18" width="136" height="36" rx="4"/>
+      <text x="0" y="6">Debito pubblico</text>
+    </g>
+    <g class="node-l3" id="l3-eco-2" data-key="infra" onclick="showInfo('infra')" transform="translate(748,205)">
+      <rect x="-52" y="-18" width="104" height="36" rx="4"/>
+      <text x="0" y="6">Infrastrutture</text>
+    </g>
+
+    <!-- L3: Nord-Sud children -->
+    <g class="node-l3" id="l3-ns-1" data-key="latifondo" onclick="showInfo('latifondo')" transform="translate(720,476)">
+      <rect x="-56" y="-18" width="112" height="36" rx="4"/>
+      <text x="0" y="6">Latifondo</text>
+    </g>
+    <g class="node-l3" id="l3-ns-2" data-key="brigantaggio" onclick="showInfo('brigantaggio')" transform="translate(748,390)">
+      <rect x="-64" y="-18" width="128" height="36" rx="4"/>
+      <text x="0" y="6">Brigantaggio</text>
+    </g>
+
+    <!-- L3: Culturale children -->
+    <g class="node-l3" id="l3-cul-1" data-key="analfabetismo" onclick="showInfo('analfabetismo')" transform="translate(302,556)">
+      <rect x="-68" y="-18" width="136" height="36" rx="4"/>
+      <text x="0" y="6">Analfabetismo</text>
+    </g>
+    <g class="node-l3" id="l3-cul-2" data-key="fareitaliani" onclick="showInfo('fareitaliani')" transform="translate(500,556)">
+      <rect x="-76" y="-18" width="152" height="36" rx="4"/>
+      <text x="0" y="6">«Fare gli italiani»</text>
+    </g>
+
+    <!-- L3: Amministrativo children -->
+    <g class="node-l3" id="l3-amm-1" data-key="accentramento" onclick="showInfo('accentramento')" transform="translate(72,118)">
+      <rect x="-68" y="-18" width="136" height="36" rx="4"/>
+      <text x="0" y="6">Accentramento</text>
+    </g>
+    <g class="node-l3" id="l3-amm-2" data-key="piemontesizzazione" onclick="showInfo('piemontesizzazione')" transform="translate(52,205)">
+      <rect x="-50" y="-18" width="100" height="36" rx="4"/>
+      <text x="0" y="-3">Piemontesiz-</text>
+      <text x="0" y="13">zazione</text>
+    </g>
+
+  </svg>
+</div>
+
+<div class="info-panel" id="infoPanel">
+  <button class="close-btn" onclick="closeInfo()">✕ chiudi</button>
+  <div class="info-label" id="infoLabel"></div>
+  <div class="info-title" id="infoTitle"></div>
+  <div class="info-text" id="infoText"></div>
+</div>
+
+<div class="legend">Clicca un nodo rosso per espandere · Clicca un nodo chiaro per leggere il testo</div>
+
+<script>
+const DATA = {
+  roma: {
+    label: 'Problema territoriale',
+    title: 'Roma capitale mancante',
+    text: 'Roma era considerata da ogni liberale italiano la capitale naturale della nazione, ma restava nelle mani del Papa, protetto militarmente dalla Francia di Napoleone III. Il nuovo Stato non poteva reclamarla senza provocare una crisi diplomatica internazionale. Ci volle la guerra franco-prussiana del 1870 — e il ritiro delle truppe francesi — per rendere possibile la breccia di Porta Pia.'
+  },
+  veneto: {
+    label: 'Problema territoriale',
+    title: 'Veneto e Trentino sotto l\'Austria',
+    text: 'Nel 1861 il Veneto, il Trentino e il Friuli restavano sotto il controllo austriaco. Il Veneto fu ottenuto nel 1866, come effetto collaterale della vittoria prussiana a Sadowa — non per meriti militari italiani, viste le sconfitte di Custoza e Lissa. Il Trentino e le altre «terre irredente» resteranno austriache fino alla fine della Prima guerra mondiale.'
+  },
+  questrom: {
+    label: 'Problema territoriale',
+    title: 'La questione romana',
+    text: 'Pio IX non riconosceva il nuovo Stato, si considerava prigioniero in Vaticano e aveva scomunicato i governanti italiani. La frattura non era solo territoriale: era uno scontro tra due concezioni dell\'autorità e della legittimità. Il Non expedit del 1874 vietò ai cattolici la partecipazione alla vita politica, privando il sistema liberale di una quota enorme del suo potenziale elettorale.'
+  },
+  debito: {
+    label: 'Problema economico',
+    title: 'Il debito pubblico',
+    text: 'Le casse erano vuote al momento dell\'unificazione. Il debito accumulato per finanziare le guerre risorgimentali, sommato a quello ereditato dagli Stati preunitari, richiedeva un risanamento urgente. Il governo rispose con una tassazione pesante e socialmente iniqua, basata su imposte indirette sui consumi che colpivano soprattutto i più poveri.'
+  },
+  infra: {
+    label: 'Problema economico',
+    title: 'L\'arretratezza infrastrutturale',
+    text: 'Al momento dell\'unificazione l\'intera penisola disponeva di circa 1.800 chilometri di ferrovia, contro i diecimila della Francia e i quindicimila dell\'Inghilterra. Il paese era prevalentemente agricolo — oltre il settanta per cento della popolazione lavorava nei campi — privo di materie prime e di fonti energetiche adeguate a sostenere uno sviluppo industriale.'
+  },
+  latifondo: {
+    label: 'Divario Nord-Sud',
+    title: 'Il latifondo meridionale',
+    text: 'Al momento dell\'unificazione le differenze strutturali tra Nord e Sud erano già marcate: agricoltura capitalistica al Nord, mezzadria al Centro, latifondo e piccola proprietà al Sud. Le politiche del nuovo Stato — che non redistribuirono le terre — accentuarono queste differenze invece di ridurle. I contadini meridionali che avevano sperato in una riforma agraria videro le proprietà baronali passare intatte ai nuovi proprietari borghesi.'
+  },
+  brigantaggio: {
+    label: 'Divario Nord-Sud',
+    title: 'Il brigantaggio',
+    text: 'Nel Mezzogiorno l\'insoddisfazione per la mancata redistribuzione delle terre si sommò all\'imposizione della leva militare obbligatoria e di nuove tasse, producendo un\'esplosione di violenza che il governo classificò come brigantaggio e affrontò come un problema di ordine pubblico. Era qualcosa di più complicato: una guerra civile strisciante che rivelava quanto fosse fragile il consenso su cui il nuovo Stato era stato costruito.'
+  },
+  analfabetismo: {
+    label: 'Problema culturale',
+    title: 'L\'analfabetismo di massa',
+    text: 'L\'analfabetismo colpiva in media il settantotto per cento della popolazione nel 1861, con punte che superavano il novanta per cento nel Mezzogiorno. Non solo: si stima che non più del due per cento degli italiani usasse l\'italiano come lingua della vita quotidiana. Il resto si esprimeva in dialetti spesso reciprocamente incomprensibili — una frammentazione che rendeva difficile costruire una coscienza nazionale condivisa.'
+  },
+  fareitaliani: {
+    label: 'Problema culturale',
+    title: '«Fatta l\'Italia, bisogna fare gli italiani»',
+    text: 'La frase attribuita a Massimo d\'Azeglio — vera o apocrifa che sia — coglieva con precisione il paradosso del nuovo Stato: aveva una bandiera e un re, ma non ancora un popolo nel senso politico del termine. Costruire un\'identità nazionale condivisa attraverso la scuola, l\'esercito e le istituzioni fu uno dei compiti più difficili e lenti della classe dirigente liberale.'
+  },
+  accentramento: {
+    label: 'Problema amministrativo',
+    title: 'La scelta dell\'accentramento',
+    text: 'Come governare un paese diviso fino a ieri in sette Stati con leggi, monete e sistemi fiscali diversi? La risposta della Destra storica fu netta: accentramento. Lo Statuto Albertino e la legislazione piemontese vennero estesi all\'intera penisola, spesso senza discussione parlamentare. Una scelta comprensibile, forse inevitabile — ma che privilegiò la rapidità sul consenso e l\'uniformità sulla diversità.'
+  },
+  piemontesizzazione: {
+    label: 'Problema amministrativo',
+    title: 'La «piemontesizzazione»',
+    text: 'Le province furono affidate a prefetti nominati dal governo centrale, in larga parte di provenienza piemontese. Quella che i contemporanei chiamarono «piemontesizzazione» non era solo una questione di orgoglio ferito: era il segnale che il nuovo Stato aveva scelto la solidità amministrativa sulla rappresentanza, imponendo un modello senza negoziarlo con le realtà locali che avrebbe dovuto governare.'
+  }
+};
+
+const groups = {
+  ter: ['l3-ter-1','l3-ter-2','l3-ter-3'],
+  eco: ['l3-eco-1','l3-eco-2'],
+  ns:  ['l3-ns-1','l3-ns-2'],
+  cul: ['l3-cul-1','l3-cul-2'],
+  amm: ['l3-amm-1','l3-amm-2']
+};
+
+const edges = {
+  ter: ['e-ter-1','e-ter-2','e-ter-3'],
+  eco: ['e-eco-1','e-eco-2'],
+  ns:  ['e-ns-1','e-ns-2'],
+  cul: ['e-cul-1','e-cul-2'],
+  amm: ['e-amm-1','e-amm-2']
+};
+
+const openGroups = {};
+
+function toggleL2(key) {
+  const isOpen = openGroups[key];
+  openGroups[key] = !isOpen;
+
+  const l2 = document.getElementById('l2-' + key);
+  if (openGroups[key]) {
+    l2.classList.add('active');
+  } else {
+    l2.classList.remove('active');
+  }
+
+  groups[key].forEach(id => {
+    const el = document.getElementById(id);
+    if (openGroups[key]) el.classList.add('visible');
+    else { el.classList.remove('visible'); el.classList.remove('selected'); }
+  });
+
+  edges[key].forEach(id => {
+    const el = document.getElementById(id);
+    if (openGroups[key]) el.classList.add('visible');
+    else el.classList.remove('visible');
+  });
+
+  if (!openGroups[key]) closeInfo();
+}
+
+function showInfo(key) {
+  const d = DATA[key];
+  if (!d) return;
+
+  document.querySelectorAll('.node-l3').forEach(n => n.classList.remove('selected'));
+  document.querySelectorAll('.node-l3').forEach(n => {
+    if (n.dataset.key === key) n.classList.add('selected');
+  });
+
+  document.getElementById('infoLabel').textContent = d.label;
+  document.getElementById('infoTitle').textContent = d.title;
+  document.getElementById('infoText').textContent = d.text;
+  const panel = document.getElementById('infoPanel');
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function closeInfo() {
+  document.getElementById('infoPanel').classList.remove('show');
+  document.querySelectorAll('.node-l3').forEach(n => n.classList.remove('selected'));
+}
+</script>
+</body>
+</html>

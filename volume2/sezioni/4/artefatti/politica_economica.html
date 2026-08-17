@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La politica economica — Destra e Sinistra storica</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #FAF7F2;
+    color: #2C2C2A;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #2C2C2A;
+    padding: 1.4rem 2.5rem;
+    border-bottom: 4px solid #8B7355;
+  }
+  .header-title {
+    font-size: 1.15rem;
+    font-weight: normal;
+    color: #F0EBE0;
+  }
+  .header-title em { color: #C2A882; font-style: italic; }
+  .header-sub {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.78rem;
+    color: #888070;
+    margin-top: 0.35rem;
+  }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    background: #FFFDF8;
+    border-bottom: 1px solid #D4C9B8;
+    display: flex;
+    padding: 0 2rem;
+  }
+  .tab-btn {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    padding: 0.9rem 1.3rem;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: #888070;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: #2C2C2A; }
+  .tab-btn.active {
+    color: #2C2C2A;
+    border-bottom-color: #8B7355;
+    font-weight: 600;
+  }
+
+  /* ── SECTION PANELS ── */
+  .section { display: none; padding: 2rem 2.5rem; }
+  .section.active { display: block; }
+
+  /* ══════════════════════════════════════════
+     SECTION 1 — LIBERISMO VS PROTEZIONISMO
+  ══════════════════════════════════════════ */
+  .vs-grid {
+    display: grid;
+    grid-template-columns: 1fr 64px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  .vs-col {
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1.5px solid #C8BBA8;
+  }
+
+  .vs-col-header {
+    padding: 0.9rem 1.2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #fff;
+  }
+  .vs-col-header span {
+    display: block;
+    font-size: 10px;
+    font-weight: normal;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  .destra-header { background: #4A6741; }
+  .sinistra-header { background: #5B7FA6; }
+
+  .vs-model {
+    padding: 0.9rem 1.2rem;
+    background: #F5F0E8;
+    border-bottom: 1px solid #E8E0D2;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    color: #5C4A2A;
+    line-height: 1.5;
+  }
+  .vs-model strong {
+    display: block;
+    font-size: 13px;
+    color: #2C2C2A;
+    margin-bottom: 3px;
+  }
+
+  .vs-items { background: #FFFDF8; }
+
+  .vs-item {
+    border-top: 1px solid #E8E0D2;
+    overflow: hidden;
+  }
+  .vs-item:first-child { border-top: none; }
+
+  .vs-item-head {
+    padding: 0.75rem 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    transition: background 0.15s;
+  }
+  .vs-item-head:hover { background: #F5F0E8; }
+
+  .vs-item-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .bullet-destra { background: #4A6741; }
+  .bullet-sinistra { background: #5B7FA6; }
+
+  .vs-item-label {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    color: #2C2C2A;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .vs-item-expand {
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 10px;
+    color: #8B7355;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .vs-item-detail {
+    display: none;
+    padding: 0 1.1rem 0.75rem 2.1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.8rem;
+    color: #5C4A2A;
+    line-height: 1.65;
+    animation: fadeIn 0.2s ease;
+  }
+  .vs-item-detail.open { display: block; }
+
+  /* VS divider */
+  .vs-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3.5rem;
+  }
+  .vs-badge {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #8B7355;
+    background: #F5F0E8;
+    border: 2px solid #C8BBA8;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Obiettivo comune note */
+  .common-note {
+    margin-top: 1.25rem;
+    background: #FFFDF8;
+    border: 1.5px solid #C8BBA8;
+    border-left: 4px solid #8B7355;
+    border-radius: 0 6px 6px 0;
+    padding: 0.85rem 1.2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.83rem;
+    color: #5C4A2A;
+    line-height: 1.65;
+  }
+  .common-note strong { color: #2C2C2A; }
+
+  /* ══════════════════════════════════════════
+     SECTION 2 — COSTI SOCIALI
+  ══════════════════════════════════════════ */
+  .costs-list { display: flex; flex-direction: column; gap: 0; }
+
+  .cost-item {
+    border: 1.5px solid #C8BBA8;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.65rem;
+    background: #FFFDF8;
+  }
+
+  .cost-head {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .cost-head:hover { background: #F5F0E8; }
+
+  .cost-era {
+    padding: 0.9rem 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.3;
+  }
+  .era-d { background: #4A6741; }
+  .era-s { background: #5B7FA6; }
+  .era-ds { background: linear-gradient(135deg, #4A6741 50%, #5B7FA6 50%); }
+
+  .cost-main {
+    padding: 0.85rem 1.1rem;
+    border-left: 1px solid #E8E0D2;
+  }
+  .cost-title {
+    font-size: 0.92rem;
+    color: #2C2C2A;
+    margin-bottom: 0.25rem;
+    line-height: 1.35;
+  }
+  .cost-summary {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.8rem;
+    color: #888070;
+    line-height: 1.45;
+  }
+
+  .cost-toggle {
+    padding: 0.85rem 1rem;
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 11px;
+    color: #8B7355;
+    white-space: nowrap;
+  }
+
+  .cost-detail {
+    display: none;
+    padding: 0.85rem 1.1rem 0.85rem 1.1rem;
+    border-top: 1px solid #E8E0D2;
+    background: #F5F0E8;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.82rem;
+    color: #2C2C2A;
+    line-height: 1.7;
+    animation: fadeIn 0.2s ease;
+  }
+  .cost-detail.open { display: block; }
+
+  /* severity bar */
+  .severity-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .severity-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #888070;
+    white-space: nowrap;
+  }
+  .severity-bar {
+    height: 5px;
+    border-radius: 3px;
+    background: #E8E0D2;
+    flex: 1;
+    overflow: hidden;
+  }
+  .severity-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: #7A2E1A;
+  }
+
+  /* ══════════════════════════════════════════
+     SECTION 3 — DECOLLO INDUSTRIALE
+  ══════════════════════════════════════════ */
+  .industry-intro {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.84rem;
+    color: #5C4A2A;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    background: #FFFDF8;
+    border-left: 4px solid #5B7FA6;
+    border-radius: 0 6px 6px 0;
+    padding: 0.85rem 1.2rem;
+  }
+
+  .industry-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ind-card {
+    background: #FFFDF8;
+    border: 1.5px solid #C8BBA8;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.18s;
+  }
+  .ind-card:hover { border-color: #5B7FA6; }
+  .ind-card.open { border-color: #5B7FA6; }
+
+  .ind-card-top {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .ind-sector-tag {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 0.6rem 0.4rem;
+    min-width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tag-sider { background: #5B4A3A; }
+  .tag-mec   { background: #3A5C7A; }
+  .tag-elett { background: #6A4A7A; }
+  .tag-tess  { background: #7A5A3A; }
+
+  .ind-card-body {
+    padding: 0.8rem 1rem;
+    flex: 1;
+  }
+
+  .ind-year {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #888070;
+    margin-bottom: 3px;
+  }
+  .ind-name {
+    font-size: 0.95rem;
+    color: #2C2C2A;
+    line-height: 1.35;
+    margin-bottom: 0.3rem;
+  }
+  .ind-short {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.79rem;
+    color: #5C4A2A;
+    line-height: 1.5;
+  }
+
+  .ind-toggle {
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 10px;
+    color: #8B7355;
+    padding: 0.4rem 1rem 0.6rem;
+  }
+
+  .ind-detail {
+    display: none;
+    padding: 0.75rem 1rem 0.9rem;
+    background: #F0F4F9;
+    border-top: 1px solid #D4C9B8;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.8rem;
+    color: #2C2C2A;
+    line-height: 1.65;
+    animation: fadeIn 0.2s ease;
+  }
+  .ind-detail.open { display: block; }
+
+  /* Geographic imbalance note */
+  .geo-note {
+    background: #2C2C2A;
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+  .geo-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .geo-text { flex: 1; }
+  .geo-title {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #C2A882;
+    margin-bottom: 0.4rem;
+  }
+  .geo-body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.82rem;
+    color: #D4C9B8;
+    line-height: 1.65;
+  }
+  .geo-bar-wrap {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    align-items: center;
+  }
+  .geo-bar-label {
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 10px;
+    color: #888070;
+    min-width: 38px;
+  }
+  .geo-bar-track {
+    flex: 1;
+    height: 6px;
+    background: #444;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .geo-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+  .fill-nord { background: #5B7FA6; }
+  .fill-sud  { background: #7A2E1A; }
+  .geo-bar-pct {
+    font-family: 'Gill Sans', Calibri, sans-serif;
+    font-size: 10px;
+    color: #888070;
+    min-width: 30px;
+    text-align: right;
+  }
+
+  /* shared */
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(-4px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title"><em>La politica economica</em> — Destra e Sinistra storica a confronto</div>
+  <div class="header-sub">Tre sezioni navigabili · Clicca sugli elementi per leggere gli approfondimenti</div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(0, this)">I · Liberismo vs Protezionismo</button>
+  <button class="tab-btn" onclick="switchTab(1, this)">II · I costi sociali</button>
+  <button class="tab-btn" onclick="switchTab(2, this)">III · Il decollo industriale</button>
+</div>
+
+<!-- ══ SECTION 1 ══════════════════════════════════════════════════════ -->
+<div class="section active" id="s0">
+
+  <div class="vs-grid">
+
+    <!-- DESTRA -->
+    <div class="vs-col">
+      <div class="vs-col-header destra-header">Destra storica <span>1861 – 1876</span></div>
+      <div class="vs-model">
+        <strong>Liberismo e rigore fiscale</strong>
+        Il mercato come motore della modernizzazione. Lo Stato non deve intervenire nell'economia: deve creare le condizioni — ordine, infrastrutture, moneta stabile — e poi farsi da parte. Obiettivo prioritario: il pareggio di bilancio.
+      </div>
+      <div class="vs-items">
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-destra"></div>
+            <div class="vs-item-label">Abolizione dei dazi interni e tariffa piemontese estesa all'intera penisola</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">Le tariffe piemontesi, tra le più basse d'Europa, vengono applicate a tutto il territorio nazionale. Questo favorisce le esportazioni agricole (vino, olio, seta) verso i mercati europei, ma espone le deboli manifatture meridionali — fino ad allora protette dai dazi borbonici — alla concorrenza diretta delle industrie francesi e inglesi. Per molte di esse è una crisi rapida e definitiva.</div>
+        </div>
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-destra"></div>
+            <div class="vs-item-label">Tassazione pesante sulle imposte indirette</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">La pressione fiscale si basa prevalentemente su imposte indirette che colpiscono i consumi piuttosto che i redditi, gravando in modo sproporzionato sui più poveri. Il provvedimento più impopolare è la tassa sul macinato (1868), che fa salire il prezzo del pane e della polenta — base dell'alimentazione popolare — scatenando sommosse in tutto il paese.</div>
+        </div>
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-destra"></div>
+            <div class="vs-item-label">Investimenti nelle ferrovie e vendita dei beni ecclesiastici</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">La costruzione della rete ferroviaria è la priorità assoluta: le ferrovie sono il presupposto materiale dell'unità nazionale. La vendita dei beni ecclesiastici e demaniali avrebbe dovuto favorire la piccola proprietà rurale, ma le modalità — lotti spesso troppo grandi per i contadini poveri — fanno sì che le terre finiscano quasi interamente nelle mani della borghesia agraria e dei latifondisti.</div>
+        </div>
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-destra"></div>
+            <div class="vs-item-label">Pareggio di bilancio raggiunto nel 1875</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">Il ministro Quintino Sella persegue con rigore la politica delle "economie fino all'osso". Nel 1875 l'obiettivo viene raggiunto: è un risultato che in pochi avrebbero scommesso raggiungibile nel 1861. Ma il paese che ha finanziato quel risanamento è più povero, più diseguale e più arrabbiato di quanto le cifre del bilancio lascino intendere.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VS divider -->
+    <div class="vs-divider"><div class="vs-badge">VS</div></div>
+
+    <!-- SINISTRA -->
+    <div class="vs-col">
+      <div class="vs-col-header sinistra-header">Sinistra storica <span>1876 – 1887</span></div>
+      <div class="vs-model">
+        <strong>Protezionismo e intervento statale</strong>
+        Lo Stato come principale finanziatore e committente dell'industria nazionale. Non un abbandono del mercato per principio, ma la costruzione di un'alleanza organica tra classe politica, grande industria e proprietà terriera.
+      </div>
+      <div class="vs-items">
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-sinistra"></div>
+            <div class="vs-item-label">Prima tariffa doganale (1878) e grande tariffa protezionistica (1887)</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">Nel 1878 una prima tariffa moderata protegge le imprese laniere e meccaniche. La svolta decisiva è del 1887: forti dazi sui manufatti stranieri (in particolare siderurgici e cotonieri) e sul grano e sullo zucchero. È il "patto ferro e grano": la tariffa protegge simultaneamente l'industria pesante del Nord e la produzione granaria dei latifondisti meridionali, costruendo un blocco di interessi trasversale che sostiene i governi della Sinistra.</div>
+        </div>
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-sinistra"></div>
+            <div class="vs-item-label">Commesse pubbliche su larga scala e sussidi all'industria</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">Lo Stato non si limita a difendere il mercato interno: diventa il principale committente dell'industria nazionale, concedendo esenzioni fiscali, contributi a fondo perduto e commesse su larga scala, soprattutto per ferrovie e cantieristica militare. Nasce un capitalismo assistito che nessuno sembra turbato di chiamare con questo nome: industrie che non avrebbero potuto sopravvivere senza la committenza pubblica.</div>
+        </div>
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-sinistra"></div>
+            <div class="vs-item-label">Abolizione della tassa sul macinato (1879–1884)</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">L'abolizione della tassa sul macinato, avviata nel 1879 e completata nel 1884, è la misura più attesa dalle classi popolari e il simbolo più odiato del rigore fiscale della Destra. La sua eliminazione è il gesto politico che più di ogni altro segna la discontinuità con il governo precedente — anche se i costi della protezione doganale si scaricheranno comunque sui consumatori più poveri attraverso il rincaro del pane.</div>
+        </div>
+        <div class="vs-item">
+          <div class="vs-item-head" onclick="toggleVs(this)">
+            <div class="vs-item-bullet bullet-sinistra"></div>
+            <div class="vs-item-label">Riforma bancaria e nascita del sistema creditizio moderno</div>
+            <div class="vs-item-expand">▸</div>
+          </div>
+          <div class="vs-item-detail">Parallelamente allo sviluppo industriale, viene costruita l'infrastruttura finanziaria che lo rende possibile. Le banche miste — la Banca Commerciale Italiana e il Credito Italiano — nascono per convogliare il risparmio privato verso il finanziamento delle imprese. È un sistema di relazioni strutturali tra banche, industria e Stato che definisce per la prima volta in Italia un modello di capitalismo finanziario industriale.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end vs-grid -->
+
+  <div class="common-note">
+    <strong>Un obiettivo comune, strategie opposte.</strong> Sia la Destra sia la Sinistra puntavano alla modernizzazione del paese e al suo inserimento nel sistema economico europeo. La differenza stava nel metodo: il liberismo della Destra si fondava sulla fiducia nel mercato e sul rigore fiscale; il protezionismo della Sinistra costruiva invece un sistema di relazioni strutturali tra Stato e grandi interessi economici che avrebbe caratterizzato il capitalismo italiano ben oltre il periodo liberale.
+  </div>
+
+</div>
+
+<!-- ══ SECTION 2 ══════════════════════════════════════════════════════ -->
+<div class="section" id="s1">
+
+  <div class="costs-list">
+
+    <div class="cost-item">
+      <div class="cost-head" onclick="toggleCost(this)">
+        <div class="cost-era era-d">Destra storica</div>
+        <div class="cost-main">
+          <div class="cost-title">Tassa sul macinato (1868)</div>
+          <div class="cost-summary">Imposta sulla macinazione dei cereali — colpiva direttamente il pane e la polenta, base dell'alimentazione popolare.</div>
+        </div>
+        <div class="cost-toggle">▸ leggi</div>
+      </div>
+      <div class="cost-detail">
+        Proposta dal ministro delle Finanze Quintino Sella come parte della politica di "economie fino all'osso", la tassa sul macinato è il provvedimento fiscale più impopolare dell'intera storia della Destra storica. Fa salire il prezzo del pane e della polenta scatenando sommosse in tutto il paese. Colpisce in modo sproporzionato le classi più povere, che spendono la quota maggiore del loro reddito in cibo. La sua abolizione, completata dalla Sinistra nel 1884, sarà presentata come il simbolo del cambiamento di regime.
+        <div class="severity-wrap">
+          <div class="severity-label">Impatto sociale</div>
+          <div class="severity-bar"><div class="severity-fill" style="width:90%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cost-item">
+      <div class="cost-head" onclick="toggleCost(this)">
+        <div class="cost-era era-d">Destra storica</div>
+        <div class="cost-main">
+          <div class="cost-title">Corso forzoso (1866)</div>
+          <div class="cost-summary">La cartamoneta diventa inconvertibile in oro o argento. L'inflazione che ne segue colpisce soprattutto i ceti più deboli.</div>
+        </div>
+        <div class="cost-toggle">▸ leggi</div>
+      </div>
+      <div class="cost-detail">
+        La crisi finanziaria innescata dai costi della Terza guerra d'indipendenza nel 1866 costringe lo Stato a introdurre il "corso forzoso": la cartamoneta diventa inconvertibile in oro o argento e la sua circolazione obbligatoria. La forte inflazione che ne segue erode il potere d'acquisto, colpendo soprattutto i ceti più deboli che non hanno risparmi o attività reali con cui difendersi. È una misura d'emergenza che si somma a una pressione fiscale già insostenibile per larghi strati della popolazione.
+        <div class="severity-wrap">
+          <div class="severity-label">Impatto sociale</div>
+          <div class="severity-bar"><div class="severity-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cost-item">
+      <div class="cost-head" onclick="toggleCost(this)">
+        <div class="cost-era era-d">Destra storica</div>
+        <div class="cost-main">
+          <div class="cost-title">Crollo delle manifatture meridionali</div>
+          <div class="cost-summary">L'estensione delle tariffe piemontesi espone il Sud alla concorrenza europea senza difese: le manifatture protette dai dazi borbonici non reggono.</div>
+        </div>
+        <div class="cost-toggle">▸ leggi</div>
+      </div>
+      <div class="cost-detail">
+        L'abolizione dei dazi borbonici e l'estensione delle tariffe piemontesi — tra le più basse d'Europa — all'intera penisola favorisce le esportazioni agricole del Nord, ma espone le deboli manifatture meridionali alla concorrenza diretta di industrie francesi e inglesi molto più avanzate. Il crollo è rapido e per molte di esse definitivo. Leopoldo Franchetti e Sidney Sonnino, nella loro inchiesta del 1876 sulla Sicilia, documentano con precisione impietosa come il liberismo stia accelerando la marginalizzazione economica del Sud invece di integrarlo nel mercato nazionale.
+        <div class="severity-wrap">
+          <div class="severity-label">Impatto sociale</div>
+          <div class="severity-bar"><div class="severity-fill" style="width:80%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cost-item">
+      <div class="cost-head" onclick="toggleCost(this)">
+        <div class="cost-era era-s">Sinistra storica</div>
+        <div class="cost-main">
+          <div class="cost-title">Guerra doganale con la Francia (1888)</div>
+          <div class="cost-summary">Le ritorsioni francesi alle tariffe protezionistiche italiane chiudono i mercati transalpini alle esportazioni meridionali, rovinando colture specializzate.</div>
+        </div>
+        <div class="cost-toggle">▸ leggi</div>
+      </div>
+      <div class="cost-detail">
+        I dazi italiani del 1887 scatenano ritorsioni commerciali: con la Francia si apre nel 1888 una guerra doganale che chiude i mercati d'oltralpe alle esportazioni meridionali, mandando in rovina le pregiate colture specializzate del Sud — vino, agrumi, olio. Il paradosso è stridente: la politica protezionistica, presentata come difesa dell'economia nazionale, colpisce duramente proprio il Mezzogiorno, le cui esportazioni agricole erano tra le più dipendenti dal mercato francese. Nessuno degli "interessi protetti" si sente in dovere di intervenire.
+        <div class="severity-wrap">
+          <div class="severity-label">Impatto sociale</div>
+          <div class="severity-bar"><div class="severity-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cost-item">
+      <div class="cost-head" onclick="toggleCost(this)">
+        <div class="cost-era era-s">Sinistra storica</div>
+        <div class="cost-main">
+          <div class="cost-title">Rincaro del pane per il dazio sul grano</div>
+          <div class="cost-summary">Il dazio cerealicolo salva i bilanci dei grandi proprietari, ma scarica il costo sui consumatori più poveri attraverso il rincaro del pane e della pasta.</div>
+        </div>
+        <div class="cost-toggle">▸ leggi</div>
+      </div>
+      <div class="cost-detail">
+        Il dazio sul grano introdotto con la tariffa del 1887 ha un effetto preciso e prevedibile: fa salire il prezzo del pane e della pasta, scaricando il costo della protezione sui consumatori più poveri. Agisce inoltre come un salvagente artificiale per il latifondo: invece di spingere i grandi proprietari meridionali a modernizzare i metodi di coltivazione, li libera dalla pressione del mercato, consolidando strutture agrarie arretrate. È lo stesso meccanismo che genererà la "protesta dello stomaco" del 1898, quando il rincaro ulteriore del grano farà esplodere la penisola.
+        <div class="severity-wrap">
+          <div class="severity-label">Impatto sociale</div>
+          <div class="severity-bar"><div class="severity-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cost-item">
+      <div class="cost-head" onclick="toggleCost(this)">
+        <div class="cost-era era-ds">Destra e Sinistra</div>
+        <div class="cost-main">
+          <div class="cost-title">La grande emigrazione</div>
+          <div class="cost-summary">Dagli anni Ottanta, centinaia di migliaia di italiani — prima dal Nord, poi in massa dal Mezzogiorno — lasciano il paese. È anche la risposta a un sistema che non ha trovato per loro nessun posto.</div>
+        </div>
+        <div class="cost-toggle">▸ leggi</div>
+      </div>
+      <div class="cost-detail">
+        La grande emigrazione che esplode tra gli anni Ottanta e i primi del Novecento non è solo il prodotto della miseria: è anche la risposta di centinaia di migliaia di contadini impoveriti a un sistema economico che li ha protetti meno di quanto non abbia protetto chi possedeva già qualcosa. La svolta protezionistica del 1887 accelera l'industrializzazione del Nord-Ovest condannando il Mezzogiorno a una crisi agricola senza uscita. Chi non ha terre, chi ha perso il lavoro nelle manifatture distrutte dalla concorrenza, chi non può permettersi il pane a prezzi protetti: per loro la risposta è la nave per le Americhe.
+        <div class="severity-wrap">
+          <div class="severity-label">Impatto sociale</div>
+          <div class="severity-bar"><div class="severity-fill" style="width:95%"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SECTION 3 ══════════════════════════════════════════════════════ -->
+<div class="section" id="s2">
+
+  <div class="industry-intro">
+    Il decollo industriale italiano degli anni Ottanta e Novanta non fu il frutto spontaneo del mercato: fu il prodotto di una politica deliberata. Tariffe doganali, commesse pubbliche, esenzioni fiscali e credito agevolato costruirono un'industria pesante orientata alle commesse statali, cresciuta in un mercato protetto — robusta per certi versi, strutturalmente dipendente dal rapporto con il potere politico per altri.
+  </div>
+
+  <div class="industry-grid">
+
+    <div class="ind-card" onclick="toggleInd(this)">
+      <div class="ind-card-top">
+        <div class="ind-sector-tag tag-sider">Siderurgico</div>
+        <div class="ind-card-body">
+          <div class="ind-year">Fondata nel 1884 · Terni (Umbria)</div>
+          <div class="ind-name">Acciaierie di Terni</div>
+          <div class="ind-short">Il primo grande polo siderurgico italiano, nato con il concorso decisivo dello Stato e delle principali banche nazionali.</div>
+        </div>
+      </div>
+      <div class="ind-toggle">▸ Approfondisci</div>
+      <div class="ind-detail">Il complesso siderurgico di Terni è l'esempio più emblematico del capitalismo assistito italiano. Nasce grazie all'impegno delle maggiori banche nazionali, ma si realizza solo con il decisivo concorso dello Stato, spinto dall'esigenza di non dipendere da fornitori stranieri per l'acciaio necessario agli armamenti e alla costruzione delle reti ferroviarie. Produce acciaio per cannoni, corazze navali, rotaie. È un'industria pesante costruita per la committenza pubblica: senza di essa, non avrebbe ragione di esistere.</div>
+    </div>
+
+    <div class="ind-card" onclick="toggleInd(this)">
+      <div class="ind-card-top">
+        <div class="ind-sector-tag tag-mec">Meccanico e navale</div>
+        <div class="ind-card-body">
+          <div class="ind-year">Espansione 1883–1885 · Genova (Liguria)</div>
+          <div class="ind-name">Ansaldo</div>
+          <div class="ind-short">Grande impresa metalmeccanica e cantieristica, cresciuta grazie a ingenti fondi pubblici stanziati per la cantieristica nazionale.</div>
+        </div>
+      </div>
+      <div class="ind-toggle">▸ Approfondisci</div>
+      <div class="ind-detail">L'Ansaldo era già attiva prima dell'unificazione, ma la sua vera espansione avviene grazie ai fondi stanziati dallo Stato tra il 1883 e il 1885 per la cantieristica militare. Produce locomotive, navi da guerra, macchinari industriali. Come le Acciaierie di Terni, è un'industria che cresce in simbiosi con la domanda pubblica: i contratti con la Marina militare e le Ferrovie dello Stato sono il suo mercato primario. Il rapporto strutturale tra industria pesante genovese e Stato italiano durerà per tutto il Novecento.</div>
+    </div>
+
+    <div class="ind-card" onclick="toggleInd(this)">
+      <div class="ind-card-top">
+        <div class="ind-sector-tag tag-mec">Meccanico</div>
+        <div class="ind-card-body">
+          <div class="ind-year">Fondata nel 1886 · Milano (Lombardia)</div>
+          <div class="ind-name">Breda</div>
+          <div class="ind-short">Nata direttamente come risposta alle esigenze della cantieristica militare, è il simbolo del capitalismo industriale milanese di fine Ottocento.</div>
+        </div>
+      </div>
+      <div class="ind-toggle">▸ Approfondisci</div>
+      <div class="ind-detail">La Breda viene fondata nel 1886 da Ernesto Breda come Società Italiana di Costruzioni Meccaniche. La sua nascita è direttamente collegata all'ondata di investimenti pubblici nella cantieristica: costruisce locomotive, vagoni ferroviari e materiale bellico. È il polo attorno a cui si consolida il distretto meccanico milanese, che insieme alle industrie tessili e alla nascente industria elettrica pone le basi del "triangolo industriale" settentrionale.</div>
+    </div>
+
+    <div class="ind-card" onclick="toggleInd(this)">
+      <div class="ind-card-top">
+        <div class="ind-sector-tag tag-elett">Elettrico</div>
+        <div class="ind-card-body">
+          <div class="ind-year">Fondata nel 1884 · Milano (Lombardia)</div>
+          <div class="ind-name">Società Edison</div>
+          <div class="ind-short">Primo segnale di un settore destinato a diventare strategico. La prima centrale elettrica italiana illumina il centro di Milano nel 1883.</div>
+        </div>
+      </div>
+      <div class="ind-toggle">▸ Approfondisci</div>
+      <div class="ind-detail">La Società Generale Italiana di Elettricità sistema Edison, costituita nel 1884, è l'impresa pionieristica che avvia lo sviluppo del settore elettrico italiano. A differenza delle industrie siderurgiche e meccaniche, l'Edison cresce in un contesto diverso: non dipende dalla committenza militare ma da quella civile — luce elettrica per le città, poi energia per le fabbriche. Beneficia del medesimo clima di agevolazioni istituzionali, ma anticipa un modello di sviluppo industriale più orientato al mercato.</div>
+    </div>
+
+  </div>
+
+  <!-- Geographic imbalance -->
+  <div class="geo-note">
+    <div class="geo-icon">⚠</div>
+    <div class="geo-text">
+      <div class="geo-title">Sviluppo geograficamente squilibrato</div>
+      <div class="geo-body">Tutte e quattro le imprese citate si trovano nel Centro-Nord: Terni, Genova, Milano. Il protezionismo e le commesse statali accelerano l'industrializzazione del Nord-Ovest, ma non producono alcuno sviluppo comparabile nel Mezzogiorno. Anzi: la guerra doganale con la Francia del 1888 distrugge le esportazioni agricole meridionali proprio mentre il Nord costruisce le sue fabbriche. Le basi del "triangolo industriale" (Torino–Milano–Genova) vengono poste in questi anni — e con esse anche la struttura del divario territoriale che caratterizzerà l'Italia per tutto il secolo successivo.</div>
+      <div class="geo-bar-wrap">
+        <div class="geo-bar-label">Nord</div>
+        <div class="geo-bar-track"><div class="geo-bar-fill fill-nord" style="width:78%"></div></div>
+        <div class="geo-bar-pct">~78%</div>
+      </div>
+      <div class="geo-bar-wrap">
+        <div class="geo-bar-label">Sud</div>
+        <div class="geo-bar-track"><div class="geo-bar-fill fill-sud" style="width:8%"></div></div>
+        <div class="geo-bar-pct">~8%</div>
+      </div>
+      <div class="geo-body" style="margin-top:0.5rem;font-size:0.75rem;color:#666">Quota stimata della produzione industriale italiana per area geografica, fine anni Ottanta dell'Ottocento.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(idx, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('s' + idx).classList.add('active');
+}
+
+function toggleVs(head) {
+  const detail = head.nextElementSibling;
+  const arrow = head.querySelector('.vs-item-expand');
+  const open = detail.classList.toggle('open');
+  arrow.textContent = open ? '▾' : '▸';
+}
+
+function toggleCost(head) {
+  const item = head.parentElement;
+  const detail = item.querySelector('.cost-detail');
+  const toggle = head.querySelector('.cost-toggle');
+  const open = detail.classList.toggle('open');
+  toggle.textContent = open ? '▾ chiudi' : '▸ leggi';
+}
+
+function toggleInd(card) {
+  const detail = card.querySelector('.ind-detail');
+  const toggle = card.querySelector('.ind-toggle');
+  const open = detail.classList.toggle('open');
+  card.classList.toggle('open', open);
+  toggle.textContent = open ? '▾ Chiudi' : '▸ Approfondisci';
+}
+</script>
+</body>
+</html>

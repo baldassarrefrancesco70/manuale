@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mappa della sezione — Nazioni e nazionalismi</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --c1:#5c7343; --c2:#9d4a2b; --c3:#3d5566; --c4:#b0872e; --frame:#8a7a52;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif)}
+  body{padding:18px 16px 30px;line-height:1.42}
+  .wrap{max-width:1280px;margin:0 auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;color:var(--ink-soft);text-align:center}
+  h1{font-size:1.32rem;font-weight:600;margin:.15rem 0 12px;text-align:center}
+
+  .toolbar{display:flex;justify-content:center;gap:14px;margin-bottom:14px;font-family:var(--sans);font-size:.74rem}
+  .toolbar button{appearance:none;border:0;background:none;color:var(--ink-soft);text-decoration:underline;
+    cursor:pointer;font-family:var(--sans);font-size:.74rem;padding:2px}
+  .toolbar button:hover{color:var(--ink)}
+
+  .root-row{display:flex;justify-content:center}
+  .root{
+    background:var(--paper-2);border:1px solid var(--frame);border-radius:3px;
+    padding:12px 26px;text-align:center;max-width:560px;
+  }
+  .root .k{font-family:var(--sans);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:3px}
+  .root h2{margin:0;font-size:1.12rem;font-weight:600}
+
+  .trunk{width:1px;height:20px;background:var(--rule);margin:0 auto}
+
+  .cascade{width:680px;max-width:100%;margin:0 auto;position:relative}
+  .row-slot{position:relative}
+  .row-slot .node{width:230px;margin-left:0}
+  .connector{width:100%;height:26px;position:relative}
+  .connector svg{display:block;width:100%;height:100%}
+  .stub-mobile{display:none;width:1px;height:26px;background:var(--rule);margin:0 auto}
+
+  .node{
+    font-family:var(--sans);border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);
+    padding:9px 12px;cursor:pointer;text-align:left;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .node:hover{background:#e1d9c4}
+  .node[aria-expanded="true"]{border-color:var(--ink);background:#e6ddc3}
+  .node .lbl{font-size:.82rem;line-height:1.25;color:var(--ink)}
+  .node .tag{display:block;font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px}
+  .node .chev{font-size:.7rem;color:var(--ink-soft);flex:0 0 auto;margin-top:1px;transition:transform .15s ease}
+  .node[aria-expanded="true"] .chev{transform:rotate(90deg)}
+
+  .frame-col .node{border-style:dashed;padding:7px 11px}
+  .frame-col .node .lbl{font-size:.76rem;font-style:italic}
+
+  .col-c1 .tag{color:var(--c1)} .col-c1 .node[aria-expanded="true"]{border-color:var(--c1)}
+  .col-c2 .tag{color:var(--c2)} .col-c2 .node[aria-expanded="true"]{border-color:var(--c2)}
+  .col-c3 .tag{color:var(--c3)} .col-c3 .node[aria-expanded="true"]{border-color:var(--c3)}
+  .col-c4 .tag{color:var(--c4)} .col-c4 .node[aria-expanded="true"]{border-color:var(--c4)}
+  .col-fr .tag{color:var(--frame)} .col-fr .node[aria-expanded="true"]{border-color:var(--frame)}
+
+  @media (max-width:760px){
+    .row-slot .node{margin-left:0 !important;margin-right:0 !important;margin-inline:auto !important}
+    .connector{display:none}
+    .stub-mobile{display:block}
+  }
+
+  .panels{margin-top:14px}
+  .panel{
+    max-height:0;overflow:hidden;transition:max-height .28s ease;
+    border-radius:0 0 4px 4px;
+  }
+  .panel.open{max-height:2400px;margin-top:10px;margin-bottom:2px}
+  .panel-inner{
+    border:1px solid var(--rule);border-left-width:4px;border-radius:3px;background:var(--paper-2);
+    padding:12px 16px 14px;
+  }
+  .panel-inner.pc1{border-left-color:var(--c1)}
+  .panel-inner.pc2{border-left-color:var(--c2)}
+  .panel-inner.pc3{border-left-color:var(--c3)}
+  .panel-inner.pc4{border-left-color:var(--c4)}
+  .panel-inner.pfr{border-left-color:var(--frame);border-left-style:dashed}
+
+  .panel-head{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:8px}
+  .panel-head b{color:var(--ink);font-weight:600;text-transform:none;letter-spacing:0;font-size:.86rem;
+    font-family:var(--serif);margin-left:6px}
+
+  .cluster-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+  .cluster{flex:1 1 220px;min-width:200px;border:1px solid var(--rule);border-radius:3px;background:var(--paper);padding:10px 13px}
+  .cluster h4{margin:0 0 6px;font-family:var(--sans);font-size:.68rem;letter-spacing:.03em;color:var(--ink-soft);text-transform:uppercase;font-weight:600}
+  .cluster ul{list-style:none;margin:0;padding:0}
+  .cluster li{font-size:.83rem;line-height:1.36;padding:6px 0;border-top:1px solid var(--line)}
+  .cluster li:first-child{border-top:0}
+  .cluster li strong{font-weight:700;color:var(--ink)}
+
+  .arrow-wrap{display:flex;align-items:center;justify-content:center;flex:0 0 36px;align-self:center}
+  .arrow-wrap svg{display:block}
+
+  .pill{display:inline-block;margin-top:4px;font-family:var(--sans);font-size:.62rem;color:var(--ink-soft);
+    border:1px dashed var(--rule);border-radius:9px;padding:1px 7px}
+
+  .nodi-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:11px;padding-top:11px;border-top:1px dashed var(--rule)}
+  .nodo-card{flex:1 1 220px;min-width:200px}
+  .nodo-card .from{display:block;font-family:var(--sans);font-style:normal;font-size:.6rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+  .nodo-card .q{font-size:.78rem;font-style:italic;line-height:1.34}
+
+  .frame-list{list-style:none;margin:0;padding:0;max-width:640px}
+  .frame-list li{font-size:.85rem;padding:7px 0;border-top:1px solid var(--line)}
+  .frame-list li:first-child{border-top:0}
+  .frame-list li strong{font-weight:700}
+
+  @media (max-width:900px){
+    .arrow-wrap{transform:rotate(90deg);flex-basis:100%;margin:2px 0}
+    .cluster-row{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Nazioni e nazionalismi &middot; Apparati</div>
+  <h1>Mappa della sezione</h1>
+
+  <div class="toolbar">
+    <button type="button" id="expandAll">Espandi tutto</button>
+    <button type="button" id="collapseAll">Comprimi tutto</button>
+  </div>
+
+  <div class="root-row">
+    <div class="root">
+      <span class="k">Sezione</span>
+      <h2>Nazioni e nazionalismi</h2>
+    </div>
+  </div>
+  <div class="trunk"></div>
+  <div class="cascade" id="cascade"></div>
+  <div class="panels" id="panels"></div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    {
+      id:"apertura", tag:"Apertura", title:"In nome del popolo", frame:true, offset:225,
+      items:[
+        {html:"<strong>Vienna, 1815</strong>: la carta d'Europa ridisegnata senza considerare i popoli come soggetti politici"},
+        {html:"<strong>In nome del popolo</strong>: la stessa formula legittima sia l'indipendenza sia l'esclusione", mirror:"verificato in: Chiusura"},
+        {html:"<strong>Guardrail</strong>: non due storie separate, ma la stessa pretesa rivolta in direzioni opposte", mirror:"verificato in: Chiusura"},
+        {html:"<strong>Metodo</strong>: raccontare il secolo senza leggerlo come corruzione di un'idea originariamente buona"}
+      ]
+    },
+    {
+      id:"cap1", tag:"Capitolo 1", title:"Vienna e il principio di nazionalità", col:"c1", offset:130,
+      clusters:[
+        { title:"Il sistema di Vienna", items:[
+          {html:"<strong>Legittimità</strong>: il potere dei sovrani viene da Dio, non dal popolo"},
+          {html:"<strong>Equilibrio</strong>: i confini si ridisegnano contro le potenze, non secondo i popoli"},
+          {html:"<strong>Restaurazione</strong>: un compromesso con la modernità, non un ritorno integrale"}
+        ]},
+        { title:"Legittimismo e costituzionalismo", items:[
+          {html:"<strong>Due fonti di potere incompatibili</strong>: diritto divino contro sovranità popolare"},
+          {html:"<strong>Liberale ≠ democratico</strong>: suffragio censitario, non universale"}
+        ]},
+        { title:"Il concerto europeo", items:[
+          {html:"<strong>Santa Alleanza</strong>: principi religiosi, nessun obbligo concreto"},
+          {html:"<strong>Quadruplice Alleanza</strong>: obblighi verificabili, diritto di intervento armato"},
+          {html:"<strong>Si spacca sulla Grecia</strong>: le potenze salvano una rivolta contro un sovrano legittimo", pill:"↔ Cap. 2 · La Grecia riesce"}
+        ]},
+        { title:"Che cos'è una nazione", items:[
+          {html:"<strong>La parola cambia statuto</strong>: da provenienza a titolare della sovranità (1789)"},
+          {html:"<strong>Nazioni «non storiche»</strong>: comunità senza Stato, prima battaglia sulla lingua"},
+          {html:"<strong>Impero asburgico</strong>: nessun confine può soddisfare tutte le rivendicazioni"}
+        ]}
+      ],
+      nodi:[
+        {q:"La Restaurazione restaurò qualcosa?", from:"Il sistema di Vienna"},
+        {q:"Il concerto europeo produsse pace o rinviò il conflitto?", from:"Il concerto europeo"},
+        {q:"Le nazioni esistono prima del nazionalismo?", from:"Che cos'è una nazione"}
+      ]
+    },
+    {
+      id:"cap2", tag:"Capitolo 2", title:"Moti e nazionalismo romantico", col:"c2", offset:300,
+      clusters:[
+        { title:"Le due ondate", items:[
+          {html:"<strong>1820-21</strong>: rivolte militari, costituzioni concesse e presto revocate"},
+          {html:"<strong>1830-31</strong>: insorgono le città, non più i reggimenti"},
+          {html:"<strong>Successo = frattura tra le potenze</strong>: Grecia e Belgio riescono, Polonia e Italia centrale no"}
+        ]},
+        { title:"La Grecia", items:[
+          {html:"<strong>Da cospirazione a guerra di popolo</strong>: clefti e religione, non coscienza nazionale"},
+          {html:"<strong>Le potenze intervengono per interesse</strong>, non per il principio di nazionalità"},
+          {html:"<strong>Uno Stato con un passato da inventare</strong>: la continuità con l'antichità si costruisce dopo"}
+        ]},
+        { title:"La nazione come cultura", items:[
+          {html:"<strong>Kulturnation</strong>: Herder e Fichte, l'appartenenza si eredita, non si sceglie", pill:"↔ Cap. 3 · Chi è tedesco"},
+          {html:"<strong>Grammatiche e canti popolari</strong>: dichiarazioni di esistenza nazionale"},
+          {html:"<strong>Prima culturale, poi politica</strong>: il passaggio non è mai scontato"}
+        ]},
+        { title:"1848", items:[
+          {html:"<strong>Sei settimane</strong>: la simultaneità non è propagazione, sono condizioni comuni"},
+          {html:"<strong>Le nazioni contro le nazioni</strong>: l'Ungheria magiara nega ai croati ciò che chiede per sé"},
+          {html:"<strong>Due fratture</strong>: liberali contro masse urbane, città contro campagne"}
+        ]}
+      ],
+      nodi:[
+        {q:"I moti fallirono per debolezza propria o per forza altrui?", from:"Le due ondate"},
+        {q:"Il 1848 fu una rivoluzione borghese tradita?", from:"1848"},
+        {q:"Perché i contadini combatterono contro la rivoluzione?", from:"1848"}
+      ]
+    },
+    {
+      id:"cap3", tag:"Capitolo 3", title:"La costruzione degli Stati nazionali: il caso tedesco", col:"c3", offset:150,
+      clusters:[
+        { title:"Due Germanie", items:[
+          {html:"<strong>Zollverein, 1834</strong>: unione doganale che esclude l'Austria"},
+          {html:"<strong>Un'appartenenza per abitudine</strong>: il mercato prima della lingua e della memoria"}
+        ]},
+        { title:"Francoforte, 1848", items:[
+          {html:"<strong>Il criterio linguistico non genera un confine</strong>: la Germania «vera» non è tracciabile"},
+          {html:"<strong>Grande o piccola Germania</strong>: completezza contro Stato praticabile"},
+          {html:"<strong>Il rifiuto di Palacký</strong>: un impero multinazionale come garanzia per i piccoli popoli", pill:"↔ Cap. 4 · Le stesse parole"},
+          {html:"<strong>Il gran rifiuto</strong>: un re non accetta una corona offerta dal popolo"}
+        ]},
+        { title:"Bismarck", items:[
+          {html:"<strong>Realpolitik</strong>: misurare le forze, non disprezzare i principi"},
+          {html:"<strong>Tre guerre</strong>: Danimarca, Austria, Francia, in pochi anni"},
+          {html:"<strong>1866</strong>: la piccola Germania è una scelta difesa, non un ripiego"}
+        ]},
+        { title:"L'Impero del 1871", items:[
+          {html:"<strong>Il patto</strong>: prosperità alla borghesia, potere alla corona"},
+          {html:"<strong>Kulturkampf</strong>: uno Stato nuovo distingue subito chi ne fa parte fino in fondo"},
+          {html:"<strong>Gotha, 1875</strong>: nasce l'attore che Bismarck voleva prevenire"}
+        ]}
+      ],
+      nodi:[
+        {q:"Uno Stato fa una nazione?", from:"L'Impero del 1871"},
+        {q:"Bismarck fece l'unità o la usò?", from:"Bismarck"},
+        {q:"La Germania imboccò una via particolare?", from:"L'Impero del 1871"}
+      ]
+    },
+    {
+      id:"cap4", tag:"Capitolo 4", title:"Dal nazionalismo romantico al nazionalismo aggressivo", col:"c4", offset:290,
+      clusters:[
+        { title:"Le stesse parole", items:[
+          {html:"<strong>Stessa pretesa, condizioni diverse</strong>: nessun tradimento, un cambio di circostanze"},
+          {html:"<strong>Quattro mutamenti</strong>: politica di massa, mercati chiusi, biologia, proiezione extraeuropea"}
+        ]},
+        { title:"Politica di massa e nazione etnica", items:[
+          {html:"<strong>Tradizioni inventate</strong>: feste, inni, monumenti, per arginare il movimento operaio"},
+          {html:"<strong>Il divorzio dalla sinistra</strong>: da programma di opposizione a risorsa di governo"},
+          {html:"<strong>Da cittadini a discendenti</strong>: l'appartenenza diventa biologica, non più culturale", pill:"↔ Cap. 1 · Che cos'è una nazione"}
+        ]},
+        { title:"La biologia in politica", items:[
+          {html:"<strong>Darwinismo sociale</strong>: la biologia restituisce alla società ciò che dalla società era venuto"},
+          {html:"<strong>La barriera della razza</strong>: una disuguaglianza storica diventa naturale e permanente"},
+          {html:"<strong>Il nemico interno</strong>: i lavoratori descritti con il vocabolario della minaccia esterna"}
+        ]},
+        { title:"Fuori dall'Europa", items:[
+          {html:"<strong>Mercati chiusi, 1873</strong>: la fine del libero scambio toglie un limite alla frammentazione"},
+          {html:"<strong>Missione di civiltà</strong>: ragioni materiali e ideologiche insieme, non alternative"},
+          {html:"<strong>L'effetto di ritorno</strong>: il principio cambia padrone e si rivolta contro chi l'ha esportato"}
+        ]}
+      ],
+      nodi:[
+        {q:"L'aggressività era già nel principio?", from:"Le stesse parole"},
+        {q:"Esiste un nazionalismo buono e uno cattivo?", from:"Da cittadini a discendenti"},
+        {q:"Le tradizioni inventate bastano a spiegare la mobilitazione?", from:"Politica di massa e nazione etnica"}
+      ]
+    },
+    {
+      id:"chiusura", tag:"Chiusura", title:"In nome del popolo, rivisto", frame:true, offset:225,
+      items:[
+        {html:"<strong>La pretesa è la stessa</strong>: ha liberato i greci e ha armato l'esclusione magiara dei croati", mirror:"risponde a: Apertura"},
+        {html:"<strong>Ma le condizioni non sono indifferenti</strong>: sangue o adesione cambiano chi può entrare"},
+        {html:"<strong>Tre domande restano aperte</strong>: nazioni trovate o costruite, Stato che precede o segue, civico o etnico"},
+        {html:"<strong>Lo strumento consegnato</strong>: chiedere chi resta fuori da ogni rivendicazione", mirror:"risponde a: Apertura"}
+      ]
+    }
+  ];
+
+  var NODE_W = 230, CASCADE_W = 680;
+
+  var ARROW_SVG =
+    '<svg viewBox="0 0 36 16" width="36" height="16" aria-hidden="true">' +
+    '<line x1="2" y1="8" x2="27" y2="8" stroke="#5b5346" stroke-width="1.4"/>' +
+    '<polyline points="20,2.5 29,8 20,13.5" fill="none" stroke="#5b5346" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+
+  function connectorSVG(prevOffset, nextOffset){
+    var x1 = prevOffset + NODE_W/2;
+    var x2 = nextOffset + NODE_W/2;
+    return '<svg viewBox="0 0 ' + CASCADE_W + ' 26" preserveAspectRatio="none" aria-hidden="true">' +
+      '<line x1="' + x1 + '" y1="0" x2="' + x2 + '" y2="26" stroke="#b7ab8d" stroke-width="1.3"/>' +
+      '</svg>';
+  }
+
+  var cascade = document.getElementById('cascade');
+  var panelsWrap = document.getElementById('panels');
+
+  function buildFramePanelInner(node){
+    var ul = document.createElement('ul');
+    ul.className = 'frame-list';
+    node.items.forEach(function(it){
+      var li = document.createElement('li');
+      li.innerHTML = it.html;
+      if (it.mirror){
+        var br = document.createElement('br');
+        li.appendChild(br);
+        var pill = document.createElement('span');
+        pill.className = 'pill';
+        pill.textContent = it.mirror;
+        li.appendChild(pill);
+      }
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function buildClusterPanelInner(node){
+    var frag = document.createDocumentFragment();
+
+    var crow = document.createElement('div');
+    crow.className = 'cluster-row';
+    node.clusters.forEach(function(cl, i){
+      if (i > 0){
+        var arrWrap = document.createElement('div');
+        arrWrap.className = 'arrow-wrap';
+        arrWrap.innerHTML = ARROW_SVG;
+        crow.appendChild(arrWrap);
+      }
+      var box = document.createElement('div');
+      box.className = 'cluster';
+      var h4 = document.createElement('h4');
+      h4.textContent = cl.title;
+      box.appendChild(h4);
+      var ul = document.createElement('ul');
+      cl.items.forEach(function(it){
+        var li = document.createElement('li');
+        li.innerHTML = it.html;
+        if (it.pill){
+          var br = document.createElement('br');
+          li.appendChild(br);
+          var pill = document.createElement('span');
+          pill.className = 'pill';
+          pill.textContent = it.pill;
+          li.appendChild(pill);
+        }
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+      crow.appendChild(box);
+    });
+    frag.appendChild(crow);
+
+    if (node.nodi && node.nodi.length){
+      var nrow = document.createElement('div');
+      nrow.className = 'nodi-row';
+      node.nodi.forEach(function(n){
+        var card = document.createElement('div');
+        card.className = 'nodo-card';
+        var from = document.createElement('span');
+        from.className = 'from';
+        from.textContent = 'Nodo storiografico · ' + n.from;
+        var q = document.createElement('span');
+        q.className = 'q';
+        q.textContent = n.q;
+        card.appendChild(from);
+        card.appendChild(q);
+        nrow.appendChild(card);
+      });
+      frag.appendChild(nrow);
+    }
+
+    return frag;
+  }
+
+  DATA.forEach(function(node, idx){
+    if (idx > 0){
+      var prev = DATA[idx - 1];
+      var connSlot = document.createElement('div');
+      connSlot.className = 'connector';
+      connSlot.innerHTML = connectorSVG(prev.offset, node.offset);
+      cascade.appendChild(connSlot);
+
+      var stubM = document.createElement('div');
+      stubM.className = 'stub-mobile';
+      cascade.appendChild(stubM);
+    }
+
+    var slot = document.createElement('div');
+    slot.className = 'row-slot' + (node.frame ? ' frame-col col-fr' : ' col-' + node.col);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'node';
+    btn.style.marginLeft = node.offset + 'px';
+    btn.setAttribute('aria-expanded','false');
+    btn.setAttribute('aria-controls','panel-' + node.id);
+    btn.innerHTML = '<span class="lbl"><span class="tag">' + node.tag + '</span>' + node.title + '</span><span class="chev">\u25B8</span>';
+    slot.appendChild(btn);
+    cascade.appendChild(slot);
+
+    var panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.id = 'panel-' + node.id;
+    var inner = document.createElement('div');
+    inner.className = 'panel-inner ' + (node.frame ? 'pfr' : 'p' + node.col);
+    var head = document.createElement('div');
+    head.className = 'panel-head';
+    head.innerHTML = node.tag + '<b>' + node.title + '</b>';
+    inner.appendChild(head);
+    inner.appendChild(node.frame ? buildFramePanelInner(node) : buildClusterPanelInner(node));
+    panel.appendChild(inner);
+    panelsWrap.appendChild(panel);
+
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      panel.classList.toggle('open', !open);
+    });
+  });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    cascade.querySelectorAll('.node').forEach(function(b){ b.setAttribute('aria-expanded','true'); });
+    panelsWrap.querySelectorAll('.panel').forEach(function(p){ p.classList.add('open'); });
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    cascade.querySelectorAll('.node').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+    panelsWrap.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('open'); });
+  });
+})();
+</script>
+</body>
+</html>

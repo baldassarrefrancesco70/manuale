@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Da samurai ad azionista</title>
+<style>
+  :root{
+    --beige: #F5F0E8;
+    --gray: #F2F2F2;
+    --brown: #8B7355;
+    --brown-dark: #6B5A42;
+    --petrol: #2C4A52;
+    --petrol-dark: #1E363D;
+    --petrol-tint: #E3EDEE;
+    --petrol-tint-2: #CFE0E2;
+    --ink: #2A2620;
+    --ink-soft: #55504A;
+    --paper: #FBF8F3;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139,115,85,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(44,74,82,0.05), transparent 45%);
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 28px 30px 44px;
+  }
+
+  header{
+    border-bottom: 2px solid var(--petrol);
+    padding-bottom: 16px;
+    margin-bottom: 12px;
+  }
+
+  .eyebrow{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--petrol);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: normal;
+  }
+
+  .intro{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 780px;
+    margin: 0;
+  }
+
+  .caveat{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--brown-dark);
+    max-width: 780px;
+    margin: 10px 0 0;
+  }
+
+  .toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 20px;
+  }
+
+  .status{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .status strong{ color: var(--petrol); }
+
+  .btn{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    border: 1.5px solid var(--brown);
+    background: transparent;
+    color: var(--brown-dark);
+    padding: 7px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .btn:hover{ background: var(--brown); color: #fff; }
+
+  .bank-label{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brown-dark);
+    margin: 0 0 8px;
+  }
+
+  #bank{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    min-height: 44px;
+    padding: 12px;
+    background: var(--gray);
+    border: 1px solid #E0DDD6;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+
+  #bank:empty::after{
+    content: "Tutti gli elementi sono stati collocati.";
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--petrol-dark);
+  }
+
+  .card{
+    font-size: 13px;
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 11px;
+    cursor: pointer;
+    max-width: 260px;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    user-select: none;
+  }
+
+  .card:hover{ box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+
+  .card.selected{
+    border-color: var(--petrol);
+    background: var(--petrol-tint);
+    box-shadow: 0 0 0 2px var(--petrol-tint-2);
+  }
+
+  .zone-title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--petrol-dark);
+    margin: 0 0 10px;
+  }
+
+  .zone{
+    margin-bottom: 22px;
+  }
+
+  .zone-row{
+    display: grid;
+    gap: 12px;
+  }
+
+  .zone.convertiti .zone-row{ grid-template-columns: 1fr 1fr 1fr; }
+  .zone.aboliti .zone-row{ grid-template-columns: 1fr 1fr; }
+
+  .cell{
+    background: var(--beige);
+    border: 1.5px solid var(--brown);
+    border-radius: 6px;
+    padding: 12px;
+    min-height: 90px;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .zone.aboliti .cell{
+    background: var(--gray);
+    border-style: dashed;
+  }
+
+  .cell.targetable{
+    border-color: var(--petrol);
+    box-shadow: 0 0 0 3px var(--petrol-tint);
+  }
+
+  .cell-head{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--petrol-dark);
+    margin: 0 0 8px;
+  }
+
+  .cell-items{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .placed{
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+
+  .placed:hover{ box-shadow: 0 2px 5px rgba(0,0,0,0.07); }
+
+  .placed .feedback{
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #E4DFD5;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: var(--petrol-dark);
+    line-height: 1.4;
+  }
+
+  .synthesis{
+    background: var(--petrol-tint);
+    border: 1.5px solid var(--petrol);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: none;
+  }
+
+  .synthesis.show{ display: block; }
+
+  .synthesis h2{
+    font-family: Georgia, serif;
+    font-weight: normal;
+    font-size: 16.5px;
+    color: var(--petrol-dark);
+    margin: 0 0 10px;
+  }
+
+  .synthesis p{
+    font-size: 14px;
+    margin: 0 0 8px;
+  }
+
+  .synthesis p:last-child{ margin-bottom: 0; }
+
+  @media (max-width: 760px){
+    .zone.convertiti .zone-row{ grid-template-columns: 1fr; }
+    .zone.aboliti .zone-row{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Il Giappone Meiji — Artefatto 8</p>
+    <h1>Da samurai ad azionista</h1>
+    <p class="intro">L'oligarchia samurai perde per legge i propri privilegi feudali, ma non tutti i privilegi seguono lo stesso destino: alcuni si convertono in patrimonio personale, altri vengono semplicemente aboliti e sostituiti da un meccanismo statale, senza alcun beneficio economico per chi li perde. Colloca ciascun elemento nella casella corretta.</p>
+    <p class="caveat">Nota: i contadini, la larga maggioranza della popolazione, restarono estranei a questo processo o vi si opposero. La conversione qui ricostruita riguarda solo l'élite samurai: non fu una trasformazione equa né estesa a chi ne restò fuori.</p>
+  </header>
+
+  <div class="toolbar">
+    <p class="status">Collocati: <strong id="count">0</strong> di <span id="total">5</span></p>
+    <button class="btn" id="resetBtn">Ricomincia</button>
+  </div>
+
+  <p class="bank-label">Elementi del vecchio ordine feudale</p>
+  <div id="bank"></div>
+
+  <div class="zone convertiti">
+    <p class="zone-title">Convertiti in patrimonio personale</p>
+    <div class="zone-row">
+      <div class="cell" data-target="terra">
+        <p class="cell-head">Terra di proprietà privata</p>
+        <div class="cell-items"></div>
+      </div>
+      <div class="cell" data-target="banche">
+        <p class="cell-head">Capitale investito in banche</p>
+        <div class="cell-items"></div>
+      </div>
+      <div class="cell" data-target="industria">
+        <p class="cell-head">Partecipazione in industria protetta</p>
+        <div class="cell-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="zone aboliti">
+    <p class="zone-title">Aboliti, sostituiti da un meccanismo statale</p>
+    <div class="zone-row">
+      <div class="cell" data-target="leva">
+        <p class="cell-head">Sostituzione con l'esercito di leva</p>
+        <div class="cell-items"></div>
+      </div>
+      <div class="cell" data-target="uguaglianza">
+        <p class="cell-head">Uguaglianza giuridica formale</p>
+        <div class="cell-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="synthesis" id="synthesis">
+    <h2>Che cosa nasce da questa conversione</h2>
+    <p>Le tre conversioni riuscite non riguardano il potere politico diretto: quello, insieme al monopolio della forza armata e allo status privilegiato, l'élite lo perde per sempre. Riguardano il patrimonio. È su questa base che nascono i grandi conglomerati come Mitsui e Sumitomo, gli zaibatsu, sostenuti dalla protezione statale e dalle commesse militari.</p>
+    <p>La stessa struttura finanzia le ferrovie giapponesi, progettate per far circolare il mercato interno — l'opposto del disegno delle ferrovie del Raj britannico in India, pensate per portare le risorse verso i porti di imbarco.</p>
+  </div>
+
+</div>
+
+<script>
+  const targetLabels = {
+    terra: "Terra di proprietà privata",
+    banche: "Capitale investito in banche",
+    industria: "Partecipazione in industria protetta",
+    leva: "Sostituzione con l'esercito di leva",
+    uguaglianza: "Uguaglianza giuridica formale"
+  };
+
+  const elements = [
+    {
+      id: 'el1', target: 'terra',
+      text: "La rendita di un feudo.",
+      feedback: "Convertita: la ricchezza legata al feudo non scompare, ma cambia forma giuridica, diventando patrimonio fondiario di proprietà privata nelle mani della stessa élite."
+    },
+    {
+      id: 'el2', target: 'banche',
+      text: "Il vitalizio ereditario dei samurai.",
+      feedback: "Convertito: il vitalizio non viene semplicemente cancellato, ma reinvestito come capitale, una delle vie con cui l'élite samurai entra nel sistema bancario del nuovo Giappone."
+    },
+    {
+      id: 'el3', target: 'industria',
+      text: "L'autorità giudiziaria locale.",
+      feedback: "Convertita: il potere di governo locale si trasforma in partecipazione economica nelle industrie protette dallo Stato, un'altra delle vie con cui il capitolo descrive la ricostruzione del patrimonio dell'élite."
+    },
+    {
+      id: 'el4', target: 'leva',
+      text: "Il monopolio della forza armata.",
+      feedback: "Abolito, non convertito: la coscrizione obbligatoria del 1873 tolse ai samurai il monopolio storico della forza armata, sostituendolo con un esercito di contadini coscritti. Nessun beneficio patrimoniale per l'élite: è una perdita netta di potere."
+    },
+    {
+      id: 'el5', target: 'uguaglianza',
+      text: "Lo status giuridico privilegiato.",
+      feedback: "Abolito, non convertito: l'uguaglianza giuridica dei sudditi elimina il privilegio di status, senza restituire all'élite alcuna forma equivalente di ricchezza o potere."
+    }
+  ];
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i+1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  let order = shuffle(elements.map(s => s.id));
+  let placements = {};
+  let selectedId = null;
+
+  const bank = document.getElementById('bank');
+  const countEl = document.getElementById('count');
+  const totalEl = document.getElementById('total');
+  totalEl.textContent = elements.length;
+
+  function getElement(id){
+    return elements.find(s => s.id === id);
+  }
+
+  function render(){
+    bank.innerHTML = '';
+    order.forEach(id => {
+      if(placements[id]) return;
+      const el = getElement(id);
+      const card = document.createElement('div');
+      card.className = 'card' + (selectedId === id ? ' selected' : '');
+      card.textContent = el.text;
+      card.addEventListener('click', () => {
+        selectedId = (selectedId === id) ? null : id;
+        render();
+      });
+      bank.appendChild(card);
+    });
+
+    document.querySelectorAll('.cell').forEach(cell => {
+      const target = cell.dataset.target;
+      const itemsWrap = cell.querySelector('.cell-items');
+      itemsWrap.innerHTML = '';
+      Object.keys(placements)
+        .filter(id => placements[id] === target)
+        .forEach(id => {
+          const el = getElement(id);
+          const div = document.createElement('div');
+          div.className = 'placed';
+          div.innerHTML = `<div>${el.text}</div>
+            <div class="feedback">${el.feedback}</div>`;
+          div.addEventListener('click', () => {
+            delete placements[id];
+            selectedId = id;
+            render();
+          });
+          itemsWrap.appendChild(div);
+        });
+
+      cell.classList.toggle('targetable', !!selectedId);
+    });
+
+    countEl.textContent = Object.keys(placements).length;
+
+    const synthesis = document.getElementById('synthesis');
+    synthesis.classList.toggle('show', Object.keys(placements).length === elements.length);
+  }
+
+  document.querySelectorAll('.cell').forEach(cell => {
+    cell.addEventListener('click', (e) => {
+      if(!selectedId) return;
+      if(e.target.closest('.placed')) return;
+      placements[selectedId] = cell.dataset.target;
+      selectedId = null;
+      render();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    placements = {};
+    selectedId = null;
+    order = shuffle(elements.map(s => s.id));
+    render();
+  });
+
+  render();
+</script>
+
+</body>
+</html>

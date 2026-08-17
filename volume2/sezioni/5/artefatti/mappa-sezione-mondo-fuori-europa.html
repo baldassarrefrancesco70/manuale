@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mappa della sezione — Il mondo fuori dall'Europa</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --c1:#5c7343; --c2:#9d4a2b; --c3:#6b5545; --c4:#3d5566; --c5:#8a6a2e; --c6:#7a4a6b; --frame:#8a7a52;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif)}
+  body{padding:14px 14px 22px;line-height:1.4}
+  .wrap{max-width:1280px;margin:0 auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.66rem;color:var(--ink-soft);text-align:center}
+  h1{font-size:1.24rem;font-weight:600;margin:.12rem 0 10px;text-align:center}
+
+  .toolbar{display:flex;justify-content:center;gap:14px;margin-bottom:10px;font-family:var(--sans);font-size:.72rem}
+  .toolbar button{appearance:none;border:0;background:none;color:var(--ink-soft);text-decoration:underline;
+    cursor:pointer;font-family:var(--sans);font-size:.72rem;padding:2px}
+  .toolbar button:hover{color:var(--ink)}
+
+  .root-row{display:flex;justify-content:center}
+  .root{
+    background:var(--paper-2);border:1px solid var(--frame);border-radius:3px;
+    padding:9px 22px;text-align:center;max-width:560px;
+  }
+  .root .k{font-family:var(--sans);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:2px}
+  .root h2{margin:0;font-size:1.04rem;font-weight:600}
+
+  .trunk{width:1px;height:14px;background:var(--rule);margin:0 auto}
+
+  .cascade{width:680px;max-width:100%;margin:0 auto;position:relative}
+  .row-slot{position:relative}
+  .row-slot .node{width:230px;margin-left:0}
+  .connector{width:100%;height:18px;position:relative}
+  .connector svg{display:block;width:100%;height:100%}
+  .stub-mobile{display:none;width:1px;height:18px;background:var(--rule);margin:0 auto}
+
+  .node{
+    font-family:var(--sans);border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);
+    padding:7px 11px;cursor:pointer;text-align:left;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .node:hover{background:#e1d9c4}
+  .node[aria-expanded="true"]{border-color:var(--ink);background:#e6ddc3}
+  .node .lbl{font-size:.8rem;line-height:1.22;color:var(--ink)}
+  .node .tag{display:block;font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px}
+  .node .chev{font-size:.68rem;color:var(--ink-soft);flex:0 0 auto;margin-top:1px;transition:transform .15s ease}
+  .node[aria-expanded="true"] .chev{transform:rotate(90deg)}
+
+  .frame-col .node{border-style:dashed;padding:6px 10px}
+  .frame-col .node .lbl{font-size:.74rem;font-style:italic}
+
+  .col-c1 .tag{color:var(--c1)} .col-c1 .node[aria-expanded="true"]{border-color:var(--c1)}
+  .col-c2 .tag{color:var(--c2)} .col-c2 .node[aria-expanded="true"]{border-color:var(--c2)}
+  .col-c3 .tag{color:var(--c3)} .col-c3 .node[aria-expanded="true"]{border-color:var(--c3)}
+  .col-c4 .tag{color:var(--c4)} .col-c4 .node[aria-expanded="true"]{border-color:var(--c4)}
+  .col-c5 .tag{color:var(--c5)} .col-c5 .node[aria-expanded="true"]{border-color:var(--c5)}
+  .col-c6 .tag{color:var(--c6)} .col-c6 .node[aria-expanded="true"]{border-color:var(--c6)}
+  .col-fr .tag{color:var(--frame)} .col-fr .node[aria-expanded="true"]{border-color:var(--frame)}
+
+  @media (max-width:760px){
+    .row-slot .node{margin-left:0 !important;margin-right:0 !important;margin-inline:auto !important}
+    .connector{display:none}
+    .stub-mobile{display:block}
+  }
+
+  .panels{margin-top:12px}
+  .panel{
+    max-height:0;overflow:hidden;transition:max-height .28s ease;
+    border-radius:0 0 4px 4px;
+  }
+  .panel.open{max-height:2400px;margin-top:9px;margin-bottom:2px}
+  .panel-inner{
+    border:1px solid var(--rule);border-left-width:4px;border-radius:3px;background:var(--paper-2);
+    padding:11px 15px 13px;
+  }
+  .panel-inner.pc1{border-left-color:var(--c1)}
+  .panel-inner.pc2{border-left-color:var(--c2)}
+  .panel-inner.pc3{border-left-color:var(--c3)}
+  .panel-inner.pc4{border-left-color:var(--c4)}
+  .panel-inner.pc5{border-left-color:var(--c5)}
+  .panel-inner.pc6{border-left-color:var(--c6)}
+  .panel-inner.pfr{border-left-color:var(--frame);border-left-style:dashed}
+
+  .panel-head{font-family:var(--sans);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:7px}
+  .panel-head b{color:var(--ink);font-weight:600;text-transform:none;letter-spacing:0;font-size:.84rem;
+    font-family:var(--serif);margin-left:6px}
+
+  .cluster-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+  .cluster{flex:1 1 210px;min-width:190px;border:1px solid var(--rule);border-radius:3px;background:var(--paper);padding:9px 12px}
+  .cluster h4{margin:0 0 5px;font-family:var(--sans);font-size:.66rem;letter-spacing:.03em;color:var(--ink-soft);text-transform:uppercase;font-weight:600}
+  .cluster ul{list-style:none;margin:0;padding:0}
+  .cluster li{font-size:.81rem;line-height:1.34;padding:5px 0;border-top:1px solid var(--line)}
+  .cluster li:first-child{border-top:0}
+  .cluster li strong{font-weight:700;color:var(--ink)}
+
+  .arrow-wrap{display:flex;align-items:center;justify-content:center;flex:0 0 32px;align-self:center}
+  .arrow-wrap svg{display:block}
+
+  .pill{display:inline-block;margin-top:4px;font-family:var(--sans);font-size:.6rem;color:var(--ink-soft);
+    border:1px dashed var(--rule);border-radius:9px;padding:1px 7px}
+
+  .nodi-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule)}
+  .nodo-card{flex:1 1 210px;min-width:190px}
+  .nodo-card .from{display:block;font-family:var(--sans);font-style:normal;font-size:.58rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+  .nodo-card .q{font-size:.76rem;font-style:italic;line-height:1.32}
+
+  .frame-list{list-style:none;margin:0;padding:0;max-width:640px}
+  .frame-list li{font-size:.83rem;padding:6px 0;border-top:1px solid var(--line)}
+  .frame-list li:first-child{border-top:0}
+  .frame-list li strong{font-weight:700}
+
+  @media (max-width:900px){
+    .arrow-wrap{transform:rotate(90deg);flex-basis:100%;margin:2px 0}
+    .cluster-row{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Storia, quarto anno &middot; Sezione</div>
+  <h1>Mappa della sezione</h1>
+
+  <div class="toolbar">
+    <button type="button" id="expandAll">Espandi tutto</button>
+    <button type="button" id="collapseAll">Comprimi tutto</button>
+  </div>
+
+  <div class="root-row">
+    <div class="root">
+      <span class="k">Sezione</span>
+      <h2>Il mondo fuori dall'Europa</h2>
+    </div>
+  </div>
+  <div class="trunk"></div>
+  <div class="cascade" id="cascade"></div>
+  <div class="panels" id="panels"></div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    {
+      id:"apertura", tag:"Apertura", title:"Il secolo del progresso", frame:true, offset:225,
+      items:[
+        {html:"<strong>Stessa parola, due esiti</strong>: libertà a Filadelfia nel 1776, dominio a Berlino nel 1884", mirror:"verificato in: Chiusura"},
+        {html:"<strong>Non due usi alterni</strong>: spesso libertà e dominio convivono nello stesso gesto", mirror:"verificato in: Chiusura"},
+        {html:"<strong>Domanda guida</strong>: chi tiene in mano la penna della propria storia, e chi la vede scritta da altri"}
+      ]
+    },
+    {
+      id:"cap1", tag:"Capitolo 1", title:"Le tredici colonie e le ragioni dell'indipendenza", col:"c1", offset:55,
+      clusters:[
+        { title:"La crisi coloniale", items:[
+          {html:"<strong>Guerra dei Sette anni</strong>: l'impero raddoppia territorio e debito insieme"},
+          {html:"<strong>Tasse senza rappresentanza</strong>: la protesta si organizza attorno a un principio, non solo al fisco"},
+          {html:"<strong>Leggi coercitive</strong>: la protesta diventa rottura"}
+        ]},
+        { title:"La Dichiarazione del 1776", items:[
+          {html:"<strong>Tre tempi</strong>: premessa filosofica, atto d'accusa, atto di rottura"},
+          {html:"<strong>\u00ABTutti gli uomini\u00BB</strong>: un principio universale scritto da chi ne escludeva molti"}
+        ]},
+        { title:"Tre esclusioni", items:[
+          {html:"<strong>Le donne</strong> restano fuori dalla cittadinanza politica"},
+          {html:"<strong>Gli schiavi</strong> restano merce nonostante il principio proclamato", pill:"\u2194 Cap. 3 \u00B7 Il sistema atlantico"},
+          {html:"<strong>I nativi</strong> pagano il prezzo crescente della stessa libertà"}
+        ]}
+      ],
+      nodi:[
+        {q:"Che cosa mosse davvero i coloni: principi o interessi?", from:"La crisi coloniale"},
+        {q:"La rivoluzione fu un fronte compatto o attraversato da fratture interne?", from:"La crisi coloniale"}
+      ]
+    },
+    {
+      id:"cap2", tag:"Capitolo 2", title:"Gli Stati Uniti dalle origini alla guerra di secessione", col:"c2", offset:330,
+      clusters:[
+        { title:"Costruire uno Stato", items:[
+          {html:"<strong>Confederazione debole</strong>: gli Articoli del 1777 non tengono insieme l'Unione"},
+          {html:"<strong>Philadelphia 1787</strong>: nasce il federalismo con pesi e contrappesi"},
+          {html:"<strong>Federalisti e Antifederalisti</strong> si dividono su quanto potere accentrare"}
+        ]},
+        { title:"L'espansione e il suo prezzo", items:[
+          {html:"<strong>Louisiana, Florida, Texas, Messico</strong>: il territorio si moltiplica in settant'anni"},
+          {html:"<strong>Destino Manifesto</strong>: una missione morale che maschera interessi materiali"},
+          {html:"<strong>Indian Removal Act</strong>: la stessa contraddizione del 1776 si aggrava"}
+        ]},
+        { title:"La contraddizione irrisolta", items:[
+          {html:"<strong>Nord industriale, Sud schiavista</strong>: due modelli in competizione per i nuovi territori"},
+          {html:"<strong>Elezione di Lincoln</strong>: la secessione precede la guerra, non l'abolizione"},
+          {html:"<strong>Tre emendamenti</strong>: la promessa riscritta sulla carta, non ancora nella pratica"}
+        ]}
+      ],
+      nodi:[
+        {q:"La frontiera: scuola di libertà o motore di spossessamento?", from:"L'espansione e il suo prezzo"},
+        {q:"La guerra di secessione: una guerra di Stati o una guerra di schiavitù?", from:"La contraddizione irrisolta"}
+      ]
+    },
+    {
+      id:"cap3", tag:"Capitolo 3", title:"Schiavitù, Haiti e colonialismo", col:"c3", offset:100,
+      clusters:[
+        { title:"Il sistema atlantico", items:[
+          {html:"<strong>La più grande migrazione forzata della storia</strong>, non un fatto isolato americano"},
+          {html:"<strong>\u00ABCommercio triangolare\u00BB</strong>: un'etichetta più semplice della realtà dei circuiti"},
+          {html:"<strong>I capitali della tratta</strong> finanziano le prime banche europee"}
+        ]},
+        { title:"Haiti, la rivoluzione che non doveva accadere", items:[
+          {html:"<strong>Gli insorti prendono alla lettera</strong> i principi che la Francia non applicava"},
+          {html:"<strong>Toussaint Louverture</strong> guida la rivolta fino all'abolizione del 1794"},
+          {html:"<strong>Dessalines</strong> proclama l'indipendenza nel 1804, dopo la revoca napoleonica"}
+        ]},
+        { title:"Due dichiarazioni, due esiti", items:[
+          {html:"<strong>Stessa struttura del 1776</strong>, scritta stavolta da chi ne era escluso", pill:"\u2194 Cap. 1 \u00B7 Tre esclusioni"},
+          {html:"<strong>Abolire la tratta</strong> e <strong>abolire la schiavitù</strong> restano due decisioni politiche diverse"}
+        ]}
+      ],
+      nodi:[
+        {q:"La tratta fu il motore del capitalismo europeo, o una sua conseguenza?", from:"Il sistema atlantico"},
+        {q:"Perché la rivoluzione haitiana è stata dimenticata?", from:"Haiti, la rivoluzione che non doveva accadere"}
+      ]
+    },
+    {
+      id:"cap4", tag:"Capitolo 4", title:"Dal colonialismo all'imperialismo di fine Ottocento", col:"c4", offset:380,
+      clusters:[
+        { title:"Un fenomeno nuovo", items:[
+          {html:"<strong>Dal commercio all'assoggettamento</strong>: il vecchio colonialismo cede il posto al controllo diretto"},
+          {html:"<strong>Grande Depressione e protezionismo</strong> spingono verso mercati coloniali esclusivi"}
+        ]},
+        { title:"Il linguaggio della missione", items:[
+          {html:"<strong>Darwinismo sociale</strong>: la superiorità tecnica diventa gerarchia biologica"},
+          {html:"<strong>Il fardello dell'uomo bianco</strong>: la conquista presentata come dovere morale"}
+        ]},
+        { title:"La spartizione", items:[
+          {html:"<strong>Conferenza di Berlino</strong>: nata per regolare la corsa, la accelera"},
+          {html:"<strong>Da un decimo a nove decimi</strong>: l'Africa passa sotto controllo europeo in quarant'anni"},
+          {html:"<strong>Le colonie rendono poco</strong>, ma la corsa continua sull'aspettativa, non sul dato"}
+        ]}
+      ],
+      nodi:[
+        {q:"L'imperialismo fu una necessità economica o una scelta politica?", from:"Un fenomeno nuovo"},
+        {q:"Il colonialismo ha modernizzato i territori colonizzati?", from:"La spartizione"}
+      ]
+    },
+    {
+      id:"cap5", tag:"Capitolo 5", title:"Due casi: India britannica ed Etiopia", col:"c5", offset:30,
+      clusters:[
+        { title:"Il dominio più compiuto", items:[
+          {html:"<strong>Seimila funzionari</strong> amministrano quasi trecento milioni di persone"},
+          {html:"<strong>Le ferrovie del Raj</strong> collegano le miniere ai porti, non le regioni tra loro"},
+          {html:"<strong>Le carestie</strong>, aggravate dal fiscalismo, costano milioni di vite"}
+        ]},
+        { title:"L'eccezione", items:[
+          {html:"<strong>Menelik II</strong> unifica lo Stato e acquista armamento moderno prima della guerra"},
+          {html:"<strong>Adua, 1° marzo 1896</strong>: la conquista italiana viene respinta"},
+          {html:"<strong>Un'eccezione</strong>, non la prova che la resistenza potesse vincere ovunque"}
+        ]}
+      ],
+      nodi:[
+        {q:"Le carestie indiane furono un disastro naturale o una conseguenza politica?", from:"Il dominio più compiuto"},
+        {q:"Adua fu un'eccezione o la prova di una possibilità?", from:"L'eccezione"}
+      ]
+    },
+    {
+      id:"cap6", tag:"Capitolo 6", title:"Il Giappone Meiji", col:"c6", offset:290,
+      clusters:[
+        { title:"Stessa minaccia, due risposte", items:[
+          {html:"<strong>Cina e Giappone</strong> partono dalla stessa condizione di isolamento forzato"},
+          {html:"<strong>La Cina si crede centro della civiltà</strong>; il Giappone si sente nazione minacciata"}
+        ]},
+        { title:"Una rivoluzione dall'alto", items:[
+          {html:"<strong>I samurai</strong> abbandonano i privilegi feudali e li convertono in capitale industriale"},
+          {html:"<strong>Lo Stato guida l'industrializzazione</strong> invece di subirla dall'esterno"},
+          {html:"<strong>Ferrovie che portano dentro</strong>, non fuori: lo stesso strumento dell'India, disegno opposto", pill:"\u2194 Cap. 5 \u00B7 Il dominio più compiuto"}
+        ]},
+        { title:"Da preda a predatore", items:[
+          {html:"<strong>1894-95</strong>: il Giappone sconfigge la Cina e le sottrae Taiwan e la Corea"},
+          {html:"<strong>1904-05, Tsushima</strong>: incrina il presupposto di superiorità su cui si regge l'imperialismo europeo"}
+        ]}
+      ],
+      nodi:[
+        {q:"Il Giappone Meiji fu una modernizzazione o una conservazione riuscita?", from:"Una rivoluzione dall'alto"},
+        {q:"Chi ha scritto la storia del secolo del progresso?", from:"Da preda a predatore \u00B7 nodo di sezione"}
+      ]
+    },
+    {
+      id:"chiusura", tag:"Chiusura", title:"Il secolo del progresso, rivisto", frame:true, offset:225,
+      items:[
+        {html:"<strong>Libertà e progresso tornano sei volte</strong>, mai con lo stesso significato", mirror:"risponde a: Apertura"},
+        {html:"<strong>I due esiti convivono</strong> spesso nello stesso gesto: separarli è già una scelta", mirror:"risponde a: Apertura"},
+        {html:"<strong>Chi tiene la penna cambia</strong>; il vocabolario della superiorità sopravvive al secolo che l'ha prodotto"}
+      ]
+    }
+  ];
+
+  var NODE_W = 230, CASCADE_W = 680;
+
+  var ARROW_SVG =
+    '<svg viewBox="0 0 32 16" width="32" height="16" aria-hidden="true">' +
+    '<line x1="2" y1="8" x2="23" y2="8" stroke="#5b5346" stroke-width="1.4"/>' +
+    '<polyline points="16,2.5 25,8 16,13.5" fill="none" stroke="#5b5346" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+
+  function connectorSVG(prevOffset, nextOffset){
+    var x1 = prevOffset + NODE_W/2;
+    var x2 = nextOffset + NODE_W/2;
+    return '<svg viewBox="0 0 ' + CASCADE_W + ' 18" preserveAspectRatio="none" aria-hidden="true">' +
+      '<line x1="' + x1 + '" y1="0" x2="' + x2 + '" y2="18" stroke="#b7ab8d" stroke-width="1.3"/>' +
+      '</svg>';
+  }
+
+  var cascade = document.getElementById('cascade');
+  var panelsWrap = document.getElementById('panels');
+
+  function buildFramePanelInner(node){
+    var ul = document.createElement('ul');
+    ul.className = 'frame-list';
+    node.items.forEach(function(it){
+      var li = document.createElement('li');
+      li.innerHTML = it.html;
+      if (it.mirror){
+        var br = document.createElement('br');
+        li.appendChild(br);
+        var pill = document.createElement('span');
+        pill.className = 'pill';
+        pill.textContent = it.mirror;
+        li.appendChild(pill);
+      }
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function buildClusterPanelInner(node){
+    var frag = document.createDocumentFragment();
+
+    var crow = document.createElement('div');
+    crow.className = 'cluster-row';
+    node.clusters.forEach(function(cl, i){
+      if (i > 0){
+        var arrWrap = document.createElement('div');
+        arrWrap.className = 'arrow-wrap';
+        arrWrap.innerHTML = ARROW_SVG;
+        crow.appendChild(arrWrap);
+      }
+      var box = document.createElement('div');
+      box.className = 'cluster';
+      var h4 = document.createElement('h4');
+      h4.textContent = cl.title;
+      box.appendChild(h4);
+      var ul = document.createElement('ul');
+      cl.items.forEach(function(it){
+        var li = document.createElement('li');
+        li.innerHTML = it.html;
+        if (it.pill){
+          var br = document.createElement('br');
+          li.appendChild(br);
+          var pill = document.createElement('span');
+          pill.className = 'pill';
+          pill.textContent = it.pill;
+          li.appendChild(pill);
+        }
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+      crow.appendChild(box);
+    });
+    frag.appendChild(crow);
+
+    if (node.nodi && node.nodi.length){
+      var nrow = document.createElement('div');
+      nrow.className = 'nodi-row';
+      node.nodi.forEach(function(n){
+        var card = document.createElement('div');
+        card.className = 'nodo-card';
+        var from = document.createElement('span');
+        from.className = 'from';
+        from.textContent = 'Nodo storiografico · ' + n.from;
+        var q = document.createElement('span');
+        q.className = 'q';
+        q.textContent = n.q;
+        card.appendChild(from);
+        card.appendChild(q);
+        nrow.appendChild(card);
+      });
+      frag.appendChild(nrow);
+    }
+
+    return frag;
+  }
+
+  DATA.forEach(function(node, idx){
+    if (idx > 0){
+      var prev = DATA[idx - 1];
+      var connSlot = document.createElement('div');
+      connSlot.className = 'connector';
+      connSlot.innerHTML = connectorSVG(prev.offset, node.offset);
+      cascade.appendChild(connSlot);
+
+      var stubM = document.createElement('div');
+      stubM.className = 'stub-mobile';
+      cascade.appendChild(stubM);
+    }
+
+    var slot = document.createElement('div');
+    slot.className = 'row-slot' + (node.frame ? ' frame-col col-fr' : ' col-' + node.col);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'node';
+    btn.style.marginLeft = node.offset + 'px';
+    btn.setAttribute('aria-expanded','false');
+    btn.setAttribute('aria-controls','panel-' + node.id);
+    btn.innerHTML = '<span class="lbl"><span class="tag">' + node.tag + '</span>' + node.title + '</span><span class="chev">\u25B8</span>';
+    slot.appendChild(btn);
+    cascade.appendChild(slot);
+
+    var panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.id = 'panel-' + node.id;
+    var inner = document.createElement('div');
+    inner.className = 'panel-inner ' + (node.frame ? 'pfr' : 'p' + node.col);
+    var head = document.createElement('div');
+    head.className = 'panel-head';
+    head.innerHTML = node.tag + '<b>' + node.title + '</b>';
+    inner.appendChild(head);
+    inner.appendChild(node.frame ? buildFramePanelInner(node) : buildClusterPanelInner(node));
+    panel.appendChild(inner);
+    panelsWrap.appendChild(panel);
+
+    btn.addEventListener('click', function(){
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      panel.classList.toggle('open', !open);
+    });
+  });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    cascade.querySelectorAll('.node').forEach(function(b){ b.setAttribute('aria-expanded','true'); });
+    panelsWrap.querySelectorAll('.panel').forEach(function(p){ p.classList.add('open'); });
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    cascade.querySelectorAll('.node').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+    panelsWrap.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('open'); });
+  });
+})();
+</script>
+</body>
+</html>

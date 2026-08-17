@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il sistema dei contrappesi: una macchina a tre ruote</title>
+<style>
+  :root{
+    --beige: #F5F0E8;
+    --gray: #F2F2F2;
+    --brown: #8B7355;
+    --brown-dark: #6B5A42;
+    --petrol: #2C4A52;
+    --petrol-dark: #1E363D;
+    --petrol-tint: #E3EDEE;
+    --petrol-tint-2: #CFE0E2;
+    --ink: #2A2620;
+    --ink-soft: #55504A;
+    --paper: #FBF8F3;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139,115,85,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(44,74,82,0.05), transparent 45%);
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 30px 44px;
+  }
+
+  header{
+    border-bottom: 2px solid var(--petrol);
+    padding-bottom: 16px;
+    margin-bottom: 22px;
+  }
+
+  .eyebrow{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--petrol);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: normal;
+  }
+
+  .intro{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0;
+  }
+
+  /* --- Diagramma --- */
+
+  .diagram{
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr 1.05fr 0.95fr 1.05fr;
+    align-items: center;
+    gap: 8px;
+    margin: 26px 0 6px;
+  }
+
+  .node{
+    background: var(--beige);
+    border: 1.5px solid var(--brown);
+    border-radius: 8px;
+    padding: 16px 12px;
+    text-align: center;
+    min-height: 128px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .node .title{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--petrol-dark);
+  }
+
+  .node .sub{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+  .node.presidente{ background: var(--petrol-tint); border-color: var(--petrol); }
+
+  .badge{
+    margin-top: 8px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    background: var(--paper);
+    border: 1.5px dashed var(--brown);
+    color: var(--brown-dark);
+    border-radius: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .badge:hover{ border-color: var(--petrol); }
+
+  .badge.picked{
+    border-style: solid;
+    border-color: var(--brown-dark);
+    background: var(--gray);
+  }
+
+  .badge.documented{
+    border-style: solid;
+    border-color: var(--petrol);
+    background: var(--petrol-tint);
+    color: var(--petrol-dark);
+    font-weight: 600;
+  }
+
+  .channel{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .mech-pill{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    line-height: 1.35;
+    text-align: center;
+    background: var(--gray);
+    border: 1.5px solid #D9D3C8;
+    border-radius: 6px;
+    padding: 8px 8px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .mech-pill:hover{ border-color: var(--petrol); box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
+
+  .mech-pill.picked{
+    border-color: var(--brown-dark);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .mech-pill.documented{
+    border-color: var(--petrol);
+    background: var(--petrol-tint);
+    color: var(--petrol-dark);
+    font-weight: 600;
+  }
+
+  .flow-mark{
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--brown);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* --- Scenario --- */
+
+  .scenario-box{
+    margin-top: 30px;
+    background: var(--gray);
+    border: 1px solid #E0DDD6;
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+
+  .scenario-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .scenario-count{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .scenario-count strong{ color: var(--petrol); }
+
+  .nav-btns{ display: flex; gap: 8px; }
+
+  .btn{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    border: 1.5px solid var(--petrol);
+    background: transparent;
+    color: var(--petrol);
+    padding: 6px 13px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .btn:hover{ background: var(--petrol); color: #fff; }
+
+  .btn:disabled{
+    opacity: 0.35;
+    cursor: default;
+  }
+  .btn:disabled:hover{ background: transparent; color: var(--petrol); }
+
+  .btn.ghost{
+    border-color: var(--brown);
+    color: var(--brown-dark);
+  }
+  .btn.ghost:hover{ background: var(--brown); color: #fff; }
+
+  .scenario-text{
+    font-size: 15.5px;
+    margin: 0 0 6px;
+  }
+
+  .scenario-prompt{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0 0 4px;
+  }
+
+  .feedback{
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--brown);
+    display: none;
+  }
+
+  .feedback.show{ display: block; }
+
+  .feedback .label{
+    display: block;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+    color: var(--brown-dark);
+    margin-bottom: 4px;
+  }
+
+  .feedback .mech{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--petrol-dark);
+    margin: 0 0 6px;
+  }
+
+  .feedback p{
+    font-size: 14px;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  @media (max-width: 900px){
+    .diagram{ grid-template-columns: 1fr; }
+    .channel{ flex-direction: row; flex-wrap: wrap; }
+    .mech-pill{ flex: 1 1 45%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Gli Stati Uniti dalle origini alla guerra di secessione — Artefatto 2</p>
+    <h1>Il sistema dei contrappesi: una macchina a tre ruote</h1>
+    <p class="intro">Il modello di Philadelphia non affida la propria tenuta alla virtù dei governanti, ma alla reciproca sorveglianza tra tre organi. Leggi lo scenario in basso, poi clicca sul canale del diagramma che indica il meccanismo di contrappeso che si attiva e l'organo che lo esercita.</p>
+  </header>
+
+  <div class="diagram">
+    <div class="node" data-node="congresso">
+      <p class="title">Congresso</p>
+      <p class="sub">Camera dei rappresentanti + Senato</p>
+    </div>
+
+    <div class="channel" data-between="congresso-presidente">
+      <button class="mech-pill" data-mech="veto">
+        <span class="flow-mark">Presidente → Congresso</span>
+        Veto sospensivo sulle leggi
+      </button>
+      <button class="mech-pill" data-mech="impeachment">
+        <span class="flow-mark">Congresso → Presidente</span>
+        Stato d'accusa e destituzione
+      </button>
+      <button class="mech-pill" data-mech="assenso">
+        <span class="flow-mark">Senato → Presidente</span>
+        Assenso alle nomine
+      </button>
+    </div>
+
+    <div class="node presidente" data-node="presidente">
+      <p class="title">Presidente</p>
+      <p class="sub">Comando delle forze armate; eletto tramite i grandi elettori</p>
+    </div>
+
+    <div class="channel" data-between="presidente-corte">
+      <button class="mech-pill" data-mech="nomina">
+        <span class="flow-mark">Presidente → Corte suprema / dipartimenti</span>
+        Nomina di giudici e responsabili federali
+      </button>
+    </div>
+
+    <div class="node" data-node="corte">
+      <p class="title">Corte suprema federale</p>
+      <p class="sub">Potere giudiziario distinto dall'autonomia degli Stati</p>
+      <button class="badge" data-mech="vitaliziertà">Giudici a vita</button>
+    </div>
+  </div>
+
+  <div class="scenario-box">
+    <div class="scenario-head">
+      <p class="scenario-count">Scenario <strong id="scenNum">1</strong> di <span id="scenTotal">8</span></p>
+      <div class="nav-btns">
+        <button class="btn ghost" id="prevBtn">← Precedente</button>
+        <button class="btn ghost" id="nextBtn">Successivo →</button>
+      </div>
+    </div>
+
+    <p class="scenario-prompt">Scenario:</p>
+    <p class="scenario-text" id="scenText"></p>
+    <p class="scenario-prompt">Clicca sul canale del diagramma che si attiva in questo caso.</p>
+
+    <div class="feedback" id="feedback">
+      <span class="label">Meccanismo previsto dal modello di Philadelphia</span>
+      <p class="mech" id="fbMech"></p>
+      <p id="fbText"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const scenarios = [
+    {
+      text: "Il Congresso approva una legge di spesa che il Presidente giudica dannosa per il paese.",
+      mech: "veto",
+      mechLabel: "Veto sospensivo sulle leggi — esercitato dal Presidente",
+      explanation: "Il Presidente può porre un veto sospensivo sulle leggi approvate dal Congresso: è il freno che il modello di Philadelphia mette nelle sue mani contro decisioni legislative che giudica dannose."
+    },
+    {
+      text: "Il Congresso vota un nuovo dazio commerciale che il Presidente considera contrario agli interessi del paese.",
+      mech: "veto",
+      mechLabel: "Veto sospensivo sulle leggi — esercitato dal Presidente",
+      explanation: "Anche in questo caso si attiva lo stesso strumento: il veto sospensivo, pensato per fermare, non impedire in modo definitivo, una legge del Congresso che il Presidente non condivide."
+    },
+    {
+      text: "Emergono prove che il Presidente ha violato gravemente le leggi in vigore durante l'esercizio della propria carica.",
+      mech: "impeachment",
+      mechLabel: "Stato d'accusa e destituzione — esercitato dal Congresso",
+      explanation: "Il Congresso può mettere il Presidente in stato d'accusa e destituirlo in caso di violazioni della legge: è il contrappeso simmetrico al veto presidenziale, riservato ai casi più gravi."
+    },
+    {
+      text: "Il Congresso ritiene che il Presidente abbia ecceduto i limiti della propria carica nell'esercizio dei suoi poteri.",
+      mech: "impeachment",
+      mechLabel: "Stato d'accusa e destituzione — esercitato dal Congresso",
+      explanation: "Si attiva lo stesso meccanismo di stato d'accusa: il Congresso resta l'organo a cui il modello di Philadelphia affida la facoltà di rimuovere un Presidente che abbia violato la legge."
+    },
+    {
+      text: "Si rende necessario individuare un nuovo giudice per la Corte suprema federale.",
+      mech: "nomina",
+      mechLabel: "Nomina di giudici e responsabili federali — esercitata dal Presidente",
+      explanation: "Il Presidente nomina i giudici della Corte suprema federale: un potere che nel sistema di Philadelphia non è esercitato in piena autonomia, perché resta soggetto al successivo assenso del Senato."
+    },
+    {
+      text: "Un dipartimento federale resta senza guida, e occorre indicare un nome per ricoprire l'incarico.",
+      mech: "nomina",
+      mechLabel: "Nomina di giudici e responsabili federali — esercitata dal Presidente",
+      explanation: "Anche i responsabili dei dipartimenti federali sono nominati dal Presidente: la stessa logica applicata alla nomina dei giudici vale per il vertice dell'amministrazione."
+    },
+    {
+      text: "Il Presidente ha scelto un candidato per guidare un dipartimento federale, ma il Senato ritiene la scelta inadeguata e nega il proprio assenso.",
+      mech: "assenso",
+      mechLabel: "Assenso alle nomine — esercitato dal Senato",
+      explanation: "Il Senato deve dare il proprio assenso a ogni nomina di rilievo, giudici compresi: è il contrappeso che impedisce al Presidente di comporre l'amministrazione e la magistratura federale senza alcun controllo."
+    },
+    {
+      text: "Dopo le elezioni si afferma una nuova maggioranza al Congresso, che vorrebbe sostituire i giudici della Corte suprema nominati dall'amministrazione precedente.",
+      mech: "vitaliziertà",
+      mechLabel: "Vitaliziertà dei giudici — garanzia della Corte suprema",
+      explanation: "I giudici della Corte suprema restano in carica a vita: una scelta pensata apposta per sottrarli alle oscillazioni della politica di breve periodo. Nessuna destituzione per motivi politici è prevista dal modello di Philadelphia."
+    }
+  ];
+
+  let current = 0;
+  const picks = {}; // index -> mech clicked
+
+  const scenText = document.getElementById('scenText');
+  const scenNum = document.getElementById('scenNum');
+  const scenTotal = document.getElementById('scenTotal');
+  const feedback = document.getElementById('feedback');
+  const fbMech = document.getElementById('fbMech');
+  const fbText = document.getElementById('fbText');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  scenTotal.textContent = scenarios.length;
+
+  const mechControls = document.querySelectorAll('[data-mech]');
+
+  function clearMarks(){
+    mechControls.forEach(el => {
+      el.classList.remove('picked', 'documented');
+    });
+  }
+
+  function render(){
+    const s = scenarios[current];
+    scenNum.textContent = current + 1;
+    scenText.textContent = s.text;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === scenarios.length - 1;
+
+    clearMarks();
+
+    const pickedMech = picks[current];
+    if(pickedMech){
+      feedback.classList.add('show');
+      fbMech.textContent = s.mechLabel;
+      fbText.textContent = s.explanation;
+
+      mechControls.forEach(el => {
+        if(el.dataset.mech === pickedMech) el.classList.add('picked');
+        if(el.dataset.mech === s.mech) el.classList.add('documented');
+      });
+    } else {
+      feedback.classList.remove('show');
+    }
+  }
+
+  mechControls.forEach(el => {
+    el.addEventListener('click', () => {
+      picks[current] = el.dataset.mech;
+      render();
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if(current > 0){ current--; render(); }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if(current < scenarios.length - 1){ current++; render(); }
+  });
+
+  render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prerequisiti — I due assi della legittimità</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --gray:#F2F2F2;
+    --brown:#8B7355;
+    --brown-dark:#6B5740;
+    --blue:#E8F4F8;
+    --blue-line:#B9DCE6;
+    --ink:#2C2A24;
+    --ink-soft:#5A5548;
+    --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:var(--beige);
+    color:var(--ink);
+    min-height:100vh;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    background-image:radial-gradient(rgba(139,115,85,0.05) 1px, transparent 1px);
+    background-size:3px 3px;
+    z-index:0;
+  }
+  .wrap{max-width:900px;margin:0 auto;position:relative;z-index:1;}
+
+  .header{
+    background:var(--brown);
+    padding:1.5rem 2rem 1.2rem;
+    border-bottom:4px solid var(--brown-dark);
+  }
+  .header-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+    color:#EFE4D4;margin-bottom:.4rem;
+  }
+  .header-title{font-size:1.4rem;color:#FBF9F4;line-height:1.35;}
+  .header-sub{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:640px;
+  }
+
+  .progress-wrap{
+    background:var(--brown-dark);
+    padding:.65rem 2rem;
+    display:flex;align-items:center;gap:1rem;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11.5px;color:#EFE4D4;
+  }
+  .progress-track{flex:1;height:5px;background:rgba(0,0,0,.2);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:#D9C6A5;width:0%;transition:width .4s ease;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+
+  .intro{
+    background:var(--paper);
+    border:1px solid #DCD2BE;
+    border-left:4px solid var(--brown);
+    border-radius:4px;
+    padding:1rem 1.2rem;
+    font-size:.92rem;
+    line-height:1.65;
+    color:var(--ink-soft);
+    margin-bottom:1.5rem;
+  }
+
+  /* PLANE */
+  .plane-section{
+    background:var(--blue);
+    border:1px solid var(--blue-line);
+    border-radius:6px;
+    padding:2.6rem 2.6rem 2.2rem;
+    position:relative;
+    margin-bottom:1.6rem;
+  }
+
+  .axis-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;
+    letter-spacing:.5px;
+    color:var(--brown-dark);
+    text-align:center;
+  }
+  .axis-title-top{font-weight:600;font-size:12px;margin-bottom:.3rem;}
+  .axis-title-left{
+    font-weight:600;font-size:12px;
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    position:absolute;left:.6rem;top:50%;transform-origin:center;
+    transform:translateY(-50%) rotate(180deg);
+  }
+
+  .plane-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:2px;
+    background:var(--brown);
+    border:2px solid var(--brown);
+    border-radius:4px;
+    min-height:420px;
+    margin:0 auto;
+    max-width:640px;
+  }
+  .quad{
+    background:#F5FAFC;
+    position:relative;
+    padding:.6rem;
+    display:flex;flex-direction:column;
+    gap:.4rem;
+    align-content:flex-start;
+    transition:background .2s;
+    min-height:200px;
+  }
+  .quad.drop-ready{background:#DCEFF5;}
+  .quad-hint{
+    position:absolute;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:10px;color:#9CB8C2;letter-spacing:.5px;
+    pointer-events:none;
+  }
+  .q-tl .quad-hint{top:.5rem;left:.6rem;}
+  .q-tr .quad-hint{top:.5rem;right:.6rem;text-align:right;}
+  .q-bl .quad-hint{bottom:.5rem;left:.6rem;}
+  .q-br .quad-hint{bottom:.5rem;right:.6rem;text-align:right;}
+  .q-bl.system-vienna{background:#FBF6EC;}
+
+  .placed-chip{
+    background:var(--paper);
+    border:1px solid var(--brown);
+    border-radius:4px;
+    padding:.4rem .55rem;
+    font-size:.72rem;
+    line-height:1.35;
+    color:var(--ink);
+  }
+
+  .ext-top{grid-column:1/3;text-align:center;margin-bottom:.5rem;}
+  .ext-left-wrap{
+    position:absolute;left:-3.6rem;top:0;bottom:0;
+    display:flex;flex-direction:column;justify-content:space-between;
+    width:3rem;
+  }
+  .ext-corner{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:10.5px;color:var(--brown-dark);
+    padding:.3rem;
+  }
+  .corner-tl{grid-column:1;grid-row:1;align-self:start;justify-self:start;}
+
+  .ext-labels{
+    display:grid;grid-template-columns:1fr 1fr;
+    max-width:640px;margin:0 auto .3rem;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:10.5px;color:var(--brown-dark);
+  }
+  .ext-labels span{padding:0 .4rem;}
+  .ext-labels .l{text-align:left;}
+  .ext-labels .r{text-align:right;}
+
+  .vert-wrap{
+    display:flex;align-items:center;gap:.8rem;
+    max-width:640px;margin:0 auto;
+  }
+  .vert-side-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:10.5px;color:var(--brown-dark);
+    writing-mode:vertical-rl;
+    display:flex;align-items:center;justify-content:center;
+    max-width:18px;
+    text-align:center;
+  }
+  .vert-side-label.top{transform:rotate(180deg);}
+
+  .axis-caption{
+    text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;color:var(--brown-dark);letter-spacing:.4px;
+    margin:.15rem 0;
+  }
+
+  /* TRAY */
+  .tray-section{
+    background:var(--gray);
+    border:1px solid #DCDCDC;
+    border-radius:6px;
+    padding:1.2rem 1.4rem;
+  }
+  .tray-title{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--brown-dark);margin-bottom:.8rem;
+  }
+  .tray{display:flex;flex-wrap:wrap;gap:.6rem;}
+  .chip{
+    background:var(--paper);
+    border:1.5px solid #C8BBA8;
+    border-radius:5px;
+    padding:.55rem .8rem;
+    font-size:.82rem;
+    line-height:1.4;
+    max-width:260px;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .chip:hover{border-color:var(--brown);background:#FFFDF8;}
+  .chip.selected{border-color:var(--brown);background:#FBF0DD;box-shadow:0 0 0 2px rgba(139,115,85,.25);}
+  .chip .chip-src{
+    display:block;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:9.5px;color:var(--brown);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.25rem;
+  }
+
+  .instruction{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:.8rem;color:var(--ink-soft);margin-bottom:.8rem;
+    min-height:1.2em;
+  }
+  .instruction.active{color:var(--brown-dark);font-weight:600;}
+
+  /* FEEDBACK PANEL */
+  .feedback-panel{
+    display:none;
+    background:var(--paper);
+    border:1px solid var(--brown);
+    border-radius:5px;
+    padding:.85rem 1rem;
+    margin-top:1rem;
+    font-size:.85rem;
+    line-height:1.55;
+  }
+  .feedback-panel.show{display:block;}
+  .feedback-panel .fb-quad{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
+    color:var(--brown-dark);margin-bottom:.3rem;
+  }
+
+  /* CLOSING */
+  .closing{
+    display:none;
+    margin-top:1.8rem;
+    background:#FBF6EC;
+    border:1.5px solid var(--brown);
+    border-radius:6px;
+    padding:1.4rem 1.6rem;
+  }
+  .closing.show{display:block;}
+  .closing-title{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--brown-dark);margin-bottom:.7rem;
+  }
+  .closing-list{list-style:none;margin:.7rem 0;}
+  .closing-list li{
+    padding:.4rem .6rem;
+    background:var(--paper);
+    border-left:3px solid var(--brown);
+    margin-bottom:.4rem;
+    font-size:.85rem;
+  }
+  .closing-question{
+    font-style:italic;
+    color:var(--ink);
+    margin-top:1rem;
+    padding-top:1rem;
+    border-top:1px solid #D9C6A0;
+    font-size:.95rem;
+  }
+
+  .unlock-btn{
+    display:none;
+    margin:1.4rem auto 0;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:.82rem;letter-spacing:.5px;
+    background:var(--brown);color:var(--paper);
+    border:none;border-radius:4px;
+    padding:.6rem 1.4rem;
+    cursor:pointer;
+  }
+  .unlock-btn.show{display:block;}
+  .unlock-btn:hover{background:var(--brown-dark);}
+
+  @media (max-width:700px){
+    .plane-section{padding:1.6rem 1.2rem;}
+    .plane-grid{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="header-label">Prerequisiti · Vienna e il principio di nazionalità</div>
+    <div class="header-title">Artefatto 1 — I due assi della legittimità</div>
+    <div class="header-sub">A Vienna, nel 1815, i vincitori risposero a una sola delle due domande possibili sulla legittimità del potere. Colloca ciascuna affermazione nel punto del piano che le corrisponde, per capire quale domanda restò senza risposta — e per chi.</div>
+  </div>
+
+  <div class="progress-wrap">
+    <span>Affermazioni collocate</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span id="progressCount">0 / 8</span>
+  </div>
+
+  <div class="main">
+
+    <div class="intro">
+      Il piano incrocia due domande logicamente indipendenti. La prima — <strong>chi ha diritto a governare</strong> — riguarda l'interno di uno Stato dato. La seconda — <strong>quale comunità ha diritto a uno Stato proprio</strong> — riguarda i confini stessi. Il Congresso di Vienna rispose solo alla prima. Seleziona un'affermazione dal basso, poi clicca sul quadrante in cui pensi che vada collocata.
+    </div>
+
+    <div class="plane-section">
+      <div class="ext-labels">
+        <span class="l">la dinastia, per continuità</span>
+        <span class="r">i governati, per consenso</span>
+      </div>
+      <div class="axis-caption">chi ha diritto a governare →</div>
+
+      <div class="vert-wrap">
+        <div class="vert-side-label top">quella che si riconosce come popolo</div>
+        <div class="plane-grid" id="planeGrid" style="flex:1;">
+          <div class="quad q-tl" data-quad="tl" onclick="placeInQuad('tl')">
+            <span class="quad-hint">governati · trattato</span>
+          </div>
+          <div class="quad q-tr" data-quad="tr" onclick="placeInQuad('tr')">
+            <span class="quad-hint">governati · popolo</span>
+          </div>
+          <div class="quad q-bl system-vienna" data-quad="bl" onclick="placeInQuad('bl')">
+            <span class="quad-hint">dinastia · trattato</span>
+          </div>
+          <div class="quad q-br" data-quad="br" onclick="placeInQuad('br')">
+            <span class="quad-hint">dinastia · popolo</span>
+          </div>
+        </div>
+        <div class="vert-side-label" style="align-self:center;">quella che il trattato assegna</div>
+      </div>
+      <div class="axis-caption" style="margin-top:.4rem;">↑ quale comunità ha diritto a uno Stato</div>
+    </div>
+
+    <div class="tray-section">
+      <div class="tray-title">Affermazioni da collocare</div>
+      <div class="instruction" id="instructionLine">Seleziona un'affermazione.</div>
+      <div class="tray" id="tray"></div>
+      <div class="feedback-panel" id="feedbackPanel">
+        <div class="fb-quad" id="fbQuad"></div>
+        <div id="fbText"></div>
+      </div>
+    </div>
+
+    <button class="unlock-btn" id="unlockBtn" onclick="showClosing()">Vedi la sintesi finale</button>
+
+    <div class="closing" id="closing">
+      <div class="closing-title">Il quadrante in alto a destra</div>
+      <p style="font-size:.9rem;line-height:1.6;">A Vienna, nel 1815, questo quadrante era vuoto. Le affermazioni che vi hai collocato appartengono infatti a momenti successivi:</p>
+      <ul class="closing-list" id="closingList"></ul>
+      <div class="closing-question">Perché, a Vienna, quel quadrante era vuoto? Non per una dimenticanza: nel vocabolario dei negoziatori del 1815, "quale comunità ha diritto a uno Stato" non era ancora una domanda politica riconosciuta. Lo sarebbe diventata nei decenni successivi — ed è la domanda che apre il resto del capitolo.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const statements = [
+  {
+    id:1, src:"Metternich",
+    text:"Il principio di legittimità riconosce come titolo valido al potere la sola continuità dinastica, di origine divina.",
+    quad:"bl",
+    explain:"Metternich fonda il diritto a governare sulla dinastia, e non pone la questione di quale comunità meriti uno Stato: i confini restano quelli assegnati dai trattati."
+  },
+  {
+    id:2, src:"Talleyrand",
+    text:"Se il diritto dei Borbone è legittimo, la Francia restaurata non può essere trattata come una nazione colpevole da smembrare.",
+    quad:"bl",
+    explain:"Anche qui la legittimità è dinastica (i Borbone), non popolare. L'argomento difende l'integrità di uno Stato già dato, non rivendica un nuovo confine per un popolo."
+  },
+  {
+    id:3, src:"La Charte del 1814",
+    text:"La Costituzione è octroyée: elargita e concessa dall'alto per libera decisione del re, non contrattata con la nazione né derivata dalla sua sovranità.",
+    quad:"bl",
+    explain:"Il potere scende dal sovrano verso i sudditi, non risale da un popolo che si riconosce come tale. Anche il perimetro dello Stato resta quello ereditato, non rivendicato."
+  },
+  {
+    id:4, src:"Restaurazione in Spagna",
+    text:"Ferdinando VII cancella la Costituzione di Cadice del 1812 e restaura il potere per sola continuità dinastica.",
+    quad:"bl",
+    explain:"Stessa logica: dinastia come fonte del governo, nessuna messa in discussione di quale comunità abbia diritto a uno Stato."
+  },
+  {
+    id:5, src:"Costituzionalismo liberale",
+    text:"Lo Stato non deve poggiare sull'arbitrio del monarca ma su una Costituzione scritta, perché la sovranità risiede nella nazione.",
+    quad:"tl",
+    explain:"[dedotto] Il liberale sposta la fonte del governo verso i governati, ma nel primo Ottocento non mette ancora in discussione i confini dello Stato esistente: agisce dentro il perimetro assegnato dai trattati, non lo contesta.",
+    tag:"dedotto"
+  },
+  {
+    id:6, src:"Dichiarazione dei diritti, art. 3 (1789)",
+    text:"Il principio di ogni sovranità risiede essenzialmente nella nazione.",
+    quad:"tr",
+    explain:"Qui il potere discende dai governati, ed è la nazione stessa — che si riconosce come tale — a essere titolare della sovranità: entrambi gli estremi 'governati' e 'popolo' sono toccati.",
+    era:"1789"
+  },
+  {
+    id:7, src:"Un patriota ceco",
+    text:"Pubblica la prima grammatica della propria lingua, per dimostrare che il suo popolo è un soggetto a sé, e non un dialetto senza storia.",
+    quad:"tr",
+    explain:"[dedotto, costruito a partire dal passaggio del capitolo sulle «nazioni non storiche»] La rivendicazione nasce dal basso, da chi si autoriconosce come popolo — non da un titolo dinastico né da un confine di trattato.",
+    era:"prima metà Ottocento",
+    tag:"dedotto"
+  },
+  {
+    id:8, src:"L'insurrezione greca (1821)",
+    text:"Russia e Gran Bretagna finiscono per sostenere una rivolta contro un sovrano legittimo, quello ottomano.",
+    quad:"tr",
+    explain:"Un popolo si solleva contro l'autorità legittima in nome di se stesso come comunità politica, e ottiene perfino l'appoggio di potenze nate per difendere il principio opposto.",
+    era:"1821"
+  }
+];
+
+let selectedId = null;
+let placedCount = 0;
+const placed = {};
+
+function renderTray(){
+  const tray = document.getElementById('tray');
+  tray.innerHTML = '';
+  statements.forEach(s=>{
+    if(placed[s.id]) return;
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.id = 'chip'+s.id;
+    chip.onclick = ()=>selectChip(s.id);
+    chip.innerHTML = '<span class="chip-src">'+s.src+'</span>'+s.text;
+    tray.appendChild(chip);
+  });
+}
+
+function selectChip(id){
+  selectedId = id;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+  const el = document.getElementById('chip'+id);
+  if(el) el.classList.add('selected');
+  const instr = document.getElementById('instructionLine');
+  instr.textContent = 'Ora clicca sul quadrante del piano in cui pensi che questa affermazione vada collocata.';
+  instr.classList.add('active');
+  document.getElementById('feedbackPanel').classList.remove('show');
+}
+
+function placeInQuad(quad){
+  if(selectedId === null) return;
+  const s = statements.find(x=>x.id===selectedId);
+  placed[s.id] = quad;
+  placedCount++;
+
+  const quadEl = document.querySelector('.quad[data-quad="'+quad+'"]');
+  const chipDiv = document.createElement('div');
+  chipDiv.className = 'placed-chip';
+  chipDiv.textContent = s.src + (s.tag ? ' [dedotto]' : '');
+  quadEl.appendChild(chipDiv);
+
+  const quadNames = {tl:'Governati · Trattato', tr:'Governati · Popolo', bl:'Dinastia · Trattato — il sistema di Vienna', br:'Dinastia · Popolo'};
+  document.getElementById('fbQuad').textContent = quadNames[s.quad];
+  document.getElementById('fbText').textContent = s.explain + (quad !== s.quad ? '  (La collocazione più coerente con il testo è questa, indipendentemente da dove l\'hai posizionata: qui l\'oggetto non misura giusto/sbagliato, ma ti restituisce la lettura del capitolo.)' : '');
+  document.getElementById('feedbackPanel').classList.add('show');
+
+  selectedId = null;
+  const instr = document.getElementById('instructionLine');
+  instr.classList.remove('active');
+  instr.textContent = placedCount < statements.length ? 'Seleziona un\'altra affermazione.' : 'Tutte le affermazioni sono state collocate.';
+
+  renderTray();
+  updateProgress();
+}
+
+function updateProgress(){
+  document.getElementById('progressFill').style.width = (placedCount/statements.length*100)+'%';
+  document.getElementById('progressCount').textContent = placedCount+' / '+statements.length;
+  if(placedCount === statements.length){
+    document.getElementById('unlockBtn').classList.add('show');
+  }
+}
+
+function showClosing(){
+  const list = document.getElementById('closingList');
+  list.innerHTML = '';
+  statements.filter(s=>s.quad==='tr').forEach(s=>{
+    const li = document.createElement('li');
+    li.textContent = (s.era ? s.era+' — ' : '') + s.src + ': ' + s.text;
+    list.appendChild(li);
+  });
+  document.getElementById('closing').classList.add('show');
+  document.getElementById('closing').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+renderTray();
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leggere a ritroso</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --da:#8B4A3E; --db:#3E6B8C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:1000px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:720px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1.2rem;}
+
+  .dossier-labels{display:flex;gap:1rem;margin-bottom:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.78rem;}
+  .dossier-labels span{flex:1;padding:.6rem .8rem;border-radius:5px;color:#fff;}
+  .dl-a{background:var(--da);}
+  .dl-b{background:var(--db);}
+
+  .progress-wrap{display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:var(--brown-dark);margin-bottom:1.2rem;}
+  .progress-track{flex:1;height:5px;background:#E3DACB;border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--brown);width:0%;transition:width .4s ease;}
+
+  .fact-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:.9rem 1.1rem;margin-bottom:.8rem;}
+  .fact-num{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9.5px;color:var(--brown);margin-bottom:.3rem;}
+  .fact-text{font-size:.88rem;line-height:1.5;margin-bottom:.7rem;}
+  .fact-opts{display:flex;gap:.5rem;margin-bottom:.7rem;}
+  .fact-opt{flex:1;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.74rem;border:1.5px solid #D4CFC4;border-radius:5px;padding:.5rem .6rem;cursor:pointer;background:var(--gray);text-align:center;}
+  .fact-opt:hover{border-color:var(--brown);}
+  .fact-opt.a.chosen{background:#F5E4DF;border-color:var(--da);color:var(--da);font-weight:600;}
+  .fact-opt.b.chosen{background:#E1E9EF;border-color:var(--db);color:var(--db);font-weight:600;}
+  .fact-opt[disabled]{cursor:default;}
+
+  .dual-reading{display:none;font-size:.78rem;line-height:1.5;}
+  .dual-reading.show{display:block;}
+  .dr-row{padding:.45rem .6rem;border-radius:4px;margin-bottom:.35rem;}
+  .dr-row.a{background:#FBF0EC;border-left:3px solid var(--da);}
+  .dr-row.b{background:#EAF0F5;border-left:3px solid var(--db);}
+  .dr-row strong{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9.5px;letter-spacing:.4px;text-transform:uppercase;}
+
+  .closing{display:none;margin-top:1.5rem;}
+  .closing.show{display:block;}
+  .closing-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.4rem 1.6rem;}
+  .closing-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.9rem;}
+  .tally{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.85rem;margin-bottom:1rem;}
+  .closing-text{font-size:.9rem;line-height:1.65;margin-bottom:1rem;}
+  .closing-q{font-style:italic;font-size:.95rem;line-height:1.6;padding-top:1rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">La costruzione degli Stati nazionali · Artefatto 18</div>
+    <div class="header-title">Leggere a ritroso</div>
+    <div class="header-sub">Venti fatti documentati dell'Ottocento tedesco. Per ciascuno, decidi in quale dei due dossier lo useresti — poi guarda l'altra lettura possibile dello stesso fatto.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">Costruisci con gli stessi venti fatti due dossier opposti: uno che sostenga che la Germania fosse destinata a un esito autoritario, uno che sostenga che fosse un paese europeo come gli altri. Nessuno dei due sarà segnato come corretto: entrambi risultano compilabili, e questo è il punto.</div>
+
+    <div class="dossier-labels">
+      <span class="dl-a">Dossier A — destinata a un esito autoritario</span>
+      <span class="dl-b">Dossier B — un paese europeo come gli altri</span>
+    </div>
+
+    <div class="progress-wrap">
+      <span>Fatti classificati</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressCount">0 / 20</span>
+    </div>
+
+    <div id="factsWrap"></div>
+
+    <div class="closing" id="closing">
+      <div class="closing-card">
+        <div class="closing-title">Che cosa ciascun dossier ha dovuto ignorare</div>
+        <div class="tally" id="tally"></div>
+        <div class="closing-text">Alcuni fatti — il suffragio universale del Reichstag, la pace mite dopo Sadowa, la nascita del primo partito operaio di massa d'Europa a Gotha — sono difficili da far entrare in un dossier costruito sulla tesi dell'esito autoritario, perché la complicano. Altri — la rinuncia della borghesia al potere politico, il governo che risponde solo all'imperatore, il Kulturkampf — sono difficili da far entrare in un dossier che sostenga la normalità europea, perché la complicano nella direzione opposta. Nessun fatto porta scritta sopra la propria interpretazione: ogni dossier funziona selezionando quali fatti mettere al centro e quali lasciare sullo sfondo.</div>
+        <div class="closing-q">In base a quale criterio si decide che cosa, di ciò che precede un esito, ne è la preparazione — e che cosa è soltanto ciò che è accaduto prima?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const facts = [
+  {text:'Il Congresso di Vienna lasciò l\'area tedesca divisa in una Confederazione di una quarantina di Stati sotto presidenza austriaca.',
+   a:'La frammentazione politica tedesca è terreno favorevole a future soluzioni di unificazione dall\'alto, imposte per via non parlamentare.',
+   b:'Anche l\'Italia e altre aree d\'Europa erano frammentate in quegli stessi anni: non è un\'anomalia tedesca.'},
+  {text:'Lo Zollverein (1834) escluse deliberatamente l\'Austria per ragioni di concorrenza industriale, non per idea nazionale.',
+   a:'Gli interessi di potenza prussiani guidano il processo fin dall\'inizio, non un progetto liberale condiviso.',
+   b:'È una decisione economica ordinaria, motivata dalla concorrenza commerciale: la praticano anche le potenze occidentali.'},
+  {text:'L\'unione doganale funzionò per decenni dentro una Confederazione che nessuno voleva trasformare in Stato.',
+   a:'Complica la tesi: mostra un\'unità economica priva per lungo tempo di qualunque ambizione politica.',
+   b:'Prova diretta che l\'integrazione economica non implica affatto un progetto politico autoritario, né alcun progetto politico.'},
+  {text:'L\'assemblea di Francoforte (1848) era composta per due terzi da funzionari pubblici e per poco più di un decimo da liberi professionisti.',
+   a:'Un\'assemblea priva di legame con le forze sociali reali prefigura una tradizione politica liberale strutturalmente debole.',
+   b:'È la stessa composizione sociale di molte assemblee liberali europee coeve: non è un tratto specificamente tedesco.'},
+  {text:'L\'assemblea di Francoforte non disponeva di truppe, amministrazione né gettito fiscale propri.',
+   a:'Il fallimento istituzionale del primo esperimento parlamentare tedesco apre la strada a soluzioni non parlamentari.',
+   b:'Nessuna assemblea rivoluzionaria europea del 1848 disponeva di poteri esecutivi propri: è un limite comune, non tedesco.'},
+  {text:'Prevalse la posizione piccolo-tedesca perché era l\'unica a indicare uno Stato realmente costruibile, non perché avesse argomenti migliori sui criteri di appartenenza.',
+   a:'La rinuncia al principio in nome della praticabilità di potere è un primo segno di subordinazione dei principi liberali alla forza.',
+   b:'Ogni Stato-nazione europeo si è formato per compromesso pratico, non per applicazione pura di un principio.'},
+  {text:'Federico Guglielmo IV rifiutò nell\'aprile 1849 la corona imperiale offerta dall\'assemblea.',
+   a:'Il rifiuto conferma il primato del principio dinastico sulla sovranità popolare nella cultura politica tedesca.',
+   b:'La stessa logica legittimista valeva per quasi tutte le monarchie europee del tempo, non solo per la Prussia.'},
+  {text:'Dopo il 1849 la borghesia liberale tedesca, spaventata dalle agitazioni operaie e contadine, rinunciò a insistere sulla via rivoluzionaria.',
+   a:'La rinuncia al potere politico in cambio di sicurezza economica prepara direttamente il patto del 1871.',
+   b:'Lo stesso comportamento si osserva nella borghesia francese dopo le giornate di giugno 1848, e altrove: non è un tratto solo tedesco.'},
+  {text:'Nel 1862 la Dieta prussiana a maggioranza liberale si oppose alla riforma militare bloccando il bilancio.',
+   a:'Mostra un parlamento incapace, già a metà Ottocento, di imporsi davvero sulla corona.',
+   b:'Conflitti tra esecutivo e legislativo sul bilancio militare avvengono in molti sistemi costituzionali coevi.'},
+  {text:'Bismarck governò per anni senza approvazione parlamentare, riscuotendo comunque le imposte.',
+   a:'La violazione aperta della prassi costituzionale, tollerata senza conseguenze, mostra la debolezza strutturale del parlamentarismo tedesco.',
+   b:'È una forzatura politica puntuale, in un momento di crisi, non la norma dell\'intero periodo imperiale.'},
+  {text:'L\'opposizione liberale minacciò ma non passò mai all\'azione diretta.',
+   a:'Conferma l\'incapacità cronica del liberalismo tedesco di tradurre le proprie posizioni in azione politica reale.',
+   b:'La stessa prudenza caratterizza le classi liberali borghesi in tutta Europa dopo il 1848.'},
+  {text:'La guerra del 1866 contro l\'Austria si concluse in poche settimane con la vittoria prussiana a Sadowa.',
+   a:'Una guerra breve e vittoriosa rafforza il prestigio del potere monarchico-militare a spese del parlamentarismo.',
+   b:'È un evento bellico ordinario nel contesto di un secolo di guerre di unificazione, non diverso da quelle italiane.'},
+  {text:'Dopo Sadowa, Bismarck impose all\'Austria sconfitta condizioni di pace miti.',
+   a:'Complica la tesi: mostra un calcolo politico sofisticato, non un\'aggressività cieca o vendicativa.',
+   b:'La moderazione post-bellica è un tratto di normale diplomazia europea dell\'equilibrio, non di militarismo.'},
+  {text:'La guerra del 1870 contro la Francia fu provocata da Bismarck con una manovra diplomatica.',
+   a:'L\'uso strumentale e calcolato del conflitto per fini di politica interna rivela un tratto tipico della futura Realpolitik autoritaria.',
+   b:'Provocare diplomaticamente un conflitto utile ai propri fini è prassi comune tra le grandi potenze ottocentesche.'},
+  {text:'L\'Impero tedesco fu proclamato a Versailles, nel palazzo dei re di Francia, il 18 gennaio 1871.',
+   a:'Nascere da una vittoria militare su suolo nemico imprime allo Stato un\'identità fondata sul conflitto, non sul consenso.',
+   b:'Molte nazioni europee — l\'Italia, la Grecia — nascono da vittorie militari: non è di per sé un tratto autoritario.'},
+  {text:'Il Reichstag fu eletto a suffragio universale maschile diretto, il più ampio d\'Europa occidentale in quel momento.',
+   a:'Complica la tesi: sembra un tratto di avanguardia politica, non di arretratezza.',
+   b:'Prova che la Germania non era affatto arretrata sul piano della partecipazione politica formale — anzi, precedeva l\'Europa occidentale.'},
+  {text:'Il governo imperiale rispondeva solo all\'imperatore, non al Reichstag eletto.',
+   a:'L\'assenza di responsabilità del governo davanti al parlamento eletto è il tratto costituzionale più diretto di un assetto non pienamente liberale.',
+   b:'Convive con un suffragio tra i più ampi d\'Europa: la combinazione è complessa, non riducibile a un\'unica etichetta.'},
+  {text:'Tra il 1872 e il 1875 il governo condusse il Kulturkampf contro la Chiesa cattolica.',
+   a:'La persecuzione legale di una minoranza religiosa mostra un uso autoritario e intollerante del potere statale sin dai primi anni dell\'Impero.',
+   b:'Conflitti Stato-Chiesa di questo tipo attraversano l\'Europa liberale dell\'epoca, dalla Francia laica al Regno d\'Italia della Questione romana.'},
+  {text:'Nel 1873 Bismarck promosse la Lega dei Tre Imperatori con Austria e Russia, in funzione antirivoluzionaria.',
+   a:'L\'alleanza con le due potenze più autoritarie d\'Europa mostra la vera collocazione ideologica del nuovo Stato.',
+   b:'È una normale alleanza diplomatica difensiva, motivata da interessi di sicurezza condivisi, non da affinità di regime.'},
+  {text:'Nel 1875, al congresso di Gotha, nacque il Partito socialdemocratico, il primo partito operaio di massa d\'Europa.',
+   a:'Complica fortemente la tesi: un regime pienamente autoritario difficilmente avrebbe tollerato la nascita e la crescita di un simile partito.',
+   b:'La nascita del primo partito operaio di massa d\'Europa proprio in Germania mostra una vitalità politica e sociale difficile da spiegare come destino autoritario.'}
+];
+
+let classified = 0;
+const choices = [];
+
+function renderFacts(){
+  const wrap = document.getElementById('factsWrap');
+  facts.forEach((f,i)=>{
+    const card = document.createElement('div');
+    card.className = 'fact-card';
+    card.innerHTML = `
+      <div class="fact-num">Fatto ${i+1} di 20</div>
+      <div class="fact-text">${f.text}</div>
+      <div class="fact-opts" id="fopts${i}">
+        <button class="fact-opt a" onclick="chooseDossier(${i},'a')">Dossier A</button>
+        <button class="fact-opt b" onclick="chooseDossier(${i},'b')">Dossier B</button>
+      </div>
+      <div class="dual-reading" id="dread${i}">
+        <div class="dr-row a"><strong>Lettura A</strong><br>${f.a}</div>
+        <div class="dr-row b"><strong>Lettura B</strong><br>${f.b}</div>
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function chooseDossier(i, pick){
+  if(choices[i]) return;
+  choices[i] = pick;
+
+  document.querySelectorAll('#fopts'+i+' .fact-opt').forEach(b=>{
+    b.disabled = true;
+    if(b.classList.contains(pick)) b.classList.add('chosen');
+  });
+  document.getElementById('dread'+i).classList.add('show');
+
+  classified++;
+  document.getElementById('progressFill').style.width = (classified/facts.length*100)+'%';
+  document.getElementById('progressCount').textContent = classified+' / '+facts.length;
+
+  if(classified === facts.length) showClosing();
+}
+
+function showClosing(){
+  const countA = choices.filter(c=>c==='a').length;
+  const countB = choices.filter(c=>c==='b').length;
+  document.getElementById('tally').textContent = `Hai assegnato ${countA} fatti al Dossier A e ${countB} al Dossier B.`;
+  document.getElementById('closing').classList.add('show');
+  document.getElementById('closing').scrollIntoView({behavior:'smooth'});
+}
+
+renderFacts();
+</script>
+</body>
+</html>

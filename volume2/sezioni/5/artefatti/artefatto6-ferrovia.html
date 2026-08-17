@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A che cosa serve una ferrovia</title>
+<style>
+  :root{
+    --beige: #F5F0E8;
+    --gray: #F2F2F2;
+    --brown: #8B7355;
+    --brown-dark: #6B5A42;
+    --petrol: #2C4A52;
+    --petrol-dark: #1E363D;
+    --petrol-tint: #E3EDEE;
+    --petrol-tint-2: #CFE0E2;
+    --ink: #2A2620;
+    --ink-soft: #55504A;
+    --paper: #FBF8F3;
+    --line-a: #6B5A42;
+    --line-b: #2C4A52;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139,115,85,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(44,74,82,0.05), transparent 45%);
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 28px 30px 44px;
+  }
+
+  header{
+    border-bottom: 2px solid var(--petrol);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--petrol);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: normal;
+  }
+
+  .intro{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin: 0;
+  }
+
+  .schema-toggle{
+    display: flex;
+    gap: 8px;
+    margin: 20px 0 16px;
+  }
+
+  .schema-btn{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 13px;
+    border: 1.5px solid var(--brown);
+    background: var(--paper);
+    color: var(--brown-dark);
+    padding: 9px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .schema-btn:hover{ background: var(--gray); }
+
+  .schema-btn.active{
+    background: var(--petrol);
+    border-color: var(--petrol);
+    color: #fff;
+  }
+
+  .map-box{
+    background: var(--beige);
+    border: 1.5px solid var(--brown);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+
+  .map-caption{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink-soft);
+    text-align: center;
+    margin: 8px 0 0;
+  }
+
+  .func-toggles{
+    display: none;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+
+  .func-toggles.show{ display: flex; }
+
+  .func-chip{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    border: 1.5px solid var(--brown);
+    background: var(--paper);
+    color: var(--brown-dark);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .func-chip:hover{ border-color: var(--petrol); }
+
+  .func-chip.active{
+    background: var(--petrol-tint);
+    border-color: var(--petrol);
+    color: var(--petrol-dark);
+    font-weight: 600;
+  }
+
+  .questions{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .qcard{
+    background: var(--gray);
+    border: 1px solid #E0DDD6;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .qtext{
+    font-size: 14.5px;
+    margin: 0 0 8px;
+  }
+
+  .reveal-btn{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12px;
+    border: 1.5px solid var(--brown);
+    background: transparent;
+    color: var(--brown-dark);
+    padding: 5px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .reveal-btn:hover{ background: var(--brown); color: #fff; }
+
+  .answer{
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--brown);
+    font-size: 13.5px;
+    display: none;
+  }
+
+  .answer.show{ display: block; }
+
+  .closing{
+    background: var(--petrol-tint);
+    border: 1.5px solid var(--petrol);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .closing p{
+    font-size: 14px;
+    margin: 0;
+    color: var(--petrol-dark);
+  }
+
+  svg text{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Due casi: India britannica ed Etiopia — Artefatto 6</p>
+    <h1>A che cosa serve una ferrovia</h1>
+    <p class="intro">Un'infrastruttura reale può essere disegnata per servire scopi molto diversi. Confronta due possibili tracciati ferroviari sulla stessa mappa schematica di un territorio coloniale, poi rispondi alle domande sulle conseguenze di ciascun disegno.</p>
+  </header>
+
+  <div class="schema-toggle">
+    <button class="schema-btn active" data-schema="A">Schema A — Circolazione interna</button>
+    <button class="schema-btn" data-schema="B">Schema B — Estrattivo</button>
+  </div>
+
+  <div class="map-box">
+    <svg viewBox="0 0 700 380" id="mapSvg" style="width:100%; height:auto; display:block;">
+      <!-- territorio stilizzato -->
+      <path d="M 90 60 Q 40 190 90 320 L 620 320 Q 660 190 620 60 Z" fill="#EFE7D8" stroke="#B9A98A" stroke-width="1.5"/>
+      <!-- linea di costa -->
+      <path d="M 90 60 Q 40 190 90 320" fill="none" stroke="var(--brown)" stroke-width="3" stroke-dasharray="1 6" stroke-linecap="round"/>
+
+      <g id="edgesA" style="display:none;"></g>
+      <g id="edgesB" style="display:none;"></g>
+
+      <!-- nodi -->
+      <g id="nodes"></g>
+    </svg>
+    <p class="map-caption" id="mapCaption">Schema A: le regioni interne, le aree di produzione e i porti sono collegati tra loro in ogni direzione.</p>
+  </div>
+
+  <div class="func-toggles" id="funcToggles">
+    <button class="func-chip" data-func="militare">Logistica militare</button>
+    <button class="func-chip" data-func="materie_prime">Materie prime ai porti</button>
+    <button class="func-chip" data-func="manufatti">Distribuzione manufatti</button>
+  </div>
+
+  <div class="questions">
+    <div class="qcard">
+      <p class="qtext">Un raccolto della Regione interna 1 deve arrivare alla Regione interna 2, per essere venduto sul mercato locale. In quale schema questo percorso è possibile via ferrovia?</p>
+      <button class="reveal-btn" data-q="q1">Mostra il confronto</button>
+      <div class="answer" id="q1">Nello Schema A esiste un collegamento diretto tra le due regioni interne. Nello Schema B non esiste alcun collegamento ferroviario tra Regione interna 1 e Regione interna 2: il raccolto dovrebbe uscire dalla rete e affidarsi ad altri mezzi, molto più lenti e costosi.</div>
+    </div>
+    <div class="qcard">
+      <p class="qtext">Quanto costa, in termini di infrastruttura disponibile, spostare merci tra due regioni interne nello Schema estrattivo?</p>
+      <button class="reveal-btn" data-q="q2">Mostra il confronto</button>
+      <div class="answer" id="q2">Nello Schema B il costo è molto alto, perché semplicemente non esiste un tracciato che colleghi le regioni interne tra loro: ogni linea converge verso un porto, non verso un'altra regione. Nello Schema A lo stesso spostamento avviene su un collegamento diretto.</div>
+    </div>
+    <div class="qcard">
+      <p class="qtext">Quanto rapidamente un reparto militare può raggiungere un'area interna partendo da un porto?</p>
+      <button class="reveal-btn" data-q="q3">Mostra il confronto</button>
+      <div class="answer" id="q3">In entrambi gli schemi il collegamento porto-regione interna esiste ed è diretto. Ma nello Schema B questa è una delle poche funzioni che la linea svolge per quella regione, non un collegamento tra tanti: la stessa efficienza che serve a muovere truppe serve anche a portare nell'entroterra i manufatti importati, non a farlo comunicare con le altre regioni.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="wrap" style="padding-top:0;">
+  <div class="closing">
+    <p>Le ferrovie qui rappresentate sono reali, estese, effettivamente utilizzate: la loro esistenza non è in discussione. Ciò che il confronto tra i due schemi rende visibile è che una stessa infrastruttura può essere disegnata per collegare un territorio al proprio interno, oppure per collegarlo a un centro esterno — e che il disegno della rete, non la sua semplice esistenza, rivela quale delle due funzioni fosse stata perseguita.</p>
+  </div>
+</div>
+
+<script>
+  const nodes = {
+    porto1: { x: 95, y: 110, label: "Porto Nord", type: "porto" },
+    porto2: { x: 95, y: 270, label: "Porto Sud", type: "porto" },
+    reg1:   { x: 330, y: 130, label: "Regione interna 1", type: "regione" },
+    reg2:   { x: 330, y: 280, label: "Regione interna 2", type: "regione" },
+    prod1:  { x: 560, y: 100, label: "Area di produzione 1", type: "produzione" },
+    prod2:  { x: 560, y: 300, label: "Area di produzione 2", type: "produzione" }
+  };
+
+  const schemaA = [
+    ['reg1','reg2'], ['reg1','prod1'], ['reg2','prod2'], ['prod1','prod2'],
+    ['reg1','porto1'], ['reg2','porto2']
+  ];
+
+  const schemaB = [
+    { pair: ['porto1','reg1'], funcs: ['militare','manufatti'] },
+    { pair: ['porto2','reg2'], funcs: ['militare','manufatti'] },
+    { pair: ['prod1','porto1'], funcs: ['materie_prime'] },
+    { pair: ['prod2','porto2'], funcs: ['materie_prime'] }
+  ];
+
+  const nodeFill = { porto: '#2C4A52', regione: '#8B7355', produzione: '#6B5A42' };
+
+  const nodesG = document.getElementById('nodes');
+  Object.values(nodes).forEach(n => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', n.x); c.setAttribute('cy', n.y); c.setAttribute('r', 9);
+    c.setAttribute('fill', nodeFill[n.type]);
+    c.setAttribute('stroke', '#FBF8F3'); c.setAttribute('stroke-width', '2');
+    nodesG.appendChild(c);
+
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', n.x); t.setAttribute('y', n.type === 'porto' ? n.y - 16 : n.y - 16);
+    t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('font-size', '12.5');
+    t.setAttribute('fill', '#2A2620');
+    t.textContent = n.label;
+    nodesG.appendChild(t);
+  });
+
+  function edgePath(a, b){
+    const n1 = nodes[a], n2 = nodes[b];
+    return `M ${n1.x} ${n1.y} L ${n2.x} ${n2.y}`;
+  }
+
+  const edgesA_G = document.getElementById('edgesA');
+  schemaA.forEach(([a,b]) => {
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d', edgePath(a,b));
+    p.setAttribute('stroke', 'var(--line-a)');
+    p.setAttribute('stroke-width', '3');
+    p.setAttribute('fill', 'none');
+    p.setAttribute('stroke-linecap', 'round');
+    edgesA_G.appendChild(p);
+  });
+
+  const edgesB_G = document.getElementById('edgesB');
+  schemaB.forEach(edge => {
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d', edgePath(edge.pair[0], edge.pair[1]));
+    p.setAttribute('stroke', '#C9BFA8');
+    p.setAttribute('stroke-width', '3');
+    p.setAttribute('fill', 'none');
+    p.setAttribute('stroke-linecap', 'round');
+    p.dataset.funcs = edge.funcs.join(',');
+    edgesB_G.appendChild(p);
+  });
+
+  let currentSchema = 'A';
+  let activeFuncs = new Set();
+
+  const captions = {
+    A: "Schema A: le regioni interne, le aree di produzione e i porti sono collegati tra loro in ogni direzione.",
+    B: "Schema B: ogni linea converge dalle aree di produzione ai porti, o dai porti verso una singola regione interna. Nessun collegamento diretto tra le regioni."
+  };
+
+  function renderMap(){
+    document.getElementById('edgesA').style.display = currentSchema === 'A' ? 'block' : 'none';
+    document.getElementById('edgesB').style.display = currentSchema === 'B' ? 'block' : 'none';
+    document.getElementById('mapCaption').textContent = captions[currentSchema];
+    document.getElementById('funcToggles').classList.toggle('show', currentSchema === 'B');
+
+    document.querySelectorAll('.schema-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.schema === currentSchema);
+    });
+
+    if(currentSchema === 'B'){
+      document.querySelectorAll('#edgesB path').forEach(p => {
+        const funcs = p.dataset.funcs.split(',');
+        const isActive = activeFuncs.size === 0 || funcs.some(f => activeFuncs.has(f));
+        p.setAttribute('stroke', activeFuncs.size > 0 && funcs.some(f => activeFuncs.has(f)) ? 'var(--line-b)' : '#C9BFA8');
+        p.setAttribute('stroke-width', activeFuncs.size > 0 && funcs.some(f => activeFuncs.has(f)) ? '5' : '3');
+      });
+    }
+  }
+
+  document.querySelectorAll('.schema-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSchema = btn.dataset.schema;
+      renderMap();
+    });
+  });
+
+  document.querySelectorAll('.func-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const f = chip.dataset.func;
+      if(activeFuncs.has(f)){ activeFuncs.delete(f); chip.classList.remove('active'); }
+      else { activeFuncs.add(f); chip.classList.add('active'); }
+      renderMap();
+    });
+  });
+
+  document.querySelectorAll('.reveal-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.q);
+      target.classList.toggle('show');
+      btn.textContent = target.classList.contains('show') ? 'Nascondi il confronto' : 'Mostra il confronto';
+    });
+  });
+
+  renderMap();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perché conquistare? Le spiegazioni a confronto</title>
+<style>
+  :root{
+    --beige: #F5F0E8;
+    --gray: #F2F2F2;
+    --brown: #8B7355;
+    --brown-dark: #6B5A42;
+    --petrol: #2C4A52;
+    --petrol-dark: #1E363D;
+    --petrol-tint: #E3EDEE;
+    --petrol-tint-2: #CFE0E2;
+    --ink: #2A2620;
+    --ink-soft: #55504A;
+    --paper: #FBF8F3;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139,115,85,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(44,74,82,0.05), transparent 45%);
+    line-height: 1.5;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 30px 44px;
+  }
+
+  header{
+    border-bottom: 2px solid var(--petrol);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--petrol);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: normal;
+  }
+
+  .intro{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 780px;
+    margin: 0;
+  }
+
+  .note{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11.5px;
+    font-style: italic;
+    color: var(--brown-dark);
+    margin: 8px 0 0;
+  }
+
+  .toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0 22px;
+  }
+
+  .status{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .status strong{ color: var(--petrol); }
+
+  .btn{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    border: 1.5px solid var(--brown);
+    background: transparent;
+    color: var(--brown-dark);
+    padding: 7px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .btn:hover{ background: var(--brown); color: #fff; }
+
+  .bank-label{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brown-dark);
+    margin: 0 0 8px;
+  }
+
+  #bank{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    min-height: 44px;
+    padding: 12px;
+    background: var(--gray);
+    border: 1px solid #E0DDD6;
+    border-radius: 6px;
+    margin-bottom: 22px;
+  }
+
+  #bank:empty::after{
+    content: "Tutti gli elementi sono stati collocati.";
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--petrol-dark);
+  }
+
+  .card{
+    font-size: 13px;
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 11px;
+    cursor: pointer;
+    max-width: 300px;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    user-select: none;
+  }
+
+  .card:hover{ box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+
+  .card.selected{
+    border-color: var(--petrol);
+    background: var(--petrol-tint);
+    box-shadow: 0 0 0 2px var(--petrol-tint-2);
+  }
+
+  .columns{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+
+  .column{
+    background: var(--beige);
+    border: 1.5px solid var(--brown);
+    border-radius: 8px;
+    padding: 14px;
+    min-height: 300px;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .column.middle{
+    background: var(--gray);
+    border-style: dashed;
+  }
+
+  .column.targetable{
+    border-color: var(--petrol);
+    box-shadow: 0 0 0 3px var(--petrol-tint);
+  }
+
+  .col-head{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--petrol-dark);
+    margin: 0 0 4px;
+  }
+
+  .col-def{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--brown);
+    line-height: 1.4;
+  }
+
+  .col-items{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .placed{
+    background: var(--paper);
+    border: 1.5px solid var(--brown);
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+
+  .placed:hover{ box-shadow: 0 2px 5px rgba(0,0,0,0.07); }
+
+  .placed .feedback{
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #E4DFD5;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 11px;
+    color: var(--petrol-dark);
+    line-height: 1.4;
+  }
+
+  .placed .feedback .label{
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 9.5px;
+    color: var(--brown-dark);
+    margin-bottom: 3px;
+  }
+
+  .synthesis{
+    margin-top: 26px;
+    background: var(--petrol-tint);
+    border: 1.5px solid var(--petrol);
+    border-radius: 8px;
+    padding: 20px 22px;
+    display: none;
+  }
+
+  .synthesis.show{ display: block; }
+
+  .synthesis h2{
+    font-family: Georgia, serif;
+    font-weight: normal;
+    font-size: 17px;
+    color: var(--petrol-dark);
+    margin: 0 0 10px;
+  }
+
+  .synthesis p{
+    font-size: 14.5px;
+    margin: 0 0 10px;
+  }
+
+  .synthesis p:last-child{ margin-bottom: 0; }
+
+  @media (max-width: 780px){
+    .columns{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Dal colonialismo all'imperialismo di fine Ottocento — Artefatto 5</p>
+    <h1>Perché conquistare? Le spiegazioni a confronto</h1>
+    <p class="intro">Il capitolo espone due letture della corsa coloniale: una necessità economica, una scelta politica. Colloca ciascun elemento nel contenitore corretto — quello di chi lo usa come prova a favore dell'una o dell'altra lettura, o nel terzo contenitore se l'elemento non basta da solo a far pendere la bilancia.</p>
+    <p class="note">Nota: l'elemento sul protezionismo doganale riporta la datazione "dopo il 1879" per precisione storica generale; il capitolo la colloca genericamente nel periodo della Grande Depressione (1873-1896) senza specificare l'anno.</p>
+  </header>
+
+  <div class="toolbar">
+    <p class="status">Collocati: <strong id="count">0</strong> di <span id="total">9</span></p>
+    <button class="btn" id="resetBtn">Ricomincia</button>
+  </div>
+
+  <p class="bank-label">Elementi da classificare</p>
+  <div id="bank"></div>
+
+  <div class="columns">
+    <div class="column" data-cat="economica">
+      <p class="col-head">Sostiene: necessità economica</p>
+      <p class="col-def">L'imperialismo come risposta a trasformazioni strutturali dell'economia europea.</p>
+      <div class="col-items"></div>
+    </div>
+    <div class="column middle" data-cat="aperto">
+      <p class="col-head">Non decide tra le due</p>
+      <p class="col-def">Elementi compatibili con entrambe le letture, o che le complicano senza risolverle.</p>
+      <div class="col-items"></div>
+    </div>
+    <div class="column" data-cat="politica">
+      <p class="col-head">Sostiene: scelta politica</p>
+      <p class="col-def">L'imperialismo come strumento di rango internazionale e di coesione interna.</p>
+      <div class="col-items"></div>
+    </div>
+  </div>
+
+  <div class="synthesis" id="synthesis">
+    <h2>Due letture, un problema che resta aperto</h2>
+    <p>Le due letture non si escludono: gli elementi economici (sovrapproduzione, protezionismo, materie prime, capitali eccedenti) e quelli politici (rango, "posto al sole", consenso interno) rispondono a domande diverse — che cosa cercavano gli europei nelle colonie, e perché lo cercavano con tanta urgenza proprio in quel momento — e possono coesistere nella stessa spiegazione complessiva.</p>
+    <p>Il problema che nessuna delle due letture, presa da sola, riesce ad assorbire del tutto è lo scarto tra l'aspettativa di rendimento economico e il risultato reale: le colonie conquistate dopo il 1870 attirarono pochi capitali e produssero risultati deludenti, eppure questo non fermò la corsa. Le decisioni furono prese sulla base di un'aspettativa che si rivelò in larga misura sbagliata.</p>
+  </div>
+
+</div>
+
+<script>
+  const catLabels = {
+    economica: "Sostiene la lettura economica",
+    aperto: "Elemento aperto, compatibile con entrambe",
+    politica: "Sostiene la lettura politica"
+  };
+
+  const elements = [
+    {
+      id: 'e1', cat: 'economica',
+      text: "La crisi di sovrapproduzione industriale europea.",
+      feedback: "Sostiene la lettura economica: la produzione industriale eccedente rispetto alla domanda interna spinge alla ricerca di nuovi sbocchi commerciali oltremare."
+    },
+    {
+      id: 'e2', cat: 'economica',
+      text: "Il protezionismo doganale instaurato da quasi tutti gli Stati europei dopo il 1879.",
+      feedback: "Sostiene la lettura economica: la chiusura dei mercati vicini dietro barriere doganali rende necessario procurarsi mercati di sbocco esclusivi altrove."
+    },
+    {
+      id: 'e3', cat: 'economica',
+      text: "La domanda di materie prime tecnologiche: caucciù, petrolio, metalli non ferrosi.",
+      feedback: "Sostiene la lettura economica: la seconda rivoluzione industriale richiede prodotti che l'Europa non possiede, o possiede in quantità insufficiente."
+    },
+    {
+      id: 'e4', cat: 'economica',
+      text: "Capitali eccedenti in cerca di rendimenti che i mercati europei saturi non offrono più.",
+      feedback: "Sostiene la lettura economica: i capitali trovano oltremare investimenti ad alto ritorno atteso in ferrovie, porti, infrastrutture minerarie."
+    },
+    {
+      id: 'e5', cat: 'aperto',
+      text: "Lo scarso rendimento effettivo delle colonie conquistate dopo il 1870.",
+      feedback: "Complica la lettura puramente economica: le colonie attirarono in realtà pochi capitali e produssero risultati deludenti, un dato che nessuna lettura strettamente economicistica riesce ad assorbire del tutto."
+    },
+    {
+      id: 'e6', cat: 'aperto',
+      text: "La destinazione prevalente degli investimenti europei, rivolti a paesi già industrializzati.",
+      feedback: "Complica la lettura economica nello stesso modo: il grosso del commercio e degli investimenti continuò a muoversi tra paesi già industrializzati, non verso i territori appena occupati."
+    },
+    {
+      id: 'e7', cat: 'politica',
+      text: "Il possesso coloniale come segno di rango tra le grandi potenze.",
+      feedback: "Sostiene la lettura politica: la bandiera oltremare diventa la misura con cui una nazione dimostra di appartenere al novero delle grandi potenze, a prescindere dal valore reale del territorio."
+    },
+    {
+      id: 'e8', cat: 'politica',
+      text: "Il \"posto al sole\" rivendicato dalla Germania di Guglielmo II.",
+      feedback: "Sostiene la lettura politica: la Germania non tollera di possedere una quota coloniale inferiore a quella di Francia e Gran Bretagna, indipendentemente da ogni calcolo di rendimento."
+    },
+    {
+      id: 'e9', cat: 'politica',
+      text: "La funzione di consenso interno dell'espansione coloniale.",
+      feedback: "Sostiene la lettura politica: offrire alle classi dirigenti europee lo strumento per cementare la fedeltà allo Stato e spostare all'esterno tensioni sociali difficili da gestire in patria."
+    }
+  ];
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i+1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  let order = shuffle(elements.map(s => s.id));
+  let placements = {};
+  let selectedId = null;
+
+  const bank = document.getElementById('bank');
+  const countEl = document.getElementById('count');
+  const totalEl = document.getElementById('total');
+  totalEl.textContent = elements.length;
+
+  function getElement(id){
+    return elements.find(s => s.id === id);
+  }
+
+  function render(){
+    bank.innerHTML = '';
+    order.forEach(id => {
+      if(placements[id]) return;
+      const el = getElement(id);
+      const card = document.createElement('div');
+      card.className = 'card' + (selectedId === id ? ' selected' : '');
+      card.textContent = el.text;
+      card.addEventListener('click', () => {
+        selectedId = (selectedId === id) ? null : id;
+        render();
+      });
+      bank.appendChild(card);
+    });
+
+    document.querySelectorAll('.column').forEach(col => {
+      const cat = col.dataset.cat;
+      const itemsWrap = col.querySelector('.col-items');
+      itemsWrap.innerHTML = '';
+      Object.keys(placements)
+        .filter(id => placements[id] === cat)
+        .forEach(id => {
+          const el = getElement(id);
+          const div = document.createElement('div');
+          div.className = 'placed';
+          div.innerHTML = `<div>${el.text}</div>
+            <div class="feedback">
+              <span class="label">${catLabels[el.cat]}</span>
+              ${el.feedback}
+            </div>`;
+          div.addEventListener('click', () => {
+            delete placements[id];
+            selectedId = id;
+            render();
+          });
+          itemsWrap.appendChild(div);
+        });
+
+      col.classList.toggle('targetable', !!selectedId);
+    });
+
+    countEl.textContent = Object.keys(placements).length;
+
+    const synthesis = document.getElementById('synthesis');
+    synthesis.classList.toggle('show', Object.keys(placements).length === elements.length);
+  }
+
+  document.querySelectorAll('.column').forEach(col => {
+    col.addEventListener('click', (e) => {
+      if(!selectedId) return;
+      if(e.target.closest('.placed')) return;
+      placements[selectedId] = col.dataset.cat;
+      selectedId = null;
+      render();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    placements = {};
+    selectedId = null;
+    order = shuffle(elements.map(s => s.id));
+    render();
+  });
+
+  render();
+</script>
+
+</body>
+</html>

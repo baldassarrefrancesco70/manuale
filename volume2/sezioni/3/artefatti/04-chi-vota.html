@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi vota — il suffragio censitario</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --admit:#4A6B5C; --excl:#C9C2B4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:960px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:700px;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .intro{background:var(--paper);border:1px solid #DCD2BE;border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;font-size:.88rem;line-height:1.6;color:var(--ink-soft);margin-bottom:1.4rem;}
+  .source-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;color:var(--brown);margin-top:.5rem;}
+
+  .controls{display:flex;gap:.8rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+  .threshold-btn{
+    flex:1;min-width:150px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;
+    background:var(--gray);border:1.5px solid #D4CFC4;border-radius:6px;
+    padding:.8rem 1rem;cursor:pointer;text-align:left;color:var(--ink-soft);
+  }
+  .threshold-btn .tb-pct{display:block;font-size:1.3rem;color:var(--brown-dark);font-family:Georgia,serif;margin-bottom:.15rem;}
+  .threshold-btn:hover{border-color:var(--brown);}
+  .threshold-btn.active{border-color:var(--brown);background:#FBF0DD;}
+
+  .stage{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1.2rem;margin-bottom:1.2rem;}
+  .population-grid{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;max-width:640px;margin:0 auto 1rem;}
+  .figure{width:100%;aspect-ratio:1;border-radius:2px;background:var(--excl);transition:background .25s;}
+  .figure.admitted{background:var(--admit);}
+
+  .count-row{display:flex;justify-content:center;gap:2rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.85rem;color:var(--ink-soft);}
+  .count-row strong{color:var(--brown-dark);font-size:1.1rem;}
+
+  .doctrine-panel{display:none;background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.1rem 1.3rem;margin-bottom:1.2rem;font-size:.88rem;line-height:1.65;}
+  .doctrine-panel.show{display:block;}
+  .doctrine-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.6rem;}
+
+  .compare-strip{display:flex;gap:.6rem;margin-bottom:1.4rem;}
+  .compare-item{flex:1;background:var(--gray);border-radius:5px;padding:.6rem;text-align:center;opacity:.4;transition:opacity .2s;}
+  .compare-item.seen{opacity:1;}
+  .compare-item .ci-pct{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1rem;color:var(--brown-dark);}
+  .compare-item .ci-count{font-size:.72rem;color:var(--ink-soft);}
+
+  .closing-q{font-style:italic;font-size:.92rem;line-height:1.6;background:var(--gray);border-left:4px solid var(--brown);border-radius:4px;padding:.9rem 1.1rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Vienna e il principio di nazionalità · Artefatto 4</div>
+    <div class="header-title">Chi vota</div>
+    <div class="header-sub">Cento figure, una popolazione schematica. Applica una soglia di censo e osserva quante ne restano ammesse al voto — poi leggi l'argomento con cui i liberali giustificavano l'esclusione.</div>
+  </div>
+
+  <div class="main">
+    <div class="intro">
+      Il suffragio censitario ammetteva al voto, nella maggior parte dei regimi liberali ottocenteschi, una quota di popolazione compresa <strong>tra l'uno e il tre per cento</strong>. Le tre soglie qui sotto sono punti d'esempio dentro quell'intervallo, non tre regimi storici nominati: servono a farti vedere, in proporzione, quanto stretta fosse la base reale del voto.
+      <div class="source-note">[Le tre soglie sono illustrative, costruite dentro il solo dato quantitativo presente nel capitolo — non corrispondono a Stati o date specifiche.]</div>
+    </div>
+
+    <div class="controls" id="controls"></div>
+
+    <div class="stage">
+      <div class="population-grid" id="grid"></div>
+      <div class="count-row">Ammessi al voto: <strong id="countAdmitted">—</strong> su 100</div>
+    </div>
+
+    <div class="doctrine-panel" id="doctrinePanel">
+      <div class="doctrine-title">La dottrina, non l'indignazione</div>
+      <div id="doctrineText"></div>
+    </div>
+
+    <div class="compare-strip" id="compareStrip"></div>
+
+    <div class="closing-q">Il diritto di voto, in questa dottrina, non è un diritto della persona: è una funzione riservata a chi possiede indipendenza materiale. Quali argomenti, oggi usati per limitare l'accesso alla partecipazione politica, hanno la stessa forma — anche se non parlano più di censo?</div>
+  </div>
+</div>
+
+<script>
+const thresholds = [
+  {pct:1, label:'Soglia bassa', sub:'verso l\'estremo inferiore dell\'intervallo (1%)'},
+  {pct:2, label:'Soglia media', sub:'a metà dell\'intervallo (2%)'},
+  {pct:3, label:'Soglia alta', sub:'verso l\'estremo superiore dell\'intervallo (3%)'}
+];
+
+const doctrineText = 'Il diritto di voto è concepito come una funzione che richiede indipendenza materiale e istruzione, non come un diritto della persona: chi dipende economicamente da altri, secondo questa dottrina, non è in condizione di esprimere una volontà propria. Da qui il suffragio censitario, che ammette al voto — nella maggior parte dei regimi liberali ottocenteschi — una quota di popolazione compresa tra l\'uno e il tre per cento.';
+
+let seenThresholds = new Set();
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  for(let i=0;i<100;i++){
+    const f = document.createElement('div');
+    f.className = 'figure';
+    f.id = 'fig'+i;
+    grid.appendChild(f);
+  }
+}
+
+function renderControls(){
+  const c = document.getElementById('controls');
+  thresholds.forEach((t,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'threshold-btn';
+    btn.id = 'thbtn'+i;
+    btn.innerHTML = `<span class="tb-pct">${t.pct}%</span>${t.label}<br><span style="font-size:.72rem;">${t.sub}</span>`;
+    btn.onclick = ()=>applyThreshold(i);
+    c.appendChild(btn);
+  });
+}
+
+function renderCompareStrip(){
+  const strip = document.getElementById('compareStrip');
+  thresholds.forEach((t,i)=>{
+    const item = document.createElement('div');
+    item.className = 'compare-item';
+    item.id = 'ci'+i;
+    item.innerHTML = `<div class="ci-pct">${t.pct}%</div><div class="ci-count">${t.pct} su 100 ammessi</div>`;
+    strip.appendChild(item);
+  });
+}
+
+function applyThreshold(i){
+  document.querySelectorAll('.threshold-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('thbtn'+i).classList.add('active');
+
+  const pct = thresholds[i].pct;
+  for(let j=0;j<100;j++){
+    document.getElementById('fig'+j).classList.toggle('admitted', j<pct);
+  }
+  document.getElementById('countAdmitted').textContent = pct;
+
+  document.getElementById('doctrineText').textContent = doctrineText;
+  document.getElementById('doctrinePanel').classList.add('show');
+
+  seenThresholds.add(i);
+  document.getElementById('ci'+i).classList.add('seen');
+}
+
+renderGrid();
+renderControls();
+renderCompareStrip();
+</script>
+</body>
+</html>

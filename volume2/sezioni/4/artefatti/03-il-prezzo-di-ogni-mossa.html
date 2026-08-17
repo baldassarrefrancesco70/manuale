@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il prezzo di ogni mossa</title>
+<style>
+  :root{
+    --beige:#F5F0E8; --gray:#F2F2F2; --brown:#8B7355; --brown-dark:#6B5740;
+    --ink:#2C2A24; --ink-soft:#5A5548; --paper:#FBF9F4; --mette:#B06A4A; --ottiene:#4A7A5C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--beige);color:var(--ink);}
+  .wrap{max-width:980px;margin:0 auto;}
+  .header{background:var(--brown);padding:1.5rem 2rem 1.2rem;border-bottom:4px solid var(--brown-dark);}
+  .header-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFE4D4;margin-bottom:.4rem;}
+  .header-title{font-size:1.4rem;color:#FBF9F4;}
+  .header-sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#EFE4D4;margin-top:.55rem;line-height:1.5;max-width:700px;}
+
+  .progress-wrap{background:var(--brown-dark);padding:.65rem 2rem;display:flex;align-items:center;gap:1rem;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;color:#EFE4D4;}
+  .progress-track{flex:1;height:5px;background:rgba(0,0,0,.2);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:#D9C6A5;width:0%;transition:width .4s ease;}
+
+  .main{padding:1.6rem 2rem 2.5rem;}
+  .ledger{margin-bottom:1.4rem;}
+  .ledger-step{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:.7rem .9rem;margin-bottom:.6rem;font-size:.8rem;}
+  .ledger-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;color:var(--brown-dark);font-weight:600;margin-bottom:.4rem;}
+  .ledger-row{display:flex;gap:.6rem;}
+  .ledger-cell{flex:1;padding:.4rem .5rem;border-radius:4px;line-height:1.4;}
+  .ledger-cell.mette{background:#F7E9E4;}
+  .ledger-cell.ottiene{background:#E4EFE6;}
+
+  .step-card{background:var(--paper);border:1px solid #DCD2BE;border-radius:6px;padding:1.3rem 1.5rem;}
+  .step-num{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.3rem;}
+  .step-title{font-size:1.05rem;color:var(--brown-dark);margin-bottom:.8rem;}
+  .step-context{font-size:.86rem;line-height:1.55;margin-bottom:1.1rem;color:var(--ink-soft);}
+
+  .bilancia{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+  .plate{background:var(--gray);border-radius:6px;padding:.8rem;min-height:80px;}
+  .plate-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.5rem;}
+  .plate.mette .plate-title{color:var(--mette);}
+  .plate.ottiene .plate-title{color:var(--ottiene);}
+  .plate-content{font-size:.82rem;line-height:1.5;min-height:2rem;}
+
+  .opts{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;}
+  .opt-group-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.75rem;color:var(--brown-dark);margin:.6rem 0 .3rem;}
+  .opt-btn{text-align:left;background:var(--gray);border:1.5px solid #D4CFC4;border-radius:5px;padding:.55rem .8rem;font-family:Georgia,serif;font-size:.82rem;cursor:pointer;}
+  .opt-btn:hover{border-color:var(--brown);}
+  .opt-btn.chosen-true{border-color:var(--ottiene);background:#EAF2EA;}
+  .opt-btn.chosen-false{border-color:#B06A4A;background:#F7E9E4;}
+  .opt-btn[disabled]{cursor:default;}
+
+  .feedback{display:none;font-size:.8rem;line-height:1.5;padding:.6rem .8rem;border-radius:4px;background:#FBF3E5;border-left:3px solid var(--brown);margin-bottom:.8rem;}
+  .feedback.show{display:block;}
+
+  .next-btn{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;background:var(--brown);color:var(--paper);border:none;border-radius:4px;padding:.6rem 1.2rem;cursor:pointer;}
+  .next-btn:hover{background:var(--brown-dark);}
+  .next-btn[disabled]{background:#D9D2C4;cursor:default;}
+
+  .final{display:none;}
+  .final.show{display:block;}
+  .final-card{background:#FBF6EC;border:1.5px solid var(--brown);border-radius:6px;padding:1.4rem 1.6rem;}
+  .final-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-dark);margin-bottom:.9rem;}
+  .plombieres-compare{background:var(--paper);border-radius:5px;padding:.8rem 1rem;font-size:.85rem;line-height:1.6;margin-bottom:1rem;}
+  .closing-q{font-style:italic;font-size:.92rem;line-height:1.6;padding-top:.9rem;border-top:1px solid #D9C6A0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-label">Cavour e la costruzione del Regno · Artefatto 3</div>
+    <div class="header-title">Il prezzo di ogni mossa</div>
+    <div class="header-sub">Sette passaggi della politica estera piemontese, 1854-1860. Per ciascuno, una bilancia a due piatti: che cosa il Piemonte mette, che cosa ottiene. Alcune opzioni sono plausibili ma false.</div>
+  </div>
+
+  <div class="progress-wrap">
+    <span>Passaggi completati</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span id="progressCount">0 / 7</span>
+  </div>
+
+  <div class="main">
+    <div class="ledger" id="ledger"></div>
+    <div id="stepWrap"></div>
+
+    <div class="final" id="final">
+      <div class="final-card">
+        <div class="final-title">Il bilancio del decennio</div>
+        <div class="plombieres-compare">Il progetto firmato a Plombières nel 1858 prevedeva quattro Stati confederati sotto la presidenza onoraria del Papa, con Nizza e Savoia già promesse alla Francia. L'esito reale — uno Stato unitario, senza il Papa, con l'aggiunta imprevista dell'Italia centrale e del Mezzogiorno — si discosta da quel piano in più di un passaggio. Non esiste una risposta unica su dove esattamente il percorso abbia deviato: la Spedizione dei Mille, che Plombières non prevedeva affatto, è il candidato più ovvio, ma le annessioni dell'Italia centrale del 1860 erano già un allontanamento dal progetto originario.</div>
+        <div class="closing-q">Ogni acquisizione ebbe un prezzo negoziato, e nessun passaggio fu deciso dalla sola forza italiana. In che senso, allora, l'unificazione fu un'iniziativa nazionale — e chi ne fu davvero l'autore?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const steps = [
+  {
+    title:'Spedizione in Crimea', years:'1854-1855',
+    context:'Il Piemonte, senza alcun interesse diretto nella guerra fra Russia e potenze occidentali, decide di parteciparvi al fianco di Francia e Gran Bretagna.',
+    metteOpts:[
+      {text:'Un corpo di spedizione di circa 20.000 uomini, in una guerra che non riguardava l\'Italia.', real:true},
+      {text:'Il riconoscimento immediato dell\'indipendenza italiana da parte delle potenze occidentali.', real:false}
+    ],
+    otterrOpts:[
+      {text:'Il diritto di sedere al tavolo dei vincitori al Congresso di Parigi.', real:true},
+      {text:'Una promessa scritta di intervento militare futuro contro l\'Austria.', real:false}
+    ],
+    note:'Non fu chiesto né ottenuto alcun impegno concreto: solo l\'ingresso nel consesso delle grandi potenze.'
+  },
+  {
+    title:'Congresso di Parigi', years:'1856',
+    context:'Seduto al tavolo dei vincitori grazie alla Crimea, Cavour usa l\'occasione per portare la questione italiana all\'attenzione europea.',
+    metteOpts:[
+      {text:'L\'occasione diplomatica appena guadagnata, denunciando pubblicamente la presenza austriaca in Italia e il malgoverno borbonico.', real:true},
+      {text:'Un\'alleanza militare formale con la Gran Bretagna.', real:false}
+    ],
+    otterrOpts:[
+      {text:'La trasformazione della questione italiana da problema interno a caso di interesse continentale.', real:true},
+      {text:'Un impegno scritto delle potenze a intervenire contro l\'Austria.', real:false}
+    ],
+    note:'Nessun impegno concreto fu preso: fu un successo di visibilità diplomatica, non di sostanza.'
+  },
+  {
+    title:'Accordi di Plombières', years:'1858',
+    context:'Incontro segreto fra Cavour e Napoleone III per costruire un\'alleanza contro l\'Austria.',
+    metteOpts:[
+      {text:'L\'impegno a cedere Nizza e la Savoia alla Francia, e l\'accettazione di un\'Italia sotto egemonia francese, divisa in quattro Stati confederati.', real:true},
+      {text:'Il riconoscimento immediato dell\'annessione della Lombardia al Piemonte.', real:false}
+    ],
+    otterrOpts:[
+      {text:'L\'impegno francese a intervenire militarmente in caso di attacco austriaco al Piemonte.', real:true},
+      {text:'L\'impegno francese a un\'Italia unita sotto la Casa Savoia.', real:false}
+    ],
+    note:'Il progetto di Plombières non prevedeva affatto l\'unità: prevedeva una confederazione a quattro sotto presidenza onoraria del Papa.'
+  },
+  {
+    title:'Provocazione dell\'ultimatum austriaco', years:'1859',
+    context:'Per far scattare l\'alleanza di Plombières, Cavour ha bisogno che sia l\'Austria a dichiarare guerra per prima.',
+    metteOpts:[
+      {text:'L\'ammassamento di truppe sabaude e dei Cacciatori delle Alpi di Garibaldi sul confine del Ticino, rischiando la guerra.', real:true},
+      {text:'Una dichiarazione ufficiale di guerra all\'Austria.', real:false}
+    ],
+    otterrOpts:[
+      {text:'L\'Austria cade nella trappola e dichiara guerra per prima, facendo scattare l\'alleanza francese.', real:true},
+      {text:'Il ritiro pacifico e negoziato dell\'Austria dal Lombardo-Veneto.', real:false}
+    ],
+    note:'Senza che fosse l\'Austria a muovere il primo passo, l\'alleanza di Plombières non si sarebbe attivata.'
+  },
+  {
+    title:'La campagna del 1859', years:'1859',
+    context:'Le truppe franco-piemontesi affrontano l\'Austria a Magenta e a Solferino, mentre nel Centro Italia scoppiano moti indipendenti.',
+    metteOpts:[
+      {text:'Le vittorie militari congiunte, ottenute soprattutto grazie all\'apporto francese.', real:true},
+      {text:'Un esercito piemontese che vince da solo, senza l\'aiuto francese.', real:false}
+    ],
+    otterrOpts:[
+      {text:'La Lombardia, più moti spontanei in Toscana, Parma, Modena ed Emilia-Romagna che Plombières non aveva previsto.', real:true},
+      {text:'Il Veneto e la Lombardia insieme, come previsto dagli accordi.', real:false}
+    ],
+    note:'Il Veneto resterà austriaco: solo la Lombardia passa al Piemonte, e i moti del Centro Italia sono un fatto imprevisto, non un obiettivo negoziato.'
+  },
+  {
+    title:'Armistizio di Villafranca', years:'11 luglio 1859',
+    context:'Spaventato dalle perdite e dal rischio di allargare il conflitto, Napoleone III firma unilateralmente la pace con l\'Austria.',
+    metteOpts:[
+      {text:'Le dimissioni di Cavour, che si sente tradito dall\'alleato francese.', real:true},
+      {text:'La rinuncia definitiva a qualunque ulteriore acquisizione territoriale.', real:false}
+    ],
+    otterrOpts:[
+      {text:'Solo la Lombardia: il Veneto resta in mano austriaca, contro le attese di Plombières.', real:true},
+      {text:'La Lombardia e il Veneto, come previsto dagli accordi originari.', real:false}
+    ],
+    note:'È il passaggio più chiaramente in perdita rispetto alle attese: Napoleone III decide da solo, senza consultare l\'alleato piemontese.'
+  },
+  {
+    title:'Rinegoziazione del 1860', years:'gennaio-marzo 1860',
+    context:'Tornato al governo, Cavour riapre i rapporti con Napoleone III per mettere in sicurezza le annessioni del Centro Italia.',
+    metteOpts:[
+      {text:'La cessione formale di Nizza e della Savoia alla Francia.', real:true},
+      {text:'Il ritiro definitivo dalla scena diplomatica europea.', real:false}
+    ],
+    otterrOpts:[
+      {text:'Il riconoscimento francese delle annessioni di Toscana, Parma, Modena ed Emilia-Romagna, sancite da plebisciti.', real:true},
+      {text:'Il via libera francese a un\'immediata marcia su Roma.', real:false}
+    ],
+    note:'Nizza e Savoia, città natale di Garibaldi compresa, pagano il prezzo del riconoscimento delle annessioni centrali.'
+  }
+];
+
+let current = 0;
+let metteChoice = null, otterrChoice = null;
+const ledgerEntries = [];
+
+function renderStep(){
+  const wrap = document.getElementById('stepWrap');
+  if(current >= steps.length){
+    wrap.innerHTML = '';
+    document.getElementById('final').classList.add('show');
+    document.getElementById('final').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  const s = steps[current];
+  metteChoice = null; otterrChoice = null;
+
+  const metteHtml = s.metteOpts.map((o,i)=>`<button class="opt-btn" onclick="chooseMette(${i})">${o.text}</button>`).join('');
+  const otterrHtml = s.otterrOpts.map((o,i)=>`<button class="opt-btn" onclick="chooseOttiene(${i})">${o.text}</button>`).join('');
+
+  wrap.innerHTML = `
+    <div class="step-card">
+      <div class="step-num">Passaggio ${current+1} di 7 — ${s.years}</div>
+      <div class="step-title">${s.title}</div>
+      <div class="step-context">${s.context}</div>
+
+      <div class="bilancia">
+        <div class="plate mette"><div class="plate-title">Che cosa mette</div><div class="plate-content" id="plateM"></div></div>
+        <div class="plate ottiene"><div class="plate-title">Che cosa ottiene</div><div class="plate-content" id="plateO"></div></div>
+      </div>
+
+      <div class="opt-group-label">Che cosa mette il Piemonte in questo passaggio?</div>
+      <div class="opts" id="metteOpts">${metteHtml}</div>
+
+      <div class="opt-group-label">Che cosa ottiene?</div>
+      <div class="opts" id="otterrOpts">${otterrHtml}</div>
+
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" disabled onclick="nextStep()">Passaggio successivo →</button>
+    </div>
+  `;
+}
+
+function chooseMette(i){
+  const s = steps[current];
+  if(metteChoice !== null) return;
+  metteChoice = i;
+  document.querySelectorAll('#metteOpts .opt-btn').forEach((b,idx)=>{
+    b.disabled = true;
+    b.classList.add(s.metteOpts[idx].real ? 'chosen-true' : (idx===i ? 'chosen-false' : ''));
+  });
+  document.getElementById('plateM').textContent = s.metteOpts.find(o=>o.real).text;
+  checkDone();
+}
+
+function chooseOttiene(i){
+  const s = steps[current];
+  if(otterrChoice !== null) return;
+  otterrChoice = i;
+  document.querySelectorAll('#otterrOpts .opt-btn').forEach((b,idx)=>{
+    b.disabled = true;
+    b.classList.add(s.otterrOpts[idx].real ? 'chosen-true' : (idx===i ? 'chosen-false' : ''));
+  });
+  document.getElementById('plateO').textContent = s.otterrOpts.find(o=>o.real).text;
+  checkDone();
+}
+
+function checkDone(){
+  if(metteChoice === null || otterrChoice === null) return;
+  const s = steps[current];
+  const fb = document.getElementById('feedback');
+  fb.classList.add('show');
+  fb.textContent = s.note;
+  document.getElementById('nextBtn').disabled = false;
+
+  ledgerEntries.push({title:s.title, mette:s.metteOpts.find(o=>o.real).text, ottiene:s.otterrOpts.find(o=>o.real).text});
+  renderLedger();
+
+  document.getElementById('progressFill').style.width = ((current+1)/steps.length*100)+'%';
+  document.getElementById('progressCount').textContent = (current+1)+' / '+steps.length;
+}
+
+function renderLedger(){
+  const ledger = document.getElementById('ledger');
+  ledger.innerHTML = ledgerEntries.map(e=>`
+    <div class="ledger-step">
+      <div class="ledger-title">${e.title}</div>
+      <div class="ledger-row">
+        <div class="ledger-cell mette">${e.mette}</div>
+        <div class="ledger-cell ottiene">${e.ottiene}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function nextStep(){
+  current++;
+  renderStep();
+}
+
+renderStep();
+</script>
+</body>
+</html>
