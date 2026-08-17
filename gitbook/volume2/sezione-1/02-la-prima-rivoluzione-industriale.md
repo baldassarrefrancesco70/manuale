@@ -85,7 +85,7 @@ Restava un ultimo squilibrio. Una produzione così vasta di merci e di carbone r
 
 Ogni anello di questa catena, il carbone che nutre il vapore, il vapore che chiede ferro, il ferro e le merci che chiamano le ferrovie, le ferrovie che moltiplicano la domanda di ferro e di carbone, rinforzava il successivo, e l'insieme ruotava su se stesso a velocità crescente. Ma tutto questo accadeva in un luogo solo, la Gran Bretagna, e prima che altrove. Resta da chiedersi perché proprio lì: se in quell'isola si fosse concentrato per necessità ciò che mancava al resto d'Europa, o se non si sia trattato piuttosto di un incontro fortunato di circostanze che nulla obbligava a coincidere.
 
-![Infografica --- Un sistema che si alimenta da sé](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info3_Sistema_industriale_che_si_autoalimenta.png)
+![Un sistema che si alimenta da sé](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info3_Sistema_industriale_che_si_autoalimenta.png)
 
 
 {% embed url="https://youtu.be/Qc3vri_FNf4" %}
@@ -101,7 +101,9 @@ Video --- Perché una pompa da miniera cambiò il mondo
 ### 2.4 Il caso inglese
 
 
-_cfr. [Atlante, cartina 3 --- Lo sviluppo industriale del Regno Unito](atlante.md#cartina-3)_
+![Cartina 3 --- Lo sviluppo industriale del Regno Unito](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/cartine/sviluppo-industriale-regno-unito.png)
+
+_cfr. [approfondimento in Atlante, cartina 3 --- Lo sviluppo industriale del Regno Unito](atlante.md#cartina-3)_
 
 
 «Perché proprio in Inghilterra?» è una domanda che nasconde una trappola nella sua stessa forma. Chiedere perché un fenomeno sia accaduto in un luogo e non altrove invita a rispondere con un elenco di ingredienti, come se la storia fosse una ricetta e bastasse riunire i sei elementi giusti perché il risultato scatti da sé. Ma una ricetta presuppone un cuoco e un'intenzione, e qui mancano entrambi. Nessuno, nel Settecento inglese, stava dosando prerequisiti per ottenere una rivoluzione industriale. Conviene perciò tenere insieme due cose che l'elenco tende a separare: che in Inghilterra si trovarono davvero riunite certe condizioni, e che il loro trovarsi riunite non era né progettato né necessario.
@@ -112,7 +114,7 @@ Il resto sono condizioni che il capitolo ha già incontrato, e che qui basta ria
 
 Sei condizioni, dunque, realmente presenti. Ma è qui che l'elenco va letto contropelo, perché prese una a una quasi nessuna di esse era esclusiva dell'Inghilterra. La Francia aveva una popolazione ben più numerosa e capitali ingenti; le Province Unite avevano inventato la finanza moderna e dominato i commerci globali prima di Londra; l'agricoltura migliorava un po' ovunque nell'Europa nord-occidentale. Se ciascun ingrediente si ritrova altrove, allora non è nessuno di essi, singolarmente preso, a spiegare l'esito. Ciò che l'Inghilterra ebbe di unico non fu un fattore, ma la loro **simultaneità**: il fatto che si trovassero tutti insieme, nello stesso luogo e nello stesso momento, a rinforzarsi a vicenda. E una coincidenza, per definizione, non è un destino. Nessuna legge storica imponeva che quelle condizioni collimassero proprio lì e proprio allora; che lo abbiano fatto è un fatto da spiegare, non una necessità da constatare.
 
-![Infografica --- Nessun ingrediente bastava](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info4_Condizioni_della_rivoluzione_industriale.png)
+![Nessun ingrediente bastava](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info4_Condizioni_della_rivoluzione_industriale.png)
 
 
 Questo lascia aperta una domanda che il capitolo non chiude, e non per reticenza. Che il primato inglese sia stato l'effetto di una superiorità strutturale o l'esito di una combinazione fortunata è precisamente uno dei nodi su cui gli storici discutono ancora, e lo riprenderemo tra le questioni controverse. Per ora basti aver sostituito alla domanda comoda, quali erano i sei fattori, quella scomoda: perché mai si presentarono insieme. Uno di quei fattori, intanto, chiede di essere guardato in faccia più degli altri, perché il suo basso costo aveva un prezzo che non compare nei bilanci britannici. È il cotone, e chi lo raccoglieva.
@@ -140,7 +142,9 @@ Risorsa digitale --- La curva del cotone
 
 Di questo dominio l'India è il caso più rivelatore, perché mostra che il "mercato" globale non era un dato naturale ma una costruzione imposta con la forza. L'India aveva una manifattura tessile antica e fiorente, capace fino a poco prima di produrre cotoni più pregiati di quelli inglesi. La Gran Bretagna la **deindustrializzò** deliberatamente, smantellandone la produzione con dazi e imposizioni politiche, per trasformare il subcontinente da concorrente in mercato vincolato, costretto a comprare i tessuti del Lancashire e a non produrne dei propri. Il libero scambio che il liberismo predicava valeva, si direbbe, in una direzione sola.
 
-_cfr. [Atlante, cartina 4 --- Le rotte del commercio atlantico, XVI-XIX secolo](atlante.md#cartina-4)_
+![Cartina 4 --- Le rotte del commercio atlantico, XVI-XIX secolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/cartine/schiavi-cotone.png)
+
+_cfr. [approfondimento in Atlante, cartina 4 --- Le rotte del commercio atlantico, XVI-XIX secolo](atlante.md#cartina-4)_
 
 
 Tirando le fila, la rivoluzione industriale appare qui sotto una luce diversa da quella della sola officina ingegnosa. Fu anche, e inseparabilmente, un'immensa estrazione di risorse su scala planetaria: capitali accumulati con la tratta, una materia prima resa artificialmente economica dal lavoro schiavile, un mercato mondiale tenuto aperto con le cannoniere e, dove serviva, con la distruzione delle industrie altrui. Tenere insieme il telaio di Crompton e la nave negriera di Liverpool non significa sporcare un'immagine luminosa per gusto della denuncia: significa vedere il fenomeno per intero, invece che dal solo lato in cui splende.
@@ -156,7 +160,7 @@ Video --- Il cotone e il suo prezzo
 ### 2.6 Dagli ordini alle classi
 
 
-Per secoli il posto di un individuo nella società era stato deciso dalla nascita. Si nasceva nobile, ecclesiastico o membro del terzo stato, e quel titolo, più che un'etichetta, era una condizione giuridica: stabiliva quali tasse si pagavano, davanti a quale tribunale si rispondeva, quali privilegi si potevano vantare. La disuguaglianza era scritta nella legge, e la legge stessa era diversa a seconda dell'ordine cui si apparteneva. La rivoluzione industriale, insieme a quella francese che l'aveva preceduta di poco, mandò in frantumi questo edificio, e al suo posto ne eresse un altro che si reggeva su un principio opposto e, a prima vista, più giusto.
+Per secoli il posto di un individuo nella società era stato deciso soprattutto dalla nascita. Si nasceva nobile o si nasceva nel terzo stato; al clero, il terzo ordine, si apparteneva invece per vocazione o per carriera, non per diritto di sangue. In ciascun caso quel titolo, più che un'etichetta, era una condizione giuridica: stabiliva quali tasse si pagavano, davanti a quale tribunale si rispondeva, quali privilegi si potevano vantare. La disuguaglianza era scritta nella legge, e la legge stessa era diversa a seconda dell'ordine cui si apparteneva. La rivoluzione industriale, insieme a quella francese che l'aveva preceduta di poco, mandò in frantumi questo edificio, e al suo posto ne eresse un altro che si reggeva su un principio opposto e, a prima vista, più giusto.
 
 Caduti i privilegi di nascita e proclamata l'uguaglianza di tutti davanti alla legge, la posizione sociale smise di dipendere dall'ordine e cominciò a dipendere da altro: dal ruolo che si occupava nella produzione, e dalla ricchezza che se ne ricavava. Non più *ordini* fissati dal diritto, ma **classi** definite dall'economia. Il cambiamento è più profondo di quanto sembri, perché sposta anche la linea del conflitto. Nell'antico regime l'antagonismo era politico e giuridico, opponeva l'aristocrazia privilegiata al popolo che ne subiva i privilegi. Ora diventava economico, e correva tra chi possedeva i mezzi di produzione, il **borghese**, e chi possedeva soltanto le proprie braccia da vendere in cambio di un salario, il **proletario**. L'uguaglianza davanti alla legge conviveva così con una disuguaglianza di fatto altrettanto netta della precedente, solo fondata su un criterio diverso.
 
@@ -273,7 +277,7 @@ Le prime formulazioni, nei decenni iniziali del secolo, misero questa convinzion
 
 La mossa di Marx, in effetti, fu di spostare il socialismo da un piano a un altro. Smise di argomentare che il capitalismo *dovrebbe* essere sostituito perché ingiusto, e sostenne di poter dimostrare che *sarà* sostituito perché condannato dalle proprie contraddizioni. Nel *Manifesto del partito comunista*, scritto con **Friedrich Engels** e pubblicato nel **1848**, e poi nell'analisi del *Capitale* (1867), cercò le leggi di funzionamento del sistema borghese per svelarne il difetto fatale. Il nucleo è il concetto di **plusvalore**: l'operaio vende all'imprenditore la propria forza-lavoro come una merce, ma con il suo lavoro produce un valore maggiore del salario che riceve, e quella differenza non pagata, di cui il capitalista si appropria, è la fonte del profitto. Lo sfruttamento, in questa lettura, non è un abuso di padroni cattivi, ma il meccanismo stesso della produzione capitalistica: è nel sistema, non nelle persone.
 
-Da qui Marx traeva una previsione. Il capitalismo, spinto dalla concorrenza a produrre e a meccanizzare sempre di più, avrebbe generato crisi ricorrenti di sovrapproduzione, concentrato la ricchezza in mani sempre più poche e ampliato intanto la massa dei proletari impoveriti, fino a creare, con le proprie mani, la classe destinata a rovesciarlo: i propri «becchini». La rivoluzione non sarebbe stata un auspicio morale, ma l'esito necessario di quel processo, e avrebbe aperto, attraverso una fase transitoria, la via a una società senza classi e senza sfruttamento. Su questo occorre essere precisi, per due ragioni. La prima è di metodo: quella dell'inevitabilità era una tesi di Marx, la sua pretesa, non un fatto acquisito, e il manuale la espone come si espone una convinzione storica, senza sposarla, tanto più che il crollo annunciato non è avvenuto nei modi previsti. La seconda è di programma: la struttura filosofica del pensiero di Marx, il materialismo storico, la dialettica, il rapporto con Hegel, non appartiene a questa pagina, ma allo studio della filosofia, dove sarà affrontata per intero. Qui Marx interessa come lo snodo storico in cui il socialismo si dà la forma teorica che porterà nel secolo successivo.
+Da qui Marx traeva una previsione. Il capitalismo, spinto dalla concorrenza a produrre e a meccanizzare sempre di più, avrebbe generato crisi ricorrenti di sovrapproduzione, concentrato la ricchezza in un numero sempre più ristretto di mani e ampliato intanto la massa dei proletari impoveriti, fino a creare, con le proprie mani, la classe destinata a rovesciarlo: i propri «becchini». La rivoluzione non sarebbe stata un auspicio morale, ma l'esito necessario di quel processo, e avrebbe aperto, attraverso una fase transitoria, la via a una società senza classi e senza sfruttamento. Su questo occorre essere precisi, per due ragioni. La prima è di metodo: quella dell'inevitabilità era una tesi di Marx, la sua pretesa, non un fatto acquisito, e il manuale la espone come si espone una convinzione storica, senza sposarla, tanto più che il crollo annunciato non è avvenuto nei modi previsti. La seconda è di programma: la struttura filosofica del pensiero di Marx, il materialismo storico, la dialettica, il rapporto con Hegel, non appartiene a questa pagina, ma allo studio della filosofia, dove sarà affrontata per intero. Qui Marx interessa come lo snodo storico in cui il socialismo si dà la forma teorica che porterà nel secolo successivo.
 
 Resta un punto che questa sezione non chiude, ed è la crepa che attraversa fin dall'inizio l'intero campo socialista. Definire la «classe» operaia come un soggetto dagli interessi unitari e contrapposti a quelli della borghesia, come i socialisti fecero rovesciando contro il capitalismo il linguaggio degli economisti classici, fu una mossa potentissima, di cui si è discusso il senso altrove in questo capitolo. Ma da subito ci si divise su tutto il resto: se la trasformazione dovesse essere rivoluzionaria o graduale, se il nemico fosse il capitale o lo Stato in quanto tale, se il soggetto del riscatto fosse il solo proletariato di fabbrica o l'intera massa dei diseredati. Il socialismo «unito» fu, più che una realtà, un obiettivo mai raggiunto. Come queste divisioni presero corpo nelle organizzazioni operaie, e perché la domanda decisiva, riformare il sistema o rovesciarlo, rimase aperta fino al Novecento, è la storia che conviene seguire a parte.
 
@@ -297,7 +301,7 @@ Si torna così, per una via inattesa, alla domanda che percorre tutto il sociali
 {% endhint %}
 
 
-![Infografica --- Una domanda che non si chiude](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info5_Storia_del_movimento_operaio.png)
+![Una domanda che non si chiude](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info5_Storia_del_movimento_operaio.png)
 
 
 ### 2.12 Due idee di progresso
@@ -365,7 +369,7 @@ Video --- La storia è discussa: l'Inghilterra, le condizioni di vita, la schiav
 - Sul «perché l'Inghilterra»: David S. Landes, *Prometeo liberato*, Einaudi (per la lettura della superiorità strutturale)
 - Kenneth Pomeranz, *La grande divergenza. La Cina, l'Europa e la nascita dell'economia mondiale moderna*, Il Mulino (per la lettura della contingenza)
 - Sulle condizioni di vita: Friedrich Engels, *La condizione della classe operaia in Inghilterra*, Editori Riuniti (fonte coeva, versante «pessimista»)
-- Edward P. Thompson, *Rivoluzione industriale e classe operaia in Inghilterra*, Il Saggiatore <!-- TODO: titolo da confermare -->
+- Edward P. Thompson, *Rivoluzione industriale e classe operaia in Inghilterra*, Il Saggiatore
 - Sulla schiavitù: Eric Williams, *Capitalismo e schiavitù*, Meltemi
 - Sven Beckert, *L'impero del cotone. Una storia globale*, Einaudi
 - Online, come prime messe a fuoco libere: le voci *rivoluzione industriale* e *tratta degli schiavi* in *Treccani*, enciclopedia online (treccani.it)

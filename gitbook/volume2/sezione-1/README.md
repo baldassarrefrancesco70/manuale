@@ -1,5 +1,13 @@
 # Lo spartiacque
 
+![Mappa concettuale della sezione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/Mappa_sezione1.png)
+
+*Mappa concettuale di apertura sezione: uno sguardo d'insieme sui capitoli, con nodi da espandere.*
+
+{% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/mappa-sezione-economia.html" %}
+Versione interattiva ed espandibile
+{% endembed %}
+
 Ci sono pochissimi momenti, nella storia della specie, in cui cambiano insieme le coordinate fondamentali dell'esistenza: quanta energia un essere umano può mettere in movimento, quanti esseri umani la terra può nutrire, come e dove si lavora, come si misura il tempo, quale rapporto si stabilisce con la natura. Uno di questi momenti è la **rivoluzione neolitica**, quando la nostra specie smise di raccogliere ciò che trovava e cominciò a produrre il proprio cibo. L'altro, a diecimila anni di distanza, è la **rivoluzione industriale**.
 
 Il paragone non è un'iperbole. Per millenni la quantità di energia disponibile era rimasta sostanzialmente fissa, legata a ciò che il sole restituiva ogni anno attraverso le piante, i muscoli, il vento e l'acqua. Bruciando il carbone, cioè energia solare accumulata in milioni di anni, l'umanità ruppe per la prima volta quel tetto. Con l'energia saltarono, uno dopo l'altro, gli altri vincoli. La popolazione, prima trattenuta dalla **soglia malthusiana**, cominciò a crescere a ritmi senza precedenti. Il lavoro abbandonò il campo e la casa per concentrarsi nella fabbrica, sotto un tetto e un orario. Il tempo stesso mutò natura, non più scandito dalle stagioni e dalla luce, ma dall'orologio e dalla campana dello stabilimento. E il rapporto con la natura si rovesciò, da limite invalicabile a materiale da trasformare, da dominare, da consumare.

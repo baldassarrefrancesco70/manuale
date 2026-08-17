@@ -9,7 +9,9 @@ Nulla di tutto ciò, però, è ancora la seconda rivoluzione industriale. È la 
 ## 3.1 Arrivare dopo
 
 
-_cfr. [Atlante, cartina 2 --- Diffusione della rivoluzione industriale in Europa](atlante.md#cartina-2)_
+![Cartina 2 --- Diffusione della rivoluzione industriale in Europa](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/cartine/diffusione-rivoluzione-industriale.png)
+
+_cfr. [approfondimento in Atlante, cartina 2 --- Diffusione della rivoluzione industriale in Europa](atlante.md#cartina-2)_
 
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/15-ferrovie-europa.html" %}
@@ -123,7 +125,7 @@ Dopo la depressione, una sola parola descrive ciò che accadde su due fronti che
 
 Sul primo fronte, la spinta veniva dalla crisi. Con i prezzi in caduta e i costi degli impianti giganteschi ormai insostenibili per chi restava solo, gli imprenditori capirono che la concorrenza spietata li stava dissanguando tutti, e smisero di combattersi per allearsi. Nacque la fase del **capitale monopolistico**, o oligopolistico, in cui pochi grandi gruppi si spartivano il mercato aggirando di fatto le leggi della libera concorrenza, e sfruttavano le economie di scala per abbattere i costi. La concentrazione assunse forme diverse, che conviene distinguere: il **cartello** era un accordo tra aziende indipendenti dello stesso settore per non farsi concorrenza, fissando prezzi minimi e quote di produzione; il **trust** era invece una fusione vera e propria di imprese prima autonome sotto un'unica direzione; la **holding**, infine, era una società che controllava altre imprese possedendone i pacchetti azionari. L'esempio che riassume tutti è la **Standard Oil** di **Rockefeller**, già incontrata come pioniera del petrolio e qui nella sua veste più temuta, quella di un monopolio che arrivò a controllare la quasi totalità della raffinazione americana.
 
-![Infografica --- Tre modi di concentrarsi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/Info6_Tre_modi_di_concentrazione_industriale.png)
+![Tre modi di concentrarsi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/Info6_Tre_modi_di_concentrazione_industriale.png)
 
 
 Sul secondo fronte, la stessa ricerca di efficienza entrò dentro la fabbrica, e ne riorganizzò il lavoro. La premessa era già stata posta dal sistema americano di fabbrica, con le sue parti standardizzate e intercambiabili; ma il salto decisivo, a cavallo tra i due secoli, fu opera dell'ingegnere americano **Frederick Winslow Taylor** e della sua «organizzazione scientifica del lavoro», il **taylorismo**. Taylor lo costruì su due principi. Il primo era la **parcellizzazione**: il processo produttivo scomposto in operazioni elementari, misurate e cronometrate, per eliminare ogni tempo morto. Il secondo, più profondo, era la **separazione tra ideazione ed esecuzione**: l'operaio di mestiere, quello che sapeva come si fa, veniva soppresso; la sua conoscenza gli veniva espropriata e concentrata negli uffici dei tecnici, e a lui non restava che eseguire, in obbedienza passiva, gesti pensati da altri. Qui il filo del capitolo si stringe in modo netto. La fabbrica aveva già tolto all'operaio la padronanza del proprio tempo; il taylorismo gli tolse l'ultima cosa che gli era rimasta, il proprio sapere. Spogliato del tempo e della competenza, il lavoratore diventava davvero, come già si era detto, una «mano».
@@ -205,10 +207,10 @@ Video --- La storia è discussa: i consumi e le crisi
 
 - Sul dibattito relativo ai consumi di massa, per la lettura critica: Max Horkheimer e Theodor W. Adorno, *Dialettica dell'illuminismo*, Einaudi (il capitolo sull'«industria culturale»)
 - Herbert Marcuse, *L'uomo a una dimensione*, Einaudi (sui «falsi bisogni»)
-- Zygmunt Bauman, opere sulla società dei consumi, Laterza <!-- TODO: titoli da precisare -->
-- Per la lettura storico-culturale, più attenta alla dimensione materiale e alla democratizzazione: Daniel Roche, *Storia delle cose banali. La nascita del consumo in Occidente* <!-- TODO: editore da confermare -->
-- Richard Sennett, *Il declino dell'uomo pubblico* <!-- TODO: editore da confermare -->
+- Zygmunt Bauman, opere sulla società dei consumi, Laterza
+- Per la lettura storico-culturale, più attenta alla dimensione materiale e alla democratizzazione: Daniel Roche, *Storia delle cose banali. La nascita del consumo in Occidente*
+- Richard Sennett, *Il declino dell'uomo pubblico*
 - Sul dibattito relativo alle crisi: Karl Marx, *Il Capitale*, libro I e libro III (le pagine sulle crisi)
 - Eric J. Hobsbawm, *L'età del capitale* e *L'età degli imperi*, Laterza (che coprono e discutono la Grande depressione)
-- Charles P. Kindleberger, opere sulle crisi finanziarie, Laterza <!-- TODO: titoli ed edizioni da confermare -->
+- Charles P. Kindleberger, opere sulle crisi finanziarie, Laterza
 - Online, come prime messe a fuoco libere: la voce *depressione* (economia) e le voci correlate in *Treccani*, enciclopedia online (treccani.it)

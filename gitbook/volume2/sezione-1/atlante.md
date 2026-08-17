@@ -4,7 +4,7 @@
 
 **Recinzione dei campi comuni, 1700-1800**
 
-![Cartina 1 --- Recinzione dei campi comuni, 1700-1800](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/Recinzioni.png)
+![Cartina 1 --- Recinzione dei campi comuni, 1700-1800](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/cartine/Recinzioni.png)
 
 
 
@@ -14,7 +14,7 @@ La cartina smentisce, appena la si guarda con attenzione, l'immagine consueta de
 
 **Diffusione della rivoluzione industriale in Europa**
 
-![Cartina 2 --- Diffusione della rivoluzione industriale in Europa](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/Diffusione%20rivoluzione%20industriale.png)
+![Cartina 2 --- Diffusione della rivoluzione industriale in Europa](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/cartine/diffusione-rivoluzione-industriale.png)
 
 
 
@@ -24,7 +24,7 @@ Il titolo dice «diffusione», e la cartina sembra confermarlo: un centro britan
 
 **Lo sviluppo industriale del Regno Unito**
 
-![Cartina 3 --- Lo sviluppo industriale del Regno Unito](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/Sviluppo%20industriale%20Regno%20Unito.png)
+![Cartina 3 --- Lo sviluppo industriale del Regno Unito](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/cartine/sviluppo-industriale-regno-unito.png)
 
 
 
@@ -34,7 +34,7 @@ Questa è la cartina che risponde alla domanda sul perché proprio l'Inghilterra
 
 **Le rotte del commercio atlantico, XVI-XIX secolo**
 
-![Cartina 4 --- Le rotte del commercio atlantico, XVI-XIX secolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/schiavi-cotone.png)
+![Cartina 4 --- Le rotte del commercio atlantico, XVI-XIX secolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/cartine/schiavi-cotone.png)
 
 
 

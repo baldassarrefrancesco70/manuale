@@ -1,0 +1,12 @@
+# Il secolo del progresso, rivisto
+
+_Chiusura di sezione_
+
+
+Libertà e progresso sono tornate, in questi sei capitoli, più volte di quante se ne potessero contare in apertura. A Filadelfia rompevano una catena e ne lasciavano intatta un'altra, quella su cui il capitolo successivo si è soffermato per intero. A Saint-Domingue venivano prese alla lettera da chi non le aveva scritte, e restituite sotto forma di un testo che l'Europa non si aspettava di dover leggere. A Berlino diventavano il vocabolario con cui quattordici delegazioni si spartivano un continente senza consultare chi lo abitava. In India misuravano, per chi amministrava, l'efficienza di un dominio; per chi lo subiva, la distanza tra un principio proclamato altrove e la propria condizione quotidiana. Ad Adua si sono fermate di fronte a un esercito che non ne aveva bisogno per vincere. In Giappone hanno cambiato mano, e con la mano hanno cambiato anche verso chi venivano puntate.
+
+Non è la stessa parola applicata a casi diversi. È la stessa parola che, applicata, produce ogni volta un rapporto tra chi la pronuncia e chi la riceve, e quel rapporto non è mai simmetrico. Chiederci se progresso e libertà abbiano liberato o assoggettato, come si chiedeva la domanda con cui il percorso si è aperto, presuppone che si tratti di due esiti alternativi tra cui scegliere. I sei capitoli suggeriscono qualcosa di più scomodo: che i due esiti spesso convivono nello stesso gesto, nello stesso documento, talvolta nella stessa persona, e che separarli con nettezza è già un modo di scegliere una delle due metà per raccontare la storia intera.
+
+Questo non significa che le sei vicende si equivalgano, né che il giudizio storico debba sospendersi davanti a ogni ambivalenza. Significa che la parola progresso non ha mai smesso di fare un lavoro preciso: distinguere chi ha il diritto di definire il proprio futuro da chi deve accettare quello che altri hanno definito per lui. Chi tiene la penna cambia, come il capitolo sul Giappone ha mostrato nel modo più netto. Che cosa si scriva con quella penna, una volta impugnata, resta la domanda che ogni epoca successiva a questa ha dovuto porsi di nuovo, senza mai risolverla una volta per tutte.
+
+Il secolo si è chiuso, ma non il vocabolario. Le parole con cui l'Ottocento ha giustificato l'esclusione e la conquista non sono uscite di scena insieme ai governi che le hanno pronunciate: hanno cambiato lessico, non funzione, e riconoscerle sotto forme più recenti resta un esercizio storico prima ancora che un esercizio di attualità.
