@@ -18,8 +18,6 @@ Il colonialismo dei secoli precedenti era stato in larga misura un'impresa priva
 
 Il **nuovo imperialismo** rovescia ciascuno di questi tratti. Diventa un obiettivo dichiarato di politica nazionale, assunto direttamente dai governi, e alla competizione partecipano Stati che nel modello precedente non avevano avuto parte: la Germania e l'Italia da poco unificate, il Belgio, e verso la fine del secolo anche potenze extraeuropee come gli Stati Uniti e il Giappone. Il controllo non si accontenta più degli scali costieri: i territori vengono conquistati militarmente, annessi, ripartiti in colonie e protettorati governati da amministrazioni centralizzate. E i tempi cambiano radicalmente. Nel 1870 gli europei controllavano circa un decimo del continente africano; tra il 1876 e il 1914 ne occupano oltre nove decimi, mentre il Pacifico viene interamente spartito.
 
-<a id="artefatto-4"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto4-vecchio-nuovo-colonialismo.html" %}
 Risorsa digitale --- Vecchio colonialismo, nuovo imperialismo
 {% endembed %}
@@ -42,8 +40,6 @@ Le ragioni economiche, però, non bastavano a rendere l'impresa presentabile. Il
 Alla base sta un nazionalismo acceso, che fa del possesso coloniale una misura del rango di una nazione tra le altre. Ma la costruzione decisiva è di ordine pseudoscientifico: dalle teorie del **darwinismo sociale**, che trasponevano indebitamente sul terreno delle società umane categorie tratte dalla biologia evolutiva, deriva l'idea di una gerarchia biologica tra le razze umane, con i popoli extraeuropei collocati a uno stadio inferiore o "infantile" dello sviluppo. L'antropologia evoluzionistica dell'epoca, con figure come Edward B. Tylor, fornì a questa costruzione un rivestimento accademico, teorizzando che le popolazioni non europee rappresentassero stadi primordiali dello sviluppo umano. È il dispositivo già visto all'opera nel capitolo precedente per giustificare la tratta, ora riformulato nel lessico prestigioso del positivismo scientifico.
 
 Da questa premessa discende la formulazione che accompagnerà l'imperialismo fino al Novecento: il **"fardello dell'uomo bianco"** nella versione anglosassone, la **mission civilisatrice** in quella francese. La conquista non viene presentata come conquista, ma come obbligo morale: governare i popoli ritenuti incapaci di governarsi sarebbe un dovere gravoso, assunto per il loro bene prima che per il proprio profitto. È qui che la parola *progresso* compie il proprio rovesciamento completo. Ciò che a Filadelfia nel 1776 serviva a rompere una catena serve ora a giustificarne una nuova, e a presentarla come atto di generosità.
-
-<a id="video-8"></a>
 
 {% embed url="https://youtu.be/FuOp66xFLro" %}
 Video --- Le parole del dominio
@@ -72,8 +68,6 @@ La conferenza, riunita tra il novembre 1884 e il febbraio 1885, produsse un prin
 Le due potenze maggiori si mossero secondo disegni geografici che si sarebbero necessariamente incrociati. La Gran Bretagna coltivava il progetto di una continuità territoriale **dal Capo al Cairo**, sostenuto con particolare energia da **Cecil Rhodes**, che avrebbe saldato lungo un asse nord-sud i possedimenti dell'Africa australe con quelli della valle del Nilo. Il disegno urtava però contro l'Africa orientale tedesca: l'accordo del 1890 lo ridimensionò, con Londra che rinunciava al collegamento terrestre continuo in cambio del controllo di Zanzibar e dell'allontanamento tedesco dall'alto Nilo. La Francia si espandeva invece secondo un asse trasversale, da ovest a est, dalla costa atlantica verso il Sahara e il Sudan.
 
 Un asse verticale e uno orizzontale, sulla stessa carta, si incontrano necessariamente in un punto. Quel punto fu **Fashoda**, nel Sudan, dove nel settembre 1898 colonne militari francesi e britanniche si fronteggiarono in un'area che entrambe rivendicavano. Consapevole della propria inferiorità militare e navale, la Francia scelse di ritirarsi: la crisi si chiuse senza combattimenti e aprì la strada a una distensione che pochi anni dopo avrebbe prodotto l'Entente cordiale.
-
-<a id="video-9"></a>
 
 {% embed url="https://youtu.be/l2n-RdR27to" %}
 Video --- Da Berlino alla spartizione
@@ -120,8 +114,6 @@ Per la borghesia europea di fine secolo il **progresso** era una legge storica m
 Fuori dall'Europa lo stesso processo si presentò in una forma che nessuna di quelle misure registra. Non un'evoluzione interna e desiderata, ma l'arrivo di un conquistatore straniero, sostenuto da una superiorità tecnologica che le **mitragliatrici Maxim** rendevano schiacciante sul campo. L'impatto scardinò equilibri sociali, linguistici e religiosi consolidati da secoli, colpendo in particolare le culture di tradizione orale, i cui riti e saperi vennero liquidati come superstizione e arretratezza. Sul piano economico, la modernizzazione fu introdotta in funzione degli interessi della metropoli: moneta, ferrovie, porti servivano a estrarre e trasportare, e la specializzazione forzata in uno o due prodotti primari, il caucciù in Congo, lo stagno in Malesia, il caffè in Brasile, legò intere regioni alle oscillazioni di mercati su cui non avevano alcuna voce. È il passaggio che alcuni storici hanno descritto come una transizione **dalla povertà al sottosviluppo**: non l'assenza di sviluppo, ma una struttura economica costruita per servire altrove.
 
 La stessa parola, dunque, indica due esperienze che non hanno quasi nulla in comune. Il capitolo che segue mostrerà che questa asimmetria non produsse ovunque lo stesso esito.
-
-<a id="infografica-8"></a>
 
 ![Il progresso, due colonne](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info9_Progresso_in_Europa_e_Colonie.png)
 
@@ -188,12 +180,8 @@ L'esito, però, non fu quello che le amministrazioni coloniali si aspettavano. N
 {% endhint %}
 
 
-<a id="infografica-9"></a>
-
 ![La spartizione in cifre](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info8_imperialismo_in_cifre.png)
 
-
-<a id="artefatto-5"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto5-spiegazioni-confronto.html" %}
 Risorsa digitale --- Perché conquistare? Le spiegazioni a confronto

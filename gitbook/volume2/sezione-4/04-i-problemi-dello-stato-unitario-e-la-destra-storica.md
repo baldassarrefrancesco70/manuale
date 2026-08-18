@@ -26,8 +26,6 @@ Il quarto problema era culturale in senso stretto, e rimetteva in discussione la
 
 Il quinto problema, infine, era quello che avrebbe pesato di più nel lungo periodo: il divario tra Nord e Sud. Al momento dell'unificazione le differenze strutturali tra le due parti della penisola erano già marcate: agricoltura capitalistica al Nord, mezzadria al Centro, latifondo e piccola proprietà al Sud. Le politiche del nuovo Stato le avrebbero però accentuate invece di ridurle. Nel Mezzogiorno, l'insoddisfazione per la mancata redistribuzione delle terre si sommò all'imposizione della leva militare obbligatoria e di nuove tasse, producendo un'esplosione di violenza che il governo classificò come **brigantaggio** e affrontò come un problema di ordine pubblico. Era qualcosa di più complicato: una guerra civile strisciante, che rivelava quanto fosse fragile il consenso su cui il nuovo Stato era stato costruito.
 
-<a id="artefatto-4"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/mappa_problemi_italia_unitaria.html" %}
 Risorsa digitale --- I problemi dell'Italia post-unitaria — Mappa concettuale
 {% endembed %}
@@ -35,8 +33,6 @@ Risorsa digitale --- I problemi dell'Italia post-unitaria — Mappa concettuale
 
 ## La Destra storica
 
-
-<a id="video-8"></a>
 
 {% embed url="https://youtu.be/2hlu1CFsQKk" %}
 Video --- La Destra storica
@@ -82,8 +78,6 @@ Le conseguenze economiche non furono meno pesanti di quelle simboliche. I costi 
 ### Le scelte economiche
 
 
-<a id="video-9"></a>
-
 {% embed url="https://youtu.be/B7-Cd1L804c" %}
 Video --- Le scelte economiche della Destra storica
 {% endembed %}
@@ -115,8 +109,6 @@ Nel 1875 la politica del rigore raggiunse il suo obiettivo: il pareggio di bilan
 
 ### La questione meridionale e il brigantaggio
 
-
-<a id="video-10"></a>
 
 {% embed url="https://youtu.be/VotL7TSr6d8" %}
 Video --- Il brigantaggio
@@ -152,8 +144,6 @@ Le grandi bande a cavallo furono distrutte entro il 1865; le ultime resistenze s
 
 ### La questione romana
 
-
-<a id="video-11"></a>
 
 {% embed url="https://youtu.be/JUSdtii4PSs" %}
 Video --- La questione romana

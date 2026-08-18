@@ -23,8 +23,6 @@ Anche il potere esecutivo, accentrato nella figura di un Presidente eletto ogni 
 
 Il sistema, insomma, non affidava la propria tenuta alla virtù dei singoli governanti, ma alla reciproca sorveglianza degli organi tra loro. Rispondeva punto per punto alla debolezza degli Articoli di Confederazione, ma apriva un problema che quella debolezza, paradossalmente, non aveva mai dovuto affrontare: quanto potere accentrare, e a spese di chi.
 
-<a id="artefatto-2"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto2-sistema-contrappesi.html" %}
 Risorsa digitale --- Il sistema dei contrappesi: una macchina a tre ruote
 {% endembed %}
@@ -36,8 +34,6 @@ Risorsa digitale --- Il sistema dei contrappesi: una macchina a tre ruote
 La Costituzione, per entrare in vigore, doveva essere ratificata dalle assemblee dei singoli Stati: fu in questa fase, tra il 1787 e il 1788, che il paese si divise in due fazioni con due idee radicalmente diverse di che cosa la libertà repubblicana dovesse ancora proteggere. I **Federalisti**, tra cui Washington, Hamilton, Franklin e Madison, sostenevano che solo un governo centrale forte potesse garantire stabilità politica, sviluppo economico e ordine sociale, e trovavano il proprio bacino di consenso nei ceti industriali, commerciali e finanziari del Centro-Nord, oltre che tra i grandi proprietari terrieri. Gli **Antifederalisti**, che ebbero in Thomas Jefferson un punto di riferimento ideale, temevano l'esito opposto: che un potere centrale troppo forte degenerasse in un'oligarchia di affaristi cittadini, capace di soffocare le libertà locali e la rappresentanza dei piccoli coltivatori. Il loro consenso era prevalentemente rurale, concentrato nel Sud e nell'Ovest, tra i ceti medio-bassi.
 
 Non erano due fazioni che discutevano solo di tecnica istituzionale: discutevano di quale dei due pericoli, la disgregazione o la tirannia, fosse più temibile per una repubblica appena nata. Su questa domanda nessuna delle due parti aveva torto in modo evidente, ed è proprio da questa ambiguità irrisolta che nascerà, di lì a pochi anni, il primo sistema partitico americano.
-
-<a id="infografica-3"></a>
 
 ![Due paure, una Costituzione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info3_Grande_Dibattito_Americano.png)
 
@@ -77,8 +73,6 @@ Lo stesso principio che apriva terre nuove ai coloni bianchi le sottraeva a chi 
 _cfr. [approfondimento in Atlante, cartina 2 --- L'espansione territoriale degli Stati Uniti (1783-1848)](atlante.md#cartina-2)_
 
 
-<a id="video-3"></a>
-
 {% embed url="https://youtu.be/-GeKjVlzTTM" %}
 Video --- Destino Manifesto: dalla missione morale al sentiero delle lacrime
 {% endembed %}
@@ -92,8 +86,6 @@ La scoperta dell'oro a Coloma, in California, tra il 1848 e il 1849 accelerò ul
 Alla vigilia della crisi finale, gli Stati Uniti erano tenuti insieme più dalla forma istituzionale che da una reale omogeneità di interessi. Il **Nord** aveva sviluppato un'economia industriale in rapida trasformazione, sostenuta da una borghesia imprenditoriale dinamica e da flussi migratori che alimentavano un'alta mobilità sociale; per proteggere le proprie manifatture dalla concorrenza britannica ne sosteneva il protezionismo doganale, e al suo interno era cresciuto, a partire dagli anni Venti dell'Ottocento, un movimento abolizionista che avrebbe trovato nel neonato Partito Repubblicano il proprio riferimento politico. Il **Sud** restava un'economia agraria fondata sulla monocoltura del cotone, che nel 1860 rendeva la regione responsabile del 60% della produzione mondiale e copriva il 70% del fabbisogno dell'industria tessile inglese, un legame commerciale che avrebbe pesato sulle scelte diplomatiche europee durante il conflitto, come si vedrà. Quella produzione poggiava su circa quattro milioni di persone ridotte in schiavitù, e la società meridionale, dominata dai grandi proprietari terrieri e riconosciuta nel Partito Democratico, difendeva il libero scambio e l'autonomia degli Stati non come astrazioni costituzionali, ma come garanzie dirette alla propria sopravvivenza economica.
 
 Questa frattura non restava confinata al piano dei principi. Le persone ridotte in schiavitù non attendevano passivamente un intervento esterno: fughe sistematiche verso gli Stati liberi del Nord o verso il Canada, organizzate attraverso la rete clandestina nota come **"ferrovia sotterranea"**, erano una forma di resistenza politica a tutti gli effetti, e contribuivano ad alimentare la tensione tra le due aree del paese quanto i dibattiti al Congresso.
-
-<a id="infografica-4"></a>
 
 ![Due economie, un solo paese](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info4_Economia_americana_prima_della_guerra.png)
 
@@ -119,8 +111,6 @@ Il 1863 segnò la svolta, su due piani distinti e ugualmente decisivi. Sul piano
 
 La superiorità demografica e industriale del Nord, una volta mobilitata pienamente, si rivelò decisiva: circa 22 milioni di abitanti contro i 9 del Sud si tradussero in un esercito di circa 2 milioni di soldati unionisti contro i 900.000 confederati. Il conflitto si chiuse nell'aprile del 1865 con la resa dell'esercito confederato ad **Appomattox**. Pochi giorni dopo la fine dei combattimenti, lo stesso Lincoln fu assassinato.
 
-<a id="video-4"></a>
-
 {% embed url="https://youtu.be/UoUu0WaEv3U" %}
 Video --- Dalla secessione alla resa
 {% endembed %}
@@ -137,8 +127,6 @@ Sulla carta, la contraddizione aperta nel 1776 sembrava finalmente sciolta. Nell
 
 
 Ottantaquattro anni dopo il 1776, la repubblica aveva finalmente messo per iscritto, in tre emendamenti, ciò che la Dichiarazione d'indipendenza aveva lasciato indeciso sulla condizione degli schiavi. Ma tra il diritto scritto e la sua applicazione si riaprì la stessa distanza già vista nel capitolo precedente tra il principio universale proclamato e la sua concreta destinazione: la forma della contraddizione cambiava, la sostanza, chi viene davvero incluso in "tutti gli uomini sono creati uguali", restava aperta.
-
-<a id="infografica-5"></a>
 
 ![Tre emendamenti, una promessa a metà](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info5_Tre_emendamenti__promessa_e_realt%C3%A0.png)
 
@@ -170,8 +158,6 @@ Dopo la svolta di Gettysburg, i comandanti unionisti, tra cui Ulysses S. Grant, 
 Fu infine il primo conflitto interamente documentato dalla fotografia. Il lavoro di Mathew B. Brady e dei suoi collaboratori mostrò per la prima volta al pubblico immagini dirette dei campi di battaglia, dei caduti, della vita quotidiana dei soldati: un cambiamento nella rappresentazione della guerra che incrinò, per la prima volta su questa scala, l'iconografia eroica e idealizzata che ne era stata data fino ad allora.
 {% endhint %}
 
-
-<a id="video-5"></a>
 
 {% embed url="https://youtu.be/RMROqByP7aw" %}
 Video --- La prima guerra moderna

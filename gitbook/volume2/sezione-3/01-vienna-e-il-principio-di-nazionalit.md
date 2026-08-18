@@ -15,8 +15,6 @@ Serve infine avere presente la carta del continente: la frammentazione dell'area
 {% endhint %}
 
 
-<a id="artefatto-1"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/01-due-assi-legittimita.html" %}
 Risorsa digitale --- I due assi della legittimità
 {% endembed %}
@@ -34,8 +32,6 @@ Il termine **Restaurazione**, che designa l'età aperta dal Congresso, dichiara 
 _cfr. [approfondimento in Atlante, cartina 1 --- L'Europa dopo il Congresso di Vienna](atlante.md#cartina-1)_
 
 
-<a id="video-1"></a>
-
 {% embed url="https://youtu.be/WheywGEGpDo" %}
 Video --- Vienna 1815: chi decide e secondo quali principi
 {% endembed %}
@@ -51,8 +47,6 @@ Il **principio di legittimità** fu sostenuto con particolare energia da Talleyr
 Il **principio di equilibrio** rispondeva invece a una preoccupazione di sicurezza: impedire che una singola potenza tornasse a imporre la propria egemonia sul continente, come la Francia aveva fatto per vent'anni. La carta politica fu ridisegnata di conseguenza, razionalizzando i confini e disponendo intorno alla Francia una serie di **Stati cuscinetto**, tra cui il Regno dei Paesi Bassi, che univa Belgio e Olanda in un'unica compagine costruita apposta per la funzione di contenimento.
 
 I due principi non coincidono, e il secondo prevalse sul primo ogni volta che entrarono in conflitto: nessuna dinastia legittima aveva mai regnato sull'insieme di Belgio e Olanda, e antiche repubbliche indipendenti scomparvero senza che la loro legittimità storica contasse. Quello che accomuna i due principi è piuttosto ciò che entrambi ignorano. Il riassetto fu condotto **senza alcun riguardo per la corrispondenza tra confini e popolazioni**, e senza che la volontà degli abitanti fosse considerata un dato rilevante. Non fu una dimenticanza: nel vocabolario politico dei negoziatori quella considerazione non era un obbligo trascurato, era una categoria che non esisteva.
-
-<a id="artefatto-2"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/02-tavolo-di-vienna.html" %}
 Risorsa digitale --- Il tavolo di Vienna
@@ -79,12 +73,8 @@ La differenza non dipende dal grado di convinzione reazionaria dei sovrani. Dipe
 {% endhint %}
 
 
-<a id="infografica-1"></a>
-
 ![Tre modi di restaurare a confronto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info4_Modelli_di_governo_dopo_1815.png)
 
-
-<a id="video-2"></a>
 
 {% embed url="https://youtu.be/l2yhVzqdJzY" %}
 Video --- Octroyée: una parola che salva un principio
@@ -111,14 +101,10 @@ Ne segue che il liberalismo si trova per gran parte del secolo in una posizione 
 {% endhint %}
 
 
-<a id="artefatto-3"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/04-chi-vota.html" %}
 Risorsa digitale --- Chi vota
 {% endembed %}
 
-
-<a id="video-3"></a>
 
 {% embed url="https://youtu.be/nfFz-gtEIxM" %}
 Video --- Da dove viene il diritto di comandare: legittimismo e costituzionalismo
@@ -134,12 +120,8 @@ La **Santa Alleanza**, firmata nel **settembre 1815** su iniziativa dello zar **
 
 Fu lo stesso Castlereagh a promuovere allora un secondo trattato di natura opposta. La **Quadruplice Alleanza**, firmata nel **novembre 1815**, riuniva le quattro potenze vincitrici, Gran Bretagna, Austria, Russia e Prussia, e formulava impegni verificabili: vigilare su ogni tentativo francese di rivincita e **intervenire militarmente** contro qualunque sommovimento rivoluzionario che minacciasse l'equilibrio europeo. Dove la Santa Alleanza affermava principi, la Quadruplice stabiliva obblighi.
 
-<a id="infografica-2"></a>
-
 ![Le alleanze del 1815](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info3_Sistema_Diplomatico_del_1815.png)
 
-
-<a id="video-4"></a>
 
 {% embed url="https://youtu.be/i3sM17syp4I" %}
 Video --- Perché la Gran Bretagna non firma la Santa Alleanza
@@ -157,8 +139,6 @@ Il meccanismo funzionò però molto meno a lungo di quanto la sua fama suggerisc
 
 È il primo indizio di quello che il resto del percorso mostrerà: il principio di nazionalità non entra nel sistema di Vienna soltanto dall'esterno, per via di insurrezioni. Entra anche dall'interno, perché le potenze che dovrebbero contenerlo trovano conveniente servirsene.
 
-<a id="video-5"></a>
-
 {% embed url="https://youtu.be/rNDGYmF6v0E" %}
 Video --- Il concerto europeo: costruzione e crisi di un sistema
 {% endembed %}
@@ -174,8 +154,6 @@ Il termine deriva dal latino *nasci*, nascere, e nell'uso medievale e di antico 
 È con l'**Illuminismo** e in modo definitivo con la **Rivoluzione francese** che la parola cambia statuto. L'articolo 3 della **Dichiarazione dei diritti dell'uomo e del cittadino** del 1789 stabilisce che il principio di ogni sovranità risiede essenzialmente nella nazione, e in quella formula il termine smette di descrivere una provenienza per designare il **titolare del potere**. L'identificazione tra popolo e nazione sposta la fonte della legittimità: il potere non discende più dall'alto per diritto divino, ma risiede nel corpo collettivo dei cittadini.
 
 Il passaggio ha una conseguenza che i negoziatori di Vienna non avevano previsto. Un titolo di legittimità è un argomento, e un argomento chiunque può usarlo. Fino a quando la sovranità si fondava sulla discendenza dinastica, il numero dei soggetti che potevano invocarla era chiuso e noto. Da quando si fonda sull'esistenza di un popolo, resta da stabilire chi conti come popolo, e la risposta non è scritta da nessuna parte.
-
-<a id="artefatto-4"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/05-la-parola-nazione.html" %}
 Risorsa digitale --- La parola nazione
@@ -193,12 +171,8 @@ Per queste comunità la prima battaglia si combatte sul terreno culturale, e ass
 
 Nell'**Impero asburgico** questo processo tocca il punto di massima tensione. Una sola autorità governa comunità di lingua, confessione e memoria diverse, nessuna delle quali coincide con un territorio compatto, e non esiste tracciato di confine che possa soddisfare tutte le rivendicazioni senza smontare lo Stato. Il principio di nazionalità, applicato lì, non è un problema di concessioni: è un problema di esistenza.
 
-<a id="infografica-3"></a>
-
 ![L'Impero asburgico, la carta delle etnie](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/Austria-Ungheria.png)
 
-
-<a id="video-6"></a>
 
 {% embed url="https://youtu.be/L37v0hegcmU" %}
 Video --- Nazioni "non storiche": una descrizione che è un giudizio
@@ -254,12 +228,8 @@ Il punto cieco del costruttivismo è proprio questo scarto tra causa e effetto. 
 
 Vale la pena osservare, infine, che il dibattito non è mai stato soltanto accademico. Sostenere che una nazione è antica e sostenere che è recente sono affermazioni che in molti paesi hanno conseguenze politiche immediate, e la scelta della posizione storiografica non è indipendente dal contesto in cui viene formulata.
 
-<a id="infografica-4"></a>
-
 ![Le teorie della nazione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info6_Teorie_storiografiche_sulla_nazione.png)
 
-
-<a id="video-7"></a>
 
 {% embed url="https://youtu.be/hRdKezEHxhM" %}
 Video --- Le nazioni esistono prima del nazionalismo? Un dibattito aperto

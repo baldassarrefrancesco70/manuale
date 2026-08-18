@@ -9,8 +9,6 @@ Quindici anni di Destra storica lasciavano un bilancio in pareggio e un paese es
 
 Chi prendeva il potere prometteva di allargare. Allargare l'elettorato, l'istruzione, le basi sociali dello Stato, il ruolo pubblico nell'economia. Molto di quel programma fu realizzato, e le riforme di questi anni sono reali. La domanda che il capitolo pone è però un'altra, e non ha una risposta comoda: si può allargare la base di uno Stato senza cambiare chi lo governa e come. Perché mentre l'elettorato triplicava, il modo di costruire le maggioranze in parlamento assumeva la forma che avrebbe dato il proprio nome a un vizio italiano di lunga durata, e l'alleanza tra industria protetta e proprietà terriera si saldava intorno a una tariffa doganale.
 
-<a id="artefatto-5"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/confronto_destra_sinistra.html" %}
 Risorsa digitale --- Confronto fra Destra e Sinistra storiche
 {% endembed %}
@@ -73,8 +71,6 @@ Nel complesso, fu una stagione riformatrice autentica, che lasciò tracce duratu
 ### Protezionismo e decollo industriale
 
 
-<a id="video-12"></a>
-
 {% embed url="https://youtu.be/B7-Cd1L804c" %}
 Video --- Le politiche economiche e il decollo industriale
 {% endembed %}
@@ -107,8 +103,6 @@ Quello che si costruì in questi anni non fu dunque solo un'industria: fu un mod
 {% endhint %}
 
 
-<a id="artefatto-6"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/politica_economica.html" %}
 Risorsa digitale --- Le politiche economiche e il decollo industriale nell'Italia post-unitaria
 {% endembed %}
@@ -116,8 +110,6 @@ Risorsa digitale --- Le politiche economiche e il decollo industriale nell'Itali
 
 ## Il colonialismo e la Triplice Alleanza
 
-
-<a id="video-13"></a>
 
 {% embed url="https://youtu.be/b9WgUznW8wA" %}
 Video --- Il colonialismo italiano
@@ -168,8 +160,6 @@ La domanda storiograficamente più onesta non è quindi se il trasformismo fosse
 - Benedetto Croce, *Storia d'Italia dal 1871 al 1915*, Laterza, 1928;
 - Giuseppe Galasso, *Storia d'Italia*, UTET, 1978;
 - Silvio Lanaro, *Storia dell'Italia repubblicana*, Marsilio, 1992.
-
-<a id="artefatto-7"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/espansione_coloniale.html" %}
 Risorsa digitale --- Espansione coloniale italiana — timeline interattiva

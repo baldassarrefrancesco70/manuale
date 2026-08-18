@@ -34,8 +34,6 @@ Da ammutinamento militare la rivolta si allargò a insurrezione popolare in ampi
 
 La riorganizzazione che seguì fu progettata a partire dalla lezione del 1857. L'esercito venne ristrutturato mescolando reggimenti europei e truppe indiane e applicando sistematicamente il principio del *divide et impera*, cioè organizzando i reparti in modo da rendere difficile la formazione di solidarietà tra gruppi religiosi ed etnici diversi. La burocrazia affiancò notabili indigeni fedeli a funzionari britannici. E si avviò una costruzione ferroviaria su vasta scala, che serviva a spostare truppe rapidamente là dove servisse. Nel **1876**, su iniziativa di Disraeli, la regina Vittoria fu proclamata imperatrice delle Indie.
 
-<a id="video-10"></a>
-
 {% embed url="https://youtu.be/Pygkn4r6qJc" %}
 Video --- Dal 1857 al Raj
 {% endembed %}
@@ -48,8 +46,6 @@ Attorno al 1890 il Raj presentava un'asimmetria che vale la pena fissare con pre
 
 Nessun apparato repressivo di quelle dimensioni può funzionare per sola coercizione, e infatti non funzionava così. Il dominio si reggeva sulla collaborazione delle gerarchie locali cui conveniva mantenerlo, sulla frammentazione deliberata delle possibili solidarietà, e su un'organizzazione amministrativa che i colonizzatori presentavano a se stessi come prova della propria superiorità tecnica, e dunque come giustificazione del proprio diritto a governare. La *missione civilizzatrice* incontrata nel capitolo precedente non era, per chi la professava, un'ipocrisia consapevole: era la spiegazione che si dava di un'asimmetria altrimenti inspiegabile.
 
-<a id="infografica-10"></a>
-
 ![Seimila su trecento milioni](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info10_equilibrio_del_Raj_Britannico.png)
 
 
@@ -59,8 +55,6 @@ Nessun apparato repressivo di quelle dimensioni può funzionare per sola coerciz
 Le opere realizzate dal Raj furono ingenti e reali, ed è proprio la loro esistenza a rendere delicato il bilancio. La rete ferroviaria indiana fu tra le più estese del mondo. Ma il suo disegno risponde a tre funzioni precise, tutte orientate verso l'esterno o verso il controllo: spostare truppe per sedare rivolte, convogliare materie prime dalle regioni interne ai porti di imbarco, distribuire i manufatti britannici nel mercato interno. Non collegare tra loro le regioni indiane per farle commerciare.
 
 La stessa logica governò lo sviluppo industriale, o meglio la sua assenza. Alla vigilia del 1914 la Gran Bretagna destinava alle colonie di più recente acquisizione una quota minima dei propri investimenti esteri: il capitale britannico non andava in India a costruire industrie, perché un'India industrializzata sarebbe stata un concorrente e non un mercato. Un episodio illumina il meccanismo: durante la guerra di secessione americana, l'interruzione delle forniture di cotone dagli Stati del Sud fece precipitare la domanda sulle piantagioni indiane, accelerando la conversione delle terre alle colture da esportazione. Ciò che accadeva a Charleston si ripercuoteva su un contadino del Deccan, e nessuno gliene aveva chiesto il parere.
-
-<a id="artefatto-6"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto6-ferrovia.html" %}
 Risorsa digitale --- A che cosa serve una ferrovia
@@ -107,8 +101,6 @@ Il trattato esisteva in due versioni, italiana e amarica, e il suo articolo deci
 
 Che la discrepanza fosse un errore di traduzione o un'ambiguità voluta è questione ancora discussa. Certo è che nessuna delle due parti si comportò come chi ha frainteso: entrambe agirono sapendo che cosa era in gioco.
 
-<a id="video-11"></a>
-
 {% embed url="https://youtu.be/EdPo3dozpV4" %}
 Video --- Uccialli: un trattato in due lingue
 {% endembed %}
@@ -150,12 +142,8 @@ Nessuno di questi elementi, isolato, sarebbe bastato. La loro combinazione spieg
 _cfr. [approfondimento in Atlante, cartina 5 --- Il Corno d'Africa e la campagna del 1895-96](atlante.md#cartina-5)_
 
 
-<a id="infografica-11"></a>
-
 ![Due casi, stessa logica](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info11_Imperialismo__India_ed_Etiopia.png)
 
-
-<a id="artefatto-7"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto7-adua.html" %}
 Risorsa digitale --- Perché ad Adua sì e altrove no

@@ -25,8 +25,6 @@ La conseguenza politica va vista bene, perché è la premessa materiale di tutto
 
 La spedizione d'**Egitto** del 1798, che qui basta registrare, appartiene alla stessa logica. Fu proposta e ottenuta come impresa autonoma, portò con sé un corpo di studiosi che avrebbe fondato l'egittologia, si concluse con la flotta francese distrutta ad Abukir e l'esercito bloccato; e quando la situazione in Europa cambiò, Bonaparte lasciò le proprie truppe in Egitto e rientrò in Francia. Nessuno lo processò per averle abbandonate.
 
-<a id="video-28"></a>
-
 {% embed url="https://youtu.be/QNs9sNv2tB4" %}
 Video --- Come si diventa arbitri di un governo
 {% endembed %}
@@ -52,8 +50,6 @@ La terza è la più difficile, e riguarda la sovranità. Uno Stato che può esse
 
 Le tre cose non si succedono nel tempo. Avvengono insieme, ed è per questo che il paragrafo sta all'inizio del capitolo: chi lo ha letto non potrà più leggere l'espressione «esportazione dei principi» come se descrivesse tutto ciò che accadeva.
 
-<a id="artefatto-19"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-20-campoformio-un-solo-trattato.html" %}
 Risorsa digitale --- Campoformio, un solo trattato
 {% endembed %}
@@ -75,14 +71,10 @@ Sieyès aveva progettato altro, e si trovò scavalcato dal generale che aveva ch
 
 Il testo fu sottoposto a **plebiscito** e approvato da circa tre milioni di sì contro poco più di millecinquecento no. La cifra da tenere è però un'altra: oltre quattro milioni di aventi diritto non votarono affatto. In un sistema a voto palese, in cui il no si esprimeva firmando un registro pubblico, l'astensione è il dato che dice di più, e conviene ricordarlo quando fra due paragrafi le percentuali torneranno. Questa è la vera novità del regime, e va nominata perché tornerà nella storia europea: un potere personale che si fa ratificare direttamente dagli elettori, scavalcando le assemblee, e che ricava da quella ratifica una legittimità che le assemblee non possono contestare.
 
-<a id="video-29"></a>
-
 {% embed url="https://youtu.be/SI8yvHNs0fA" %}
 Video --- Prendere il potere restando legali
 {% endembed %}
 
-
-<a id="video-30"></a>
 
 {% embed url="" %}
 Video --- Plebiscito
@@ -115,8 +107,6 @@ Nelle stesse settimane in cui garantiva quelle cose, il regime ne toglieva siste
 
 Il **principio elettivo scompare dall'amministrazione locale**. La legge del febbraio 1800 pose a capo di ciascuno degli ottantatré dipartimenti un **prefetto** nominato dal governo e a esso solo responsabile, e sotto di lui sottoprefetti e sindaci ugualmente nominati. Fra i suoi compiti non c'era soltanto l'amministrazione: doveva sorvegliare quello che i documenti dell'epoca chiamano lo spirito pubblico, cioè riferire su ciò che si pensava nel dipartimento e reprimere le opposizioni locali. I contemporanei se ne accorsero subito, e il paragone che circolava era con gli intendenti dell'antico regime. Il disegno dipartimentale del 1790 restava, e restava anche l'uniformità; spariva l'elezione. Chi aveva costruito quel sistema nel 1790 lo aveva pensato come decentramento, e in dieci anni divenne il più efficace strumento di accentramento che la Francia avesse mai avuto: un'amministrazione uniforme è più facile da dirigere dal centro di un mosaico di privilegi.
 
-<a id="video-31"></a>
-
 {% embed url="" %}
 Video --- Il prefetto
 {% endembed %}
@@ -142,16 +132,12 @@ Nello stesso testo, e con la stessa forza di legge, si trovano altre disposizion
 
 Non si tratta di un residuo del passato sopravvissuto per distrazione. La condizione giuridica della donna sposata nel Codice è per molti aspetti **peggiore** di quella riconosciuta dalla legislazione rivoluzionaria degli anni precedenti, che aveva parificato i figli nelle successioni, ammesso il divorzio per mutuo consenso e riconosciuto alle donne una capacità civile più ampia. Il Codice non conserva: restringe, e lo fa consapevolmente, sulla base dell'idea che la famiglia sia la cellula dell'ordine sociale e che l'ordine di una famiglia richieda un capo.
 
-<a id="infografica-19"></a>
-
 ![La condizione giuridica della donna sposata, 1789-1804](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info20_Condizione_giuridica_femminile_1789-1804.png)
 
 
 Da qui il modo giusto di leggere il testo, ed è quello aperto dal paragrafo sui cittadini attivi e passivi. Il Codice realizza compiutamente l'uguaglianza civile per gli uomini adulti, e nel farlo traccia un confine interno preciso. Non è che l'uguaglianza sia stata proclamata e poi tradita: è che l'uguaglianza di cui si parlava aveva, fin dall'inizio, un soggetto determinato, e il Codice è il documento in cui quel soggetto viene scritto per intero e reso operativo. Per questo il testo poté essere insieme l'atto di morte dell'antico regime e, per metà della popolazione francese, una regressione.
 
 Della sua fortuna europea si dirà nel paragrafo sui territori, ma conviene anticipare il dato che la rende storicamente decisiva: il Codice sopravvisse alla caduta di chi lo aveva promulgato. Restò in vigore, o fu imitato, in gran parte dell'Europa continentale anche dopo il 1815, e con esso restarono i confini che portava incorporati.
-
-<a id="artefatto-20"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-21-il-codice-civile-due-colonne.html" %}
 Risorsa digitale --- Il Codice civile, due colonne
@@ -171,8 +157,6 @@ I fatti che seguirono vanno detti senza attenuazioni. In **Guadalupa** un corpo 
 Sulla portata di questo paragrafo nell'economia del capitolo conviene essere espliciti. La tesi secondo cui Napoleone esportò i principi della Rivoluzione può assorbire molte cose: la censura, i prefetti, i plebisciti, perfino l'Impero, presentandoli come il prezzo dell'ordine necessario a diffondere le riforme. Non può assorbire questo. Qui non c'è una libertà politica sacrificata alla stabilità: c'è la revoca, per legge, dell'unico atto con cui la Rivoluzione aveva esteso la cittadinanza oltre il proprio confine, e il ritorno di esseri umani alla condizione di proprietà.
 
 E va registrato un dato che riguarda il modo in cui si raccontano queste vicende. Della Francia si dice spesso che fu il primo paese europeo ad abolire la schiavitù. È vero, e va detto insieme alla seconda metà della frase: fu anche l'unico ad averla ristabilita per legge dopo averla abolita, e quindi l'unico ad aver dovuto abolirla due volte. La seconda volta sarà nel 1848.
-
-<a id="video-32"></a>
 
 {% embed url="https://youtu.be/RdA4v9nSY6s" %}
 Video --- 1794 e 1802, otto anni
@@ -199,12 +183,8 @@ Vi erano gli **Stati satelliti**, formalmente indipendenti, retti da parenti o d
 
 Vi erano infine gli **alleati vincolati per trattato**, formalmente sovrani: gli Stati della **Confederazione del Reno**, che riuniva i principati tedeschi dopo la fine del Sacro Romano Impero nel 1806, il Ducato di Varsavia, la Danimarca, e a fasi alterne l'Austria e la Russia. Qui la Francia non legiferava: chiedeva contingenti militari e adesione alla propria politica economica.
 
-<a id="infografica-20"></a>
-
 ![I tre statuti dell'Europa napoleonica](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info21_Statuti_dell_Europa_napoleonica.png)
 
-
-<a id="video-33"></a>
 
 {% embed url="https://youtu.be/hicDtW6l74w" %}
 Video --- Annessi, satelliti, alleati
@@ -212,8 +192,6 @@ Video --- Annessi, satelliti, alleati
 
 
 Quella politica economica aveva un nome, il **blocco continentale**, decretato nel 1806. Poiché la Gran Bretagna non poteva essere battuta militarmente, se ne sarebbe rovinato il commercio chiudendo al suo naviglio tutti i porti del continente. Le conseguenze furono asimmetriche: alcune manifatture continentali, prive della concorrenza inglese, prosperarono; i porti atlantici e mediterranei furono rovinati; il contrabbando divenne un'industria; e i paesi che vivevano di commercio marittimo furono costretti a una scelta fra la propria economia e l'alleanza francese. E fu il blocco a trasformarsi nel motore dell'espansione, per una ragione meccanica: per essere efficace doveva chiudere ogni porto, e ogni porto lasciato aperto obbligava a un'altra occupazione. La logica che portò in Portogallo e in Spagna nel 1807-1808, e poi in Russia nel 1812, comincia qui.
-
-<a id="video-34"></a>
 
 {% embed url="" %}
 Video --- Il blocco continentale
@@ -224,8 +202,6 @@ Video --- Il blocco continentale
 
 _cfr. [approfondimento in Atlante, cartina 6 --- L'Europa napoleonica nel 1812](atlante.md#cartina-6)_
 
-
-<a id="artefatto-21"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-23-tre-statuti-una-mappa.html" %}
 Risorsa digitale --- Tre statuti, una mappa
@@ -244,16 +220,12 @@ La domanda del capitolo si decide qui, e si decide meglio con una griglia che co
 
 **Che cosa non arriva.** L'indipendenza. La sovranità popolare in senso politico: nei territori napoleonici si vota poco, si vota male e non si decide nulla, e i parlamenti locali, dove esistono, sono consultivi. La libertà di stampa. Una riforma agraria: la vendita dei beni ecclesiastici arricchì quasi ovunque la borghesia urbana e i proprietari già forti, e nel Mezzogiorno il contadino uscì dalla feudalità senza uscire dalla povertà. E non arriva l'uguaglianza per tutti, perché il Codice porta con sé anche il proprio confine interno.
 
-<a id="infografica-21"></a>
-
 ![Che cosa arriva nei territori](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info18_Effetti_della_dominazione_napoleonica.png)
 
 
 Da questa griglia discende la cosa che il capitolo chiede di tenere ferma, ed è più scomoda di qualunque bilancio. **Le stesse persone potevano guadagnare da una colonna e pagare l'altra.** Un avvocato milanese guadagnava dall'uguaglianza giuridica, dalle carriere aperte e dai tribunali funzionanti, e pagava con la coscrizione del figlio. Un mercante di Amburgo guadagnava dalla fine dei privilegi corporativi e veniva rovinato dal blocco. Un contadino napoletano smetteva di dovere prestazioni al barone e cominciava a essere chiamato alle armi da uno Stato che prima non lo raggiungeva. Non esistono i favorevoli e i contrari come due gruppi separati: esiste, per moltissimi, un bilancio individuale che non si chiude.
 
 Ed è per questo che sulla domanda del capitolo non si vota a maggioranza. Chiedersi se la dominazione napoleonica fu nel complesso un bene o un male significa sommare grandezze non omogenee. Chiedersi che cosa portò, che cosa impose e che cosa non concesse mai è una domanda a cui si può rispondere.
-
-<a id="artefatto-22"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-19-la-griglia-dei-territori.html" %}
 Risorsa digitale --- La griglia dei territori
@@ -270,8 +242,6 @@ Il meccanismo funzionava così. Ogni anno il governo fissava il contingente da a
 
 Poi c'era la terza possibilità, ed è quella che conta. Chi estraeva un numero basso poteva farsi **sostituire**, pagando un altro giovane disposto ad andare al suo posto. La sostituzione era legale, regolata, e aveva un prezzo di mercato che variava di anno in anno e saliva quando la guerra andava male: nei periodi peggiori equivaleva a diverse annate di salario di un bracciante. Esistevano intermediari che organizzavano i contratti, e famiglie che si assicuravano contro il rischio di estrazione.
 
-<a id="infografica-22"></a>
-
 ![Coscrizione e rimpiazzo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info19_Coscrizione_e_rimpiazzo_militare.png)
 
 
@@ -283,14 +253,10 @@ Sulle dimensioni le stime vanno prese con cautela. Le chiamate alle armi in tutt
 
 Qui si chiude l'arco aperto dal paragrafo sulla guerra nel Settecento. Di quella guerra si diceva che era limitata anche perché il reclutamento era parziale, e che nessuno pensava di mobilitare una popolazione. La leva in massa del 1793 aveva fatto saltare quella premessa in nome della patria in pericolo. Qui la mobilitazione è diventata un'istituzione ordinaria di uno Stato in pace con sé stesso, amministrata da uffici, con moduli, liste e ricorsi. Non è più un'emergenza: è il funzionamento normale di uno Stato che ha bisogno di uomini e sa come prenderli.
 
-<a id="artefatto-23"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-22-il-sorteggio.html" %}
 Risorsa digitale --- Il sorteggio
 {% endembed %}
 
-
-<a id="video-35"></a>
 
 {% embed url="https://youtu.be/7Eb9tdJwXco" %}
 Video --- Una legge uguale per tutti
@@ -304,8 +270,6 @@ Video --- Una legge uguale per tutti
 La Spagna era un alleato, non un nemico. Fu il blocco continentale a portarvi le truppe francesi, che dovevano attraversarla per chiudere i porti portoghesi; una volta dentro, nel 1808, Napoleone approfittò di una crisi dinastica per convocare la famiglia reale a Bayonne, ottenerne l'abdicazione e mettere sul trono il fratello Giuseppe, dotandolo di una costituzione che aboliva la feudalità, l'Inquisizione e i privilegi. Si aspettava, come in Italia, che il paese accettasse. Ne seguirono sei anni di guerra che logorarono l'Impero più di qualunque coalizione.
 
 La rivolta cominciò a Madrid il 2 maggio 1808 e si estese al paese intero, e la sua natura va descritta con precisione perché è il punto per cui questo paragrafo esiste. Gli eserciti regolari spagnoli furono battuti più volte; ciò che non fu battuto furono le bande locali, che attaccavano convogli, colpivano i reparti isolati e sparivano fra la popolazione. I contemporanei chiamarono quel modo di combattere **guerrilla**, e la parola è entrata da lì in tutte le lingue europee.
-
-<a id="video-36"></a>
 
 {% embed url="" %}
 Video --- Guerrilla
@@ -355,12 +319,8 @@ Va infine osservato che la divisione fra le due letture segue spesso una geograf
 
 La domanda che il nodo lascia aperta è la più utile che questo percorso possa consegnare: che cosa si accetta come criterio per giudicare un'azione politica, ciò che ha prodotto nel lungo periodo, oppure il modo in cui è stata compiuta?
 
-<a id="infografica-23"></a>
-
 ![Due letture su Napoleone](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info22_Due_letture_su_Napoleone.png)
 
-
-<a id="artefatto-24"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-24-esportazione-o-dominio.html" %}
 Risorsa digitale --- Esportazione o dominio

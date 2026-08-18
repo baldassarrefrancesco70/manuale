@@ -31,8 +31,6 @@ La Cina si concepiva come centro della civiltà, e questa autopercezione aveva c
 
 L'élite giapponese arrivò a una conclusione opposta, e ci arrivò rapidamente. Non si percepiva come impero universale autosufficiente ma come una nazione potenziale, minacciata dallo stesso destino che stava travolgendo il vicino continentale. Il caso cinese, in altri termini, funzionò per il Giappone come esempio negativo osservabile in tempo reale, e la conclusione che ne trasse fu che per conservare l'indipendenza occorreva trasformarsi, non resistere.
 
-<a id="infografica-12"></a>
-
 ![Stessa minaccia, due risposte](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info12_Cina_e_Giappone_nell_Ottocento.png)
 
 
@@ -49,8 +47,6 @@ Le riforme che seguirono furono rapide e sistematiche. Nel **1871** l'abolizione
 
 Vale la pena notare che l'ultima di queste misure è la stessa che in India, come il capitolo precedente ha mostrato, spinse i contadini verso l'indebitamento e contribuì alla catastrofe delle carestie. La differenza non sta nello strumento fiscale, ma in chi ne incassava il gettito e in che cosa ci faceva.
 
-<a id="artefatto-8"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto8-samurai-azionista.html" %}
 Risorsa digitale --- Da samurai ad azionista
 {% endembed %}
@@ -65,8 +61,6 @@ Il confronto con l'India è qui più istruttivo di qualunque enunciazione teoric
 
 Su questa base nacquero gli **zaibatsu**, i grandi conglomerati industriali e finanziari, tra cui **Mitsui** e **Sumitomo**, che discendevano da antiche dinastie mercantili e che convertirono patrimoni agrari e commerciali in capitale industriale, sostenuti dalla protezione statale e dalle commesse militari. Il Giappone protesse la propria manifattura invece di aprirla alla concorrenza britannica, ed evitò così quella distruzione della capacità produttiva esistente che in India era stata chiamata deindustrializzazione.
 
-<a id="infografica-13"></a>
-
 ![Ferrovie che portano dentro, ferrovie che portano fuori](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info13_India_e_Giappone_a_confronto.png)
 
 
@@ -78,8 +72,6 @@ Non tutti accettarono la trasformazione. La resistenza più consistente venne pr
 Sul piano istituzionale, la **Costituzione del 1889** fu modellata sull'esempio prussiano e risolse in senso marcatamente autoritario la tensione tra rappresentanza e autorità. Prevedeva un parlamento, la **Dieta**, ma manteneva il potere esecutivo nelle mani dell'imperatore e di una ristretta oligarchia non responsabile davanti ai deputati. La sua funzione principale era esterna prima che interna: fornire al Giappone una veste istituzionale riconoscibile dalle cancellerie occidentali, e quindi la credibilità necessaria a rinegoziare i trattati ineguali del 1858.
 
 Parallelamente, l'occidentalizzazione dei costumi produsse una reazione che il governo non contrastò ma organizzò. Lo **shintoismo** fu elevato a religione di Stato e il culto dell'imperatore istituzionalizzato; l'**Editto sull'educazione del 1890** fece della scuola uno strumento di formazione patriottica e di obbedienza. Anche il darwinismo sociale, che l'Europa usava per giustificare il dominio sugli altri, fu recepito in Giappone con un segno diverso: come avvertimento sulla propria sorte, la prova che chi non si modernizza scivola nella condizione delle nazioni colonizzate. La libertà di cui si parlava era la sovranità dello Stato nel sistema internazionale, non necessariamente la libertà civile dei sudditi.
-
-<a id="video-12"></a>
 
 {% embed url="https://youtu.be/-9DvwLApN64" %}
 Video --- Dalle navi nere alla Costituzione
@@ -99,8 +91,6 @@ Il confronto con Adua, che il capitolo precedente ha esaminato, aiuta a misurare
 
 _cfr. [approfondimento in Atlante, cartina 6 --- L'Asia orientale nel 1905](atlante.md#cartina-6)_
 
-
-<a id="video-13"></a>
 
 {% embed url="https://youtu.be/SVxj-u3TtWQ" %}
 Video --- Da preda a predatore

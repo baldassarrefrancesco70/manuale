@@ -27,8 +27,6 @@ Su un punto, però, il liberalismo di Cavour mostrava aspetti apertamente conser
 
 Nominato presidente del Consiglio nel 1852, Cavour sfruttò la condizione privilegiata del Piemonte per trasformarlo in un modello di modernità liberale e nel perno della questione italiana. Comprese che l'unificazione non si sarebbe potuta fare né con le cospirazioni né con le sole battaglie, ma attraverso un paziente lavoro di rafforzamento interno e di costruzione di alleanze internazionali.
 
-<a id="video-6"></a>
-
 {% embed url="https://youtu.be/Fjm2kYWRFnc" %}
 Video --- Dieci anni decisi altrove
 {% endembed %}
@@ -46,8 +44,6 @@ Il passo successivo furono gli **Accordi di Plombières** (1858): negli incontri
 
 _cfr. [approfondimento in Atlante, cartina 3 --- L'Italia secondo gli accordi di Plombières](atlante.md#cartina-3)_
 
-
-<a id="artefatto-3"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/03-il-prezzo-di-ogni-mossa.html" %}
 Risorsa digitale --- Il prezzo di ogni mossa
@@ -83,8 +79,6 @@ La notte tra il 5 e il 6 maggio 1860, Garibaldi salpò dallo **scoglio di Quarto
 
 Sul campo, la campagna fu travolgente. Il 15 maggio i garibaldini sconfissero i borbonici nella **battaglia di Calatafimi**, che aprì la strada verso il capoluogo. Supportati dalla popolazione locale, conquistarono Palermo in pochi giorni e posero l'intera isola sotto il loro controllo con la decisiva vittoria di **Milazzo** il 20 luglio. Sbarcato in Calabria il 19 agosto, Garibaldi risalì rapidamente la penisola e il **7 settembre entrò trionfalmente a Napoli**, mentre Francesco II era già fuggito a Gaeta. L'ultima resistenza borbonica fu spezzata nella **battaglia del Volturno**, combattuta tra il 1° e il 2 ottobre.
 
-<a id="infografica-2"></a>
-
 ![Sei mesi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info2_Spedizione_dei_Mille_1860.png)
 
 
@@ -109,8 +103,6 @@ Il carisma di Garibaldi era una risorsa politica di primo piano. Era noto intern
 Dietro i successi militari emergevano però profonde contraddizioni sociali. I contadini siciliani insorsero sperando non solo nella caduta dei Borbone, ma anche in una radicale redistribuzione delle terre, minacciando le proprietà della borghesia locale. Il governo garibaldino, pur avendo adottato misure popolari come l'abrogazione della tassa sul macinato, scelse di separare nettamente la questione sociale da quella nazionale: Garibaldi ordinò al luogotenente **Nino Bixio** di reprimere duramente le rivolte contadine, e la repressione culminò nelle esecuzioni sommarie del tragico episodio di **Bronte** nell'agosto 1860. La scelta fu politicamente obbligata, senza l'appoggio dei proprietari terrieri l'impresa sarebbe naufragata, ma rivelò i limiti strutturali di un movimento che aveva promesso la liberazione senza poter affrontare la questione agraria.
 {% endhint %}
 
-
-<a id="video-7"></a>
 
 {% embed url="https://youtu.be/YoPwYMKC6Sg" %}
 Video --- Bronte, agosto 1860

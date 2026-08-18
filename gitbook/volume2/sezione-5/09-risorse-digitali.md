@@ -9,11 +9,11 @@ Le risorse digitali e i video sono già incontrati nel corso del capitolo, nel p
 
 Il capitolo lavora su un testo — la Dichiarazione — che si legge come proclama e si capisce solo come argomento a tre tempi, e su un'economia coloniale che non è mai stata semplicemente "libera" né semplicemente "sottomessa".
 
-- **Risorsa digitale** --- [Dentro la Dichiarazione: la logica di un testo](01-le-tredici-colonie-e-le-ragioni-dell-indipendenza.md#artefatto-1)
-- **Infografica** --- [Le tredici colonie: tre economie, un doppio vincolo](01-le-tredici-colonie-e-le-ragioni-dell-indipendenza.md#infografica-1)
-- **Infografica** --- [Una promessa a chi? Le esclusioni della Dichiarazione](01-le-tredici-colonie-e-le-ragioni-dell-indipendenza.md#infografica-2)
-- **Video** --- [Dalla tassa di bollo alla rottura (1763-1776)](01-le-tredici-colonie-e-le-ragioni-dell-indipendenza.md#video-1)
-- **Video** --- [Promesse di guerra, tradimenti di pace](01-le-tredici-colonie-e-le-ragioni-dell-indipendenza.md#video-2)
+- **Risorsa digitale** --- [Dentro la Dichiarazione: la logica di un testo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto1-logica-dichiarazione.html)
+- **Infografica** --- [Le tredici colonie: tre economie, un doppio vincolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info1_Le_Tredici_Colonie_Americane.png)
+- **Infografica** --- [Una promessa a chi? Le esclusioni della Dichiarazione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info2_Esclusioni_della_Dichiarazione_%281776%29.png)
+- **Video** --- [Dalla tassa di bollo alla rottura (1763-1776)](https://youtu.be/YsTPX4ZRR3I)
+- **Video** --- [Promesse di guerra, tradimenti di pace](https://youtu.be/RRLm28Vejlw)
 
 
 ## Capitolo · Gli Stati Uniti dalle origini alla guerra di secessione
@@ -21,13 +21,13 @@ Il capitolo lavora su un testo — la Dichiarazione — che si legge come procla
 
 Un sistema costituzionale pensato per bilanciarsi da solo, due economie che convivono nello stesso paese, un principio scritto che non coincide con la sua applicazione: il capitolo tiene aperte tre tensioni parallele.
 
-- **Risorsa digitale** --- [Il sistema dei contrappesi: una macchina a tre ruote](02-gli-stati-uniti-dalle-origini-alla-guerra-di-secessione.md#artefatto-2)
-- **Infografica** --- [Due paure, una Costituzione](02-gli-stati-uniti-dalle-origini-alla-guerra-di-secessione.md#infografica-3)
-- **Infografica** --- [Due economie, un solo paese](02-gli-stati-uniti-dalle-origini-alla-guerra-di-secessione.md#infografica-4)
-- **Infografica** --- [Tre emendamenti, una promessa a metà](02-gli-stati-uniti-dalle-origini-alla-guerra-di-secessione.md#infografica-5)
-- **Video** --- [Dalla secessione alla resa](02-gli-stati-uniti-dalle-origini-alla-guerra-di-secessione.md#video-4)
-- **Video** --- [La prima guerra moderna](02-gli-stati-uniti-dalle-origini-alla-guerra-di-secessione.md#video-5)
-- **Video** --- [Destino Manifesto: dalla missione morale al sentiero delle lacrime](02-gli-stati-uniti-dalle-origini-alla-guerra-di-secessione.md#video-3)
+- **Risorsa digitale** --- [Il sistema dei contrappesi: una macchina a tre ruote](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto2-sistema-contrappesi.html)
+- **Infografica** --- [Due paure, una Costituzione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info3_Grande_Dibattito_Americano.png)
+- **Infografica** --- [Due economie, un solo paese](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info4_Economia_americana_prima_della_guerra.png)
+- **Infografica** --- [Tre emendamenti, una promessa a metà](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info5_Tre_emendamenti__promessa_e_realt%C3%A0.png)
+- **Video** --- [Dalla secessione alla resa](https://youtu.be/UoUu0WaEv3U)
+- **Video** --- [La prima guerra moderna](https://youtu.be/RMROqByP7aw)
+- **Video** --- [Destino Manifesto: dalla missione morale al sentiero delle lacrime](https://youtu.be/-GeKjVlzTTM)
 
 
 ## Capitolo · Schiavitù, Haiti e colonialismo
@@ -35,11 +35,11 @@ Un sistema costituzionale pensato per bilanciarsi da solo, due economie che conv
 
 Il capitolo confronta due dichiarazioni e mostra che l'abolizione della schiavitù non fu un solo evento ma una sequenza scaglionata di decisioni diverse, Stato per Stato.
 
-- **Risorsa digitale** --- [Due dichiarazioni a confronto](03-schiavit-haiti-e-colonialismo.md#artefatto-3)
-- **Infografica** --- [La tratta atlantica in cifre](03-schiavit-haiti-e-colonialismo.md#infografica-6)
-- **Infografica** --- [Due abolizioni, non una](03-schiavit-haiti-e-colonialismo.md#infografica-7)
-- **Video** --- [Haiti 1791-1804](03-schiavit-haiti-e-colonialismo.md#video-7)
-- **Video** --- [Il commercio triangolare e i suoi limiti](03-schiavit-haiti-e-colonialismo.md#video-6)
+- **Risorsa digitale** --- [Due dichiarazioni a confronto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto3-due-dichiarazioni.html)
+- **Infografica** --- [La tratta atlantica in cifre](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info6_Statistiche_sulla_tratta_atlantica.png)
+- **Infografica** --- [Due abolizioni, non una](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info7_Fine_della_schiavit%C3%B9_atlantica.png)
+- **Video** --- [Haiti 1791-1804](https://youtu.be/YVt6Ge3XAzk)
+- **Video** --- [Il commercio triangolare e i suoi limiti](https://youtu.be/RzHuMn0wIM8)
 
 
 ## Capitolo · Dal colonialismo all'imperialismo di fine Ottocento
@@ -47,12 +47,12 @@ Il capitolo confronta due dichiarazioni e mostra che l'abolizione della schiavit
 
 Colonialismo e imperialismo vengono spesso usati come sinonimi: il capitolo li separa su più assi insieme, e mette a confronto le spiegazioni concorrenti del perché si conquista.
 
-- **Risorsa digitale** --- [Vecchio colonialismo, nuovo imperialismo](04-dal-colonialismo-all-imperialismo-di-fine-ottocento.md#artefatto-4)
-- **Risorsa digitale** --- [Perché conquistare? Le spiegazioni a confronto](04-dal-colonialismo-all-imperialismo-di-fine-ottocento.md#artefatto-5)
-- **Infografica** --- [La spartizione in cifre](04-dal-colonialismo-all-imperialismo-di-fine-ottocento.md#infografica-9)
-- **Infografica** --- [Il progresso, due colonne](04-dal-colonialismo-all-imperialismo-di-fine-ottocento.md#infografica-8)
-- **Video** --- [Da Berlino alla spartizione](04-dal-colonialismo-all-imperialismo-di-fine-ottocento.md#video-9)
-- **Video** --- [Le parole del dominio](04-dal-colonialismo-all-imperialismo-di-fine-ottocento.md#video-8)
+- **Risorsa digitale** --- [Vecchio colonialismo, nuovo imperialismo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto4-vecchio-nuovo-colonialismo.html)
+- **Risorsa digitale** --- [Perché conquistare? Le spiegazioni a confronto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto5-spiegazioni-confronto.html)
+- **Infografica** --- [La spartizione in cifre](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info8_imperialismo_in_cifre.png)
+- **Infografica** --- [Il progresso, due colonne](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info9_Progresso_in_Europa_e_Colonie.png)
+- **Video** --- [Da Berlino alla spartizione](https://youtu.be/l2n-RdR27to)
+- **Video** --- [Le parole del dominio](https://youtu.be/FuOp66xFLro)
 
 
 ## Capitolo · Due casi: India britannica ed Etiopia
@@ -60,12 +60,12 @@ Colonialismo e imperialismo vengono spesso usati come sinonimi: il capitolo li s
 
 Il capitolo isola le condizioni che spiegano due esiti opposti — un impero che si consolida, una campagna che fallisce — invece di trattarli come episodi a sé.
 
-- **Risorsa digitale** --- [A che cosa serve una ferrovia](05-due-casi-india-britannica-ed-etiopia.md#artefatto-6)
-- **Risorsa digitale** --- [Perché ad Adua sì e altrove no](05-due-casi-india-britannica-ed-etiopia.md#artefatto-7)
-- **Infografica** --- [Seimila su trecento milioni](05-due-casi-india-britannica-ed-etiopia.md#infografica-10)
-- **Infografica** --- [Due casi, stessa logica](05-due-casi-india-britannica-ed-etiopia.md#infografica-11)
-- **Video** --- [Dal 1857 al Raj](05-due-casi-india-britannica-ed-etiopia.md#video-10)
-- **Video** --- [Uccialli: un trattato in due lingue](05-due-casi-india-britannica-ed-etiopia.md#video-11)
+- **Risorsa digitale** --- [A che cosa serve una ferrovia](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto6-ferrovia.html)
+- **Risorsa digitale** --- [Perché ad Adua sì e altrove no](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto7-adua.html)
+- **Infografica** --- [Seimila su trecento milioni](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info10_equilibrio_del_Raj_Britannico.png)
+- **Infografica** --- [Due casi, stessa logica](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info11_Imperialismo__India_ed_Etiopia.png)
+- **Video** --- [Dal 1857 al Raj](https://youtu.be/Pygkn4r6qJc)
+- **Video** --- [Uccialli: un trattato in due lingue](https://youtu.be/EdPo3dozpV4)
 
 
 ## Capitolo · Il Giappone Meiji
@@ -73,11 +73,11 @@ Il capitolo isola le condizioni che spiegano due esiti opposti — un impero che
 
 Lo stesso strumento — la ferrovia, come nel capitolo precedente — produce qui l'esito opposto: il capitolo chiude la sezione confrontando due risposte diverse alla stessa minaccia esterna.
 
-- **Risorsa digitale** --- [Da samurai ad azionista](06-il-giappone-meiji.md#artefatto-8)
-- **Infografica** --- [Stessa minaccia, due risposte](06-il-giappone-meiji.md#infografica-12)
-- **Infografica** --- [Ferrovie che portano dentro, ferrovie che portano fuori](06-il-giappone-meiji.md#infografica-13)
-- **Video** --- [Dalle navi nere alla Costituzione](06-il-giappone-meiji.md#video-12)
-- **Video** --- [Da preda a predatore](06-il-giappone-meiji.md#video-13)
+- **Risorsa digitale** --- [Da samurai ad azionista](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto8-samurai-azionista.html)
+- **Infografica** --- [Stessa minaccia, due risposte](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info12_Cina_e_Giappone_nell_Ottocento.png)
+- **Infografica** --- [Ferrovie che portano dentro, ferrovie che portano fuori](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info13_India_e_Giappone_a_confronto.png)
+- **Video** --- [Dalle navi nere alla Costituzione](https://youtu.be/-9DvwLApN64)
+- **Video** --- [Da preda a predatore](https://youtu.be/SVxj-u3TtWQ)
 
 
 
@@ -86,8 +86,6 @@ Lo stesso strumento — la ferrovia, come nel capitolo precedente — produce qu
 
 Cronologia, glossario e palestra di argomentazione sono pensati per essere usati dopo lo studio dei capitoli, e servono a rimettere in ordine quanto studiato.
 
-<a id="artefatto-9"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto9-cronologia-mondo-fuori-europa.html" %}
 Risorsa digitale --- Cronologia della sezione
 {% endembed %}
@@ -95,16 +93,12 @@ Risorsa digitale --- Cronologia della sezione
 
 La cronologia mostra quattro corsie — tecnica, economia, società, idee — che scorrono insieme invece che in sequenza unica: utile per vedere che cosa succedeva *nello stesso momento* in campi diversi, per esempio che l'indipendenza americana e la spartizione dell'Africa di fine secolo appartengono alla stessa sezione ma a fasi molto distanti del suo arco. Le barre segnano i fenomeni lunghi, i punti gli eventi singoli.
 
-<a id="artefatto-10"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto10-glossario-mondo-fuori-europa.html" %}
 Risorsa digitale --- Glossario della sezione
 {% endembed %}
 
 
 Il glossario raccoglie i termini in grassetto incontrati nei capitoli. Alcune voci sono segnalate come **parole contese**: non hanno solo una definizione, ma anche la storia di chi le ha coniate e contro chi — utile quando un termine come "imperialismo" o "destino manifesto" sembra descrittivo e invece porta dentro una giustificazione che il capitolo ha già messo in discussione. Ha una modalità attiva, con frasi del manuale a termine oscurato, utile per l'autoverifica prima di una prova.
-
-<a id="artefatto-11"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto11-palestra-mondo-fuori-europa.html" %}
 Risorsa digitale --- Palestra di argomentazione della sezione

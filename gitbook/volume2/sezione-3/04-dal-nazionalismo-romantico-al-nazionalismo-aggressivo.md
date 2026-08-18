@@ -20,8 +20,6 @@ Non serve alcun tradimento perché questo accada. Serve che cambino le circostan
 
 Il capitolo esamina questi quattro mutamenti. Alla fine converrà tornare sulla tesi della continuità e chiedersi se non provi troppo, perché se ogni rivendicazione nazionale contiene già la propria versione aggressiva, diventa difficile distinguere un movimento di liberazione da una campagna di esclusione, e quella distinzione qualche volta serve.
 
-<a id="artefatto-15"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/15-stessa-pretesa-due-epoche.html" %}
 Risorsa digitale --- La stessa pretesa, due epoche
 {% endembed %}
@@ -40,8 +38,6 @@ Lo scopo era arginare. Le stesse masse che il suffragio ammetteva alla politica 
 
 Il nazionalismo cessa così di essere ciò che era stato per mezzo secolo, un programma di opposizione contro governi che lo negavano, e diventa una **risorsa di governo**.
 
-<a id="video-25"></a>
-
 {% embed url="https://youtu.be/ff-U40hJEUw" %}
 Video --- Quando la politica diventa affare di milioni
 {% endembed %}
@@ -57,8 +53,6 @@ Il legame originario tra causa nazionale e causa della libertà non era casuale:
 Il passaggio è visibile nella collocazione politica dei movimenti nazionalisti. Fino al 1848 stavano a sinistra, tra i cospiratori, gli esuli e i repubblicani; dopo il 1870 si spostano stabilmente a destra, tra i sostenitori dell'ordine, dell'esercito e della gerarchia sociale. Il capitolo sul 1848 ha già mostrato il momento della rottura, con la borghesia liberale che davanti alla richiesta di una repubblica democratica e sociale sceglie l'ordine; e il capitolo sull'unificazione tedesca ha mostrato l'esito, con i liberali che entrano nel partito nazional-liberale a sostegno del cancelliere che avevano combattuto. Alla fine del secolo il processo è compiuto: il nazionalismo è la bandiera di chi difende l'assetto esistente, non di chi lo contesta.
 
 **Louis Snyder** ha proposto per i due momenti due etichette che vale la pena tenere distinte: il nazionalismo della prima metà del secolo è **integrativo**, punta a unire in unità più grandi ciò che era frammentato, e ha bisogno di territori e mercati ampi perché li considera condizione del progresso; quello di fine secolo è **aggressivo**, e non punta più a unire ma a delimitare. **Hobsbawm** ha aggiunto l'osservazione decisiva: mentre il primo poteva applicarsi solo a comunità abbastanza grandi da costituire uno Stato economicamente sensato, il secondo diventa **parcellizzabile**, applicabile a qualunque piccola patria etnoculturale, per piccola che sia, perché non ha più bisogno di giustificarsi con il progresso.
-
-<a id="infografica-14"></a>
 
 ![Il pendolo politico](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info14_pendolo_politico_1815-1900.png)
 
@@ -87,14 +81,10 @@ Dall'altra parte si formò uno schieramento altrettanto significativo, che compr
 {% endhint %}
 
 
-<a id="artefatto-16"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/16-chi-entra-nella-nazione.html" %}
 Risorsa digitale --- Chi entra nella nazione
 {% endembed %}
 
-
-<a id="video-26"></a>
 
 {% embed url="https://youtu.be/17MOxum_4mI" %}
 Video --- L'affare Dreyfus e la nascita di una parola
@@ -125,12 +115,8 @@ Queste ricerche furono condotte da studiosi con cattedre, laboratori e riviste, 
 {% endhint %}
 
 
-<a id="infografica-15"></a>
-
 ![Il circolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info15_Circolo_del_Darwinismo_Sociale.png)
 
-
-<a id="artefatto-17"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/17-laboratorio-della-gerarchia.html" %}
 Risorsa digitale --- Il laboratorio della gerarchia
@@ -145,8 +131,6 @@ Resta da spiegare perché società che si dichiaravano fondate sull'uguaglianza 
 **Hobsbawm** ha proposto la spiegazione più economica, e ha osservato che il darwinismo sociale e l'antropologia razziale non appartengono alla scienza dell'Ottocento ma alla sua politica. Le società liberali europee si erano costituite su un'ideologia egualitaria e universalista ereditata dalla Rivoluzione: tutti gli uomini nascono uguali in diritti. Al tempo stesso producevano e richiedevano disuguaglianze enormi, all'interno attraverso lo sfruttamento del lavoro, all'esterno attraverso la dominazione coloniale.
 
 La contraddizione non era sostenibile con gli strumenti del liberalismo, perché il liberalismo non dispone di argomenti logici per negare a qualcuno l'uguaglianza che afferma in linea di principio. Ogni richiesta di estendere i diritti a chi ne era escluso, lavoratori, donne, popolazioni colonizzate, si appoggiava sui principi che la classe dirigente stessa proclamava. Contro quelle richieste occorreva una barriera che non fosse discutibile per via razionale, e la **razza** la fornì: trasformò una disuguaglianza storica, quindi modificabile, in una disuguaglianza naturale, quindi permanente. Hobsbawm la chiama, per questo, una barriera illogica, e l'aggettivo non è un insulto: è la descrizione della sua funzione, perché un argomento razionale sarebbe stato confutabile.
-
-<a id="infografica-16"></a>
 
 ![La barriera illogica](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info16_Liberalismo_e_la_Barriera_Illogica.png)
 
@@ -164,12 +148,8 @@ Su queste rappresentazioni si innesta infine il linguaggio biologico. La povert�
 
 È in questa forma che il Novecento lo erediterà, e converrà ricordarsene.
 
-<a id="infografica-17"></a>
-
 ![Il nemico interno](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info17_Esclusione_sociale_nel_XIX_secolo.png)
 
-
-<a id="video-27"></a>
 
 {% embed url="https://youtu.be/laEEY7oXPFg" %}
 Video --- Come la biologia entrò in politica
@@ -186,8 +166,6 @@ La depressione, che si prolunga con andamento irregolare fino agli ultimi anni d
 La risposta è l'abbandono del libero scambio. Uno dopo l'altro, gli Stati europei innalzano **tariffe protettive** a difesa delle proprie industrie e delle proprie agricolture, e il liberismo che era stato la dottrina economica dominante della metà del secolo diventa una posizione minoritaria. Nasce quello che si può chiamare un **nazionalismo economico**: la prosperità viene concepita non più come effetto di scambi crescenti tra tutti, ma come una quantità limitata che ciascuno strappa agli altri.
 
 Il mutamento pesa sull'idea stessa di nazione. Nella fase liberale la nazione era anche uno spazio economico da allargare, e questo poneva un limite alla sua frammentazione. Quando lo spazio da difendere conta più dello spazio da allargare, quel limite cade, e la logica della delimitazione può procedere senza freni interni.
-
-<a id="video-28"></a>
 
 {% embed url="https://youtu.be/_WgB94Dlf9s" %}
 Video --- Quando l'Europa smise di credere al libero scambio
@@ -207,21 +185,15 @@ Vale la pena osservare che la convinzione della superiorità europea non era con
 
 Su questo terreno il principio di nazionalità subisce l'ultima trasformazione. Fino a quel momento aveva stabilito che ogni popolo ha diritto a governarsi; ora stabilisce che alcuni popoli hanno diritto a governarne altri, e lo fa senza contraddizione apparente, perché nel frattempo ha imparato a distinguere i popoli che sono nazioni da quelli che, secondo la scala evolutiva, non lo sono ancora.
 
-<a id="artefatto-18"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/18-perche-conquistare.html" %}
 Risorsa digitale --- Perché conquistare
 {% endembed %}
 
 
-<a id="video-29"></a>
-
 {% embed url="" %}
 Video --- Le Esposizioni universali: il progresso come spettacolo
 {% endembed %}
 
-
-<a id="video-30"></a>
 
 {% embed url="https://youtu.be/Wck-l0aQYTw" %}
 Video --- Un giudizio che oggi si legge con disagio
@@ -239,14 +211,10 @@ Quella élite non si comportò come previsto. Alla fine degli anni Ottanta la fo
 
 È l'ultima acquisizione di questo percorso, e la più importante per quello che segue. Il principio secondo cui una comunità ha diritto a governarsi da sé non appartiene a chi l'ha formulato. Nell'Ottocento aveva scardinato l'ordine dinastico costruito a Vienna; nel Novecento avrebbe scardinato gli imperi coloniali costruiti da chi quel principio aveva usato per giustificarli. Che cosa accada quando la pretesa cambia di nuovo padrone è materia del percorso successivo.
 
-<a id="artefatto-19"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/19-test-della-dicotomia.html" %}
 Risorsa digitale --- Il test della dicotomia
 {% endembed %}
 
-
-<a id="video-31"></a>
 
 {% embed url="https://youtu.be/ku2d2u0oaWg" %}
 Video --- Il principio cambia padrone

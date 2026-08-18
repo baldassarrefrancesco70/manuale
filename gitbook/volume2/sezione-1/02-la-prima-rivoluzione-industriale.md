@@ -6,8 +6,6 @@ Il capitolo precedente ha stabilito alcune cose, e conviene averle chiare. Che i
 
 Nessuna di queste cose, però, è ancora la rivoluzione industriale. Sono il mondo che la precede, non la rottura stessa. E ciò che manca è proprio il punto da cui il capitolo prende le mosse: che cosa distingue un cambiamento di questa portata da un semplice accumulo di miglioramenti. Prima di spiegare perché accadde, occorre dire che cosa esattamente accadde. Da qui si comincia.
 
-<a id="video-7"></a>
-
 {% embed url="https://youtu.be/VH3Glb8BwA8" %}
 Video --- Il filo del discorso
 {% endembed %}
@@ -31,8 +29,6 @@ La quarta è il limite stesso della produzione. La protoindustria si era fermata
 
 Queste quattro rotture sono il nucleo produttivo di quel rivolgimento più ampio di cui si è parlato in apertura. E ne portano con sé una quinta, meno visibile ma non meno decisiva, che riguarda non il modo di produrre ma il modo di guardare il mondo. Con la convergenza di macchina e carbone, **il rapporto tra l'uomo e la natura si capovolge**: l'ambiente cessa di essere il limite invalicabile entro cui l'economia doveva stare, e diventa un serbatoio di materia da estrarre, trasformare, consumare. È una promessa di abbondanza, e insieme l'inizio di un conto, quello ambientale, che si sarebbe presentato molto più tardi.
 
-<a id="video-8"></a>
-
 {% embed url="https://youtu.be/0iGK-C3tpEg" %}
 Video --- La rottura
 {% endembed %}
@@ -46,8 +42,6 @@ La rivoluzione industriale non cominciò dal ferro, né dalle armi, né dalle gr
 Le ragioni per cui toccò al tessile sono diverse e convergenti. Anzitutto una manodopera che conosceva già i gesti: il lavoro a domicilio aveva abituato per generazioni ampie fasce della popolazione rurale a filare e tessere, e quella familiarità con le operazioni si trasferì, quando venne il momento, dentro gli stabilimenti. Poi la materia prima: il cotone grezzo affluiva in grandi quantità e a basso costo lungo le rotte dell'economia-mondo, dalle piantagioni schiaviste americane su cui la Gran Bretagna aveva il controllo, un legame di cui si dovrà misurare più avanti tutto il peso. C'era inoltre un mercato di sbocco sconfinato, sostenuto su tre fronti insieme, la crescita demografica interna, la fine dell'autoconsumo contadino che le enclosures avevano trasformato in domanda di beni, e i vasti mercati coloniali. E c'era infine la facilità del passaggio meccanico: aprire una prima filanda costava molto meno di un'industria pesante, e i gesti ripetitivi della filatura e della tessitura si prestavano a essere replicati e accelerati da macchine. Come esattamente ciò avvenne, con quali invenzioni successive, è raccontato a parte.
 
 Il motivo per cui il tessile è detto «trainante», però, non sta nei suoi tassi di crescita, per quanto eccezionali. Sta nella reazione a catena che innescò. Meccanizzare la filatura e la tessitura scatenò una fame di macchine che nessuna bottega artigiana poteva saziare, e per costruire telai più robusti e le macchine a vapore che li muovevano divenne necessario potenziare la metallurgia e la meccanica. Quelle macchine, a loro volta, chiedevano carbone, per alimentare il vapore e per fondere il ferro, e la domanda di carbone moltiplicò e allargò le miniere. La produzione di massa esigeva poi che balle di cotone e tessuti finiti si spostassero senza sosta tra i porti, le fabbriche e i mercati, e questo bisogno diede impulso a canali, strade e, di lì a poco, ferrovie. Le fabbriche stesse, troppo grandi ormai per i casolari di campagna, richiamavano masse di lavoratori e gonfiavano le città. Un solo settore, mettendosi in moto, tirava dietro di sé tutti gli altri: è questo che ne fa una locomotiva, e non la semplice rapidità della sua ascesa.
-
-<a id="video-9"></a>
 
 {% embed url="https://youtu.be/VhDg26fsgHg" %}
 Video --- Il settore trainante
@@ -73,8 +67,6 @@ Un filo lega tutti questi nomi, ed è il loro mestiere. Un tessitore, un barbier
 {% endhint %}
 
 
-<a id="artefatto-7"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/08-atlante-macchine.html" %}
 Risorsa digitale --- Atlante delle macchine
 {% endembed %}
@@ -93,19 +85,13 @@ Restava un ultimo squilibrio. Una produzione così vasta di merci e di carbone r
 
 Ogni anello di questa catena, il carbone che nutre il vapore, il vapore che chiede ferro, il ferro e le merci che chiamano le ferrovie, le ferrovie che moltiplicano la domanda di ferro e di carbone, rinforzava il successivo, e l'insieme ruotava su se stesso a velocità crescente. Ma tutto questo accadeva in un luogo solo, la Gran Bretagna, e prima che altrove. Resta da chiedersi perché proprio lì: se in quell'isola si fosse concentrato per necessità ciò che mancava al resto d'Europa, o se non si sia trattato piuttosto di un incontro fortunato di circostanze che nulla obbligava a coincidere.
 
-<a id="infografica-3"></a>
-
 ![Un sistema che si alimenta da sé](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info3_Sistema_industriale_che_si_autoalimenta.png)
 
-
-<a id="video-10"></a>
 
 {% embed url="https://youtu.be/Qc3vri_FNf4" %}
 Video --- Carbone e vapore
 {% endembed %}
 
-
-<a id="video-11"></a>
 
 {% embed url="https://youtu.be/HzHo7R_Zawc" %}
 Video --- Perché una pompa da miniera cambiò il mondo
@@ -128,14 +114,10 @@ Il resto sono condizioni che il capitolo ha già incontrato, e che qui basta ria
 
 Sei condizioni, dunque, realmente presenti. Ma è qui che l'elenco va letto contropelo, perché prese una a una quasi nessuna di esse era esclusiva dell'Inghilterra. La Francia aveva una popolazione ben più numerosa e capitali ingenti; le Province Unite avevano inventato la finanza moderna e dominato i commerci globali prima di Londra; l'agricoltura migliorava un po' ovunque nell'Europa nord-occidentale. Se ciascun ingrediente si ritrova altrove, allora non è nessuno di essi, singolarmente preso, a spiegare l'esito. Ciò che l'Inghilterra ebbe di unico non fu un fattore, ma la loro **simultaneità**: il fatto che si trovassero tutti insieme, nello stesso luogo e nello stesso momento, a rinforzarsi a vicenda. E una coincidenza, per definizione, non è un destino. Nessuna legge storica imponeva che quelle condizioni collimassero proprio lì e proprio allora; che lo abbiano fatto è un fatto da spiegare, non una necessità da constatare.
 
-<a id="infografica-4"></a>
-
 ![Nessun ingrediente bastava](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info4_Condizioni_della_rivoluzione_industriale.png)
 
 
 Questo lascia aperta una domanda che il capitolo non chiude, e non per reticenza. Che il primato inglese sia stato l'effetto di una superiorità strutturale o l'esito di una combinazione fortunata è precisamente uno dei nodi su cui gli storici discutono ancora, e lo riprenderemo tra le questioni controverse. Per ora basti aver sostituito alla domanda comoda, quali erano i sei fattori, quella scomoda: perché mai si presentarono insieme. Uno di quei fattori, intanto, chiede di essere guardato in faccia più degli altri, perché il suo basso costo aveva un prezzo che non compare nei bilanci britannici. È il cotone, e chi lo raccoglieva.
-
-<a id="video-12"></a>
 
 {% embed url="https://youtu.be/H8aSw4yiT_s" %}
 Video --- Il caso inglese
@@ -153,8 +135,6 @@ Quella curva ascendente ha un rovescio umano preciso, e va nominato senza eufemi
 
 Il mercato, d'altra parte, non era meno spietato della materia prima, e per gli stessi motivi di potenza. La base di partenza fu interna: le enclosures e la fine dell'autoconsumo avevano trasformato masse di ex contadini in consumatori costretti a comprare ciò che prima producevano, e una rete precoce di strade a pedaggio e di canali, oltre tremila chilometri di canali entro fine secolo, aveva unificato il paese in un unico mercato percorribile anche d'inverno. Ma i guadagni astronomici che spingevano a rischiare capitali nelle macchine venivano da fuori. L'Inghilterra sedeva al centro dell'economia-mondo, e vi sedeva armata: la sua supremazia navale e compagnie come quella delle Indie Orientali, autorizzate dallo Stato a usare le armi, le permisero, con le guerre combattute tra il 1793 e il 1815, di spazzar via quasi tutti i rivali coloniali e di conquistarsi un dominio pressoché monopolistico sui mari. Il risultato fu che l'esportazione superò il consumo interno come motore dell'industria: intorno al 1814 l'Inghilterra esportava quattro metri di cotone ogni tre consumati in patria, e nel 1850 la proporzione era già di tredici a otto.
 
-<a id="artefatto-8"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/07-curva-cotone.html" %}
 Risorsa digitale --- La curva del cotone
 {% endembed %}
@@ -168,8 +148,6 @@ _cfr. [approfondimento in Atlante, cartina 4 --- Le rotte del commercio atlantic
 
 
 Tirando le fila, la rivoluzione industriale appare qui sotto una luce diversa da quella della sola officina ingegnosa. Fu anche, e inseparabilmente, un'immensa estrazione di risorse su scala planetaria: capitali accumulati con la tratta, una materia prima resa artificialmente economica dal lavoro schiavile, un mercato mondiale tenuto aperto con le cannoniere e, dove serviva, con la distruzione delle industrie altrui. Tenere insieme il telaio di Crompton e la nave negriera di Liverpool non significa sporcare un'immagine luminosa per gusto della denuncia: significa vedere il fenomeno per intero, invece che dal solo lato in cui splende.
-
-<a id="video-13"></a>
 
 {% embed url="https://youtu.be/omr-RMhBfto" %}
 Video --- Il cotone e il suo prezzo
@@ -216,14 +194,10 @@ Fu una violenza, prima ancora che un'organizzazione. Piegare uomini e donne cres
 
 A rendere possibile questa disciplina concorse anche la trasformazione del lavoro in gesti sempre più semplici. Frammentata la produzione in operazioni elementari e ripetitive, l'abilità artigianale diventava superflua, e l'operaio, ridotto a eseguire un movimento che chiunque poteva imparare in un'ora, diventava facilmente sostituibile, e perciò ricattabile. Nella formula tagliente dello storico **David Landes**, non era più un artigiano ma una «mano», un paio di braccia intercambiabili. Fu anche per questo che i padroni trovarono spesso conveniente impiegare donne e bambini, più docili al comando e pagati assai meno: ma le condizioni di quel lavoro, e il prezzo che ne pagarono i più deboli, sono il tema della prossima sezione. Qui basti aver stabilito il rovesciamento di fondo, l'operaio non governa più la macchina, è la macchina a governare lui.
 
-<a id="video-14"></a>
-
 {% embed url="https://youtu.be/fU2auukjjlc" %}
 Video --- Classi e disciplina
 {% endembed %}
 
-
-<a id="video-15"></a>
 
 {% embed url="https://youtu.be/IgJKu7TQKU4" %}
 Video --- Il tempo dell'orologio
@@ -242,8 +216,6 @@ Dentro quei quartieri le condizioni di vita superavano ogni limite di sopportazi
 Il lavoro, di cui si è già detto quanto avesse mutato la sua natura sotto la disciplina dell'orologio, aggiungeva a tutto questo la sua durezza materiale: giornate di dodici, quattordici, sedici ore per sei giorni la settimana, nessuna ferie, nessuna tutela in caso di malattia o infortunio, e salari tenuti deliberatamente al livello della pura sussistenza, tanto bassi da costringere a lavorare senza sosta per sopravvivere. La miseria non era un incidente del sistema, ma una sua condizione di funzionamento.
 
 È in questo quadro che va collocato il tratto forse più duro della questione sociale, l'impiego massiccio di **donne e bambini**. La semplificazione delle mansioni li rendeva utilizzabili quanto un uomo adulto, e agli imprenditori convenivano per due ragioni brutali: costavano molto meno ed erano ritenuti più docili, più facili da piegare alla disciplina. Tra il 1834 e il 1847 solo un quarto degli addetti dei cotonifici inglesi era costituito da uomini adulti; il resto erano donne e ragazzi. Non solo nel tessile: donne e bambini scendevano anche nelle miniere, a compiti fisicamente devastanti. Per i bambini, sfruttati dalla più tenera età, significò la privazione di ogni istruzione e di un normale sviluppo del corpo.
-
-<a id="video-16"></a>
 
 {% embed url="https://youtu.be/Gu0qWIdWIHo" %}
 Video --- L'inchiesta Sadler
@@ -287,8 +259,6 @@ A saldare economia e filosofia in un'unica visione intervenne, quasi per equivoc
 
 Liberismo, positivismo e darwinismo sociale non erano la stessa cosa, ma convergevano, e insieme formavano un blocco ideologico di straordinaria forza. Esso consentiva alla borghesia di leggere la corsa al profitto, lo sconvolgimento delle vecchie comunità, l'espansione oltremare non come atti di interesse o di potenza, ma come tappe scientificamente necessarie della marcia dell'umanità verso la civiltà e l'abbondanza. Era una costruzione quasi perfetta, capace di trasformare ogni durezza in un passaggio obbligato del cammino. Quasi perfetta, però, non del tutto: mentre si ergeva, cresceva già la voce di chi non negava il progresso, ma poneva una domanda che quella voce trionfante non sapeva sentire: progresso, sì, ma a spese di chi.
 
-<a id="video-17"></a>
-
 {% embed url="" %}
 Video --- La fede nel progresso
 {% endembed %}
@@ -311,8 +281,6 @@ Da qui Marx traeva una previsione. Il capitalismo, spinto dalla concorrenza a pr
 
 Resta un punto che questa sezione non chiude, ed è la crepa che attraversa fin dall'inizio l'intero campo socialista. Definire la «classe» operaia come un soggetto dagli interessi unitari e contrapposti a quelli della borghesia, come i socialisti fecero rovesciando contro il capitalismo il linguaggio degli economisti classici, fu una mossa potentissima, di cui si è discusso il senso altrove in questo capitolo. Ma da subito ci si divise su tutto il resto: se la trasformazione dovesse essere rivoluzionaria o graduale, se il nemico fosse il capitale o lo Stato in quanto tale, se il soggetto del riscatto fosse il solo proletariato di fabbrica o l'intera massa dei diseredati. Il socialismo «unito» fu, più che una realtà, un obiettivo mai raggiunto. Come queste divisioni presero corpo nelle organizzazioni operaie, e perché la domanda decisiva, riformare il sistema o rovesciarlo, rimase aperta fino al Novecento, è la storia che conviene seguire a parte.
 
-<a id="video-18"></a>
-
 {% embed url="https://youtu.be/XKQ7affB_jw" %}
 Video --- I socialismi
 {% endembed %}
@@ -333,8 +301,6 @@ Si torna così, per una via inattesa, alla domanda che percorre tutto il sociali
 {% endhint %}
 
 
-<a id="infografica-5"></a>
-
 ![Una domanda che non si chiude](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info5_Storia_del_movimento_operaio.png)
 
 
@@ -351,16 +317,12 @@ Ed è sulla terza domanda, a chi giova il progresso, che le due fedi mostravano 
 
 Fin qui il conflitto, e potremmo fermarci a registrarlo. Ma c'è un passo ulteriore, e questa sezione, che chiude il percorso sulle ideologie, è il luogo per compierlo. Se si guarda ciò che i due avversari avevano *in comune*, invece di ciò che li divideva, si scopre qualcosa che nessuno dei due poteva vedere dall'interno. Entrambi credevano che la storia avesse una direzione, e che quella direzione fosse buona. La mano invisibile del liberismo e la necessità storica del crollo capitalistico in Marx sono, sotto la loro opposizione, la stessa figura di pensiero: la fiducia che un meccanismo impersonale, il mercato per gli uni, le leggi dello sviluppo economico per gli altri, garantisca da sé l'approdo felice, quasi a prescindere dalla volontà e dagli errori degli uomini. Sono due determinismi speculari, due modi di affidarsi a una legge che lavora per il bene alle spalle di chi la subisce. L'ottimismo era la loro aria comune, e la respiravano senza accorgersene.
 
-<a id="artefatto-9"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/09-due-idee-progresso.html" %}
 Risorsa digitale --- Due idee di progresso
 {% endembed %}
 
 
 Questo non significa mettere sullo stesso piano l'apologia della disuguaglianza e la rivendicazione della giustizia: sarebbe un falso equilibrio, e le due cause non pesano ugualmente sulla bilancia morale. Significa qualcosa di diverso e più scomodo: che la certezza di un futuro necessariamente migliore, condivisa dagli uni e dagli altri, era essa stessa un tratto d'epoca, la grande illusione ottimistica dell'Ottocento. Il secolo successivo si sarebbe incaricato di scuoterla. Le guerre totali, le crisi che non preludevano a nessun crollo risolutore, i regimi che invocarono la storia per giustificare l'orrore, avrebbero insegnato che il progresso non ha alcuna direzione garantita, e che nessuna legge, del mercato o della storia, lavora al posto degli esseri umani. La faccia luminosa del progresso, da cui questo percorso era partito, mostrava così la sua faccia critica: non l'assenza di progresso, ma la scoperta che il progresso non è un destino, e che va scelto, difeso e pagato, ogni volta, da chi lo vuole.
-
-<a id="video-19"></a>
 
 {% embed url="https://youtu.be/_xyI3blbvGs" %}
 Video --- Due idee di progresso
@@ -392,8 +354,6 @@ Il cuore del disaccordo è un problema di metodo, e vale la pena coglierlo perch
 Il capitolo ha stabilito che la schiavitù e l'industria del cotone erano inseparabili sul piano storico e morale. Resta però una domanda diversa, e più tecnica, su cui gli storici discutono aspramente: quanto, in termini economici, la schiavitù *causò* o finanziò la rivoluzione industriale? La tesi più celebre è quella dello storico caraibico Eric Williams, che nel 1944 sostenne due cose forti: che i profitti della tratta e delle piantagioni fornirono i capitali che alimentarono il decollo industriale britannico, e che l'Inghilterra abolì la schiavitù non per scrupolo morale, ma quando essa smise di essere redditizia. È una tesi potente, e per decenni è stata contestata dalla storiografia economica quantitativa, che ha calcolato come i profitti del commercio schiavistico, per quanto ingenti, fossero una quota relativamente piccola degli investimenti totali dell'economia britannica, e come l'abolizione avesse anche moventi politici e morali reali.
 
 Negli ultimi anni la tesi di Williams è però tornata al centro, in forma nuova, con la «nuova storia del capitalismo» e con opere come *L'impero del cotone* di Sven Beckert, che colloca schiavitù, violenza e conquista al cuore stesso della nascita del capitalismo industriale. Conviene, di fronte a questo, tenere distinti due piani che è facile confondere, ed è forse la cosa più utile che questo nodo insegna. Un piano è morale e storico: che l'industria del cotone fosse intrecciata alla schiavitù è certo, e il capitolo l'ha mostrato. L'altro è causale e quantitativo: *quanto* quella schiavitù abbia pesato sul decollo industriale, se ne fu la causa principale o una tra le tante condizioni, è tutt'altro che stabilito. La tesi di Williams ha una presa fortissima perché salda il capitalismo alla sua colpa d'origine e dà al fenomeno un colpevole; la ricerca quantitativa la ridimensiona senza però smentirne il nucleo. La verità morale e la misura economica non coincidono, e il compito dello storico è non lasciare che l'una divori l'altra.
-
-<a id="video-20"></a>
 
 {% embed url="" %}
 Video --- La storia è discussa: l'Inghilterra, le condizioni di vita, la schiavitù

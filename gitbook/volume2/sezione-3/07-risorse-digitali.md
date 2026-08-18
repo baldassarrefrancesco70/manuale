@@ -9,21 +9,21 @@ Le risorse digitali e i video sono già incontrati nel corso del capitolo, nel p
 
 Il capitolo lavora contro una sovrapposizione che sembra naturale — chi governa e chi ha diritto a uno Stato — e mostra come "nazione" cambi significato proprio nel momento in cui la si crede una parola stabile.
 
-- **Risorsa digitale** --- [I due assi della legittimità](01-vienna-e-il-principio-di-nazionalit.md#artefatto-1)
-- **Risorsa digitale** --- [Il tavolo di Vienna](01-vienna-e-il-principio-di-nazionalit.md#artefatto-2)
-- **Risorsa digitale** --- [Chi vota](01-vienna-e-il-principio-di-nazionalit.md#artefatto-3)
-- **Risorsa digitale** --- [La parola nazione](01-vienna-e-il-principio-di-nazionalit.md#artefatto-4)
-- **Infografica** --- [Tre modi di restaurare a confronto](01-vienna-e-il-principio-di-nazionalit.md#infografica-1)
-- **Infografica** --- [Le alleanze del 1815](01-vienna-e-il-principio-di-nazionalit.md#infografica-2)
-- **Infografica** --- [L'Impero asburgico, la carta delle etnie](01-vienna-e-il-principio-di-nazionalit.md#infografica-3)
-- **Infografica** --- [Le teorie della nazione](01-vienna-e-il-principio-di-nazionalit.md#infografica-4)
-- **Video** --- [Vienna 1815: chi decide e secondo quali principi](01-vienna-e-il-principio-di-nazionalit.md#video-1)
-- **Video** --- [Octroyée: una parola che salva un principio](01-vienna-e-il-principio-di-nazionalit.md#video-2)
-- **Video** --- [Da dove viene il diritto di comandare: legittimismo e costituzionalismo](01-vienna-e-il-principio-di-nazionalit.md#video-3)
-- **Video** --- [Perché la Gran Bretagna non firma la Santa Alleanza](01-vienna-e-il-principio-di-nazionalit.md#video-4)
-- **Video** --- [Il concerto europeo: costruzione e crisi di un sistema](01-vienna-e-il-principio-di-nazionalit.md#video-5)
-- **Video** --- [Nazioni "non storiche": una descrizione che è un giudizio](01-vienna-e-il-principio-di-nazionalit.md#video-6)
-- **Video** --- [Le nazioni esistono prima del nazionalismo? Un dibattito aperto](01-vienna-e-il-principio-di-nazionalit.md#video-7)
+- **Risorsa digitale** --- [I due assi della legittimità](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/01-due-assi-legittimita.html)
+- **Risorsa digitale** --- [Il tavolo di Vienna](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/02-tavolo-di-vienna.html)
+- **Risorsa digitale** --- [Chi vota](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/04-chi-vota.html)
+- **Risorsa digitale** --- [La parola nazione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/05-la-parola-nazione.html)
+- **Infografica** --- [Tre modi di restaurare a confronto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info4_Modelli_di_governo_dopo_1815.png)
+- **Infografica** --- [Le alleanze del 1815](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info3_Sistema_Diplomatico_del_1815.png)
+- **Infografica** --- [L'Impero asburgico, la carta delle etnie](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/Austria-Ungheria.png)
+- **Infografica** --- [Le teorie della nazione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info6_Teorie_storiografiche_sulla_nazione.png)
+- **Video** --- [Vienna 1815: chi decide e secondo quali principi](https://youtu.be/WheywGEGpDo)
+- **Video** --- [Octroyée: una parola che salva un principio](https://youtu.be/l2yhVzqdJzY)
+- **Video** --- [Da dove viene il diritto di comandare: legittimismo e costituzionalismo](https://youtu.be/nfFz-gtEIxM)
+- **Video** --- [Perché la Gran Bretagna non firma la Santa Alleanza](https://youtu.be/i3sM17syp4I)
+- **Video** --- [Il concerto europeo: costruzione e crisi di un sistema](https://youtu.be/rNDGYmF6v0E)
+- **Video** --- [Nazioni "non storiche": una descrizione che è un giudizio](https://youtu.be/L37v0hegcmU)
+- **Video** --- [Le nazioni esistono prima del nazionalismo? Un dibattito aperto](https://youtu.be/hRdKezEHxhM)
 
 
 ## Capitolo · Moti e nazionalismo romantico
@@ -31,21 +31,21 @@ Il capitolo lavora contro una sovrapposizione che sembra naturale — chi govern
 
 Qui la barriera è la controintuitività: il moto che sembra dover riuscire fallisce, quello che sembra periferico si diffonde, e la stessa premessa produce esiti opposti a seconda di chi la usa.
 
-- **Risorsa digitale** --- [La Grecia in tre strati](02-moti-e-nazionalismo-romantico.md#artefatto-5)
-- **Risorsa digitale** --- [Perché questo moto riesce e quello no](02-moti-e-nazionalismo-romantico.md#artefatto-6)
-- **Risorsa digitale** --- [Volontaristica o organica](02-moti-e-nazionalismo-romantico.md#artefatto-7)
-- **Risorsa digitale** --- [Lo stesso argomento, due volte](02-moti-e-nazionalismo-romantico.md#artefatto-8)
-- **Infografica** --- [1848, sei settimane](02-moti-e-nazionalismo-romantico.md#infografica-5)
-- **Infografica** --- [Le due fratture](02-moti-e-nazionalismo-romantico.md#infografica-6)
-- **Infografica** --- [Tre ondate a confronto](02-moti-e-nazionalismo-romantico.md#infografica-7)
-- **Video** --- [Rivoluzioni di caserma: la prima ondata e la macchina della repressione](02-moti-e-nazionalismo-romantico.md#video-8)
-- **Video** --- [Quanto durarono le costituzioni del 1820](02-moti-e-nazionalismo-romantico.md#video-9)
-- **Video** --- [I clefti: chi combatteva davvero in Grecia](02-moti-e-nazionalismo-romantico.md#video-10)
-- **Video** --- [La Grecia: la prima nazione che diventa Stato](02-moti-e-nazionalismo-romantico.md#video-11)
-- **Video** --- [1830: perché il Belgio riesce e la Polonia no](02-moti-e-nazionalismo-romantico.md#video-12)
-- **Video** --- [Una grammatica è un atto politico: la nazione come cultura](02-moti-e-nazionalismo-romantico.md#video-13)
-- **Video** --- [Perché raccogliere fiabe era un atto politico](02-moti-e-nazionalismo-romantico.md#video-14)
-- **Video** --- [1848: sei settimane e diciotto mesi](02-moti-e-nazionalismo-romantico.md#video-15)
+- **Risorsa digitale** --- [La Grecia in tre strati](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/07-grecia-tre-strati.html)
+- **Risorsa digitale** --- [Perché questo moto riesce e quello no](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/08-perche-riesce-o-no.html)
+- **Risorsa digitale** --- [Volontaristica o organica](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/09-volontaristica-organica.html)
+- **Risorsa digitale** --- [Lo stesso argomento, due volte](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/11-stesso-argomento-due-volte.html)
+- **Infografica** --- [1848, sei settimane](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info9__insurrezioni_europee_del_1848.png)
+- **Infografica** --- [Le due fratture](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info11_Le_due_fratture_del_1848.png)
+- **Infografica** --- [Tre ondate a confronto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info12__ondate_rivoluzionarie_%281820-1849%29.png)
+- **Video** --- [Rivoluzioni di caserma: la prima ondata e la macchina della repressione](https://youtu.be/_PW4kxd5V2k)
+- **Video** --- [Quanto durarono le costituzioni del 1820](https://youtu.be/cdPT0auDOqc)
+- **Video** --- [I clefti: chi combatteva davvero in Grecia](https://youtu.be/6SjbZSX0Jp0)
+- **Video** --- [La Grecia: la prima nazione che diventa Stato](https://youtu.be/rqNVap1Yk5U)
+- **Video** --- [1830: perché il Belgio riesce e la Polonia no](https://youtu.be/t6uTYRv77g8)
+- **Video** --- [Una grammatica è un atto politico: la nazione come cultura](https://youtu.be/1Xd7kKVbE-k)
+- **Video** --- [Perché raccogliere fiabe era un atto politico](https://youtu.be/2xPoKB3-fs0)
+- **Video** --- [1848: sei settimane e diciotto mesi](https://youtu.be/Zt62ZcQZdVw)
 
 
 ## Capitolo · La costruzione degli Stati nazionali: il caso tedesco
@@ -53,27 +53,27 @@ Qui la barriera è la controintuitività: il moto che sembra dover riuscire fall
 
 Il capitolo smonta la lettura teleologica dell'unificazione tedesca — un percorso che sembra condurre dritto al 1871 — mostrando patti, esclusioni e velocità diverse che quella lettura nasconde.
 
-- **Risorsa digitale** --- [Dove finisce la Germania](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#artefatto-9)
-- **Risorsa digitale** --- [Il tavolo di Francoforte](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#artefatto-10)
-- **Risorsa digitale** --- [Misurare le forze](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#artefatto-11)
-- **Risorsa digitale** --- [Il patto del 1871](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#artefatto-12)
-- **Risorsa digitale** --- [Chi può far cadere un governo](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#artefatto-13)
-- **Risorsa digitale** --- [Leggere a ritroso](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#artefatto-14)
-- **Infografica** --- [Due Germanie](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#infografica-8)
-- **Infografica** --- [Il contraccolpo](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#infografica-9)
-- **Infografica** --- [Ferro e sangue](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#infografica-10)
-- **Infografica** --- [Tre guerre, tre funzioni](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#infografica-11)
-- **Infografica** --- [Chi resta fuori](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#infografica-12)
-- **Infografica** --- [I tre piani](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#infografica-13)
-- **Video** --- [Due Germanie: che cosa unisce un'unione doganale](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-16)
-- **Video** --- [Il 1848 tedesco: la nazione messa ai voti](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-17)
-- **Video** --- [Perché un re rifiuta una corona](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-18)
-- **Video** --- [1866: perché Bismarck salvò l'Austria dopo averla battuta](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-19)
-- **Video** --- [Perché l'Impero tedesco fu proclamato in Francia](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-20)
-- **Video** --- [Bismarck: ottenere un programma sottraendolo a chi lo aveva scritto](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-21)
-- **Video** --- [Kulturkampf: un nome che giudica l'avversario](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-22)
-- **Video** --- [L'arena che sfuggì al suo progettista](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-23)
-- **Video** --- [Che cosa il 1871 lasciò aperto](03-la-costruzione-degli-stati-nazionali-il-caso-tedesco.md#video-24)
+- **Risorsa digitale** --- [Dove finisce la Germania](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/13-dove-finisce-la-germania.html)
+- **Risorsa digitale** --- [Il tavolo di Francoforte](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/14-tavolo-di-francoforte.html)
+- **Risorsa digitale** --- [Misurare le forze](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/15-misurare-le-forze.html)
+- **Risorsa digitale** --- [Il patto del 1871](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/16-il-patto-del-1871.html)
+- **Risorsa digitale** --- [Chi può far cadere un governo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/17-chi-fa-cadere-governo.html)
+- **Risorsa digitale** --- [Leggere a ritroso](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/18-leggere-a-ritroso.html)
+- **Infografica** --- [Due Germanie](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info13_Divergenza_politica_ed_economica_tedesca.png)
+- **Infografica** --- [Il contraccolpo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info14_Il_meccanismo_del_contraccolpo_nazionale.png)
+- **Infografica** --- [Ferro e sangue](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info15_Anatomia_di_%C2%ABFerro_e_Sangue%C2%BB.png)
+- **Infografica** --- [Tre guerre, tre funzioni](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info16_Bismarck_e_l_unificazione_tedesca.png)
+- **Infografica** --- [Chi resta fuori](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info17_Impero_tedesco_del_1871.png)
+- **Infografica** --- [I tre piani](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info18_tre_piani_tedeschi_%281815-1875%29.png)
+- **Video** --- [Due Germanie: che cosa unisce un'unione doganale](https://youtu.be/Fky5fDy_t7k)
+- **Video** --- [Il 1848 tedesco: la nazione messa ai voti](https://youtu.be/g5ZqOIl4qnU)
+- **Video** --- [Perché un re rifiuta una corona](https://youtu.be/LpcrEYCP8Yo)
+- **Video** --- [1866: perché Bismarck salvò l'Austria dopo averla battuta](https://youtu.be/iZVKEmYSQfM)
+- **Video** --- [Perché l'Impero tedesco fu proclamato in Francia](https://youtu.be/thUaMe7TdB4)
+- **Video** --- [Bismarck: ottenere un programma sottraendolo a chi lo aveva scritto](https://youtu.be/ee8yHo6NT0Q)
+- **Video** --- [Kulturkampf: un nome che giudica l'avversario](https://youtu.be/aIihIsdRmI4)
+- **Video** --- [L'arena che sfuggì al suo progettista](https://youtu.be/A2sptgV8Gxs)
+- **Video** --- [Che cosa il 1871 lasciò aperto](https://youtu.be/40jqp4qp7ZY)
 
 
 ## Capitolo · Dal nazionalismo romantico al nazionalismo aggressivo
@@ -81,22 +81,22 @@ Il capitolo smonta la lettura teleologica dell'unificazione tedesca — un perco
 
 Il capitolo chiude la sezione seguendo come un'idea buona si trasforma senza che nessuno la corrompa dall'esterno: lo stesso vocabolario, applicato a un criterio diverso, cambia da culturale a biologico.
 
-- **Risorsa digitale** --- [La stessa pretesa, due epoche](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#artefatto-15)
-- **Risorsa digitale** --- [Chi entra nella nazione](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#artefatto-16)
-- **Risorsa digitale** --- [Il laboratorio della gerarchia](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#artefatto-17)
-- **Risorsa digitale** --- [Perché conquistare](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#artefatto-18)
-- **Risorsa digitale** --- [Il test della dicotomia](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#artefatto-19)
-- **Infografica** --- [Il pendolo politico](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#infografica-14)
-- **Infografica** --- [Il circolo](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#infografica-15)
-- **Infografica** --- [La barriera illogica](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#infografica-16)
-- **Infografica** --- [Il nemico interno](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#infografica-17)
-- **Video** --- [Quando la politica diventa affare di milioni](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#video-25)
-- **Video** --- [L'affare Dreyfus e la nascita di una parola](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#video-26)
-- **Video** --- [Come la biologia entrò in politica](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#video-27)
-- **Video** --- [Quando l'Europa smise di credere al libero scambio](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#video-28)
-- **Video** --- [Le Esposizioni universali: il progresso come spettacolo](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#video-29)
-- **Video** --- [Un giudizio che oggi si legge con disagio](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#video-30)
-- **Video** --- [Il principio cambia padrone](04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md#video-31)
+- **Risorsa digitale** --- [La stessa pretesa, due epoche](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/15-stessa-pretesa-due-epoche.html)
+- **Risorsa digitale** --- [Chi entra nella nazione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/16-chi-entra-nella-nazione.html)
+- **Risorsa digitale** --- [Il laboratorio della gerarchia](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/17-laboratorio-della-gerarchia.html)
+- **Risorsa digitale** --- [Perché conquistare](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/18-perche-conquistare.html)
+- **Risorsa digitale** --- [Il test della dicotomia](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/19-test-della-dicotomia.html)
+- **Infografica** --- [Il pendolo politico](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info14_pendolo_politico_1815-1900.png)
+- **Infografica** --- [Il circolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info15_Circolo_del_Darwinismo_Sociale.png)
+- **Infografica** --- [La barriera illogica](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info16_Liberalismo_e_la_Barriera_Illogica.png)
+- **Infografica** --- [Il nemico interno](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info17_Esclusione_sociale_nel_XIX_secolo.png)
+- **Video** --- [Quando la politica diventa affare di milioni](https://youtu.be/ff-U40hJEUw)
+- **Video** --- [L'affare Dreyfus e la nascita di una parola](https://youtu.be/17MOxum_4mI)
+- **Video** --- [Come la biologia entrò in politica](https://youtu.be/laEEY7oXPFg)
+- **Video** --- [Quando l'Europa smise di credere al libero scambio](https://youtu.be/_WgB94Dlf9s)
+- **Video** --- Le Esposizioni universali: il progresso come spettacolo
+- **Video** --- [Un giudizio che oggi si legge con disagio](https://youtu.be/Wck-l0aQYTw)
+- **Video** --- [Il principio cambia padrone](https://youtu.be/ku2d2u0oaWg)
 
 
 
@@ -105,8 +105,6 @@ Il capitolo chiude la sezione seguendo come un'idea buona si trasforma senza che
 
 Cronologia, glossario e palestra di argomentazione sono pensati per essere usati dopo lo studio dei capitoli, e servono a rimettere in ordine quanto studiato.
 
-<a id="artefatto-20"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/20-cronologia-nazioni.html" %}
 Risorsa digitale --- Cronologia della sezione
 {% endembed %}
@@ -114,16 +112,12 @@ Risorsa digitale --- Cronologia della sezione
 
 La cronologia mostra quattro corsie — tecnica, economia, società, idee — che scorrono insieme invece che in sequenza unica: utile per vedere che cosa succedeva *nello stesso momento* in campi diversi, per esempio che l'unificazione tedesca e la svolta del nazionalismo verso il criterio biologico non sono eventi lontani nel tempo. Le barre segnano i fenomeni lunghi, i punti gli eventi singoli.
 
-<a id="artefatto-21"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/21-glossario-nazioni.html" %}
 Risorsa digitale --- Glossario della sezione
 {% endembed %}
 
 
 Il glossario raccoglie i termini in grassetto incontrati nei capitoli. Alcune voci sono segnalate come **parole contese**: non hanno solo una definizione, ma anche la storia di chi le ha coniate e contro chi — utile quando un termine come "nazione" o "Realpolitik" sembra descrittivo e invece porta dentro uno slittamento di significato che il capitolo ha già messo in luce. Ha una modalità attiva, con frasi del manuale a termine oscurato, utile per l'autoverifica prima di una prova.
-
-<a id="artefatto-22"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/22-palestra-nazioni.html" %}
 Risorsa digitale --- Palestra di argomentazione della sezione

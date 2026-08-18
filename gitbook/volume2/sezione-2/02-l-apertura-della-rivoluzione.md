@@ -9,12 +9,8 @@ Il capitolo precedente ha lasciato sul tavolo alcune cose e conviene tenerle a p
 
 Da qui il capitolo riparte, e la domanda della sezione si sdoppia esattamente come era stato annunciato. Il primo tempo riguarda il fondamento: come si passa da un'assemblea di ordini, che rappresenta corpi, a un'assemblea di nazione, che pretende di rappresentare un popolo, e in nome di che cosa questo passaggio sarebbe legittimo. Il secondo tempo nasce dal primo e lo mette in difficoltà: quando la sovranità viene attribuita alla nazione, occorre stabilire con una legge chi la nazione sia, e ogni legge di questo tipo traccia un confine. Il capitolo tiene i due tempi separati e in quest'ordine, perché la distanza tra la promessa e il confine non è un incidente da segnalare in nota: è il contenuto.
 
-<a id="infografica-7"></a>
-
 ![Le quattro assemblee](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info%207_Le_quattro_assemblee_rivoluzionarie.png)
 
-
-<a id="video-10"></a>
 
 {% embed url="https://youtu.be/NI4y-wfW-io" %}
 Video --- Le quattro assemblee
@@ -60,14 +56,10 @@ Un quaderno di lamentele non è la trascrizione di ciò che una comunità pensav
 
 Tra ciò che fu chiesto nell'inverno e ciò che fu fatto entro l'estate corre una distanza che questo capitolo non colma supponendo un programma nascosto. La colma, se ci riesce, mostrando che cosa accadde nelle sei settimane in cui l'assemblea non riuscì nemmeno a cominciare a lavorare.
 
-<a id="video-11"></a>
-
 {% embed url="https://youtu.be/ipc745RzsNE" %}
 Video --- Che cosa può dimostrare una fonte
 {% endembed %}
 
-
-<a id="artefatto-7"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-07-leggere-un-cahier.html" %}
 Risorsa digitale --- Leggere un cahier: quattro quaderni a confronto
@@ -96,8 +88,6 @@ Fu per arginare questa ondata che nella notte del **4 agosto** l'Assemblea votò
 Lo stallo si sciolse per fame. Il **5 ottobre** un corteo composto in maggioranza da donne parigine, seguito a distanza dalla guardia nazionale, marciò su Versailles chiedendo pane. Nella notte una parte dei manifestanti penetrò nel palazzo, e il re firmò i decreti. L'indomani accettò di trasferirsi a Parigi, alle Tuileries, e l'assemblea lo seguì poco dopo: da quel momento entrambi lavorarono sotto lo sguardo della capitale.
 
 Sommando la sequenza si ricava un fatto che conviene enunciare senza attenuarlo, perché sarà decisivo più avanti. L'Assemblea nazionale fu salvata due volte, in luglio e in ottobre, dall'intervento armato di persone che in quell'assemblea non erano rappresentate e che di lì a pochi mesi essa stessa avrebbe escluso dal voto. La legalità nuova nacque appoggiandosi a una forza che non aveva alcun titolo legale.
-
-<a id="artefatto-8"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-08-chi-tiene-in-piedi-lassemblea.html" %}
 Risorsa digitale --- Maggio-ottobre 1789, chi tiene in piedi l'assemblea
@@ -137,14 +127,10 @@ Il testo ha dunque una caratteristica che conviene fissare prima di procedere: �
 
 Un'ultima annotazione riguarda ciò che del testo è rimasto. La Dichiarazione del 1789 è stata ripresa come preambolo dalle costituzioni francesi del 1848, del 1946 e del 1958, e le sue formule si ritrovano, riscritte, nei principi fondamentali di molte costituzioni novecentesche, compresa quella italiana, e nella Dichiarazione universale approvata dalle Nazioni Unite nel 1948. Il dato è vero e va usato con prudenza, perché contiene una trappola. Sapere che quel testo sarebbe diventato la base di un linguaggio universale dei diritti rende quasi impossibile leggerlo per quello che era nell'agosto del 1789, cioè un documento controverso, approvato in fretta, di cui i contemporanei discutevano l'utilità e che il re rifiutò di firmare per settimane. Il posto che occupa oggi è il risultato di due secoli di conflitti, non una proprietà che il testo avesse alla nascita.
 
-<a id="video-12"></a>
-
 {% embed url="https://youtu.be/h2kTn9b-AbI" %}
 Video --- Che cosa fa un testo che dichiara
 {% endembed %}
 
-
-<a id="artefatto-9"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-09-la-promessa-e-la-legge.html" %}
 Risorsa digitale --- La promessa e la legge
@@ -158,8 +144,6 @@ Risorsa digitale --- La promessa e la legge
 Nello spazio di due anni la struttura amministrativa, giudiziaria, fiscale ed economica del regno fu smontata e sostituita per intero. A compiere l'operazione più radicale che l'Europa avesse mai visto non furono rivoluzionari di professione, che non esistevano, ma un'assemblea composta in larghissima parte di avvocati, magistrati e funzionari, molti dei quali erano titolari delle cariche che stavano abolendo.
 
 Il punto di partenza è la notte del **4 agosto 1789**, e va letto con precisione perché il seguito ne dipende. L'Assemblea proclamò l'abolizione integrale del regime feudale, ma i decreti che nei giorni seguenti tradussero il principio in norme introdussero una distinzione. I **diritti personali**, cioè le corvée, le servitù della persona, i monopoli signorili, la giustizia del signore, furono aboliti immediatamente e senza indennizzo, in quanto usurpazioni. I **diritti reali**, cioè i censi e i canoni gravanti sulle terre, furono invece assimilati a una forma legittima di proprietà, e per liberarsene i contadini avrebbero dovuto riscattarli pagando al signore un capitale. La coerenza con l'articolo 17 della Dichiarazione è perfetta; l'effetto pratico fu che i contadini ignorarono la distinzione, si considerarono liberi da tutto e rifiutarono in massa di pagare qualsiasi riscatto. Il riscatto sarà abolito senza indennizzo soltanto nel 1793, quando la Repubblica avrà bisogno delle campagne.
-
-<a id="infografica-8"></a>
 
 ![La notte del 4 agosto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info7_La_Fine_del_Feudalesimo.png)
 
@@ -181,12 +165,8 @@ Vale la pena registrare la conseguenza politica, perché sarà uno dei fili del 
 {% endhint %}
 
 
-<a id="infografica-9"></a>
-
 ![Il ciclo dell'assegnato](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info8_Il_Ciclo_dell_Assegnato.png)
 
-
-<a id="video-13"></a>
 
 {% embed url="https://youtu.be/KtknY74Kmp8" %}
 Video --- L'assegnato
@@ -211,14 +191,10 @@ La geografia del rifiuto non fu casuale, e va guardata perché sarà la geografi
 
 Qui va tenuta ferma una precisazione che il capitolo seguente renderà indispensabile. La rivolta che nel 1793 incendierà l'Ovest non nascerà da un generico oscurantismo contadino contrapposto ai lumi della città. Nascerà da questo provvedimento e dai suoi effetti concreti, sommati a due fatti già noti al lettore: che i beni della Chiesa venduti all'asta erano stati comprati soprattutto dai borghesi delle città, e che quelle stesse città governavano ormai i dipartimenti. Quando nel marzo del 1793 la Convenzione imporrà una leva di trecentomila uomini, i contadini dell'Ovest si rifiuteranno di andare a morire per uno Stato che aveva preso le terre, cambiato i confini, imposto le tasse e cacciato il loro prete, e la difesa del clero refrattario diventerà la bandiera sotto cui si combatterà. Anche il re, del resto, era un cattolico convinto, e il rifiuto di sanzionare i provvedimenti contro i refrattari pesò sulla sua decisione di andarsene.
 
-<a id="video-14"></a>
-
 {% embed url="" %}
 Video --- Il giuramento e la prima frattura
 {% endembed %}
 
-
-<a id="video-15"></a>
 
 {% embed url="https://youtu.be/KiW2OkdQjCs" %}
 Video --- Costituzionali e refrattari
@@ -233,12 +209,8 @@ Nel **dicembre del 1789**, quattro mesi dopo aver dichiarato che gli uomini nasc
 
 Il criterio era fiscale. Erano **cittadini attivi** i maschi di almeno venticinque anni, domiciliati da un anno, non domestici salariati, che pagassero un'imposta diretta pari almeno al valore di tre giornate di lavoro. Erano **cittadini passivi** tutti gli altri, i quali conservavano integri i diritti civili, la libertà, la sicurezza, la proprietà, l'uguaglianza davanti alla legge, e non votavano. La distinzione dei due termini è di Sieyès, e le cifre correnti collocano gli attivi attorno ai quattro milioni e trecentomila su una popolazione maschile adulta di circa sette milioni. Il filtro non finiva lì: gli attivi non eleggevano direttamente i deputati, ma designavano **elettori di secondo grado** ai quali era richiesto un censo assai più alto, il che riduceva il corpo effettivamente decisivo a poche decine di migliaia di persone. Per essere eletti si dovevano infine possedere una proprietà fondiaria e pagare un'imposta pari a un **marco d'argento**, requisito che restringeva la rappresentanza ai soli notabili e che fu abolito nell'estate del 1791 dopo una campagna condotta, fra gli altri, da Robespierre.
 
-<a id="infografica-10"></a>
-
 ![I filtri del voto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info9_Democrazia_a_Imbuto_%281789-1791%29.png)
 
-
-<a id="video-16"></a>
 
 {% embed url="https://youtu.be/roiNEPb3pHA" %}
 Video --- Attivi e passivi
@@ -252,8 +224,6 @@ Sulle colonie la contraddizione fu discussa apertamente e chiusa con una decisio
 Nella direzione opposta si mosse invece un altro confine. I protestanti ottennero la piena cittadinanza già nel dicembre del 1789, gli ebrei di Bordeaux e di Avignone nel gennaio del 1790, tutti gli ebrei di Francia nel settembre del 1791, primo caso europeo di emancipazione per legge. Il confine, dunque, non era immobile: si spostava, e nel muoversi mostrava di essere il risultato di scelte e non di un limite d'epoca.
 
 Resta la domanda più difficile, ed è quella che va posta per capire e non per assolvere. Perché uomini che avevano appena scritto l'articolo 1 poterono ritenere coerente il decreto di dicembre? La risposta che davano loro era che i diritti politici non sono un attributo della persona ma una funzione affidata a chi è in condizione di esercitarla con giudizio indipendente, e che chi dipende dal salario di un altro, chi non ha proprietà, chi vive nella casa altrui come domestico non è padrone della propria volontà e voterebbe secondo quella di chi lo mantiene. Il censo non misurava dunque, ai loro occhi, la ricchezza: misurava l'indipendenza, e per questa via una società che aveva appena abolito i corpi ne ricostruiva uno, formato dai proprietari. È un ragionamento coerente, ed è sbagliato, ma il modo in cui è sbagliato si vede solo dopo averlo ricostruito per intero.
-
-<a id="artefatto-10"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-10-chi-e-cittadino-nel-1791.html" %}
 Risorsa digitale --- Chi è cittadino nel 1791
@@ -276,8 +246,6 @@ L'assemblea si trovò davanti a un'alternativa che non voleva affrontare, e scel
 
 A completare il quadro contribuì una decisione presa dall'assemblea stessa, su proposta di Robespierre: nessuno dei suoi membri sarebbe stato eleggibile alla legislatura successiva. Il gesto era disinteressato e le conseguenze furono pesanti. L'Assemblea legislativa che si riunì nell'ottobre del 1791 per far funzionare una macchina costituzionale delicatissima non conteneva un solo deputato che avesse partecipato a costruirla. Durò undici mesi.
 
-<a id="artefatto-11"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-11-il-congegno-del-1791.html" %}
 Risorsa digitale --- La macchina costituzionale del 1791
 {% endembed %}
@@ -297,16 +265,12 @@ A tutto questo si aggiungeva la stampa. La libertà di manifestare il pensiero, 
 
 Conviene tenere ferma una distinzione che tornerà utile nel capitolo seguente, perché è la fonte dell'equivoco più comune. I club non sono gruppi parlamentari. Non hanno seggi, non votano le leggi, e la loro composizione non coincide con quella dell'assemblea, dato che vi si iscrivono anche persone che non sono deputate e spesso non sono nemmeno elettrici. Gli schieramenti che nel capitolo seguente si affronteranno nella Convenzione, la Montagna, la Gironda, la Pianura, sono un'altra cosa ancora: non associazioni con una sede e un registro, ma alleanze mobili di deputati, che prendono nome dai banchi su cui siedono. Un deputato può appartenere al club dei giacobini e schierarsi in aula con la Gironda, e nel giro di un anno cambiare la seconda cosa senza cambiare la prima.
 
-<a id="video-17"></a>
-
 {% embed url="https://youtu.be/ggvLdlxSxgA" %}
 Video --- Un club non è un gruppo parlamentare
 {% endembed %}
 
 
 Da questa collocazione fuori dalle istituzioni deriva insieme la forza dei club e il problema che pongono. In un ordine in cui la sovranità appartiene alla nazione e viene esercitata dai rappresentanti, chi parla a nome della nazione fuori dall'aula sta esercitando un diritto o sta usurpando una funzione? La costituzione non risponde. Nel 1792 la domanda smetterà di essere teorica.
-
-<a id="artefatto-12"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-12-chi-parla-a-nome-della-nazione.html" %}
 Risorsa digitale --- Chi parla a nome della nazione
@@ -320,8 +284,6 @@ Risorsa digitale --- Chi parla a nome della nazione
 Nella primavera del 1792 la guerra fu voluta quasi da tutti, e per ragioni che si escludevano a vicenda. È un caso raro e istruttivo: la stessa decisione, sostenuta da schieramenti che ne attendevano esiti opposti, e quasi tutti sbagliarono la previsione.
 
 Il gruppo che si raccoglieva attorno a **Brissot**, e che la storiografia chiamerà **girondino**, la voleva perché era convinto che la guerra avrebbe costretto il re a scoprirsi, avrebbe smascherato i traditori interni e avrebbe portato la libertà ai popoli d'Europa, i quali si sarebbero sollevati al passaggio delle truppe francesi. La corte la voleva per la ragione simmetrica: contava su una sconfitta rapida che avrebbe riportato l'ordine e restituito al re i poteri perduti, e la regina passava informazioni militari a Vienna. **La Fayette** la voleva perché un esercito in campagna avrebbe rafforzato l'esecutivo, e il generale che lo comandava. Contro la guerra si schierò, quasi isolato al club dei giacobini, **Robespierre**, con due argomenti: che nessuno ama i missionari armati, e che una guerra lunga avrebbe consegnato la Repubblica al primo generale vittorioso. Aveva torto sul primo punto meno di quanto si credesse allora, e sul secondo aveva ragione con vent'anni di anticipo.
-
-<a id="infografica-11"></a>
 
 ![Aprile 1792: quattro attori, una decisione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info10_Crollo_monarchia_francese_1791-1792.png)
 
@@ -352,8 +314,6 @@ Il **20 settembre** l'esercito francese, contro ogni previsione, fermò l'avanza
 Su quelle elezioni conviene però fermarsi un momento, perché il dato è poco noto e vale molto. La prima assemblea della storia eletta a suffragio universale maschile fu scelta da circa un decimo degli aventi diritto. La provincia moderata si astenne, i sospetti di monarchismo furono scoraggiati o esclusi dalle assemblee elettorali, e l'estate appena trascorsa non incoraggiava a farsi notare. Il suffragio universale, la prima volta che fu praticato, produsse un'assemblea eletta da una minoranza.
 
 Nessuno, nell'aprile di quell'anno, aveva dichiarato guerra per fondare una repubblica. La repubblica fu il risultato di una sconfitta militare che si stava consumando e non si consumò, di un proclama nemico che ottenne il contrario di ciò che voleva, e di un'insurrezione che l'assemblea legalmente in carica non decise e non poté impedire. Ora la Francia ha un re prigioniero, una costituzione da scrivere daccapo e un'assemblea eletta da tutti i maschi adulti che quasi nessuno ha votato. Le sue difficoltà cominciano adesso.
-
-<a id="video-18"></a>
 
 {% embed url="https://youtu.be/cNoJGwUZfl0" %}
 Video --- Perché tutti volevano la guerra

@@ -88,8 +88,6 @@ Questa tragica spaccatura, in cui il popolo finiva per percepire i rivoluzionari
 {% endhint %}
 
 
-<a id="video-1"></a>
-
 {% embed url="https://youtu.be/Wq-lSOjj5Bo" %}
 Video --- Il popolo dalla parte sbagliata
 {% endembed %}
@@ -103,8 +101,6 @@ Le trasformazioni introdotte in Italia durante l'età napoleonica non si limitar
 **L'esperienza concreta di un'amministrazione unificata.** L'idea stessa di un'Italia unita affonda le sue radici proprio nell'età napoleonica: dopo secoli di estrema frammentazione, la penisola venne momentaneamente riunificata sotto l'influenza del generale francese. La creazione di entità statali più vaste e la conseguente modernizzazione amministrativa dimostrarono agli italiani che superare i confini dei vecchi staterelli per adottare leggi, codici e mercati omogenei era un progetto politicamente ed economicamente fattibile.
 
 **La nascita dell'idea di "Nazione" e dei suoi simboli.** È durante il cosiddetto "triennio giacobino" che all'interno di una cerchia ristretta di patrioti prende forma non solo la volontà di riscatto, ma l'idea stessa di nazione come nuovo soggetto storico collettivo che reclama indipendenza, libertà e democrazia. Non a caso, è in questo periodo che nascono i simboli dell'identità nazionale: la bandiera tricolore sventolò per la prima volta a Reggio Emilia nel 1797 come vessillo della Repubblica Cisalpina, diventando il simbolo della rivoluzione italiana.
-
-<a id="video-2"></a>
 
 {% embed url="https://youtu.be/9FuAujDp5zw" %}
 Video --- Una bandiera più antica della nazione che rappresenta
@@ -141,8 +137,6 @@ _cfr. [approfondimento in Atlante, cartina 2 --- L'Italia del 1815](atlante.md#c
 
 I sovrani tornati sui loro troni si ispirarono a principi assolutistici, cancellando ogni forma di rappresentanza politica e ogni possibilità di dissenso. In molti Stati, come in Piemonte e nel Ducato di Modena, fu smantellato l'apparato legislativo napoleonico: **vennero ripristinati i privilegi dell'aristocrazia e del clero**, furono licenziati i funzionari assunti durante il regime francese e si reintrodussero vecchie discriminazioni contro le minoranze religiose, come ebrei e valdesi. Paradossalmente, però, gli stessi sovrani reazionari scelsero spesso di mantenere in vita gli efficienti sistemi polizieschi e di riscossione fiscale creati da Napoleone.
 
-<a id="artefatto-1"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/01-restaurazione-non-cancello.html" %}
 Risorsa digitale --- Che cosa la Restaurazione non poté cancellare
 {% endembed %}
@@ -152,8 +146,6 @@ Risorsa digitale --- Che cosa la Restaurazione non poté cancellare
 
 
 L'assetto imposto da Vienna e dal cancelliere Metternich si scontrò frontalmente con le nuove aspirazioni all'indipendenza e all'unità maturate durante l'età napoleonica. L'oppressione straniera, unita alla rigida censura sulla stampa e al soffocamento del dibattito culturale, generò una forte insofferenza tra gli intellettuali e la borghesia. Essendo preclusa ogni forma di manifestazione legale delle proprie opinioni politiche, il dissenso liberale e democratico si organizzò nella clandestinità. Divennero così protagoniste le **società segrete**, prima fra tutte la **Carboneria**, che si diffuse soprattutto nel Regno delle Due Sicilie, nello Stato della Chiesa, in Lombardia e in Piemonte. Queste reti clandestine, animate da borghesi, studenti ed ex militari napoleonici, divennero lo strumento principale per organizzare la resistenza e pianificare i moti insurrezionali degli anni Venti, con il duplice obiettivo di reclamare le Costituzioni e cacciare gli austriaci.
-
-<a id="infografica-1"></a>
 
 ![Due assi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info1_Mappa_politica_della_Restaurazione_italiana.png)
 

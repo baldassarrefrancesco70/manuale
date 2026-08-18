@@ -23,14 +23,10 @@ Il risultato fu un'assemblea di settecentoquarantanove deputati che somigliava s
 
 C'è però una caratteristica della Convenzione che pesa più della sua composizione, e conviene fissarla subito perché spiega molto di ciò che segue. La Convenzione non è soltanto un'assemblea legislativa: è insieme costituente, legislativa e, quando decide di esserlo, giudicante. Non esiste un potere esecutivo fuori di essa, perché i comitati che governano sono formati da suoi membri e da essa revocabili. Il congegno del 1791 era fallito perché separava un re e un'assemblea che non collaboravano; il congegno del 1792 elimina il problema eliminando la separazione. Un'assemblea che concentra tutti i poteri non ha nulla che la fermi se non se stessa, e questa non è una considerazione retrospettiva: i deputati lo sapevano, e lo consideravano il prezzo dell'emergenza.
 
-<a id="infografica-12"></a>
-
 ![La Convenzione: un'assemblea, tutti i poteri](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info11_Potere_Rivoluzionario__1791_vs_1792.png)
 
 
 Va infine segnalato al lettore, perché tornerà, un filo che attraversa l'intera sezione. La cittadinanza politica si allarga qui, nel settembre del 1792, al massimo grado che raggiungerà. Nell'agosto del 1795 il criterio censitario sarà reintrodotto dagli stessi uomini. Non è una linea che avanza.
-
-<a id="artefatto-13"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-13-il-filo-della-cittadinanza.html" %}
 Risorsa digitale --- Il filo della cittadinanza, 1789-1799
@@ -45,12 +41,8 @@ Montagna, Gironda e Pianura non sono partiti, e la precisazione non è pedanteri
 
 I **montagnardi** siedono sui banchi alti a sinistra, da cui il nome, e all'inizio sono un centinaio scarso. La loro forza non sta nei numeri ma nel rapporto con le **sezioni parigine**, cioè con l'unico soggetto capace di mettere in strada decine di migliaia di uomini armati a poche centinaia di metri dall'aula; fra i loro esponenti più ascoltati ci sono Robespierre, Saint-Just, Danton e Marat. I **girondini**, così chiamati perché alcuni di loro venivano dal dipartimento della Gironda e raccolti attorno a Brissot, sono circa duecento, altrettanto repubblicani e altrettanto borghesi, con legami più stretti con la borghesia degli affari delle città portuali; si distinguono per due cose, la diffidenza verso la pressione della capitale sull'assemblea nazionale e l'ostilità a ogni controllo dei prezzi. In mezzo, e in basso, siede la **Pianura**, chiamata anche Palude dagli avversari: oltre quattrocento deputati su settecentoquarantanove, senza portavoce riconosciuti, fra i quali uomini come Sieyès e Carnot.
 
-<a id="infografica-13"></a>
-
 ![L'emiciclo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info12_Geografia_della_Convenzione_del_1792.png)
 
-
-<a id="video-19"></a>
 
 {% embed url="https://youtu.be/rZx7l397_EY" %}
 Video --- Montagna, Gironda, Pianura
@@ -90,8 +82,6 @@ Le votazioni del gennaio 1793 furono quattro, e i loro numeri raccontano un'asse
 
 Restano due conseguenze da tenere ferme. La prima è istituzionale: la Convenzione ha giudicato un individuo, cioè ha esercitato una funzione giudiziaria pur essendo l'assemblea legislativa, ed è la prima applicazione pratica della concentrazione dei poteri descritta nel paragrafo precedente. La seconda è personale e pesò moltissimo: i deputati che avevano votato la morte del re sapevano che nessuna restaurazione li avrebbe perdonati. Da quel giorno la sopravvivenza della Repubblica e la loro coincisero.
 
-<a id="artefatto-14"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-14-le-quattro-votazioni.html" %}
 Risorsa digitale --- Le quattro votazioni del gennaio 1793
 {% endembed %}
@@ -118,8 +108,6 @@ _cfr. [approfondimento in Atlante, cartina 5 --- La Francia del 1793](atlante.md
 
 Sommare queste quattro crisi non serve, e non è la domanda giusta. La domanda è quanto peso attribuire a ciascuna, e la risposta cambia a seconda di che cosa si vuole spiegare. La leva dei trecentomila spiega benissimo l'insurrezione dell'Ovest e non spiega Tolone. L'epurazione dei girondini spiega le rivolte delle città e non spiega la Vandea, cominciata prima. La crisi dei prezzi spiega la pressione delle sezioni sull'assemblea e non spiega il tradimento di Dumouriez. Ciò che le quattro crisi hanno in comune è soltanto il calendario, e la loro simultaneità produce un effetto che nessuna di esse avrebbe prodotto da sola: la convinzione, in chi governa, che il paese sia percorso da un'unica trama.
 
-<a id="artefatto-15"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-15-quattro-crisi-un-anno.html" %}
 Risorsa digitale --- Quattro crisi, un anno
 {% endembed %}
@@ -133,12 +121,8 @@ Ogni provvedimento di cui si parlerà in questo paragrafo fu presentato come tem
 
 L'elenco, seguito nell'ordine in cui i provvedimenti furono presi, ha una progressione riconoscibile. In **marzo** la Convenzione istituì un **Tribunale rivoluzionario** competente sui reati controrivoluzionari, con procedura abbreviata e senza appello, creò in ogni comune **comitati di sorveglianza** incaricati di schedare i sospetti, e inviò nei dipartimenti e presso gli eserciti i **rappresentanti in missione**, deputati muniti di poteri praticamente illimitati sul territorio assegnato. In **aprile** nacque il **Comitato di salute pubblica**, organo ristretto di governo eletto dall'assemblea e da essa rinnovabile ogni mese, che in luglio assunse la composizione destinata a durare, con Robespierre fra i suoi membri.
 
-<a id="infografica-14"></a>
-
 ![La macchina del governo rivoluzionario](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info16_Macchina_del_Governo_Rivoluzionario_%281793-1794%29.png)
 
-
-<a id="video-20"></a>
 
 {% embed url="https://youtu.be/09_AhUgtcUg" %}
 Video --- Comitato di salute pubblica
@@ -166,8 +150,6 @@ Conviene tenere presente questo testo quando, due paragrafi più avanti, si guar
 {% endhint %}
 
 
-<a id="video-21"></a>
-
 {% embed url="https://youtu.be/F4IEyCGeS0I" %}
 Video --- Sospetto
 {% endembed %}
@@ -176,8 +158,6 @@ Video --- Sospetto
 Guardando l'insieme si riconosce una struttura coerente, ed è la struttura dell'eccezione: il diritto ordinario viene sospeso, non abolito, in vista di un termine dichiarato. Ma il termine è la pace, e la pace non dipende da chi decide la sospensione. Più l'eccezione viene organizzata, con comitati, uffici, procedure e leggi che la disciplinano, più assomiglia a un ordinamento stabile.
 
 Va detta anche la cosa più scomoda, e va detta senza attenuarla, perché senza di essa il paragrafo seguente non si capisce. Queste misure funzionarono. Entro l'estate del 1794 la Vandea era stata schiacciata, le città federaliste riconquistate, Tolone ripresa, e gli eserciti della Repubblica avevano portato la guerra fuori dai confini. Il governo rivoluzionario fece esattamente ciò che dichiarava di voler fare.
-
-<a id="video-22"></a>
 
 {% embed url="https://youtu.be/UzLNVQ4UGXM" %}
 Video --- La grammatica dell'eccezione
@@ -204,8 +184,6 @@ La terza è quella che riguarda il modo di leggere l'intero decennio, ed è la r
 
 Resta da segnalare che cosa accadde a quel testo dopo. Proprio perché non fu mai applicato, la costituzione dell'anno I non ebbe difetti pratici da rimproverarle, e divenne per tutto l'Ottocento il riferimento dei movimenti democratici, repubblicani e socialisti europei: la si invocò nel 1830, nel 1848 e durante la Comune di Parigi. È una sorte che dice qualcosa sul modo in cui i documenti politici sopravvivono. Un testo applicato genera delusioni; un testo sospeso conserva intatta la propria promessa, e proprio per questo diventa una bandiera.
 
-<a id="artefatto-16"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-16-tre-costituzioni-a-confronto.html" %}
 Risorsa digitale --- Tre costituzioni a confronto: 1791, 1793, 1795
 {% endembed %}
@@ -223,14 +201,10 @@ Sulle **dimensioni** le stime sono discusse, e vanno date come intervalli. Le co
 
 Le cifre della sola Vandea stanno fuori da questa contabilità e sono le più controverse dell'intera storiografia rivoluzionaria: le valutazioni delle perdite demografiche della regione oscillano fra le centosettantamila e le duecentocinquantamila persone, morti in combattimento, per rappresaglia, per fame e per epidemia. Le esecuzioni di massa condotte a Nantes dal rappresentante **Carrier**, con affondamenti di imbarcazioni cariche di prigionieri nella Loira, e la repressione di Lione dopo la riconquista appartengono a questo secondo conto e non a quello dei tribunali. Tenere separati i due insiemi non è un artificio contabile: chi li somma senza dirlo ottiene un numero unico che nasconde due fenomeni con logiche diverse, e chi li tiene separati senza spiegarlo lascia credere che il secondo sia marginale.
 
-<a id="infografica-15"></a>
-
 ![Due conti separati](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info14_Analisi_delle_vittime_del_Terrore.png)
 
 
 Sulla **composizione sociale** dei condannati dai tribunali le ricostruzioni concordano nelle proporzioni, e conviene darle per esteso perché sono il dato che smentisce l'immagine corrente. Operai e artigiani costituiscono circa il trentuno per cento delle condanne, i contadini il ventotto, i borghesi il venticinque, il clero poco più dell'otto, i nobili poco più del sei. Sommando le prime tre voci si supera l'ottanta per cento: il Terrore colpì in larghissima maggioranza il terzo stato, cioè le persone in nome delle quali era stato dichiarato. Il dato si spiega con la legge dei sospetti, che permetteva di denunciare chiunque, e con la geografia: dove si combatteva una guerra civile, a essere arrestati erano gli abitanti, e gli abitanti erano contadini.
-
-<a id="infografica-16"></a>
 
 ![Chi furono le vittime del Terrore](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info13_Le_vittime_del_Terrore_francese.png)
 
@@ -254,12 +228,8 @@ Resta comunque il fatto che rende questi mesi diversi da qualunque altro periodo
 {% endhint %}
 
 
-<a id="infografica-17"></a>
-
 ![Il calendario repubblicano](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info15_Calendario_Repubblicano_della_Ragione.png)
 
-
-<a id="video-23"></a>
 
 {% embed url="" %}
 Video --- Il calendario repubblicano
@@ -284,14 +254,10 @@ La seconda lettura ha un difetto simmetrico e più insidioso, perché è meno vi
 
 La domanda di metodo che il paragrafo lascia aperta è la più difficile del percorso, e conviene portarsela dietro fino alla fine: che cosa si accetterebbe come prova che un insieme di idee ha causato un esito politico?
 
-<a id="video-24"></a>
-
 {% embed url="https://youtu.be/Sy794tKzl64" %}
 Video --- Due spiegazioni per gli stessi fatti
 {% endembed %}
 
-
-<a id="artefatto-17"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-17-due-letture-del-terrore.html" %}
 Risorsa digitale --- Due letture del Terrore: distribuire le prove
@@ -313,8 +279,6 @@ Conviene però tornare alla premessa che il capitolo iniziale della sezione avev
 Il legame con la domanda della sezione è diretto, e va enunciato senza retorica. La coscrizione è il rovescio della cittadinanza. Finché il soldato è un professionista assoldato da un re, il suddito che resta a casa non deve nulla di più che le imposte. Quando la sovranità appartiene alla nazione, la nazione può chiedere ai propri membri la vita, e può farlo legittimamente, perché chiedendola non chiede obbedienza a un padrone ma un dovere verso sé stessi. È lo stesso movimento che ha allargato la cittadinanza, visto dall'altro lato, e produce insieme il cittadino elettore e il soldato coscritto.
 
 Va aggiunto, per non lasciare l'impressione di un entusiasmo unanime, che le diserzioni furono numerose per tutta la durata delle guerre, che la coscrizione fu una delle cause principali delle rivolte contadine, e che molti dei coscritti del 1793 furono i primi a scoprire che un dovere verso sé stessi, quando lo si scrive in una legge, viene applicato da un gendarme.
-
-<a id="video-25"></a>
 
 {% embed url="https://youtu.be/Qc7sd9AWJfs" %}
 Video --- Il soldato e il cittadino
@@ -372,8 +336,6 @@ Ciò che seguì non fu una pacificazione. I tribunali speciali furono smantellat
 
 Nel Sud-Est e nella valle del Rodano cominciò intanto quello che i contemporanei chiamarono **Terrore bianco**: bande di giovani appartenenti ai ceti benestanti diedero la caccia ai giacobini, e nelle prigioni di Lione, Marsiglia e Aix i detenuti furono massacrati come lo erano stati a Parigi nel settembre del 1792. Non cambiò la violenza, cambiò la direzione in cui era esercitata.
 
-<a id="video-26"></a>
-
 {% embed url="https://youtu.be/95jwfwt56n4" %}
 Video --- Termidoro non è la fine della violenza
 {% endembed %}
@@ -388,8 +350,6 @@ Resta una conseguenza storiografica che vale la pena isolare, perché riguarda i
 La costituzione dell'anno III fu scritta da uomini che avevano una sola preoccupazione dominante: impedire che qualcuno potesse rifare ciò che loro stessi avevano fatto.
 
 Il testo approvato nell'agosto del **1795** rovescia sistematicamente il precedente. Il suffragio universale è abolito e torna il **censo**, con un secondo grado così selettivo da ridurre a poche decine di migliaia gli elettori che contano davvero. Il corpo legislativo è diviso in due camere, il Consiglio dei Cinquecento che propone e il Consiglio degli Anziani che approva o respinge, perché una camera sola aveva mostrato che cosa poteva fare. L'esecutivo è affidato a un **Direttorio** di cinque membri, rinnovabile di un quinto ogni anno, che non può sciogliere le camere e non può proporre leggi. Le due dichiarazioni premesse al testo affiancano ai diritti un elenco di **doveri**, e uno di questi enuncia che l'intero ordine sociale riposa sul mantenimento della proprietà. I costituenti non ne fecero mistero: dichiararono apertamente che la Francia doveva essere governata dai migliori, e per migliori intendevano i più istruiti e i proprietari. Nessun organo può prevalere sugli altri, il che è il punto, e nessun organo può risolvere un conflitto, il che è il problema.
-
-<a id="infografica-18"></a>
 
 ![Il Direttorio](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info17_Direttorio_Francese.png)
 
@@ -412,14 +372,10 @@ L'esecuzione andò male. Trasferite le camere a Saint-Cloud con il pretesto di u
 
 Su questa vicenda conviene resistere a una tentazione. Il quadriennio del Direttorio si racconta facilmente come un vuoto in attesa di essere riempito, e brumaio come la conclusione che tutti aspettavano. I fatti dicono qualcosa di più preciso e meno consolatorio. Il regime aveva reso l'esercito l'arbitro delle proprie crisi, chiamandolo cinque volte in quattro anni a decidere questioni che le urne avevano deciso diversamente; quando l'ultimo colpo di Stato arrivò, la domanda non era più se un generale sarebbe intervenuto, ma quale. Che poi toccasse a quello sbarcato da poco dall'Egitto, e che la giornata si risolvesse per l'intervento improvvisato di suo fratello davanti a una porta, appartiene alla contingenza e non alla necessità.
 
-<a id="artefatto-18"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-18-il-ciclo-dei-colpi-di-stato.html" %}
 Risorsa digitale --- 1795-1799, il ciclo dei colpi di Stato
 {% endembed %}
 
-
-<a id="video-27"></a>
 
 {% embed url="https://youtu.be/uYYNe42USd8" %}
 Video --- Perché il Direttorio chiamava i generali

@@ -14,8 +14,6 @@ La schiavitù delle piantagioni del Sud americano non nasceva da una particolari
 
 Il peso delle diverse potenze in questo traffico non fu uniforme. Il **Portogallo**, insieme al Brasile, deportò il numero maggiore di persone, quasi sei milioni; la **Gran Bretagna** dominò il traffico nel corso del Settecento con oltre tre milioni; seguivano la **Francia**, con circa un milione e trecentomila, la **Spagna**, i **Paesi Bassi**, e infine gli **Stati Uniti**, con poco più di trecentomila persone deportate direttamente. Quest'ultimo dato merita attenzione perché mostra qualcosa di controintuitivo: la popolazione schiavizzata degli Stati Uniti, che nel 1750 contava circa trecentomila persone e nel 1860 ne contava quasi quattro milioni, non crebbe per importazione ma per riproduzione interna, sotto un regime giuridico che rendeva la condizione servile ereditaria.
 
-<a id="infografica-6"></a>
-
 ![La tratta atlantica in cifre](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info6_Statistiche_sulla_tratta_atlantica.png)
 
 
@@ -25,8 +23,6 @@ Il modello con cui questo commercio viene comunemente descritto, quello del **"c
 
 _cfr. [approfondimento in Atlante, cartina 3 --- I circuiti della tratta atlantica](atlante.md#cartina-3)_
 
-
-<a id="video-6"></a>
 
 {% embed url="https://youtu.be/RzHuMn0wIM8" %}
 Video --- Il commercio triangolare e i suoi limiti
@@ -71,8 +67,6 @@ Il contesto internazionale in cui l'insurrezione si sviluppò era quello aperto 
 
 La parentesi si richiuse presto. Nel **1802** Napoleone ripristinò schiavitù e tratta e inviò una spedizione militare per riportare la colonia sotto controllo diretto: Toussaint Louverture fu catturato e morì l'anno successivo in prigionia in Francia. La resistenza proseguì sotto la guida di **Jean-Jacques Dessalines**, che sconfisse le truppe francesi e proclamò il **1° gennaio 1804** l'indipendenza di Haiti.
 
-<a id="video-7"></a>
-
 {% embed url="https://youtu.be/YVt6Ge3XAzk" %}
 Video --- Haiti 1791-1804
 {% endembed %}
@@ -85,8 +79,6 @@ Il testo con cui Haiti proclamò la propria indipendenza condivide con la Dichia
 
 Ciò che cambia è chi tiene in mano la penna. Il testo del 1776 proclamava l'uguaglianza di "tutti gli uomini" ed era firmato anche da proprietari di schiavi, con una condanna della tratta rimossa dalla bozza per non urtare gli interessi dei piantatori del Sud. Il testo del 1804 è scritto da chi quell'esclusione l'aveva subita, e ne porta il segno: è rivolto esplicitamente contro la Francia coloniale e contro il principio stesso di supremazia su cui il sistema delle piantagioni si era retto. La stessa grammatica dei diritti naturali produce, a ventotto anni di distanza, due documenti che si assomigliano nella forma e si oppongono in ciò che ciascuno dei due include.
 
-<a id="artefatto-3"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto3-due-dichiarazioni.html" %}
 Risorsa digitale --- Due dichiarazioni a confronto
 {% endembed %}
@@ -98,8 +90,6 @@ Risorsa digitale --- Due dichiarazioni a confronto
 L'uscita dal sistema fu lenta e avvenne in due tempi distinti, che conviene non confondere: prima l'abolizione del **commercio** marittimo di persone, poi, spesso a molti decenni di distanza, l'abolizione dell'**istituto** della schiavitù. La Danimarca fu la prima a bandire la tratta, nel 1792, con entrata in vigore nel 1803, ma abolì la schiavitù solo nel 1848. La Gran Bretagna proibì la tratta nel 1807 e la schiavitù nel 1833. Gli Stati Uniti bandirono la tratta dal 1° gennaio 1808, la data più vicina consentita dalla Costituzione, ma abolirono la schiavitù solo nel 1865, al termine della guerra di secessione. La Francia, dopo l'abolizione del 1794 revocata da Napoleone nel 1802, dovette attendere il 1848. La Spagna sottoscrisse formalmente l'abolizione della tratta nel 1820, ma il contrabbando proseguì per decenni con la tolleranza delle autorità, e la schiavitù cessò a Porto Rico nel 1873 e a Cuba nel 1886. Il Brasile, che aveva ricevuto il maggior numero di deportati, fu l'ultimo Stato delle Americhe ad abolirla, il 13 maggio 1888.
 
 Questo scarto sistematico tra le due date non è un dettaglio tecnico: mostra che proibire il traffico e smantellare il sistema produttivo che quel traffico alimentava erano due decisioni politiche diverse, con avversari diversi e tempi diversi. Nessuno Stato le prese insieme.
-
-<a id="infografica-7"></a>
 
 ![Due abolizioni, non una](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info7_Fine_della_schiavit%C3%B9_atlantica.png)
 

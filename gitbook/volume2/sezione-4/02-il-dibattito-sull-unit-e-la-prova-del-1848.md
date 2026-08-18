@@ -43,8 +43,6 @@ In seguito, il dibattito si spostò su posizioni ancora più concrete. A Milano,
 {% endhint %}
 
 
-<a id="video-3"></a>
-
 {% embed url="https://youtu.be/mctuFEg4mkY" %}
 Video --- Discutere di traduzioni per parlare d'altro
 {% endembed %}
@@ -83,8 +81,6 @@ Il campo dei liberali-moderati prese forma a partire dagli anni Quaranta dell'Ot
 
 Pur con le loro differenze, Gioberti, Balbo e D'Azeglio costruirono l'impalcatura ideologica del moderatismo: un approccio pragmatico, riformista e diplomatico che, dopo il fallimento delle rivoluzioni democratiche del 1848, diventerà il binario principale su cui si muoverà il processo di unificazione.
 
-<a id="artefatto-2"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/02-sette-programmi-quattro-domande.html" %}
 Risorsa digitale --- Sette programmi, quattro domande
 {% endembed %}
@@ -95,8 +91,6 @@ Risorsa digitale --- Sette programmi, quattro domande
 
 
 Il 1848 arrivò quando sembrava che qualcosa stesse per cambiare davvero. Le riforme liberali avviate dal nuovo papa Pio IX, dall'entusiasmo suscitato da Leopoldo II in Toscana e dalle prime aperture di Carlo Alberto in Piemonte avevano alimentato le speranze del programma moderato neoguelfo, portando alla firma di un accordo per una Lega doganale. Poi arrivò la crisi economica del 1846-47: cattivi raccolti, commercio in stagnazione, fame nelle campagne. La miscela tra miseria materiale e rivendicazioni politiche produsse un'esplosione che nessuno aveva previsto nei tempi e nelle dimensioni.
-
-<a id="video-4"></a>
 
 {% embed url="https://youtu.be/Z3YuGdMYQNw" %}
 Video --- Dodici mesi e nessun vincitore
@@ -125,8 +119,6 @@ In **Toscana** il granduca Leopoldo II fuggì a Gaeta e il governo passò a un t
 Per arginare l'affermazione dei democratici e tentare di recuperare prestigio, nel marzo 1849 Carlo Alberto riprese le ostilità contro l'Austria, ma il suo esercito fu sbaragliato a **Novara** in soli tre giorni. Disperato, Carlo Alberto abdicò a favore del figlio **Vittorio Emanuele II**, il quale firmò un nuovo armistizio con l'Austria ma scelse di mantenere in vigore lo Statuto Albertino. Con il crollo del fronte militare, anche gli esperimenti democratici furono drammaticamente repressi: la Repubblica romana resistette valorosamente sotto la guida militare di Garibaldi, ma dovette capitolare il **4 luglio 1849** di fronte all'imponente intervento dell'esercito francese inviato da Luigi Napoleone per restaurare il pontefice. La Repubblica di Venezia, stremata da un lungo assedio austriaco e colpita da una devastante epidemia di colera, si arrese nell'agosto del 1849.
 
 Alla fine del biennio rivoluzionario, le istituzioni e le riforme liberali furono abrogate in quasi tutta la penisola. L'unica fondamentale eccezione fu il **Regno di Sardegna**, che mantenne la Costituzione e il regime parlamentare. Questo fatto rese il Piemonte sabaudo l'unico vero polo di riferimento politico e il rifugio sicuro per migliaia di esuli, liberali e patrioti italiani, preparandolo a guidare il definitivo processo di unificazione nel decennio successivo.
-
-<a id="video-5"></a>
 
 {% embed url="https://youtu.be/6f4xSPx6p3U" %}
 Video --- Cento giorni di Repubblica romana

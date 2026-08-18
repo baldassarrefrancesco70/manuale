@@ -9,10 +9,10 @@ Le risorse digitali e i video sono già incontrati nel corso del capitolo, nel p
 
 Il capitolo apre contro un'assunzione comoda — che la Restaurazione abbia semplicemente cancellato l'età napoleonica — e distingue due parole che il linguaggio comune tende a fondere in una sola.
 
-- **Risorsa digitale** --- [Che cosa la Restaurazione non poté cancellare](01-l-italia-napoleonica-e-la-restaurazione.md#artefatto-1)
-- **Infografica** --- [Due assi](01-l-italia-napoleonica-e-la-restaurazione.md#infografica-1)
-- **Video** --- [Il popolo dalla parte sbagliata](01-l-italia-napoleonica-e-la-restaurazione.md#video-1)
-- **Video** --- [Una bandiera più antica della nazione che rappresenta](01-l-italia-napoleonica-e-la-restaurazione.md#video-2)
+- **Risorsa digitale** --- [Che cosa la Restaurazione non poté cancellare](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/01-restaurazione-non-cancello.html)
+- **Infografica** --- [Due assi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info1_Mappa_politica_della_Restaurazione_italiana.png)
+- **Video** --- [Il popolo dalla parte sbagliata](https://youtu.be/Wq-lSOjj5Bo)
+- **Video** --- [Una bandiera più antica della nazione che rappresenta](https://youtu.be/9FuAujDp5zw)
 
 
 ## Capitolo · Il dibattito sull'unità e la prova del 1848
@@ -20,10 +20,10 @@ Il capitolo apre contro un'assunzione comoda — che la Restaurazione abbia semp
 
 Sette programmi politici diversi rischiano di restare nomi da memorizzare: le risorse qui servono a distinguerli per le domande a cui rispondono, non per l'etichetta.
 
-- **Risorsa digitale** --- [Sette programmi, quattro domande](02-il-dibattito-sull-unit-e-la-prova-del-1848.md#artefatto-2)
-- **Video** --- [Discutere di traduzioni per parlare d'altro](02-il-dibattito-sull-unit-e-la-prova-del-1848.md#video-3)
-- **Video** --- [Dodici mesi e nessun vincitore](02-il-dibattito-sull-unit-e-la-prova-del-1848.md#video-4)
-- **Video** --- [Cento giorni di Repubblica romana](02-il-dibattito-sull-unit-e-la-prova-del-1848.md#video-5)
+- **Risorsa digitale** --- [Sette programmi, quattro domande](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/02-sette-programmi-quattro-domande.html)
+- **Video** --- [Discutere di traduzioni per parlare d'altro](https://youtu.be/mctuFEg4mkY)
+- **Video** --- [Dodici mesi e nessun vincitore](https://youtu.be/Z3YuGdMYQNw)
+- **Video** --- [Cento giorni di Repubblica romana](https://youtu.be/6f4xSPx6p3U)
 
 
 ## Capitolo · Cavour e la costruzione del Regno
@@ -31,10 +31,10 @@ Sette programmi politici diversi rischiano di restare nomi da memorizzare: le ri
 
 La diplomazia che porta all'unità è per sua natura invisibile: il capitolo mostra che ogni acquisizione ebbe un prezzo, e le risorse rendono visibile quel prezzo e la durata reale della campagna del 1860.
 
-- **Risorsa digitale** --- [Il prezzo di ogni mossa](03-cavour-e-la-costruzione-del-regno.md#artefatto-3)
-- **Infografica** --- [Sei mesi](03-cavour-e-la-costruzione-del-regno.md#infografica-2)
-- **Video** --- [Dieci anni decisi altrove](03-cavour-e-la-costruzione-del-regno.md#video-6)
-- **Video** --- [Bronte, agosto 1860](03-cavour-e-la-costruzione-del-regno.md#video-7)
+- **Risorsa digitale** --- [Il prezzo di ogni mossa](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/03-il-prezzo-di-ogni-mossa.html)
+- **Infografica** --- [Sei mesi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info2_Spedizione_dei_Mille_1860.png)
+- **Video** --- [Dieci anni decisi altrove](https://youtu.be/Fjm2kYWRFnc)
+- **Video** --- [Bronte, agosto 1860](https://youtu.be/YoPwYMKC6Sg)
 
 
 ## Capitolo · I problemi dello Stato unitario e la Destra storica
@@ -42,11 +42,11 @@ La diplomazia che porta all'unità è per sua natura invisibile: il capitolo mos
 
 Cinque problemi ereditati dall'unificazione rischiano di restare un elenco senza gerarchia: la risorsa qui li mette in relazione invece di limitarsi a contarli.
 
-- **Risorsa digitale** --- [I problemi dell'Italia post-unitaria — Mappa concettuale](04-i-problemi-dello-stato-unitario-e-la-destra-storica.md#artefatto-4)
-- **Video** --- [La Destra storica](04-i-problemi-dello-stato-unitario-e-la-destra-storica.md#video-8)
-- **Video** --- [Le scelte economiche della Destra storica](04-i-problemi-dello-stato-unitario-e-la-destra-storica.md#video-9)
-- **Video** --- [Il brigantaggio](04-i-problemi-dello-stato-unitario-e-la-destra-storica.md#video-10)
-- **Video** --- [La questione romana](04-i-problemi-dello-stato-unitario-e-la-destra-storica.md#video-11)
+- **Risorsa digitale** --- [I problemi dell'Italia post-unitaria — Mappa concettuale](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/mappa_problemi_italia_unitaria.html)
+- **Video** --- [La Destra storica](https://youtu.be/2hlu1CFsQKk)
+- **Video** --- [Le scelte economiche della Destra storica](https://youtu.be/B7-Cd1L804c)
+- **Video** --- [Il brigantaggio](https://youtu.be/VotL7TSr6d8)
+- **Video** --- [La questione romana](https://youtu.be/JUSdtii4PSs)
 
 
 ## Capitolo · Gli anni della Sinistra storica
@@ -54,11 +54,11 @@ Cinque problemi ereditati dall'unificazione rischiano di restare un elenco senza
 
 Il capitolo lavora contro l'idea che nel passaggio 1876 cambi poco, e mostra come le stesse politiche economiche possano produrre vincitori e perdenti nello stesso momento.
 
-- **Risorsa digitale** --- [Confronto fra Destra e Sinistra storiche](05-gli-anni-della-sinistra-storica.md#artefatto-5)
-- **Risorsa digitale** --- [Le politiche economiche e il decollo industriale nell'Italia post-unitaria](05-gli-anni-della-sinistra-storica.md#artefatto-6)
-- **Risorsa digitale** --- [Espansione coloniale italiana — timeline interattiva](05-gli-anni-della-sinistra-storica.md#artefatto-7)
-- **Video** --- [Le politiche economiche e il decollo industriale](05-gli-anni-della-sinistra-storica.md#video-12)
-- **Video** --- [Il colonialismo italiano](05-gli-anni-della-sinistra-storica.md#video-13)
+- **Risorsa digitale** --- [Confronto fra Destra e Sinistra storiche](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/confronto_destra_sinistra.html)
+- **Risorsa digitale** --- [Le politiche economiche e il decollo industriale nell'Italia post-unitaria](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/politica_economica.html)
+- **Risorsa digitale** --- [Espansione coloniale italiana — timeline interattiva](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/espansione_coloniale.html)
+- **Video** --- [Le politiche economiche e il decollo industriale](https://youtu.be/B7-Cd1L804c)
+- **Video** --- [Il colonialismo italiano](https://youtu.be/b9WgUznW8wA)
 
 
 ## Capitolo · L'età crispina e la crisi di fine secolo
@@ -66,8 +66,8 @@ Il capitolo lavora contro l'idea che nel passaggio 1876 cambi poco, e mostra com
 
 Il capitolo chiude la sezione seguendo una contraddizione che il testo non risolve in una sola direzione, tenendo insieme più fili che altrimenti resterebbero sparsi negli ultimi anni del secolo.
 
-- **Risorsa digitale** --- [Timeline interattiva sulla crisi di fine secolo](06-l-et-crispina-e-la-crisi-di-fine-secolo.md#artefatto-8)
-- **Video** --- [La crisi di fine secolo](06-l-et-crispina-e-la-crisi-di-fine-secolo.md#video-14)
+- **Risorsa digitale** --- [Timeline interattiva sulla crisi di fine secolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/timeline_crisi_fine_secolo.html)
+- **Video** --- [La crisi di fine secolo](https://youtu.be/97UP9ih2T2Q)
 
 
 
@@ -76,8 +76,6 @@ Il capitolo chiude la sezione seguendo una contraddizione che il testo non risol
 
 Cronologia, glossario e palestra di argomentazione sono pensati per essere usati dopo lo studio dei capitoli, e servono a rimettere in ordine quanto studiato.
 
-<a id="artefatto-9"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/08-cronologia-italia.html" %}
 Risorsa digitale --- Cronologia della sezione
 {% endembed %}
@@ -85,16 +83,12 @@ Risorsa digitale --- Cronologia della sezione
 
 La cronologia mostra quattro corsie — tecnica, economia, società, idee — che scorrono insieme invece che in sequenza unica: utile per vedere che cosa succedeva *nello stesso momento* in campi diversi, per esempio che le riforme della Destra storica e le prime tensioni sociali post-unitarie non sono fasi separate ma sovrapposte. Le barre segnano i fenomeni lunghi, i punti gli eventi singoli.
 
-<a id="artefatto-10"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/09-glossario-italia.html" %}
 Risorsa digitale --- Glossario della sezione
 {% endembed %}
 
 
 Il glossario raccoglie i termini in grassetto incontrati nei capitoli. Alcune voci sono segnalate come **parole contese**: non hanno solo una definizione, ma anche la storia di chi le ha coniate e contro chi — utile quando un termine come "trasformismo" o "Risorgimento" sembra descrittivo e invece porta dentro un giudizio storiografico. Ha una modalità attiva, con frasi del manuale a termine oscurato, utile per l'autoverifica prima di una prova.
-
-<a id="artefatto-11"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/10-palestra-italia.html" %}
 Risorsa digitale --- Palestra di argomentazione della sezione

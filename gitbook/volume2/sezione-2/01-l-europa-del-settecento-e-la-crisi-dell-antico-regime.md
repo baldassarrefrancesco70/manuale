@@ -19,14 +19,10 @@ Tre nodi devono essere chiari prima di andare avanti. Che il privilegio, nella s
 {% endhint %}
 
 
-<a id="artefatto-1"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-01-tre-nodi-da-chiarire.html" %}
 Risorsa digitale --- Prima di cominciare: tre nodi da chiarire
 {% endembed %}
 
-
-<a id="video-1"></a>
 
 {% embed url="" %}
 Video --- Rivoluzione, come cambia una parola
@@ -43,16 +39,12 @@ La società d'antico regime si pensa divisa in **tre ordini**, o stati, definiti
 
 Le proporzioni chiariscono di che cosa si stia parlando. Su una popolazione francese che alla vigilia della Rivoluzione si aggira sui ventotto milioni di abitanti, il clero conta circa centotrentamila persone, mezzo punto percentuale, ed è esente dall'imposta, riscuote la decima sui raccolti e dispone di tribunali propri; al suo interno, però, la distanza tra un vescovo di famiglia aristocratica e un parroco di campagna che vive come i suoi parrocchiani è tale che nel 1789 i due si troveranno su fronti diversi. La nobiltà si aggira attorno alle quattrocentomila persone, un punto e mezzo, ed è a sua volta divisa tra la **nobiltà di spada**, di antica origine militare, e la **nobiltà di toga**, entrata nell'ordine attraverso le cariche giudiziarie e amministrative; possiede gran parte della terra, esercita la giustizia signorile minore, gode di ampie esenzioni fiscali e occupa i vertici dello Stato e dell'esercito. Tutto il resto, il novantotto per cento abbondante della popolazione, è terzo stato.
 
-<a id="infografica-1"></a>
-
 ![La piramide che non è una piramide](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info1_Gerarchia_sociale_dell_Antico_Regime.png)
 
 
 Ed è qui la prima anomalia da registrare. Il terzo stato non è un gruppo sociale, è ciò che rimane quando si sono tolti gli altri due. Vi rientrano il banchiere di Parigi e il bracciante della Bretagna, il fabbricante di Lione e il mendicante, l'avvocato e il facchino, e ciò che li accomuna giuridicamente è soltanto una cosa: pagano, e non decidono. Chiedersi che cosa vuole il terzo stato, come farà un celebre opuscolo del 1789, significa già compiere un'operazione politica, perché trasforma una categoria residuale in un soggetto che parla con una voce sola.
 
 La divisione in ordini non esaurisce però l'architettura. Sotto di essa la società è organizzata in **corpi**: province, città, corporazioni di mestiere, università, tribunali, comunità religiose. Ciascun corpo possiede un proprio statuto, contrattato con la corona in un momento del passato e conservato per iscritto, che gli riconosce esenzioni, giurisdizioni, diritti di rappresentanza. È qui che va cercato il senso esatto della parola **privilegio**, che etimologicamente indica una legge privata, valida per uno e non per tutti. Il privilegio non è un abuso tollerato dalla legge, è legge esso stesso. L'individuo isolato, che non appartiene ad alcun corpo, non ha quasi diritti: si è titolari di diritti in quanto membri di qualcosa.
-
-<a id="video-2"></a>
 
 {% embed url="https://youtu.be/1UxattnN4yQ" %}
 Video --- Privilegio non vuol dire ricchezza
@@ -68,16 +60,12 @@ _cfr. [approfondimento in Atlante, cartina 1 --- La Francia d'antico regime: un 
 
 Nelle campagne vive la grande maggioranza dei francesi, circa venti milioni di persone, e su di esse i tre prelievi convergono simultaneamente: la taglia e le altre imposte allo Stato, la decima alla Chiesa, censi, canoni, monopoli e corvée al signore. Negli ultimi decenni del secolo la pressione dell'ultimo tipo si aggrava, e in un modo che i contemporanei trovano particolarmente odioso. Molti proprietari nobili, per sostenere un tenore di vita costoso e per riaffermare una preminenza che sentono minacciata, fanno rileggere agli archivisti i vecchi registri signorili e rimettono in esazione diritti caduti in disuso da generazioni. Il fenomeno ha ricevuto un nome, **reazione feudale**, e la sua estensione reale è discussa dagli storici: quel che non è discusso è l'effetto sulla percezione. Un prelievo antico che torna dopo un lungo silenzio non appare come una consuetudine, appare come un sopruso, e obbliga chi lo subisce a chiedersi su quale titolo si fondi. Nell'estate del 1789 saranno proprio gli archivi signorili, e non i castelli in quanto tali, l'obiettivo che le comunità rurali cercheranno per primo.
 
-<a id="infografica-2"></a>
-
 ![I tre prelievi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info2_Sistema_fiscale_sui_contadini_francesi.png)
 
 
 Resta un'ultima tessera, ed è quella che complica il quadro più di ogni altra. La corona, cronicamente a corto di denaro, da secoli vende cariche pubbliche, e molte di queste cariche conferiscono a chi le acquista la nobiltà, trasmissibile ai figli: è per questa via che si è formata la nobiltà di toga. La conseguenza va misurata bene. Nella società d'antico regime la mobilità sociale esiste, ed è persino istituzionalizzata, ma passa dentro l'ordine dei privilegi invece di attraversarlo: il borghese che riesce non abolisce il privilegio, lo compra. Questo rende fragile ogni ricostruzione che immagini una borghesia compatta e consapevole, in attesa di rovesciare un mondo che le sta stretto. Per gran parte del Settecento la strada della borghesia che ha successo è l'integrazione, non il conflitto.
 
 Negli anni Ottanta, però, quella strada si restringe. Un editto del 1781 riserva l'accesso ai gradi di ufficiale a chi possa dimostrare quattro generazioni di nobiltà, escludendo di fatto i nobilitati di fresco oltre che i borghesi; misure analoghe irrigidiscono l'accesso ad altre carriere. Se la nobiltà francese abbia davvero praticato in questi anni una chiusura sistematica, o se si tratti di provvedimenti isolati a cui la storiografia ha attribuito troppa coerenza, è materia di discussione. Ma la coincidenza vale la pena di essere notata: nel decennio in cui la porta comincia a chiudersi si formano gli uomini che nel 1789 siederanno tra i deputati del terzo stato.
-
-<a id="artefatto-2"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-02-chi-paga-che-cosa.html" %}
 Risorsa digitale --- Chi paga che cosa: il prelievo in una parrocchia francese
@@ -102,8 +90,6 @@ La **Russia** presenta la forma più estrema di potere personale, che i contempo
 
 La **Gran Bretagna**, infine, produce il paradosso su cui vale la pena fermarsi. È lo Stato meno assoluto d'Europa: dopo il 1689 il re governa accanto al Parlamento, non può legiferare né tassare senza di esso, e il vincolo non è scritto in una costituzione unica ma in un insieme di consuetudini e di documenti stratificati, fra cui il Bill of Rights. Aristocrazia terriera e borghesia degli affari non si contendono le istituzioni, le occupano insieme, e questa convergenza produce una stabilità politica che sul continente non ha eguali, oltre a una dialettica regolata fra schieramenti che i viaggiatori francesi osservano con un misto di ammirazione e di incredulità. La politica estera che ne deriva ha due obiettivi soltanto, impedire che sul continente si formi una potenza egemone e proteggere le rotte commerciali oceaniche. Ed è lo Stato che estrae dalla propria popolazione, in proporzione, molto più di quanto riesca a fare la Francia. La ragione sta in un meccanismo che avrà un peso decisivo alla fine di questo capitolo: poiché è il Parlamento a votare le imposte, chi presta denaro alla corona britannica sa che il rimborso è garantito da chi quelle imposte controlla. La **Banca d'Inghilterra**, fondata nel 1694, e un debito pubblico consolidato permettono così a Londra di indebitarsi a tassi bassi e per somme enormi. Il consenso non è, in questo caso, una limitazione del potere: ne è la condizione.
 
-<a id="artefatto-3"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-03-cinque-macchine-di-potere.html" %}
 Risorsa digitale --- Cinque macchine di potere
 {% endembed %}
@@ -125,8 +111,6 @@ _cfr. [approfondimento in Atlante, cartina 3 --- Le spartizioni della Polonia](a
 
 Resta da capire che cosa significhi, concretamente, fare la guerra dentro questo sistema. Su questo punto i manuali offrono una descrizione consolidata, e conviene non accettarla prima di averla smontata.
 
-<a id="video-3"></a>
-
 {% embed url="https://youtu.be/tzuqQ4syD5c" %}
 Video --- Assolutismo, storia di una parola
 {% endembed %}
@@ -142,8 +126,6 @@ Le premesse sono cinque. La guerra non è concepita come uno scontro totale ma c
 
 La conclusione che se ne trae è che la guerra settecentesca sia un affare tra gabinetti, con regole, e sostanzialmente estranea alle popolazioni.
 
-<a id="infografica-3"></a>
-
 ![Premesse e conclusione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info3_La_guerra_limitata_nel_Settecento.png)
 
 
@@ -153,14 +135,10 @@ Altre prove, però, non entrano nella tesi, e sono di due tipi. Il primo riguard
 
 Che cosa resta, allora, della tesi. Resta che essa descrive bene un teatro, quello continentale europeo, una classe di obiettivi, quelli dinastici, e un'esperienza, quella dell'ufficiale nobile. Descrive molto peggio l'esperienza del contadino sassone requisito, e non descrive affatto ciò che accade oltre gli oceani. Soprattutto, la tesi nasconde una domanda che non pone mai: limitata rispetto a che cosa. La risposta implicita è quasi sempre la stessa, rispetto alle guerre che verranno dopo il 1792, quando eserciti di cittadini coscritti combatteranno per la sopravvivenza di un regime. Ma definire un'epoca attraverso ciò che essa non è ancora è precisamente l'operazione da cui questa sezione si tiene lontana: nel 1760 nessuno stava combattendo una guerra limitata, si stava semplicemente combattendo la guerra.
 
-<a id="artefatto-4"></a>
-
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-04-anatomia-di-una-tesi.html" %}
 Risorsa digitale --- Anatomia di una tesi: la «guerra limitata»
 {% endembed %}
 
-
-<a id="video-4"></a>
 
 {% embed url="https://youtu.be/vMP9xG9KmuY" %}
 Video --- Che cos'è una tesi storiografica
@@ -227,8 +205,6 @@ Il programma è ovunque simile, perché ovunque simile è il bisogno. Si vuole u
 
 Si vuole una giustizia più rapida e meno crudele, e la tortura comincia a cadere pochi anni dopo che **Cesare Beccaria** ne aveva argomentato l'inutilità in un libro tradotto in tutta Europa. Si vogliono mercati più liberi, e cadono corporazioni, vincoli annonari e dogane interne. Si vuole, dove esiste, attenuare la servitù personale.
 
-<a id="video-5"></a>
-
 {% embed url="" %}
 Video --- Giurisdizionalismo
 {% endembed %}
@@ -245,8 +221,6 @@ In **Russia** la distanza tra il linguaggio e i fatti è la più ampia di tutte.
 La penisola italiana, riorganizzata dalle guerre di successione e priva di potenze proprie, è in questi decenni uno dei laboratori più avanzati d'Europa, e lo è in modi tanto diversi da rendere difficile parlarne al singolare. Il **Granducato di Toscana** di **Pietro Leopoldo**, figlio di Maria Teresa, spinge il programma riformatore più in là di chiunque altro: è il primo Stato ad abolire le corporazioni di mestiere e a liberalizzare interamente il commercio dei cereali, e con la **Leopoldina** del 1786 il primo Stato al mondo ad abolire insieme la tortura e la pena di morte, traducendo in codice l'argomentazione di Beccaria. La **Lombardia austriaca** riceve da Vienna il catasto e la riforma dell'amministrazione, e restituisce a Vienna un ambiente intellettuale di prima grandezza, quello che ruota attorno alla rivista *Il Caffè*, ai fratelli **Pietro e Alessandro Verri** e allo stesso Beccaria: qui il rapporto tra riforma e pensiero non è a senso unico. Il **Regno di Napoli** produce, con **Antonio Genovesi** e **Gaetano Filangieri**, una riflessione sull'economia civile e sulla legislazione che l'Europa legge e traduce, e ottiene molto poco: il conflitto giurisdizionale con Roma condotto dal ministro Tanucci intacca le immunità ecclesiastiche, ma il potere dei baroni sulle campagne resta intatto, e con esso il feudo. Il **Regno di Sardegna**, infine, sceglie deliberatamente la strada opposta, un modello autoritario e militare che diffida dell'Illuminismo e riforma pochissimo, e va tenuto presente per una ragione precisa: dimostra che nel Settecento riformare era una scelta, non una necessità del tempo.
 
 Dai casi messi in fila si ricava un limite che li accomuna tutti, e che riguarda chi le riforme le fa e per chi. Nessuno di questi sovrani coinvolge la borghesia colta nel potere politico, benché ne usi le idee e ne assuma i funzionari; nessuno immagina un ruolo per le masse popolari, che restano oggetto di provvedimenti e mai soggetto di decisioni. Il riformismo settecentesco distribuisce benefici e non distribuisce potere: si può abolire la tortura senza dare a nessuno il diritto di discutere le leggi.
-
-<a id="artefatto-5"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-05-la-riforma-e-il-titolo-giuridico.html" %}
 Risorsa digitale --- La riforma e il titolo giuridico
@@ -266,8 +240,6 @@ Ogni tentativo di ridurne le prerogative, nel 1771 con il cancelliere Maupeou e 
 {% endhint %}
 
 
-<a id="video-6"></a>
-
 {% embed url="https://youtu.be/g76l9poCcis" %}
 Video --- I parlamenti francesi
 {% endembed %}
@@ -276,8 +248,6 @@ Video --- I parlamenti francesi
 Da qui viene il nome ambiguo con cui l'Ottocento battezzerà questa stagione, **dispotismo illuminato**, e da qui l'impasse che essa incontra. Per abolire i privilegi il sovrano deve agire contro il diritto vigente, cioè comportarsi da despota; se rispetta il diritto vigente, non riforma nulla. La contraddizione non è retorica, è pratica, e nessuno dei sovrani del Settecento la scioglie.
 
 Va detto per contro, e con chiarezza, ciò che questi sovrani non stavano cercando. Non stavano preparando l'uguaglianza dei cittadini, non stavano fallendo nel produrla, e sarebbero rimasti sinceramente sorpresi di sentirsi attribuire quell'obiettivo. Volevano uno Stato più ricco, più uniforme, meglio amministrato e militarmente più forte, e per ottenerlo dovevano ridurre le esenzioni. La coincidenza parziale tra il loro programma e quello che verrà è reale, e non autorizza a leggere il primo come una versione incompiuta del secondo.
-
-<a id="video-7"></a>
 
 {% embed url="https://youtu.be/mapcV4e8aBQ" %}
 Video --- Riformare o rispettare il diritto: il dilemma dei sovrani settecenteschi
@@ -294,8 +264,6 @@ Nel 1788 la monarchia francese non è povera. Il regno è il più popoloso d'Eur
 
 Il debito ha una storia, e la storia è militare. Le guerre del secolo sono state finanziate a prestito, e l'ultima, l'intervento a fianco dei coloni americani insorti contro la Gran Bretagna tra il 1778 e il 1783, è stata pagata quasi interamente con nuovi prestiti: **Necker**, allora direttore delle finanze, aveva scelto di non aumentare le imposte per non pagarne il costo politico. La vittoria è piena, l'umiliazione della rivale è completa, e il servizio del debito arriva ad assorbire una quota delle entrate ordinarie che le stime collocano attorno alla metà. La monarchia francese perde la propria libertà di manovra vincendo una guerra.
 
-<a id="infografica-4"></a>
-
 ![Dove vanno le entrate del regno](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info6_Francia_1788__Crisi_del_Debito.png)
 
 
@@ -311,16 +279,12 @@ Nell'agosto del 1788 il tesoro sospende i pagamenti. È una bancarotta di fatto,
 
 Su un punto, però, la corona non decide. Nel dicembre del 1788, sotto la pressione di una campagna di opuscoli che ha invaso il regno, il consiglio raddoppia il numero dei deputati del terzo stato, portandolo a eguagliare la somma degli altri due ordini. Lascia però aperta la questione dalla quale dipende ogni cosa, se il voto si conterà per testa o per ordine: nel primo caso il raddoppio conta, nel secondo non conta nulla, perché due ordini metteranno sempre in minoranza il terzo. Il silenzio del governo su questo punto non è un'astuzia, è l'impossibilità di scegliere senza perdere qualcuno.
 
-<a id="video-8"></a>
-
 {% embed url="https://youtu.be/SxoKMbIDX1k" %}
 Video --- Voto per testa o per ordine
 {% endembed %}
 
 
 Conviene guardare bene che cosa è successo, perché è il contrario di quello che il senno di poi suggerisce. La convocazione degli Stati generali non è un atto riformatore, è la dichiarazione che la macchina fiscale è bloccata e che il re non sa più come far accettare un'imposta. E non è stata strappata da chi vuole cambiare l'ordine sociale: è stata pretesa dai corpi privilegiati, che negli Stati generali vedevano lo strumento per difendere le proprie esenzioni contro il ministero. Nell'estate del 1788, chi festeggia per le strade festeggia la sconfitta del dispotismo ministeriale, non la nascita di una nazione di eguali.
-
-<a id="artefatto-6"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-06-la-catena-dei-rifiuti.html" %}
 Risorsa digitale --- 1786-1789, la catena dei rifiuti
@@ -334,21 +298,15 @@ Mentre la crisi politica si scioglieva in una convocazione, ne stava maturando u
 
 Il raccolto del 1788 fu pessimo. Il prezzo del frumento salì in pochi mesi in una misura che le stime collocano tra il cinquanta e il cento per cento rispetto agli anni normali, e con esso il prezzo del pane, che nell'alimentazione dei ceti popolari non era un alimento tra gli altri ma quasi l'unico. L'effetto si propagò per una via che vale la pena seguire, perché non è intuitiva. Le famiglie costrette a destinare al pane la quasi totalità del salario smisero di comprare tutto il resto; la domanda di tessuti e di manufatti crollò; le manifatture urbane ridussero la produzione e licenziarono. Alla fame si aggiunse così la disoccupazione, e l'inverno che seguì fu eccezionalmente rigido. Il 1789 si aprì con tumulti per il prezzo del pane in decine di città e con sommosse nelle campagne.
 
-<a id="infografica-5"></a>
-
 ![La catena del pane](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info5_La_Catena_del_Pane_%281788-1789%29.png)
 
 
 La coincidenza tra questa crisi e l'altra è il punto su cui conviene fermarsi, perché è il tipo di problema che tornerà più volte nei capitoli seguenti. Le due crisi non hanno la stessa natura, non hanno la stessa durata, non hanno gli stessi protagonisti. Una è istituzionale, matura da decenni, si combatte a colpi di editti tra ministri e magistrati, e riguarda chi abbia il diritto di consentire un'imposta. L'altra è materiale, arriva in pochi mesi, dipende da un'annata climatica, e riguarda il pane. Nessuna delle due, presa da sola, spiega ciò che accadrà: carestie ce n'erano state molte, e nessuna aveva prodotto una rivoluzione; crisi fiscali anche, e si erano sempre chiuse con un espediente. Ciò che rende il 1789 diverso è che le due si presentano insieme, e che la seconda mette in strada, esattamente nei mesi in cui si eleggono i deputati, centinaia di migliaia di persone che non hanno voce nelle istituzioni e hanno fame.
 
-<a id="infografica-6"></a>
-
 ![Due crisi, due orologi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info4_Meccanismo_della_Rivoluzione_Francese.png)
 
 
 Elencare le cause, dunque, non basta, e non è nemmeno la domanda giusta. La domanda è quanto peso attribuire a ciascuna, e la risposta cambia a seconda di che cosa si vuole spiegare: la convocazione degli Stati generali si spiega benissimo senza il cattivo raccolto, ciò che accadrà nell'estate del 1789 non si spiega affatto senza di esso.
-
-<a id="video-9"></a>
 
 {% embed url="https://youtu.be/ksfTtYEH1dU" %}
 Video --- Due crisi che si incontrano: politica e sussistenza nel 1788
