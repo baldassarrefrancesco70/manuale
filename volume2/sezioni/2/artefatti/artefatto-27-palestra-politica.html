@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce la politica del mondo moderno &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Otto nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai nodi storiografici della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "L'Europa del Settecento e la crisi dell'antico regime":"#6b5545",
+    "L'apertura della Rivoluzione":"#b0872e",
+    "La Repubblica, il Terrore, il Direttorio":"#9d4a2b",
+    "L'Europa di Napoleone":"#3d5566"
+  };
+  var CAPORDER = ["L'Europa del Settecento e la crisi dell'antico regime","L'apertura della Rivoluzione","La Repubblica, il Terrore, il Direttorio","L'Europa di Napoleone"];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"L'Europa del Settecento e la crisi dell'antico regime",
+      titolo:"Il dispotismo illuminato è una categoria storica o un'etichetta postuma?",
+      formulazioni:{
+        partenza:"Il dispotismo illuminato descrive un programma di governo realmente condiviso dai sovrani del secondo Settecento, fondato su una nuova giustificazione del potere basata sull'utilità e non più soltanto sul diritto divino.",
+        ristretta:"Tra gli anni Sessanta e Ottanta del Settecento, alcuni sovrani europei, Giuseppe II fra tutti, condivisero un programma di governo riconoscibile, fondato su una nuova giustificazione del potere basata sull'utilità, anche se estendere questa lettura a ogni caso compreso sotto l'etichetta rischia di appiattire differenze reali, come quella con Caterina II, che estese la servitù della gleba.",
+        opposta:"Il dispotismo illuminato non descrive un programma di governo realmente condiviso, ma un vocabolario comune adottato da sovrani spinti dalla stessa pressione fiscale della guerra, che scoprirono nelle esenzioni ecclesiastiche e nobiliari lo stesso ostacolo da rimuovere: l'Illuminismo fornì le parole, non il movente."
+      },
+      affermazioni:[
+        {testo:"Tra gli anni Sessanta e Ottanta del Settecento, sovrani lontanissimi per tradizione legiferarono sugli stessi oggetti con formule simili: tolleranza religiosa, riduzione delle immunità ecclesiastiche, catasto, riforma penale, libertà del commercio dei grani.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"mostra una convergenza di misure, ma non stabilisce se il movente fosse condiviso o solo la pressione fiscale comune."}},
+        {testo:"Il comune denominatore tra quei sovrani fu la pressione fiscale della guerra: tutti avevano bisogno di più denaro e più soldati, e tutti scoprirono nelle esenzioni ecclesiastiche e nobiliari lo stesso ostacolo.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riconosce un programma \"riconoscibile\" solo per alcuni sovrani specifici, senza escludere che la pressione fiscale abbia agito accanto ad esso."}},
+        {testo:"Alcune riforme del dispotismo illuminato, l'abolizione della tortura, la tolleranza per i culti minoritari, non producevano denaro, anzi costarono consenso senza fruttare nulla al tesoro.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura fiscale."}},
+        {testo:"Caterina II estese la servitù della gleba, mentre Giuseppe II tentò di abolirla.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"mette in dubbio l'idea di un programma davvero condiviso.",
+                 ristretta:"è precisamente il caso su cui la Ristretta fonda la propria cautela."}},
+        {testo:"I sovrani del secondo Settecento cambiarono il modo in cui giustificavano il proprio potere: non più soltanto per diritto divino, ma per l'utilità di ciò che facevano.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"l'Opposta non nega il cambiamento del vocabolario di legittimazione, sostiene solo che l'Illuminismo fornì le parole e non il movente."}}
+      ]
+    },
+    {
+      capitolo:"L'Europa del Settecento e la crisi dell'antico regime",
+      titolo:"La crisi francese del 1787-88 fu una crisi finanziaria o una crisi politica?",
+      formulazioni:{
+        partenza:"Il crollo della monarchia francese nel 1787-88 fu la conseguenza diretta di un dissesto finanziario che rese lo Stato incapace di pagare i propri creditori e di aumentare le proprie entrate.",
+        ristretta:"Nell'estate del 1788 il dissesto finanziario fu la causa immediata e sufficiente a spiegare la convocazione degli Stati generali, anche se questo non dice nulla sul perché la Francia, e non la Gran Bretagna con un debito proporzionalmente più pesante, sia arrivata al collasso.",
+        opposta:"Il crollo della monarchia francese nel 1787-88 non fu la conseguenza diretta di un dissesto finanziario, ma il sintomo di una crisi di legittimità politica già in corso da vent'anni: la Gran Bretagna usciva dalla stessa guerra con un debito proporzionalmente più pesante e non crollava, perché disponeva di un parlamento che votava le imposte e rassicurava i creditori, un'istituzione che alla Francia mancava."
+      },
+      affermazioni:[
+        {testo:"Nell'agosto del 1788 il tesoro francese sospese i pagamenti ai propri creditori, dopo che gli espedienti finanziari si erano esauriti uno dopo l'altro.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"l'Opposta non nega il dissesto finanziario, sposta l'attenzione sul perché la Francia, e non la Gran Bretagna, ne fu travolta."}},
+        {testo:"La Gran Bretagna uscì dalla stessa guerra con un debito proporzionalmente più pesante di quello francese, e non crollò: continuò a prendere a prestito, e a tassi migliori.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è il confronto su cui la Ristretta fonda il proprio limite dichiarato."}},
+        {testo:"La Gran Bretagna disponeva di un parlamento che votava le imposte e per questo rassicurava i creditori, un'istituzione che alla Francia mancava.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Nell'estate del 1788 la convocazione degli Stati generali era, per quasi tutti i suoi sostenitori, il modo di salvare la monarchia, non di abbatterla.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"confuta"},
+         perche:{partenza:"è compatibile con entrambe le letture sulle cause della crisi.",
+                 opposta:"è il punto cieco riconosciuto alla lettura della crisi di legittimità, che rischia di leggere \"il 1789 dentro il 1788\"."}},
+        {testo:"Cifre di debito pubblico simili a quelle francesi, altrove in Europa, produssero esiti politici opposti a quello francese.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura finanziaria.",
+                 ristretta:"la Ristretta ammette già questo limite comparativo."}}
+      ]
+    },
+    {
+      capitolo:"L'apertura della Rivoluzione",
+      titolo:"La Rivoluzione fu opera della borghesia?",
+      formulazioni:{
+        partenza:"La Rivoluzione francese fu la rivoluzione con cui una borghesia economicamente cresciuta abbatté l'ordine feudale che ne ostacolava lo sviluppo.",
+        ristretta:"L'assemblea che guidò la Rivoluzione francese produsse un ordine giuridico costruito sulla proprietà privata e sull'impresa, abolizione del regime feudale, soppressione delle corporazioni, vendita dei beni ecclesiastici a chi aveva capitale, un esito compatibile con gli interessi di una borghesia economicamente ascesa, anche senza che i suoi protagonisti fossero essi stessi imprenditori o mercanti.",
+        opposta:"La Rivoluzione francese non fu opera della borghesia: chi sedeva nell'Assemblea costituente erano avvocati, magistrati e funzionari che vivevano di rendita e di ufficio e che abolirono le proprie stesse posizioni, mentre la nobiltà settecentesca investiva in miniere, manifatture e commercio marittimo quanto e più della borghesia; il conflitto del 1789 fu politico e culturale prima che sociale."
+      },
+      affermazioni:[
+        {testo:"L'Assemblea costituente abolì il regime feudale, soppresse le corporazioni, liberò il mercato dei beni e del lavoro, vendette le terre della Chiesa a chi aveva capitale, e scrisse nella Dichiarazione che la proprietà è sacra.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è l'esito su cui la Ristretta fonda la propria formulazione.",
+                 opposta:"l'Opposta non nega questo esito giuridico, ne contesta l'attribuzione causale a un'origine sociale borghese."}},
+        {testo:"Chi sedeva nell'Assemblea costituente non erano imprenditori né mercanti, ma avvocati, magistrati e funzionari che vivevano di rendita e di ufficio, e che stavano abolendo le proprie stesse posizioni.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette già esplicitamente questo dato."}},
+        {testo:"La nobiltà settecentesca investiva in miniere, manifatture e commercio marittimo quanto e più della borghesia.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La parola «feudalesimo», nella Francia del 1789, designava un insieme di rendite e di diritti giurisdizionali, non un modo di produzione in senso economico.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza."}},
+        {testo:"L'abolizione del privilegio fu il punto su cui tutto il conflitto del 1789 si decise, e su cui si combatté per anni.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"è il punto cieco riconosciuto alla lettura revisionista."}}
+      ]
+    },
+    {
+      capitolo:"L'apertura della Rivoluzione",
+      titolo:"Le esclusioni del 1791: compromesso o coerenza?",
+      formulazioni:{
+        partenza:"La distinzione tra cittadini attivi e passivi nella Costituzione del 1791 fu un compromesso tattico e transitorio, destinato per sua natura a cadere non appena la pressione politica lo avesse reso possibile.",
+        ristretta:"La distinzione tra cittadini attivi e passivi fu, almeno nella percezione di una parte dei suoi stessi sostenitori, un compromesso tattico destinato a cadere, come mostra la sua abolizione nell'agosto del 1792 non appena la pressione politica lo rese possibile, anche se questo non spiega da solo il suo ritorno nella Costituzione del 1795.",
+        opposta:"Il censo non era un ostacolo tattico alla dottrina rivoluzionaria ma la dottrina stessa: i diritti politici erano concepiti come una funzione riservata a chi possedeva un giudizio indipendente garantito dalla proprietà, e i medesimi uomini reintrodussero un criterio censitario nella Costituzione del 1795 non appena l'emergenza militare si allentò."
+      },
+      affermazioni:[
+        {testo:"La distinzione tra cittadini attivi e passivi fu cancellata nell'agosto del 1792, meno di tre anni dopo la sua introduzione, non appena la pressione politica lo rese possibile.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il dato su cui la Ristretta si fonda.",
+                 opposta:"l'Opposta non nega la cronologia, ne contesta l'interpretazione come segno di un principio che si stava realizzando."}},
+        {testo:"I medesimi uomini che avevano abolito il censo nel 1792 lo reintrodussero nella Costituzione del 1795, non appena l'emergenza militare si allentò.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta stessa riconosce di non spiegare \"il suo ritorno nella Costituzione del 1795\"."}},
+        {testo:"La caduta della distinzione tra cittadini attivi e passivi nel 1792 fu prodotta da un'emergenza militare e da un'insurrezione, non da una conversione dei suoi stessi sostenitori.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Condorcet formulò pubblicamente, già allora, argomenti a favore del voto alle donne, e i liberi di colore fecero lo stesso per le colonie: entrambe le richieste furono respinte con un voto.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"confuta"},
+         perche:{partenza:"mostra che esistevano voci per un'inclusione più ampia, ma non decide se l'esclusione fosse un compromesso transitorio o una dottrina coerente.",
+                 opposta:"è il punto cieco riconosciuto alla lettura della coerenza: un limite contestato pubblicamente dai contemporanei non può dirsi il limite naturale di un'epoca."}},
+        {testo:"I diritti politici, secondo la seconda lettura, erano concepiti come una funzione da affidare a chi possedeva un giudizio indipendente, pensato come effetto della proprietà.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La Repubblica, il Terrore, il Direttorio",
+      titolo:"La repressione della Vandea fu un genocidio?",
+      formulazioni:{
+        partenza:"La repressione della rivolta vandeana del 1793-94 costituì un genocidio, deciso e attuato dalla Convenzione per distruggere una popolazione in quanto tale.",
+        ristretta:"Nell'agosto del 1793 e nei primi mesi del 1794, le direttive più radicali della Convenzione e delle colonne mobili, distruzione dei raccolti, incendio degli insediamenti, ordine di non fare prigionieri in alcuni casi, assunsero i tratti di una violenza sistematica contro la popolazione civile della Vandea, senza che questo implichi necessariamente che l'intera repressione rispondesse a un piano deliberato di distruzione della popolazione in quanto tale.",
+        opposta:"La repressione della Vandea non fu un genocidio: colpì un territorio insorto e non un gruppo definito per nascita, chi deponeva le armi o si dichiarava repubblicano poteva salvarsi, le direttive più feroci furono in parte disapprovate a Parigi, e il termine, coniato dal diritto internazionale del Novecento, rischia di misurare il passato con una categoria costruita per altro."
+      },
+      affermazioni:[
+        {testo:"Nell'agosto del 1793 la Convenzione decretò la distruzione della Vandea, ordinando l'abbattimento dei boschi, l'asportazione dei raccolti, la requisizione del bestiame e l'evacuazione degli abitanti non combattenti.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il tipo di direttiva su cui la Ristretta fonda la propria formulazione.",
+                 opposta:"l'Opposta non nega la durezza del decreto, ne contesta la qualificazione giuridica come genocidio."}},
+        {testo:"Chi deponeva le armi o si dichiarava repubblicano poteva salvarsi dalla repressione della Vandea.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Le direttive più feroci contro la Vandea furono in parte disapprovate a Parigi, e Carrier, uno dei comandanti responsabili, fu processato e giustiziato dai suoi stessi compagni.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il termine «genocidio» appartiene al diritto internazionale del Novecento, e applicarlo retroattivamente rischia di misurare il passato con una categoria costruita per altro.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto a chi usa il termine.",
+                 ristretta:"la Ristretta evita di usare la parola in modo assoluto, parlando di \"violenza sistematica\"."}},
+        {testo:"Alcuni comandanti scrissero relazioni in cui si vantavano di aver sterminato popolazioni.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"mette pressione sull'idea che la repressione colpisse solo un territorio insorto e non una popolazione in quanto tale."}}
+      ]
+    },
+    {
+      capitolo:"La Repubblica, il Terrore, il Direttorio",
+      titolo:"Il Direttorio doveva finire con un generale?",
+      formulazioni:{
+        partenza:"Il Direttorio era destinato a cadere per mano di un generale, perché la sua costituzione non prevedeva alcun modo legale di risolvere il conflitto tra esecutivo e camere e lasciava all'esercito l'unica forza capace di dirimerlo.",
+        ristretta:"Il vizio di costruzione della costituzione del 1795, che non prevedeva alcun modo legale di risolvere un conflitto fra esecutivo e camere, rese sistematico e crescente il ricorso ai militari nei momenti di scontro istituzionale, anche se questo non basta da solo a dimostrare che l'esito con un generale fosse l'unico possibile.",
+        opposta:"Il Direttorio non era destinato a cadere per mano di un generale: aveva stabilizzato la moneta, riorganizzato l'amministrazione, chiuso o vinto alcune guerre, le elezioni continuavano a tenersi e nell'estate del 1799 la situazione militare stava migliorando; brumaio riuscì per un soffio, dopo una giornata gestita male, e un esito che dipende da un'improvvisazione non era iscritto nelle premesse."
+      },
+      affermazioni:[
+        {testo:"In quattro anni il ricorso ai militari per risolvere conflitti istituzionali fu sistematico e crescente, e la guerra rese i generali finanziariamente indispensabili.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il dato su cui la Ristretta si fonda."}},
+        {testo:"Nell'estate del 1799 la situazione militare del Direttorio stava migliorando, non peggiorando.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riguarda il vizio strutturale, non la congiuntura militare del 1799."}},
+        {testo:"Il colpo di Stato di brumaio riuscì per un soffio, dopo una giornata gestita male, e se i granatieri non fossero entrati nell'aula la storia successiva sarebbe stata diversa.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta non sostiene che l'esito con un generale fosse inevitabile in ogni dettaglio."}},
+        {testo:"Il colpo di Stato di brumaio fu il quinto tentativo di risoluzione extralegale di un conflitto istituzionale in quattro anni di Direttorio.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"è il punto cieco riconosciuto alla lettura contingente: la ripetizione sistematica rende poco plausibile trattarlo come un caso isolato."}},
+        {testo:"Il Direttorio stabilizzò la moneta dopo il disastro degli assegnati, riorganizzò l'amministrazione, e le elezioni continuarono regolarmente a tenersi.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riguarda la gestione dei conflitti tra poteri, non il bilancio complessivo dell'azione di governo."}}
+      ]
+    },
+    {
+      capitolo:"L'Europa di Napoleone",
+      titolo:"Napoleone esportò la Rivoluzione o costruì un dominio?",
+      formulazioni:{
+        partenza:"Il sistema napoleonico diffuse in Europa i risultati irreversibili della Rivoluzione francese, lasciando istituzioni che sopravvissero alla caduta dell'Impero.",
+        ristretta:"Il sistema napoleonico diffuse in alcuni territori europei istituzioni della Rivoluzione francese, l'abolizione della feudalità, il Codice civile, le amministrazioni uniformi, che vi sopravvissero alla Restaurazione, senza che questo implichi che l'intero progetto napoleonico fosse guidato dall'intenzione di esportare quei principi piuttosto che di costruire un dominio imperiale.",
+        opposta:"Il sistema napoleonico non esportò la Rivoluzione ma costruì un dominio imperiale che usò il linguaggio dei principi: le riforme non furono mai sottoposte a chi le riceveva, le contribuzioni e la coscrizione trasferirono risorse e uomini verso la Francia, i troni furono distribuiti a parenti, Venezia fu ceduta come merce di scambio, e nel 1802 fu ripristinata la schiavitù."
+      },
+      affermazioni:[
+        {testo:"Dove arrivarono i francesi la feudalità fu abolita, e non tornò nemmeno dopo il 1815.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è l'esempio su cui la Ristretta si fonda.",
+                 opposta:"l'Opposta non nega necessariamente questo esito duraturo, sposta l'attenzione sulla natura impositiva del processo."}},
+        {testo:"Nel 1802 Napoleone ripristinò la schiavitù, revocando l'estensione più ampia di cittadinanza che la Rivoluzione avesse compiuto.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza.",
+                 ristretta:"la Ristretta non sostiene che l'intero progetto napoleonico fosse guidato dall'intenzione di esportare i principi rivoluzionari."}},
+        {testo:"Nessun territorio poté scegliere se accettare le riforme napoleoniche, che non furono mai sottoposte a chi le riceveva.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Migliaia di funzionari e giuristi formatisi nelle istituzioni napoleoniche restarono a lavorare nelle stesse amministrazioni sotto i sovrani restaurati dopo il 1815.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"è il punto cieco riconosciuto alla lettura del dominio."}},
+        {testo:"Le contribuzioni, le requisizioni e il blocco continentale trasferirono risorse verso la Francia in modo sistematico, e i troni furono distribuiti a parenti dell'imperatore.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"L'Europa di Napoleone",
+      titolo:"I plebisciti napoleonici erano consultazioni?",
+      formulazioni:{
+        partenza:"I plebisciti napoleonici furono finzioni che non misuravano un'opinione ma la manifestavano imponendola.",
+        ristretta:"Il voto non segreto, l'amministrazione prefettizia interessata al risultato e una domanda che non ammetteva alternative resero i plebisciti napoleonici strumenti che manifestavano più che misurare un'opinione, almeno per la parte dell'elettorato che si sentiva sotto osservazione, senza che questo cancelli il significato dell'astensione libera di chi non votò.",
+        opposta:"I plebisciti napoleonici, pur con cifre gonfiate, registrarono qualcosa di reale: l'astensione, altissima, era libera e non punita, e non c'è ragione di credere che una consultazione pienamente libera avrebbe rovesciato l'esito, almeno fino al 1810."
+      },
+      affermazioni:[
+        {testo:"Nei plebisciti napoleonici il voto non era segreto: i registri erano aperti nelle sedi pubbliche, e chi votava no lo faceva sotto il proprio nome.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il dato su cui la Ristretta si fonda."}},
+        {testo:"L'astensione ai plebisciti napoleonici, pur altissima, era libera e non punita: chi non voleva approvare poteva restare a casa senza conseguenze.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riconosce già esplicitamente questo dato."}},
+        {testo:"La domanda posta nei plebisciti non ammetteva alternative: non si sceglieva fra due opzioni, ma si approvava o si disapprovava l'esistente.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"In un contesto in cui il dissenso era visibile e la polizia efficiente, astenersi era già la forma prudente di dire no, e non equivaleva a indifferenza.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura che considera le cifre autentiche."}},
+        {testo:"Non c'è ragione di credere che una consultazione pienamente libera avrebbe rovesciato l'esito dei plebisciti napoleonici, almeno fino al 1810.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sui vizi procedurali, senza esprimersi su un ipotetico esito alternativo."}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle([0,1,2,3,4]);
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su 5 affermazioni totali).';
+    } else if(answered<5){
+      verifyHint.textContent=answered+' su 5 classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e 5 classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

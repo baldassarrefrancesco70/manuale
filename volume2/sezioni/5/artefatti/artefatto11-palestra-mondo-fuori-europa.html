@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Il mondo fuori dall'Europa &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Dodici nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai nodi storiografici della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "Le tredici colonie e le ragioni dell'indipendenza":"#6b5545",
+    "Gli Stati Uniti dalle origini alla guerra di secessione":"#b0872e",
+    "Schiavitù, Haiti e colonialismo":"#9d4a2b",
+    "Dal colonialismo all'imperialismo di fine Ottocento":"#3d5566",
+    "Due casi: India britannica ed Etiopia":"#5c6b3d",
+    "Il Giappone Meiji":"#6d4c6b"
+  };
+  var CAPORDER = ["Le tredici colonie e le ragioni dell'indipendenza","Gli Stati Uniti dalle origini alla guerra di secessione","Schiavitù, Haiti e colonialismo","Dal colonialismo all'imperialismo di fine Ottocento","Due casi: India britannica ed Etiopia","Il Giappone Meiji"];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"Le tredici colonie e le ragioni dell'indipendenza",
+      titolo:"Che cosa mosse davvero i coloni: principi o interessi?",
+      formulazioni:{
+        partenza:"I coloni americani si ribellarono alla Corona britannica perché autenticamente persuasi di una minaccia tirannica reale, radicata in una cultura politica whig radicale ereditata dall'Inghilterra del Seicento, e non per calcolo di interesse economico.",
+        ristretta:"In una parte significativa dei coloni, specie nelle fasi iniziali della protesta contro le tasse britanniche, la ribellione nacque da un'autentica persuasione ideologica di una minaccia tirannica radicata nella cultura whig radicale, più che da un calcolo di interesse economico.",
+        opposta:"I coloni americani si ribellarono alla Corona britannica non per un'autentica minaccia tirannica percepita, ma perché la retorica dei diritti naturali rivestiva interessi materiali concreti, di mercanti danneggiati dal monopolio commerciale britannico e di speculatori terrieri bloccati dalla Royal Proclamation del 1763, che trovarono nei principi enunciati una giustificazione a posteriori."
+      },
+      affermazioni:[
+        {testo:"Le tasse britanniche contestate erano, in proporzione, modeste, ma furono percepite come il primo passo di un disegno più ampio di asservimento.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"mostra che la reazione non è spiegabile dal peso economico della tassa in sé, ma dalla percezione ideologica di una minaccia.",
+                 ristretta:"coincide con la fase iniziale della protesta a cui la Ristretta si riferisce esplicitamente.",
+                 opposta:"indebolisce l'idea che il movente fosse un danno economico concreto."}},
+        {testo:"I mercanti coloniali erano danneggiati dal monopolio commerciale britannico, e gli speculatori terrieri erano bloccati dalla Royal Proclamation del 1763 nella loro espansione verso ovest.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"mostra interessi materiali concreti dietro la protesta.",
+                 ristretta:"la Ristretta parla di \"una parte significativa\" mossa da ideologia, senza escludere che altri gruppi, mercanti, speculatori, agissero per interesse; questo dato riguarda un sottoinsieme diverso.",
+                 opposta:"è esattamente l'evidenza su cui si fonda la lettura economica."}},
+        {testo:"Gli stessi coloni che invocavano diritti naturali inalienabili possedevano schiavi e occupavano terre sottratte alle popolazioni native, senza avvertire in questo alcuna contraddizione.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla lettura ideologica.",
+                 ristretta:"caso dubbio: non è chiaro se l'incoerenza morale documentata riguardi la parte di coloni a cui la Ristretta si riferisce o l'insieme dei coloni.",
+                 opposta:"mostra un'incoerenza morale, ma non prova di per sé che il vero movente fosse economico."}},
+        {testo:"Chi si ribellava alla Corona rischiava concretamente la vita, la proprietà e la posizione sociale, perché l'accusa di tradimento comportava la pena capitale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"un calcolo di puro interesse avrebbe suggerito la prudenza, non la rottura.",
+                 ristretta:"stesso argomento, applicato alla parte dei coloni a cui la Ristretta si riferisce.",
+                 opposta:"è il punto cieco che il nodo riconosce alla lettura economica."}},
+        {testo:"La cultura politica whig radicale, sospettosa per tradizione di ogni concentrazione di potere, era stata ereditata dai coloni dall'Inghilterra del Seicento.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il fondamento stesso della lettura di Bailyn.",
+                 ristretta:"stesso fondamento, con portata ridotta.",
+                 opposta:"contraddice l'idea che i principi fossero solo una veste retorica successiva."}}
+      ]
+    },
+    {
+      capitolo:"Le tredici colonie e le ragioni dell'indipendenza",
+      titolo:"La rivoluzione fu un processo condiviso, o anche un conflitto interno?",
+      formulazioni:{
+        partenza:"La rivoluzione americana fu un fronte sostanzialmente compatto, la società coloniale unita contro la madrepatria.",
+        ristretta:"Il movimento patriota riuscì a costruire, specialmente nei momenti decisivi dello scontro con la Gran Bretagna, una mobilitazione ampia e sostanzialmente compatta, sufficiente a reggere una guerra lunga otto anni, anche se non rappresentava l'intera società coloniale.",
+        opposta:"La rivoluzione americana non fu un fronte compatto contro la madrepatria, ma un processo attraversato da profonde fratture interne, tra patrioti e una consistente minoranza lealista, e tra le rivendicazioni economiche dei ceti popolari e degli agricoltori indebitati e gli interessi dei grandi mercanti e proprietari terrieri che guidavano il movimento."
+      },
+      affermazioni:[
+        {testo:"Secondo alcune stime, fino a un quinto della popolazione bianca delle colonie rimase lealista verso la Corona britannica.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"nega la compattezza totale del fronte coloniale.",
+                 ristretta:"è precisamente il dato che giustifica la clausola \"anche se non rappresentava l'intera società coloniale\".",
+                 opposta:"documenta una frattura interna reale."}},
+        {testo:"Chi protestava contro lo Stamp Act non condivideva necessariamente gli interessi dei grandi mercanti e proprietari terrieri che guidavano il movimento patriota, e in alcuni casi usò la crisi rivoluzionaria per rivendicazioni proprie contro creditori ed élite locali.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"mostra tensioni interne che vanno oltre la semplice esistenza di una minoranza lealista, mettendo pressione anche sulla \"sostanziale compattezza\" che la Ristretta rivendica."}},
+        {testo:"Il movimento patriota riuscì comunque a costruire una mobilitazione autenticamente ampia, che nei decenni successivi permise di reggere una guerra lunga otto anni.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il nucleo stesso della formulazione ristretta."}},
+        {testo:"Insistere sulla compattezza del fronte coloniale rischia di proiettare all'indietro un'unità nazionale che nel 1776 non esisteva ancora.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla lettura di partenza.",
+                 ristretta:"la Ristretta ammette già l'assenza di un'unità totale, quindi questa critica generale non aggiunge nulla a una tesi già qualificata."}}
+      ]
+    },
+    {
+      capitolo:"Gli Stati Uniti dalle origini alla guerra di secessione",
+      titolo:"La frontiera: scuola di libertà o motore di spossessamento?",
+      formulazioni:{
+        partenza:"La frontiera occidentale fu un laboratorio identitario che, nel confronto quotidiano con uno spazio non ancora incorporato nelle istituzioni, forgiò le virtù distintive dell'americano, autonomia, iniziativa individuale, attitudine democratica.",
+        ristretta:"Per i coloni bianchi della frontiera occidentale, il confronto quotidiano con uno spazio non ancora incorporato nelle istituzioni contribuì, insieme ad altri fattori, a rafforzare tratti di autonomia e iniziativa individuale, senza che questo basti a spiegare da solo l'intera identità nazionale americana.",
+        opposta:"La frontiera occidentale non fu un laboratorio di libertà, ma il motore di una sistematica rimozione forzata delle popolazioni indigene: la libertà dei coloni bianchi fu una libertà a somma zero, la cui estensione coincise punto per punto con la distruzione materiale e culturale delle comunità native."
+      },
+      affermazioni:[
+        {testo:"Il mito del self-made man, radicato nell'esperienza della frontiera, attraversò l'intera cultura politica statunitense successiva.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"la persistenza culturale del mito non prova né smentisce, da sola, che fosse fondato sullo spossessamento."}},
+        {testo:"L'estensione della libertà dei coloni bianchi nella frontiera coincise, punto per punto, con la distruzione materiale e culturale delle comunità indigene.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta parla solo del contributo alla formazione di tratti identitari nei coloni bianchi, senza negare, né avere bisogno di negare, il prezzo pagato da altri."}},
+        {testo:"Le popolazioni indigene venivano descritte nella retorica del tempo come «caos» o «male», per rendere accettabile la loro sottomissione come prerequisito del progresso civile.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Ridurre la frontiera al solo meccanismo dello spossessamento rischia di non spiegare perché il mito dell'autonomia individuale abbia avuto una presa così duratura e genuina sull'immaginazione di generazioni di americani.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla lettura critica."}},
+        {testo:"Per le popolazioni che già abitavano lo spazio della frontiera, quello spazio «libero» descritto da Turner era il luogo di una sistematica rimozione forzata.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si limita esplicitamente ai coloni bianchi."}}
+      ]
+    },
+    {
+      capitolo:"Gli Stati Uniti dalle origini alla guerra di secessione",
+      titolo:"Guerra di secessione: una guerra di Stati o una guerra di schiavitù?",
+      formulazioni:{
+        partenza:"La causa della secessione degli Stati confederati non fu la schiavitù, ma la difesa dei diritti degli Stati contro l'invasione del potere federale nelle proprie prerogative.",
+        ristretta:"Per una parte consistente dei soldati e dei cittadini del Sud che non possedevano schiavi, la secessione fu vissuta e giustificata come difesa dei diritti degli Stati contro l'invasione del potere federale, un principio con radici reali nel compromesso costituzionale del 1787, indipendentemente dalla difesa della schiavitù.",
+        opposta:"La causa della secessione degli Stati confederati fu la schiavitù: le stesse dichiarazioni di secessione approvate dagli Stati del Sud nel 1860-61 la citano esplicitamente e ripetutamente come motivo della rottura, mentre il linguaggio dei diritti degli Stati fu, in questo caso specifico, lo strumento retorico per proteggerla."
+      },
+      affermazioni:[
+        {testo:"Le dichiarazioni di secessione approvate dagli Stati del Sud nel 1860-61 citano esplicitamente e ripetutamente la tutela della schiavitù come causa della rottura.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riguarda la percezione soggettiva dei soldati senza schiavi, non il contenuto dei documenti politici ufficiali."}},
+        {testo:"Centinaia di migliaia di soldati sudisti che non possedevano schiavi imbracciarono comunque le armi in nome di un principio più ampio di sovranità statale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il fondamento stesso della Ristretta.",
+                 opposta:"il nodo non scioglie la tensione tra questo dato e il fatto che, applicato a questo caso, il principio di sovranità statale \"esisteva quasi esclusivamente per proteggere\" la schiavitù."}},
+        {testo:"Il linguaggio dei diritti degli Stati contro l'accentramento federale aveva radici reali nel compromesso costituzionale del 1787.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"mostra che il linguaggio non era inventato dal nulla, ma non stabilisce quale fosse la causa reale della secessione nel 1860-61."}},
+        {testo:"Il principio dei diritti degli Stati, applicato al caso della secessione del 1860-61, esisteva quasi esclusivamente per proteggere la schiavitù, e le fonti del tempo, quando parlavano apertamente, lo sapevano.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"indebolisce anche la versione ristretta, mostrando che il principio invocato era comunque strutturalmente legato alla schiavitù."}},
+        {testo:"La narrazione della «causa perduta» nacque nel dopoguerra come narrazione di riconciliazione, utile a ricostruire un'identità sudista non più fondata sulla difesa esplicita della schiavitù, divenuta indifendibile.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"riguarda l'origine postbellica della narrazione, non nega che una parte dei soldati la vivesse sinceramente durante il conflitto."}}
+      ]
+    },
+    {
+      capitolo:"Schiavitù, Haiti e colonialismo",
+      titolo:"La tratta fu il motore del capitalismo europeo, o una sua conseguenza?",
+      formulazioni:{
+        partenza:"I profitti della tratta atlantica e delle piantagioni caraibiche fornirono il capitale iniziale che rese possibile la rivoluzione industriale britannica.",
+        ristretta:"Il fatto che il sistema schiavista caraibico avesse iniziato a cessare di essere il più redditizio contribuì a rendere l'abolizione della tratta politicamente meno costosa per gli interessi economici britannici, un fattore che si affiancò, senza necessariamente sostituirle, alle convinzioni religiose e morali genuinamente radicate nel movimento abolizionista.",
+        opposta:"I profitti diretti della tratta atlantica rappresentarono una quota modesta, attorno all'uno per cento, del prodotto britannico, troppo piccola per spiegare da sola la rivoluzione industriale, che fu il risultato di molte cause contemporanee, dall'agricoltura al carbone alle innovazioni tecniche."
+      },
+      affermazioni:[
+        {testo:"I profitti diretti della tratta atlantica rappresentavano una quota modesta, attorno all'uno per cento, del prodotto britannico complessivo.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"riguarda il finanziamento del decollo industriale, non il movente dell'abolizione, oggetto della Ristretta."}},
+        {testo:"I capitali che finanziarono le prime banche e compagnie assicurative di Liverpool e Bristol contarono per la funzione decisiva che svolsero in un momento chiave, non per la loro percentuale sul prodotto totale.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il movimento abolizionista britannico era genuinamente radicato in convinzioni religiose e morali.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"riguarda il movente dell'abolizione, non il finanziamento del decollo industriale.",
+                 ristretta:"è testualmente incorporato nella formulazione ristretta (\"si affiancò... alle convinzioni religiose e morali genuinamente radicate\")."}},
+        {testo:"Secondo Williams, il sistema schiavista caraibico aveva iniziato a cessare di essere il più redditizio nel momento in cui la schiavitù fu abolita.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{partenza:"riguarda il movente dell'abolizione, non il finanziamento del decollo industriale.",
+                 opposta:"l'Opposta, così come formulata, contesta la quota di PIL legata al finanziamento, non il movente dell'abolizione."}},
+        {testo:"Dare per scontato che le convinzioni morali non muovano mai la politica è un assunto, non un risultato di ricerca dimostrato.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"rinforza l'esigenza, incorporata nella Ristretta, di non escludere le convinzioni morali."}}
+      ]
+    },
+    {
+      capitolo:"Schiavitù, Haiti e colonialismo",
+      titolo:"Perché la rivoluzione haitiana è stata dimenticata?",
+      formulazioni:{
+        partenza:"L'oblio della rivoluzione haitiana nella storiografia occidentale non fu un caso di semplice disattenzione, ma il prodotto dell'impossibilità concettuale, per i contemporanei europei, di pensare come evento storico una rivoluzione vittoriosa di schiavi.",
+        ristretta:"Per la cultura intellettuale europea del primo Ottocento, plasmata dal quadro concettuale illuminista, una rivoluzione vittoriosa di schiavi risultò difficile da pensare come evento storico, un ostacolo cognitivo che contribuì, in quella fase, al progressivo oscuramento di Haiti nei racconti successivi.",
+        opposta:"L'oblio della rivoluzione haitiana non fu il prodotto di un'impossibilità concettuale, ma di cause più prosaiche, la piccola dimensione del paese, il suo isolamento diplomatico dopo il 1804, l'ostracismo economico impostogli dalle potenze schiaviste, che spiegano perché sia stata dimenticata come vengono dimenticati i paesi piccoli e poveri."
+      },
+      affermazioni:[
+        {testo:"L'ostracismo economico imposto ad Haiti dalle potenze schiaviste, che ne temevano l'esempio, contribuì al suo isolamento diplomatico dopo il 1804.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è compatibile con un ostacolo concettuale concomitante, sposta solo l'enfasi su cause pratiche."}},
+        {testo:"Il silenzio storiografico su Haiti non riguardò in modo uguale altre vicende di paesi piccoli e poveri, e durò a lungo anche quando le condizioni diplomatiche erano cambiate.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"è il punto cieco che il nodo riconosce alla lettura delle «cause prosaiche»."}},
+        {testo:"Spiegare l'oblio di Haiti con un ostacolo concettuale rischia di renderlo troppo automatico e inevitabile, sottraendolo alle scelte concrete di chi scriveva i manuali.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza stessa."}},
+        {testo:"La piccola dimensione del paese e il suo isolamento diplomatico dopo il 1804 sono cause concrete e verificabili.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"non esclude che accanto a queste cause pratiche operasse anche un ostacolo cognitivo."}},
+        {testo:"La storia scritta segue di norma la potenza degli Stati che la producono, e Haiti sarebbe stata dimenticata come vengono dimenticati i paesi piccoli e poveri.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Dal colonialismo all'imperialismo di fine Ottocento",
+      titolo:"L'imperialismo fu una necessità economica o una scelta politica?",
+      formulazioni:{
+        partenza:"L'imperialismo di fine Ottocento fu una necessità del capitalismo maturo, la risposta strutturale al sottoconsumo interno e all'eccedenza di capitali che le economie industriali dovevano esportare per continuare a funzionare.",
+        ristretta:"In alcune fasi e per alcune potenze europee, l'espansione coloniale rispose effettivamente a un bisogno di collocare capitali eccedenti prodotti dalla maturazione del sistema industriale, anche se questo non descrive la generalità del fenomeno imperialista di fine Ottocento.",
+        opposta:"L'imperialismo di fine Ottocento non fu una necessità economica del capitalismo maturo, ma il prodotto di fattori politici, il prestigio internazionale, la competizione tra Stati, il bisogno di consenso interno, dato che le colonie acquisite dopo il 1870 attrassero scarsi investimenti e resero poco."
+      },
+      affermazioni:[
+        {testo:"Le colonie acquisite dopo il 1870 attrassero scarsi investimenti e resero poco; il capitale europeo continuò a fluire prevalentemente verso altri paesi industrializzati e verso le colonie di popolamento bianco.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette già che il meccanismo economico non vale \"per la generalità del fenomeno\"; questo dato generale è compatibile con quella concessione."}},
+        {testo:"Il fenomeno imperialista comparve in tutta Europa in un momento di prestigio internazionale crescente, competizione tra Stati e bisogno di consenso interno.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La lettura politica dell'imperialismo rischia di separare il prestigio internazionale dalle strutture economiche che lo rendevano desiderabile, come se la competizione tra Stati industriali fosse indipendente dalla trasformazione produttiva in corso.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura politica."}},
+        {testo:"Se l'imperialismo era la soluzione a un problema di collocamento dei capitali eccedenti, fu una soluzione che non funzionò nei fatti, e tuttavia continuò nonostante non funzionasse.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta già concede che il meccanismo non valga in generale; questo dato non aggiunge nulla al nucleo più circoscritto che difende."}},
+        {testo:"Trattare l'imperialismo come una necessità economica significa dedurre le intenzioni degli attori storici dai risultati che le colonie avrebbero dovuto produrre, non da quello che realmente accadde.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura economica.",
+                 ristretta:"colpisce soprattutto la versione generale della tesi, non il nucleo più cauto della Ristretta."}}
+      ]
+    },
+    {
+      capitolo:"Dal colonialismo all'imperialismo di fine Ottocento",
+      titolo:"Il colonialismo ha modernizzato i territori colonizzati?",
+      formulazioni:{
+        partenza:"Il colonialismo, costruendo ferrovie, porti, ospedali, scuole e apparati amministrativi nei territori occupati, produsse per le società colonizzate un bilancio complessivamente positivo che ne accelerò lo sviluppo.",
+        ristretta:"In alcuni contesti coloniali specifici, le infrastrutture costruite dalle potenze europee, ferrovie, porti, ospedali, scuole, apparati amministrativi, contribuirono in una certa misura allo sviluppo locale, senza che questo permetta di generalizzare un bilancio complessivamente positivo per l'insieme dei territori colonizzati.",
+        opposta:"Il colonialismo non modernizzò i territori colonizzati, ma li strutturò per servire un centro esterno: le ferrovie collegavano le zone di estrazione ai porti di imbarco anziché le regioni tra loro, e la riconversione delle economie alla monocoltura da esportazione le rese dipendenti da mercati e prezzi decisi altrove, in un passaggio dalla povertà al sottosviluppo."
+      },
+      affermazioni:[
+        {testo:"Le ferrovie coloniali collegavano tipicamente le zone di estrazione ai porti di imbarco, non le regioni del territorio colonizzato tra loro: erano progettate per portare fuori, non per far circolare dentro.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"un disegno pensato per l'estrazione non esclude in modo netto benefici locali incidentali, e il nodo non chiarisce come pesare i due aspetti."}},
+        {testo:"La riconversione delle economie coloniali alla monocoltura da esportazione le rese dipendenti da mercati e prezzi decisi altrove.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"contraddice l'idea di un contributo, anche modesto, allo sviluppo locale."}},
+        {testo:"Le potenze coloniali costruirono, nei territori occupati, ferrovie, porti, ospedali, scuole e apparati amministrativi: opere reali e documentate.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"l'Opposta non nega l'esistenza di queste opere, ne contesta il disegno e la funzione."}},
+        {testo:"Descrivere le società colonizzate come oggetti passivi di una struttura imposta rischia di cancellare la capacità di iniziativa di chi vi viveva, comprese le élite che usarono gli strumenti dei colonizzatori per contestarne il dominio.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura critica."}},
+        {testo:"Una ragione per cui la lettura modernizzatrice ha avuto tanta presa è che offre alle società ex coloniali un bilancio complessivo con cui è più comodo convivere.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"è un'osservazione sull'appeal della lettura, non una prova sui fatti storici."}}
+      ]
+    },
+    {
+      capitolo:"Due casi: India britannica ed Etiopia",
+      titolo:"Le carestie indiane furono un disastro naturale o una conseguenza politica?",
+      formulazioni:{
+        partenza:"Le grandi carestie dell'India ottocentesca furono prodotte da cause naturali e strutturali, la siccità ricorrente del regime dei monsoni, la sovrappopolazione, l'arretratezza dei sistemi agricoli, che l'amministrazione britannica fronteggiò con i mezzi limitati disponibili.",
+        ristretta:"Almeno alcune delle carestie indiane ottocentesche, specie quelle legate ai periodi di siccità più severa, ebbero un'origine in gran parte climatica e strutturale, che l'amministrazione britannica fronteggiò con mezzi oggettivamente limitati.",
+        opposta:"Le grandi carestie dell'India ottocentesca furono prodotte da politiche precise dell'amministrazione britannica, il fiscalismo monetario che spinse i contadini verso l'indebitamento, la conversione delle terre a colture da esportazione, la scelta di non interrompere le esportazioni di grano durante le crisi in nome del dogma liberista, non da cause naturali."
+      },
+      affermazioni:[
+        {testo:"L'amministrazione britannica scelse di non interrompere le esportazioni di grano dall'India durante le crisi di carestia, in nome di una dottrina liberista che considerava l'intervento pubblico sui mercati un errore.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"contraddice l'idea che l'amministrazione abbia \"fronteggiato con mezzi oggettivamente limitati\" un problema puramente climatico: qui la scelta fu attiva, non un limite subito."}},
+        {testo:"Amartya Sen ha mostrato che le grandi carestie moderne non dipendono di norma dall'assenza fisica di cibo, ma dal collasso della capacità di accedervi.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La siccità legata al regime dei monsoni è un fatto climatico verificabile che colpì ricorrentemente l'India ottocentesca.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"l'Opposta non nega l'innesco climatico, sposta l'attenzione sulle politiche che lo trasformarono in carestia di massa."}},
+        {testo:"La scomparsa dei margini di sicurezza alimentare che per secoli avevano assorbito le crisi di siccità fu essa stessa un fatto politico, non naturale.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura tradizionale."}},
+        {testo:"Gli amministratori britannici che si rifiutarono di bloccare le esportazioni di grano non volevano la morte dei contadini indiani, ma credevano che l'interferenza sui mercati avrebbe peggiorato la situazione.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"confuta"},
+         perche:{partenza:"le intenzioni degli amministratori non stabiliscono da sole se la causa fosse climatica o politica.",
+                 opposta:"è il punto cieco che il nodo riconosce alla lettura politica: rischia di leggere come intenzione ciò che fu conseguenza non voluta di una dottrina."}}
+      ]
+    },
+    {
+      capitolo:"Due casi: India britannica ed Etiopia",
+      titolo:"Adua fu un'eccezione o la prova di una possibilità?",
+      formulazioni:{
+        partenza:"La vittoria etiope di Adua nel 1896 dimostrò che la resistenza africana alla conquista coloniale europea era possibile, e che il dominio coloniale non fu subito passivamente ma combattuto.",
+        ristretta:"La vittoria etiope di Adua nel 1896 dimostrò che, in almeno un caso, la resistenza africana alla conquista coloniale europea poté avere successo, offrendo alla cultura panafricana successiva la prova che il dominio coloniale non fu ovunque subito passivamente.",
+        opposta:"Adua fu un'eccezione le cui condizioni, uno Stato già centralizzato, un armamento moderno, un terreno favorevole, la più debole delle potenze coloniali come avversario, furono troppo particolari per essere replicabili altrove, dove infatti la resistenza fu tentata e schiacciata, dal Sudan mahdista all'Africa sud-occidentale tedesca."
+      },
+      affermazioni:[
+        {testo:"L'Etiopia disponeva già di uno Stato centralizzato e di un armamento moderno, acquistato sfruttando la concorrenza tra le potenze europee, e affrontò la più debole delle potenze coloniali su un terreno favorevole.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta parla già di \"almeno un caso\", quindi la specificità delle condizioni etiopi non la contraddice."}},
+        {testo:"Altrove la resistenza africana fu tentata e schiacciata, dal Sudan mahdista all'Africa sud-occidentale tedesca.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"basta un caso a \"dimostrare la possibilità\"; la tesi di partenza non nega che altrove si sia fallito."}},
+        {testo:"Adua ebbe grande importanza nella cultura panafricana del Novecento, dove divenne un simbolo, correggendo una storiografia coloniale che raccontava la spartizione dell'Africa come processo privo di antagonisti.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"il valore simbolico di Adua non decide se le sue condizioni fossero replicabili altrove."}},
+        {testo:"Concentrarsi sulle condizioni particolari che resero possibile la vittoria etiope rischia di far scomparire le resistenze sconfitte altrove.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura dell'eccezione."}},
+        {testo:"Trasformare un caso irripetibile come Adua in prova di una possibilità generale rischia di suggerire che, dove la conquista riuscì, fu perché la resistenza fu insufficiente, un giudizio ingeneroso verso chi combatté e perse contro forze superiori.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza.",
+                 ristretta:"la Ristretta, limitandosi ad \"almeno un caso\" senza generalizzare, evita esplicitamente l'obiezione mossa a questo punto cieco."}}
+      ]
+    },
+    {
+      capitolo:"Il Giappone Meiji",
+      titolo:"Il Giappone Meiji fu una modernizzazione o una conservazione riuscita?",
+      formulazioni:{
+        partenza:"La trasformazione Meiji fu una modernizzazione autentica, l'unico caso in cui un paese extraeuropeo colmò il divario con l'Occidente senza esserne colonizzato e senza pagarne il prezzo di dipendenza economica.",
+        ristretta:"L'abolizione del sistema feudale, l'uguaglianza giuridica e la coscrizione universale introdotte dal Giappone Meiji furono trasformazioni reali che cambiarono la vita di milioni di persone, anche senza che questo implichi un giudizio complessivo sulla natura dell'intero processo politico.",
+        opposta:"Il Meiji non fu una modernizzazione ma una conservazione riuscita: fu la stessa oligarchia del vecchio ordine, a partire dai samurai, a guidare il processo e a uscirne rafforzata, mantenendo il potere effettivo fuori dal controllo parlamentare e mobilitando i meccanismi tradizionali di obbedienza, culto imperiale ed educazione, proprio per impedire che la modernizzazione producesse una società politicamente autonoma."
+      },
+      affermazioni:[
+        {testo:"I samurai persero i propri privilegi giuridici, ma convertirono la propria ricchezza in capitale industriale e finanziario, mantenendo il controllo del paese in forme nuove.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si limita alle riforme, abolizione del feudalesimo, uguaglianza giuridica, coscrizione, senza esprimersi sulla natura complessiva del potere politico."}},
+        {testo:"La Costituzione del 1889 lasciò il potere effettivo a un gruppo ristretto non responsabile davanti al parlamento.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"L'abolizione del sistema feudale, l'uguaglianza giuridica e la coscrizione universale furono trasformazioni reali che cambiarono la vita di milioni di persone, non semplici facciate.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il nucleo stesso della formulazione ristretta.",
+                 opposta:"l'Opposta non nega queste riforme, contesta il giudizio complessivo sul regime."}},
+        {testo:"Misurare la modernizzazione giapponese con indicatori come i chilometri di ferrovia, l'alfabetizzazione e la produzione industriale significa accettare la stessa definizione di progresso con cui l'Europa misurava se stessa.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura modernizzatrice.",
+                 ristretta:"la Ristretta non fa leva su indicatori quantitativi aggregati, ma sul cambiamento concreto prodotto da riforme specifiche."}},
+        {testo:"Il modello di trasformazione dal basso a cui si contrappone la lettura critica del Meiji non fu realizzato nella sua forma pura da quasi nessun paese, incluso nessuno di quelli europei.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura della conservazione riuscita."}}
+      ]
+    },
+    {
+      capitolo:"Il Giappone Meiji",
+      titolo:"Chi ha scritto la storia del secolo del progresso?",
+      formulazioni:{
+        partenza:"Il linguaggio dei diritti, una volta enunciato dalle potenze occidentali, non restò sotto il loro controllo e poté essere impugnato da chiunque ne fosse escluso, a dimostrazione che la posizione di chi subisce la storia non è mai definitiva.",
+        ristretta:"In alcuni casi circoscritti, Haiti, il Congresso Nazionale Indiano, il Giappone Meiji, il linguaggio dei diritti enunciato dalle potenze occidentali fu impugnato con successo da chi ne era escluso, senza che questi casi bastino a stabilire una regola generale sulla capacità di iniziativa di chi subisce la storia.",
+        opposta:"Il linguaggio dei diritti non incrinò il sistema che lo aveva prodotto, ma ne fece parte: le rivendicazioni che riuscirono furono poche e pagate a prezzi altissimi, e in almeno un caso, quello giapponese, il successo consistette nel passare dal lato di chi domina, non nell'abolire il dominio."
+      },
+      affermazioni:[
+        {testo:"Per ogni Haiti ci sono decine di rivolte schiacciate, e per ogni Adua le resistenze cancellate del Sudan mahdista e dell'Africa sud-occidentale tedesca.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette già esplicitamente che i casi riusciti sono circoscritti e non costituiscono una regola generale."}},
+        {testo:"Il successo giapponese nel Meiji consistette nel passare dal lato di chi domina, non nell'abolire il dominio come sistema.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"indebolisce l'idea che l'iniziativa di chi era escluso incrini davvero il sistema.",
+                 ristretta:"la Ristretta parla di linguaggio dei diritti \"impugnato con successo\", compatibile con questo esito, che non affronta esplicitamente."}},
+        {testo:"Haiti rivendicò lo stesso principio di uguaglianza contro chi lo aveva scritto per primo.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"un singolo caso non decide da solo il bilancio complessivo che l'Opposta contesta."}},
+        {testo:"In India, l'amministrazione britannica produsse l'élite del Congresso Nazionale Indiano, che avrebbe poi contestato il dominio straniero con le stesse parole del linguaggio occidentale dei diritti.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Chi insiste sulla struttura rischia di trattare come inefficaci rivendicazioni che hanno cambiato la vita di milioni di persone, e di ridurre a comparse gli attori extraeuropei, ripetendo in forma critica lo stesso gesto della storiografia coloniale che intende correggere.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla lettura strutturale."}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    var n=NODI[i];
+    state.order=shuffle(n.affermazioni.map(function(_,idx){ return idx; }));
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    var total=n.affermazioni.length;
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su '+total+' affermazioni totali).';
+    } else if(answered<total){
+      verifyHint.textContent=answered+' su '+total+' classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e '+total+' classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

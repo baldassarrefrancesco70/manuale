@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce l'Italia &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Nove nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai nodi storiografici della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "L'Italia napoleonica e la Restaurazione":"#b0872e",
+    "Il dibattito sull'unità e la prova del 1848":"#9d4a2b",
+    "Cavour e la costruzione del Regno":"#3d5566",
+    "I problemi dello Stato unitario e la Destra storica":"#5c6b3d",
+    "Gli anni della Sinistra storica":"#6d4c6b",
+    "L'età crispina e la crisi di fine secolo":"#4a7a7a"
+  };
+  var CAPORDER = ["L'Italia napoleonica e la Restaurazione","Il dibattito sull'unità e la prova del 1848","Cavour e la costruzione del Regno","I problemi dello Stato unitario e la Destra storica","Gli anni della Sinistra storica","L'età crispina e la crisi di fine secolo"];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"L'Italia napoleonica e la Restaurazione",
+      titolo:"Chi combatteva contro i francesi, e in nome di che cosa?",
+      formulazioni:{
+        partenza:"Le insorgenze antifrancesi del 1796-1815 furono una reazione di masse rurali analfabete, mobilitate dal clero e dai signori locali contro il proprio interesse oggettivo.",
+        ristretta:"In molte aree rurali dell'Italia napoleonica, la mobilitazione contro requisizioni, coscrizione obbligatoria, tasse e vendita dei beni ecclesiastici fu alimentata dal clero e dai signori locali, che incanalarono un malcontento reale verso obiettivi lontani dal proprio interesse oggettivo di lungo periodo, senza che questo dato basti a spiegare la scala complessiva del fenomeno in tutte le regioni coinvolte.",
+        opposta:"Le insorgenze antifrancesi del 1796-1815 furono il primo movimento di massa della storia italiana moderna, una resistenza popolare a un'occupazione straniera cancellata dal racconto risorgimentale perché scomoda, non una manipolazione: nessuna manovra del clero o dei signori locali avrebbe potuto mobilitare centinaia di migliaia di uomini in regioni diversissime senza motivazioni, requisizioni, coscrizione, tasse, vendita dei beni ecclesiastici, profanazione di luoghi e riti, che quegli uomini riconoscevano come proprie."
+      },
+      affermazioni:[
+        {testo:"Il contadino che gridava «Viva Maria» non era, secondo la lettura reazionaria, un soggetto politico, ma un soggetto manipolato dal clero e dai signori locali.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Mobilitare centinaia di migliaia di uomini in regioni diversissime richiede motivazioni che quegli uomini riconoscessero come proprie: requisizioni, coscrizione obbligatoria, tasse, vendita dei beni ecclesiastici, profanazione di luoghi e riti.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla lettura reazionaria.",
+                 ristretta:"la Ristretta ammette già di non spiegare \"la scala complessiva del fenomeno in tutte le regioni\"."}},
+        {testo:"Chi insorgeva contro i francesi non difendeva l'Italia, che non era ancora un soggetto politico per nessuno, ma la propria parrocchia, il proprio calendario, il proprio pascolo comune.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è compatibile con la lettura reazionaria: la difesa di interessi locali è coerente con l'idea di manipolazione su obiettivi lontani dall'interesse di lungo periodo.",
+                 ristretta:"è precisamente l'obiezione su cui la Ristretta si fonda per non parlare di \"resistenza nazionale\".",
+                 opposta:"è il punto cieco che il nodo riconosce alla lettura resistenziale."}},
+        {testo:"La lettura resistenziale nacque a partire dagli anni Novanta del Novecento, in ambienti di orientamento cattolico e controrivoluzionario.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"è un dato sull'origine storiografica della lettura, non sui fatti del 1796-1815."}},
+        {testo:"Le insorgenze erano effettivamente scomparse dai manuali di storia prima che la lettura resistenziale le riportasse all'attenzione.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Il dibattito sull'unità e la prova del 1848",
+      titolo:"Il federalismo di Cattaneo era una strada percorribile?",
+      formulazioni:{
+        partenza:"Il federalismo repubblicano di Cattaneo era una strada politicamente percorribile per l'unificazione italiana, radicata nella tradizione comunale, in una geografia economica realmente differenziata e in classi dirigenti locali già abituate ad amministrare.",
+        ristretta:"Il federalismo di Cattaneo aveva radici reali nella tradizione comunale e in una geografia economica differenziata, come mostra la proposta di ordinamento regionale di Minghetti nel 1861, respinta da una scelta politica e non da un'impossibilità materiale, anche se questo non dimostra che il progetto federalista avesse, nel 1848 o nel 1859, la forza organizzativa per imporsi contro il Piemonte.",
+        opposta:"Il federalismo di Cattaneo era un'illusione: non ebbe mai un esercito, né un alleato internazionale, né una rete organizzata oltre i confini lombardi, e nel 1848, quando Milano insorta poté decidere del proprio destino, il partito federalista non riuscì nemmeno a impedire l'annessione al Piemonte nella propria città, nel momento più favorevole che avrebbe mai avuto."
+      },
+      affermazioni:[
+        {testo:"Nel 1861 Marco Minghetti, uno dei capi della Destra e non un oppositore, propose un ordinamento regionale, che fu respinto da una scelta politica, non da un'impossibilità materiale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il dato su cui la Ristretta fonda la propria formulazione."}},
+        {testo:"Il federalismo di Cattaneo non ebbe mai un esercito, né un alleato internazionale, né una rete organizzata che superasse i confini lombardi.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette già di non poter dimostrare la forza organizzativa del federalismo nel 1848 o nel 1859."}},
+        {testo:"Nel 1859 l'alternativa concreta al Piemonte non era una federazione di repubbliche italiane, ma la permanenza dell'egemonia austriaca sulla penisola.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce a chi considera il federalismo un'illusione."}},
+        {testo:"Nel 1848, quando Milano insorta ebbe la possibilità di decidere del proprio destino, il partito federalista non riuscì a impedire l'annessione al Piemonte nella propria città, nel momento più favorevole che avrebbe mai avuto.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Usare l'esito finale come prova, poiché il federalismo perse, non poteva vincere, è il ragionamento retrospettivo contro cui l'intera sezione mette in guardia fin dall'inizio.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla lettura dell'illusione."}}
+      ]
+    },
+    {
+      capitolo:"Il dibattito sull'unità e la prova del 1848",
+      titolo:"Mazzini: visionario o utopista?",
+      formulazioni:{
+        partenza:"Il dogmatismo ideologico di Mazzini fu la causa principale dei fallimenti del movimento democratico risorgimentale.",
+        ristretta:"In alcune delle imprese insurrezionali che promosse direttamente, il rigido attaccamento di Mazzini ai propri principi, l'insurrezione dal basso come unica via legittima, il rifiuto di ogni compromesso tattico, contribuì agli insuccessi del movimento democratico, senza che questo giudizio si estenda necessariamente all'intera parabola del mazzinianesimo o alle sue idee più lungimiranti.",
+        opposta:"Il movimento democratico risorgimentale non fallì per il dogmatismo ideologico di Mazzini: la sua visione dell'educazione popolare, dell'insurrezione dal basso e dell'Europa dei popoli anticipò problemi che l'unificazione cavouriana avrebbe lasciato irrisolti, ed è per questo che la tradizione democratica e repubblicana lo riconobbe come il vero padre spirituale dell'Italia unita."
+      },
+      affermazioni:[
+        {testo:"Per i suoi contemporanei moderati, e per Cavour in particolare, Mazzini era un agitatore pericoloso, le cui imprese contribuivano a destabilizzare senza costruire.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Per la tradizione democratica e repubblicana, Mazzini fu il vero padre spirituale dell'Italia unita, anche se non riuscì a realizzarla nella forma in cui l'aveva immaginata.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"il nodo non specifica se questo riconoscimento riguardi le stesse imprese circoscritte a cui la Ristretta limita il giudizio sul dogmatismo, o l'insieme del pensiero mazziniano."}},
+        {testo:"La visione mazziniana comprendeva l'appello all'educazione popolare, all'insurrezione dal basso e all'Europa dei popoli.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"descrive il contenuto della visione senza decidere se il dogmatismo abbia causato i fallimenti del movimento."}},
+        {testo:"La visione mazziniana anticipò problemi che l'unificazione realizzata sotto la guida di Cavour avrebbe lasciato irrisolti.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"stessa incertezza dell'affermazione precedente: non è chiaro se questa anticipazione riguardi le imprese a cui la Ristretta limita il giudizio sul dogmatismo."}}
+      ]
+    },
+    {
+      capitolo:"Cavour e la costruzione del Regno",
+      titolo:"Un'unificazione dal basso o dall'alto?",
+      formulazioni:{
+        partenza:"L'unificazione italiana fu un movimento popolare, espressione di una coscienza nazionale diffusa nelle masse italiane.",
+        ristretta:"In alcune fasi e in alcuni contesti, penso ai plebisciti e alla partecipazione volontaria alle campagne garibaldine, l'unificazione italiana poté contare su un'adesione popolare reale, anche se questo non basta a definire l'intero processo come un movimento sorretto da una partecipazione ampia e diffusa delle masse, in particolare contadine.",
+        opposta:"L'unificazione italiana non fu un'espressione di coscienza nazionale diffusa ma una «rivoluzione mancata», realizzata dall'alto attraverso la diplomazia e le armi del Piemonte, senza una reale partecipazione delle masse popolari, soprattutto contadine, che restarono estranee o ostili al processo, e anche la partecipazione borghese fu più limitata di quanto la retorica risorgimentale suggerisca."
+      },
+      affermazioni:[
+        {testo:"Antonio Gramsci definì l'unificazione italiana una \"rivoluzione mancata\", realizzata dall'alto attraverso la diplomazia e le armi del Piemonte, senza una reale partecipazione delle masse popolari.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette già che l'adesione non fu ampia e diffusa tra le masse, specie contadine."}},
+        {testo:"Le masse popolari, soprattutto contadine, rimasero estranee o ostili al processo di unificazione.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente il limite esplicitamente ammesso dalla Ristretta."}},
+        {testo:"Denis Mack Smith ha sottolineato come anche la partecipazione borghese all'unificazione fosse molto più limitata di quanto la retorica risorgimentale suggerisca.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sulla partecipazione popolare a plebisciti e campagne, non su quella borghese."}},
+        {testo:"I plebisciti e le campagne garibaldine registrarono episodi di partecipazione popolare volontaria reale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è l'evidenza su cui la Ristretta fonda la propria formulazione più circoscritta.",
+                 opposta:"l'Opposta non nega singoli episodi di partecipazione volontaria, sostiene che nel complesso il processo fu guidato dall'alto."}}
+      ]
+    },
+    {
+      capitolo:"Cavour e la costruzione del Regno",
+      titolo:"Cavour e Garibaldi: collaborazione o conflitto?",
+      formulazioni:{
+        partenza:"L'incontro di Teano rappresentò la collaborazione tra Cavour e Garibaldi, le due anime del Risorgimento, unite in nome dell'Italia unita.",
+        ristretta:"A Teano, nell'ottobre del 1860, Cavour e Garibaldi si incontrarono formalmente in nome dell'unità d'Italia, e quell'incontro pubblico sancì la cessione delle conquiste garibaldine alla monarchia sabauda, indipendentemente da quanto fossero rimasti tesi i rapporti personali e politici tra i due nei mesi precedenti.",
+        opposta:"Il rapporto tra Cavour e Garibaldi non fu una collaborazione ma un conflitto: Cavour temeva Garibaldi e ne ostacolò i piani quando poté, e la cessione di Nizza, città natale dell'eroe dei Mille, alla Francia fu da lui vissuta come un tradimento personale, a Teano Cavour riuscì semplicemente a neutralizzare Garibaldi nel momento decisivo, piegando l'impresa democratica agli obiettivi della monarchia sabauda."
+      },
+      affermazioni:[
+        {testo:"A Teano, Cavour e Garibaldi si incontrarono pubblicamente in nome dell'unità d'Italia.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"l'Opposta non nega che l'incontro pubblico sia avvenuto, ne contesta il significato reale."}},
+        {testo:"Cavour temeva Garibaldi e ne ostacolò i piani quando poté.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sull'esito pubblico dell'incontro, indipendentemente dai rapporti personali pregressi."}},
+        {testo:"La cessione di Nizza, città natale di Garibaldi, alla Francia fu da lui vissuta come un tradimento personale.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il racconto tradizionale presenta l'incontro di Teano come il momento in cui i due grandi protagonisti del Risorgimento si incontrarono in nome dell'Italia unita, ma il rapporto tra Cavour e Garibaldi fu, nei mesi precedenti, molto più conflittuale di quanto questa immagine suggerisca.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sull'esito pubblico dell'incontro indipendentemente da quanto i rapporti fossero rimasti tesi."}}
+      ]
+    },
+    {
+      capitolo:"I problemi dello Stato unitario e la Destra storica",
+      titolo:"Le politiche verso il Mezzogiorno erano le uniche possibili?",
+      formulazioni:{
+        partenza:"La politica economica della Destra storica verso il Mezzogiorno, rigore fiscale e liberismo compresi, fu necessaria per accumulare il capitale che avrebbe finanziato l'industrializzazione italiana del primo Novecento.",
+        ristretta:"Il rigore fiscale e il liberismo della Destra storica furono, almeno secondo la ricostruzione di Rosario Romeo, la premessa che consentì di accumulare il capitale poi confluito nell'industrializzazione italiana del primo Novecento, anche se questo non dimostra che nel 1861 quel sacrificio fosse l'unica strada percorribile, dato che nessuno poteva allora garantirne il beneficio finale.",
+        opposta:"La politica economica della Destra storica verso il Mezzogiorno non fu necessaria ma iniqua: i costi dell'accumulazione furono distribuiti in modo socialmente iniquo e geograficamente squilibrato, e alternative meno gravose per il Mezzogiorno, riforma agraria, fiscalità progressiva, investimenti pubblici selettivi, erano praticabili, anche se un sistema politico fondato su trasformismo e rappresentanza censitaria non fu in grado di produrle."
+      },
+      affermazioni:[
+        {testo:"Senza il sacrificio iniziale del rigore fiscale e del liberismo, secondo Romeo, non ci sarebbe stato il decollo industriale italiano del primo Novecento.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è l'argomento di Romeo su cui la Ristretta si fonda."}},
+        {testo:"Nel 1861 nessuno poteva garantire che il sacrificio richiesto al Mezzogiorno avrebbe effettivamente prodotto il beneficio industriale successivo.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla tesi di Romeo.",
+                 ristretta:"è precisamente il limite che la Ristretta stessa dichiara."}},
+        {testo:"I costi dell'accumulazione di capitale furono distribuiti in modo socialmente iniquo e geograficamente squilibrato, colpendo il Mezzogiorno più del resto del paese.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riguarda la funzione economica del sacrificio fiscale, non la sua distribuzione sociale e geografica."}},
+        {testo:"Uno Stato con le casse vuote, un elettorato del due per cento e un parlamento in cui i proprietari terrieri erano sovrarappresentati difficilmente avrebbe potuto deliberare una riforma agraria contro se stesso.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"è il punto cieco che il nodo riconosce alla tesi di Sereni."}},
+        {testo:"Franchetti e Sonnino documentarono nel 1876 come il liberismo stesse accelerando la marginalizzazione economica del Sud invece di integrarlo nel mercato nazionale.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sulla funzione di accumulazione del capitale a livello nazionale."}}
+      ]
+    },
+    {
+      capitolo:"Gli anni della Sinistra storica",
+      titolo:"Il trasformismo: degenerazione o necessità sistemica?",
+      formulazioni:{
+        partenza:"Il trasformismo fu una degenerazione della politica italiana, un opportunismo che svuotò i programmi riformatori e costruì maggioranze attraverso scambi di favori invece che su principi condivisi.",
+        ristretta:"Il trasformismo, costruendo maggioranze attraverso accordi personali e scambi di favori invece che su principi condivisi, ritardò la formazione di partiti politici moderni e favorì clientelismo e corruzione, un costo reale che nessuna spiegazione delle sue cause strutturali cancella.",
+        opposta:"Il trasformismo non fu una degenerazione ma la risposta razionale a una necessità sistemica: in un paese dove votava meno del due per cento della popolazione, dove i partiti moderni non esistevano e le fratture regionali e ideologiche erano profondissime, costruire maggioranze attraverso accordi personali era l'unico modo di governare, lo stesso meccanismo che Cavour aveva già usato con il Connubio del 1852 e che la storiografia ha giudicato, in quel caso, una mossa geniale."
+      },
+      affermazioni:[
+        {testo:"Il «Connubio» del 1852, con cui Cavour unì il centro-destra moderato con l'opposizione di centro-sinistra emarginando le ali estreme, è passato alla storia come una mossa geniale, mentre il trasformismo di Depretis come una degenerazione.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sui costi concreti del trasformismo, non sul giudizio storiografico riservato al Connubio."}},
+        {testo:"Il trasformismo ritardò la formazione di partiti politici moderni, annacquò i programmi riformatori, favorì il clientelismo e la corruzione, e produsse sfiducia nelle istituzioni rappresentative.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il nucleo su cui la Ristretta fonda la propria formulazione.",
+                 opposta:"l'Opposta non nega questi costi, sostiene che fossero comunque la risposta razionale disponibile."}},
+        {testo:"I governi della Sinistra storica, nonostante il trasformismo, produssero riforme reali: la legge Coppino, la riforma elettorale del 1882, il Codice Zanardelli.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette i costi del trasformismo senza negare che siano state approvate anche riforme concrete."}},
+        {testo:"Un elettorato più largo di quello raggiunto dalla riforma del 1882 avrebbe prodotto un Parlamento più difficile da gestire con gli strumenti del trasformismo, ed è per questo che ci si fermò al sette per cento.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"In un paese dove votava meno del due per cento della popolazione, i partiti moderni non esistevano e la classe dirigente era divisa lungo molteplici fratture, i sistemi parlamentari maturi fatti di coalizioni programmatiche non avevano le condizioni strutturali per funzionare.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{opposta:"è il nucleo dell'argomento su cui l'Opposta si fonda."}}
+      ]
+    },
+    {
+      capitolo:"L'età crispina e la crisi di fine secolo",
+      titolo:"Crispi: autoritario o modernizzatore?",
+      formulazioni:{
+        partenza:"Francesco Crispi fu un precursore del modello autoritario italiano, la cui concentrazione del potere esecutivo, repressione delle opposizioni e retorica imperialista anticiparono, nelle forme, alcuni tratti del fascismo.",
+        ristretta:"Nella concentrazione del potere esecutivo, nella repressione delle opposizioni e nella retorica imperialista di Crispi si possono riconoscere, nelle forme, alcuni tratti che anticipano il modello autoritario italiano del Novecento, un giudizio che vale soprattutto se si isolano quelle scelte dal contesto in cui furono compiute, con il rischio di presentismo che la stessa lettura riconosce.",
+        opposta:"Francesco Crispi non fu un precursore del fascismo ma un riformatore schiacciato tra le resistenze della classe dirigente conservatrice e la pressione delle forze popolari: il Codice Zanardelli, la riforma amministrativa, le leggi sulla sanità pubblica e sulle Opere pie furono il nucleo di un progetto modernizzatore genuino, in cui l'autoritarismo non era la negazione del riformismo ma la sua condizione, perché senza uno Stato forte, per Crispi, non c'erano riforme possibili."
+      },
+      affermazioni:[
+        {testo:"Crispi represse i Fasci siciliani con lo stato d'assedio, scegliendo il controllo sulla modernizzazione quando le due esigenze entrarono in collisione.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"mette in tensione l'idea di un riformismo genuino con un atto di repressione diretta."}},
+        {testo:"Il Codice Zanardelli, la riforma amministrativa e le leggi sulla sanità pubblica e sulle Opere pie furono provvedimenti concreti del governo Crispi.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"non nega l'esistenza di queste riforme, si concentra sui tratti autoritari.",
+                 opposta:"è il nucleo su cui l'Opposta fonda il proprio giudizio."}},
+        {testo:"Leggere Crispi alla luce di ciò che venne dopo di lui rischia di attribuire a scelte politiche con una logica nel proprio contesto un'intenzionalità che allora non avevano.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza.",
+                 ristretta:"è precisamente il rischio di presentismo che la Ristretta riconosce esplicitamente."}},
+        {testo:"Crispi era convinto che senza uno Stato forte non ci fossero riforme possibili, e che la debolezza delle istituzioni fosse il vero nemico della modernizzazione italiana.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è compatibile sia con una lettura autoritaria sia con una modernizzatrice."}},
+        {testo:"La «democrazia autoritaria» di Crispi non fu un ossimoro accidentale ma una contraddizione strutturale: voleva più cittadini, ma cittadini gestibili; uno Stato più moderno, ma guidato dall'alto.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"è la sintesi della storiografia più recente, che rifiuta entrambe le letture polari."}}
+      ]
+    },
+    {
+      capitolo:"L'età crispina e la crisi di fine secolo",
+      titolo:"Il colonialismo italiano è mai stato davvero elaborato?",
+      formulazioni:{
+        partenza:"Il colonialismo italiano è stato a lungo tenuto ai margini della storiografia e della memoria pubblica italiane non per la sua reale scarsa rilevanza, ma per una rimozione attiva, prodotta da scelte politiche e culturali precise.",
+        ristretta:"La rimozione del colonialismo liberale, quello di Crispi, di Giolitti, della Libia, dalla memoria pubblica italiana fu in parte il prodotto di scelte attive di oscuramento, come mostrano i vent'anni di contestazione istituzionale alle ricerche di Angelo Del Boca sull'uso di armi chimiche in Etiopia, senza che questo debba spiegare da solo ogni aspetto della collocazione marginale del colonialismo nella manualistica scolastica.",
+        opposta:"Il colonialismo italiano occupa uno spazio limitato nella storiografia e nella manualistica non per una rimozione attiva, ma per un argomento di proporzione: il dominio coloniale italiano durò poco più di mezzo secolo, riguardò territori limitati e non plasmò la struttura economica del paese come accadde per Francia e Gran Bretagna, mentre altri eventi dello stesso arco di tempo, dalle guerre mondiali alla trasformazione industriale, ne determinarono il destino in misura incomparabilmente maggiore."
+      },
+      affermazioni:[
+        {testo:"Solo nel 1996 il governo italiano riconobbe ufficialmente l'uso di gas tossici contro la popolazione etiope, dopo vent'anni di battaglia storiografica e politica contro le ricerche di Angelo Del Boca.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il dato su cui la Ristretta fonda la propria formulazione.",
+                 opposta:"è il punto cieco che il nodo riconosce all'argomento della proporzione."}},
+        {testo:"Il dominio coloniale italiano durò poco più di mezzo secolo, riguardò territori limitati e non plasmò la struttura economica del paese come accadde per Francia e Gran Bretagna.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sul colonialismo liberale e sulla sua rimozione attiva, non contesta il dato su durata e portata.",
+                 opposta:"è l'argomento su cui l'Opposta si fonda."}},
+        {testo:"La conquista dell'Etiopia del 1935-36 fu condotta con l'uso sistematico di armi chimiche, in particolare iprite e fosgene, su popolazioni civili e combattenti, un fatto documentato e riconosciuto dalla storiografia internazionale.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{ristretta:"la Ristretta si concentra sul colonialismo liberale (Crispi, Giolitti, Libia), mentre questo fatto riguarda la fase fascista successiva.",
+                 opposta:"non nega la gravità di questo evento, sostiene che l'intero arco coloniale ebbe un peso proporzionalmente minore su altri fattori."}},
+        {testo:"Altri fatti dello stesso arco di tempo del colonialismo italiano, dalle guerre mondiali alla trasformazione industriale, determinarono il destino del paese in misura incomparabilmente maggiore.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La costruzione della colonia Eritrea comportò espropriazioni di terre, lavoro coatto e discriminazioni sistematiche codificate in leggi razziste che precedettero di decenni quelle del 1938.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{ristretta:"la Ristretta si concentra sul colonialismo liberale di Crispi, Giolitti e la Libia; questo dato riguarda la fase ottocentesca della colonia eritrea.",
+                 opposta:"mostra una violenza strutturale precoce che complica l'idea di un dominio dal peso proporzionalmente trascurabile."}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    var n=NODI[i];
+    state.order=shuffle(n.affermazioni.map(function(_,idx){ return idx; }));
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    var total=n.affermazioni.length;
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su '+total+' affermazioni totali).';
+    } else if(answered<total){
+      verifyHint.textContent=answered+' su '+total+' classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e '+total+' classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

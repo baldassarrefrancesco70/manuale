@@ -34,10 +34,14 @@ Il sistema costruito nel 1815 funzionava esattamente come era stato progettato. 
 
 Ne segue una conseguenza che i patrioti impiegarono un decennio a riconoscere. Nessuna insurrezione affrontava soltanto il proprio sovrano: affrontava la coalizione. Finché il fronte conservatore restava compatto, la sproporzione delle forze rendeva la sconfitta una questione di settimane, e la qualità delle ragioni degli insorti non entrava nel calcolo. Perché un moto avesse qualche possibilità, occorreva che quel fronte fosse diviso su altro.
 
+<a id="video-8"></a>
+
 {% embed url="https://youtu.be/_PW4kxd5V2k" %}
 Video --- Rivoluzioni di caserma: la prima ondata e la macchina della repressione
 {% endembed %}
 
+
+<a id="video-9"></a>
 
 {% embed url="https://youtu.be/cdPT0auDOqc" %}
 Video --- Quanto durarono le costituzioni del 1820
@@ -70,6 +74,8 @@ Resta da chiedersi perché Scio commosse l'Europa e Alessandria no. La risposta 
 {% endhint %}
 
 
+<a id="video-10"></a>
+
 {% embed url="https://youtu.be/6SjbZSX0Jp0" %}
 Video --- I clefti: chi combatteva davvero in Grecia
 {% endembed %}
@@ -85,6 +91,8 @@ Sul campo la situazione era compromessa. Il sultano aveva ottenuto l'appoggio de
 L'**Impero ottomano non era uno Stato cristiano né europeo**, e non rientrava nell'area di tutela della Santa Alleanza. Sostenere una rivolta contro il sultano non violava formalmente il principio di legittimità, o almeno era possibile sostenere che non lo violasse. Su questa apertura si inserirono interessi divergenti. La **Russia** ruppe con la Porta nel 1822 presentandosi come protettrice degli ortodossi balcanici, con l'obiettivo, poco spirituale, di uno sbocco sul Mediterraneo. La **Gran Bretagna** e la **Francia**, per impedire che l'intervento russo fosse unilaterale e alterasse gli equilibri nel Levante, scelsero di affiancarlo invece di opporvisi. Nel luglio **1827** il **Trattato di Londra** formalizzò l'intesa; nell'ottobre le flotte alleate distrussero quella turco-egiziana a **Navarino**; la pace di **Adrianopoli** del **1829** riconobbe l'indipendenza greca.
 
 Il risultato è una contraddizione che vale la pena tenere ferma. Tre delle potenze che si erano impegnate a reprimere ogni rivolta contro un sovrano legittimo collaborarono militarmente per farne nascere uno Stato. Austria e Prussia rimasero fedeli al principio e restarono a guardare. La **questione d'Oriente**, cioè il problema di che cosa fare dei territori ottomani in disgregazione, si rivelò il terreno su cui la solidarietà conservatrice non reggeva, perché lì gli interessi di potenza contavano più della dottrina.
+
+<a id="artefatto-5"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/07-grecia-tre-strati.html" %}
 Risorsa digitale --- La Grecia in tre strati
@@ -103,6 +111,8 @@ Restava un problema che nessun trattato poteva risolvere. Una parte consistente 
 La risposta arrivò dalla storiografia. A partire dagli anni Cinquanta, l'opera di **Konstantinos Paparrigopoulos** riscrisse la storia nazionale integrando l'**Impero bizantino** come anello di congiunzione tra l'antichità e il presente, e restituì una nazione greca continua per oltre due millenni. L'operazione era intellettualmente seria e politicamente utilissima: fondava la **Megale Idea**, il progetto di ricostituire lo spazio bizantino, che avrebbe orientato la politica estera greca per un secolo.
 
 È il primo caso, in questo percorso, di una nazione che non trova il proprio passato ma lo costruisce, e conviene registrarlo perché tornerà.
+
+<a id="video-11"></a>
 
 {% embed url="https://youtu.be/rqNVap1Yk5U" %}
 Video --- La Grecia: la prima nazione che diventa Stato
@@ -133,10 +143,14 @@ L'**Italia centrale** fallì per una ragione ancora diversa, e istruttiva. Gli i
 
 Il bilancio del 1830 lascia l'Europa divisa in due aree che il 1815 non aveva previsto. A ovest, Francia, Gran Bretagna e Belgio con regimi costituzionali e opinione pubblica organizzata; a est, gli imperi centrali e la Russia fedeli al principio di legittimità. Il concerto europeo non è morto, ma ha smesso di essere un'unica cosa.
 
+<a id="artefatto-6"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/08-perche-riesce-o-no.html" %}
 Risorsa digitale --- Perché questo moto riesce e quello no
 {% endembed %}
 
+
+<a id="video-12"></a>
 
 {% embed url="https://youtu.be/t6uTYRv77g8" %}
 Video --- 1830: perché il Belgio riesce e la Polonia no
@@ -160,15 +174,21 @@ I canali della diffusione furono le **università** e le **scuole**, dove una nu
 
 La distinzione è utile a patto di non trasformarla in una successione ordinata. Il passaggio dalla nazione culturale alla nazione politica non era iscritto nella prima, e in alcuni casi non avvenne mai. Ma quando avvenne, la definizione ereditata dal Romanticismo si portò dietro una conseguenza che nel 1830 nessuno aveva calcolato: se l'appartenenza è involontaria e si eredita con la lingua, allora chi parla un'altra lingua non può entrare nella nazione neanche volendo.
 
+<a id="artefatto-7"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/09-volontaristica-organica.html" %}
 Risorsa digitale --- Volontaristica o organica
 {% endembed %}
 
 
+<a id="video-13"></a>
+
 {% embed url="https://youtu.be/1Xd7kKVbE-k" %}
 Video --- Una grammatica è un atto politico: la nazione come cultura
 {% endembed %}
 
+
+<a id="video-14"></a>
 
 {% embed url="https://youtu.be/2xPoKB3-fs0" %}
 Video --- Perché raccogliere fiabe era un atto politico
@@ -188,6 +208,8 @@ La simultaneità non si spiega con la propagazione, quindi, ma con condizioni co
 
 Che i tre elementi coincidessero ovunque non rendeva prevedibile l'esplosione, e nessuno dei governi la previde. Rende però comprensibile perché, una volta cominciata, non si sia fermata a una frontiera.
 
+<a id="infografica-5"></a>
+
 ![1848, sei settimane](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info9__insurrezioni_europee_del_1848.png)
 
 
@@ -203,6 +225,8 @@ La rivoluzione ungherese portava però dentro di sé la propria sconfitta, e non
 Il resto è repressione. A Vienna il **Reichstag** eletto a suffragio universale si paralizzò nelle rivalità tra nazionalità e lasciò una sola decisione destinata a durare, l'abolizione della servitù della gleba in tutto l'Impero nel luglio 1848. In ottobre la capitale fu assediata e occupata; **Ferdinando I** abdicò a favore del nipote **Francesco Giuseppe**, che nel marzo 1849 sciolse il Reichstag e concesse dall'alto una costituzione centralistica e censitaria. Per piegare l'Ungheria l'Austria dovette chiedere aiuto allo zar, e furono le truppe russe, nell'agosto 1849, a chiudere la partita. Kossuth andò in esilio.
 
 In Germania la rivoluzione produsse invece un'assemblea costituente riunita a **Francoforte**, che discusse per un anno quali territori e quali popolazioni dovessero comporre lo Stato tedesco. Quel dibattito, e il suo esito, appartengono al capitolo dedicato alla costruzione dello Stato nazionale tedesco, dove potranno essere letti per quello che sono: non un fallimento occasionale, ma il primo tentativo europeo di stabilire per via parlamentare chi appartenga a una nazione.
+
+<a id="artefatto-8"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/11-stesso-argomento-due-volte.html" %}
 Risorsa digitale --- Lo stesso argomento, due volte
@@ -233,11 +257,17 @@ Il risultato smentiva un'assunzione condivisa da liberali e democratici, per rag
 
 Sconfitto sul campo, il 1848 lasciò comunque alcune cose che non furono revocate. La servitù della gleba non tornò. Nessun governo, dopo, poté ignorare l'esistenza di un'opinione pubblica. E il principio di nazionalità smise di essere una rivendicazione di minoranze cospirative per diventare un dato con cui le cancellerie dovevano fare i conti. Come farvi i conti, e con quali strumenti, è il problema che occupa la seconda metà del secolo.
 
+<a id="infografica-6"></a>
+
 ![Le due fratture](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info11_Le_due_fratture_del_1848.png)
 
 
+<a id="infografica-7"></a>
+
 ![Tre ondate a confronto](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info12__ondate_rivoluzionarie_%281820-1849%29.png)
 
+
+<a id="video-15"></a>
 
 {% embed url="https://youtu.be/Zt62ZcQZdVw" %}
 Video --- 1848: sei settimane e diciotto mesi

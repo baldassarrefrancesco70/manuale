@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronologia a corsie</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.4}
+
+  .chart{display:grid;grid-template-columns:100px minmax(0,1fr);border:1px solid var(--rule);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);overflow:hidden}
+  .labels{border-right:1px solid var(--rule);background:var(--paper-2);min-width:0}
+  .labels .sp{height:30px;border-bottom:1px solid var(--line)}
+  .labels .lb{height:58px;display:flex;align-items:center;padding:0 10px;font-family:var(--sans);
+    font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+  .labels .lb:last-child{border-bottom:0}
+  .labels .lb.off{opacity:.25}
+
+  .scroller{overflow-x:auto;overflow-y:hidden;position:relative;min-width:0}
+  .track{position:relative;height:262px}
+  .axis{height:30px;border-bottom:1px solid var(--line);position:relative}
+  .axis .tk{position:absolute;top:0;height:30px;border-left:1px solid var(--line)}
+  .axis .tk span{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);padding-left:4px;line-height:30px}
+  .lane{position:absolute;left:0;right:0;height:58px;border-bottom:1px solid var(--line)}
+  .lane.off{opacity:.12;pointer-events:none}
+  .ev{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid var(--paper);
+    cursor:pointer;margin-left:-7px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+  .ev:hover{width:18px;height:18px;margin-left:-9px;margin-top:-2px}
+  .ev.sel{box-shadow:0 0 0 3px var(--ink)}
+  .bar{position:absolute;height:8px;border-radius:4px;opacity:.38;cursor:pointer}
+  .bar:hover{opacity:.65}
+  .bar.sel{opacity:.9}
+  .cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.7;pointer-events:none}
+  .cursor::after{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;
+    border-right:5px solid transparent;border-top:7px solid var(--ink)}
+
+  .slider{margin:14px 0 4px}
+  input[type=range]{width:100%;accent-color:#201d18}
+  .yearNow{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);text-align:center;margin-bottom:12px}
+  .yearNow strong{color:var(--ink);font-size:1.05rem}
+
+  .now{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  @media(max-width:760px){.now{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:440px){.now{grid-template-columns:minmax(0,1fr)}}
+  .cell{border:1px solid var(--rule);border-top-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:9px 11px;min-height:80px}
+  .cell h4{font-family:var(--sans);font-size:.64rem;letter-spacing:.07em;text-transform:uppercase;margin:0 0 6px}
+  .cell p{margin:0 0 5px;font-size:.9rem;line-height:1.4}
+  .cell p .y{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-right:5px}
+  .cell .none{color:var(--ink-soft);font-style:italic;font-size:.85rem}
+
+  .detail{margin-top:14px;border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;display:none}
+  .detail.show{display:block}
+  .detail .k{font-family:var(--sans);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  .detail h3{margin:3px 0 5px;font-size:1.08rem}
+  .detail p{margin:0;font-size:.97rem}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce la politica del mondo moderno &middot; Apparati</div>
+  <h1>Cronologia a corsie</h1>
+  <p class="sub">Le cose non accadono in fila, accadono insieme. Quattro corsie scorrono in parallelo: sposta il cursore lungo gli anni e guarda che cosa succede nello stesso momento nella tecnica, nell'economia, nella societ&agrave; e nelle idee. Clicca un punto o una barra per leggerne la scheda.</p>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="chart">
+    <div class="labels" id="labels"></div>
+    <div class="scroller" id="scroller">
+      <div class="track" id="track">
+        <div class="axis" id="axis"></div>
+        <div class="cursor" id="cursor" style="left:0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider"><input type="range" id="range" min="1740" max="1815" value="1789" step="1" aria-label="Anno"></div>
+  <div class="yearNow">Intorno all'anno <strong id="ylab">1789</strong></div>
+
+  <div class="now" id="now"></div>
+
+  <div class="detail" id="detail">
+    <span class="k" id="d-lane"></span>
+    <h3 id="d-title"></h3>
+    <p id="d-note"></p>
+  </div>
+
+  <p class="note">Le date sono indicative e da verificare prima della stampa. La dicitura &laquo;circa&raquo; segnala processi diffusi nel tempo o datazioni convenzionali, non eventi puntuali: le barre indicano fenomeni di lunga durata, i punti eventi singoli.</p>
+
+<script>
+(function(){
+  var LANES=[
+    {k:"tec",lab:"Tecnica",col:"#6b5545"},
+    {k:"eco",lab:"Economia",col:"#b0872e"},
+    {k:"soc",lab:"Societa\u0300",col:"#9d4a2b"},
+    {k:"ide",lab:"Idee",col:"#3d5566"}
+  ];
+  LANES[2].lab="Societ\u00E0";
+
+  var Y0=1740, Y1=1815, PPY=16, PAD=20;
+  var W=(Y1-Y0)*PPY+PAD*2;
+
+  var E=[
+    {y:1783,l:"tec",t:"Il pallone aerostatico",approx:true,
+     n:"I fratelli Montgolfier a Parigi: il volo umano diventa possibile mentre la monarchia non trova pi\u00F9 modo di farsi prestare denaro. Il progresso tecnico e la crisi politica corrono su binari indipendenti."},
+    {y:1792,l:"tec",t:"Prima esecuzione con la ghigliottina",
+     n:"Concepita come dispositivo che applica la stessa morte a chiunque, indipendentemente dal ceto: la macchina traduce in meccanica il principio di uguaglianza proclamato tre anni prima."},
+    {y:1794,l:"tec",t:"Telegrafo ottico di Chappe",
+     n:"Una linea di segnali a vista collega Parigi al fronte del Nord in poche ore: la Repubblica in guerra si dota della prima rete di comunicazione a distanza della storia."},
+    {y:1795,l:"tec",t:"Sistema metrico decimale",approx:true,
+     n:"Il metro nasce da una misurazione astronomica, non dall'autorit\u00E0 di un sovrano: anche le unit\u00E0 di misura vengono sottratte al potere personale."},
+    {y:1796,l:"tec",t:"Vaccino contro il vaiolo",
+     n:"In Inghilterra, mentre il Direttorio francese fatica a governare, Jenner sperimenta la vaccinazione: il mondo continua a cambiare anche fuori dal perimetro della Rivoluzione."},
+
+    {y:1774,y2:1776,l:"eco",t:"Ministero Turgot",
+     n:"Liberalizza il commercio dei grani e abolisce le corporazioni; nel 1776 la coalizione di parlamenti e corte lo fa cadere. Il blocco alle riforme esiste gi\u00E0 dodici anni prima dell'emergenza finanziaria del 1788."},
+    {y:1778,y2:1783,l:"eco",t:"Guerra d'indipendenza americana",
+     n:"La Francia finanzia a debito l'intervento a fianco degli insorti. La vittoria sulla rivale di sempre costa alla monarchia la propria libert\u00E0 di manovra fiscale."},
+    {y:1781,l:"eco",t:"Compte rendu au roi",
+     n:"Necker pubblica per la prima volta un rendiconto delle finanze regie: le casse del re diventano oggetto di discussione pubblica."},
+    {y:1786,l:"eco",t:"Piano Calonne",
+     n:"Un'imposta fondiaria uguale per ogni ordine, senza esenzioni: i notabili convocati per farla approvare rispondono che solo gli Stati generali possono consentirla."},
+    {y:1788,y2:1789,l:"eco",t:"Crisi di sussistenza",approx:true,
+     n:"Il prezzo del pane sale fino al doppio in pochi mesi: la crisi materiale si somma a quella istituzionale proprio mentre si eleggono i deputati."},
+    {y:1789,l:"eco",t:"Marcia delle donne su Versailles",
+     n:"Il 5 ottobre il pane, non solo i principi, muove il corteo che riporta il re e l'assemblea a Parigi sotto lo sguardo della capitale."},
+    {y:1789,l:"eco",t:"Confisca dei beni della Chiesa",
+     n:"Lo Stato requisisce le terre ecclesiastiche per risanare il debito: nasce il ceto di proprietari che legher\u00E0 il proprio interesse alla tenuta della Rivoluzione."},
+    {y:1790,l:"eco",t:"Corso legale dell'assegnato",
+     n:"Un titolo garantito dalle terre confiscate diventa moneta a tutti gli effetti: l'inizio della prima grande inflazione dell'et\u00E0 contemporanea."},
+    {y:1793,l:"eco",t:"Massimo generale",
+     n:"Il calmiere su prezzi e salari, strappato al governo dalla pressione delle sezioni contro le convinzioni economiche della maggioranza dei deputati."},
+    {y:1794,l:"eco",t:"Abolizione del massimo",
+     n:"Tornano il libero mercato e, con esso, l'inflazione: l'inverno seguente sar\u00E0 il pi\u00F9 duro del decennio rivoluzionario."},
+    {y:1800,l:"eco",t:"Banca di Francia",
+     n:"Il Consolato ricostruisce ci\u00F2 che dieci anni di assegnati avevano distrutto: una moneta di cui ci si pu\u00F2 fidare."},
+    {y:1806,l:"eco",t:"Blocco continentale",
+     n:"Chiudere ogni porto del continente alle merci britanniche: la politica economica che diventer\u00E0 il motore meccanico dell'espansione territoriale."},
+
+    {y:1789,l:"soc",t:"Presa della Bastiglia",
+     n:"Non libera prigionieri politici, che erano pochi e non c'erano: dimostra che il re non pu\u00F2 pi\u00F9 usare l'esercito contro la propria capitale."},
+    {y:1789,l:"soc",t:"Abolizione del regime feudale",
+     n:"Notte del 4 agosto: i diritti personali cadono subito, quelli reali restano riscattabili a pagamento. I contadini ignoreranno la distinzione e si considereranno liberi da tutto."},
+    {y:1790,y2:1791,l:"soc",t:"Scisma del giuramento",approx:true,
+     n:"Sette vescovi su centotrenta giurano fedelt\u00E0 alla nazione: la Rivoluzione perde una parte del paese, e la perde sulla questione religiosa, non su quella fiscale."},
+    {y:1791,l:"soc",t:"Fuga di Varennes",
+     n:"Il re lascia scritto che non riconosce la costituzione di cui dovrebbe essere il perno: il legame di fiducia si rompe prima ancora di essere tradito nei fatti."},
+    {y:1792,l:"soc",t:"Assalto alle Tuileries",
+     n:"Le sezioni parigine e i federati abbattono la monarchia che l'assemblea legalmente in carica non aveva n\u00E9 voluto n\u00E9 deciso di abolire."},
+    {y:1792,l:"soc",t:"Massacri di settembre",
+     n:"Il panico da invasione si scarica sulle carceri della capitale: mille o millecinquecento morti, in gran parte detenuti comuni estranei alla politica."},
+    {y:1793,y2:1796,l:"soc",t:"Insurrezione della Vandea",approx:true,
+     n:"La leva dei trecentomila accende una guerra civile che affonda le radici nello scisma religioso di due anni prima, non in un generico oscurantismo contadino."},
+    {y:1793,y2:1794,l:"soc",t:"Il governo rivoluzionario",
+     n:"Sedici-diciassettemila condanne dei tribunali, in larga maggioranza fra operai, artigiani e contadini: il dispositivo colpisce soprattutto il terzo stato in nome del quale \u00E8 stato dichiarato."},
+    {y:1794,l:"soc",t:"Abolizione della schiavit\u00F9 nelle colonie",
+     n:"Ratifica parlamentare di un'emancipazione decisa sul campo, due anni prima, da due commissari senza alcuna autorizzazione: il punto pi\u00F9 avanzato di cittadinanza raggiunto dalla Rivoluzione."},
+    {y:1794,l:"soc",t:"9 termidoro",
+     n:"Robespierre e i suoi vengono abbattuti da uomini che il governo rivoluzionario lo avevano applicato quanto lui, e per lo stesso timore di finire nella lista successiva."},
+    {y:1795,l:"soc",t:"Insurrezioni di germinale e pratile",approx:true,
+     n:"L'ultima volta che il popolo parigino interviene come forza politica autonoma: da qui in avanti chi vorr\u00E0 la piazza dovr\u00E0 procurarsi dei soldati."},
+    {y:1802,l:"soc",t:"Ripristino della schiavit\u00F9",
+     n:"La Francia diventa l'unico paese europeo ad aver dovuto abolire la schiavit\u00F9 due volte, avendola prima ristabilita per legge dopo averla abolita."},
+    {y:1804,l:"soc",t:"Incoronazione di Napoleone",
+     n:"Il papa partecipa alla cerimonia senza incoronare: la sovranit\u00E0 che l'imperatore riceve viene da un plebiscito, non dalla Chiesa n\u00E9 dal sangue."},
+    {y:1808,l:"soc",t:"Insurrezione di Madrid",
+     n:"Nasce la parola guerriglia: la resistenza si combatte in nome del re legittimo e della religione, non di una costituzione da conquistare."},
+    {y:1814,y2:1815,l:"soc",t:"Congresso di Vienna",approx:true,
+     n:"Le potenze si riuniscono per restaurare la legittimit\u00E0 dinastica, come se venticinque anni fossero stati una parentesi: il fondamento del potere \u00E8 cambiato per sempre, il confine della cittadinanza resta un problema aperto."},
+
+    {y:1748,l:"ide",t:"Lo spirito delle leggi",
+     n:"Montesquieu distingue i governi per la loro natura e il loro principio, e mette in circolo il modello della separazione dei poteri: una delle tre risposte che il secolo dar\u00E0 alla domanda sul fondamento del potere."},
+    {y:1751,y2:1772,l:"ide",t:"L'Encyclop\u00E9die",
+     n:"Diciassette volumi in ordine alfabetico, che tolgono al sapere ogni gerarchia teologica e accolgono il lavoro manuale come sapere a pieno titolo."},
+    {y:1762,l:"ide",t:"Il contratto sociale",
+     n:"Rousseau: la sovranit\u00E0 del popolo non si delega. Una tesi che nel 1792 si trover\u00E0 nelle mani di uomini che dovranno pur eleggere un'assemblea per esercitarla."},
+    {y:1764,l:"ide",t:"Dei delitti e delle pene",
+     n:"Beccaria argomenta l'inutilit\u00E0 della tortura e della pena di morte in un libro che l'Europa dei sovrani riformatori legge e in parte applica, decenni prima che la Francia lo faccia per legge."},
+    {y:1776,l:"ide",t:"Dichiarazione d'indipendenza americana",approx:true,
+     n:"Il giusnaturalismo passa per la prima volta dalla filosofia alla fondazione concreta di uno Stato, tredici anni prima che lo stesso accada a Parigi."},
+    {y:1789,l:"ide",t:"Che cos'\u00E8 il Terzo Stato?",approx:true,
+     n:"Siey\u00E8s trasforma una categoria residuale, definita solo per sottrazione dagli altri due ordini, in un soggetto che rivendica di essere la nazione intera."},
+    {y:1789,l:"ide",t:"Dichiarazione dei diritti dell'uomo",
+     n:"Non concede diritti: dichiara che esistono gi\u00E0 e che il potere li ha finora ignorati. Parla degli uomini, non dei francesi, e lascia alla legge il compito di dire chi sia cittadino."},
+    {y:1792,l:"ide",t:"Discorso di Saint-Just sul re",
+     n:"Se Luigi potesse risultare innocente, l'insurrezione che lo ha deposto sarebbe stata un crimine: un ragionamento valido le cui premesse rendono il dubbio impossibile da tollerare."},
+    {y:1804,l:"ide",t:"Codice civile dei francesi",
+     n:"Realizza per intero l'uguaglianza civile degli uomini adulti e, nello stesso testo, restringe la capacit\u00E0 giuridica della donna sposata rispetto alla legislazione rivoluzionaria di dieci anni prima."}
+  ];
+
+
+  var on={tec:true,eco:true,soc:true,ide:true};
+  var sel=null, year=1789;
+
+  function x(y){ return PAD+(y-Y0)*PPY; }
+
+  var track=document.getElementById('track');
+  var axis=document.getElementById('axis');
+  var cursor=document.getElementById('cursor');
+  var labels=document.getElementById('labels');
+  var chips=document.getElementById('chips');
+  var nowEl=document.getElementById('now');
+  var range=document.getElementById('range');
+  var ylab=document.getElementById('ylab');
+  var scroller=document.getElementById('scroller');
+  var detail=document.getElementById('detail');
+
+  track.style.width=W+'px';
+
+  var ax='';
+  for(var yy=1740; yy<=1815; yy+=10){
+    ax+='<div class="tk" style="left:'+x(yy)+'px"><span>'+yy+'</span></div>';
+  }
+  axis.innerHTML=ax;
+
+  var lh='<div class="sp"></div>';
+  LANES.forEach(function(l){
+    lh+='<div class="lb" data-l="'+l.k+'" style="color:'+l.col+'">'+l.lab+'</div>';
+  });
+  labels.innerHTML=lh;
+
+  LANES.forEach(function(l,i){
+    var lane=document.createElement('div');
+    lane.className='lane';
+    lane.setAttribute('data-l',l.k);
+    lane.style.top=(30+i*58)+'px';
+    track.appendChild(lane);
+  });
+
+  function paint(){
+    LANES.forEach(function(l){
+      var lane=track.querySelector('.lane[data-l="'+l.k+'"]');
+      if(!lane) return;
+      if(on[l.k]) lane.classList.remove('off'); else lane.classList.add('off');
+      lane.innerHTML='';
+      var items=E.filter(function(e){ return e.l===l.k; })
+                 .sort(function(a,b){ return a.y-b.y; });
+      var lastX=-999, row=0;
+      items.forEach(function(e,idx){
+        var id=l.k+'-'+idx;
+        var px=x(e.y);
+        if(px-lastX<16){ row=(row+1)%2; } else { row=0; }
+        lastX=px;
+        var el=document.createElement('div');
+        if(e.y2){
+          el.className='bar'+(sel===id?' sel':'');
+          el.style.width=Math.max(8,(e.y2-e.y)*PPY)+'px';
+          el.style.top=(24+(row?14:0))+'px';
+          el.title=e.y+'-'+e.y2+' \u00B7 '+e.t;
+        } else {
+          el.className='ev'+(sel===id?' sel':'');
+          el.style.top=(21+(row?14:0))+'px';
+          el.title=e.y+' \u00B7 '+e.t;
+        }
+        el.style.left=px+'px';
+        el.style.background=l.col;
+        el.addEventListener('click',function(){ pick(e,id,l); });
+        lane.appendChild(el);
+      });
+    });
+    var lbs=labels.querySelectorAll('.lb');
+    for(var i=0;i<lbs.length;i++){
+      if(on[lbs[i].getAttribute('data-l')]) lbs[i].classList.remove('off');
+      else lbs[i].classList.add('off');
+    }
+  }
+
+  function pick(e,id,l){
+    sel=id; year=e.y; range.value=e.y;
+    detail.className='detail show';
+    detail.style.borderLeftColor=l.col;
+    document.getElementById('d-lane').textContent=
+      l.lab+' \u00B7 '+e.y+(e.y2?'-'+e.y2:'')+(e.approx?' circa':'');
+    document.getElementById('d-title').textContent=e.t;
+    document.getElementById('d-note').textContent=e.n;
+    paint(); moveCursor(); renderNow();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  }
+
+  function moveCursor(){
+    cursor.style.left=x(year)+'px';
+    ylab.textContent=year;
+  }
+
+  function renderNow(){
+    var WIN=6, html='';
+    LANES.forEach(function(l){
+      if(!on[l.k]) return;
+      var hits=E.filter(function(e){
+        if(e.l!==l.k) return false;
+        if(e.y2) return (year>=e.y-1 && year<=e.y2+1);
+        return Math.abs(e.y-year)<=WIN;
+      }).sort(function(a,b){ return a.y-b.y; });
+      var body='';
+      if(hits.length){
+        hits.forEach(function(e){
+          body+='<p><span class="y">'+e.y+(e.y2?'-'+e.y2:'')+'</span>'+e.t+'</p>';
+        });
+      } else {
+        body='<p class="none">niente di rilevante in questi anni</p>';
+      }
+      html+='<div class="cell" style="border-top-color:'+l.col+'">'+
+            '<h4 style="color:'+l.col+'">'+l.lab+'</h4>'+body+'</div>';
+    });
+    nowEl.innerHTML=html;
+  }
+
+  function buildChips(){
+    chips.innerHTML='';
+    LANES.forEach(function(l){
+      var b=document.createElement('button');
+      b.setAttribute('aria-pressed', on[l.k] ? 'true' : 'false');
+      b.innerHTML='<span class="dot" style="background:'+l.col+'"></span>'+l.lab;
+      b.addEventListener('click',function(){
+        on[l.k]=!on[l.k];
+        buildChips(); paint(); renderNow();
+      });
+      chips.appendChild(b);
+    });
+  }
+
+  range.addEventListener('input',function(ev){
+    year=parseInt(ev.target.value,10);
+    sel=null;
+    detail.className='detail';
+    moveCursor(); renderNow(); paint();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  });
+
+  buildChips();
+  paint();
+  moveCursor();
+  renderNow();
+  scroller.scrollLeft=Math.max(0, x(1789)-scroller.clientWidth/2);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossario</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --contesa:#9c3d23;
+    --ok:#4b6b3d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .controls{margin-bottom:6px}
+  .search{width:100%;font-family:var(--serif);font-size:.98rem;color:var(--ink);
+    background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;
+    padding:9px 12px;margin-bottom:12px}
+  .search:focus{outline:none;border-color:var(--ink-soft)}
+  .search::placeholder{color:var(--ink-soft);font-family:var(--sans);font-size:.84rem}
+
+  .chiprow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .chiprow + .chiprow{margin-bottom:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.45}
+  .chips button[aria-pressed="true"]{color:var(--ink)}
+
+  .modebar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:14px}
+  .count{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+  .switch{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 12px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .switch[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .list{display:flex;flex-direction:column;gap:10px}
+  .card{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:11px 14px}
+  .card.ordinaria{border-left-color:var(--rule)}
+  .card.contesa{border-left-color:var(--contesa)}
+  .card .head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+  .card h3{margin:0;font-size:1.05rem;font-weight:600}
+  .tag-contesa{font-family:var(--sans);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--contesa);border:1px solid var(--contesa);border-radius:2px;padding:2px 6px;white-space:nowrap}
+  .loc{font-family:var(--sans);font-size:.7rem;color:var(--ink-soft);margin:0 0 6px}
+  .def{margin:0;font-size:.94rem}
+  .perche{margin:8px 0 0;padding-top:7px;border-top:1px dotted var(--line);font-size:.9rem;
+    font-style:italic;color:var(--ink-soft)}
+  .perche .k{font-family:var(--sans);font-style:normal;font-size:.66rem;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--contesa);margin-right:5px}
+  .empty{font-family:var(--sans);font-size:.85rem;color:var(--ink-soft);font-style:italic;padding:20px 0}
+
+  .quiz{display:none;border:1px solid var(--rule);border-left-width:3px;border-left-color:var(--ink);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:16px 18px}
+  .quiz.show{display:block}
+  .quiz-instructions{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);margin:0 0 14px;
+    padding-bottom:10px;border-bottom:1px dotted var(--line)}
+  .quiz .loc{margin-bottom:10px}
+  .quiz .def{font-size:1rem;line-height:1.55;margin:0 0 18px}
+
+  .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:4px}
+  @media(max-width:560px){.options{grid-template-columns:minmax(0,1fr)}}
+  .option{appearance:none;text-align:left;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--serif);font-size:.94rem;color:var(--ink);padding:10px 13px;border-radius:2px;
+    cursor:pointer;line-height:1.35}
+  .option:hover:not(:disabled){border-color:var(--ink-soft)}
+  .option:disabled{cursor:default}
+  .option.correct{border-color:var(--ok);border-width:2px;background:#e3ead9}
+  .option.wrong{border-color:var(--contesa);border-width:2px;background:#f1ddd4}
+
+  .quiz-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .quiz-actions button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--sans);font-size:.8rem;padding:8px 14px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .quiz-actions button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .quiz-actions button:disabled{opacity:.4;cursor:default}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce l'economia del mondo moderno &middot; Apparati</div>
+  <h1>Glossario</h1>
+  <p class="sub">Novantotto voci, i termini che il testo ha pesato e a volte messo in discussione. Cerca un termine, filtra per capitolo, oppure passa alla modalit&agrave; attiva e mettiti alla prova: leggi la definizione e riconosci il termine giusto tra quattro opzioni.</p>
+
+  <div class="controls">
+    <input class="search" id="search" type="text" placeholder="Cerca un termine o una parola nella definizione&hellip;" autocomplete="off">
+    <div class="chiprow"><div class="chips" id="chapChips"></div></div>
+    <div class="modebar">
+      <span class="count" id="count"></span>
+      <button class="switch" id="quizToggle" aria-pressed="false" type="button">Modalit&agrave; attiva</button>
+    </div>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <div class="quiz" id="quiz">
+    <p class="quiz-instructions">Leggi la definizione e scegli il termine corretto tra le quattro opzioni.</p>
+    <p class="loc" id="q-loc"></p>
+    <p class="def" id="q-def"></p>
+    <div class="options" id="q-options"></div>
+    <div class="quiz-actions">
+      <button id="q-next" class="primary" type="button">Prossimo</button>
+    </div>
+  </div>
+
+  <p class="note">Le voci contese sono segnalate dal bordo e dall'etichetta a margine: la definizione riassume un'interpretazione che il capitolo discute, non un dato pacifico.</p>
+
+<script>
+(function(){
+  var ENTRIES = [{"termine": "Rivoluzione industriale", "tipo": "ordinaria", "capitolo": "Lo spartiacque", "paragrafo": "Lo spartiacque, ricorre anche in Prima della Rivoluzione industriale", "definizione": "Il processo, avviato in Gran Bretagna dalla seconda metà del Settecento, che ruppe insieme i vincoli millenari dell'energia, della popolazione, del lavoro e del rapporto con la natura. Il manuale la accosta, per portata e non per necessità, alla rivoluzione neolitica: un mutamento enorme, non per questo un destino."}, {"termine": "rivoluzione neolitica", "tipo": "ordinaria", "capitolo": "Lo spartiacque", "paragrafo": "", "definizione": "Il passaggio, diecimila anni prima della rivoluzione industriale, in cui la specie umana smise di raccogliere il cibo che trovava e cominciò a produrlo. Il capitolo la richiama come unico altro momento paragonabile per ampiezza delle coordinate che cambia insieme: energia, popolazione, lavoro, rapporto con la natura."}, {"termine": "soglia malthusiana", "tipo": "ordinaria", "capitolo": "Lo spartiacque", "paragrafo": "", "definizione": "Il tetto demografico per cui la crescita della popolazione, in un'economia di antico regime, urtava presto contro la scarsità di cibo disponibile. È il primo dei vincoli che il capitolo elenca come saltati con la rivoluzione industriale."}, {"termine": "rivoluzione scientifica", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "apertura di capitolo", "definizione": "L'affermarsi, nel Seicento, di un'idea del sapere pubblica, verificabile e orientata all'utile, secondo il programma di Francis Bacon. Il capitolo tiene sospeso un nodo che riprenderà: le prime macchine della rivoluzione industriale non nasceranno da questa scienza teorica, ma dall'ingegno pratico di artigiani e meccanici."}, {"termine": "peste", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.1 La rivoluzione demografica", "definizione": "La malattia epidemica la cui scomparsa dall'Europa occidentale, nella prima metà del Settecento, contribuì al calo della mortalità alla base della crescita demografica. Il capitolo ne attribuisce la fine non solo a pratiche sanitarie come le quarantene, ma a un fattore prosaico, la sostituzione del legno con il mattone nell'edilizia, che allontanava i topi."}, {"termine": "chinino", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.1 La rivoluzione demografica", "definizione": "Il farmaco contro le febbri malariche che il capitolo cita, insieme all'ipecacuana e alla lotta al vaiolo, tra i progressi dell'arte medica settecentesca che ridussero la mortalità. Il testo avverte però di non sopravvalutarne il peso: la medicina dell'epoca restava largamente impotente, e il vaccino di Jenner arriva quando la crescita demografica è già avviata da decenni."}, {"termine": "campi aperti", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.2 La rivoluzione agricola inglese", "definizione": "Il sistema di gestione agraria (*open fields*), diffuso in gran parte dell'Inghilterra fino al Settecento, in cui i contadini vantavano diritti d'uso sulle terre comuni: spigolare, far pascolare il bestiame, raccogliere legna. È l'assetto che le enclosures smantellarono."}, {"termine": "maggese", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.2 La rivoluzione agricola inglese", "definizione": "Il riposo periodico che costringeva a lasciare improduttiva una parte dei campi per farne recuperare la fertilità. Il suo superamento, grazie alla quadruplice rotazione, è indicato dal capitolo come l'innovazione decisiva della rivoluzione agricola inglese."}, {"termine": "quadruplice rotazione", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.2 La rivoluzione agricola inglese", "definizione": "Il cosiddetto sistema di Norfolk, che alternava sullo stesso terreno cereali, foraggere come il trifoglio e radici come le rape, superando la necessità del maggese. Il capitolo ne sottolinea l'effetto a catena: più foraggio, più bestiame, più letame, rese cerealicole più alte."}, {"termine": "corporazioni di mestiere", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.3 La manifattura prima della fabbrica", "definizione": "Le associazioni che, fino al primo Settecento, imbrigliavano la manifattura urbana fissando metodi, quantità e salari, frenando ogni aumento della produzione. Il capitolo le presenta come il vincolo che spinse i mercanti a spostare la lavorazione nelle campagne, dando origine alla protoindustria."}, {"termine": "mercante-imprenditore", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.3 La manifattura prima della fabbrica", "definizione": "La figura attorno a cui ruotava il sistema del *putting-out*: acquistava la materia prima, la distribuiva alle famiglie contadine, ritirava il prodotto finito pagato a cottimo, e rivendeva sui mercati. Il suo profitto stava nella distanza tra il compenso minimo versato ai contadini e il prezzo di vendita."}, {"termine": "contadino-operaio", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.3 La manifattura prima della fabbrica", "definizione": "La figura ibrida, né del tutto contadina né del tutto operaia, che filava e tesseva in casa nelle pause del lavoro agricolo per integrare un reddito insufficiente. Il capitolo la userà come termine di paragone per misurare, più avanti, che cosa esattamente la fabbrica tolse: gli strumenti propri, l'autonomia sui tempi, l'unità della famiglia."}, {"termine": "diciotto operazioni distinte", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "Focus, 1.4 Le dottrine economiche", "definizione": "Il numero di fasi in cui, secondo l'esempio con cui Adam Smith apre l'*Indagine sulla ricchezza delle nazioni*, si scompone la fabbricazione di uno spillo. Il focus lo usa per introdurre la divisione del lavoro: un operaio da solo non arriverebbe a venti spilli al giorno, dieci operai specializzati ne producono quarantottomila."}, {"termine": "divisione del lavoro", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "Focus, 1.4 Le dottrine economiche", "definizione": "Per Smith, la fonte prima della ricchezza: frazionare la produzione in operazioni semplici e specializzate abbatte i costi, allarga i mercati e apre la strada alla meccanizzazione. Il focus ne mostra anche il rovescio, già intravisto da Smith stesso: l'operaio condannato a ripetere un unico gesto minimo."}, {"termine": "mano invisibile", "tipo": "contesa", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "Focus, 1.4 Le dottrine economiche", "definizione": "La figura con cui Smith descrive il meccanismo per cui, perseguendo ciascuno il proprio interesse egoistico in concorrenza con gli altri, gli individui produrrebbero senza volerlo il benessere della collettività: l'arricchimento del singolo come premessa, non ostacolo, del progresso della nazione.", "perche": "il focus mostra che la metafora non descrive un meccanismo neutro, ma fonda una conclusione politica precisa, l'arretramento dello Stato a poche funzioni essenziali, e una lettura morale della disuguaglianza: se il mercato si autoregola e genera benessere da sé, la disuguaglianza che produce smette di apparire ingiusta. La \"mano\" traveste da osservazione economica quella che è anche una tesi sul ruolo legittimo dello Stato, ed è il testo stesso a farne, poche righe dopo, «una rassicurazione potente» per gli imprenditori del tempo, non una semplice descrizione di come funziona il mercato."}, {"termine": "mercantilismo", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.4 Le dottrine economiche", "definizione": "La prima delle tre risposte del capitolo alla domanda sulla fonte della ricchezza: identifica la ricchezza con l'oro e i metalli preziosi, tratta il commercio come un gioco a somma zero, e affida allo Stato dazi, barriere doganali e monopoli come le manifatture reali di Colbert."}, {"termine": "fisiocrazia", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.4 Le dottrine economiche", "definizione": "La seconda risposta, nata in Francia con Quesnay e Turgot: sposta la fonte della ricchezza dal commercio alla terra, unica attività capace di produrre un \"prodotto netto\". Il capitolo ne segnala il fallimento politico sotto Turgot come primo segno che riforme di quella portata erano incompatibili con la monarchia assoluta."}, {"termine": "enclosures", "tipo": "ordinaria", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "1.2 La rivoluzione agricola inglese", "definizione": "Le recinzioni delle terre comuni inglesi, accelerate nel corso del Settecento: privatizzarono i campi aperti, concentrandoli nelle mani di grandi e medi proprietari, e trasformarono in braccianti o migranti i piccoli proprietari e i contadini poveri incapaci di sostenerne i costi. Il capitolo la presenta come trasformazione compiuta per una ragione immediata, aumentare rese e rendite, non come premessa consapevole dell'industria che sarebbe venuta."}, {"termine": "accumulazione originaria", "tipo": "contesa", "capitolo": "Prima della Rivoluzione industriale", "paragrafo": "da individuare in fase di scrittura definizione, Nodi storiografici", "definizione": "La formula, di origine marxiana, per cui il capitalismo nasce da una violenza fondativa: la separazione dei produttori dai propri mezzi di produzione, di cui le enclosures sarebbero l'episodio fondativo.", "perche": "il testo la presenta come formula marxiana che dà alla rivoluzione «un colpevole e un'origine», spiegandone la presa tenace al di là della fondatezza: non una descrizione neutra ma un racconto che carica le enclosures di un «peccato d'origine»."}, {"termine": "economia-mondo", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "apertura di capitolo", "definizione": "La fitta rete di scambi già strutturata su scala globale mentre i mercati interni restavano angusti: il grande commercio intercontinentale, compreso il commercio triangolare, che concentrava capitali nelle potenze capaci di controllarne le rotte, Gran Bretagna e Olanda in testa."}, {"termine": "crisi del Seicento", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "apertura di capitolo", "definizione": "Gli sconvolgimenti di carestie, guerre e peggioramento del clima che il secolo precedente aveva conosciuto in modo diseguale: spostò il baricentro economico dal Mediterraneo al Nord, indebolendo Spagna e Italia e rafforzando Olanda e Inghilterra. Il capitolo la usa come primo avvertimento contro le spiegazioni lineari: una crisi può essere, altrove, un'occasione."}, {"termine": "rivoluzione agricola", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "apertura di capitolo, ricorre in 1.2", "definizione": "La riorganizzazione delle campagne inglesi nel Settecento, imperniata sulle enclosures e sulla quadruplice rotazione. Il capitolo mette in guardia dal chiamarla \"presupposto\" della rivoluzione industriale: chi la compì lo fece per aumentare rese e rendite, non in vista di un'industria che ancora non esisteva."}, {"termine": "protoindustria", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "apertura di capitolo, sviluppata in 1.3", "definizione": "Il sistema, detto anche *putting-out*, con cui la manifattura tessile si produceva a domicilio prima della fabbrica: telai e filatoi di proprietà di chi li usava, ritmi dettati dalle stagioni, non dal sorvegliante. Il capitolo la presenta come un limite di produttività contro cui il sistema si arenò, aprendo la strada alla meccanizzazione."}, {"termine": "carbone fossile", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.1 La rivoluzione industriale come rottura epocale", "definizione": "La riserva di energia accumulata in ere geologiche che ruppe il tetto energetico rimasto fisso per millenni. Il capitolo lo indica come la prima delle quattro rotture che definiscono la rivoluzione industriale come tale, non come semplice perfezionamento tecnico."}, {"termine": "proletario", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.1 La rivoluzione industriale come rottura epocale, ricorre in 2.6", "definizione": "Il lavoratore che, a differenza del contadino-operaio, non possiede più gli strumenti del proprio lavoro e non ha che la propria forza-lavoro da vendere. Il capitolo lo fa nascere dalla seconda delle quattro rotture: le macchine, troppo grandi e costose, diventano proprietà del capitalista."}, {"termine": "navetta volante", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.2 Il settore trainante, Focus", "definizione": "Il congegno brevettato da John Kay nel 1733 che accelerò la tessitura a mano. Il focus la presenta come l'origine dello squilibrio, non di un'idea astratta, che innescò la ricerca di soluzioni per la filatura: un tessitore veloce divorava più filo di quanto la filatura manuale potesse fornirgli."}, {"termine": "spinning jenny", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.2 Il settore trainante, Focus", "definizione": "La «giannetta» messa a punto tra il 1764 e il 1765 da James Hargreaves: azionata a mano, permetteva a un solo lavoratore di far girare molti fusi insieme. Piccola e mossa dalla forza umana, poté restare nelle case dei filatori, moltiplicando il lavoro senza spostarlo."}, {"termine": "water frame", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.2 Il settore trainante, Focus", "definizione": "Il filatoio idraulico brevettato nel 1769 da Richard Arkwright, mosso non dal braccio ma dall'acqua. Il focus ne fa il vero salto: legata alla corrente di un fiume, la macchina non poteva più stare in una casa, e la sua collocazione in grandi edifici lungo i corsi d'acqua diede origine, come conseguenza tecnica e non come idea, ai primi stabilimenti."}, {"termine": "spinning mule", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.2 Il settore trainante, Focus", "definizione": "Il «mulo» ideato nel 1779 da Samuel Crompton, che incrociava i rulli del water frame e il carrello mobile della jenny, producendo un filo insieme resistente e sottile. Divenne la macchina standard dell'industria cotoniera inglese."}, {"termine": "telaio meccanico", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.2 Il settore trainante, Focus", "definizione": "Il telaio progettato da Edmund Cartwright nel 1785, che riportò la meccanizzazione alla tessitura dopo che la filatura, meccanizzata per prima, aveva rovesciato lo squilibrio iniziale producendo più filo di quanto si potesse tessere a mano."}, {"termine": "macchina a vapore", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.1, sviluppata in 2.3 Carbone e vapore", "definizione": "Il congegno che il capitolo rifiuta di trattare come sinonimo della rivoluzione industriale: nata come pompa da miniera con Newcomen nel 1712, diventa fonte di moto rotatorio continuo solo con i perfezionamenti di Watt, liberando l'energia dalla vicinanza a un corso d'acqua."}, {"termine": "condensatore separato", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.3 Carbone e vapore", "definizione": "L'innovazione capitale con cui James Watt, tra il 1769 e il 1784, ridusse enormemente lo spreco di combustibile della macchina a vapore. Il capitolo la indica come il dettaglio tecnico da cui discese una conseguenza più profonda: la trasformazione del dispositivo in fonte di moto rotatorio continuo."}, {"termine": "coke", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.3 Carbone e vapore", "definizione": "Il combustibile ricavato distillando il carbone fossile, che Abraham Darby impiegò negli altiforni dal 1709 ottenendo temperature che il carbone di legna non raggiungeva. Fu la prima delle due innovazioni che sciolsero il nodo della scarsità di ferro inglese."}, {"termine": "puddellaggio", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.3 Carbone e vapore", "definizione": "Il procedimento brevettato da Henry Cort nel 1783-84, che purificava la ghisa ricavandone ferro dolce e lavorabile anche dal minerale inglese di qualità mediocre. Il capitolo lo lega ai numeri che \"esplosero\": la produzione di ghisa quasi decuplicò tra il 1788 e il 1825."}, {"termine": "Gloriosa Rivoluzione", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.4 Il caso inglese", "definizione": "Il mutamento costituzionale del 1688-89 da cui la Gran Bretagna uscì con un assetto parlamentare che spuntò le armi dell'assolutismo. Il capitolo la presenta non come dettaglio istituzionale ma come cornice di regole, tutela della proprietà, sicurezza degli investimenti, disciplina dei brevetti, entro cui la ricchezza poté muoversi."}, {"termine": "commercio triangolare", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "apertura di capitolo, ripreso in 2.5", "definizione": "Il circuito tra Europa, Africa e Americhe che moltiplicava i traffici marittimi e concentrava capitali nelle potenze che ne controllavano le rotte. In 2.5 il capitolo lo scompone nelle sue tre tratte, manufatti, esseri umani, materie prime, mostrandone il legame diretto con il basso prezzo del cotone inglese."}, {"termine": "colera", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.8 La questione sociale", "definizione": "L'epidemia che dal 1831 colpì soprattutto i poveri nei sobborghi industriali privi di fognature e acqua corrente. Il capitolo la elenca tra le conseguenze sanitarie di un habitat urbano degradato, insieme a tifo e tubercolosi."}, {"termine": "società di mutuo soccorso", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "Le prime organizzazioni stabili con cui i lavoratori, sconfitto il luddismo, raccolsero quote tra iscritti per assistersi in caso di malattia, infortunio o disoccupazione. Il capitolo le presenta come il luogo in cui, attraverso il contatto quotidiano, maturò la percezione di una condizione comune di classe."}, {"termine": "Trade Unions", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "I sindacati nati in Gran Bretagna dopo la legalizzazione delle associazioni operaie nel 1824, il cui strumento caratteristico divenne lo sciopero. Il capitolo ne segna la crescita fino all'organismo nazionale del 1868, il Trade Unions Congress."}, {"termine": "sciopero", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "L'astensione collettiva dal lavoro per costringere i padroni a trattare su salari e orari, strumento delle Trade Unions. Il capitolo ne sottolinea la natura organizzata e non istintiva: chi la rompeva, il «crumiro», diventava agli occhi degli operai il traditore per eccellenza."}, {"termine": "cartismo", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "Il movimento che tra il 1838 e il 1848 portò centinaia di migliaia di lavoratori a chiedere, con petizioni di massa, una «Carta del popolo» per il suffragio universale maschile. Il capitolo lo presenta come il momento in cui la rivendicazione del salario si fa rivendicazione del voto."}, {"termine": "Factory Acts", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "I provvedimenti britannici, dal 1802 e poi negli anni Trenta e Quaranta, che ridussero l'orario di lavoro nei settori più massacranti. Il capitolo li presenta come i primi interventi statali, di carattere paternalistico, a proteggere le «mezze forze», donne e bambini."}, {"termine": "Public Health Act", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "La legge britannica del 1848 che istituì i primi uffici sanitari incaricati di acque e fognature. Il capitolo la lega alla paura delle epidemie più che a un soprassalto di generosità dello Stato."}, {"termine": "liberismo", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "1.4, ripreso in 2.10 La fede nel progresso", "definizione": "La terza risposta alla domanda sulla fonte della ricchezza, destinata a imporsi: affida al mercato il compito di regolare l'economia, diffida dello Stato, individua nel lavoro la fonte del valore. In 2.10 il capitolo ne mostra la funzione ideologica: dà al profitto dell'imprenditore la dignità di un servizio reso alla collettività."}, {"termine": "positivismo", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.10 La fede nel progresso", "definizione": "La mentalità diffusa nella seconda metà dell'Ottocento secondo cui l'unica conoscenza valida è quella scientifica, e i suoi metodi vanno estesi a ogni campo della vita sociale. Il capitolo lo indica, insieme al liberismo, come una delle due impalcature che diedero forma teorica alla fede ottocentesca nel progresso."}, {"termine": "selezione naturale", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.10 La fede nel progresso", "definizione": "Il meccanismo darwiniano per cui sopravvivono gli individui meglio adatti all'ambiente. Il capitolo la presenta come teoria rigorosamente biologica prima di mostrarne lo slittamento verso il darwinismo sociale, un'operazione che qualifica come tale, non come sviluppo naturale della teoria."}, {"termine": "plusvalore", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.11 I socialismi", "definizione": "Per Marx, la differenza non pagata tra il valore che l'operaio produce con il proprio lavoro e il salario che riceve, di cui il capitalista si appropria come fonte del profitto. Il capitolo ne sottolinea l'implicazione: lo sfruttamento non è un abuso di padroni cattivi, è il meccanismo stesso della produzione capitalistica."}, {"termine": "Prima Internazionale", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "Focus, movimento operaio", "definizione": "L'associazione fondata nel 1864 per unire i movimenti operai dei vari paesi. Il focus la presenta come il luogo del primo tentativo di unione e, insieme, della prima grande frattura, quella tra Marx e Bakunin sull'identità stessa del soggetto rivoluzionario."}, {"termine": "Seconda Internazionale", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "Focus, movimento operaio", "definizione": "L'organizzazione fondata nel 1889, con cui il marxismo divenne l'ideologia ufficiale del movimento operaio europeo. Il focus ne segnala il paradosso: il trionfo coincise con lo scarto tra le previsioni di Marx e i fatti, da cui nacque il revisionismo di Bernstein."}, {"termine": "revisionismo", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "Focus, movimento operaio", "definizione": "La proposta di Eduard Bernstein di abbandonare l'idea della rivoluzione violenta, perseguendo il miglioramento delle condizioni operaie per la via delle riforme dentro il sistema democratico. Il focus la presenta come risposta a uno scarto constatato: il crollo del capitalismo previsto da Marx non stava arrivando."}, {"termine": "luddismo", "tipo": "contesa", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "Il movimento di protesta operaia del primo Ottocento inglese, culminato nel biennio 1811-1812, che si esprimeva distruggendo i telai meccanici nelle fabbriche.", "perche": "il testo apre smontando esplicitamente la lettura corrente («artigiani ottusi spaventati dal nuovo») come quella che «li liquida» ignorando ciò che dicevano loro stessi: il termine porta un giudizio di irrazionalità che il capitolo contesta, spiegando invece la distruzione dei telai come l'unica forma di pressione disponibile in un'Inghilterra dove la legge proibiva ogni associazione operaia."}, {"termine": "darwinismo sociale", "tipo": "contesa", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.10 La fede nel progresso", "definizione": "L'estensione, operata da Herbert Spencer, delle leggi della selezione naturale darwiniana alla storia delle nazioni e delle classi, per cui competizione e conflitto sarebbero i mezzi necessari con cui i gruppi «più adatti» soppiantano i «più deboli».", "perche": "il testo mostra lo «slittamento» con cui Spencer strappò una teoria biologica al suo terreno per convertirla in giustificazione dell'ordine esistente e della dominazione coloniale: il nome traveste da scienza una legittimazione dei rapporti di forza."}, {"termine": "socialismo utopistico", "tipo": "contesa", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.11 I socialismi", "definizione": "L'etichetta con cui si designano i primi pensatori socialisti del secolo, Saint-Simon, Owen, Fourier, fiduciosi che bastasse mostrare con la propaganda e con l'esempio la razionalità del proprio modello per convincere l'intera società ad adottarlo.", "perche": "il testo mostra che l'etichetta fu un conio polemico di Marx per relegare Owen, Fourier e Saint-Simon nel sogno benintenzionato e riservare a sé il «socialismo scientifico»: la parola con cui li ricordiamo è quella scelta dal loro critico."}, {"termine": "socialismo scientifico", "tipo": "contesa", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.11 I socialismi", "definizione": "L'etichetta con cui Marx definì il proprio socialismo, fondato non sull'argomento che il capitalismo dovrebbe essere sostituito perché ingiusto, ma sulla dimostrazione che sarà sostituito perché condannato dalle proprie contraddizioni interne.", "perche": "il rovescio dello stesso conio: il testo segnala che l'aggettivo «scientifico» non descrive, rivendica, contrapponendosi ad «utopistico» come un'arma nella stessa mossa retorica."}, {"termine": "classi pericolose", "tipo": "contesa", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.9 Le prime reazioni", "definizione": "L'espressione con cui la mentalità borghese indicava i lavoratori sradicati dei sobborghi industriali, temuti come fonte di disordine e di epidemie.", "perche": "il testo la registra tra virgolette come categoria della paura borghese, saldata al timore delle epidemie che «risalivano» verso i quartieri benestanti: nomina i poveri dal punto di vista di chi li teme, giudizio travestito da descrizione sociale."}, {"termine": "piantagioni schiaviste d'America", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.2 Il settore trainante, sviluppato in 2.5", "definizione": "La fonte del cotone grezzo che affluiva in Inghilterra a basso costo. Il capitolo le indica già in 2.2 come una delle condizioni del primato tessile britannico, rinviando a 2.5 la misura di «tutto il peso» di quel legame."}, {"termine": "Liverpool-Manchester", "tipo": "ordinaria", "capitolo": "La prima rivoluzione industriale", "paragrafo": "2.3 Carbone e vapore", "definizione": "La linea ferroviaria aperta nel 1830, la prima a unire due città con un servizio regolare di merci e passeggeri. Il capitolo la lega alla domanda di ferro e carbone che ne triplicò la produzione nazionale in vent'anni."}, {"termine": "schiavitù", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "apertura di capitolo, sviluppata in 2.5 nel capitolo precedente", "definizione": "Il sistema di lavoro coatto su cui poggiava la coltivazione del cotone grezzo esportato in Inghilterra. Il capitolo la richiama in apertura come uno dei debiti già saldati dal racconto, insieme alla questione sociale, prima di passare a ciò che il primo capitolo non poteva ancora prevedere di sé."}, {"termine": "questione sociale", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "apertura di capitolo, sviluppata in 2.8 nel capitolo precedente", "definizione": "Il nome con cui i contemporanei registrarono la novità della miseria industriale: non la povertà in sé, ma il fatto che diventasse un problema da spiegare, perché conviveva con una ricchezza nuova e visibile nelle stesse città. Il capitolo la richiama come premessa già acquisita del racconto."}, {"termine": "Stato", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.1 Arrivare dopo", "definizione": "Il motore che, dove le condizioni di partenza erano sfavorevoli, prese il posto dell'iniziativa privata spontanea che in Inghilterra aveva bastato a sé stessa: i governi si fecero promotori diretti dello sviluppo, progettando ferrovie, gestendo miniere, varando leggi a tutela delle società per azioni. Il capitolo indica questo rovesciamento, l'industria figlia della mano pubblica invece che di quella privata, come il tratto che accomuna quasi tutti i paesi arrivati dopo la Gran Bretagna."}, {"termine": "Zollverein", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.1 Arrivare dopo", "definizione": "L'unione doganale tedesca del 1834, che unificò il mercato interno abbattendo le barriere tra gli staterelli. Il capitolo la indica come una delle due leve, insieme all'istruzione tecnica, che permisero alla Germania di accelerare dopo un avvio tardivo."}, {"termine": "sistema americano di fabbrica", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.1 Arrivare dopo", "definizione": "Il modello produttivo statunitense fondato su macchine utensili di precisione che producevano parti standardizzate e intercambiabili, nato dalla scarsità di manodopera che gli Stati Uniti trasformarono in stimolo. Il capitolo lo presenta come la premessa diretta della futura catena di montaggio."}, {"termine": "zaibatsu", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.1 Arrivare dopo", "definizione": "I colossi industriali e finanziari giapponesi, come Mitsubishi e Mitsui, nati quando lo Stato dell'era Meiji cedette a prezzi vantaggiosi a pochi grandi imprenditori le industrie pesanti che aveva fondato e finanziato in prima persona."}, {"termine": "svantaggio del pioniere", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.1 Arrivare dopo, sviluppato nel Focus «Il sorpasso»", "definizione": "Il paradosso per cui chi arriva primo si trova, in un secondo momento, prigioniero del proprio successo precoce: gli impianti costruiti per la prima rivoluzione industriale diventano un peso quando arrivano le tecnologie della seconda, perché rendono ancora e nessuno ha l'urgenza di sostituirli."}, {"termine": "libero scambio", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.1 Arrivare dopo, sviluppato nel Focus «Il sorpasso»", "definizione": "Il principio a cui la Gran Bretagna restò fedele mentre gli altri paesi, colpiti dalla caduta dei prezzi, alzavano dazi protettivi. Il Focus lo indica come una delle cause del sorpasso: la Gran Bretagna ne fu danneggiata due volte, sugli sbocchi esteri sbarrati e in casa dalla concorrenza libera di entrare."}, {"termine": "Bayer e Siemens", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Focus «Il sorpasso»", "definizione": "I colossi industriali tedeschi che il Focus indica come frutto della sinergia tra scuole tecniche, laboratori e banche miste: l'esempio concreto del metodo con cui la Germania costruì il proprio sorpasso nei settori nuovi."}, {"termine": "Krupp", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Focus «Il sorpasso»", "definizione": "Le acciaierie della Ruhr che il Focus cita come dominatrici dei mercati tedeschi dell'acciaio, protette dai dazi di Bismarck: un caso concreto della strategia industriale che il capitolo attribuisce alla Germania di fine secolo."}, {"termine": "Standard Oil", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Focus «Il sorpasso», ripresa in 3.2 e 3.5", "definizione": "Il trust monopolistico di Rockefeller, citato come esempio statunitense di capitalismo manageriale nel Focus, poi come pioniera del petrolio in 3.2, infine come «l'esempio che riassume tutti» le forme di concentrazione, cartello, trust, holding, in 3.5."}, {"termine": "Martin-Siemens", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.2 Scienza e industria", "definizione": "Il forno che, insieme al convertitore di Bessemer e al procedimento Gilchrist-Thomas, permise tra gli anni Cinquanta e Settanta dell'Ottocento di produrre acciaio di qualità in enormi quantità e a basso costo, aprendo l'epoca dei grattacieli e delle grandi architetture di ferro."}, {"termine": "Bayer", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.2 Scienza e industria", "definizione": "L'azienda chimica tedesca che il capitolo cita come esempio dei farmaci di sintesi, tra cui l'aspirina, nati dal legame stretto tra laboratori universitari e fabbriche che definì il primato tedesco nella chimica."}, {"termine": "elettricità", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.2 Scienza e industria", "definizione": "Il settore che il capitolo presenta come il più spettacolare della seconda rivoluzione industriale: da curiosità di laboratorio, con Volta e Faraday, a forza motrice e luce di massa solo quando dinamo e generatori la resero disponibile su vasta scala."}, {"termine": "Edison", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.2 Scienza e industria", "definizione": "L'inventore della lampadina che nel 1879 segnò, per il capitolo, il salto dell'elettricità verso l'uso di massa: da lì vennero le centrali, i tram, e una rivoluzione delle comunicazioni con telefono, grammofono e cinematografo."}, {"termine": "motore a scoppio", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.2 Scienza e industria", "definizione": "Il motore che, a differenza della macchina a vapore, brucia il combustibile al proprio interno; montato su ruote da Daimler e Benz nel 1885, diede vita alle prime automobili. Il capitolo avverte di non sopravvalutarne la portata immediata: a fine Ottocento il petrolio costava ancora dalle cinque alle dieci volte più del carbone."}, {"termine": "Società per Azioni", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.3 Il capitalismo organizzato", "definizione": "Lo strumento che frazionava la proprietà tra una moltitudine di sottoscrittori, permettendo di raccogliere i capitali enormi richiesti dai nuovi settori. Il capitolo la presenta come uno dei due strumenti, insieme alla banca, con cui il capitalismo rispose alla pressione della crisi del 1873."}, {"termine": "capitalismo finanziario", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.3 Il capitalismo organizzato", "definizione": "La fusione tra capitale bancario e capitale industriale, non più due mondi distinti ma un intreccio in cui le banche miste acquistano quote delle aziende che finanziano e siedono nei loro consigli di amministrazione. Il capitolo ne indica l'effetto: concentrare in poche mani un potere prima disperso."}, {"termine": "manager", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.3 Il capitalismo organizzato", "definizione": "Il dirigente di professione, tecnico e stipendiato, che guida l'impresa quando la proprietà, polverizzata tra migliaia di azionisti, si separa dalla direzione. Il capitolo lo presenta come figura che apre una questione destinata ad attraversare tutto il secolo successivo: chi controlli davvero le grandi imprese."}, {"termine": "capitalismo manageriale", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Focus «Il sorpasso», sviluppato in 3.3", "definizione": "Il modello, attribuito dal capitolo soprattutto agli Stati Uniti, in cui le imprese giganti dovettero inventare una direzione separata dalla proprietà per potersi governare. In 3.3 diventa uno dei due fenomeni, insieme al capitalismo finanziario, con cui il mercato rispose alla propria crescita."}, {"termine": "settore terziario", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.3 Il capitalismo organizzato", "definizione": "Il comparto di lavoro non manuale, impiegati, contabili, ingegneri, esperti di vendita, di cui il capitolo indica l'ascesa come primo grande motore di espansione, legato alla nascita dei colletti bianchi."}, {"termine": "capitale monopolistico", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "La fase, detta anche oligopolistica, in cui pochi grandi gruppi si spartiscono il mercato aggirando di fatto la libera concorrenza. Il capitolo la presenta come risposta diretta alla crisi del 1873: gli imprenditori smisero di combattersi e cominciarono ad allearsi."}, {"termine": "cartello", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "La prima delle tre forme di concentrazione che il capitolo distingue: un accordo tra aziende indipendenti dello stesso settore per non farsi concorrenza, fissando prezzi minimi e quote di produzione. Le imprese restano autonome."}, {"termine": "trust", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "La seconda forma: una fusione vera e propria di imprese prima autonome sotto un'unica direzione. Il capitolo ne indica la Standard Oil come esempio che riassume tutte e tre le forme insieme."}, {"termine": "holding", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "La terza forma: una società che controlla altre imprese possedendone i pacchetti azionari, senza fondersi con esse. Il capitolo la distingue nettamente dal cartello e dal trust per il meccanismo di controllo, non di accordo o fusione."}, {"termine": "taylorismo", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "L'«organizzazione scientifica del lavoro» elaborata da Frederick Winslow Taylor a cavallo tra Otto e Novecento, fondata su parcellizzazione e separazione tra ideazione ed esecuzione. Il capitolo lo presenta come il compimento di un processo di espropriazione che segue fin dall'inizio: dopo il tempo, tolto in 2.7, il taylorismo toglie all'operaio anche il proprio sapere."}, {"termine": "parcellizzazione", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "Il primo dei due principi tayloristi: il processo produttivo scomposto in operazioni elementari, misurate e cronometrate per eliminare ogni tempo morto. Il capitolo la lega direttamente alla nascita della figura dell'operaio massa."}, {"termine": "catena di montaggio", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "Il metodo applicato da Henry Ford dal 1913, in cui non è l'operaio a spostarsi verso il pezzo ma il pezzo a scorrere fino a lui a un ritmo deciso dalla direzione. Il capitolo ne registra il doppio effetto: l'abbattimento dei tempi e dei prezzi, e il logoramento di chi la eseguiva."}, {"termine": "separazione tra ideazione ed esecuzione", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "Il secondo, più profondo, dei due principi tayloristi: la conoscenza dell'operaio di mestiere viene espropriata e concentrata negli uffici dei tecnici, lasciandogli solo l'esecuzione in obbedienza passiva di gesti pensati da altri."}, {"termine": "Meiji", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.1 Arrivare dopo", "definizione": "L'era, avviata nel 1868, in cui lo Stato giapponese smantellò in pochi anni il sistema feudale e si fece promotore assoluto dell'industrializzazione, fondando e finanziando esso stesso le prime industrie pesanti prima di cederle a pochi grandi imprenditori."}, {"termine": "grandi magazzini", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Capitolo 3, Focus «I templi del consumo»", "definizione": "Le grandi strutture commerciali sorte nelle città di fine Ottocento, il Bon Marché a Parigi, Wertheim a Berlino, che vendevano di tutto sotto un solo tetto e rivoluzionarono il commercio prima ancora dei costumi. Il focus le presenta come il luogo in cui il capitalismo compì il rovesciamento decisivo della seconda rivoluzione industriale: trasformare le masse che lavoravano in masse che consumano."}, {"termine": "Bon Marché", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Capitolo 3, Focus «I templi del consumo»", "definizione": "Il grande magazzino parigino che il focus cita come primo esempio della nuova forma commerciale, insieme al Wertheim di Berlino: sorto per vendere in un solo luogo merci di ogni tipo, comprate in enormi volumi a prezzi bassissimi dai produttori."}, {"termine": "prezzo fisso", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Capitolo 3, Focus «I templi del consumo»", "definizione": "L'abolizione della contrattazione nei grandi magazzini, un gesto antico che il nuovo commercio fece sparire. Il focus ne segnala l'ambivalenza: libera il cliente dalla fatica di mercanteggiare, ma lo rende anche più passivo, un visitatore dentro un ambiente pensato per lui."}, {"termine": "pagamento a rate", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Capitolo 3, Focus «I templi del consumo»", "definizione": "Il sistema che, insieme alla vendita per catalogo, allargò il mercato dei grandi magazzini ai ceti medi e popolari, rendendo accessibili beni durevoli altrimenti fuori portata."}, {"termine": "feticismo della merce", "tipo": "contesa", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Capitolo 3, Focus «I templi del consumo»", "definizione": "L'aura di significato e potere evocativo di cui la merce viene rivestita nella messa in scena delle vetrine, indipendente dalla sua utilità e slegata, agli occhi di chi la desidera, dalle condizioni in cui è stata prodotta.", "perche": "l'espressione è di Marx, ripresa poi dagli studiosi dei grandi magazzini. Non è una descrizione neutra ma una lente interpretativa: il focus la usa per sostenere che la vetrina mostra il sogno e nasconde la fabbrica, un giudizio sul meccanismo del desiderio, non una semplice constatazione di come le merci vengono esposte."}, {"termine": "pubblicità moderna", "tipo": "ordinaria", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Capitolo 3, Focus «I templi del consumo»", "definizione": "La trasformazione dell'avviso commerciale in scienza della persuasione, con uffici, marchi e identità visive, cresciuta sulla scoperta che una merce standardizzata non possiede di per sé alcun fascino. Il focus la lega alla vertiginosa crescita della spesa pubblicitaria statunitense tra fine Ottocento e anni Venti del Novecento."}, {"termine": "colletti bianchi", "tipo": "contesa", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.3 Il capitalismo organizzato", "definizione": "Il ceto sociale distinto dal proletariato di fabbrica, impiegati, contabili, tecnici, che il Novecento chiamò così in contrapposizione ai «colletti blu» degli operai.", "perche": "il testo ne data e attribuisce il conio (Charles Wright Mills, in contrapposizione ai «colletti blu»): un'espressione che nasce già come classificazione sociale contrapposta, non come semplice descrizione di un mestiere."}, {"termine": "operaio massa", "tipo": "contesa", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "3.5 La concentrazione", "definizione": "La figura del lavoratore parcellizzato, ripetitivo, dequalificato e intercambiabile prodotta dal taylorismo e dalla catena di montaggio: svuotato di sapere pratico e di autonomia, ridotto ad appendice della macchina.", "perche": "il testo la introduce come figura-esito dell'espropriazione tayloristica, non categoria neutra: nomina un giudizio sul lavoro svuotato di sapere e autonomia, il compimento del processo che il capitolo segue dall'inizio."}, {"termine": "officina del mondo", "tipo": "contesa", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Il filo del discorso", "definizione": "L'espressione con cui si indicava la Gran Bretagna a metà Ottocento, quando un solo paese produceva per tutti gli altri.", "perche": "il testo isola l'espressione («e la parola dice tutto») per usarla come immagine di un primato che si crederà eterno e non lo è: una formula celebrativa d'epoca di cui il capitolo smonta la promessa di durata."}, {"termine": "grande depressione", "tipo": "contesa", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "Il filo del discorso, sviluppata in 3.4", "definizione": "Il nome con cui i contemporanei chiamarono il lungo periodo di difficoltà economica tra il 1873 e il 1896.", "perche": "il testo dichiara la parola fuorviante, «inganna più di ogni altra», perché nomina come crollo un ventennio in cui la produzione crebbe: il battesimo dei contemporanei dice lo spavento degli imprenditori, non lo stato dell'economia."}, {"termine": "industria culturale", "tipo": "contesa", "capitolo": "La seconda rivoluzione industriale", "paragrafo": "primo nodo storiografico, «I consumi di massa: liberazione o manipolazione?»", "definizione": "Il concetto con cui la Scuola di Francoforte descrive il consumo di massa come strumento di conformismo e controllo sociale.", "perche": "il testo la attribuisce ai pensatori della Scuola di Francoforte come strumento di una tesi precisa, il consumo come conformismo e controllo: non un settore economico ma un concetto critico che porta il proprio giudizio."}];
+  var CAPITOLI = [{"nome": "Lo spartiacque", "col": "#6b5545"}, {"nome": "Prima della Rivoluzione industriale", "col": "#b0872e"}, {"nome": "La prima rivoluzione industriale", "col": "#9d4a2b"}, {"nome": "La seconda rivoluzione industriale", "col": "#3d5566"}];
+
+  var state = { q:'', capitolo:null, quiz:false, quizEntry:null, quizOptions:null, quizButtons:null, answered:false };
+
+  var searchEl=document.getElementById('search');
+  var chapChips=document.getElementById('chapChips');
+  var countEl=document.getElementById('count');
+  var listEl=document.getElementById('list');
+  var quizToggle=document.getElementById('quizToggle');
+  var quizEl=document.getElementById('quiz');
+
+  function norm(s){
+    return (s||'').toLowerCase()
+      .replace(/[àáâä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
+      .replace(/[òóôö]/g,'o').replace(/[ùúûü]/g,'u');
+  }
+
+  var STOPWORDS = {'di':1,'da':1,'del':1,'della':1,'dei':1,'delle':1,'dello':1,'dell':1,
+    'la':1,'le':1,'lo':1,'il':1,'gli':1,'un':1,'una':1,'uno':1,'e':1,'ed':1,'a':1,'ad':1,
+    'tra':1,'fra':1,'con':1,'per':1,'su':1,'in':1,'al':1,'alla':1,'allo':1,'agli':1,'alle':1,
+    'come':1,'che':1,'non':1,'più':1,'piu':1};
+
+  function significantWords(term){
+    return norm(term).split(/\s+/).filter(function(w){ return w.length>=4 && !STOPWORDS[w]; });
+  }
+  function tooSimilar(a,b){
+    var wa=significantWords(a.termine), wb=significantWords(b.termine);
+    for(var i=0;i<wa.length;i++){ if(wb.indexOf(wa[i])>-1) return true; }
+    return false;
+  }
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+  function pickDistractors(correct){
+    var used = {}; used[correct.termine]=true;
+    var picked = [];
+    function take(list){
+      list.forEach(function(e){
+        if(picked.length<3 && !used[e.termine]){ picked.push(e); used[e.termine]=true; }
+      });
+    }
+    take(shuffle(ENTRIES.filter(function(e){
+      return e.capitolo===correct.capitolo && !used[e.termine] && !tooSimilar(correct,e);
+    })));
+    if(picked.length<3){
+      take(shuffle(ENTRIES.filter(function(e){
+        return e.capitolo!==correct.capitolo && !used[e.termine] && !tooSimilar(correct,e);
+      })));
+    }
+    if(picked.length<3){
+      take(shuffle(ENTRIES.filter(function(e){
+        return !used[e.termine];
+      })));
+    }
+    return picked;
+  }
+
+  function filtered(){
+    var q = norm(state.q);
+    return ENTRIES.filter(function(e){
+      if(state.capitolo && e.capitolo!==state.capitolo) return false;
+      if(!q) return true;
+      return norm(e.termine).indexOf(q)>-1 || norm(e.definizione).indexOf(q)>-1;
+    });
+  }
+
+  function capColor(nome){
+    for(var i=0;i<CAPITOLI.length;i++){ if(CAPITOLI[i].nome===nome) return CAPITOLI[i].col; }
+    return '#5b5346';
+  }
+
+  function buildChips(){
+    var html='';
+    html+='<button data-c="" aria-pressed="'+(state.capitolo===null)+'"><span class="dot" style="background:#5b5346"></span>Tutti</button>';
+    CAPITOLI.forEach(function(c){
+      html+='<button data-c="'+c.nome.replace(/"/g,'&quot;')+'" aria-pressed="'+(state.capitolo===c.nome)+'">'+
+        '<span class="dot" style="background:'+c.col+'"></span>'+c.nome+'</button>';
+    });
+    chapChips.innerHTML=html;
+    Array.prototype.forEach.call(chapChips.querySelectorAll('button'),function(b){
+      b.addEventListener('click',function(){
+        state.capitolo = b.getAttribute('data-c') || null;
+        buildChips(); renderList(); if(state.quiz) pickQuizEntry();
+      });
+    });
+  }
+
+  function card(e){
+    var div=document.createElement('div');
+    div.className='card '+e.tipo;
+    div.style.borderLeftColor = e.tipo==='contesa' ? '' : capColor(e.capitolo);
+    var loc = e.capitolo + (e.paragrafo ? ' · '+e.paragrafo : '');
+    var head=document.createElement('div'); head.className='head';
+    var h3=document.createElement('h3'); h3.textContent=e.termine; head.appendChild(h3);
+    if(e.tipo==='contesa'){
+      var tag=document.createElement('span'); tag.className='tag-contesa'; tag.textContent='contesa';
+      head.appendChild(tag);
+    }
+    div.appendChild(head);
+    var p=document.createElement('p'); p.className='loc'; p.textContent=loc; div.appendChild(p);
+    var d=document.createElement('p'); d.className='def'; d.textContent=e.definizione; div.appendChild(d);
+    if(e.tipo==='contesa' && e.perche){
+      var pc=document.createElement('div'); pc.className='perche';
+      var k=document.createElement('span'); k.className='k'; k.textContent='Perché è contesa';
+      pc.appendChild(k);
+      pc.appendChild(document.createTextNode(e.perche));
+      div.appendChild(pc);
+    }
+    return div;
+  }
+
+  function renderList(){
+    var items=filtered();
+    countEl.textContent = items.length+' di '+ENTRIES.length+' voci';
+    listEl.innerHTML='';
+    if(!items.length){
+      var e=document.createElement('p'); e.className='empty'; e.textContent='Nessuna voce corrisponde alla ricerca.';
+      listEl.appendChild(e);
+      return;
+    }
+    items.forEach(function(it){ listEl.appendChild(card(it)); });
+  }
+
+  function pool(){
+    return state.capitolo ? ENTRIES.filter(function(e){return e.capitolo===state.capitolo;}) : ENTRIES;
+  }
+
+  function pickQuizEntry(){
+    var p=pool();
+    if(!p.length){ state.quizEntry=null; state.quizOptions=null; state.answered=false; renderQuiz(); return; }
+    var cand;
+    if(p.length>1 && state.quizEntry){
+      do{ cand = p[Math.floor(Math.random()*p.length)]; } while(cand.termine===state.quizEntry.termine);
+    } else {
+      cand = p[Math.floor(Math.random()*p.length)];
+    }
+    state.quizEntry=cand;
+    state.quizOptions=shuffle([cand].concat(pickDistractors(cand)));
+    state.answered=false;
+    renderQuiz();
+  }
+
+  function selectOption(opt){
+    if(state.answered) return;
+    state.answered=true;
+    var correct=state.quizEntry;
+    state.quizButtons.forEach(function(ref){
+      ref.btn.disabled=true;
+      if(ref.opt.termine===correct.termine) ref.btn.classList.add('correct');
+      else if(ref.opt.termine===opt.termine) ref.btn.classList.add('wrong');
+    });
+  }
+
+  function renderQuiz(){
+    var locEl=document.getElementById('q-loc');
+    var defEl=document.getElementById('q-def');
+    var optsEl=document.getElementById('q-options');
+    var nextBtn=document.getElementById('q-next');
+
+    if(!state.quizEntry){
+      locEl.textContent='';
+      defEl.textContent='Nessuna voce disponibile per questo filtro.';
+      optsEl.innerHTML='';
+      nextBtn.disabled=true;
+      return;
+    }
+    var e=state.quizEntry;
+    locEl.textContent = e.capitolo + (e.paragrafo ? ' · '+e.paragrafo : '');
+    defEl.textContent = e.definizione;
+
+    optsEl.innerHTML='';
+    state.quizButtons=[];
+    state.quizOptions.forEach(function(opt){
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.className='option';
+      btn.textContent=opt.termine;
+      btn.addEventListener('click',function(){ selectOption(opt); });
+      optsEl.appendChild(btn);
+      state.quizButtons.push({btn:btn, opt:opt});
+    });
+    nextBtn.disabled=false;
+  }
+
+  document.getElementById('q-next').addEventListener('click',function(){
+    pickQuizEntry();
+  });
+
+  quizToggle.addEventListener('click',function(){
+    state.quiz=!state.quiz;
+    quizToggle.setAttribute('aria-pressed', state.quiz?'true':'false');
+    listEl.style.display = state.quiz ? 'none' : '';
+    quizEl.className = 'quiz'+(state.quiz?' show':'');
+    if(state.quiz) pickQuizEntry();
+  });
+
+  searchEl.addEventListener('input',function(){
+    state.q=searchEl.value;
+    renderList();
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

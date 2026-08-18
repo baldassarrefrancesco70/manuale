@@ -27,6 +27,8 @@ Le tredici colonie non formavano, alla vigilia della crisi, un blocco omogeneo. 
 
 Su questa varietà si innestava un dualismo che i coloni stessi non percepivano come contraddittorio. Sul piano economico l'impero imponeva un rigido **mercantilismo**: solo navi inglesi potevano toccare i porti americani, le merci dovevano transitare per la madrepatria, l'industria locale era scoraggiata per non fare concorrenza a quella britannica, un regime allentato solo dal fiorente contrabbando con i Caraibi. Sul piano politico, al contrario, si era consolidata un'autonomia senza pari nel mondo coloniale del tempo: sotto governatori di nomina regia, ogni colonia aveva sviluppato assemblee elettive che, nel tempo, avevano accumulato poteri sempre più ampi. I coloni, intrisi di cultura puritana, si pensavano come un "popolo eletto" impegnato in un "sacro esperimento": un'autopercezione che renderà tanto più insopportabile, dopo il 1763, ogni interferenza percepita come illegittima nel proprio autogoverno.
 
+<a id="infografica-1"></a>
+
 ![Le tredici colonie: tre economie, un doppio vincolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info1_Le_Tredici_Colonie_Americane.png)
 
 
@@ -54,6 +56,8 @@ Nel settembre 1774 dodici delle tredici colonie inviarono delegati a Filadelfia 
 
 Fu **Thomas Jefferson**, incaricato da un comitato di cinque delegati che comprendeva anche John Adams e Benjamin Franklin, a redigere il testo che il 4 luglio 1776 il Congresso approvò a Filadelfia: la **Dichiarazione d'indipendenza**. Il documento non nacque dal nulla: pochi giorni prima, il 12 giugno 1776, la Convenzione della Virginia aveva proclamato la propria Dichiarazione dei diritti, redatta da George Mason — il primo testo moderno sui diritti dell'uomo incorporato in una costituzione scritta, e modello diretto per l'estensore della dichiarazione nazionale.
 
+<a id="video-1"></a>
+
 {% embed url="https://youtu.be/YsTPX4ZRR3I" %}
 Video --- Dalla tassa di bollo alla rottura (1763-1776)
 {% endembed %}
@@ -69,6 +73,8 @@ Il preambolo enuncia un principio filosofico prima ancora di elencare un solo fa
 Alla premessa filosofica segue la parte più lunga del testo, un elenco dettagliato di accuse a Giorgio III: leggi rifiutate, assemblee sciolte, tribunali sottratti al controllo popolare, truppe mantenute in tempo di pace senza consenso, tasse imposte senza rappresentanza. Non è un'invettiva generica: è costruito come un atto d'accusa in forma quasi processuale, ogni capo formulato per dimostrare un pattern di comportamento tirannico, non un torto isolato. La struttura non è casuale: dopo aver stabilito nel preambolo che un governo perde legittimità quando viola sistematicamente i diritti dei governati, il documento deve dimostrare che questo è esattamente ciò che è accaduto, fatto per fatto.
 
 Il testo si chiude non con un appello ma con un atto performativo: la dichiarazione formale che le colonie unite sono, e di diritto devono essere, Stati liberi e indipendenti, sciolti da ogni fedeltà alla corona britannica. La forma stessa del testo, premessa filosofica, dimostrazione fattuale, atto di rottura, anticipa un modello retorico che altri, rivendicando la propria indipendenza in nome degli stessi principi, useranno contro chi quei principi aveva scritto per primo.
+
+<a id="artefatto-1"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/artefatti/artefatto1-logica-dichiarazione.html" %}
 Risorsa digitale --- Dentro la Dichiarazione: la logica di un testo
@@ -88,6 +94,8 @@ Il terzo fronte, quello delle popolazioni native, ha una storia diversa dalle pr
 {% endhint %}
 
 
+<a id="infografica-2"></a>
+
 ![Una promessa a chi? Le esclusioni della Dichiarazione](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/5/img/info2_Esclusioni_della_Dichiarazione_%281776%29.png)
 
 
@@ -103,6 +111,8 @@ Il dopoguerra non fu più clemente di quanto lo fosse stata la guerra. Nessuna d
 La libertà conquistata dai coloni e l'espropriazione subita dai nativi non furono due processi paralleli e indipendenti: furono la stessa espansione, letta da due lati opposti della stessa frontiera.
 {% endhint %}
 
+
+<a id="video-2"></a>
 
 {% embed url="https://youtu.be/RRLm28Vejlw" %}
 Video --- Promesse di guerra, tradimenti di pace

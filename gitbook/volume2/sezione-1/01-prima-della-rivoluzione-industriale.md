@@ -17,6 +17,8 @@ Nessuno di questi nodi, da solo o sommato agli altri, rendeva necessario ciò ch
 {% endhint %}
 
 
+<a id="artefatto-1"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/04-prerequisiti.html" %}
 Risorsa digitale --- Prima di cominciare
 {% endembed %}
@@ -35,15 +37,21 @@ Vale la pena soffermarsi su questa gerarchia di cause, perché smentisce un'atte
 
 Il quadro continentale, però, non è uniforme, e l'eccezione più vistosa è proprio il paese che di lì a poco sarà al centro del racconto. In **Inghilterra** la popolazione passò dai **6 milioni del 1740 agli oltre 14 del 1830**, ma a trainarla non fu il calo della mortalità, bensì un netto aumento della **natalità**. La regola europea, insomma, lì non vale. È una singolarità da tenere a mente, senza scioglierla subito in spiegazione: che il caso inglese si comporti in modo anomalo è un fatto da registrare adesso, non una prova da spendere in anticipo.
 
+<a id="artefatto-2"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/01-demografia.html" %}
 Risorsa digitale --- La popolazione che cresce
 {% endembed %}
 
 
+<a id="video-2"></a>
+
 {% embed url="https://youtu.be/Nbttq5rhOl4" %}
 Video --- La rivoluzione demografica
 {% endembed %}
 
+
+<a id="video-3"></a>
 
 {% embed url="https://youtu.be/4mV_WWeoFcE" %}
 Video --- Morire di meno, non nascere di più
@@ -62,6 +70,8 @@ Il primo mutamento fu nell'assetto della proprietà. Fino ad allora gran parte d
 _cfr. [approfondimento in Atlante, cartina 1 --- Recinzione dei campi comuni, 1700-1800](atlante.md#cartina-1)_
 
 
+<a id="artefatto-3"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/02-enclosures.html" %}
 Risorsa digitale --- Il villaggio prima e dopo
 {% endembed %}
@@ -75,6 +85,8 @@ Da questa somma di fattori venne un **balzo produttivo senza precedenti**, che a
 
 La stessa campagna che il capitale stava riorganizzando restava, nel frattempo, il luogo dove si produceva anche ciò che non era cibo, dentro le case, nelle pause del lavoro dei campi.
 
+<a id="video-4"></a>
+
 {% embed url="https://youtu.be/p5pGu9Pt8YM" %}
 Video --- Le enclosures
 {% endembed %}
@@ -87,6 +99,8 @@ Esisteva un'industria prima delle fabbriche, e funzionava rovesciando quasi ogni
 
 Alle sue origini c'è un problema di regole. Fino al primo Settecento la manifattura urbana era imbrigliata dalle **corporazioni** di mestiere, che fissavano metodi, quantità e salari, e in questo modo frenavano ogni aumento della produzione. Per aggirarle, i mercanti più intraprendenti spostarono la lavorazione nelle campagne, fuori dalla giurisdizione delle corporazioni, dove per giunta la manodopera era abbondante e costava meno. La figura attorno a cui ruota tutto è il **mercante-imprenditore**: acquistava la materia prima, la lana o il cotone grezzo, e la distribuiva alle famiglie contadine; queste filavano e tessevano in casa, poi il mercante ritirava il prodotto finito, pagava a cottimo, cioè in base alla quantità, e rivendeva sui mercati cittadini o internazionali. Il suo profitto stava tutto nella distanza tra il compenso minimo versato ai contadini e il prezzo di vendita.
 
+<a id="artefatto-4"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/03-putting-out.html" %}
 Risorsa digitale --- Il giro del mercante
 {% endembed %}
@@ -96,12 +110,16 @@ Nelle campagne il lavoro manifatturiero non sostituiva quello agricolo, vi si in
 
 Conviene fissare le differenze rispetto alla condizione operaia che verrà, perché sono nette e aiutano a misurare, più avanti, che cosa esattamente la fabbrica cambiò. Il contadino-operaio possedeva spesso i propri strumenti, il filatoio a ruota, il telaio a mano in legno, mentre il proletario di fabbrica venderà soltanto la propria forza-lavoro. Il lavoro domestico garantiva una notevole autonomia sui tempi, scanditi dalle stagioni e dalle esigenze familiari, senza sorvegliante e senza il moto ininterrotto di una macchina. E restava un'attività dell'intero nucleo familiare, che divideva i compiti senza strappare nessuno dal proprio ambiente. Sono le tre cose, gli strumenti, il tempo, la famiglia, che di lì a poco lo stabilimento meccanizzato azzererà.
 
+<a id="infografica-1"></a>
+
 ![Tre cose che la fabbrica cambia](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info2_Cambiamenti_della_Rivoluzione_Industriale.png)
 
 
 C'è anche una lettura di più largo respiro. Secondo storici come **Eric Hobsbawm**, fu proprio questo sistema disperso a covare il primo capitalismo industriale: il mercante-imprenditore, tenendo le fila di una produzione frammentata in migliaia di casolari e collegandola alle reti del commercio mondiale, accumulò i capitali e le competenze organizzative che sarebbero poi confluiti nell'industria. Non è un caso che intere regioni, lo Yorkshire in Inghilterra, le Fiandre, si siano arricchite così.
 
 Eppure il sistema portava dentro di sé il proprio limite. Alla vigilia della rivoluzione industriale la popolazione cresceva e i mercati si allargavano, e la domanda di merci finì per superare quanto il lavoro a domicilio potesse produrre. Le operazioni manuali erano lente, e i mercanti faticavano a controllare tempi e qualità di una manodopera sparsa per le campagne. Da questa strozzatura, e dalla spinta ad abbassare ancora i costi, nascerà l'idea di riunire macchine più grandi in un solo luogo, mosse da un'unica fonte di energia, l'acqua prima, il vapore poi. È la soglia della fabbrica, e con essa comincia un'altra storia, in cui il tessitore a mano, un tempo la più abile e indipendente delle figure del lavoro, sarà travolto.
+
+<a id="video-5"></a>
 
 {% embed url="https://youtu.be/Vog9V9EmdlU" %}
 Video --- La manifattura prima della fabbrica
@@ -113,6 +131,8 @@ Video --- La manifattura prima della fabbrica
 
 Tutte le grandi teorie economiche del Sette e Ottocento rispondono, in fondo, a una sola domanda: da dove viene la ricchezza. Sembra ovvia, e non lo è, perché la risposta che si dà a quella domanda decide tutto il resto, che cosa lo Stato debba fare, chi produca il valore, dove convenga investire. Nel giro di un secolo la stessa domanda riceve tre risposte incompatibili. Per i mercantilisti la ricchezza sta nel commercio e nell'oro che esso accumula; per i fisiocrati nella terra; per i liberisti nel lavoro. Seguire come la risposta si sposta, dal metallo al suolo alla fatica umana, è il modo migliore per capire il pensiero economico alla vigilia della rivoluzione industriale.
 
+<a id="infografica-2"></a>
+
 ![Una domanda, tre risposte](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/info1_teorie_economiche_sulla_ricchezza.png)
 
 
@@ -122,10 +142,14 @@ Tutte le grandi teorie economiche del Sette e Ottocento rispondono, in fondo, a 
 
 **Il liberismo.** La terza risposta è quella destinata a imporsi, e coincide con l'ideologia della borghesia capitalista che sta per prendere il centro della scena. Il liberismo affida al mercato, e al mercato soltanto, il compito di regolare l'economia, diffida dell'intervento dello Stato e fa del libero scambio internazionale la sua bandiera. La ricchezza, qui, non viene né dall'oro né dalla terra, ma dal **lavoro** umano e dalla sua organizzazione. Il pensatore che diede a questa idea la forma di un sistema fu lo scozzese **Adam Smith**, con l'*Indagine sulla natura e le cause della ricchezza delle nazioni* del **1776**, il testo che più di ogni altro fornì alla nuova classe imprenditoriale la sua sicurezza intellettuale e morale. Come Smith arrivi a fare del lavoro la sorgente del valore, e con quali strumenti, merita di essere visto da vicino.
 
+<a id="artefatto-5"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/06-dottrine.html" %}
 Risorsa digitale --- Da dove viene la ricchezza
 {% endembed %}
 
+
+<a id="video-6"></a>
 
 {% embed url="https://youtu.be/QJZjAw117Vw" %}
 Video --- Da dove viene la ricchezza
@@ -146,6 +170,8 @@ Attorno a questo nucleo Smith costruisce un intero sistema. La società è fatta
 L'effetto complessivo fu di tradurre la dinamica dura e disordinata del primo capitalismo in un modello ottimistico ed elegante, in cui la disuguaglianza generata dal mercato non appariva ingiusta, perché fondata sullo scambio di merci equivalenti e sulla rimozione dei vecchi vincoli corporativi e monarchici. Per gli imprenditori della prima rivoluzione industriale fu una rassicurazione potente, la certezza che **il loro profitto coincideva con il bene di tutti**. Che la stessa fabbrica di spilli mostri anche il rovescio di quel modello, l'operaio condannato a ripetere per la vita intera un unico gesto minimo, è qualcosa che Smith stesso intravide, e che il secolo successivo avrebbe collocato al centro della propria critica.
 {% endhint %}
 
+
+<a id="artefatto-6"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/05-spilli.html" %}
 Risorsa digitale --- La fabbrica di spilli

@@ -44,6 +44,8 @@ In Italia il trauma lasciò tracce profonde e contraddittorie. Nella memoria pop
 ## La crisi di fine secolo
 
 
+<a id="video-14"></a>
+
 {% embed url="https://youtu.be/97UP9ih2T2Q" %}
 Video --- La crisi di fine secolo
 {% endembed %}
@@ -86,6 +88,8 @@ Le conseguenze sul sistema creditizio furono invece più costruttive, almeno nel
 Lo scandalo della Banca Romana non fu il primo caso di intreccio tra finanza e politica nella storia italiana, né l'ultimo. Ma fu il primo a diventare un caso nazionale, a coinvolgere nomi di primo piano e a produrre conseguenze istituzionali durature. Lasciò nell'opinione pubblica una diffidenza verso la classe politica che si sarebbe sommata a quella già alimentata dal trasformismo, contribuendo a quel discredito delle istituzioni rappresentative che la crisi di fine secolo avrebbe portato al limite di rottura.
 {% endhint %}
 
+
+<a id="artefatto-8"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/timeline_crisi_fine_secolo.html" %}
 Risorsa digitale --- Timeline interattiva sulla crisi di fine secolo

@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Nazioni e nazionalismi &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Dodici nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai nodi storiografici della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "Vienna e il principio di nazionalità":"#b0872e",
+    "Moti e nazionalismo romantico":"#9d4a2b",
+    "La costruzione degli Stati nazionali: il caso tedesco":"#3d5566",
+    "Dal nazionalismo romantico al nazionalismo aggressivo":"#5c6b3d"
+  };
+  var CAPORDER = ["Vienna e il principio di nazionalità","Moti e nazionalismo romantico","La costruzione degli Stati nazionali: il caso tedesco","Dal nazionalismo romantico al nazionalismo aggressivo"];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"Vienna e il principio di nazionalità",
+      titolo:"La Restaurazione restaurò qualcosa?",
+      formulazioni:{
+        partenza:"La Restaurazione non riuscì a ricostituire integralmente l'ordine dinastico, sociale e giuridico anteriore al 1789, perché rallentò ma non interruppe l'emancipazione dai vincoli feudali e la crescita della borghesia.",
+        ristretta:"Sul piano delle strutture economiche e amministrative, la Restaurazione fu effettivamente una parentesi che non invertì il processo di emancipazione dai vincoli feudali e la crescita della borghesia, anche se sul piano dell'esperienza vissuta impose per una generazione censura, sorveglianza e repressione politica.",
+        opposta:"La Restaurazione riuscì davvero a ricostituire l'ordine dinastico, sociale e giuridico anteriore al 1789: i sovrani restaurati conservarono deliberatamente molti degli strumenti amministrativi napoleonici proprio per rafforzare il proprio controllo, e per una generazione imposero censura preventiva, sorveglianza politica, processi, esecuzioni ed esilii a chiunque ne mettesse in discussione l'autorità."
+      },
+      affermazioni:[
+        {testo:"Perfino in Francia, dove i Borbone tornavano sul trono da cui erano stati cacciati, il ritorno passò per la concessione di una Carta costituzionale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"mostra che persino il caso più favorevole a un ritorno pieno all'assolutismo passò per una concessione costituzionale."}},
+        {testo:"Nel primo Ottocento la censura preventiva, la sorveglianza politica, i processi ed esecuzioni, gli esilii e la reintegrazione delle minoranze religiose nelle vecchie discriminazioni furono realtà concrete per chi le visse.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"la Partenza riguarda le strutture di lungo periodo, non nega che l'esperienza vissuta fosse dura.",
+                 ristretta:"è il dato su cui la Ristretta fonda la propria distinzione tra piano strutturale e piano vissuto."}},
+        {testo:"I sovrani restaurati conservarono deliberatamente molti strumenti amministrativi di origine napoleonica, che li rendevano più efficaci dei loro predecessori di antico regime.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"nel nodo questo dato è usato contro l'idea di una piena restaurazione, non a suo favore."}},
+        {testo:"La società del primo Ottocento era, per struttura economica e sociale, ormai distante in modo incolmabile da quella degli anni Ottanta del Settecento: era la società dei capitalisti e degli arrivisti, non quella dei duchi rientrati dall'esilio.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Dichiarare la restaurazione impossibile in linea di principio rischia di far sembrare inoffensivo un ordine che per una generazione fu tutt'altro.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco che il nodo riconosce alla propria tesi di partenza.",
+                 ristretta:"la Ristretta ha già incorporato questa obiezione distinguendo i due piani."}}
+      ]
+    },
+    {
+      capitolo:"Vienna e il principio di nazionalità",
+      titolo:"Il concerto europeo produsse pace o rinviò il conflitto?",
+      formulazioni:{
+        partenza:"Il concerto europeo costruito nel 1815 fu una sistemazione realistica che, riammettendo la Francia sconfitta tra le grandi potenze e istituendo consultazioni diplomatiche periodiche, ridusse per circa quarant'anni la frequenza dei conflitti diretti tra gli Stati europei.",
+        ristretta:"Il concerto europeo ridusse effettivamente, per circa quarant'anni, la frequenza dei conflitti diretti tra i grandi Stati europei, un risultato reale se si guarda alla pace fra le potenze, anche se questo non tiene conto dei conflitti interni agli Stati prodotti dagli interventi armati del 1820-21 e del 1831.",
+        opposta:"Il concerto europeo del 1815 non produsse pace ma la rinviò: la stabilità fu ottenuta ridisegnando i confini senza riguardo per la corrispondenza tra Stati e popolazioni e mantenuta attraverso il diritto di intervento armato contro i moti interni, che privò il dissenso di ogni sbocco legale, lo spinse nella clandestinità e produsse una condizione cospirativa permanente."
+      },
+      affermazioni:[
+        {testo:"La Francia sconfitta fu riammessa tra le grandi potenze già nel 1818, evitando la costruzione di un revanscismo permanente.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"l'Opposta non nega la riammissione della Francia, contesta il prezzo pagato altrove per la stabilità complessiva."}},
+        {testo:"Gli interventi armati del 1820-21 e del 1831 furono guerre a tutti gli effetti per le popolazioni che li subirono.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura positiva.",
+                 ristretta:"la Ristretta riconosce già esplicitamente di non tenere conto di questi conflitti interni."}},
+        {testo:"Il dissenso politico, privato di ogni sbocco legale dal diritto di intervento armato contro i moti interni, si organizzò nella clandestinità, producendo una condizione cospirativa permanente.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"colpisce anche la versione ristretta, mostrando un costo strutturale del sistema."}},
+        {testo:"I confini ridisegnati nel 1815 non tennero conto della corrispondenza tra Stati e popolazioni.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è compatibile con una sistemazione giudicata realistica rispetto ai suoi obiettivi dichiarati."}},
+        {testo:"Dire che il concerto europeo alimentò la rivoluzione che voleva impedire presuppone che, senza quel sistema, le rivendicazioni nazionali e liberali sarebbero state più deboli, un'ipotesi indimostrabile.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura negativa."}}
+      ]
+    },
+    {
+      capitolo:"Vienna e il principio di nazionalità",
+      titolo:"Le nazioni esistono prima del nazionalismo?",
+      formulazioni:{
+        partenza:"Le nazioni sono un fenomeno recente, prodotto dalla modernizzazione e dal nazionalismo, e non una realtà preesistente che il nazionalismo si è limitato a risvegliare.",
+        ristretta:"Per almeno alcune nazioni europee dell'Ottocento, la trasformazione industriale e statale richiese la costruzione attiva, da parte delle élite, di una popolazione culturalmente omogenea attraverso scuola, stampa e simboli condivisi, un processo che la formula della «comunità immaginata» descrive bene in quei casi specifici, senza dover valere come legge generale per ogni nazione esistita.",
+        opposta:"Le nazioni non sono un prodotto recente del nazionalismo, ma comunità dotate di leggi, consuetudini, discendenza comune e coscienza collettiva documentabili molto prima della modernità, formate a partire da un patrimonio di miti d'origine, memorie e simboli di lunga durata che le nazioni moderne hanno ereditato più che inventato."
+      },
+      affermazioni:[
+        {testo:"Secondo Gellner, la modernizzazione richiede una popolazione culturalmente omogenea, alfabetizzata e istruita in un sistema scolastico standardizzato controllato dallo Stato: non è la nazione a generare il nazionalismo, ma il nazionalismo a produrre la nazione.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il meccanismo su cui la Ristretta fa leva."}},
+        {testo:"Hobsbawm ha documentato come bandiere, inni, feste e monumenti presentati come antichissimi fossero in realtà fabbricati tra Otto e Novecento come ingegneria sociale delle élite.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Comunità dotate di leggi, consuetudini, discendenza comune e coscienza collettiva sono documentabili in Inghilterra, Scozia e Polonia molto prima della modernità.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si limita a sostenere che in alcuni casi specifici la costruzione attiva fu necessaria, senza negare radici preesistenti altrove."}},
+        {testo:"Le nazioni moderne si formano quasi sempre a partire da comunità etniche preesistenti (le ethnies), e la persistenza di miti d'origine e simboli condivisi spiega perché milioni di persone si siano lasciate uccidere per un'appartenenza presunta recente.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Che le élite abbiano fabbricato simboli nazionali è documentato, ma che quella fabbricazione da sola basti a produrre una disponibilità di massa al sacrificio non lo è altrettanto.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto al costruttivismo.",
+                 ristretta:"la Ristretta è già più cauta, limitata ad \"alcune nazioni europee dell'Ottocento\"."}}
+      ]
+    },
+    {
+      capitolo:"Moti e nazionalismo romantico",
+      titolo:"I moti fallirono per debolezza propria o per forza altrui?",
+      formulazioni:{
+        partenza:"I moti insurrezionali del 1820-1831 riuscirono soltanto dove trovarono una frattura tra gli interessi delle grandi potenze conservatrici, e fallirono ovunque quelle potenze presentarono un fronte compatto.",
+        ristretta:"Nei casi di Napoli, Torino, Madrid, Varsavia e delle Legazioni, dove il fronte delle potenze conservatrici fu compatto o l'intervento concordato, i moti fallirono; in Grecia e Belgio, dove quella coalizione era divisa, riuscirono, una correlazione che vale per questi casi, senza per questo stabilire una legge generale su ogni moto europeo dell'epoca.",
+        opposta:"I moti insurrezionali del 1820-1831 fallirono non per l'intervento delle grandi potenze, ma per una debolezza strutturale propria: furono organizzati da gruppi ristretti di ufficiali, studenti e professionisti senza legami con le campagne, dove viveva la grande maggioranza degli europei, e un regime sostenuto da poche migliaia di ufficiali e da nessun contadino sarebbe caduto comunque, con o senza intervento straniero."
+      },
+      affermazioni:[
+        {testo:"In Grecia e in Belgio, dove i moti riuscirono, la coalizione delle potenze conservatrici era divisa; a Napoli, Torino, Madrid, Varsavia e nelle Legazioni, dove fallirono, il fronte era compatto o l'intervento fu concordato.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è la correlazione su cui la Ristretta si fonda."}},
+        {testo:"I moti insurrezionali furono organizzati da gruppi ristretti, ufficiali di formazione napoleonica, studenti, professionisti, senza legami con le campagne, dove viveva la grande maggioranza degli europei, e in alcuni casi i contadini si mossero contro di loro.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta registra una correlazione diplomatica senza escludere che accanto ad essa operasse anche una debolezza sociale."}},
+        {testo:"In Grecia la trasformazione della cospirazione in guerra di popolo precedette l'intervento delle grandi potenze, e in parte lo rese possibile.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"è il punto cieco riconosciuto alla lettura geopolitica."}},
+        {testo:"Il Belgio, la cui rivoluzione fu urbana e borghese quanto le altre insurrezioni fallite, ottenne comunque uno Stato indipendente che dura ancora oggi.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"è il punto cieco riconosciuto alla lettura sociale."}},
+        {testo:"L'intervento austriaco o russo, secondo la lettura sociale, non spiegò la sconfitta dei moti ma si limitò ad abbreviarla: un regime sostenuto da poche migliaia di ufficiali e da nessun contadino sarebbe caduto comunque.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Moti e nazionalismo romantico",
+      titolo:"Il 1848 fu una rivoluzione borghese tradita?",
+      formulazioni:{
+        partenza:"Nel 1848 la borghesia liberale tradì la rivoluzione, preferendo la sicurezza della proprietà al rischio della democrazia e alleandosi con i ceti conservatori contro le rivendicazioni sociali delle masse urbane.",
+        ristretta:"Nelle giornate di giugno a Parigi, la repressione degli operai da parte di un governo repubblicano mostrò che la borghesia liberale preferì la sicurezza della proprietà al rischio della democrazia, almeno in quel momento e in quel luogo specifici, senza che questo dimostri che l'intero ciclo rivoluzionario del 1848 fosse «destinato» a un simile esito.",
+        opposta:"I liberali del 1848 non tradirono la rivoluzione, ne applicarono coerentemente il programma: avevano sempre sostenuto che il voto spettasse a chi possiede e paga imposte, e la loro reazione di fronte alla richiesta di suffragio universale e diritto al lavoro fu coerente con la dottrina che esponevano da trent'anni, non un tradimento di obiettivi mai dichiarati."
+      },
+      affermazioni:[
+        {testo:"Nelle giornate di giugno a Parigi, un governo repubblicano represse militarmente gli operai insorti.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è l'episodio su cui la Ristretta fonda la propria formulazione circoscritta.",
+                 opposta:"l'Opposta non nega l'episodio, ne contesta l'interpretazione come tradimento."}},
+        {testo:"I liberali del 1848 avevano sempre sostenuto, fin da trent'anni prima, che il voto dovesse spettare a chi possiede e paga imposte.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sull'episodio specifico di giugno, non sulla coerenza dottrinale di lungo periodo."}},
+        {testo:"Prima delle giornate di giugno il fronte rivoluzionario del 1848 esisteva come fronte unico; dopo giugno, liberali e democratici non tornarono più a combattere insieme.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura che nega il tradimento."}},
+        {testo:"Le assemblee del 1848 mostrarono divisioni interne profonde tra chi voleva la repubblica e chi la monarchia costituzionale, tra centri industriali e province agricole.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura del tradimento.",
+                 ristretta:"la Ristretta si limita a un episodio specifico che resta un fatto anche in presenza di divisioni interne alla borghesia."}},
+        {testo:"Dopo il 1848, la dinamica rivoluzionaria si spostò dalle regioni avanzate dell'Europa occidentale verso quelle marginali, a cominciare dall'Impero russo.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{ristretta:"eccede l'episodio specifico delle giornate di giugno su cui la Ristretta si concentra.",
+                 opposta:"è compatibile con entrambe le letture."}}
+      ]
+    },
+    {
+      capitolo:"Moti e nazionalismo romantico",
+      titolo:"Perché i contadini combatterono contro la rivoluzione?",
+      formulazioni:{
+        partenza:"I contadini europei del 1848 si opposero alle rivoluzioni perché i rivoluzionari, provenendo dagli stessi ceti che quotidianamente esigevano loro affitti e prestazioni, minacciavano con la privatizzazione delle terre comuni gli interessi materiali immediati delle famiglie contadine.",
+        ristretta:"In Galizia nel 1846 e in Lombardia nel 1848, i contadini si opposero ai rivoluzionari perché ne percepivano gli interessi materiali come una minaccia diretta, legna, pascolo, integrazione alimentare, senza che questo schema valga necessariamente per ogni caso di mobilitazione contadina europea dello stesso periodo.",
+        opposta:"I contadini europei non si opposero alle rivoluzioni del 1848 per un calcolo di interesse materiale immediato legato alla privatizzazione delle terre comuni, ma per la percezione di chi fosse il nemico più prossimo, una variabile che dipendeva dalla struttura della proprietà locale più che da un interesse economico universale, come mostrano i casi, altrettanto reali, di campagne che si schierarono con i rivoluzionari, a cominciare dall'Irlanda cattolica."
+      },
+      affermazioni:[
+        {testo:"In Galizia nel 1846 i contadini si mossero contro i nobili polacchi insorti, che pure promettevano l'abolizione della servitù, e preferirono le autorità imperiali.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è uno dei due casi su cui la Ristretta si fonda.",
+                 opposta:"è compatibile sia con un calcolo di interesse materiale sia con una percezione del nemico più prossimo."}},
+        {testo:"I rivoluzionari del 1848 erano spesso avvocati, commercianti, proprietari e amministratori, le stesse persone che nei rapporti quotidiani esigevano affitti e prestazioni dai contadini.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il programma economico dei rivoluzionari prevedeva la privatizzazione delle terre comuni, che per una famiglia contadina significava perdere legna, pascolo e integrazione alimentare.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{partenza:"è il nucleo dell'argomento su cui la Partenza si fonda."}},
+        {testo:"In Irlanda cattolica e in altre regioni, la mobilitazione contadina si schierò con i rivoluzionari, e in alcuni casi precedette persino quella urbana.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta limita esplicitamente la propria portata ai casi di Galizia e Lombardia."}},
+        {testo:"Ricondurre l'opposizione contadina alla sola minaccia economica immediata rischia di trattare i contadini come soggetti privi di un proprio orizzonte politico.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla spiegazione materiale.",
+                 ristretta:"la Ristretta si limita a due casi documentati, quindi l'obiezione generale la colpisce con minor forza."}}
+      ]
+    },
+    {
+      capitolo:"La costruzione degli Stati nazionali: il caso tedesco",
+      titolo:"Uno Stato fa una nazione?",
+      formulazioni:{
+        partenza:"Lo Stato-nazione tedesco del 1871 fu il prodotto della competizione di potenza tra Prussia e Austria, mentre miti, cerimoniali e patrimoni culturali comuni ebbero un ruolo soltanto secondario o strumentale.",
+        ristretta:"Nel caso tedesco, la competizione di potenza tra Prussia e Austria, Zollverein, 1866, 1870, fu il motore decisivo che tracciò i confini dello Stato-nazione tedesco, anche se questo non spiega da solo perché milioni di persone di lingua tedesca abbiano riconosciuto in quei confini una patria comune.",
+        opposta:"Lo Stato-nazione tedesco del 1871 non fu soltanto il prodotto della competizione di potenza tra Prussia e Austria: le armi prussiane tracciarono i confini della piccola Germania, ma non produssero da sole la ragione per cui milioni di persone di lingua tedesca riconobbero in quei confini una patria comune, un'adesione spiegabile solo richiamando il patrimonio di miti, letteratura e memoria condivisa che questa lettura considera secondario."
+      },
+      affermazioni:[
+        {testo:"I confini dello Stato-nazione tedesco del 1871 violarono il criterio linguistico su cui i nazionalisti avevano insistito per mezzo secolo.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è la prova più forte a favore della lettura di Breuilly."}},
+        {testo:"Il patrimonio di miti sull'antica Germania, la letteratura e la memoria condivisa erano materiali disponibili da decenni, non fabbricati nel 1871.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette già che la sola competizione di potenza non spiega l'adesione popolare."}},
+        {testo:"Il patrimonio culturale tedesco comprendeva anche Vienna e i tedeschi di Boemia, che restarono fuori dai confini del nuovo Stato-nazione del 1871.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di Smith."}},
+        {testo:"Le fasi decisive della formazione dello Stato-nazione tedesco furono lo Zollverein, la guerra del 1866 e quella del 1870.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il nucleo su cui la Ristretta fonda la propria formulazione.",
+                 opposta:"l'Opposta non nega l'importanza di queste tappe, sostiene che da sole non spiegano l'adesione popolare."}},
+        {testo:"Se la politica di potenza spiegasse tutto, resterebbe inspiegabile perché la stessa politica non abbia funzionato altrove, in casi analoghi, con lo stesso esito.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di Breuilly.",
+                 ristretta:"la Ristretta ammette già che la sola competizione di potenza non basti."}}
+      ]
+    },
+    {
+      capitolo:"La costruzione degli Stati nazionali: il caso tedesco",
+      titolo:"Bismarck fece l'unità o la usò?",
+      formulazioni:{
+        partenza:"Bismarck non perseguì l'unità nazionale tedesca come fine, ma la usò come strumento per salvaguardare la monarchia, l'esercito e i privilegi della propria classe conservatrice.",
+        ristretta:"Bismarck, Junker conservatore il cui obiettivo dichiarato fu la salvaguardia della monarchia, dell'esercito e dei privilegi della propria classe, usò l'unificazione nazionale come strumento per raggiungere quell'obiettivo in un secolo che rendeva impraticabile la pura conservazione, almeno per quanto riguarda le sue intenzioni dichiarate e la struttura costituzionale del 1871, che durò fino al 1918 esattamente come era stata progettata.",
+        opposta:"Bismarck volesse o no la Germania, la Germania nacque, e con essa uno spazio politico, economico e culturale che nessuna volontà individuale controllò più: il fatto che il Reichstag fosse privo di poteri di governo non impedì che al suo interno si formasse in quattro anni il primo partito operaio di massa d'Europa, esattamente ciò che il suo progettista intendeva prevenire."
+      },
+      affermazioni:[
+        {testo:"Bismarck diede alla Germania un mercato unificato senza governo parlamentare, uno Stato nazionale senza sovranità nazionale, il suffragio universale senza il potere di rovesciare un ministero.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"descrive il disegno costituzionale voluto da Bismarck, non decide se gli esiti successivi siano rimasti sotto quel controllo."}},
+        {testo:"La struttura costituzionale del 1871 durò fino al 1918, e le sue asimmetrie funzionarono a lungo esattamente come erano state progettate.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura opposta.",
+                 ristretta:"è il dato su cui la Ristretta fonda la propria formulazione."}},
+        {testo:"All'interno del Reichstag, pur privo di poteri di governo, si formò in quattro anni il primo partito operaio di massa d'Europa, esattamente ciò che Bismarck intendeva prevenire.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"mette pressione anche sulla versione più cauta, mostrando un esito importante sfuggito al disegno."}},
+        {testo:"Bismarck non combatté frontalmente il liberalismo e il nazionalismo, ma ne assunse i programmi realizzandoli per conto della corona, sottraendo così all'opposizione la propria ragione d'essere.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Valutare un processo storico dalle sole motivazioni dichiarate del suo protagonista è, in generale, un criterio debole.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza.",
+                 ristretta:"la Ristretta si fonda proprio su un caso in cui le intenzioni si tradussero in una struttura duratura, superando così l'obiezione generale."}}
+      ]
+    },
+    {
+      capitolo:"La costruzione degli Stati nazionali: il caso tedesco",
+      titolo:"La Germania imboccò una via particolare?",
+      formulazioni:{
+        partenza:"La Germania ottocentesca seguì una via di modernizzazione anomala, in cui una rapida industrializzazione economica si accompagnò al mantenimento del potere politico nelle mani dell'aristocrazia terriera, dell'esercito e della burocrazia dinastica, rendendo il paese vulnerabile a esiti autoritari.",
+        ristretta:"Fino al 1918, la combinazione tedesca di rapida industrializzazione economica e mantenimento del potere politico nelle mani dell'aristocrazia terriera, dell'esercito e della burocrazia dinastica costituì un assetto costituzionale specifico, in cui il governo non rispondeva al parlamento, un dato che resta vero a prescindere dal giudizio sulla sua «anomalia» rispetto a un modello occidentale.",
+        opposta:"La Germania ottocentesca non imboccò una via particolare: la Gran Bretagna conservò un'aristocrazia terriera influentissima e una camera alta ereditaria, la Francia oscillò tra tre repubbliche, due imperi e due monarchie in ottant'anni, e in nessuno dei due casi la borghesia governò nel senso richiesto dal modello; la borghesia tedesca, inoltre, dominò l'economia, il diritto, l'università e l'associazionismo urbano, ottenendo in molti campi più dei suoi omologhi occidentali."
+      },
+      affermazioni:[
+        {testo:"La Gran Bretagna conservò un'aristocrazia terriera influentissima e una camera alta ereditaria fino a ben oltre l'Ottocento.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si limita al dato che il governo tedesco non rispondeva al parlamento, vero anche se altri paesi conservarono elementi aristocratici."}},
+        {testo:"La Francia oscillò tra tre repubbliche, due imperi e due monarchie nell'arco di ottant'anni, e in nessuno di questi regimi la borghesia governò nel senso richiesto dal modello della Sonderweg.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La borghesia tedesca dominò l'economia, il diritto, l'università e l'associazionismo urbano, ottenendo in molti campi più dei suoi omologhi occidentali.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riguarda specificamente il potere politico, non il dominio della borghesia negli altri campi."}},
+        {testo:"Nell'Impero tedesco del 1871 il governo non rispondeva al parlamento.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il dato su cui la Ristretta fonda la propria formulazione.",
+                 opposta:"l'Opposta non nega questo dato costituzionale, contesta che renda la Germania un caso anomalo rispetto a un modello occidentale che, a suo dire, non esiste."}},
+        {testo:"La tesi della Sonderweg costruisce l'Ottocento tedesco a partire da un esito del Novecento, selezionando nel passato ciò che a quell'esito conduce.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza.",
+                 ristretta:"la Ristretta si limita a un dato costituzionale verificabile del 1871, senza previsioni teleologiche."}}
+      ]
+    },
+    {
+      capitolo:"Dal nazionalismo romantico al nazionalismo aggressivo",
+      titolo:"L'aggressività era già nel principio?",
+      formulazioni:{
+        partenza:"Il nazionalismo europeo conobbe una rottura storica intorno al 1870, passando da una fase integrativa e liberale a una fase divisiva e apertamente aggressiva.",
+        ristretta:"Dopo il 1870 i movimenti nazionalisti europei si emanciparono dall'identificazione con il liberal-radicalismo e si spostarono stabilmente a destra, come mostra il fatto che fino al 1848 essere nazionalista significasse quasi sempre essere anche liberale, mentre alla fine del secolo significava l'opposto, una rottura databile, anche se le sue cause, politica di massa, depressione economica, competizione coloniale, restano da discutere.",
+        opposta:"Il nazionalismo europeo non conobbe una vera rottura intorno al 1870: gli elementi che resero possibile l'esito aggressivo erano presenti fin dall'inizio, nella pretesa messianica di una missione particolare che ogni movimento nazionale si attribuiva dentro la fratellanza dei popoli liberi, e nel paradosso per cui costruire una nazione significa imporre a qualcuno la scelta tra assimilazione e inferiorità, producendo il contronazionalismo di chi quella scelta subisce."
+      },
+      affermazioni:[
+        {testo:"Fino al 1848 essere nazionalista significava quasi sempre essere anche liberale; alla fine del secolo significava l'opposto.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il dato empirico esplicito su cui la Ristretta si fonda.",
+                 opposta:"l'Opposta non nega questo cambiamento, sostiene che gli elementi che lo resero possibile fossero già presenti nel principio."}},
+        {testo:"I movimenti nazionali degli anni Trenta immaginavano una fratellanza di popoli liberi, ma quasi ciascuno si attribuiva dentro quella fratellanza una missione particolare, l'Italia di Mazzini chiamata a rigenerare l'Europa, la Polonia come nazione sacrificata, il primato dello spirito germanico.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra sul cambiamento di alleanze politiche dopo il 1870."}},
+        {testo:"Costruire una nazione significa imporre a qualcuno la scelta tra assimilazione e inferiorità, producendo il contronazionalismo di chi quella scelta subisce.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Se il rovesciamento verso un nazionalismo aggressivo dopo il 1870 si spiega con cause esterne come la politica di massa, la depressione economica o la competizione coloniale, allora il principio nazionale non conteneva di per sé alcuna direzione aggressiva propria.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura della discontinuità.",
+                 ristretta:"la Ristretta segnala che le cause del cambiamento \"restano da discutere\", lasciando aperta proprio questa possibilità."}},
+        {testo:"Se ogni rivendicazione nazionale contenesse già la propria versione escludente, la distinzione tra un movimento di liberazione e una campagna di esclusione diventerebbe solo una differenza di grado, rendendo difficile giudicare le rivendicazioni anticoloniali del Novecento.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura della continuità."}}
+      ]
+    },
+    {
+      capitolo:"Dal nazionalismo romantico al nazionalismo aggressivo",
+      titolo:"Esiste un nazionalismo buono e uno cattivo?",
+      formulazioni:{
+        partenza:"Il patriottismo civico, fondato su leggi comuni e su un'adesione volontaria a un patto, e il nazionalismo etnoculturale, fondato su etnia, lingua e discendenza, sono due fenomeni distinti per natura e non per grado, e solo il primo è compatibile con una società plurale.",
+        ristretta:"Il patriottismo civico e il nazionalismo etnoculturale restano distinguibili almeno sul piano dei loro effetti verso chi non ne fa parte: un'assimilazione, per quanto dura, resta una porta aperta a chi accetta di conformarsi, mentre una discendenza mancante è un muro invalicabile, e questa differenza conta anche se gli elementi civici ed etnici si intrecciano quasi sempre nella realtà storica.",
+        opposta:"Il patriottismo civico e il nazionalismo etnoculturale non sono due fenomeni distinti per natura: nella realtà storica gli elementi civici ed etnici sono quasi sempre intrecciati, e un nazionalismo dichiaratamente civico può imporre un'uniformità non meno severa di quella etnica, come mostra la politica francese di assimilazione linguistica esercitata prima sulle popolazioni regionali e poi sui sudditi coloniali."
+      },
+      affermazioni:[
+        {testo:"La politica francese di assimilazione linguistica, esercitata prima sulle popolazioni regionali e poi sui sudditi coloniali, prometteva un'appartenenza aperta a tutti, ma a condizione che tutti diventassero identici.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta mantiene una distinzione sul piano degli effetti che questo dato non cancella."}},
+        {testo:"Nessuna nazione documentabile poggia su un solo elemento, civico o etnico: nella realtà storica i due sono quasi sempre intrecciati.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è la concessione che la Ristretta incorpora esplicitamente."}},
+        {testo:"La dicotomia tra nazionalismo civico ed etnoculturale si presta a un uso autoassolutorio: le nazioni occidentali si riconoscono nel modello civico e collocano quello etnico presso gli altri.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura di partenza.",
+                 ristretta:"la Ristretta sposta la distinzione dal piano delle origini a quello degli effetti."}},
+        {testo:"Un'assimilazione dura, per quanto severa, resta una porta aperta a chi accetta di conformarsi; una discendenza mancante è un muro invalicabile.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il criterio su cui la Ristretta fonda la propria distinzione.",
+                 opposta:"è il punto cieco riconosciuto alla lettura che dissolve la dicotomia."}},
+        {testo:"Ciò che il modello civico esclude non è chi ha la discendenza sbagliata, ma chi rifiuta di rinunciare a ciò che era.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Dal nazionalismo romantico al nazionalismo aggressivo",
+      titolo:"Le tradizioni inventate bastano a spiegare la mobilitazione?",
+      formulazioni:{
+        partenza:"La mobilitazione nazionalista di massa alla vigilia della Prima guerra mondiale fu il prodotto di una fabbricazione deliberata di simboli, feste e liturgie civili, messa in atto da élite che volevano convogliare le energie popolari verso l'obbedienza allo Stato.",
+        ristretta:"Nei quarant'anni precedenti al 1914, le élite europee, spaventate dalla democrazia di massa e dal movimento operaio, fabbricarono simboli, feste e liturgie civili con lo scopo dichiarato di convogliare le energie popolari verso l'obbedienza allo Stato, una spiegazione che rende conto della simultaneità con cui il fenomeno apparve in tutta Europa, anche se da sola non basta a spiegare perché milioni di persone si siano dette disposte a morire per quei simboli.",
+        opposta:"Le tradizioni inventate non bastano a spiegare la mobilitazione nazionalista del 1914: un'operazione delle élite spiega l'offerta, non la domanda, e nessuna propaganda ottiene la disponibilità a morire se non trova un materiale su cui appoggiarsi, le tradizioni inventate funzionarono perché si sintonizzarono su un patrimonio già presente di miti d'origine, memorie collettive e simboli di lunga durata che le rendeva riconoscibili invece che arbitrarie."
+      },
+      affermazioni:[
+        {testo:"Le élite europee di fine Ottocento, spaventate dalla democrazia di massa e dal movimento operaio, fabbricarono simboli, feste, culti scolastici e liturgie civili con lo scopo dichiarato di convogliare le energie popolari verso l'obbedienza allo Stato.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il nucleo su cui la Ristretta fonda la propria formulazione.",
+                 opposta:"l'Opposta non nega la fabbricazione, sostiene solo che non basti a spiegare la disponibilità a morire."}},
+        {testo:"Il fenomeno della fabbricazione di tradizioni nazionali apparve, con una simultaneità sorprendente, ovunque in Europa nello stesso periodo.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Nessuna propaganda ottiene la disponibilità a morire se non trova un materiale preesistente su cui appoggiarsi.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente il limite che la Ristretta stessa riconosce."}},
+        {testo:"Attribuire alle masse una credulità illimitata, capace di lasciarsi mobilitare fino al sacrificio della vita da simboli fabbricati da poco, significa trattare come passivi proprio i soggetti la cui azione si vuole spiegare.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura costruttivista.",
+                 ristretta:"la Ristretta ammette già il limite esplicativo della sola fabbricazione."}},
+        {testo:"La rilevanza del patrimonio culturale preesistente invocato dalla lettura etno-simbolica viene selezionata guardando quali nazionalismi hanno poi avuto successo, il che rende l'argomento difficile da falsificare.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura etno-simbolica.",
+                 ristretta:"la Ristretta non fa leva sul patrimonio preesistente come proprio argomento."}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle([0,1,2,3,4]);
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su 5 affermazioni totali).';
+    } else if(answered<5){
+      verifyHint.textContent=answered+' su 5 classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e 5 classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

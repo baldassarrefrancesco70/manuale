@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce l'economia del mondo moderno &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Sette nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai nodi storiografici della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "Prima della Rivoluzione industriale":"#b0872e",
+    "La prima rivoluzione industriale":"#9d4a2b",
+    "La seconda rivoluzione industriale":"#3d5566"
+  };
+  var CAPORDER = ["Prima della Rivoluzione industriale","La prima rivoluzione industriale","La seconda rivoluzione industriale"];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"Prima della Rivoluzione industriale",
+      titolo:"Le enclosures: progresso o esproprio?",
+      formulazioni:{
+        partenza:"Le enclosures furono una modernizzazione necessaria dell'agricoltura inglese, e i costi sociali che provocarono furono il prezzo di un progresso complessivo.",
+        ristretta:"Le enclosures parlamentari delle grandi tenute contribuirono a una modernizzazione dell'agricoltura inglese che ne accrebbe la produttività, un progresso i cui costi sociali, per quanto reali, furono più circoscritti di quanto la lettura dell'esproprio ha spesso sostenuto.",
+        opposta:"Le enclosures furono una spoliazione, una «rapina di classe» ai danni dei poveri delle campagne, che distrusse un'economia comunitaria e i diritti d'uso su cui si reggeva la sopravvivenza di molti, non un prezzo necessario del progresso."
+      },
+      affermazioni:[
+        {testo:"Robert Allen ha mostrato che una parte cospicua dell'aumento di produttività agricola venne prima delle recinzioni parlamentari e si dovè ai piccoli coltivatori indipendenti, non solo alle grandi tenute recintate.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"non_decide"},
+         perche:{ristretta:"colpisce direttamente il nucleo della Ristretta, che attribuisce l'aumento di produttività proprio alle enclosures parlamentari delle grandi tenute.",
+                 opposta:"mostra che il progresso non fu solo merito delle grandi tenute, ma non tocca la questione dei costi sociali contestati dall'Opposta."}},
+        {testo:"Altri studiosi hanno ridimensionato la portata dello sradicamento provocato dalle enclosures, distinguendo tra le molte forme diverse che la recinzione assunse.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"coerente con l'idea di costi \"più circoscritti di quanto la lettura dell'esproprio ha sostenuto\"."}},
+        {testo:"Le terre comuni privatizzate garantivano ai contadini poveri diritti d'uso, spigolare, far pascolare il bestiame, raccogliere legna, su cui si reggeva la loro sopravvivenza.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è compatibile con l'idea che questi diritti fossero un costo sociale accettabile di un progresso complessivo."}},
+        {testo:"Il racconto marxiano dell'«accumulazione originaria» presenta le enclosures come una violenza fondativa che separò i produttori dai propri mezzi di sussistenza, dando al capitalismo un'origine e un colpevole.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La stessa recinzione poté essere, nello stesso momento, progresso per alcuni ed esproprio per altri, a seconda della posizione sociale di chi la subiva.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"è la sintesi con cui il nodo si chiude, e non prende posizione netta per nessuna delle due letture."}}
+      ]
+    },
+    {
+      capitolo:"Prima della Rivoluzione industriale",
+      titolo:"Una soglia o un lento scivolamento?",
+      formulazioni:{
+        partenza:"La rivoluzione industriale costituì una rottura storica netta e rapida rispetto al mondo che la precedette, non l'esito di una trasformazione lenta e di lunga durata.",
+        ristretta:"La rottura tecnico-economica fu netta e rapida almeno nel passaggio al sistema di fabbrica e nell'uso dell'energia a vapore, anche se altre trasformazioni dello stesso periodo, come quella agricola o quella demografica, maturarono su tempi più lunghi.",
+        opposta:"La rivoluzione industriale non fu una soglia netta ma l'esito di un lento scivolamento di lunga durata: la protoindustria maturò per secoli, la crescita demografica fu graduale, e la stessa rivoluzione agricola inglese può essere retrodatata di oltre un secolo rispetto al Settecento in cui la si colloca di solito."
+      },
+      affermazioni:[
+        {testo:"Eric Kerridge sostenne che il grosso del mutamento agrario inglese fosse avvenuto già tra Cinquecento e Seicento, retrodatando la rivoluzione agricola di oltre un secolo rispetto al Settecento.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette già che trasformazioni come quella agricola \"maturarono su tempi più lunghi\"; questo dato conferma quella concessione senza toccare il nucleo su fabbrica e vapore."}},
+        {testo:"La protoindustria, il sistema del lavoro a domicilio che precedette la fabbrica, maturò nell'arco di secoli.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La rivoluzione industriale comportò quattro rotture riconosciute come tali dal capitolo: il superamento del tetto energetico grazie al carbone, il passaggio degli strumenti di lavoro dalla proprietà del lavoratore a quella del capitalista, la concentrazione del lavoro nella fabbrica con un tempo scandito dall'orologio, e un aumento di produttività senza precedenti.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Alcuni storici hanno proposto di abbandonare la parola «rivoluzione», ritenuta troppo drammatica, in favore di immagini di lenta accelerazione.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"il suggerimento di abbandonare del tutto la parola \"rivoluzione\" va oltre quanto la Ristretta concede, che mantiene una rottura netta per fabbrica e vapore."}},
+        {testo:"Chiamare «rivoluzione» il processo ha il pregio di nominare una discontinuità reale, ma rischia di imporre un «prima e dopo» troppo netto che appiattisce le continuità.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"il nodo la presenta come un bilanciamento tra pregio e rischio, non come prova a favore di una lettura."}}
+      ]
+    },
+    {
+      capitolo:"La prima rivoluzione industriale",
+      titolo:"Perché proprio l'Inghilterra: merito o fortuna?",
+      formulazioni:{
+        partenza:"L'Inghilterra guidò la rivoluzione industriale perché possedeva vantaggi strutturali propri, istituzioni, mentalità scientifica, cultura del lavoro e dell'impresa, che nessun'altra regione del mondo possedeva.",
+        ristretta:"L'Inghilterra godette di alcuni vantaggi istituzionali e culturali specifici, una mentalità scientifica applicata alla pratica, una cultura del credito e dell'impresa, che ne favorirono l'industrializzazione, senza che questo implichi una superiorità strutturale complessiva rispetto alle regioni più avanzate del continente asiatico nello stesso periodo.",
+        opposta:"L'Inghilterra non guidò la rivoluzione industriale per una superiorità strutturale propria, ma per una combinazione di fattori in gran parte fortuiti, la disponibilità di giacimenti di carbone dove servivano e l'accesso alle risorse del Nuovo Mondo, dato che fino alla metà del Settecento le regioni più avanzate della Cina e dell'Europa erano, per tenore di vita, consumi e tecniche, sorprendentemente simili."
+      },
+      affermazioni:[
+        {testo:"Fino alla metà del Settecento, le regioni più avanzate della Cina e dell'Europa erano sorprendentemente simili per tenore di vita, consumi e tecniche.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente l'evidenza su cui si fonda la negazione, nella Ristretta, di una \"superiorità strutturale complessiva\" precoce."}},
+        {testo:"La disponibilità di giacimenti di carbone dove servivano e l'accesso alle risorse del Nuovo Mondo, colonie e piantagioni schiaviste, furono fattori in gran parte fortuiti che aprirono il divario tra Inghilterra e Cina dopo la metà del Settecento.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riconosce vantaggi istituzionali specifici senza escludere che accanto ad essi abbiano agito anche fattori contingenti."}},
+        {testo:"L'Inghilterra sviluppò una mentalità scientifica applicata alla pratica e una cultura del credito e dell'impresa, riconosciute come vantaggi istituzionali specifici.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è il nucleo stesso della formulazione ristretta."}},
+        {testo:"La lettura del «merito» è lusinghiera e rassicurante, perché racconta il presente come esito necessario di virtù passate e permette all'Occidente di leggere il proprio primato come una conquista guadagnata, non come un caso.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la critica colpisce soprattutto la forma più forte e teleologica della tesi, non la versione più cauta della Ristretta."}},
+        {testo:"La lettura della contingenza è più scomoda, perché toglie all'esito il conforto della necessità e lo affida a coincidenze geografiche e a rapporti di forza.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"segnala una resistenza psicologica verso la lettura opposta, non una prova sui fatti."}}
+      ]
+    },
+    {
+      capitolo:"La prima rivoluzione industriale",
+      titolo:"Le condizioni di vita migliorarono o peggiorarono?",
+      formulazioni:{
+        partenza:"L'industrializzazione, almeno nella sua prima fase, peggiorò le condizioni di vita delle masse lavoratrici.",
+        ristretta:"Nella prima fase dell'industrializzazione britannica, e per ampie fasce del proletariato urbano, le condizioni di vita concrete, l'aria dei sobborghi, le ore di lavoro, la perdita di autonomia, peggiorarono, anche se questo non si estende necessariamente all'andamento di lungo periodo dei salari reali medi.",
+        opposta:"L'industrializzazione, anche nella sua prima fase, non peggiorò le condizioni di vita delle masse lavoratrici: nel lungo periodo i salari reali salirono e l'industria sollevò progressivamente il tenore di vita generale, per quanto lentamente e ingiustamente."
+      },
+      affermazioni:[
+        {testo:"Nel lungo periodo i salari reali degli operai industriali salirono.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta esplicitamente non si estende \"all'andamento di lungo periodo dei salari reali medi\"."}},
+        {testo:"Il salario reale medio può salire mentre la vita concreta peggiora, perché la media nasconde la distribuzione e il denaro non cattura ciò che non ha prezzo, l'aria dei sobborghi, le ore di lavoro, la perdita di autonomia, la mortalità urbana.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è precisamente l'argomento su cui la Ristretta si fonda."}},
+        {testo:"Un operaio poteva guadagnare qualche scellino in più rispetto a prima e vivere comunque peggio del contadino che era stato.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Stabilire che cosa conti come «vita migliore», più reddito o più dignità, più merci o più tempo, è già una scelta di valore, non un dato oggettivo.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il dibattito tra ottimisti e pessimisti non si chiude in parte perché le fonti disponibili sono lacunose, e in parte perché la domanda non è soltanto una questione di fatti.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La prima rivoluzione industriale",
+      titolo:"Quanto pesò la schiavitù nell'industrializzazione?",
+      formulazioni:{
+        partenza:"I profitti della tratta atlantica e delle piantagioni schiavistiche furono i capitali che finanziarono e resero possibile il decollo industriale britannico.",
+        ristretta:"I profitti della tratta atlantica e delle piantagioni schiavistiche fornirono una parte rilevante dei capitali che finanziarono in particolare l'industria cotoniera britannica nella sua fase di avvio, senza che questo renda la schiavitù la fonte principale del finanziamento dell'intero decollo industriale del paese.",
+        opposta:"I profitti del commercio schiavistico, per quanto ingenti, furono una quota relativamente piccola degli investimenti totali dell'economia britannica, insufficiente a spiegare da sola il decollo industriale, che ebbe altre e più consistenti fonti di capitale."
+      },
+      affermazioni:[
+        {testo:"La storiografia economica quantitativa ha calcolato che i profitti del commercio schiavistico, per quanto ingenti, fossero una quota relativamente piccola degli investimenti totali dell'economia britannica.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta limita il finanziamento all'industria cotoniera in fase di avvio, non agli \"investimenti totali dell'economia britannica\"."}},
+        {testo:"Sven Beckert, ne L'impero del cotone, colloca schiavitù, violenza e conquista al cuore stesso della nascita del capitalismo industriale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il cotone grezzo delle piantagioni schiaviste americane, su cui la Gran Bretagna aveva il controllo, affluiva in grandi quantità e a basso costo, ed è uno dei motivi per cui il settore tessile fu il primo a meccanizzarsi.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è precisamente il legame settoriale su cui la Ristretta fa leva.",
+                 opposta:"mostra un legame reale tra cotone schiavista e industria tessile, ma non decide la questione quantitativa del peso complessivo sugli investimenti nazionali."}},
+        {testo:"L'abolizione della schiavitù ebbe anche moventi politici e morali reali, non riducibili al solo calcolo di redditività.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"la Partenza riguarda solo il finanziamento del decollo industriale, non il movente dell'abolizione."}},
+        {testo:"Il piano morale e storico, l'intreccio tra industria del cotone e schiavitù, e il piano causale e quantitativo, quanto quella schiavitù pesò economicamente sul decollo, sono due questioni distinte che è facile confondere.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La seconda rivoluzione industriale",
+      titolo:"I consumi di massa: liberazione o manipolazione?",
+      formulazioni:{
+        partenza:"La nascita della società dei consumi di massa fu un'emancipazione democratica, che rese accessibili a molti beni e forme di svago un tempo riservati a pochi e allargò la sfera dell'autonomia individuale.",
+        ristretta:"Per alcune categorie sociali, e in particolare per le donne che nei «templi del consumo» trovarono un primo accesso alla sfera pubblica, la nascita della società dei consumi di massa rappresentò un ampliamento reale dello spazio di libertà e di scelta, senza che questo descriva necessariamente l'esperienza di tutti i consumatori.",
+        opposta:"La nascita della società dei consumi di massa non fu un'emancipazione ma una nuova forma di controllo: i desideri del consumatore non nacquero da lui, ma gli furono fabbricati dall'esterno dalla pubblicità e dalla moda, che crearono l'insoddisfazione perpetua necessaria a far girare la macchina produttiva."
+      },
+      affermazioni:[
+        {testo:"Le donne, nei «templi del consumo» come i grandi magazzini, trovarono un primo accesso alla sfera pubblica.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è precisamente l'esempio su cui la Ristretta si fonda."}},
+        {testo:"I desideri del consumatore non nascono da lui, ma gli vengono fabbricati dall'esterno dalla pubblicità e dalla moda, che creano un'insoddisfazione perpetua necessaria a far girare la macchina produttiva.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta si concentra su un ampliamento reale per alcune categorie specifiche, senza negare che altrove operassero meccanismi di fabbricazione del desiderio."}},
+        {testo:"I consumatori non sono né sovrani liberi né burattini passivi, ma usano le merci in modi che i produttori non prevedono e non controllano del tutto.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{partenza:"complica entrambe le letture nette, senza sostenerne una in particolare.",
+                 ristretta:"è coerente con un'idea di libertà parziale e circoscritta, più vicina alla cautela della Ristretta che alle due letture estreme."}},
+        {testo:"Presumere che le masse siano passivamente plasmate dalla pubblicità significa negare loro ogni capacità di scelta e di resistenza, trattando da automi proprio coloro che si vorrebbe difendere.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura critica."}},
+        {testo:"La lettura «liberatoria» dei consumi di massa è lusinghiera perché coincide con la nostra esperienza quotidiana di consumatori, e ci restituisce padroni dei nostri desideri.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{partenza:"è un'osservazione sulla presa psicologica della lettura, non una prova sui fatti storici."}}
+      ]
+    },
+    {
+      capitolo:"La seconda rivoluzione industriale",
+      titolo:"La sovrapproduzione: la crisi era nel sistema o fu un incidente?",
+      formulazioni:{
+        partenza:"Le crisi di sovrapproduzione sono un difetto strutturale del capitalismo, non un incidente congiunturale di percorso.",
+        ristretta:"La Grande depressione del 1873 fu, almeno in quel caso specifico, una manifestazione dello squilibrio strutturale che la concorrenza e la spinta a meccanizzare tendono a produrre nel capitalismo, senza che questo implichi necessariamente che ogni crisi successiva debba obbedire alla stessa legge.",
+        opposta:"Le crisi di sovrapproduzione, come la Grande depressione del 1873, non sono un difetto strutturale del capitalismo ma disallineamenti congiunturali tra offerta e domanda, provocati da cause contingenti, che il mercato, lasciato lavorare, riassesta da sé."
+      },
+      affermazioni:[
+        {testo:"La ripresa economica arrivò puntualmente dopo il 1896, a conclusione di un lungo periodo di riaggiustamento a un'ondata di innovazioni e a una rivoluzione dei trasporti.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta riguarda solo la Grande depressione del 1873 come caso specifico, senza pronunciarsi sulla natura di ogni crisi successiva."}},
+        {testo:"Una teoria che prevede crisi ricorrenti trova sempre conferme, perché le crisi, prima o poi, arrivano comunque: questo la rende difficile da falsificare.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura strutturale.",
+                 ristretta:"la Ristretta si limita a un solo caso documentato e non fa una previsione generale sulle crisi future."}},
+        {testo:"La posizione di ciascun interprete su questo dibattito tende a coincidere con la sua collocazione politica.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il capitalismo, spinto dalla concorrenza a produrre e a meccanizzare senza sosta, tende per sua natura a generare più merci di quante il mercato, con i salari che comprime, possa assorbirne.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il nucleo dell'argomento marxiano su cui la Partenza si fonda."}},
+        {testo:"La lettura congiunturale rischia di non vedere ciò che le crisi hanno in comune, riducendo a una serie di incidenti isolati ciò che forse ha una radice condivisa.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"è il punto cieco riconosciuto alla lettura congiunturale."}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle([0,1,2,3,4]);
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su 5 affermazioni totali).';
+    } else if(answered<5){
+      verifyHint.textContent=answered+' su 5 classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e 5 classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

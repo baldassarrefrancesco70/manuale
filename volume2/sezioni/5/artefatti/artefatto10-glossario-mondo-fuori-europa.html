@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossario</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --contesa:#9c3d23;
+    --ok:#4b6b3d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .controls{margin-bottom:6px}
+  .search{width:100%;font-family:var(--serif);font-size:.98rem;color:var(--ink);
+    background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;
+    padding:9px 12px;margin-bottom:12px}
+  .search:focus{outline:none;border-color:var(--ink-soft)}
+  .search::placeholder{color:var(--ink-soft);font-family:var(--sans);font-size:.84rem}
+
+  .chiprow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .chiprow + .chiprow{margin-bottom:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.45}
+  .chips button[aria-pressed="true"]{color:var(--ink)}
+
+  .modebar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:14px}
+  .count{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+  .switch{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 12px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .switch[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .list{display:flex;flex-direction:column;gap:10px}
+  .card{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:11px 14px}
+  .card.ordinaria{border-left-color:var(--rule)}
+  .card.contesa{border-left-color:var(--contesa)}
+  .card .head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+  .card h3{margin:0;font-size:1.05rem;font-weight:600}
+  .tag-contesa{font-family:var(--sans);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--contesa);border:1px solid var(--contesa);border-radius:2px;padding:2px 6px;white-space:nowrap}
+  .loc{font-family:var(--sans);font-size:.7rem;color:var(--ink-soft);margin:0 0 6px}
+  .def{margin:0;font-size:.94rem}
+  .perche{margin:8px 0 0;padding-top:7px;border-top:1px dotted var(--line);font-size:.9rem;
+    font-style:italic;color:var(--ink-soft)}
+  .perche .k{font-family:var(--sans);font-style:normal;font-size:.66rem;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--contesa);margin-right:5px}
+  .empty{font-family:var(--sans);font-size:.85rem;color:var(--ink-soft);font-style:italic;padding:20px 0}
+
+  .quiz{display:none;border:1px solid var(--rule);border-left-width:3px;border-left-color:var(--ink);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:16px 18px}
+  .quiz.show{display:block}
+  .quiz-instructions{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);margin:0 0 14px;
+    padding-bottom:10px;border-bottom:1px dotted var(--line)}
+  .quiz .loc{margin-bottom:10px}
+  .quiz .def{font-size:1rem;line-height:1.55;margin:0 0 18px}
+
+  .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:4px}
+  @media(max-width:560px){.options{grid-template-columns:minmax(0,1fr)}}
+  .option{appearance:none;text-align:left;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--serif);font-size:.94rem;color:var(--ink);padding:10px 13px;border-radius:2px;
+    cursor:pointer;line-height:1.35}
+  .option:hover:not(:disabled){border-color:var(--ink-soft)}
+  .option:disabled{cursor:default}
+  .option.correct{border-color:var(--ok);border-width:2px;background:#e3ead9}
+  .option.wrong{border-color:var(--contesa);border-width:2px;background:#f1ddd4}
+
+  .quiz-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .quiz-actions button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--sans);font-size:.8rem;padding:8px 14px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .quiz-actions button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .quiz-actions button:disabled{opacity:.4;cursor:default}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Il mondo fuori dall'Europa &middot; Apparati</div>
+  <h1>Glossario</h1>
+  <p class="sub">Centoquattro voci, i termini che il testo ha pesato e a volte messo in discussione. Cerca un termine, filtra per capitolo, oppure passa alla modalit&agrave; attiva e mettiti alla prova: leggi la definizione e riconosci il termine giusto tra quattro opzioni.</p>
+
+  <div class="controls">
+    <input class="search" id="search" type="text" placeholder="Cerca un termine o una parola nella definizione&hellip;" autocomplete="off">
+    <div class="chiprow"><div class="chips" id="chapChips"></div></div>
+    <div class="modebar">
+      <span class="count" id="count"></span>
+      <button class="switch" id="quizToggle" aria-pressed="false" type="button">Modalit&agrave; attiva</button>
+    </div>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <div class="quiz" id="quiz">
+    <p class="quiz-instructions">Leggi la definizione e scegli il termine corretto tra le quattro opzioni.</p>
+    <p class="loc" id="q-loc"></p>
+    <p class="def" id="q-def"></p>
+    <div class="options" id="q-options"></div>
+    <div class="quiz-actions">
+      <button id="q-next" class="primary" type="button">Prossimo</button>
+    </div>
+  </div>
+
+  <p class="note">Le voci contese sono segnalate dal bordo e dall'etichetta a margine: la definizione riassume un'interpretazione che il capitolo discute, non un dato pacifico.</p>
+
+<script>
+(function(){
+  var ENTRIES = [{"termine": "mercantilismo", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "Un mondo a due velocità", "definizione": "Il regime imposto dall'impero sul piano economico: solo navi inglesi potevano toccare i porti americani, le merci dovevano transitare per la madrepatria, l'industria locale era scoraggiata, un vincolo allentato solo dal contrabbando con i Caraibi."}, {"termine": "Sugar Act", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "Il dazio doganale sullo zucchero varato nel 1764, il primo della sequenza di provvedimenti fiscali con cui Londra tenta di coprire i costi della difesa del nuovo impero americano."}, {"termine": "Stamp Act", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "La tassa di bollo su documenti e giornali varata nel 1765, che innesca boicottaggi e mobilitazioni di piazza perché nessuna di quelle imposte era stata approvata da rappresentanti eletti dai coloni."}, {"termine": "Figli della Libertà", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "Le società che guidano le mobilitazioni di piazza contro i provvedimenti fiscali britannici, insieme al ricorso sistematico alle assemblee locali e alla stampa."}, {"termine": "\"no taxation without representation\"", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "La formula che sintetizza l'intera crisi fiscale coloniale: non un rifiuto del fisco, ma la rivendicazione di un principio costituzionale inglese applicato contro l'Inghilterra stessa."}, {"termine": "\"massacro di Boston\"", "tipo": "contesa", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "Lo scontro del 1770 fra soldati britannici e una folla di coloni, concluso con diversi morti.", "perche": "è il nome dato dalla propaganda patriota a uno scontro tra soldati e folla, che trasforma un incidente in simbolo per orientare l'opinione pubblica contro la Corona."}, {"termine": "Boston Tea Party", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "La risposta plateale del 1773 all'assegnazione del monopolio sul tè alla Compagnia delle Indie Orientali: un gruppo di coloni assalta le navi della Compagnia e ne getta in mare l'intero carico."}, {"termine": "leggi coercitive", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "La stretta repressiva del 1774 con cui la Corona risponde al Boston Tea Party: chiudono il porto di Boston, sospendono l'autogoverno del Massachusetts, sostituiscono i giudici locali con funzionari nominati da Londra."}, {"termine": "leggi intollerabili", "tipo": "contesa", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La rappresentanza negata", "definizione": "Il nome con cui i coloni ribattezzano le leggi coercitive del 1774.", "perche": "è un'etichetta coniata dai coloni per le leggi coercitive britanniche del 1774, che segnala già nel nome un giudizio di condanna invece di descrivere il provvedimento."}, {"termine": "Royal Proclamation", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La frontiera vietata", "definizione": "Il provvedimento del 1763 con cui la Corona vieta ai coloni di insediarsi oltre gli Appalachi, riservando quei territori alle popolazioni native per contenere i costi di un'espansione incontrollata."}, {"termine": "Primo Congresso continentale", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "Dalla protesta alla rottura", "definizione": "L'assemblea di delegati riunita a Filadelfia nel settembre 1774, con l'obiettivo di coordinare i boicottaggi e difendere le autonomie, non ancora di separarsi."}, {"termine": "Secondo Congresso continentale", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "Dalla protesta alla rottura", "definizione": "L'assemblea riunita nel maggio 1775, dopo gli scontri di Lexington e Concord, che decide di formare un esercito comune affidandone il comando a George Washington."}, {"termine": "Dichiarazione d'indipendenza", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "Dalla protesta alla rottura", "definizione": "Il testo redatto da Jefferson e approvato il 4 luglio 1776, modellato sulla Dichiarazione dei diritti della Virginia di poche settimane prima: il capitolo ne isola la struttura argomentativa, ripresa da altri movimenti indipendentisti compreso quello haitiano."}, {"termine": "diritto alla rivoluzione", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La Dichiarazione d'indipendenza: anatomia di un testo", "definizione": "Il principio che discende dal preambolo della Dichiarazione: quando un governo viola sistematicamente i diritti dei governati, il popolo ha non solo la facoltà ma il dovere di modificarlo o distruggerlo."}, {"termine": "Ordinanza del Nord-Ovest", "tipo": "ordinaria", "capitolo": "Le tredici colonie e le ragioni dell'indipendenza", "paragrafo": "La Dichiarazione d'indipendenza: anatomia di un testo", "definizione": "Il provvedimento del 1787 con cui il Congresso organizza l'espansione verso i territori appena liberati dal controllo britannico, senza riservare alcun diritto riconosciuto alle popolazioni native: il Focus dedicato ne mostra il pianificare l'aggiramento, affidando all'esercito il compito di reprimere le resistenze."}, {"termine": "\"grande compromesso\"", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il modello di Philadelphia", "definizione": "La soluzione trovata alla Convenzione costituzionale per la rappresentanza al Congresso: una Camera dei rappresentanti eletta in proporzione alla popolazione e un Senato con due seggi per ogni Stato a prescindere dalla sua ampiezza, per impedire che gli Stati più popolosi schiacciassero quelli piccoli."}, {"termine": "Federalisti", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Due idee di libertà", "definizione": "Lo schieramento, fra cui Washington, Hamilton, Franklin e Madison, che sostiene come solo un governo centrale forte possa garantire stabilità politica, sviluppo economico e ordine sociale: il proprio bacino di consenso nei ceti industriali, commerciali e finanziari del Centro-Nord."}, {"termine": "Antifederalisti", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Due idee di libertà", "definizione": "Lo schieramento, con Jefferson come punto di riferimento ideale, che teme un potere centrale troppo forte capace di degenerare in un'oligarchia di affaristi: consenso prevalentemente rurale, concentrato nel Sud e nell'Ovest."}, {"termine": "Bill of Rights", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il compromesso e la nascita dei partiti", "definizione": "I primi dieci emendamenti alla Costituzione, approvati nel 1791 per venire incontro ai timori antifederalisti sulla tutela delle libertà individuali e delle prerogative statali."}, {"termine": "partito federalista", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il compromesso e la nascita dei partiti", "definizione": "Il partito di Hamilton, nato dalla spaccatura sulle scelte del Segretario al Tesoro marcatamente favorevoli a mercanti e banche del Nord: uno dei primi due partiti della storia americana."}, {"termine": "partito repubblicano-democratico", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il compromesso e la nascita dei partiti", "definizione": "Il partito di Jefferson, che consolida l'opposizione agraria e sudista già formata durante il dibattito sulla ratifica della Costituzione."}, {"termine": "Ordinanza del Nord-Ovest", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il modello aperto: dai territori agli Stati", "definizione": "Il provvedimento del 1787, già incontrato a proposito delle popolazioni native, qui rilevante per il meccanismo con cui organizza l'ingresso di nuovi Stati nell'Unione: territori sotto tutela federale fino a 60.000 abitanti, poi ammissione a pieno titolo."}, {"termine": "\"America agli americani\"", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il raddoppio del territorio", "definizione": "Il principio con cui il presidente Monroe sintetizza nel 1823 la propria dottrina, un avvertimento diplomatico alla Santa Alleanza perché rinunci a nuove colonizzazioni nell'emisfero occidentale."}, {"termine": "\"città sopra una collina\"", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il Destino Manifesto e il prezzo della frontiera", "definizione": "La formula con cui il puritano John Winthrop descrive già nel 1630 la colonia della Nuova Inghilterra come modello destinato a essere osservato dal mondo intero, radice religiosa dell'autopercezione di \"popolo eletto\" che nell'Ottocento si secolarizza nel Destino Manifesto."}, {"termine": "Destino Manifesto", "tipo": "contesa", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il Destino Manifesto e il prezzo della frontiera", "definizione": "Il mandato politico e territoriale con cui gli americani si presentano come titolari di un diritto stabilito dalla Provvidenza a possedere l'intero continente.", "perche": "è un'espressione coniata da John L. O'Sullivan nel 1845 per presentare come missione provvidenziale un'espansione che il testo mostra mascherare interessi materiali concreti."}, {"termine": "Trattato di Guadalupe Hidalgo", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il Destino Manifesto e il prezzo della frontiera", "definizione": "L'atto che sancisce nel 1848 la vittoria americana sul Messico, costringendolo a cedere oltre un milione e trecentomila chilometri quadrati in cambio di un indennizzo che non compensa la perdita di oltre un terzo del territorio nazionale."}, {"termine": "Indian Removal Act", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il Destino Manifesto e il prezzo della frontiera", "definizione": "La legge firmata da Andrew Jackson nel 1830, che dispone la rimozione forzata delle popolazioni native del Sud-Est e la loro deportazione a ovest del Mississippi."}, {"termine": "\"sentiero delle lacrime\"", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Il Destino Manifesto e il prezzo della frontiera", "definizione": "Il tragitto della deportazione forzata imposta dall'Indian Removal Act, seguito dal confinamento nelle riserve che decima la popolazione nativa per epidemie, malnutrizione e stress sociale."}, {"termine": "\"ferrovia sotterranea\"", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Due economie, un solo paese", "definizione": "La rete clandestina attraverso cui le persone ridotte in schiavitù organizzano fughe sistematiche verso gli Stati liberi del Nord o verso il Canada: una forma di resistenza politica a tutti gli effetti."}, {"termine": "Confederazione degli Stati d'America", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "La crisi dei compromessi", "definizione": "Lo Stato costituito dagli Stati del Sud dopo l'elezione di Lincoln nel 1860, di fronte alla prospettiva della fine della parità di potere nell'Unione."}, {"termine": "Proclama di Emancipazione", "tipo": "contesa", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Dall'illusione di Bull Run alla svolta di Gettysburg", "definizione": "L'atto firmato da Lincoln nel 1863, che dichiara liberi gli schiavi degli Stati in rivolta: una misura di guerra il cui effetto va oltre il proprio perimetro giuridico, trasformando la natura del conflitto agli occhi dell'opinione pubblica internazionale.", "perche": "il nome suggerisce una liberazione generale, ma il testo precisa che fu una misura di guerra dalla portata legale limitata, non applicata agli Stati schiavisti rimasti fedeli all'Unione."}, {"termine": "Ku Klux Klan", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Diritti sulla carta", "definizione": "L'organizzazione nata negli anni della Ricostruzione, strumento più brutale della nuova stagione di discriminazione sistematica, segregazione legale e violenza organizzata contro la popolazione afroamericana del Sud."}, {"termine": "Bull Run", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Dall'illusione di Bull Run alla svolta di Gettysburg", "definizione": "Il luogo della vittoria sudista del luglio 1861 che dimostra quanto fosse illusoria l'aspettativa nordista di una vittoria rapida."}, {"termine": "Gettysburg", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Dall'illusione di Bull Run alla svolta di Gettysburg", "definizione": "Il luogo della vittoria unionista del luglio 1863 che fa passare stabilmente l'iniziativa militare nelle mani del Nord."}, {"termine": "Appomattox", "tipo": "ordinaria", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "La resa e il prezzo del conflitto", "definizione": "Il luogo della resa dell'esercito confederato nell'aprile 1865, che chiude il conflitto pochi giorni prima dell'assassinio di Lincoln."}, {"termine": "causa perduta", "tipo": "contesa", "capitolo": "Gli Stati Uniti dalle origini alla guerra di secessione", "paragrafo": "Guerra di secessione: una guerra di Stati o una guerra di schiavitù?", "definizione": "Il racconto con cui gli Stati confederati, negli anni successivi alla sconfitta, sostituiscono la difesa della schiavitù con la difesa dei diritti degli Stati come causa della secessione.", "perche": "è una narrazione nata nel dopoguerra confederato per sostituire la difesa della schiavitù con un principio costituzionale più presentabile, contro l'evidenza delle stesse dichiarazioni di secessione."}, {"termine": "\"commercio triangolare\"", "tipo": "contesa", "capitolo": "Schiavitù, Haiti e colonialismo", "paragrafo": "Un sistema, non un'eccezione", "definizione": "Il modello con cui si descrive comunemente la tratta atlantica: merci europee verso l'Africa, persone dall'Africa alle Americhe, materie prime dalle Americhe all'Europa.", "perche": "è un'etichetta divulgativa che la storiografia recente, in particolare Pétré-Grenouilleau, mostra fuorviante rispetto alla reale molteplicità dei circuiti della tratta."}, {"termine": "Rio de Janeiro", "tipo": "ordinaria", "capitolo": "Schiavitù, Haiti e colonialismo", "paragrafo": "Un sistema, non un'eccezione", "definizione": "Il primo porto negriero del pianeta, non Liverpool come si crede comunemente: uno degli argomenti con cui la storiografia recente mostra i limiti del modello del commercio triangolare."}, {"termine": "Saint-Domingue", "tipo": "ordinaria", "capitolo": "Schiavitù, Haiti e colonialismo", "paragrafo": "Il capitale e la piantagione", "definizione": "La colonia francese, l'attuale Haiti, che un secolo e mezzo dopo l'introduzione della canna da zucchero alle Barbados diventa la più redditizia del mondo e uno dei luoghi con la più alta concentrazione di persone schiavizzate rispetto alla popolazione libera."}, {"termine": "Royal African Company", "tipo": "ordinaria", "capitolo": "Schiavitù, Haiti e colonialismo", "paragrafo": "L'Africa dentro il sistema", "definizione": "La compagnia fondata nel 1672 la cui installazione di basi fortificate sulla costa accelera il mutamento per cui alcuni Stati africani, come il Dahomey, diventano dipendenti dalle armi e dai beni europei."}, {"termine": "Dahomey", "tipo": "ordinaria", "capitolo": "Schiavitù, Haiti e colonialismo", "paragrafo": "L'Africa dentro il sistema", "definizione": "Il regno il cui caso, il più studiato, mostra come uno Stato africano ristrutturi la propria economia attorno alla produzione di prigionieri, rendendo la guerra e le razzie il motore economico dello Stato stesso."}, {"termine": "Bois Caïman", "tipo": "ordinaria", "capitolo": "Schiavitù, Haiti e colonialismo", "paragrafo": "Haiti: la rivoluzione che non doveva accadere", "definizione": "La cerimonia, presieduta dall'houngan Boukman e dalla mambo Fatiman, che la tradizione haitiana colloca alle origini dell'insurrezione del 1791: un rito vodou e insieme un consiglio di guerra, da leggere con cautela documentaria ma centrale come fondamento simbolico dell'identità nazionale."}, {"termine": "Compagnia delle Indie Orientali", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Due colonialismi, non uno", "definizione": "L'esempio più noto delle grandi compagnie mercantili del colonialismo dei secoli precedenti, che operavano con ampia autonomia dai governi e miravano alla penetrazione commerciale, non al controllo territoriale."}, {"termine": "nuovo imperialismo", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Due colonialismi, non uno", "definizione": "Il fenomeno che rovescia i tratti del colonialismo dei secoli precedenti: obiettivo dichiarato di politica nazionale, conquista militare e amministrazione centralizzata al posto della penetrazione commerciale delle compagnie private."}, {"termine": "seconda rivoluzione industriale", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Perché proprio allora", "definizione": "La trasformazione che muta la natura della domanda europea di materie prime, caucciù, petrolio, metalli non ferrosi, prodotti che l'Europa non possedeva in quantità sufficiente."}, {"termine": "Grande Depressione", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Perché proprio allora", "definizione": "La lunga crisi economica fra il 1873 e il 1896 che spinge quasi tutti gli Stati europei verso il protezionismo doganale, alla ricerca di mercati di sbocco esclusivi per le merci industriali in eccesso."}, {"termine": "darwinismo sociale", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Il fardello e la scienza", "definizione": "Le teorie che trasportano indebitamente sul terreno delle società umane categorie tratte dalla biologia evolutiva, da cui deriva l'idea di una gerarchia biologica fra le razze."}, {"termine": "\"fardello dell'uomo bianco\"", "tipo": "contesa", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Il fardello e la scienza", "definizione": "La formulazione anglosassone con cui la conquista coloniale viene presentata non come conquista ma come obbligo morale gravoso, assunto per il bene dei popoli colonizzati.", "perche": "è una formula che presenta la conquista coloniale come obbligo morale gravoso, mascherando dietro il linguaggio del sacrificio la violenza e l'interesse del dominio."}, {"termine": "mission civilisatrice", "tipo": "contesa", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Il fardello e la scienza", "definizione": "La versione francese dello stesso dispositivo retorico del fardello dell'uomo bianco.", "perche": "è la versione francese dello stesso dispositivo retorico: presenta la conquista come dovere di civilizzazione, non come conquista."}, {"termine": "Tunisia", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le scintille: Tunisia ed Egitto", "definizione": "Il territorio su cui la Francia impone il protettorato nel 1881, sfruttando il via libera ottenuto al Congresso di Berlino del 1878: uno dei due episodi che, prima della Conferenza di Berlino, mostrano alle cancellerie che il vecchio equilibrio non regge più."}, {"termine": "Canale di Suez", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le scintille: Tunisia ed Egitto", "definizione": "La via più breve verso l'India, punto più sensibile dell'intero sistema imperiale britannico, il cui controllo è la vera ragione dell'intervento militare britannico in Egitto nel 1882."}, {"termine": "Congresso di Berlino del 1878", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Berlino, novembre 1884", "definizione": "Il congresso in cui Bismarck lavora a un equilibrio continentale che isola la Francia, offrendole compensazioni coloniali, tra cui la Tunisia, per distoglierla dal desiderio di rivincita in Europa."}, {"termine": "Conferenza di Berlino", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Berlino, novembre 1884", "definizione": "La conferenza riunita fra il novembre 1884 e il febbraio 1885, il cui motivo immediato fu il bacino del Congo: produce il principio dell'effettiva occupazione, che invece di calmare la competizione coloniale la accelera."}, {"termine": "Stato libero del Congo", "tipo": "contesa", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Berlino, novembre 1884", "definizione": "Il dominio personale riconosciuto a Leopoldo II del Belgio dalla Conferenza di Berlino: il Focus dedicato ne segue il sistema di sfruttamento del caucciù, fondato su quote obbligatorie, lavoro forzato e mutilazioni punitive.", "perche": "è un nome che evoca libertà e filantropia mentre designava, come mostra il focus dedicato, uno dei regimi di sfruttamento più violenti della storia coloniale."}, {"termine": "dal Capo al Cairo", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le direttrici della corsa", "definizione": "Il progetto di continuità territoriale britannica sostenuto da Cecil Rhodes, che avrebbe saldato lungo un asse nord-sud i possedimenti dell'Africa australe con quelli della valle del Nilo."}, {"termine": "Fashoda", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le direttrici della corsa", "definizione": "Il luogo del Sudan dove, nel settembre 1898, si fronteggiano colonne militari francesi e britanniche nel punto in cui si incrociano i rispettivi disegni espansionistici: la crisi si chiude senza combattimenti."}, {"termine": "Mahdi", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "La violenza del sistema", "definizione": "Il capo la cui rivolta oppone per anni in Sudan una resistenza organizzata di matrice islamica alle forze anglo-egiziane."}, {"termine": "guerra anglo-boera", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "La violenza del sistema", "definizione": "Il conflitto del 1899-1902 fra due popolazioni di coloni europei per il controllo delle miniere d'oro e diamanti in Sudafrica, concluso con l'annessione britannica delle repubbliche dell'Orange e del Transvaal."}, {"termine": "\"posto al sole\"", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Il posto al sole", "definizione": "La rivendicazione con cui Guglielmo II chiede per la Germania una quota coloniale non inferiore a quella di Francia e Gran Bretagna."}, {"termine": "Siam", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Oltre l'Africa", "definizione": "Il regno che sopravvive indipendente in Asia proprio perché Francia e Gran Bretagna hanno interesse a mantenerlo come Stato cuscinetto tra i rispettivi domini."}, {"termine": "sfere d'influenza", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Oltre l'Africa", "definizione": "Il regime a cui viene ripartita la Cina, rimasta nominalmente indipendente ma svuotata di sovranità effettiva senza che nessuno ne rivendichi formalmente il territorio."}, {"termine": "guerre dell'oppio", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Oltre l'Africa", "definizione": "I conflitti con cui la Cina viene aperta con la forza, la prima delle quali si chiude nel 1842 con il trattato di Nanchino, che cede Hong Kong alla Gran Bretagna e apre Shanghai al commercio straniero."}, {"termine": "impero informale", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Oltre l'Africa", "definizione": "Il modo in cui funziona l'America Latina, fuori dalla spartizione formale ma non dal sistema: oligarchie locali esportano materie prime verso le metropoli europee, ricevendone manufatti e prestiti che ne vincolano le scelte economiche."}, {"termine": "mitragliatrici Maxim", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Il progresso visto dall'altra parte", "definizione": "La superiorità tecnologica che rende schiacciante, sul campo, l'arrivo del conquistatore straniero fuori dall'Europa."}, {"termine": "Sottosviluppo", "tipo": "contesa", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Il progresso visto dall'altra parte", "definizione": "Il termine con cui alcuni storici descrivono la transizione che il colonialismo produce fuori dall'Europa: non l'assenza di sviluppo, ma una struttura economica costruita per servire un centro esterno.", "perche": "il testo distingue esplicitamente il termine dalla semplice assenza di sviluppo, definendolo una struttura economica costruita per servire un centro esterno."}, {"termine": "Entente cordiale", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le colonie e il continente", "definizione": "L'accordo del 1904 fra Francia e Gran Bretagna, in origine un compromesso su Egitto e Marocco, che diventa una delle intese destinate a legare militarmente le potenze europee."}, {"termine": "Triplice Alleanza", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le colonie e il continente", "definizione": "Lo schieramento del 1882, uno dei due in cui si divide l'Europa mentre la competizione coloniale alimenta una diffidenza reciproca che irrigidisce il sistema delle alleanze."}, {"termine": "Triplice Intesa", "tipo": "ordinaria", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le colonie e il continente", "definizione": "Lo schieramento del 1907, formatosi quando Londra abbandona l'isolamento tradizionale per avvicinarsi a Francia e Russia di fronte alla costruzione della flotta tedesca."}, {"termine": "évolués", "tipo": "contesa", "capitolo": "Dal colonialismo all'imperialismo di fine Ottocento", "paragrafo": "Le colonie e il continente", "definizione": "Il termine coniato dai francesi per le minoranze ristrette di nativi istruite nelle scuole coloniali per fornire il personale amministrativo necessario.", "perche": "è un termine coniato dai francesi per l'élite indigena scolarizzata, definito dal testo un'etichetta che misura il valore di una persona dalla distanza percorsa rispetto alla propria cultura d'origine."}, {"termine": "gemma della corona", "tipo": "contesa", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "La gemma della corona", "definizione": "La formula corrente all'epoca per l'India, il possedimento coloniale che pesa più di ogni altro per l'impero britannico.", "perche": "è una formula dell'epoca che suggerisce un ornamento prezioso, laddove il testo mostra che l'India era il perno strutturale senza cui l'intero sistema imperiale britannico non avrebbe funzionato."}, {"termine": "Canale di Suez", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "La gemma della corona", "definizione": "La rotta la cui apertura nel 1869 riduce di settimane il viaggio verso oriente e rende l'India il perno logistico e militare di un impero esteso dal Mediterraneo al Pacifico."}, {"termine": "Compagnia delle Indie Orientali", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "Da compagnia a Stato", "definizione": "L'ente che governa l'India per conto della corona fino alla metà dell'Ottocento, con un modello fondato su fiscalismo agrario e alleanza con le gerarchie tradizionali locali."}, {"termine": "deindustrializzazione", "tipo": "contesa", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "Da compagnia a Stato", "definizione": "Il processo con cui l'importazione massiccia di tessuti industriali britannici a basso costo distrugge nel giro di alcuni decenni la vastissima industria cotoniera artigianale indiana, riducendo il subcontinente a fornitore di materie prime e mercato per i manufatti della metropoli.", "perche": "il testo precisa che il termine non indica un mancato sviluppo ma la distruzione attiva di una capacità produttiva preesistente."}, {"termine": "sepoy", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "1857", "definizione": "I reparti indiani dell'esercito coloniale fra cui comincia l'ammutinamento del 1857, innescato dalle cartucce ingrassate con sego di vacca e di maiale ma alimentato da anni di tensione crescente."}, {"termine": "Raj", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "1857", "definizione": "Il regime di amministrazione diretta instaurato nel 1858, quando il governo britannico sopprime la Compagnia delle Indie dopo la rivolta e assume il controllo del subcontinente attraverso un viceré."}, {"termine": "seimila funzionari britannici", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "Seimila funzionari", "definizione": "La cifra, attorno al 1890, degli amministratori che governano quasi trecento milioni di persone appoggiandosi a circa settantamila soldati europei: la misura dell'intera asimmetria del sistema coloniale indiano."}, {"termine": "Congresso Nazionale Indiano", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "Il paradosso della modernizzazione", "definizione": "L'organizzazione fondata nel 1885 con il sostegno di amministratori britannici che intendevano incanalare in forme moderate le proteste delle classi medie: diventa nel giro di pochi decenni il principale veicolo del nazionalismo indiano."}, {"termine": "Tunisia", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "L'altro caso", "definizione": "Il territorio la cui occupazione francese nel 1881 viene recepita dall'Italia come un'umiliazione diplomatica, spingendola l'anno successivo a sottoscrivere la Triplice Alleanza e poi a rivolgere l'attenzione al Corno d'Africa."}, {"termine": "Triplice Alleanza", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "L'altro caso", "definizione": "L'alleanza con Germania e Austria-Ungheria che l'Italia sottoscrive nel 1882 per uscire dall'isolamento dopo l'umiliazione tunisina."}, {"termine": "Massaua", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "L'altro caso", "definizione": "Il porto occupato nel 1885, atto di nascita della colonia eritrea, dopo l'acquisto della baia di Assab."}, {"termine": "Dogali", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "L'altro caso", "definizione": "Il luogo dell'eccidio del 1887 in cui cadono cinquecento soldati italiani, il primo arresto militare della spedizione italiana verso l'altopiano etiope."}, {"termine": "Trattato di Uccialli", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "Uccialli, ovvero un trattato in due lingue", "definizione": "L'accordo firmato nel 1889 con il negus Menelik II, esistente in due versioni linguistiche che formulano diversamente l'articolo decisivo: protettorato nella versione italiana, facoltà nella versione amarica."}, {"termine": "Adua", "tipo": "ordinaria", "capitolo": "Due casi: India britannica ed Etiopia", "paragrafo": "Adua", "definizione": "Il luogo della sconfitta netta e definitiva dell'esercito italiano il 1° marzo 1896: il capitolo la presenta come un'eccezione, non la prova che la resistenza africana potesse vincere ovunque, spiegata da una combinazione di fattori politici, militari, geografici e dallo stato dell'avversario."}, {"termine": "\"navi nere\"", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Le navi nere", "definizione": "Il nome con cui i giapponesi ribattezzano la squadra navale del commodoro Perry, entrata nelle acque giapponesi nel luglio 1853 per chiedere, con la minaccia di un intervento militare, l'apertura dei porti."}, {"termine": "shogunato Tokugawa", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Le navi nere", "definizione": "Il regime che governa il Giappone da due secoli e mezzo al momento dell'arrivo di Perry, in un isolamento diplomatico e commerciale noto come sakoku, con lo shogun detentore del potere effettivo e l'imperatore privo di autorità politica."}, {"termine": "daimyo", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Le navi nere", "definizione": "I grandi signori feudali della struttura sociale giapponese, di cui lo shogun chiede formalmente il parere di fronte alla minaccia americana, un gesto senza precedenti."}, {"termine": "samurai", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Le navi nere", "definizione": "La casta guerriera in crescente difficoltà economica, che fornirà l'oligarchia da cui uscirà la classe dirigente della Restaurazione Meiji."}, {"termine": "sonnō jōi", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Le navi nere", "definizione": "La formula, «riverire l'imperatore, espellere i barbari», che sintetizza il movimento nato dalla reazione ai trattati ineguali del 1858, e che sceglie la figura imperiale come punto di legittimazione."}, {"termine": "Mutsuhito", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Le navi nere", "definizione": "Il giovane imperatore a cui passa nominalmente il potere nel gennaio 1868, quando lo shogunato cade e ha inizio la Restaurazione Meiji."}, {"termine": "Restaurazione Meiji", "tipo": "contesa", "capitolo": "Il Giappone Meiji", "paragrafo": "Le navi nere", "definizione": "Il passaggio di potere del gennaio 1868, guidato da un movimento dalle parole d'ordine tradizionaliste e xenofobe che, una volta al potere, fa l'opposto di quanto promesso.", "perche": "il nome suggerisce un ritorno al passato, mentre il testo osserva esplicitamente che il movimento, una volta al potere, fece l'opposto: importò sistematicamente modelli occidentali."}, {"termine": "Giuramento dei Cinque Articoli", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Una rivoluzione dall'alto", "definizione": "Il documento promulgato dall'imperatore nel 1868 all'avvio del nuovo governo, che enuncia i principi guida della nuova stagione, fra cui la ricerca del sapere ovunque nel mondo."}, {"termine": "yen", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Una rivoluzione dall'alto", "definizione": "La moneta unificata introdotta sul piano economico insieme a una tassazione fondiaria in denaro anziché in natura, che garantisce allo Stato entrate certe e prevedibili."}, {"termine": "zaibatsu", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Ferrovie che portano dentro", "definizione": "I grandi conglomerati industriali e finanziari, discendenti da antiche dinastie mercantili, che convertono patrimoni agrari e commerciali in capitale industriale sostenuti dalla protezione statale e dalle commesse militari."}, {"termine": "Mitsui", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Ferrovie che portano dentro", "definizione": "Uno dei principali zaibatsu, insieme a Sumitomo."}, {"termine": "Sumitomo", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Ferrovie che portano dentro", "definizione": "Uno dei principali zaibatsu, insieme a Mitsui."}, {"termine": "Costituzione del 1889", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Il prezzo interno", "definizione": "Il testo modellato sull'esempio prussiano che risolve in senso marcatamente autoritario la tensione fra rappresentanza e autorità, mantenendo il potere esecutivo nelle mani dell'imperatore e di un'oligarchia non responsabile davanti ai deputati."}, {"termine": "Dieta", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Il prezzo interno", "definizione": "Il parlamento previsto dalla Costituzione del 1889, la cui funzione principale è fornire al Giappone una veste istituzionale riconoscibile dalle cancellerie occidentali."}, {"termine": "shintoismo", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Il prezzo interno", "definizione": "La religione elevata a religione di Stato, con cui si istituzionalizza il culto dell'imperatore come reazione organizzata all'occidentalizzazione dei costumi."}, {"termine": "Editto sull'educazione del 1890", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Il prezzo interno", "definizione": "Il provvedimento che fa della scuola uno strumento di formazione patriottica e di obbedienza, parte della reazione che il governo organizza all'occidentalizzazione."}, {"termine": "guerra sino-giapponese del 1894-95", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Da preda a predatore", "definizione": "Il conflitto in cui il Giappone sconfigge la Cina e le sottrae Taiwan e il controllo sulla Corea."}, {"termine": "guerra russo-giapponese del 1904-05", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Da preda a predatore", "definizione": "Il conflitto in cui il Giappone annienta la flotta russa, la prima volta nella storia moderna che una potenza asiatica sconfigge una grande potenza europea in un conflitto su scala industriale."}, {"termine": "Tsushima", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "Da preda a predatore", "definizione": "Il luogo della battaglia navale in cui il Giappone annienta la flotta russa nel 1905."}, {"termine": "Taiping", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "La penna e il testo", "definizione": "La rivolta, fra il 1850 e il 1864, guerra civile più sanguinosa dell'Ottocento, il cui movimento proclama un regno fondato su riforme radicali dalla ridistribuzione della terra all'uguaglianza tra i sessi."}, {"termine": "Boxer", "tipo": "ordinaria", "capitolo": "Il Giappone Meiji", "paragrafo": "La penna e il testo", "definizione": "La rivolta del 1900, diretta contro missionari, ferrovie e simboli della presenza straniera, repressa da un contingente internazionale che occupa e saccheggia Pechino."}];
+  var CAPITOLI = [{"nome": "Le tredici colonie e le ragioni dell'indipendenza", "col": "#6b5545"}, {"nome": "Gli Stati Uniti dalle origini alla guerra di secessione", "col": "#b0872e"}, {"nome": "Schiavitù, Haiti e colonialismo", "col": "#9d4a2b"}, {"nome": "Dal colonialismo all'imperialismo di fine Ottocento", "col": "#3d5566"}, {"nome": "Due casi: India britannica ed Etiopia", "col": "#5c6b3d"}, {"nome": "Il Giappone Meiji", "col": "#6d4c6b"}];
+
+  var state = { q:'', capitolo:null, quiz:false, quizEntry:null, quizOptions:null, quizButtons:null, answered:false };
+
+  var searchEl=document.getElementById('search');
+  var chapChips=document.getElementById('chapChips');
+  var countEl=document.getElementById('count');
+  var listEl=document.getElementById('list');
+  var quizToggle=document.getElementById('quizToggle');
+  var quizEl=document.getElementById('quiz');
+
+  function norm(s){
+    return (s||'').toLowerCase()
+      .replace(/[àáâä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
+      .replace(/[òóôö]/g,'o').replace(/[ùúûü]/g,'u');
+  }
+
+  var STOPWORDS = {'di':1,'da':1,'del':1,'della':1,'dei':1,'delle':1,'dello':1,'dell':1,
+    'la':1,'le':1,'lo':1,'il':1,'gli':1,'un':1,'una':1,'uno':1,'e':1,'ed':1,'a':1,'ad':1,
+    'tra':1,'fra':1,'con':1,'per':1,'su':1,'in':1,'al':1,'alla':1,'allo':1,'agli':1,'alle':1,
+    'come':1,'che':1,'non':1,'più':1,'piu':1};
+
+  function significantWords(term){
+    return norm(term).split(/\s+/).filter(function(w){ return w.length>=4 && !STOPWORDS[w]; });
+  }
+  function tooSimilar(a,b){
+    var wa=significantWords(a.termine), wb=significantWords(b.termine);
+    for(var i=0;i<wa.length;i++){ if(wb.indexOf(wa[i])>-1) return true; }
+    return false;
+  }
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+  function pickDistractors(correct){
+    var used = {}; used[correct.termine]=true;
+    var picked = [];
+    function take(list){
+      list.forEach(function(e){
+        if(picked.length<3 && !used[e.termine]){ picked.push(e); used[e.termine]=true; }
+      });
+    }
+    take(shuffle(ENTRIES.filter(function(e){
+      return e.capitolo===correct.capitolo && !used[e.termine] && !tooSimilar(correct,e);
+    })));
+    if(picked.length<3){
+      take(shuffle(ENTRIES.filter(function(e){
+        return e.capitolo!==correct.capitolo && !used[e.termine] && !tooSimilar(correct,e);
+      })));
+    }
+    if(picked.length<3){
+      take(shuffle(ENTRIES.filter(function(e){
+        return !used[e.termine];
+      })));
+    }
+    return picked;
+  }
+
+  function filtered(){
+    var q = norm(state.q);
+    return ENTRIES.filter(function(e){
+      if(state.capitolo && e.capitolo!==state.capitolo) return false;
+      if(!q) return true;
+      return norm(e.termine).indexOf(q)>-1 || norm(e.definizione).indexOf(q)>-1;
+    });
+  }
+
+  function capColor(nome){
+    for(var i=0;i<CAPITOLI.length;i++){ if(CAPITOLI[i].nome===nome) return CAPITOLI[i].col; }
+    return '#5b5346';
+  }
+
+  function buildChips(){
+    var html='';
+    html+='<button data-c="" aria-pressed="'+(state.capitolo===null)+'"><span class="dot" style="background:#5b5346"></span>Tutti</button>';
+    CAPITOLI.forEach(function(c){
+      html+='<button data-c="'+c.nome.replace(/"/g,'&quot;')+'" aria-pressed="'+(state.capitolo===c.nome)+'">'+
+        '<span class="dot" style="background:'+c.col+'"></span>'+c.nome+'</button>';
+    });
+    chapChips.innerHTML=html;
+    Array.prototype.forEach.call(chapChips.querySelectorAll('button'),function(b){
+      b.addEventListener('click',function(){
+        state.capitolo = b.getAttribute('data-c') || null;
+        buildChips(); renderList(); if(state.quiz) pickQuizEntry();
+      });
+    });
+  }
+
+  function card(e){
+    var div=document.createElement('div');
+    div.className='card '+e.tipo;
+    div.style.borderLeftColor = e.tipo==='contesa' ? '' : capColor(e.capitolo);
+    var loc = e.capitolo + (e.paragrafo ? ' · '+e.paragrafo : '');
+    var head=document.createElement('div'); head.className='head';
+    var h3=document.createElement('h3'); h3.textContent=e.termine; head.appendChild(h3);
+    if(e.tipo==='contesa'){
+      var tag=document.createElement('span'); tag.className='tag-contesa'; tag.textContent='contesa';
+      head.appendChild(tag);
+    }
+    div.appendChild(head);
+    var p=document.createElement('p'); p.className='loc'; p.textContent=loc; div.appendChild(p);
+    var d=document.createElement('p'); d.className='def'; d.textContent=e.definizione; div.appendChild(d);
+    if(e.tipo==='contesa' && e.perche){
+      var pc=document.createElement('div'); pc.className='perche';
+      var k=document.createElement('span'); k.className='k'; k.textContent='Perché è contesa';
+      pc.appendChild(k);
+      pc.appendChild(document.createTextNode(e.perche));
+      div.appendChild(pc);
+    }
+    return div;
+  }
+
+  function renderList(){
+    var items=filtered();
+    countEl.textContent = items.length+' di '+ENTRIES.length+' voci';
+    listEl.innerHTML='';
+    if(!items.length){
+      var e=document.createElement('p'); e.className='empty'; e.textContent='Nessuna voce corrisponde alla ricerca.';
+      listEl.appendChild(e);
+      return;
+    }
+    items.forEach(function(it){ listEl.appendChild(card(it)); });
+  }
+
+  function pool(){
+    return state.capitolo ? ENTRIES.filter(function(e){return e.capitolo===state.capitolo;}) : ENTRIES;
+  }
+
+  function pickQuizEntry(){
+    var p=pool();
+    if(!p.length){ state.quizEntry=null; state.quizOptions=null; state.answered=false; renderQuiz(); return; }
+    var cand;
+    if(p.length>1 && state.quizEntry){
+      do{ cand = p[Math.floor(Math.random()*p.length)]; } while(cand.termine===state.quizEntry.termine);
+    } else {
+      cand = p[Math.floor(Math.random()*p.length)];
+    }
+    state.quizEntry=cand;
+    state.quizOptions=shuffle([cand].concat(pickDistractors(cand)));
+    state.answered=false;
+    renderQuiz();
+  }
+
+  function selectOption(opt){
+    if(state.answered) return;
+    state.answered=true;
+    var correct=state.quizEntry;
+    state.quizButtons.forEach(function(ref){
+      ref.btn.disabled=true;
+      if(ref.opt.termine===correct.termine) ref.btn.classList.add('correct');
+      else if(ref.opt.termine===opt.termine) ref.btn.classList.add('wrong');
+    });
+  }
+
+  function renderQuiz(){
+    var locEl=document.getElementById('q-loc');
+    var defEl=document.getElementById('q-def');
+    var optsEl=document.getElementById('q-options');
+    var nextBtn=document.getElementById('q-next');
+
+    if(!state.quizEntry){
+      locEl.textContent='';
+      defEl.textContent='Nessuna voce disponibile per questo filtro.';
+      optsEl.innerHTML='';
+      nextBtn.disabled=true;
+      return;
+    }
+    var e=state.quizEntry;
+    locEl.textContent = e.capitolo + (e.paragrafo ? ' · '+e.paragrafo : '');
+    defEl.textContent = e.definizione;
+
+    optsEl.innerHTML='';
+    state.quizButtons=[];
+    state.quizOptions.forEach(function(opt){
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.className='option';
+      btn.textContent=opt.termine;
+      btn.addEventListener('click',function(){ selectOption(opt); });
+      optsEl.appendChild(btn);
+      state.quizButtons.push({btn:btn, opt:opt});
+    });
+    nextBtn.disabled=false;
+  }
+
+  document.getElementById('q-next').addEventListener('click',function(){
+    pickQuizEntry();
+  });
+
+  quizToggle.addEventListener('click',function(){
+    state.quiz=!state.quiz;
+    quizToggle.setAttribute('aria-pressed', state.quiz?'true':'false');
+    listEl.style.display = state.quiz ? 'none' : '';
+    quizEl.className = 'quiz'+(state.quiz?' show':'');
+    if(state.quiz) pickQuizEntry();
+  });
+
+  searchEl.addEventListener('input',function(){
+    state.q=searchEl.value;
+    renderList();
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

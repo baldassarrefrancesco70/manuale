@@ -27,6 +27,8 @@ Questo non rende l'esito necessario, e conviene diffidare della formula secondo 
 _cfr. [approfondimento in Atlante, cartina 3 --- La Confederazione germanica e lo Zollverein](atlante.md#cartina-3)_
 
 
+<a id="infografica-8"></a>
+
 ![Due Germanie](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info13_Divergenza_politica_ed_economica_tedesca.png)
 
 
@@ -52,6 +54,8 @@ Il risultato fu che negli anni Cinquanta e Sessanta l'area tedesca disponeva di 
 {% endhint %}
 
 
+<a id="video-16"></a>
+
 {% embed url="https://youtu.be/Fky5fDy_t7k" %}
 Video --- Due Germanie: che cosa unisce un'unione doganale
 {% endembed %}
@@ -69,6 +73,8 @@ Il criterio funziona finché resta sulla pagina. Applicato alla carta dell'Europ
 Ne segue una difficoltà che il Romanticismo non aveva previsto perché non se n'era occupato. Una nazione definita dalla lingua e uno Stato definito da un confine sono due oggetti di natura diversa, e il secondo richiede una linea continua dove il primo presenta macchie, isole e sovrapposizioni. Chiunque avesse voluto costruire uno Stato tedesco avrebbe dovuto scegliere quale parte della nazione lasciare fuori, e nessun criterio linguistico può fondare quella scelta, perché è precisamente il criterio linguistico a essere violato.
 
 Nel 1848 si tentò di risolvere il problema con lo strumento che i liberali consideravano appropriato a ogni questione politica: la discussione parlamentare.
+
+<a id="artefatto-9"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/13-dove-finisce-la-germania.html" %}
 Risorsa digitale --- Dove finisce la Germania
@@ -112,10 +118,14 @@ Vale la pena osservare che Palacký formulava una posizione oggi difficile da co
 {% endhint %}
 
 
+<a id="artefatto-10"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/14-tavolo-di-francoforte.html" %}
 Risorsa digitale --- Il tavolo di Francoforte
 {% endembed %}
 
+
+<a id="infografica-9"></a>
 
 ![Il contraccolpo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info14_Il_meccanismo_del_contraccolpo_nazionale.png)
 
@@ -131,10 +141,14 @@ L'assemblea, priva di ogni legittimità residua, fu dispersa dalle truppe nel gi
 
 Quello che accadde subito dopo è la parte meno raccontata e la più decisiva. La borghesia liberale tedesca, spaventata dalle agitazioni operaie e contadine di quei mesi, non insistette. Scoprì, come i suoi omologhi in tutta Europa nello stesso biennio, che le proprie richieste economiche, mercato unificato, sicurezza dei contratti, infrastrutture, libertà d'impresa, potevano essere soddisfatte anche da un governo autoritario, purché garantisse l'ordine e la proprietà. Il fallimento del 1849 non lasciò dunque un vuoto: lasciò una classe dirigente economica disponibile a rinunciare al potere politico in cambio delle condizioni del proprio arricchimento. Chi avesse saputo offrirle quel patto avrebbe potuto fare l'unità tedesca senza di essa, e contro di essa.
 
+<a id="video-17"></a>
+
 {% embed url="https://youtu.be/g5ZqOIl4qnU" %}
 Video --- Il 1848 tedesco: la nazione messa ai voti
 {% endembed %}
 
+
+<a id="video-18"></a>
 
 {% embed url="https://youtu.be/LpcrEYCP8Yo" %}
 Video --- Perché un re rifiuta una corona
@@ -163,10 +177,14 @@ Vale poi la pena osservare a chi la frase fosse rivolta. Non a un nemico esterno
 {% endhint %}
 
 
+<a id="artefatto-11"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/15-misurare-le-forze.html" %}
 Risorsa digitale --- Misurare le forze
 {% endembed %}
 
+
+<a id="infografica-10"></a>
 
 ![Ferro e sangue](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info15_Anatomia_di_%C2%ABFerro_e_Sangue%C2%BB.png)
 
@@ -189,13 +207,19 @@ Il luogo scelto non era un dettaglio cerimoniale. Significava che la nazione ted
 _cfr. [approfondimento in Atlante, cartina 4 --- La formazione dell'Impero tedesco, 1864-1871](atlante.md#cartina-4)_
 
 
+<a id="infografica-11"></a>
+
 ![Tre guerre, tre funzioni](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info16_Bismarck_e_l_unificazione_tedesca.png)
 
+
+<a id="video-19"></a>
 
 {% embed url="https://youtu.be/iZVKEmYSQfM" %}
 Video --- 1866: perché Bismarck salvò l'Austria dopo averla battuta
 {% endembed %}
 
+
+<a id="video-20"></a>
 
 {% embed url="https://youtu.be/thUaMe7TdB4" %}
 Video --- Perché l'Impero tedesco fu proclamato in Francia
@@ -217,18 +241,26 @@ Alle **masse** andò il **suffragio universale maschile** per l'elezione del **R
 
 È in questo senso che l'Impero tedesco costituisce un precedente e non un'eccezione. Dimostrava che uno Stato poteva modernizzarsi, industrializzarsi e mobilitare la nazione senza passare per la democrazia parlamentare, e che la borghesia poteva accettarlo. Era un'informazione che nel resto d'Europa non passò inosservata.
 
+<a id="artefatto-12"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/16-il-patto-del-1871.html" %}
 Risorsa digitale --- Il patto del 1871
 {% endembed %}
 
+
+<a id="artefatto-13"></a>
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/17-chi-fa-cadere-governo.html" %}
 Risorsa digitale --- Chi può far cadere un governo
 {% endembed %}
 
 
+<a id="infografica-12"></a>
+
 ![Chi resta fuori](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info17_Impero_tedesco_del_1871.png)
 
+
+<a id="video-21"></a>
 
 {% embed url="https://youtu.be/ee8yHo6NT0Q" %}
 Video --- Bismarck: ottenere un programma sottraendolo a chi lo aveva scritto
@@ -246,23 +278,33 @@ Sul piano internazionale, ottenuti i propri obiettivi territoriali, Bismarck si 
 
 Il calcolo sul suffragio universale, infine, si rivelò meno sicuro di quanto sembrasse. I voti socialisti crebbero da poco più di centomila nel 1871 a oltre trecentomila nel 1874, e nel **1875**, al congresso di **Gotha**, l'unione tra i seguaci di Lassalle e i marxisti di Liebknecht e Bebel diede vita al **Partito socialdemocratico**, il primo partito operaio di massa d'Europa, indipendente da qualunque formazione borghese. Bismarck aveva costruito un'arena elettorale credendo di poterla controllare, e vi si presentò un attore che non rientrava in nessuna delle categorie con cui era stata progettata.
 
+<a id="artefatto-14"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/artefatti/18-leggere-a-ritroso.html" %}
 Risorsa digitale --- Leggere a ritroso
 {% endembed %}
 
 
+<a id="infografica-13"></a>
+
 ![I tre piani](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/3/img/info18_tre_piani_tedeschi_%281815-1875%29.png)
 
+
+<a id="video-22"></a>
 
 {% embed url="https://youtu.be/aIihIsdRmI4" %}
 Video --- Kulturkampf: un nome che giudica l'avversario
 {% endembed %}
 
 
+<a id="video-23"></a>
+
 {% embed url="https://youtu.be/A2sptgV8Gxs" %}
 Video --- L'arena che sfuggì al suo progettista
 {% endembed %}
 
+
+<a id="video-24"></a>
 
 {% embed url="https://youtu.be/40jqp4qp7ZY" %}
 Video --- Che cosa il 1871 lasciò aperto

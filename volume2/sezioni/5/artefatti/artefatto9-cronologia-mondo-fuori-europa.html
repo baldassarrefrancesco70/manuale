@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronologia a corsie</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.4}
+
+  .chart{display:grid;grid-template-columns:100px minmax(0,1fr);border:1px solid var(--rule);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);overflow:hidden}
+  .labels{border-right:1px solid var(--rule);background:var(--paper-2);min-width:0}
+  .labels .sp{height:30px;border-bottom:1px solid var(--line)}
+  .labels .lb{height:58px;display:flex;align-items:center;padding:0 10px;font-family:var(--sans);
+    font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+  .labels .lb:last-child{border-bottom:0}
+  .labels .lb.off{opacity:.25}
+
+  .scroller{overflow-x:auto;overflow-y:hidden;position:relative;min-width:0}
+  .track{position:relative;height:262px}
+  .axis{height:30px;border-bottom:1px solid var(--line);position:relative}
+  .axis .tk{position:absolute;top:0;height:30px;border-left:1px solid var(--line)}
+  .axis .tk span{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);padding-left:4px;line-height:30px}
+  .lane{position:absolute;left:0;right:0;height:58px;border-bottom:1px solid var(--line)}
+  .lane.off{opacity:.12;pointer-events:none}
+  .ev{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid var(--paper);
+    cursor:pointer;margin-left:-7px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+  .ev:hover{width:18px;height:18px;margin-left:-9px;margin-top:-2px}
+  .ev.sel{box-shadow:0 0 0 3px var(--ink)}
+  .bar{position:absolute;height:8px;border-radius:4px;opacity:.38;cursor:pointer}
+  .bar:hover{opacity:.65}
+  .bar.sel{opacity:.9}
+  .cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.7;pointer-events:none}
+  .cursor::after{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;
+    border-right:5px solid transparent;border-top:7px solid var(--ink)}
+
+  .slider{margin:14px 0 4px}
+  input[type=range]{width:100%;accent-color:#201d18}
+  .yearNow{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);text-align:center;margin-bottom:12px}
+  .yearNow strong{color:var(--ink);font-size:1.05rem}
+
+  .now{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  @media(max-width:760px){.now{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:440px){.now{grid-template-columns:minmax(0,1fr)}}
+  .cell{border:1px solid var(--rule);border-top-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:9px 11px;min-height:80px}
+  .cell h4{font-family:var(--sans);font-size:.64rem;letter-spacing:.07em;text-transform:uppercase;margin:0 0 6px}
+  .cell p{margin:0 0 5px;font-size:.9rem;line-height:1.4}
+  .cell p .y{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-right:5px}
+  .cell .none{color:var(--ink-soft);font-style:italic;font-size:.85rem}
+
+  .detail{margin-top:14px;border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;display:none}
+  .detail.show{display:block}
+  .detail .k{font-family:var(--sans);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  .detail h3{margin:3px 0 5px;font-size:1.08rem}
+  .detail p{margin:0;font-size:.97rem}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Il mondo fuori dall'Europa &middot; Apparati</div>
+  <h1>Cronologia a corsie</h1>
+  <p class="sub">Le cose non accadono in fila, accadono insieme. Quattro corsie scorrono in parallelo: sposta il cursore lungo gli anni e guarda che cosa succede nello stesso momento nella tecnica, nell'economia, nella società e nelle idee. Clicca un punto o una barra per leggerne la scheda.</p>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="chart">
+    <div class="labels" id="labels"></div>
+    <div class="scroller" id="scroller">
+      <div class="track" id="track">
+        <div class="axis" id="axis"></div>
+        <div class="cursor" id="cursor" style="left:0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider"><input type="range" id="range" min="1750" max="1914" value="1884" step="1" aria-label="Anno"></div>
+  <div class="yearNow">Intorno all'anno <strong id="ylab">1884</strong></div>
+
+  <div class="now" id="now"></div>
+
+  <div class="detail" id="detail">
+    <span class="k" id="d-lane"></span>
+    <h3 id="d-title"></h3>
+    <p id="d-note"></p>
+  </div>
+
+  <p class="note">Le date sono indicative e da verificare prima della stampa. La dicitura «circa» segnala processi diffusi nel tempo o datazioni convenzionali, non eventi puntuali: le barre indicano fenomeni di lunga durata, i punti eventi singoli.</p>
+
+<script>
+(function(){
+  var LANES=[
+    {k:"tec",lab:"Tecnica",col:"#6b5545"},
+    {k:"eco",lab:"Economia",col:"#b0872e"},
+    {k:"soc",lab:"Società",col:"#9d4a2b"},
+    {k:"ide",lab:"Idee",col:"#3d5566"}
+  ];
+
+  var Y0=1750, Y1=1914, PPY=9, PAD=20;
+  var W=(Y1-Y0)*PPY+PAD*2;
+
+  var E=[
+    {y:1853,l:"tec",t:"Le navi nere di Perry",
+     n:"Quattro vascelli a vapore nella baia di Edo: la tecnologia stessa, prima ancora delle parole, dice al Giappone che il tempo per restare isolato è finito."},
+    {y:1857,l:"tec",t:"Le cartucce Enfield",
+     n:"Ingrassate con grasso animale, impure per induisti e musulmani insieme: un dettaglio tecnico che innesca una rivolta ben più grande di sé."},
+    {y:1853,y2:1900,l:"tec",t:"Le ferrovie del Raj",approx:true,
+     n:"Costruite per spostare truppe e materie prime verso i porti: la stessa tecnologia che altrove collega, qui è progettata per portare fuori."},
+    {y:1872,y2:1900,l:"tec",t:"Le ferrovie Meiji",approx:true,
+     n:"Stessa tecnologia, stesso decennio, disegno opposto: qui le linee integrano il mercato interno invece di convogliarlo verso un porto."},
+    {y:1861,y2:1865,l:"tec",t:"Fucili a canna rigata",
+     n:"Precisione e gittata aumentano drasticamente: le vecchie cariche di fanteria diventano stragi, e la guerra civile americana anticipa i tratti della guerra totale."},
+    {y:1865,l:"tec",t:"Fotografia di guerra",approx:true,
+     n:"Mathew Brady documenta per la prima volta i campi di battaglia: l'iconografia eroica della guerra comincia a incrinarsi sotto il peso delle immagini reali."},
+    {y:1869,l:"tec",t:"Apertura del Canale di Suez",
+     n:"Settimane di navigazione in meno verso oriente: l'India resta raggiungibile abbastanza in fretta da restare il perno logistico di un impero intercontinentale."},
+    {y:1884,l:"tec",t:"Mitragliatrice Maxim",approx:true,
+     n:"Il simbolo tecnico dello squilibrio che rende possibile la conquista: poche decine di uomini possono ora tenere testa a un esercito."},
+    {y:1891,l:"tec",t:"Transiberiana",
+     n:"L'impero russo comincia a cucire la Siberia alla Russia europea: un'espansione che corre su rotaia invece che su nave."},
+
+    {y:1763,l:"eco",t:"Fine della guerra dei Sette anni",
+     n:"L'impero britannico raddoppia il proprio territorio e insieme il proprio debito: le colonie smettono di essere un margine trascurato e diventano una risorsa fiscale."},
+    {y:1803,l:"eco",t:"Acquisto della Louisiana",
+     n:"Jefferson raddoppia da solo la superficie della repubblica: la prima delle grandi acquisizioni ottenute per via diplomatica, non militare."},
+    {y:1819,l:"eco",t:"Acquisizione della Florida",approx:true,
+     n:"Il Trattato Adams-Onís mette in sicurezza l'intera costa meridionale: in meno di vent'anni il territorio ereditato dal 1783 è più che raddoppiato."},
+    {y:1846,y2:1848,l:"eco",t:"Guerra con il Messico",
+     n:"Si chiude con la cessione di oltre un milione di chilometri quadrati: il prezzo pagato dal Messico per il Destino Manifesto degli Stati Uniti."},
+    {y:1858,l:"eco",t:"Nascita del Raj britannico",
+     n:"La Compagnia delle Indie viene soppressa e l'amministrazione passa alla Corona: lo stesso anno in cui il Giappone firma i propri trattati ineguali, l'India perde ogni residuo di autonomia."},
+    {y:1860,l:"eco",t:"Cotone del Sud: 60% della produzione mondiale",
+     n:"Copriva anche il 70% del fabbisogno dell'industria tessile inglese: un legame commerciale che peserà sulle scelte diplomatiche europee durante la guerra civile."},
+    {y:1861,y2:1865,l:"eco",t:"Guerra di secessione",
+     n:"Rimuove lo scontro tra il protezionismo industriale del Nord e il liberismo cotoniero del Sud: la vittoria dell'Unione decide anche quale modello economico guiderà il continente."},
+    {y:1873,y2:1896,l:"eco",t:"Grande Depressione",approx:true,
+     n:"Prezzi e profitti crollano in tutta Europa: la ricerca di mercati esclusivi e materie prime protette diventa una spinta diretta verso la corsa coloniale."},
+    {y:1875,y2:1914,l:"eco",t:"La spartizione del mondo",approx:true,
+     n:"Circa un quarto delle terre emerse cambia padrone o ne acquista uno nuovo: una velocità senza precedenti nella storia della colonizzazione europea."},
+    {y:1884,y2:1885,l:"eco",t:"Conferenza di Berlino",
+     n:"Il principio dell'occupazione effettiva, pensato per regolare la corsa, la accelera: ogni potenza ha ora fretta di occupare prima delle altre."},
+    {y:1899,y2:1902,l:"eco",t:"Guerra anglo-boera",
+     n:"Due popolazioni di coloni europei si combattono per il controllo delle miniere d'oro e diamanti: la resistenza indigena resta ai margini di uno scontro tra bianchi."},
+    {y:1908,l:"eco",t:"Fine dello Stato libero del Congo",
+     n:"Il Parlamento belga sottrae il Congo a Leopoldo II dopo la denuncia internazionale del regime del caucciù: l'indignazione colpisce l'eccesso di un sovrano, non il principio della colonizzazione."},
+
+    {y:1750,l:"soc",t:"Popolazione schiavizzata: 300.000",
+     n:"Nelle colonie inglesi del Nord America: una cifra che crescerà per riproduzione interna, non per nuovi arrivi, sotto un regime giuridico che rende la condizione servile ereditaria."},
+    {y:1763,l:"soc",t:"Royal Proclamation",
+     n:"La Corona vieta ai coloni di insediarsi oltre gli Appalachi, riservando le terre alle popolazioni native: un divieto che l'indipendenza spazzerà via pochi decenni dopo."},
+    {y:1770,l:"soc",t:"Massacro di Boston",
+     n:"Uno scontro tra soldati e folla diventa, nel linguaggio della propaganda patriota, il simbolo di una tirannia da rovesciare."},
+    {y:1775,y2:1783,l:"soc",t:"Guerra d'indipendenza americana",
+     n:"Tredici colonie diventano una repubblica in nome di un principio universale che, come mostreranno i decenni successivi, non includeva affatto tutti."},
+    {y:1791,y2:1804,l:"soc",t:"Rivoluzione haitiana",
+     n:"L'unica rivoluzione del secolo che porta la promessa dei diritti naturali fino alla propria conclusione più radicale: la libertà rivendicata da chi ne era escluso."},
+    {y:1830,y2:1838,l:"soc",t:"Indian Removal Act e sentiero delle lacrime",approx:true,
+     n:"Le popolazioni native del Sud-Est vengono deportate con la forza a ovest del Mississippi: la stessa libertà che i coloni bianchi conquistano si traduce, per loro, in spossessamento."},
+    {y:1848,l:"soc",t:"Febbre dell'oro in California",
+     n:"Accelera la migrazione verso il Pacifico e satura la frontiera continentale: da qui la proiezione statunitense comincia a guardare oltre l'oceano."},
+    {y:1857,l:"soc",t:"Rivolta dei sepoy",
+     n:"Un ammutinamento militare diventa insurrezione popolare in ampie regioni del nord dell'India: la repressione che segue ridisegna l'intero sistema coloniale."},
+    {y:1858,y2:1868,l:"soc",t:"Sonnō jōi",approx:true,
+     n:"«Riverire l'imperatore, espellere i barbari»: il movimento che abbatte lo shogunato promette isolamento e produce, una volta al potere, il suo esatto contrario."},
+    {y:1860,l:"soc",t:"Popolazione schiavizzata: quasi 4 milioni",
+     n:"Negli Stati Uniti, alla vigilia della guerra civile: centotré anni prima erano trecentomila. Non l'importazione, ma la riproduzione forzata, ha moltiplicato la cifra."},
+    {y:1865,y2:1878,l:"soc",t:"Le grandi carestie indiane",approx:true,
+     n:"Milioni di morti in una regione che, nello stesso periodo, continua a esportare grano: la natura da sola non basta a spiegarle."},
+    {y:1868,l:"soc",t:"Caduta dello shogunato",
+     n:"Nasce la Restaurazione Meiji: un nome che promette ritorno al passato, per un governo che farà l'esatto opposto."},
+    {y:1877,l:"soc",t:"Rivolta di Satsuma",
+     n:"I samurai insorgono contro il governo che li ha privati dei privilegi, e vengono sconfitti dall'esercito di leva: la casta guerriera battuta da ciò che l'ha sostituita."},
+    {y:1881,y2:1898,l:"soc",t:"Rivolta del Mahdi",approx:true,
+     n:"Una resistenza organizzata di matrice islamica tiene testa per anni alle forze anglo-egiziane in Sudan."},
+    {y:1885,l:"soc",t:"Congresso Nazionale Indiano",
+     n:"Nato con il sostegno di amministratori britannici per moderare le proteste, diventa in pochi decenni il principale veicolo del nazionalismo indiano."},
+    {y:1894,y2:1895,l:"soc",t:"Guerra sino-giapponese",
+     n:"Il Giappone sconfigge la Cina e le sottrae Taiwan e il controllo sulla Corea: la stessa potenza che rischiava la colonizzazione trent'anni prima ne pratica una propria."},
+    {y:1896,l:"soc",t:"Battaglia di Adua",
+     n:"Un esercito europeo è sconfitto in modo netto da un esercito africano: nell'intera stagione della spartizione, accade una volta sola."},
+    {y:1900,l:"soc",t:"Rivolta dei Boxer",approx:true,
+     n:"L'esasperazione popolare contro la presenza straniera in Cina viene repressa da un contingente internazionale che occupa e saccheggia Pechino."},
+    {y:1904,y2:1908,l:"soc",t:"Sterminio degli Herero",approx:true,
+     n:"La repressione tedesca di una rivolta nell'Africa sud-occidentale è considerata da parte della storiografia il primo genocidio del Novecento."},
+    {y:1911,l:"soc",t:"Crollo della dinastia Qing",
+     n:"Duemila anni di impero finiscono in una repubblica troppo debole per governare: la Cina si frammenta sotto il controllo di potentati militari regionali."},
+    {y:1914,l:"soc",t:"Attentato di Sarajevo",
+     n:"La miccia finale non viene da una colonia: viene dai Balcani, dove nessuna potenza può essere compensata altrove come accadeva nelle dispute d'oltremare."},
+
+    {y:1776,l:"ide",t:"Dichiarazione d'indipendenza americana",
+     n:"Preambolo filosofico, atto d'accusa, atto di rottura: la struttura in tre tempi che altri, esclusi dallo stesso principio, useranno contro chi l'ha scritta per primo."},
+    {y:1794,l:"ide",t:"Abolizione francese della schiavitù",
+     n:"La Convenzione decreta l'abolizione nelle colonie sotto la pressione delle rivolte, cinque anni dopo aver proclamato l'uguaglianza a Parigi: la parola arriva prima del fatto."},
+    {y:1804,l:"ide",t:"Dichiarazione d'indipendenza haitiana",
+     n:"Stessa struttura argomentativa del testo americano del 1776, scritta però da chi l'esclusione l'aveva subita, non da chi l'aveva proclamata senza applicarla."},
+    {y:1845,l:"ide",t:"Destino Manifesto",
+     n:"John L. O'Sullivan trasforma l'espansione territoriale in un mandato della Provvidenza, mascherando dietro una missione disinteressata interessi materiali molto concreti."},
+    {y:1858,l:"ide",t:"Trattati ineguali del Giappone",
+     n:"Tariffe agevolate e diritti di extraterritorialità concessi sotto minaccia militare: la sovranità formale resta, ma su commercio e giustizia decide qualcun altro."},
+    {y:1868,l:"ide",t:"Restaurazione Meiji",
+     n:"Il nome promette un ritorno al passato; il governo che nasce fa l'esatto opposto, importando sistematicamente istituzioni, tecnologia ed eserciti occidentali."},
+    {y:1870,y2:1900,l:"ide",t:"La narrazione della «causa perduta»",approx:true,
+     n:"Il Sud sconfitto sostituisce la difesa della schiavitù con un principio costituzionale più presentabile: una rilettura destinata a durare generazioni."},
+    {y:1889,l:"ide",t:"Costituzione giapponese",
+     n:"Modellata sulla Prussia: una facciata parlamentare che lascia il potere reale a un'oligarchia non responsabile, pensata per essere presentabile alle cancellerie occidentali."},
+    {y:1899,l:"ide",t:"«Il fardello dell'uomo bianco»",
+     n:"La formula più nota di questo linguaggio nasce come poesia, di Rudyard Kipling; la Francia userà un'espressione equivalente, mission civilisatrice, con la stessa funzione retorica."},
+    {y:1902,l:"ide",t:"Hobson e la teoria dell'imperialismo",
+     n:"L'espansione coloniale spiegata come necessità economica del capitalismo maturo: una tesi che i dati sul rendimento reale delle colonie metteranno presto in difficoltà."},
+    {y:1905,l:"ide",t:"Tsushima e la fine di un mito",
+     n:"Una potenza asiatica distrugge la flotta di una grande potenza europea: il presupposto di superiorità tecnologica su cui si reggeva la costruzione ideologica dell'imperialismo si incrina sul terreno più difficile da negare."}
+  ];
+
+  var on={tec:true,eco:true,soc:true,ide:true};
+  var sel=null, year=1884;
+
+  function x(y){ return PAD+(y-Y0)*PPY; }
+
+  var track=document.getElementById('track');
+  var axis=document.getElementById('axis');
+  var cursor=document.getElementById('cursor');
+  var labels=document.getElementById('labels');
+  var chips=document.getElementById('chips');
+  var nowEl=document.getElementById('now');
+  var range=document.getElementById('range');
+  var ylab=document.getElementById('ylab');
+  var scroller=document.getElementById('scroller');
+  var detail=document.getElementById('detail');
+
+  track.style.width=W+'px';
+
+  var ax='';
+  for(var yy=1750; yy<=1914; yy+=20){
+    ax+='<div class="tk" style="left:'+x(yy)+'px"><span>'+yy+'</span></div>';
+  }
+  axis.innerHTML=ax;
+
+  var lh='<div class="sp"></div>';
+  LANES.forEach(function(l){
+    lh+='<div class="lb" data-l="'+l.k+'" style="color:'+l.col+'">'+l.lab+'</div>';
+  });
+  labels.innerHTML=lh;
+
+  LANES.forEach(function(l,i){
+    var lane=document.createElement('div');
+    lane.className='lane';
+    lane.setAttribute('data-l',l.k);
+    lane.style.top=(30+i*58)+'px';
+    track.appendChild(lane);
+  });
+
+  function paint(){
+    LANES.forEach(function(l){
+      var lane=track.querySelector('.lane[data-l="'+l.k+'"]');
+      if(!lane) return;
+      if(on[l.k]) lane.classList.remove('off'); else lane.classList.add('off');
+      lane.innerHTML='';
+      var items=E.filter(function(e){ return e.l===l.k; })
+                 .sort(function(a,b){ return a.y-b.y; });
+      var lastX=-999, row=0;
+      items.forEach(function(e,idx){
+        var id=l.k+'-'+idx;
+        var px=x(e.y);
+        if(px-lastX<16){ row=(row+1)%2; } else { row=0; }
+        lastX=px;
+        var el=document.createElement('div');
+        if(e.y2){
+          el.className='bar'+(sel===id?' sel':'');
+          el.style.width=Math.max(8,(e.y2-e.y)*PPY)+'px';
+          el.style.top=(24+(row?14:0))+'px';
+          el.title=e.y+'-'+e.y2+' · '+e.t;
+        } else {
+          el.className='ev'+(sel===id?' sel':'');
+          el.style.top=(21+(row?14:0))+'px';
+          el.title=e.y+' · '+e.t;
+        }
+        el.style.left=px+'px';
+        el.style.background=l.col;
+        el.addEventListener('click',function(){ pick(e,id,l); });
+        lane.appendChild(el);
+      });
+    });
+    var lbs=labels.querySelectorAll('.lb');
+    for(var i=0;i<lbs.length;i++){
+      if(on[lbs[i].getAttribute('data-l')]) lbs[i].classList.remove('off');
+      else lbs[i].classList.add('off');
+    }
+  }
+
+  function pick(e,id,l){
+    sel=id; year=e.y; range.value=e.y;
+    detail.className='detail show';
+    detail.style.borderLeftColor=l.col;
+    document.getElementById('d-lane').textContent=
+      l.lab+' · '+e.y+(e.y2?'-'+e.y2:'')+(e.approx?' circa':'');
+    document.getElementById('d-title').textContent=e.t;
+    document.getElementById('d-note').textContent=e.n;
+    paint(); moveCursor(); renderNow();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  }
+
+  function moveCursor(){
+    cursor.style.left=x(year)+'px';
+    ylab.textContent=year;
+  }
+
+  function renderNow(){
+    var WIN=6, html='';
+    LANES.forEach(function(l){
+      if(!on[l.k]) return;
+      var hits=E.filter(function(e){
+        if(e.l!==l.k) return false;
+        if(e.y2) return (year>=e.y-1 && year<=e.y2+1);
+        return Math.abs(e.y-year)<=WIN;
+      }).sort(function(a,b){ return a.y-b.y; });
+      var body='';
+      if(hits.length){
+        hits.forEach(function(e){
+          body+='<p><span class="y">'+e.y+(e.y2?'-'+e.y2:'')+'</span>'+e.t+'</p>';
+        });
+      } else {
+        body='<p class="none">niente di rilevante in questi anni</p>';
+      }
+      html+='<div class="cell" style="border-top-color:'+l.col+'">'+
+            '<h4 style="color:'+l.col+'">'+l.lab+'</h4>'+body+'</div>';
+    });
+    nowEl.innerHTML=html;
+  }
+
+  function buildChips(){
+    chips.innerHTML='';
+    LANES.forEach(function(l){
+      var b=document.createElement('button');
+      b.setAttribute('aria-pressed', on[l.k] ? 'true' : 'false');
+      b.innerHTML='<span class="dot" style="background:'+l.col+'"></span>'+l.lab;
+      b.addEventListener('click',function(){
+        on[l.k]=!on[l.k];
+        buildChips(); paint(); renderNow();
+      });
+      chips.appendChild(b);
+    });
+  }
+
+  range.addEventListener('input',function(ev){
+    year=parseInt(ev.target.value,10);
+    sel=null;
+    detail.className='detail';
+    moveCursor(); renderNow(); paint();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  });
+
+  buildChips();
+  paint();
+  moveCursor();
+  renderNow();
+  scroller.scrollLeft=Math.max(0, x(1884)-scroller.clientWidth/2);
+})();
+</script>
+</body>
+</html>

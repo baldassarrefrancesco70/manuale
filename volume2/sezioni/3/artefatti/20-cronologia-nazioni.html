@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronologia a corsie</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.4}
+
+  .chart{display:grid;grid-template-columns:100px minmax(0,1fr);border:1px solid var(--rule);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);overflow:hidden}
+  .labels{border-right:1px solid var(--rule);background:var(--paper-2);min-width:0}
+  .labels .sp{height:30px;border-bottom:1px solid var(--line)}
+  .labels .lb{height:58px;display:flex;align-items:center;padding:0 10px;font-family:var(--sans);
+    font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+  .labels .lb:last-child{border-bottom:0}
+  .labels .lb.off{opacity:.25}
+
+  .scroller{overflow-x:auto;overflow-y:hidden;position:relative;min-width:0}
+  .track{position:relative;height:262px}
+  .axis{height:30px;border-bottom:1px solid var(--line);position:relative}
+  .axis .tk{position:absolute;top:0;height:30px;border-left:1px solid var(--line)}
+  .axis .tk span{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);padding-left:4px;line-height:30px}
+  .lane{position:absolute;left:0;right:0;height:58px;border-bottom:1px solid var(--line)}
+  .lane.off{opacity:.12;pointer-events:none}
+  .ev{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid var(--paper);
+    cursor:pointer;margin-left:-7px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+  .ev:hover{width:18px;height:18px;margin-left:-9px;margin-top:-2px}
+  .ev.sel{box-shadow:0 0 0 3px var(--ink)}
+  .bar{position:absolute;height:8px;border-radius:4px;opacity:.38;cursor:pointer}
+  .bar:hover{opacity:.65}
+  .bar.sel{opacity:.9}
+  .cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.7;pointer-events:none}
+  .cursor::after{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;
+    border-right:5px solid transparent;border-top:7px solid var(--ink)}
+
+  .slider{margin:14px 0 4px}
+  input[type=range]{width:100%;accent-color:#201d18}
+  .yearNow{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);text-align:center;margin-bottom:12px}
+  .yearNow strong{color:var(--ink);font-size:1.05rem}
+
+  .now{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  @media(max-width:760px){.now{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:440px){.now{grid-template-columns:minmax(0,1fr)}}
+  .cell{border:1px solid var(--rule);border-top-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:9px 11px;min-height:80px}
+  .cell h4{font-family:var(--sans);font-size:.64rem;letter-spacing:.07em;text-transform:uppercase;margin:0 0 6px}
+  .cell p{margin:0 0 5px;font-size:.9rem;line-height:1.4}
+  .cell p .y{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-right:5px}
+  .cell .none{color:var(--ink-soft);font-style:italic;font-size:.85rem}
+
+  .detail{margin-top:14px;border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;display:none}
+  .detail.show{display:block}
+  .detail .k{font-family:var(--sans);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  .detail h3{margin:3px 0 5px;font-size:1.08rem}
+  .detail p{margin:0;font-size:.97rem}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Nazioni e nazionalismi &middot; Apparati</div>
+  <h1>Cronologia a corsie</h1>
+  <p class="sub">Le cose non accadono in fila, accadono insieme. Quattro corsie scorrono in parallelo: sposta il cursore lungo gli anni e guarda che cosa succede nello stesso momento nella tecnica, nell'economia, nella societ&agrave; e nelle idee. Clicca un punto o una barra per leggerne la scheda.</p>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="chart">
+    <div class="labels" id="labels"></div>
+    <div class="scroller" id="scroller">
+      <div class="track" id="track">
+        <div class="axis" id="axis"></div>
+        <div class="cursor" id="cursor" style="left:0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider"><input type="range" id="range" min="1780" max="1900" value="1848" step="1" aria-label="Anno"></div>
+  <div class="yearNow">Intorno all'anno <strong id="ylab">1848</strong></div>
+
+  <div class="now" id="now"></div>
+
+  <div class="detail" id="detail">
+    <span class="k" id="d-lane"></span>
+    <h3 id="d-title"></h3>
+    <p id="d-note"></p>
+  </div>
+
+  <p class="note">Le date sono indicative e da verificare prima della stampa. La dicitura &laquo;circa&raquo; segnala processi diffusi nel tempo o datazioni convenzionali, non eventi puntuali: le barre indicano fenomeni di lunga durata, i punti eventi singoli.</p>
+
+<script>
+(function(){
+  var LANES=[
+    {k:"tec",lab:"Tecnica",col:"#6b5545"},
+    {k:"eco",lab:"Economia",col:"#b0872e"},
+    {k:"soc",lab:"Societa\u0300",col:"#9d4a2b"},
+    {k:"ide",lab:"Idee",col:"#3d5566"}
+  ];
+  LANES[2].lab="Societ\u00E0";
+
+  var Y0=1780, Y1=1900, PPY=9, PAD=20;
+  var W=(Y1-Y0)*PPY+PAD*2;
+
+  var E=[
+    {y:1835,y2:1860,l:"tec",t:"Le ferrovie nell'area tedesca",approx:true,
+     n:"Lo spazio doganale unificato dallo Zollverein rende conveniente collegare gli Stati con la ferrovia: la Ruhr diventa il bacino che arma l'unit\u00E0 politica ancora di l\u00E0 da venire."},
+    {y:1848,l:"tec",t:"Cinque giorni da Parigi a Vienna",approx:true,
+     n:"Il servizio d'informazioni pi\u00F9 veloce d'Europa, quello della banca Rothschild, impiega cinque giorni per portare una notizia da una capitale all'altra: la rivoluzione del 1848 corre pi\u00F9 in fretta di quanto le notizie possano viaggiare."},
+    {y:1850,y2:1870,l:"tec",t:"Il telegrafo elettrico",approx:true,
+     n:"Nel giro di una generazione la velocit\u00E0 delle notizie si capovolge: quel che nel 1848 richiedeva giorni comincia presto a richiedere minuti, e la politica di massa avr\u00E0 anche questo tra i suoi strumenti."},
+    {y:1870,y2:1890,l:"tec",t:"La stampa a basso costo",approx:true,
+     n:"Le rotative a vapore abbattono il prezzo delle copie: per la prima volta un testo stampato pu\u00F2 raggiungere ogni giorno un pubblico di massa alfabetizzato."},
+
+    {y:1818,l:"eco",t:"La Prussia abbatte i dazi interni",
+     n:"Non \u00E8 un progetto di unit\u00E0 nazionale: \u00E8 la soluzione tecnica al problema di un regno diviso in due blocchi territoriali separati dagli Stati vicini."},
+    {y:1834,l:"eco",t:"Lo Zollverein",
+     n:"L'unione doganale tedesca esclude deliberatamente l'Austria: da questo momento esistono due Germanie, una politica e una economica, che non coincidono."},
+    {y:1846,y2:1847,l:"eco",t:"Crisi agraria e commerciale",approx:true,
+     n:"Cattivi raccolti, poi crisi manifatturiera: la miseria materiale che si somma alle rivendicazioni politiche, nello stesso biennio in mezza Europa."},
+    {y:1850,y2:1870,l:"eco",t:"Il decollo industriale tedesco",approx:true,
+     n:"Ferro, acciaio, carbone della Ruhr: negli anni Cinquanta e Sessanta l'area tedesca costruisce una base industriale che nessuno dei suoi Stati avrebbe potuto costruire da solo."},
+    {y:1873,l:"eco",t:"Crolla la borsa",
+     n:"Vienna e New York aprono una lunga fase di contrazione: non \u00E8 la produzione a calare, sono i profitti, in un mercato reso stretto da nuovi concorrenti industriali."},
+    {y:1879,l:"eco",t:"La Germania alza i dazi",
+     n:"Bismarck apre la stagione del protezionismo: il libero scambio, dottrina dominante di met\u00E0 secolo, diventa quasi ovunque posizione minoritaria."},
+    {y:1884,y2:1885,l:"eco",t:"Conferenza di Berlino",approx:true,
+     n:"Le potenze europee si spartiscono a tavolino gli spazi d'influenza in Africa: la concorrenza per materie prime e mercati esclusivi diventa oggetto di un accordo tra i contendenti."},
+
+    {y:1820,y2:1821,l:"soc",t:"Cadice, Nola, Torino",approx:true,
+     n:"In due anni gli ufficiali sollevano cinque Stati diversi con lo stesso metodo: il controllo di alcuni reggimenti basta a strappare una costituzione, non a difenderla."},
+    {y:1821,y2:1829,l:"soc",t:"Guerra d'indipendenza greca",
+     n:"L'unica insurrezione della prima ondata che non viene repressa, perch\u00E9 l'Impero ottomano resta fuori dall'area di tutela della Santa Alleanza."},
+    {y:1825,l:"soc",t:"Rivolta decabrista",
+     n:"A Pietroburgo un gruppo di ufficiali tenta lo stesso copione riuscito altrove: il nuovo zar Nicola I lo stronca in poche ore."},
+    {y:1830,y2:1831,l:"soc",t:"La seconda ondata",
+     n:"Parigi, Belgio, Polonia, Italia centrale: insorgono le citt\u00E0, non pi\u00F9 i reggimenti. Gli esiti opposti dipendono dagli interessi delle potenze, non dal merito delle rivendicazioni."},
+    {y:1846,l:"soc",t:"Rivolta contadina in Galizia",
+     n:"I contadini polacchi si scagliano contro i nobili che promettevano l'abolizione della servit\u00F9: la solidariet\u00E0 nazionale non lega automaticamente classi diverse."},
+    {y:1848,y2:1849,l:"soc",t:"Sei settimane, poi il riflusso",
+     n:"Da Palermo a Milano nessun governo resta in piedi in poche settimane: bastano pochi mesi perch\u00E9 il fronte rivoluzionario si spacchi, tra liberali e masse urbane, tra citt\u00E0 e campagne."},
+    {y:1848,l:"soc",t:"Il Parlamento di Francoforte",
+     n:"Per un anno un'assemblea discute quali popolazioni debbano comporre la nazione tedesca: il primo tentativo europeo di deciderlo per via parlamentare, e il primo a scoprire che i criteri non bastano."},
+    {y:1849,l:"soc",t:"Fine della rivoluzione ungherese",
+     n:"L'Austria piega Kossuth solo con l'intervento delle truppe russe, dopo essersi servita delle nazionalit\u00E0 che l'Ungheria magiara aveva escluso dai propri diritti."},
+    {y:1864,l:"soc",t:"Guerra contro la Danimarca",
+     n:"La prima delle tre guerre di Bismarck, combattuta insieme all'Austria: il vero obiettivo resta ancora invisibile."},
+    {y:1866,l:"soc",t:"Sadowa",
+     n:"La Prussia batte l'Austria e la esclude dalla Germania, ma Bismarck la lascia in piedi: la piccola Germania \u00E8 una scelta difesa, non un ripiego subito."},
+    {y:1870,y2:1871,l:"soc",t:"Guerra e proclamazione dell'Impero",
+     n:"Sedan fa cadere Napoleone III; il 18 gennaio 1871 l'Impero tedesco nasce nella Galleria degli Specchi di Versailles, nella reggia dei re di Francia."},
+    {y:1871,l:"soc",t:"La Comune di Parigi",
+     n:"Gli osservatori borghesi descrivono gli insorti con lo stesso vocabolario riservato ai nemici esterni: la minaccia, questa volta, sta dentro le mura della capitale."},
+    {y:1872,y2:1875,l:"soc",t:"Kulturkampf",
+     n:"Il nuovo Impero tratta i propri sudditi cattolici come appartenenza sospetta: uno Stato appena nato comincia subito a distinguere chi ne fa parte fino in fondo."},
+    {y:1875,l:"soc",t:"Congresso di Gotha",
+     n:"Nasce il Partito socialdemocratico tedesco: l'arena elettorale costruita da Bismarck per contenere le masse produce l'attore che meno si aspettava di trovarvi."},
+    {y:1870,y2:1900,l:"soc",t:"Scuola obbligatoria e suffragio allargato",approx:true,
+     n:"Alfabetizzazione, coscrizione, allargamento del voto: per la prima volta gli Stati europei dispongono degli strumenti per formare un'appartenenza, non solo per registrarla."},
+    {y:1885,l:"soc",t:"Congresso nazionale indiano",approx:true,
+     n:"Un'\u00E9lite formata nelle scuole del colonizzatore rivolge contro il dominio coloniale gli stessi argomenti che l'Europa aveva usato contro i propri imperi dinastici."},
+    {y:1894,y2:1899,l:"soc",t:"Affare Dreyfus",
+     n:"Un ufficiale ebreo e alsaziano condannato su prove che si riveleranno inconsistenti: chi difende il verdetto anche dopo che le prove crollano lo fa in nome dell'onore della nazione, non per errore."},
+
+    {y:1784,y2:1791,l:"ide",t:"Herder e lo spirito del popolo",approx:true,
+     n:"La nazione come organismo naturale, non come patto: lingua e carattere si ereditano, non si scelgono."},
+    {y:1789,l:"ide",t:"Dichiarazione dei diritti dell'uomo",
+     n:"L'articolo 3 sposta la sovranit\u00E0 dal re alla nazione: da questo momento la parola smette di indicare una provenienza e diventa un titolo di potere."},
+    {y:1807,y2:1808,l:"ide",t:"Fichte, Discorsi alla nazione tedesca",approx:true,
+     n:"Filosofia come mobilitazione: l'appartenenza tedesca diventa un compito morale prima ancora che un programma politico."},
+    {y:1815,l:"ide",t:"Santa Alleanza",
+     n:"Il potere fondato sul diritto divino contro quello fondato sulla volont\u00E0 popolare: due fonti di legittimit\u00E0 che il secolo non riuscir\u00E0 a conciliare."},
+    {y:1831,l:"ide",t:"Giovine Italia e Giovine Europa",
+     n:"Mazzini immagina una fratellanza di popoli liberi, ma attribuisce a ciascuno una missione particolare: la vocazione a guidare gli altri \u00E8 gi\u00E0, in nuce, un titolo a governarli."},
+    {y:1848,l:"ide",t:"Il rifiuto di Palack\u00FD",
+     n:"\u00ABSe l'Austria non esistesse, sarebbe il caso d'inventarla\u00BB: un popolo senza Stato proprio sceglie l'impero multinazionale come garanzia contro le nazioni vicine."},
+    {y:1859,l:"ide",t:"L'origine delle specie",
+     n:"Darwin costruisce la lotta per l'esistenza per analogia con Malthus e con la concorrenza di mercato: il prestito torner\u00E0 presto al mittente, applicato ai popoli."},
+    {y:1860,y2:1890,l:"ide",t:"Darwinismo sociale",approx:true,
+     n:"Le leggi ricavate dalla societ\u00E0 per interpretare la natura vengono restituite alla societ\u00E0 con l'autorit\u00E0 della biologia: un argomento che qualunque esito storico interpreta come conferma."},
+    {y:1876,l:"ide",t:"Antropologia criminale",approx:true,
+     n:"La scuola italiana cerca nei tratti del corpo la prova di un'inferiorit\u00E0 ereditaria: lo stesso metodo che classifica i popoli comincia a classificare i devianti."},
+    {y:1882,l:"ide",t:"Renan, Che cos'\u00E8 una nazione?",
+     n:"Un plebiscito di tutti i giorni contro un vincolo di sangue: la formula volontaristica pi\u00F9 citata del secolo, pronunciata mentre nella pratica prevale gi\u00E0 il modello opposto."},
+    {y:1851,l:"ide",t:"Grande Esposizione di Londra",approx:true,
+     n:"Al Crystal Palace il progresso tecnico diventa spettacolo di massa: la prima di una serie di manifestazioni che educano il pubblico europeo a un senso di superiorit\u00E0 presentato come constatazione."}
+  ];
+
+  var on={tec:true,eco:true,soc:true,ide:true};
+  var sel=null, year=1848;
+
+  function x(y){ return PAD+(y-Y0)*PPY; }
+
+  var track=document.getElementById('track');
+  var axis=document.getElementById('axis');
+  var cursor=document.getElementById('cursor');
+  var labels=document.getElementById('labels');
+  var chips=document.getElementById('chips');
+  var nowEl=document.getElementById('now');
+  var range=document.getElementById('range');
+  var ylab=document.getElementById('ylab');
+  var scroller=document.getElementById('scroller');
+  var detail=document.getElementById('detail');
+
+  track.style.width=W+'px';
+
+  var ax='';
+  for(var yy=Y0; yy<=Y1; yy+=20){
+    ax+='<div class="tk" style="left:'+x(yy)+'px"><span>'+yy+'</span></div>';
+  }
+  axis.innerHTML=ax;
+
+  var lh='<div class="sp"></div>';
+  LANES.forEach(function(l){
+    lh+='<div class="lb" data-l="'+l.k+'" style="color:'+l.col+'">'+l.lab+'</div>';
+  });
+  labels.innerHTML=lh;
+
+  LANES.forEach(function(l,i){
+    var lane=document.createElement('div');
+    lane.className='lane';
+    lane.setAttribute('data-l',l.k);
+    lane.style.top=(30+i*58)+'px';
+    track.appendChild(lane);
+  });
+
+  function paint(){
+    LANES.forEach(function(l){
+      var lane=track.querySelector('.lane[data-l="'+l.k+'"]');
+      if(!lane) return;
+      if(on[l.k]) lane.classList.remove('off'); else lane.classList.add('off');
+      lane.innerHTML='';
+      var items=E.filter(function(e){ return e.l===l.k; })
+                 .sort(function(a,b){ return a.y-b.y; });
+      var lastX=-999, row=0;
+      items.forEach(function(e,idx){
+        var id=l.k+'-'+idx;
+        var px=x(e.y);
+        if(px-lastX<16){ row=(row+1)%2; } else { row=0; }
+        lastX=px;
+        var el=document.createElement('div');
+        if(e.y2){
+          el.className='bar'+(sel===id?' sel':'');
+          el.style.width=Math.max(8,(e.y2-e.y)*PPY)+'px';
+          el.style.top=(24+(row?14:0))+'px';
+          el.title=e.y+'-'+e.y2+' \u00B7 '+e.t;
+        } else {
+          el.className='ev'+(sel===id?' sel':'');
+          el.style.top=(21+(row?14:0))+'px';
+          el.title=e.y+' \u00B7 '+e.t;
+        }
+        el.style.left=px+'px';
+        el.style.background=l.col;
+        el.addEventListener('click',function(){ pick(e,id,l); });
+        lane.appendChild(el);
+      });
+    });
+    var lbs=labels.querySelectorAll('.lb');
+    for(var i=0;i<lbs.length;i++){
+      if(on[lbs[i].getAttribute('data-l')]) lbs[i].classList.remove('off');
+      else lbs[i].classList.add('off');
+    }
+  }
+
+  function pick(e,id,l){
+    sel=id; year=e.y; range.value=e.y;
+    detail.className='detail show';
+    detail.style.borderLeftColor=l.col;
+    document.getElementById('d-lane').textContent=
+      l.lab+' \u00B7 '+e.y+(e.y2?'-'+e.y2:'')+(e.approx?' circa':'');
+    document.getElementById('d-title').textContent=e.t;
+    document.getElementById('d-note').textContent=e.n;
+    paint(); moveCursor(); renderNow();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  }
+
+  function moveCursor(){
+    cursor.style.left=x(year)+'px';
+    ylab.textContent=year;
+  }
+
+  function renderNow(){
+    var WIN=6, html='';
+    LANES.forEach(function(l){
+      if(!on[l.k]) return;
+      var hits=E.filter(function(e){
+        if(e.l!==l.k) return false;
+        if(e.y2) return (year>=e.y-1 && year<=e.y2+1);
+        return Math.abs(e.y-year)<=WIN;
+      }).sort(function(a,b){ return a.y-b.y; });
+      var body='';
+      if(hits.length){
+        hits.forEach(function(e){
+          body+='<p><span class="y">'+e.y+(e.y2?'-'+e.y2:'')+'</span>'+e.t+'</p>';
+        });
+      } else {
+        body='<p class="none">niente di rilevante in questi anni</p>';
+      }
+      html+='<div class="cell" style="border-top-color:'+l.col+'">'+
+            '<h4 style="color:'+l.col+'">'+l.lab+'</h4>'+body+'</div>';
+    });
+    nowEl.innerHTML=html;
+  }
+
+  function buildChips(){
+    chips.innerHTML='';
+    LANES.forEach(function(l){
+      var b=document.createElement('button');
+      b.setAttribute('aria-pressed', on[l.k] ? 'true' : 'false');
+      b.innerHTML='<span class="dot" style="background:'+l.col+'"></span>'+l.lab;
+      b.addEventListener('click',function(){
+        on[l.k]=!on[l.k];
+        buildChips(); paint(); renderNow();
+      });
+      chips.appendChild(b);
+    });
+  }
+
+  range.addEventListener('input',function(ev){
+    year=parseInt(ev.target.value,10);
+    sel=null;
+    detail.className='detail';
+    moveCursor(); renderNow(); paint();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  });
+
+  buildChips();
+  paint();
+  moveCursor();
+  renderNow();
+  scroller.scrollLeft=Math.max(0, x(1848)-scroller.clientWidth/2);
+})();
+</script>
+</body>
+</html>

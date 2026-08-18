@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronologia a corsie</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --tec:#6b5545; --eco:#b0872e; --soc:#9d4a2b; --ide:#3d5566;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.4}
+
+  .chart{display:grid;grid-template-columns:100px minmax(0,1fr);border:1px solid var(--rule);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);overflow:hidden}
+  .labels{border-right:1px solid var(--rule);background:var(--paper-2);min-width:0}
+  .labels .sp{height:30px;border-bottom:1px solid var(--line)}
+  .labels .lb{height:58px;display:flex;align-items:center;padding:0 10px;font-family:var(--sans);
+    font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+  .labels .lb:last-child{border-bottom:0}
+  .labels .lb.off{opacity:.25}
+
+  .scroller{overflow-x:auto;overflow-y:hidden;position:relative;min-width:0}
+  .track{position:relative;height:262px}
+  .axis{height:30px;border-bottom:1px solid var(--line);position:relative}
+  .axis .tk{position:absolute;top:0;height:30px;border-left:1px solid var(--line)}
+  .axis .tk span{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);padding-left:4px;line-height:30px}
+  .lane{position:absolute;left:0;right:0;height:58px;border-bottom:1px solid var(--line)}
+  .lane.off{opacity:.12;pointer-events:none}
+  .ev{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid var(--paper);
+    cursor:pointer;margin-left:-7px;box-shadow:0 0 0 1px rgba(0,0,0,.14);transition:transform .12s}
+  .ev:hover{transform:scale(1.3)}
+  .ev.sel{box-shadow:0 0 0 3px var(--ink)}
+  .span{position:absolute;height:7px;border-radius:4px;opacity:.4;cursor:pointer}
+  .span:hover{opacity:.7}
+  .span.sel{opacity:.9}
+  .cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.7;pointer-events:none}
+  .cursor::after{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;
+    border-right:5px solid transparent;border-top:7px solid var(--ink)}
+
+  .slider{margin:14px 0 4px}
+  input[type=range]{width:100%;accent-color:#5b5346}
+  .yearNow{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);text-align:center;margin-bottom:12px}
+  .yearNow strong{color:var(--ink);font-size:1.05rem}
+  .now{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:760px){.now{grid-template-columns:1fr 1fr}}
+  @media(max-width:440px){.now{grid-template-columns:1fr}}
+  .cell{border:1px solid var(--rule);border-top-width:3px;border-radius:2px;background:var(--paper-2);padding:9px 11px;min-height:78px}
+  .cell h4{font-family:var(--sans);font-size:.64rem;letter-spacing:.07em;text-transform:uppercase;margin:0 0 6px}
+  .cell p{margin:0 0 5px;font-size:.9rem;line-height:1.4}
+  .cell p .y{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin-right:5px}
+  .cell .none{color:var(--ink-soft);font-style:italic;font-size:.85rem}
+  .detail{margin-top:14px;border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;display:none}
+  .detail.show{display:block}
+  .detail .k{font-family:var(--sans);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  .detail h3{margin:3px 0 5px;font-size:1.08rem}
+  .detail p{margin:0;font-size:.97rem}
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:16px;border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Come nasce l'Italia · Apparati</div>
+  <h1>Cronologia a corsie</h1>
+  <p class="sub">Le cose non accadono in fila, accadono insieme. Quattro corsie scorrono in parallelo: sposta il cursore lungo gli anni e guarda che cosa succede nello stesso momento nella tecnica di governo, nell'economia, nella società e nelle idee. Clicca un punto o una barra per leggerne la scheda.</p>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="chart">
+    <div class="labels" id="labels"></div>
+    <div class="scroller" id="scroller">
+      <div class="track" id="track">
+        <div class="axis" id="axis"></div>
+        <div class="cursor" id="cursor" style="left:0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider"><input type="range" id="range" min="1795" max="1900" value="1860" step="1" aria-label="Anno"></div>
+  <div class="yearNow">Intorno all'anno <strong id="ylab">1860</strong></div>
+
+  <div class="now" id="now"></div>
+
+  <div class="detail" id="detail">
+    <span class="k" id="d-lane"></span>
+    <h3 id="d-title"></h3>
+    <p id="d-note"></p>
+  </div>
+
+  <p class="note">La dicitura «circa» segnala processi diffusi nel tempo o datazioni convenzionali, non eventi puntuali: le barre indicano fenomeni di lunga durata, i punti eventi singoli. Le date sono indicative e da verificare prima della stampa.</p>
+
+<script>
+(function(){
+  var LANES=[
+    {k:"tec",lab:"Tecnica",col:"#6b5545"},
+    {k:"eco",lab:"Economia",col:"#b0872e"},
+    {k:"soc",lab:"Societa\u0300",col:"#9d4a2b"},
+    {k:"ide",lab:"Idee",col:"#3d5566"}
+  ];
+  LANES[2].lab="Societ\u00E0";
+
+  var Y0=1795, Y1=1900, PPY=10, PAD=20;
+  var W=(Y1-Y0)*PPY+PAD*2;
+
+  var E=[
+    // ---- TECNICA (strumenti amministrativi e di governo) ----
+    {y:1802,y2:1814,l:"tec",t:"Modernizzazione amministrativa francese",approx:true,
+     n:"Costituzioni, codice civile, catasto, prefetture: la penisola sperimenta per la prima volta confini amministrativi più ampi di quelli dei vecchi Stati. L'esperienza si interrompe nel 1815, ma non si dimentica."},
+    {y:1848,l:"tec",t:"Statuto Albertino",
+     n:"Promulgato da Carlo Alberto l'8 febbraio, concesso e non conquistato. Sarà l'unica costituzione del '48 a sopravvivere alla Restaurazione degli Stati vicini, e diventerà quella dell'Italia unita."},
+    {y:1861,l:"tec",t:"Piemontesizzazione",
+     n:"Statuto, codici e legge elettorale piemontesi estesi per decreto all'intera penisola, spesso senza discussione parlamentare: l'uniformità scelta al posto del consenso."},
+    {y:1861,y2:1870,l:"tec",t:"Rete ferroviaria nazionale",
+     n:"Da 1.800 chilometri quasi tutti concentrati in Piemonte a una dorsale che attraversa la penisola: il presupposto materiale dell'unità, costruito con un debito che qualcun altro dovrà pagare."},
+    {y:1863,l:"tec",t:"Legge Pica",
+     n:"Sospende le garanzie costituzionali nelle province in stato di brigantaggio. Paradossalmente garantisce per la prima volta un processo agli accusati: uno stato d'eccezione che si dà delle regole."},
+    {y:1865,l:"tec",t:"Capitale a Firenze",
+     n:"La Convenzione di settembre sposta la capitale da Torino: un atto rivolto più a Napoleone III che agli italiani, per rendere credibile la rinuncia a Roma."},
+    {y:1871,l:"tec",t:"Legge delle Guarentigie",
+     n:"Offre al Papa piena autonomia spirituale e libertà diplomatica. Pio IX la respinge senza esitazione: un'offerta generosa che non basta a chiudere il conflitto."},
+    {y:1882,l:"tec",t:"Riforma elettorale",
+     n:"Il corpo elettorale si triplica, dal due al sette per cento della popolazione, e l'alfabetismo diventa criterio alternativo al censo. Il suffragio universale resta lontano."},
+    {y:1888,l:"tec",t:"Riforma amministrativa",
+     n:"I sindaci diventano elettivi nei capoluoghi e nei comuni maggiori: un passo verso il decentramento che la Destra aveva sempre rifiutato."},
+    {y:1889,l:"tec",t:"Codice Zanardelli",
+     n:"Abolisce la pena di morte e riconosce la liceità dello sciopero: uno dei codici penali più avanzati d'Europa, promulgato dallo stesso governo che l'anno dopo dichiarerà lo stato d'assedio in Sicilia."},
+    {y:1894,l:"tec",t:"Fondazione della Banca d'Italia",
+     n:"Nasce dallo scandalo della Banca Romana: la funzione di emettere moneta, gestita fino ad allora da una pluralità di istituti privati, passa a un istituto unico."},
+
+    // ---- ECONOMIA ----
+    {y:1796,y2:1814,l:"eco",t:"Sfruttamento fiscale francese",approx:true,
+     n:"Tributi in denaro, coscrizione, requisizioni, saccheggio di opere d'arte: il prezzo pagato per la modernizzazione amministrativa che la stessa Francia impone."},
+    {y:1815,l:"eco",t:"Frammentazione doganale della Restaurazione",approx:true,
+     n:"Il ritorno a sette sistemi fiscali e monetari diversi cancella, sulla carta, l'esperienza di un mercato più ampio che gli anni napoleonici avevano reso pensabile."},
+    {y:1847,l:"eco",t:"Lega doganale italiana",approx:true,
+     n:"Un accordo commerciale fra Stati ancora divisi politicamente: la prima crepa, timida e presto richiusa, nella frammentazione economica della penisola."},
+    {y:1861,y2:1875,l:"eco",t:"Rigore fiscale della Destra",
+     n:"Imposte indirette, tassa sul macinato, vendita dei beni ecclesiastici: il pareggio di bilancio del 1875 fu conseguito, ma il conto lo pagò chi meno poteva permetterselo."},
+    {y:1866,l:"eco",t:"Corso forzoso",
+     n:"La crisi finanziaria della Terza guerra d'indipendenza rende la cartamoneta inconvertibile: un'inflazione che colpisce soprattutto i ceti più deboli."},
+    {y:1868,l:"eco",t:"Tassa sul macinato",
+     n:"Un'imposta sulla macinazione dei cereali che fa salire il prezzo del pane: il provvedimento fiscale più impopolare del secolo, e il più efficace nel raggiungere il pareggio."},
+    {y:1873,l:"eco",t:"Grande Depressione agricola",approx:true,
+     n:"Il crollo dei prezzi causato dai cereali americani e russi a basso costo spinge industriali del Nord e latifondisti del Sud verso la stessa richiesta: il protezionismo."},
+    {y:1884,l:"eco",t:"Acciaierie di Terni",
+     n:"Nascono con capitali pubblici e commesse statali: il decollo industriale del «triangolo» settentrionale non è un successo del libero mercato, ma del suo opposto."},
+    {y:1887,l:"eco",t:"Svolta protezionistica",
+     n:"Dazi su manufatti e cereali proteggono insieme la siderurgia del Nord e il latifondo del Sud: il patto «ferro e grano» che terrà insieme due interessi altrimenti estranei."},
+    {y:1888,l:"eco",t:"Guerra doganale con la Francia",
+     n:"Le ritorsioni francesi chiudono i mercati alle esportazioni meridionali di vino, agrumi e olio: il prezzo pagato dal Sud per una tariffa pensata al Nord."},
+    {y:1893,l:"eco",t:"Scandalo della Banca Romana",
+     n:"Emissione illegale di banconote e prestiti occulti a politici e giornalisti: la scoperta che il sistema del credito e quello della politica erano la stessa cosa."},
+    {y:1880,y2:1900,l:"eco",t:"Grande emigrazione",approx:true,
+     n:"Centinaia di migliaia di persone lasciano il paese: la risposta di chi il sistema protetto ha lasciato fuori, prima dal Nord e poi in massa dal Mezzogiorno."},
+
+    // ---- SOCIETÀ ----
+    {y:1796,y2:1799,l:"soc",t:"Insorgenze antifrancesi",
+     n:"Centinaia di migliaia di contadini in armi contro l'esercito che aboliva i privilegi feudali: la mobilitazione popolare più ampia dell'Italia napoleonica va contro il progetto modernizzatore, non a suo favore."},
+    {y:1799,l:"soc",t:"Crollo della Repubblica partenopea",
+     n:"L'Armata della Santa Fede, una miscela di contadini, disertori e briganti legittimata dai Borbone, riconquista Napoli: la «rivoluzione passiva» di Cuoco trova qui la sua prova."},
+    {y:1820,y2:1821,l:"soc",t:"Moti carbonari",
+     n:"Napoli concede una Costituzione in luglio, il Piemonte insorge in marzo: l'esercito austriaco li sconfigge entrambi, e la lezione che ne resta è l'isolamento dalle masse."},
+    {y:1830,y2:1831,l:"soc",t:"Moti del Centro Italia",
+     n:"Sperando nell'aiuto francese che non arriva, Modena, Parma e lo Stato Pontificio si sollevano e vengono rioccupati: la seconda dimostrazione che la fiducia nei sovrani stranieri non basta."},
+    {y:1848,y2:1849,l:"soc",t:"Biennio rivoluzionario",
+     n:"Statuti concessi, Repubbliche proclamate e riconquistate in dodici mesi: il biennio non stabilisce quale programma fosse migliore, stabilisce quale fosse ancora in piedi alla fine."},
+    {y:1857,l:"soc",t:"Spedizione di Pisacane a Sapri",
+     n:"I contadini che avrebbe dovuto sollevare lo scambiano per brigante e lo denunciano ai Borbone: lo stesso schema del 1799, a distanza di due generazioni."},
+    {y:1860,l:"soc",t:"Plebisciti di annessione",
+     n:"Il novantanove per cento dei votanti sceglie il Regno di Sardegna, a suffragio universale ma a voto palese: una misura di consenso che è anche una misura di quante strade fossero già chiuse."},
+    {y:1861,y2:1865,l:"soc",t:"Brigantaggio postunitario",
+     n:"Centoventimila soldati impiegati contro una guerra civile che lo Stato preferisce chiamare criminalità: i morti superano quelli di tutte le guerre risorgimentali messe insieme."},
+    {y:1870,l:"soc",t:"Presa di Roma",
+     n:"La breccia di Porta Pia arriva perché la Francia crolla a Sedan, non per iniziativa italiana: l'ultima acquisizione territoriale della sezione dipende da una guerra altrui."},
+    {y:1874,l:"soc",t:"Non expedit",
+     n:"Il divieto papale ai cattolici di partecipare alla vita politica priva lo Stato liberale di una quota enorme del proprio elettorato potenziale, e gli nega un grande partito conservatore popolare."},
+    {y:1893,y2:1894,l:"soc",t:"Fasci siciliani",
+     n:"Un movimento di contadini e operai per condizioni dignitose viene affrontato con lo stato d'assedio e trentamila soldati: la stessa logica repressiva del 1863, trent'anni dopo."},
+    {y:1898,l:"soc",t:"Eccidio di Milano",
+     n:"Il generale Bava Beccaris usa i cannoni contro la folla che protesta per il prezzo del pane. Il re lo decorerà, non lo punirà."},
+    {y:1900,l:"soc",t:"Assassinio di Umberto I",
+     n:"L'anarchico Gaetano Bresci dichiara di voler vendicare i morti di Milano: la crisi di fine secolo chiude il secolo con un regicidio."},
+
+    // ---- IDEE ----
+    {y:1797,l:"ide",t:"Il tricolore a Reggio Emilia",
+     n:"Nasce come vessillo della Repubblica Cisalpina, sessantaquattro anni prima dello Stato che rappresenterà: un simbolo può precedere la comunità che dichiara di incarnare."},
+    {y:1801,l:"ide",t:"La «rivoluzione passiva» di Cuoco",approx:true,
+     n:"La diagnosi che i patrioti avevano importato la rivoluzione senza radicarla nella società italiana diventerà, trent'anni dopo, la lezione di Mazzini."},
+    {y:1831,l:"ide",t:"Giovine Italia",
+     n:"Mazzini rifiuta la segretezza della Carboneria per un programma pubblico: educazione delle masse e insurrezione dal basso, contro un secolo di cospirazioni fallite."},
+    {y:1839,l:"ide",t:"Il Politecnico di Cattaneo",
+     n:"Prima che una proposta politica, un programma di modernizzazione tecnica e civile: per Cattaneo l'indipendenza doveva passare attraverso lo sviluppo, non precederlo."},
+    {y:1843,l:"ide",t:"Il primato di Gioberti",
+     n:"Una confederazione guidata dal Papa: il progetto che per primo avvicina alla causa nazionale settori cattolici fino ad allora estranei al Risorgimento."},
+    {y:1848,l:"ide",t:"«Libera Chiesa in libero Stato»",approx:true,
+     n:"La formula cavouriana circola negli anni della prima guerra d'indipendenza e diventerà il punto di riferimento del liberalismo risorgimentale, e il bersaglio dichiarato di Pio IX."},
+    {y:1864,l:"ide",t:"Sillabo",
+     n:"Ottanta articoli di condanna della modernità liberale: il manifesto dell'intransigenza pontificia rende esplicito quanto fosse illusoria ogni conciliazione."},
+    {y:1869,y2:1870,l:"ide",t:"Concilio Vaticano I",
+     n:"Proclama il dogma dell'infallibilità pontificia nello stesso anno in cui l'esercito italiano entra a Roma: le due sovranità si irrigidiscono nello stesso momento."},
+    {y:1891,l:"ide",t:"Rerum Novarum",
+     n:"Leone XIII mobilita la Chiesa sulla questione sociale: una svolta parziale che pone le basi per un movimento cattolico organizzato, ma non riporta i cattolici alle urne."},
+    {y:1897,l:"ide",t:"«Torniamo allo Statuto»",
+     n:"Sonnino propone di sganciare il governo dalla fiducia del Parlamento per legarlo solo a quella del Re: il sistema liberale che dichiara di non sentirsi sicuro di affrontare la democrazia di massa a viso aperto."}
+  ];
+
+  var on={tec:true,eco:true,soc:true,ide:true};
+  var sel=null, year=1860;
+
+  var x=function(y){return PAD+(y-Y0)*PPY;};
+  var track=document.getElementById('track');
+  var axis=document.getElementById('axis');
+  var cursor=document.getElementById('cursor');
+  var labels=document.getElementById('labels');
+  var chips=document.getElementById('chips');
+  var nowEl=document.getElementById('now');
+  var range=document.getElementById('range');
+  var ylab=document.getElementById('ylab');
+  var scroller=document.getElementById('scroller');
+  var detail=document.getElementById('detail');
+
+  track.style.width=W+'px';
+
+  var ax='';
+  for(var yy=Y0; yy<=Y1; yy+=10){ ax+='<div class="tk" style="left:'+x(yy)+'px"><span>'+yy+'</span></div>'; }
+  axis.innerHTML=ax;
+
+  labels.innerHTML='<div class="sp"></div>'+LANES.map(function(l){
+    return '<div class="lb" data-l="'+l.k+'" style="color:'+l.col+'">'+l.lab+'</div>';
+  }).join('');
+
+  LANES.forEach(function(l,i){
+    var lane=document.createElement('div');
+    lane.className='lane'; lane.dataset.l=l.k;
+    lane.style.top=(30+i*58)+'px';
+    track.appendChild(lane);
+  });
+
+  function paint(){
+    LANES.forEach(function(l){
+      var lane=track.querySelector('.lane[data-l="'+l.k+'"]');
+      if(!lane) return;
+      lane.classList.toggle('off',!on[l.k]);
+      lane.innerHTML='';
+      var items=E.filter(function(e){return e.l===l.k;}).sort(function(a,b){return a.y-b.y;});
+      var lastX=-999, row=0;
+      items.forEach(function(e,idx){
+        var id=l.k+'-'+idx;
+        var px=x(e.y);
+        if(px-lastX<16){ row=(row+1)%2; } else { row=0; }
+        lastX=px;
+        var top=(e.y2?24:20)+(row?13:0);
+        if(e.y2){
+          var s=document.createElement('div');
+          s.className='span'+(sel===id?' sel':'');
+          s.style.left=px+'px';
+          s.style.width=Math.max(8,(e.y2-e.y)*PPY)+'px';
+          s.style.top=top+'px';
+          s.style.background=l.col;
+          s.title=e.y+'-'+e.y2+' · '+e.t;
+          s.addEventListener('click',function(){pick(e,id,l);});
+          lane.appendChild(s);
+        } else {
+          var d=document.createElement('div');
+          d.className='ev'+(sel===id?' sel':'');
+          d.style.left=px+'px';
+          d.style.top=top+'px';
+          d.style.background=l.col;
+          d.title=e.y+' · '+e.t;
+          d.addEventListener('click',function(){pick(e,id,l);});
+          lane.appendChild(d);
+        }
+      });
+    });
+    Array.prototype.forEach.call(labels.querySelectorAll('.lb'),function(lb){
+      lb.classList.toggle('off',!on[lb.dataset.l]);
+    });
+  }
+
+  function pick(e,id,l){
+    sel=id; year=e.y; range.value=e.y;
+    detail.className='detail show';
+    detail.style.borderLeftColor=l.col;
+    document.getElementById('d-lane').textContent=l.lab+' · '+e.y+(e.y2?'-'+e.y2:'')+(e.approx?' circa':'');
+    document.getElementById('d-title').textContent=e.t;
+    document.getElementById('d-note').textContent=e.n;
+    paint(); moveCursor(); renderNow();
+    scroller.scrollLeft=Math.max(0, x(year)-scroller.clientWidth/2);
+  }
+
+  function moveCursor(){ cursor.style.left=x(year)+'px'; ylab.textContent=year; }
+
+  function renderNow(){
+    var WIN=6;
+    nowEl.innerHTML=LANES.filter(function(l){return on[l.k];}).map(function(l){
+      var hits=E.filter(function(e){
+        return e.l===l.k && (e.y2 ? (year>=e.y-1 && year<=e.y2+1) : Math.abs(e.y-year)<=WIN);
+      }).sort(function(a,b){return a.y-b.y;});
+      var body = hits.length
+        ? hits.map(function(e){ return '<p><span class="y">'+e.y+(e.y2?'-'+e.y2:'')+'</span>'+e.t+'</p>'; }).join('')
+        : '<p class="none">niente di rilevante in questi anni</p>';
+      return '<div class="cell" style="border-top-color:'+l.col+'"><h4 style="color:'+l.col+'">'+l.lab+'</h4>'+body+'</div>';
+    }).join('');
+  }
+
+  function buildChips(){
+    chips.innerHTML='';
+    LANES.forEach(function(l){
+      var b=document.createElement('button');
+      b.setAttribute('aria-pressed',on[l.k]);
+      b.innerHTML='<span class="dot" style="background:'+l.col+'"></span>'+l.lab;
+      b.addEventListener('click',function(){ on[l.k]=!on[l.k]; buildChips(); paint(); renderNow(); });
+      chips.appendChild(b);
+    });
+  }
+
+  range.addEventListener('input',function(e){
+    year=+e.target.value; sel=null;
+    detail.className='detail';
+    moveCursor(); renderNow(); paint();
+    scroller.scrollLeft=Math.max(0,x(year)-scroller.clientWidth/2);
+  });
+
+  buildChips(); paint(); moveCursor(); renderNow();
+  scroller.scrollLeft=Math.max(0,x(1860)-scroller.clientWidth/2);
+})();
+</script>
+</body>
+</html>

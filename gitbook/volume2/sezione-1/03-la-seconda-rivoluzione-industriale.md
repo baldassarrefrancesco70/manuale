@@ -14,6 +14,8 @@ Nulla di tutto ciò, però, è ancora la seconda rivoluzione industriale. È la 
 _cfr. [approfondimento in Atlante, cartina 2 --- Diffusione della rivoluzione industriale in Europa](atlante.md#cartina-2)_
 
 
+<a id="artefatto-10"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/15-ferrovie-europa.html" %}
 Risorsa digitale --- Le ferrovie europee, 1850-1870
 {% endembed %}
@@ -39,6 +41,8 @@ Il **Giappone**, infine, è il caso più eccezionale, l'unica economia extra-eur
 
 Cinque paesi, cinque strade, e nessuna che ricalchi quella inglese. È la prova, ancor prima di entrare nel merito dei nuovi settori, che il modello britannico non era un destino universale: era una delle forme possibili dell'industrializzazione, la prima, non la necessaria. E che il primato, come si vedrà, era già in movimento.
 
+<a id="video-21"></a>
+
 {% embed url="https://youtu.be/d7G02tfTvPA" %}
 Video --- Arrivare dopo
 {% endembed %}
@@ -58,6 +62,8 @@ Contro questa fedeltà alle "gloriose tradizioni" del pionierismo, Germania e St
 La lezione del sorpasso è la più chiara conferma di un filo che percorre l'intera sezione. Il primato non è un possesso che, una volta conquistato, si conserva da sé; è una posizione storica, che può essere perduta proprio da chi la detiene, e a volte perché la detiene. Il vantaggio del pioniere e il suo svantaggio sono la stessa cosa vista in due momenti diversi. La Gran Bretagna non cadde per un fallimento, ma per la rigidità del proprio successo: ed è questa, più di ogni statistica, la prova che **il primato è storia, non destino**.
 {% endhint %}
 
+
+<a id="video-22"></a>
 
 {% embed url="https://youtu.be/ec6g5RC0pH4" %}
 Video --- Il sorpasso
@@ -79,12 +85,16 @@ L'**elettricità** è la più spettacolare, perché trasforma una curiosità da 
 
 Il **motore a scoppio**, infine, è quello che più cambierà il secolo successivo, anche se all'inizio sembra il meno decisivo. A differenza della macchina a vapore, che bruciava il combustibile all'esterno, il nuovo motore lo faceva esplodere al proprio interno, ricavandone la spinta; e montato su ruote da **Daimler** e **Benz** nel 1885, alimentato da un distillato del petrolio, la benzina, diede vita alle prime automobili. Con esse nacque la domanda che avrebbe fatto la fortuna del **petrolio**, estratto in Nord America dal primo pozzo del 1859 e presto controllato dalla **Standard Oil** di Rockefeller. E qui vale la pena fermarsi, perché è il punto in cui la nostra immagine del passato inganna più facilmente: alla fine dell'Ottocento il petrolio costava dalle cinque alle dieci volte più del carbone, e restò per gran parte del Novecento un combustibile secondario. L'età del petrolio non era ancora cominciata; era soltanto stata resa possibile. Anche qui, come per la rivoluzione industriale intera, la portata di un'invenzione non coincide con il momento della sua nascita.
 
+<a id="artefatto-11"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/11-atlante-invenzioni.html" %}
 Risorsa digitale --- Atlante delle invenzioni
 {% endembed %}
 
 
 Questi settori non crebbero isolati. Richiedevano impianti giganteschi, capitali enormi, competenze che nessun imprenditore solitario poteva più possedere: e nel farlo trasformarono non solo ciò che si produceva, ma il modo stesso di fare impresa. È la trasformazione a cui conviene guardare ora.
+
+<a id="video-23"></a>
 
 {% embed url="https://youtu.be/kNTF__6V9XA" %}
 Video --- Scienza e industria
@@ -113,6 +123,8 @@ Perché mai i prezzi caddero così a lungo? Per due ragioni che convergevano, e 
 
 Fu di fronte a questa lunga emorragia dei prezzi che il capitalismo occidentale cambiò pelle, e cominciò ad abbandonare i princìpi del liberismo classico che lo avevano guidato per un secolo. Le reazioni furono diverse e convergenti, e da esse nasce buona parte del mondo di fine secolo. Gli Stati tornarono a proteggere i propri mercati con i dazi, rompendo il dogma del libero scambio; le imprese, capendo che la guerra dei prezzi le stava dissanguando tutte, smisero di combattersi e cominciarono ad allearsi e a fondersi, dando origine alle grandi concentrazioni; e insieme al capitale bancario, come si è visto, l'industria strinse quel legame che avrebbe chiamato capitalismo finanziario. Sul piano sociale, la rovina delle campagne spinse milioni di persone a lasciare la terra, alimentando un'emigrazione di massa verso le città e verso le Americhe che alla fine del secolo avrebbe superato il milione di partenze all'anno. E, sullo sfondo, la combinazione tra mercati chiusi dai dazi e capacità produttive enormi spinse le potenze a cercare fuori dall'Europa gli sbocchi che dentro non trovavano più, alimentando la corsa imperialistica. Ciascuna di queste reazioni ha una sua storia. La prima a cui guardare, perché fu la risposta più diretta delle imprese alla caduta dei prezzi, è la fine della libera concorrenza.
 
+<a id="video-24"></a>
+
 {% embed url="" %}
 Video --- Una depressione senza crollo
 {% endembed %}
@@ -125,6 +137,8 @@ Dopo la depressione, una sola parola descrive ciò che accadde su due fronti che
 
 Sul primo fronte, la spinta veniva dalla crisi. Con i prezzi in caduta e i costi degli impianti giganteschi ormai insostenibili per chi restava solo, gli imprenditori capirono che la concorrenza spietata li stava dissanguando tutti, e smisero di combattersi per allearsi. Nacque la fase del **capitale monopolistico**, o oligopolistico, in cui pochi grandi gruppi si spartivano il mercato aggirando di fatto le leggi della libera concorrenza, e sfruttavano le economie di scala per abbattere i costi. La concentrazione assunse forme diverse, che conviene distinguere: il **cartello** era un accordo tra aziende indipendenti dello stesso settore per non farsi concorrenza, fissando prezzi minimi e quote di produzione; il **trust** era invece una fusione vera e propria di imprese prima autonome sotto un'unica direzione; la **holding**, infine, era una società che controllava altre imprese possedendone i pacchetti azionari. L'esempio che riassume tutti è la **Standard Oil** di **Rockefeller**, già incontrata come pioniera del petrolio e qui nella sua veste più temuta, quella di un monopolio che arrivò a controllare la quasi totalità della raffinazione americana.
 
+<a id="infografica-6"></a>
+
 ![Tre modi di concentrarsi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/img/Info6_Tre_modi_di_concentrazione_industriale.png)
 
 
@@ -135,6 +149,8 @@ Le teorie di Taylor trovarono l'applicazione più radicale nelle fabbriche di au
 Ma su chi eseguiva, il prezzo fu pesantissimo. Nasceva la figura dell'**operaio massa**, parcellizzato, ripetitivo, dequalificato, del tutto intercambiabile: svuotato di ogni sapere pratico e di ogni autonomia, ridotto ad appendice della macchina, sottoposto a una fatica logorante e a una disciplina di tipo militare. È il compimento di quel processo di espropriazione che il capitolo segue fin dai suoi inizi, e che qui tocca il fondo: non più solo il tempo e gli strumenti, ma l'intelligenza stessa del lavoro passata dall'altra parte. Quella condizione, e lo straniamento che portava con sé, sarebbe stata fissata in un'immagine indimenticabile dal cinema del Novecento, l'operaio inghiottito dagli ingranaggi di *Tempi moderni* di Charlie Chaplin.
 
 Concentrazione del capitale e concentrazione del controllo sul lavoro erano il volto interno del nuovo capitalismo. Ma le stesse forze che lo spingevano a concentrarsi in casa lo spingevano anche a guardare fuori: i mercati chiusi dai dazi e la capacità produttiva ormai enorme cercavano sbocchi oltre i confini nazionali. È da qui, dalla protezione dei mercati e dalla ricerca di spazi nuovi, che prende le mosse l'ultimo passaggio.
+
+<a id="video-25"></a>
 
 {% embed url="https://youtu.be/uilqt_JKaHc" %}
 Video --- La metamorfosi del capitalismo
@@ -169,6 +185,8 @@ Questo mondo nuovo cambiò anche i comportamenti, e in due direzioni che vale la
 {% endhint %}
 
 
+<a id="artefatto-12"></a>
+
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/1/artefatti/12-vetrina-feticismo.html" %}
 Risorsa digitale --- La vetrina e la fabbrica
 {% endembed %}
@@ -196,6 +214,8 @@ La Grande depressione del 1873 pose un problema che va molto oltre quei ventitr�
 La lettura liberale nega che esista una simile legge. Le crisi, in questa prospettiva, non sono strutturali ma congiunturali: disallineamenti temporanei tra offerta e domanda, provocati da cause contingenti, un eccesso di investimenti in un settore, uno shock come l'arrivo del grano americano, un errore di previsione collettivo, che il mercato, lasciato lavorare, riassesta da sé. La Grande depressione, in questa chiave, fu appunto un lungo e doloroso riaggiustamento a un'ondata di innovazioni e a una rivoluzione dei trasporti, non il sintomo di un male incurabile: la prova ne sarebbe la ripresa che, puntualmente, arrivò dopo il 1896.
 
 Il dibattito è antico e non si è mai chiuso, e vale la pena riconoscere che pesa, su entrambe le posizioni, qualcosa che va oltre le prove. La lettura strutturale ha una presa fortissima perché sembra confermata dai fatti successivi, il 1929, le crisi ricorrenti del Novecento e del nostro secolo, che danno l'impressione di un sistema periodicamente in panne; e perché offre una spiegazione potente, che collega la crisi al cuore del meccanismo invece che al caso. Ma proprio la sua forza è il suo rischio: una teoria che prevede crisi ricorrenti trova sempre conferme, perché le crisi, prima o poi, arrivano, e questo la rende difficile da falsificare. La lettura congiunturale, all'opposto, ha il pregio della prudenza empirica, guarda ogni crisi nella sua specificità invece di ricondurla a una legge unica; ma rischia di non vedere ciò che le crisi hanno in comune, e di ridurre a serie di incidenti ciò che forse ha una radice. Non è un caso, va detto con franchezza, che la posizione di ciascun interprete su questo punto tenda a coincidere con la sua collocazione politica: raramente una questione storiografica è stata così intrecciata alle convinzioni di chi la discute. Ed è proprio per questo che vale la pena studiarla, perché insegna a distinguere ciò che le prove mostrano da ciò che noi vorremmo che mostrassero.
+
+<a id="video-26"></a>
 
 {% embed url="" %}
 Video --- La storia è discussa: i consumi e le crisi

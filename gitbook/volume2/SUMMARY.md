@@ -11,6 +11,7 @@
     * [La seconda rivoluzione industriale](sezione-1/03-la-seconda-rivoluzione-industriale.md)
     * [Lo spartiacque, rivisto](sezione-1/04-lo-spartiacque-rivisto.md)
     * [ATLANTE](sezione-1/atlante.md)
+    * [Risorse digitali](sezione-1/06-risorse-digitali.md)
 <!-- SEZIONE:sezione-1 END -->
 <!-- SEZIONE:sezione-2 START -->
 <!-- TITOLO:Come nasce la politica del mondo moderno -->
@@ -21,6 +22,7 @@
     * [L'Europa di Napoleone](sezione-2/04-l-europa-di-napoleone.md)
     * [Il fondamento e il confine, rivisti](sezione-2/05-il-fondamento-e-il-confine-rivisti.md)
     * [ATLANTE](sezione-2/atlante.md)
+    * [Risorse digitali](sezione-2/07-risorse-digitali.md)
 <!-- SEZIONE:sezione-2 END -->
 <!-- SEZIONE:sezione-3 START -->
 <!-- TITOLO:Nazioni e nazionalismi -->
@@ -31,6 +33,7 @@
     * [Dal nazionalismo romantico al nazionalismo aggressivo](sezione-3/04-dal-nazionalismo-romantico-al-nazionalismo-aggressivo.md)
     * [In nome del popolo, rivisto](sezione-3/05-in-nome-del-popolo-rivisto.md)
     * [ATLANTE](sezione-3/atlante.md)
+    * [Risorse digitali](sezione-3/07-risorse-digitali.md)
 <!-- SEZIONE:sezione-3 END -->
 <!-- SEZIONE:sezione-4 START -->
 <!-- TITOLO:Come nasce l'Italia -->
@@ -43,6 +46,7 @@
     * [L'età crispina e la crisi di fine secolo](sezione-4/06-l-et-crispina-e-la-crisi-di-fine-secolo.md)
     * [Il plebiscito, riletto](sezione-4/07-il-plebiscito-riletto.md)
     * [ATLANTE](sezione-4/atlante.md)
+    * [Risorse digitali](sezione-4/09-risorse-digitali.md)
 <!-- SEZIONE:sezione-4 END -->
 <!-- SEZIONE:sezione-5 START -->
 <!-- TITOLO:Il mondo fuori dall'Europa -->
@@ -55,4 +59,5 @@
     * [Il Giappone Meiji](sezione-5/06-il-giappone-meiji.md)
     * [Il secolo del progresso, rivisto](sezione-5/07-il-secolo-del-progresso-rivisto.md)
     * [ATLANTE](sezione-5/atlante.md)
+    * [Risorse digitali](sezione-5/09-risorse-digitali.md)
 <!-- SEZIONE:sezione-5 END -->
