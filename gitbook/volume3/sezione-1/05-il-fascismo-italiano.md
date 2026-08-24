@@ -23,7 +23,7 @@ In questo clima di esasperazione per il carovita, e alimentate dalla convinzione
 
 L'episodio si chiuse senza spargimento di sangue, grazie all'intervento del primo ministro **Giovanni Giolitti**, che si rifiutò di impiegare l'esercito e costrinse gli industriali a concedere aumenti salariali. Fu una gestione che, sul momento, disinnescò la crisi con gli strumenti classici della mediazione liberale — la stessa arte del compromesso che aveva definito l'intera carriera di Giolitti. Ma quella soluzione, efficace nell'immediato, ebbe un costo politico che si sarebbe rivelato enorme: agli occhi della borghesia e dei proprietari terrieri, che avevano visto materializzarsi lo spettro della rivoluzione, lo Stato liberale non aveva riportato l'ordine, aveva ceduto al ricatto. La paura non si placò con gli aumenti salariali: cercò altrove chi promettesse di non mediare affatto.
 
-{% embed url="https://drive.google.com/file/d/1WjwH-32Zq7X_VREd1zBnnKPwdozlltBu/view" %}
+{% embed url="https://youtu.be/c6YkeWi7yCU" %}
 Video --- Il biennio rosso
 {% endembed %}
 
@@ -87,7 +87,7 @@ Ma l'aspetto più disperante, per chi subiva tutto questo, era la certezza dell'
 {% endhint %}
 
 
-![Infografica --- Dal biennio rosso alla marcia su Roma: la parabola 1919-1922](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info5_ascesa_del_fascismo_%281919-1922%29.png)
+![Dal biennio rosso alla marcia su Roma: la parabola 1919-1922](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info5_ascesa_del_fascismo_%281919-1922%29.png)
 
 
 ## Lo Stato liberale che non regge
@@ -138,7 +138,7 @@ La **marcia su Roma** del **27-28 ottobre 1922** fu organizzata da un quadrumvir
 
 È in quel rifiuto, non nella marcia, che finì lo Stato liberale. Non lo travolse una forza superiore: lo lasciò cadere chi aveva il potere e il dovere di difenderlo. Mussolini, rimasto per prudenza a Milano fino all'ultimo, si recò a Roma il 30 ottobre soltanto dopo aver ricevuto formalmente dal sovrano l'incarico di formare il nuovo governo. Ottenne così il potere non con un colpo di Stato, ma nel pieno rispetto formale dello **Statuto Albertino**, dalle mani del re e senza che fosse sparato un colpo. È la differenza decisiva rispetto a Weimar, e insieme la sua inquietante somiglianza: là il potere fu consegnato con una firma presidenziale, qui con una firma mancata, quella sul decreto che avrebbe fermato tutto; in entrambi i casi la legalità non fu violata, fu usata.
 
-{% embed url="https://drive.google.com/file/d/16PiAexuqwKm3C-Vn_X7xET1JoU1gsIDa/view" %}
+{% embed url="https://youtu.be/Vv_k8JpiAEA" %}
 Video --- La marcia su Roma: che cosa successe davvero
 {% endembed %}
 
@@ -183,7 +183,7 @@ Il **10 giugno 1924**, pochi giorni dopo, Matteotti fu rapito a Roma da una squa
 {% endhint %}
 
 
-{% embed url="https://drive.google.com/file/d/1ekff9Z-EybVctva2TdSs9pUla_W-nqgY/view" %}
+{% embed url="https://youtu.be/Sg5oOgKqx4k" %}
 Video --- Il delitto Matteotti e il 3 gennaio 1925
 {% endembed %}
 
@@ -207,7 +207,7 @@ Quel discorso troncò d'autorità la questione morale aperta dall'omicidio e liq
 
 Ciò che il 3 gennaio 1925 era stato annunciato con un discorso, nei due anni seguenti divenne diritto. È il tratto che distingue la costruzione della dittatura italiana da quella tedesca, e che il capitolo di confronto riprenderà: il fascismo non sospese lo Statuto Albertino con un colpo netto, come Hitler avrebbe fatto con la Legge dei pieni poteri in un solo giorno, ma lo svuotò dall'interno con una serie di leggi ordinarie, approvate nelle forme, che lasciarono in piedi il guscio costituzionale mentre ne cancellavano il contenuto. L'architetto giuridico di questa operazione fu il ministro della Giustizia **Alfredo Rocco**, e la sua opera merita attenzione proprio perché fu opera di un giurista: la dittatura si costruì con gli strumenti del diritto, non contro di essi.
 
-![Infografica --- Le leggi fascistissime: quattro bersagli](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info6_Leggi_Fascistissime_%281925-1926%29.png)
+![Le leggi fascistissime: quattro bersagli](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info6_Leggi_Fascistissime_%281925-1926%29.png)
 
 
 Il primo bersaglio fu l'**equilibrio dei poteri**. La legge del 24 dicembre 1925 trasformò Mussolini da presidente del Consiglio, primo fra pari, in **«capo del governo»**, responsabile ormai soltanto davanti al re e non più davanti al Parlamento, senza il cui preventivo consenso nessun provvedimento poteva nemmeno essere discusso in aula. Una seconda legge, del 31 gennaio 1926, attribuì al governo la facoltà di emanare autonomamente norme con valore di legge, di fatto scavalcando le Camere. L'accentramento raggiunse anche le amministrazioni locali: nel 1926 le cariche elettive dei comuni furono soppresse, sindaci e consigli comunali sostituiti dal **podestà**, nominato dal governo e controllato dai prefetti. La stessa legge del 24 dicembre 1925, quella che concentrava ogni potere nel capo del governo, sarebbe stata anni dopo — lo si è visto nel focus su Mussolini — lo strumento con cui il re avrebbe potuto destituirlo, e infine lo destituì: costruita per blindare il potere, conteneva già la clausola della sua reversibilità.
@@ -259,7 +259,7 @@ La tesi provocò una delle più aspre polemiche della cultura italiana del Novec
 
 Entrambe le posizioni hanno il loro punto cieco. Chi nega il consenso deve spiegare come un regime tenuto in piedi solo dalla forza abbia potuto sopravvivere così a lungo con un apparato repressivo che, per quanto spietato, era numericamente esiguo rispetto alla popolazione: la coercizione, da sola, non basta a spiegare la durata. Ma chi enfatizza il consenso rischia di dimenticare ciò che quel consenso rendeva possibile e nascondeva: che si formava dentro un sistema in cui l'alternativa era il confino o il carcere, in cui l'informazione era controllata e il dissenso vietato, e che un consenso ottenuto sopprimendo ogni voce contraria non è la stessa cosa di un consenso libero. La domanda vera, allora, non è se ci fu consenso — ci fu — ma che valore abbia il consenso in assenza di libertà, e questa è una domanda che riguarda non solo il fascismo, ma la natura stessa di ogni regime che sappia farsi amare da chi governa.
 
-{% embed url="https://drive.google.com/file/d/1gSZjreU0bFloo2CuEVQsqQVNq-PTHm9E/view" %}
+{% embed url="https://youtu.be/968d94i3dCA" %}
 Video --- Il nodo storiografico: parentesi, rivelazione, consenso
 {% endembed %}
 
@@ -274,7 +274,7 @@ Video --- Il nodo storiografico: parentesi, rivelazione, consenso
 - Salvatore Lupo, *Il fascismo. La politica in un regime totalitario*, Donzelli, Roma 2000.
 - Voce «Fascismo», in *Enciclopedia Treccani*, treccani.it.
 
-{% embed url="https://drive.google.com/file/d/1xW3MWjru9h2ZnJKOLeK_wYGkJE18ak0A/view" %}
+{% embed url="https://youtu.be/tJrLE7nqG54" %}
 Video --- Panoramica del capitolo
 {% endembed %}
 
@@ -282,6 +282,6 @@ Video --- Panoramica del capitolo
 Risorsa digitale --- Due morti a confronto: Roma 1922 / Berlino 1933
 {% endembed %}
 
-{% embed url="https://drive.google.com/file/d/10Ij-LY6ix3byJbMOr_IlS2xq6TkXpDgk/view" %}
-Video --- «Roma e Berlino»: due democrazie, due morti
+{% embed url="https://youtu.be/L3EiA7eLtp4" %}
+Video --- Due morti a confronto: Roma 1922 / Berlino 1933
 {% endembed %}

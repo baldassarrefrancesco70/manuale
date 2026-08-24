@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il 1939 in sei mosse: dal Patto d'Acciaio alla spartizione della Polonia</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --diretta:#5c7a6f;
+    --diretta-bg:#e6edea;
+    --parallela:#8a7a5a;
+    --parallela-bg:#efe8d9;
+    --avviso:#a1665c;
+    --avviso-bg:#f2e4e0;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:960px; margin:0 auto; padding:26px 24px 40px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.25rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 22px; line-height:1.5;
+  }
+  .tappa-titolo-sezione{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.82rem; color:var(--marrone-scuro);
+    text-align:center; margin:26px 0 14px;
+  }
+
+  .slot-fila{
+    display:grid; grid-template-columns:repeat(6, 1fr); gap:8px;
+    margin-bottom:22px;
+  }
+  @media (max-width:720px){ .slot-fila{ grid-template-columns:repeat(3, 1fr); } }
+  .slot{
+    min-height:100px;
+    background:#fffdfa; border:2px dashed var(--marrone); border-radius:8px;
+    padding:8px; cursor:pointer; position:relative;
+    display:flex; flex-direction:column;
+  }
+  .slot.occupato{ border-style:solid; cursor:pointer; }
+  .slot.errore{ border-color:var(--avviso); }
+  .slot-numero{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.62rem; font-weight:700; color:var(--marrone);
+    margin-bottom:4px;
+  }
+  .slot-testo{
+    font-family:Georgia, serif; font-size:0.68rem; line-height:1.35; color:var(--testo);
+    flex:1;
+  }
+  .slot-data{
+    display:none;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.62rem; font-weight:700; color:var(--marrone-scuro);
+    margin-top:6px; padding-top:5px; border-top:1px solid #e5ddd0;
+  }
+  .slot.date-rivelate .slot-data{ display:block; }
+  .slot-avviso{
+    display:none;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.58rem; font-weight:700; color:var(--avviso);
+    margin-top:3px;
+  }
+  .slot.errore .slot-avviso{ display:block; }
+
+  .pool{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+    margin-bottom:8px; min-height:20px;
+  }
+  .carta-evento{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:8px;
+    padding:10px 14px; max-width:260px;
+    font-family:Georgia, serif; font-size:0.78rem; line-height:1.4; color:var(--testo);
+    cursor:pointer; transition:transform 0.15s, box-shadow 0.15s;
+  }
+  .carta-evento:hover{ transform:translateY(-1px); }
+  .carta-evento.selezionata{
+    border-color:var(--marrone-scuro); border-width:2px; background:#fff;
+    box-shadow:0 2px 8px rgba(107,89,64,0.25);
+  }
+
+  .messaggio-riordino{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem; color:var(--marrone-scuro); font-weight:600;
+    min-height:20px; margin:6px 0 10px;
+  }
+
+  .azioni{ text-align:center; margin:10px 0 8px; }
+  .btn-continua{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.82rem; font-weight:600;
+    background:var(--marrone-scuro); color:#fff; border:none;
+    padding:11px 28px; border-radius:22px; cursor:pointer;
+    transition:background 0.2s, opacity 0.2s;
+  }
+  .btn-continua:hover{ background:#59492f; }
+  .btn-continua:disabled{ opacity:0.35; cursor:not-allowed; }
+
+  .esercizio-coppie{ display:none; }
+  .esercizio-coppie.visibile{ display:block; }
+  .coppia{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:10px;
+    padding:14px 18px; margin-bottom:14px;
+  }
+  .coppia-testo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.82rem; color:var(--marrone-scuro);
+    margin:0 0 10px; text-align:center; line-height:1.4;
+  }
+  .coppia-testo .freccia{ color:var(--marrone); font-weight:400; }
+  .coppia-bottoni{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }
+  .btn-scelta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem; font-weight:600;
+    background:#fff; border:1.5px solid var(--marrone); color:var(--marrone-scuro);
+    padding:8px 16px; border-radius:18px; cursor:pointer;
+    transition:background 0.15s, color 0.15s;
+  }
+  .btn-scelta:hover{ background:var(--marrone); color:#fff; }
+  .btn-scelta.scelta-fatta{ opacity:0.55; cursor:default; }
+  .btn-scelta.scelta-fatta:hover{ background:#fff; color:var(--marrone-scuro); }
+  .coppia-spiegazione{
+    display:none;
+    font-family:Georgia, serif; font-size:0.8rem; line-height:1.6;
+    padding:10px 14px; border-radius:7px;
+  }
+  .coppia-spiegazione.visibile{ display:block; }
+  .coppia-spiegazione.diretta{ background:var(--diretta-bg); color:var(--diretta); }
+  .coppia-spiegazione.parallela{ background:var(--parallela-bg); color:var(--parallela); }
+  .coppia-spiegazione strong{ font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; }
+
+  .idea-guida{
+    display:none;
+    margin-top:8px;
+    background:#fffdfa; border-left:5px solid var(--marrone); border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif; font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida.visibile{ display:block; }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Il 1939 in sei mosse</h1>
+    <p class="sottotitolo">Dal Patto d'Acciaio alla spartizione della Polonia</p>
+  </header>
+
+  <p class="istruzioni">
+    Tocca una tappa per selezionarla, poi tocca la casella in cui vuoi collocarla, per ricostruire l'ordine cronologico reale. Le date sono nascoste: compariranno quando tutte le caselle saranno riempite.
+  </p>
+
+  <div class="slot-fila" id="slotFila"></div>
+  <p class="messaggio-riordino" id="messaggioRiordino"></p>
+  <div class="pool" id="pool"></div>
+  <div class="azioni" id="azioniRiordino"></div>
+
+  <div class="esercizio-coppie" id="esercizioCoppie">
+    <p class="tappa-titolo-sezione">Conseguenza diretta o evento parallelo?</p>
+    <p class="istruzioni" style="margin-top:-6px;">Per ogni coppia di tappe consecutive nell'ordine cronologico reale, indica se il legame fra loro è una conseguenza diretta o due sviluppi paralleli e indipendenti.</p>
+    <div id="coppieBox"></div>
+    <div class="idea-guida" id="ideaGuida">
+      <strong>Idea-guida.</strong> La sequenza che porta dal Patto d'Acciaio all'invasione della Polonia non è un'unica catena di cause: alcuni sviluppi corrono in parallelo su fronti diversi — l'asse Roma-Berlino da una parte, la ricerca sovietica di un accordo dall'altra — e solo nell'ultimo tratto, dal fallimento delle trattative di Mosca in poi, la catena diventa stretta e diretta fino all'invasione.
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var eventi = [
+    { id:'accaio', testo:'Viene firmato un patto di alleanza militare fra Italia e Germania.', data:'22 maggio 1939', rango:2 },
+    { id:'litvinov', testo:'Il ministro degli esteri sovietico, di origini ebraiche e favorevole a un\'intesa con le potenze occidentali, viene sostituito da Molotov.', data:'3 maggio 1939', rango:1 },
+    { id:'trattative', testo:'Francia, Gran Bretagna e Unione Sovietica avviano trattative militari a Mosca per un fronte comune contro la Germania.', data:'estate 1939', rango:3 },
+    { id:'fallimento', testo:'Le trattative militari a Mosca falliscono, per la diffidenza reciproca e per il rifiuto di Polonia e Romania di concedere il transito all\'Armata Rossa.', data:'estate 1939', rango:4 },
+    { id:'molotov-ribbentrop', testo:'Unione Sovietica e Germania firmano un patto di non aggressione, con un protocollo segreto che spartisce le rispettive sfere di influenza in Europa orientale.', data:'23 agosto 1939', rango:5 },
+    { id:'polonia', testo:'La Germania invade la Polonia.', data:'1 settembre 1939', rango:6 }
+  ];
+
+  var ordinePresentazione = ['accaio','fallimento','polonia','litvinov','molotov-ribbentrop','trattative'];
+
+  var coppie = [
+    { aId:'litvinov', bId:'accaio', tipo:'parallela',
+      spiega:"la sostituzione di Litvinov con Molotov segnala un riorientamento della politica estera sovietica verso la Germania, mentre il Patto d'Acciaio è un'alleanza militare italo-tedesca. Avvengono quasi in contemporanea ma non sono l'uno conseguenza dell'altro." },
+    { aId:'accaio', bId:'trattative', tipo:'parallela',
+      spiega:"le trattative di Mosca nascono dal tentativo di Francia e Gran Bretagna di contenere la Germania, un obiettivo che esiste a prescindere dal Patto d'Acciaio, firmato sull'altro fronte dell'asse Roma-Berlino." },
+    { aId:'trattative', bId:'fallimento', tipo:'diretta',
+      spiega:"è la naturale prosecuzione dello stesso negoziato, che si chiude per la diffidenza reciproca e per il rifiuto di Polonia e Romania di concedere il transito all'Armata Rossa." },
+    { aId:'fallimento', bId:'molotov-ribbentrop', tipo:'diretta',
+      spiega:"è proprio il fallimento delle trattative con le potenze occidentali ad aprire la strada all'accordo con la Germania, siglato pochi giorni dopo." },
+    { aId:'molotov-ribbentrop', bId:'polonia', tipo:'diretta',
+      spiega:"il protocollo segreto di spartizione contenuto nel patto è la premessa concreta dell'invasione, che segue di soli otto giorni la firma." }
+  ];
+
+  var slots = [null, null, null, null, null, null];
+  var selezionata = null;
+  var pool = document.getElementById('pool');
+  var slotFila = document.getElementById('slotFila');
+  var messaggio = document.getElementById('messaggioRiordino');
+  var azioniRiordino = document.getElementById('azioniRiordino');
+  var esercizioCoppie = document.getElementById('esercizioCoppie');
+
+  function eventoById(id){ return eventi.filter(function(e){ return e.id === id; })[0]; }
+
+  for(var i = 0; i < 6; i++){
+    var s = document.createElement('div');
+    s.className = 'slot';
+    s.setAttribute('data-slot', i);
+    s.innerHTML = '<div class="slot-numero">' + (i + 1) + '</div><div class="slot-testo"></div><div class="slot-data"></div><div class="slot-avviso">posizione da rivedere</div>';
+    s.addEventListener('click', function(){
+      var idx = parseInt(this.getAttribute('data-slot'), 10);
+      if(slots[idx]){
+        // libera la casella: la carta torna nel pool
+        var ev = slots[idx];
+        slots[idx] = null;
+        renderTutto();
+        var carta = creaCarta(ev);
+        pool.appendChild(carta);
+        return;
+      }
+      if(selezionata === null) return;
+      slots[idx] = selezionata;
+      var cartaSel = pool.querySelector('.carta-evento[data-id="' + selezionata.id + '"]');
+      if(cartaSel) cartaSel.remove();
+      selezionata = null;
+      renderTutto();
+      controllaCompletamento();
+    });
+    slotFila.appendChild(s);
+  }
+
+  function creaCarta(ev){
+    var el = document.createElement('div');
+    el.className = 'carta-evento';
+    el.setAttribute('data-id', ev.id);
+    el.textContent = ev.testo;
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.carta-evento').forEach(function(c){ c.classList.remove('selezionata'); });
+      if(selezionata && selezionata.id === ev.id){
+        selezionata = null;
+        return;
+      }
+      selezionata = ev;
+      el.classList.add('selezionata');
+    });
+    return el;
+  }
+
+  ordinePresentazione.forEach(function(id){
+    pool.appendChild(creaCarta(eventoById(id)));
+  });
+
+  function renderTutto(){
+    for(var i = 0; i < 6; i++){
+      var slotEl = slotFila.querySelector('.slot[data-slot="' + i + '"]');
+      var ev = slots[i];
+      if(ev){
+        slotEl.classList.add('occupato');
+        slotEl.querySelector('.slot-testo').textContent = ev.testo;
+      } else {
+        slotEl.classList.remove('occupato', 'date-rivelate', 'errore');
+        slotEl.querySelector('.slot-testo').textContent = '';
+        slotEl.querySelector('.slot-data').textContent = '';
+      }
+    }
+    var riempite = slots.filter(Boolean).length;
+    messaggio.textContent = riempite < 6 ? (riempite + ' di 6 collocate') : '';
+  }
+
+  function controllaCompletamento(){
+    if(slots.filter(Boolean).length === 6){
+      azioniRiordino.innerHTML = '<button class="btn-continua" id="btnRivela">Rivela le date</button>';
+      document.getElementById('btnRivela').addEventListener('click', rivelaDate);
+    }
+  }
+
+  function rivelaDate(){
+    for(var i = 0; i < 6; i++){
+      var slotEl = slotFila.querySelector('.slot[data-slot="' + i + '"]');
+      var ev = slots[i];
+      slotEl.classList.add('date-rivelate');
+      slotEl.querySelector('.slot-data').textContent = ev.data;
+      if(ev.rango !== i + 1){
+        slotEl.classList.add('errore');
+      }
+    }
+    messaggio.textContent = 'Le caselle segnate in rosso non rispettano l\'ordine cronologico reale.';
+    azioniRiordino.innerHTML = '<button class="btn-continua" id="btnProsegui">Prosegui con i legami causali</button>';
+    document.getElementById('btnProsegui').addEventListener('click', function(){
+      esercizioCoppie.classList.add('visibile');
+      esercizioCoppie.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      azioniRiordino.innerHTML = '';
+    });
+  }
+
+  var coppieBox = document.getElementById('coppieBox');
+  var risposte = 0;
+  coppie.forEach(function(c, idx){
+    var a = eventoById(c.aId);
+    var b = eventoById(c.bId);
+    var div = document.createElement('div');
+    div.className = 'coppia';
+    div.innerHTML =
+      '<p class="coppia-testo">' + a.data + ' — ' + a.testo + '<br><span class="freccia">&darr;</span><br>' + b.data + ' — ' + b.testo + '</p>' +
+      '<div class="coppia-bottoni">' +
+        '<button class="btn-scelta" data-scelta="diretta">Conseguenza diretta</button>' +
+        '<button class="btn-scelta" data-scelta="parallela">Evento parallelo/indipendente</button>' +
+      '</div>' +
+      '<div class="coppia-spiegazione ' + c.tipo + '" id="spiegaCoppia' + idx + '"><strong>' + (c.tipo === 'diretta' ? 'Conseguenza diretta.' : 'Evento parallelo.') + '</strong> ' + c.spiega + '</div>';
+    coppieBox.appendChild(div);
+
+    var bottoni = div.querySelectorAll('.btn-scelta');
+    var spiegazione = div.querySelector('.coppia-spiegazione');
+    var risposto = false;
+    bottoni.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(risposto) return;
+        risposto = true;
+        bottoni.forEach(function(b){ b.classList.add('scelta-fatta'); });
+        spiegazione.classList.add('visibile');
+        risposte++;
+        if(risposte === coppie.length){
+          document.getElementById('ideaGuida').classList.add('visibile');
+        }
+      });
+    });
+  });
+
+  renderTutto();
+})();
+</script>
+</body>
+</html>

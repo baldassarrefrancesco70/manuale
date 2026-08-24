@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronologia della sezione — Come muore una democrazia</title>
+<style>
+  :root{
+    --bg:#F2F2F2;
+    --card:#fffdfa;
+    --accent:#8B7355;
+    --italia:#8B7355;
+    --germania:#5b7a8f;
+    --urss:#9c5b45;
+    --intl:#7a8a5c;
+    --text:#2b2723;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;}
+  h1,h2,h3,.label,.ui,button,select,.legend,.filters,.axis-year,.node-date{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  .wrap{max-width:1400px;margin:0 auto;padding:22px 26px 40px;}
+  h1{font-size:1.5rem;margin:0 0 6px;color:var(--text);font-weight:600;letter-spacing:.2px;}
+  .subtitle{font-size:.95rem;color:#5a554e;margin:0 0 18px;max-width:900px;line-height:1.5;}
+  .panel{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:14px 18px;margin-bottom:16px;}
+  .controls{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start;}
+  .control-group{display:flex;flex-direction:column;gap:6px;}
+  .control-group .ctitle{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:#7a746b;margin-bottom:2px;}
+  .lane-buttons{display:flex;flex-wrap:wrap;gap:8px;}
+  .lane-btn{display:flex;align-items:center;gap:7px;border:1.5px solid var(--accent);background:#fff;border-radius:20px;padding:5px 12px 5px 8px;cursor:pointer;font-size:.82rem;color:var(--text);transition:opacity .2s,background .2s;}
+  .lane-btn .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto;}
+  .lane-btn.active{background:#efe9dc;}
+  .lane-btn.dimmed-off{opacity:.45;}
+  .year-select{display:flex;gap:8px;align-items:center;}
+  select{border:1.5px solid var(--accent);border-radius:6px;padding:6px 8px;font-size:.85rem;background:#fff;color:var(--text);}
+  .clear-btn{border:1px solid var(--accent);background:#fff;border-radius:6px;padding:6px 10px;font-size:.78rem;cursor:pointer;color:var(--accent);}
+  .clear-btn:hover{background:#f6f1e8;}
+  .clear-btn:disabled{opacity:.35;cursor:default;}
+
+  .chart-shell{overflow-x:auto;overflow-y:hidden;border:1px solid var(--accent);border-radius:8px;background:#fff;position:relative;}
+  .chart-inner{position:relative;}
+  .lane-labels{position:sticky;left:0;top:0;z-index:5;}
+  .chart-grid{position:relative;}
+
+  .lane-row-label{position:absolute;left:0;width:132px;display:flex;align-items:center;gap:8px;padding:0 10px;background:linear-gradient(90deg,#fff 78%,rgba(255,255,255,0));font-size:.8rem;font-weight:600;pointer-events:none;}
+  .lane-row-label .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto;}
+
+  .lane-track{position:absolute;height:2px;top:50%;transform:translateY(-1px);border-radius:2px;}
+  .year-tick{position:absolute;top:0;bottom:0;border-left:1px dashed #e2ddd2;}
+  .year-tick-label{position:absolute;font-size:.68rem;color:#a39c8f;top:2px;}
+  .decade-tick{border-left:1px solid #d8d1c2;}
+
+  .node{position:absolute;cursor:pointer;transition:opacity .25s, transform .15s;}
+  .node.dimmed{opacity:.22;}
+  .node.year-dim{opacity:.15;}
+  .node.year-hit{filter:drop-shadow(0 0 0 rgba(0,0,0,0));}
+  .node-dot{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);}
+  .node-bar{height:12px;border-radius:6px;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);}
+  .node.selected .node-dot,.node.selected .node-bar{box-shadow:0 0 0 3px rgba(139,115,85,.55);}
+  .node-date{position:absolute;font-size:.66rem;white-space:nowrap;color:#5a554e;transform-origin:left top;transform:rotate(-32deg);top:16px;left:2px;}
+
+  .convergence-note{position:absolute;font-size:.72rem;color:#7a746b;text-align:center;width:130px;top:-14px;font-style:italic;}
+
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:.78rem;color:#5a554e;}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  #detailArea{margin-top:16px;}
+  .detail-card{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 20px;animation:fadein .2s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+  .detail-card .lane-tag{display:inline-block;font-family:'Gill Sans',sans-serif;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:#fff;padding:2px 9px;border-radius:12px;margin-bottom:8px;}
+  .detail-card h3{margin:0 0 6px;font-size:1.05rem;}
+  .detail-card .ddate{font-family:'Gill Sans',sans-serif;font-size:.78rem;color:#7a746b;margin-bottom:8px;}
+  .detail-card p{margin:0;line-height:1.55;font-size:.95rem;}
+  .close-detail{float:right;border:none;background:none;font-size:1.1rem;cursor:pointer;color:#a39c8f;line-height:1;}
+  .close-detail:hover{color:var(--accent);}
+
+  .year-card{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 20px;}
+  .year-card h3{margin:0 0 4px;font-size:1.1rem;}
+  .year-card .yhint{font-size:.8rem;color:#7a746b;margin-bottom:12px;}
+  .year-event{display:flex;gap:12px;padding:9px 0;border-top:1px solid #eee6d6;}
+  .year-event:first-of-type{border-top:none;}
+  .year-event .ytag{flex:0 0 118px;font-family:'Gill Sans',sans-serif;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:#fff;padding:3px 8px;border-radius:10px;height:fit-content;text-align:center;}
+  .year-event .ytxt{font-size:.92rem;line-height:1.5;}
+  .year-event .ytxt b{display:block;font-family:'Gill Sans',sans-serif;font-size:.72rem;color:#7a746b;font-weight:600;margin-bottom:2px;}
+
+  .empty-hint{color:#9a9385;font-size:.88rem;font-style:italic;padding:6px 2px;}
+  .footer-note{margin-top:22px;font-size:.78rem;color:#9a9385;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Cronologia della sezione — «Come muore una democrazia»</h1>
+  <p class="subtitle">Quattro storie nazionali sullo stesso asse temporale, dal 1914 al 1994. Fino al 1945 seguono quattro corsie parallele — Italia, Germania, Unione Sovietica, quadro internazionale — poi tre di esse si esauriscono e resta la sola Italia repubblicana a percorrere gli anni fino al 1994.</p>
+
+  <div class="panel controls">
+    <div class="control-group">
+      <div class="ctitle">Isola una corsia</div>
+      <div class="lane-buttons" id="laneButtons"></div>
+    </div>
+    <div class="control-group">
+      <div class="ctitle">Isola un anno</div>
+      <div class="year-select">
+        <select id="yearSelect"><option value="">— tutti gli anni —</option></select>
+        <button class="clear-btn" id="clearYearBtn" disabled>Azzera</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-shell" id="chartShell">
+    <div class="chart-inner" id="chartInner"></div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <div id="detailArea">
+    <p class="empty-hint">Clic su un nodo o una barra della cronologia per aprire la scheda di dettaglio, oppure isola un anno per vedere affiancati tutti gli eventi delle quattro corsie in quel momento.</p>
+  </div>
+
+  <p class="footer-note">Asse a scala proporzionale per anno. Scorrimento orizzontale per esplorare l'intero periodo 1914–1994.</p>
+</div>
+
+<script>
+(function(){
+  const LANES = [
+    {id:'italia', name:'Italia', color:'#8B7355', y:0, start:1915, end:1994,
+      events:[
+        {y1:1915, label:"Patto di Londra e ingresso in guerra", date:"26 aprile / 24 maggio 1915", detail:"Patto di Londra (26 aprile) e ingresso in guerra (24 maggio)."},
+        {y1:1917, label:"Caporetto", date:"ottobre–novembre 1917", detail:"Caporetto (ottobre–novembre)."},
+        {y1:1918, label:"Vittorio Veneto, fine della guerra", date:"1918", detail:"Vittorio Veneto e fine della guerra."},
+        {y1:1919, label:"Fasci di combattimento; biennio rosso", date:"marzo 1919", detail:"Fondazione dei Fasci di combattimento (marzo); avvio del biennio rosso."},
+        {y1:1922, label:"Marcia su Roma", date:"28 ottobre 1922", detail:"Marcia su Roma (28 ottobre)."},
+        {y1:1924, label:"Delitto Matteotti; secessione dell'Aventino", date:"10 giugno 1924", detail:"Delitto Matteotti (10 giugno) e secessione dell'Aventino."},
+        {y1:1925, y2:1926, label:"Leggi «fascistissime»", date:"1925–26", detail:"Discorso del 3 gennaio 1925; leggi del 24 dicembre 1925 e del 31 gennaio–9 novembre 1926."},
+        {y1:1935, y2:1936, label:"Guerra d'Etiopia; proclamazione dell'Impero", date:"ott. 1935 – mag. 1936", detail:"Guerra d'Etiopia (ottobre 1935–maggio 1936) e proclamazione dell'Impero."},
+        {y1:1936, label:"Asse Roma-Berlino", date:"ottobre 1936", detail:"Asse Roma-Berlino (ottobre)."},
+        {y1:1938, label:"Leggi razziste", date:"1938", detail:"Manifesto della razza (luglio), espulsione di docenti e studenti ebrei dalla scuola pubblica (5 settembre), Dichiarazione sulla razza del Gran Consiglio (ottobre)."},
+        {y1:1939, label:"Patto d'Acciaio", date:"22 maggio 1939", detail:"Patto d'Acciaio (22 maggio)."},
+        {y1:1943, label:"Caduta di Mussolini; armistizio", date:"25 luglio / 8 settembre 1943", detail:"Caduta di Mussolini (25 luglio); armistizio e occupazione tedesca (8 settembre)."},
+        {y1:1945, label:"Liberazione", date:"25 aprile 1945", detail:"Liberazione (25 aprile)."},
+        {y1:1946, label:"Referendum istituzionale; nascita della Repubblica", date:"2 giugno 1946", detail:"Referendum istituzionale e nascita della Repubblica (2 giugno)."},
+        {y1:1948, label:"Costituzione in vigore", date:"1° gennaio 1948", detail:"Entrata in vigore della Costituzione (1° gennaio)."},
+        {y1:1992, label:"Mani Pulite; stragi di Capaci e via D'Amelio", date:"1992", detail:"Avvio di Mani Pulite (17 febbraio); strage di Capaci (23 maggio) e strage di via D'Amelio (19 luglio)."},
+        {y1:1994, label:"Nascita della Seconda Repubblica", date:"28 marzo 1994", detail:"Elezioni e nascita della cosiddetta Seconda Repubblica (28 marzo)."}
+      ]},
+    {id:'germania', name:'Germania', color:'#5b7a8f', y:1, start:1918, end:1939,
+      events:[
+        {y1:1918, label:"Armistizio e rivoluzione tedesca", date:"11 novembre 1918", detail:"Armistizio e rivoluzione tedesca (11 novembre)."},
+        {y1:1919, label:"Costituzione di Weimar", date:"11 agosto 1919", detail:"Costituzione di Weimar (11 agosto)."},
+        {y1:1920, label:"Kapp-Putsch", date:"marzo 1920", detail:"Kapp-Putsch (marzo)."},
+        {y1:1923, label:"Occupazione della Ruhr; iperinflazione; putsch di Monaco", date:"1923", detail:"Occupazione della Ruhr, iperinflazione, putsch di Monaco (novembre)."},
+        {y1:1929, label:"Inizio della crisi economica", date:"1929", detail:"Inizio della crisi economica."},
+        {y1:1930, y2:1932, label:"Ascesa elettorale del nazismo", date:"1930–32", detail:"Ascesa elettorale del nazismo."},
+        {y1:1933, label:"Hitler cancelliere; pieni poteri", date:"gen.–mag. 1933", detail:"Hitler cancelliere (30 gennaio); incendio del Reichstag (27 febbraio); Legge dei pieni poteri (23 marzo); scioglimento dei sindacati (maggio)."},
+        {y1:1934, label:"Crisi Dollfuss; morte di Hindenburg", date:"lug./ago. 1934", detail:"Crisi Dollfuss e schieramento italiano al Brennero (luglio); morte di Hindenburg, Hitler assume i pieni poteri di capo dello Stato (agosto)."},
+        {y1:1935, label:"Leggi di Norimberga; riarmo dichiarato", date:"1935", detail:"Leggi di Norimberga; riarmo dichiarato."},
+        {y1:1936, label:"Rimilitarizzazione della Renania", date:"1936", detail:"Rimilitarizzazione della Renania."},
+        {y1:1938, label:"Anschluss; Conferenza di Monaco", date:"mar./set. 1938", detail:"Anschluss dell'Austria (marzo); Conferenza di Monaco (settembre)."},
+        {y1:1939, label:"Praga; Patto d'Acciaio; Molotov-Ribbentrop; Polonia", date:"1939", detail:"Occupazione di Praga (marzo); Patto d'Acciaio (22 maggio); patto Molotov-Ribbentrop (23 agosto); invasione della Polonia (1° settembre)."}
+      ]},
+    {id:'urss', name:'Unione Sovietica', color:'#9c5b45', y:2, start:1917, end:1939,
+      events:[
+        {y1:1917, label:"Caduta dello zar; presa del potere bolscevica", date:"febbraio / novembre 1917", detail:"Caduta dello zar (febbraio); presa del potere bolscevica (7 novembre/25 ottobre)."},
+        {y1:1918, label:"Pace di Brest-Litovsk; guerra civile", date:"marzo 1918", detail:"Pace di Brest-Litovsk (marzo); inizio della guerra civile."},
+        {y1:1921, label:"Rivolta di Kronstadt; avvio della NEP", date:"marzo 1921", detail:"Rivolta di Kronstadt (marzo) e avvio della NEP."},
+        {y1:1922, label:"Stalin segretario generale", date:"aprile 1922", detail:"Stalin segretario generale (aprile)."},
+        {y1:1924, label:"Morte di Lenin", date:"21 gennaio 1924", detail:"Morte di Lenin (21 gennaio)."},
+        {y1:1927, label:"Espulsione di Trockij, Zinov'ev, Kamenev", date:"1927", detail:"Espulsione di Trockij, Zinov'ev, Kamenev."},
+        {y1:1928, y2:1932, label:"Primo piano quinquennale; collettivizzazione forzata", date:"1928–32", detail:"Primo piano quinquennale e collettivizzazione forzata."},
+        {y1:1929, label:"Esilio di Trockij; sconfitta di Bucharin", date:"1929", detail:"Esilio di Trockij, sconfitta di Bucharin."},
+        {y1:1932, y2:1933, label:"Holodomor", date:"1932–33", detail:"Holodomor."},
+        {y1:1934, label:"Assassinio di Kirov", date:"dicembre 1934", detail:"Assassinio di Kirov (dicembre), pretesto delle Grandi purghe."},
+        {y1:1936, y2:1938, label:"Processi di Mosca", date:"1936–38", detail:"Processi di Mosca."},
+        {y1:1939, label:"Litvinov sostituito da Molotov; Molotov-Ribbentrop; Polonia orientale", date:"1939", detail:"Sostituzione di Litvinov con Molotov (maggio); patto Molotov-Ribbentrop (23 agosto); spartizione della Polonia orientale."}
+      ]},
+    {id:'intl', name:'Quadro internazionale', color:'#7a8a5c', y:3, start:1914, end:1939,
+      events:[
+        {y1:1914, label:"Attentato di Sarajevo; crisi di luglio", date:"28 giugno 1914", detail:"Attentato di Sarajevo (28 giugno) e crisi di luglio."},
+        {y1:1919, label:"Conferenza di Parigi; trattato di Versailles; SdN", date:"28 giugno 1919", detail:"Conferenza di Parigi e trattato di Versailles (28 giugno); nascita della Società delle Nazioni."},
+        {y1:1929, label:"Crisi economica mondiale", date:"1929", detail:"Crisi economica mondiale."},
+        {y1:1933, label:"Germania esce dalla Società delle Nazioni", date:"ottobre 1933", detail:"La Germania esce dalla Società delle Nazioni (ottobre)."},
+        {y1:1935, label:"Conferenza di Stresa e sua rottura", date:"aprile 1935", detail:"Conferenza di Stresa (aprile) e sua rottura dopo l'Etiopia."},
+        {y1:1936, label:"Guerra civile spagnola; intervento italo-tedesco", date:"luglio 1936", detail:"Guerra civile spagnola (luglio); intervento italo-tedesco."},
+        {y1:1937, label:"Patto Anticomintern (Italia aderisce)", date:"novembre 1937", detail:"Patto Anticomintern (Italia aderisce, novembre)."},
+        {y1:1938, label:"Anschluss; Conferenza di Monaco", date:"1938", detail:"Anschluss; Conferenza di Monaco."},
+        {y1:1939, label:"Trattative anglo-franco-sovietiche fallite; Molotov-Ribbentrop; Polonia", date:"1939", detail:"Fallimento delle trattative anglo-franco-sovietiche (estate); patto Molotov-Ribbentrop; invasione della Polonia (1° settembre): inizio della guerra mondiale, punto in cui la cronologia di sezione si ferma."}
+      ]}
+  ];
+
+  const PX_PER_YEAR = 54;
+  const Y_START = 1914, Y_END = 1994;
+  const LEFT_PAD = 150, RIGHT_PAD = 60;
+  const LANE_ROW_H = 128;
+  const CONVERGE_START = 1939, CONVERGE_END = 1946;
+
+  function xFor(year){ return LEFT_PAD + (year - Y_START) * PX_PER_YEAR; }
+  const totalWidth = xFor(Y_END) + RIGHT_PAD;
+  const totalHeight = LANE_ROW_H * 4 + 40;
+
+  const laneY = i => 30 + LANE_ROW_H * i + LANE_ROW_H/2;
+  const italiaY = laneY(0);
+
+  let activeLanes = new Set();
+  let selectedYear = "";
+  let selectedNodeKey = null;
+
+  const chartInner = document.getElementById('chartInner');
+  chartInner.style.width = totalWidth + 'px';
+  chartInner.style.height = totalHeight + 'px';
+
+  // Year ticks (every 5 years, decade emphasized)
+  for(let yr=1915; yr<=1990; yr+=5){
+    const tick = document.createElement('div');
+    tick.className = 'year-tick' + (yr % 10 === 0 ? ' decade-tick' : '');
+    tick.style.left = xFor(yr) + 'px';
+    tick.style.top = '20px';
+    tick.style.height = (totalHeight - 20) + 'px';
+    chartInner.appendChild(tick);
+    if(yr % 10 === 0){
+      const lbl = document.createElement('div');
+      lbl.className = 'year-tick-label';
+      lbl.style.left = (xFor(yr)+3) + 'px';
+      lbl.textContent = yr;
+      chartInner.appendChild(lbl);
+    }
+  }
+
+  // Lane row labels
+  LANES.forEach((lane, i) => {
+    const rl = document.createElement('div');
+    rl.className = 'lane-row-label';
+    rl.style.top = (laneY(i) - 12) + 'px';
+    rl.style.height = '24px';
+    rl.innerHTML = '<span class="sw" style="background:'+lane.color+'"></span>' + lane.name;
+    chartInner.appendChild(rl);
+  });
+
+  // SVG layer for lane lines + convergence
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNS,'svg');
+  svg.setAttribute('width', totalWidth);
+  svg.setAttribute('height', totalHeight);
+  svg.style.position = 'absolute';
+  svg.style.left = '0';
+  svg.style.top = '0';
+  svg.style.pointerEvents = 'none';
+  chartInner.appendChild(svg);
+
+  LANES.forEach((lane, i) => {
+    const y = laneY(i);
+    if(lane.id === 'italia'){
+      // full continuous line, thicker after 1946
+      const p1 = document.createElementNS(svgNS,'path');
+      p1.setAttribute('d', `M ${xFor(lane.start)} ${y} L ${xFor(CONVERGE_END)} ${y}`);
+      p1.setAttribute('stroke', lane.color);
+      p1.setAttribute('stroke-width', '2');
+      p1.setAttribute('fill','none');
+      svg.appendChild(p1);
+      const p2 = document.createElementNS(svgNS,'path');
+      p2.setAttribute('d', `M ${xFor(CONVERGE_END)} ${y} L ${xFor(Y_END)} ${y}`);
+      p2.setAttribute('stroke', lane.color);
+      p2.setAttribute('stroke-width', '4');
+      p2.setAttribute('fill','none');
+      svg.appendChild(p2);
+    } else {
+      const p1 = document.createElementNS(svgNS,'path');
+      p1.setAttribute('d', `M ${xFor(lane.start)} ${y} L ${xFor(CONVERGE_START)} ${y}`);
+      p1.setAttribute('stroke', lane.color);
+      p1.setAttribute('stroke-width', '2');
+      p1.setAttribute('fill','none');
+      svg.appendChild(p1);
+      // converging curve into italia line
+      const curve = document.createElementNS(svgNS,'path');
+      const x0 = xFor(CONVERGE_START), x1 = xFor(CONVERGE_END);
+      const d = `M ${x0} ${y} C ${x0 + (x1-x0)*0.55} ${y}, ${x0 + (x1-x0)*0.45} ${italiaY}, ${x1} ${italiaY}`;
+      curve.setAttribute('d', d);
+      curve.setAttribute('stroke', lane.color);
+      curve.setAttribute('stroke-width', '2');
+      curve.setAttribute('fill','none');
+      curve.setAttribute('opacity','0.75');
+      curve.classList.add('converge-path');
+      svg.appendChild(curve);
+    }
+  });
+
+  // 1945 marker
+  const markerX = xFor(1945);
+  const markerLine = document.createElementNS(svgNS,'line');
+  markerLine.setAttribute('x1', markerX); markerLine.setAttribute('x2', markerX);
+  markerLine.setAttribute('y1', 22); markerLine.setAttribute('y2', totalHeight-6);
+  markerLine.setAttribute('stroke', '#c9c2b3');
+  markerLine.setAttribute('stroke-dasharray','3,3');
+  svg.appendChild(markerLine);
+
+  const noteEl = document.createElement('div');
+  noteEl.className = 'convergence-note';
+  noteEl.style.left = (markerX - 55) + 'px';
+  noteEl.style.top = (totalHeight - 2) + 'px';
+  noteEl.textContent = '1945 · da quattro storie a una';
+  chartInner.appendChild(noteEl);
+
+  // Nodes
+  const allYears = new Set();
+  const nodeEls = [];
+
+  LANES.forEach((lane, laneIdx) => {
+    const y = laneY(laneIdx);
+    lane.events.forEach((ev, evIdx) => {
+      const isInterval = ev.y2 !== undefined;
+      for(let yy = ev.y1; yy <= (ev.y2 || ev.y1); yy++) allYears.add(yy);
+
+      const node = document.createElement('div');
+      node.className = 'node';
+      node.dataset.lane = lane.id;
+      node.dataset.y1 = ev.y1;
+      node.dataset.y2 = ev.y2 || ev.y1;
+      const key = lane.id + '-' + evIdx;
+      node.dataset.key = key;
+
+      if(isInterval){
+        const x1 = xFor(ev.y1), x2 = xFor(ev.y2);
+        node.style.left = x1 + 'px';
+        node.style.top = (y - 6) + 'px';
+        node.style.width = Math.max(x2-x1, 16) + 'px';
+        const bar = document.createElement('div');
+        bar.className = 'node-bar';
+        bar.style.width = '100%';
+        bar.style.background = lane.color;
+        node.appendChild(bar);
+      } else {
+        const x1 = xFor(ev.y1);
+        node.style.left = (x1 - 7) + 'px';
+        node.style.top = (y - 7) + 'px';
+        const dot = document.createElement('div');
+        dot.className = 'node-dot';
+        dot.style.background = lane.color;
+        node.appendChild(dot);
+      }
+
+      const dateLbl = document.createElement('div');
+      dateLbl.className = 'node-date';
+      dateLbl.textContent = ev.date;
+      node.appendChild(dateLbl);
+
+      node.addEventListener('click', () => selectNode(lane, ev, key));
+      chartInner.appendChild(node);
+      nodeEls.push({el: node, lane: lane.id, y1: ev.y1, y2: ev.y2 || ev.y1});
+    });
+  });
+
+  // Lane filter buttons
+  const laneButtonsEl = document.getElementById('laneButtons');
+  LANES.forEach(lane => {
+    const btn = document.createElement('div');
+    btn.className = 'lane-btn';
+    btn.innerHTML = '<span class="dot" style="background:'+lane.color+'"></span>' + lane.name;
+    btn.addEventListener('click', () => {
+      if(activeLanes.has(lane.id)) activeLanes.delete(lane.id);
+      else activeLanes.add(lane.id);
+      renderLaneFilter();
+    });
+    laneButtonsEl.appendChild(btn);
+    btn._laneId = lane.id;
+  });
+
+  function renderLaneFilter(){
+    const buttons = laneButtonsEl.children;
+    for(const btn of buttons){
+      const id = btn._laneId;
+      const anyActive = activeLanes.size > 0;
+      btn.classList.toggle('active', activeLanes.has(id));
+      btn.classList.toggle('dimmed-off', anyActive && !activeLanes.has(id));
+    }
+    nodeEls.forEach(n => {
+      const anyActive = activeLanes.size > 0;
+      n.el.classList.toggle('dimmed', anyActive && !activeLanes.has(n.lane));
+    });
+  }
+
+  // Legend
+  const legendEl = document.getElementById('legend');
+  LANES.forEach(lane => {
+    const s = document.createElement('span');
+    s.innerHTML = '<span class="sw" style="background:'+lane.color+'"></span>' + lane.name + ' (' + lane.start + '–' + lane.end + ')';
+    legendEl.appendChild(s);
+  });
+
+  // Year select
+  const yearSelect = document.getElementById('yearSelect');
+  const sortedYears = Array.from(allYears).sort((a,b)=>a-b);
+  sortedYears.forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    yearSelect.appendChild(opt);
+  });
+  const clearYearBtn = document.getElementById('clearYearBtn');
+
+  yearSelect.addEventListener('change', () => {
+    selectedYear = yearSelect.value;
+    applyYearFilter();
+  });
+  clearYearBtn.addEventListener('click', () => {
+    selectedYear = "";
+    yearSelect.value = "";
+    applyYearFilter();
+  });
+
+  function applyYearFilter(){
+    clearYearBtn.disabled = !selectedYear;
+    if(!selectedYear){
+      nodeEls.forEach(n => n.el.classList.remove('year-dim'));
+      renderDetailDefault();
+      return;
+    }
+    const yr = parseInt(selectedYear, 10);
+    nodeEls.forEach(n => {
+      const hit = yr >= n.y1 && yr <= n.y2;
+      n.el.classList.toggle('year-dim', !hit);
+    });
+    renderYearCard(yr);
+  }
+
+  function renderYearCard(yr){
+    const area = document.getElementById('detailArea');
+    const hits = [];
+    LANES.forEach(lane => {
+      lane.events.forEach(ev => {
+        const y2 = ev.y2 || ev.y1;
+        if(yr >= ev.y1 && yr <= y2) hits.push({lane, ev});
+      });
+    });
+    let html = '<div class="year-card"><h3>Anno ' + yr + '</h3>';
+    html += '<div class="yhint">Eventi delle quattro corsie che cadono in questo anno, affiancati.</div>';
+    if(hits.length === 0){
+      html += '<p class="empty-hint">Nessun evento registrato in questo anno.</p>';
+    } else {
+      hits.forEach(h => {
+        html += '<div class="year-event"><div class="ytag" style="background:'+h.lane.color+'">'+h.lane.name+'</div>' +
+                '<div class="ytxt"><b>'+h.ev.date+'</b>'+ (h.ev.detail || h.ev.label) +'</div></div>';
+      });
+    }
+    html += '</div>';
+    area.innerHTML = html;
+  }
+
+  function selectNode(lane, ev, key){
+    selectedYear = "";
+    yearSelect.value = "";
+    clearYearBtn.disabled = true;
+    nodeEls.forEach(n => n.el.classList.remove('year-dim'));
+
+    nodeEls.forEach(n => n.el.classList.remove('selected'));
+    const target = nodeEls.find(n => n.el.dataset.key === key);
+    if(target) target.el.classList.add('selected');
+
+    const area = document.getElementById('detailArea');
+    area.innerHTML = '<div class="detail-card">' +
+      '<button class="close-detail" aria-label="Chiudi">×</button>' +
+      '<span class="lane-tag" style="background:'+lane.color+'">'+lane.name+'</span>' +
+      '<h3>'+ev.label+'</h3>' +
+      '<div class="ddate">'+ev.date+'</div>' +
+      '<p>'+(ev.detail || ev.label)+'</p>' +
+      '</div>';
+    area.querySelector('.close-detail').addEventListener('click', () => {
+      nodeEls.forEach(n => n.el.classList.remove('selected'));
+      renderDetailDefault();
+    });
+  }
+
+  function renderDetailDefault(){
+    document.getElementById('detailArea').innerHTML = '<p class="empty-hint">Clic su un nodo o una barra della cronologia per aprire la scheda di dettaglio, oppure isola un anno per vedere affiancati tutti gli eventi delle quattro corsie in quel momento.</p>';
+  }
+
+  // Animate convergence paths when scrolled into view
+  const convergePaths = svg.querySelectorAll('.converge-path');
+  convergePaths.forEach(p => {
+    const len = p.getTotalLength();
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+    p.style.transition = 'stroke-dashoffset 1.6s ease';
+  });
+
+  const shell = document.getElementById('chartShell');
+  let animated = false;
+  function tryAnimate(){
+    if(animated) return;
+    const shellRect = shell.getBoundingClientRect();
+    if(shellRect.top < window.innerHeight && shellRect.bottom > 0){
+      animated = true;
+      requestAnimationFrame(() => {
+        convergePaths.forEach(p => { p.style.strokeDashoffset = '0'; });
+      });
+    }
+  }
+  window.addEventListener('scroll', tryAnimate, {passive:true});
+  window.addEventListener('resize', tryAnimate);
+  tryAnimate();
+
+})();
+</script>
+</body>
+</html>

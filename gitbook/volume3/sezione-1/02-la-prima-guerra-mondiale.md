@@ -39,11 +39,11 @@ Infine, la **penisola balcanica**. Il lento sgretolarsi dell'Impero ottomano —
 
 Nessuno di questi cinque elementi, da solo, spiega la guerra. Insieme, spiegano perché l'Europa del 1914 fosse un sistema instabile, in cui una crisi mal gestita poteva avere conseguenze sproporzionate. Non spiegano ancora perché quella crisi sia stata gestita come è stata gestita: per questo occorre guardare, giorno per giorno, alle decisioni dell'estate.
 
-{% embed url="https://drive.google.com/file/d/1N4Z4XExDyGZj-1dXqmaDx_rL2_b-u7tT/view" %}
+{% embed url="https://youtu.be/BsIT1abCyDA" %}
 Video --- I due blocchi delle alleanze
 {% endembed %}
 
-{% embed url="https://drive.google.com/file/d/12EUqUfw_sTpPuKjF7AeYfVOKu8xYjWgl/view" %}
+{% embed url="https://youtu.be/RHFyr6kTR4I" %}
 Video --- Le cinque cause di sfondo
 {% endembed %}
 
@@ -72,12 +72,14 @@ Sei dichiarazioni di guerra in nove giorni, prese da sei governi diversi, ciascu
 Risorsa digitale --- I bivi del luglio 1914
 {% endembed %}
 
-{% embed url="https://drive.google.com/file/d/1G17G5yN6-Vpzs175oD_xqp_YgIGmwIzZ/view" %}
+{% embed url="https://youtu.be/ZXH9DnjVm4Y" %}
 Video --- Il metodo delle scelte
 {% endembed %}
 
 
-_cfr. [Atlante, cartina 1 --- L'Europa alla vigilia della Prima guerra mondiale](atlante.md#cartina-1)_
+![Cartina 1 --- L'Europa alla vigilia della Prima guerra mondiale](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Alleanze.png)
+
+_cfr. [approfondimento in Atlante, cartina 1 --- L'Europa alla vigilia della Prima guerra mondiale](atlante.md#cartina-1)_
 
 
 Quello che nell'estate del 1914 restava, formalmente, un conflitto balcanico si trasformò così in una guerra fra le maggiori potenze del continente, e nel giro di pochi mesi in una guerra mondiale: già il 23 agosto il Giappone entrò in campo a fianco dell'Intesa per impadronirsi dei possedimenti tedeschi in Estremo Oriente, mentre fra ottobre e novembre l'Impero ottomano si schierò con gli Imperi Centrali, aprendo fronti in Medio Oriente e nel Caucaso. Nessuno, in nessuna delle capitali coinvolte, immaginava che la guerra sarebbe durata più di qualche mese.
@@ -92,7 +94,7 @@ Chiamarla "guerra" è già una scelta di parole ingannevole. Nell'estate del 191
 
 La prima novità fu la scala della mobilitazione umana. Le potenze belligeranti fecero ricorso alla **coscrizione obbligatoria** su una misura mai vista: la Gran Bretagna mobilitò circa il 12,5% della propria popolazione maschile, la Germania il 15,4%, la Francia quasi il 17%. Su scala globale furono chiamati alle armi circa sessanta milioni di uomini. Ma la totalità del conflitto non si misurò solo al fronte: nacque il concetto di **fronte interno**, cioè l'idea che l'intera popolazione civile fosse coinvolta nello sforzo bellico, e insieme diventasse un bersaglio strategico legittimo. Aumento dei prezzi, razionamento del cibo, mercato nero divennero l'esperienza quotidiana di milioni di persone che non avevano mai visto una trincea.
 
-![Infografica --- Fattori della guerra totale](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info1_Fattori_della_guerra_totale.png)
+![Fattori della guerra totale](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info1_Fattori_della_guerra_totale.png)
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/05-macchina-guerra-totale.html" %}
 Risorsa digitale --- La macchina della guerra totale
@@ -115,7 +117,7 @@ Per sostenere una simile macchina produttiva, il ruolo dello Stato si dilatò co
 
 L'illusione di una guerra breve, affidata a piani di movimento rapido come lo Schlieffen tedesco, si infranse contro la superiorità delle armi difensive: mitragliatrice e filo spinato bastavano a fermare qualunque avanzata. Il conflitto si trasformò in una **guerra di posizione** combattuta in chilometri di trincee scavate nel fango e nella roccia, dove il concetto stesso di battaglia risolutiva, ereditato dall'epoca napoleonica, perse significato: le offensive diventarono massacri frontali il cui unico obiettivo era logorare le risorse umane dell'avversario, non conquistare terreno.
 
-{% embed url="https://drive.google.com/file/d/1XCha_qnhaXGmlFtO9pBmSKpc0ESkzztx/view" %}
+{% embed url="https://youtu.be/KK-NYTWTqmg" %}
 Video --- Perché la guerra durò quattro anni
 {% endembed %}
 
@@ -138,7 +140,7 @@ Questi mutamenti nella mentalità e nei costumi si rivelarono in parte irreversi
 {% endhint %}
 
 
-{% embed url="https://drive.google.com/file/d/166aiHt9GUJYHw9_1gociyHWJi3iD2RV1/view" %}
+{% embed url="https://youtu.be/CkSVf-UHUBk" %}
 Video --- Le donne e la guerra
 {% endembed %}
 
@@ -203,7 +205,7 @@ Nella primavera del 1918, consapevole che il tempo giocava contro di lui, **Lude
 
 In poco più di un anno erano crollati quattro imperi che, nell'estate del 1914, sembravano fra le istituzioni più solide d'Europa: quello russo, quello tedesco, quello austro-ungarico, quello ottomano. La guerra che doveva durare poche settimane si chiudeva lasciando dietro di sé non solo milioni di morti, ma un vuoto di potere continentale che i trattati di pace avrebbero dovuto colmare, e che in larga parte non colmarono.
 
-{% embed url="https://drive.google.com/file/d/1ESbJMCydYnU15e5plDM6dC9JNNuuvXJR/view" %}
+{% embed url="https://youtu.be/ubE8DPXgRKM" %}
 Video --- Come finì la guerra
 {% endembed %}
 
@@ -241,7 +243,9 @@ Se questo sia stato, come lo raccontò a lungo la retorica patriottica, il trion
 
 Il fronte italo-austriaco disegnava un'enorme "S" lunga circa 640 chilometri, divisibile in tre settori: il saliente trentino, che si incuneava minacciosamente verso Verona, il fronte alpino, e il breve ma decisivo settore del fiume Isonzo, che sfociava nell'Adriatico. Gli italiani si trovarono davanti a un dilemma strategico difficile da sciogliere: l'unico terreno che permetteva un'avanzata su vasta scala era quello orientale, verso l'Isonzo e il Carso, ma attaccare in quella direzione esponeva l'intero esercito al rischio di essere aggirato da un'offensiva austriaca proveniente dal Trentino. Il comandante supremo, generale **Luigi Cadorna**, sciolse il dilemma con una dottrina rigida, riassunta nella sua "Libretta rossa": l'attacco frontale massiccio, fondato sulla convinzione che la disciplina e lo "spirito" dell'attaccante potessero prevalere sulla superiorità materiale della difesa — mitragliatrici, trincee, reticolati.
 
-_cfr. [Atlante, cartina 2 --- Il fronte italo-austriaco](atlante.md#cartina-2)_
+![Cartina 2 --- Il fronte italo-austriaco](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Fronte%20italiano%281915-18%29.png)
+
+_cfr. [approfondimento in Atlante, cartina 2 --- Il fronte italo-austriaco](atlante.md#cartina-2)_
 
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/03-fronte-italo-austriaco.html" %}
@@ -264,7 +268,7 @@ L'impatto psicologico del crollo fu tale da trasformare la parola "Caporetto" in
 {% endhint %}
 
 
-{% embed url="https://drive.google.com/file/d/1lW2IXH90DSLNHnEc9clJPLoZm3RgrD6-/view" %}
+{% embed url="https://youtu.be/0I33uL-jnNg" %}
 Video --- Caporetto
 {% endembed %}
 
@@ -296,9 +300,13 @@ Risorsa digitale --- Al tavolo dei Quattro Grandi
 {% endembed %}
 
 
-_cfr. [Atlante, cartina 3 --- L'Europa nel 1914](atlante.md#cartina-3)_
+![Cartina 3 --- L'Europa nel 1914](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Europa%201914.png)
 
-_cfr. [Atlante, cartina 4 --- L'Europa dopo i trattati di Parigi (1919-1920)](atlante.md#cartina-4)_
+_cfr. [approfondimento in Atlante, cartina 3 --- L'Europa nel 1914](atlante.md#cartina-3)_
+
+![Cartina 4 --- L'Europa dopo i trattati di Parigi (1919-1920)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Europa%201919.png)
+
+_cfr. [approfondimento in Atlante, cartina 4 --- L'Europa dopo i trattati di Parigi (1919-1920)](atlante.md#cartina-4)_
 
 
 Confrontare le due mappe, quella del 1914 e quella disegnata a Versailles, rende visibile in un colpo d'occhio l'ampiezza della rottura raccontata in questo capitolo: quattro imperi scomparsi, un mosaico di Stati nuovi al loro posto, una Germania mutilata e una Russia isolata. Ma la mappa, da sola, non dice se quella rottura fosse destinata a produrre un ventennio di pace fragile e poi una nuova guerra, o se lo abbia fatto per scelte specifiche, prese da uomini specifici, che avrebbero potuto essere diverse. È la domanda con cui la sezione prosegue nel capitolo seguente.
@@ -324,7 +332,7 @@ Una lettura più critica, sviluppata in particolare dagli studi sulla "sacralizz
 
 Il punto cieco della prima lettura è cronologico e difficilmente aggirabile: se la piazza avesse davvero deciso, il Patto di Londra non avrebbe potuto precederla. Il punto cieco della seconda è che riduce a manovra pura un fenomeno che ebbe una sua autenticità: molti fra chi scese in piazza non sapevano nulla del Patto segreto, e la loro adesione, per quanto instradata da altri, non era necessariamente falsa. Vale la pena, leggendo questo episodio, tenere a mente quanto si è già letto nel capitolo di apertura della sezione sul rapporto diretto fra capo, o movimento, e popolo, e sull'insofferenza per la mediazione parlamentare: le radiose giornate ne sono, con un secolo di anticipo su quel lessico, un caso di scuola.
 
-{% embed url="https://drive.google.com/file/d/1MnV5XhW4KMqeTK-HLqPYJF20z8lRgnZO/view" %}
+{% embed url="https://youtu.be/F84_spaszv0" %}
 Video --- Il nodo storiografico: le radiose giornate
 {% endembed %}
 
@@ -347,6 +355,6 @@ Il punto cieco della lettura keynesiana è che, per quanto lucida sul piano econ
 - Margaret MacMillan, *Parigi 1919. Sei mesi che cambiarono il mondo*, trad. di Anna Maria Sioli, Mondadori, Milano 2006 (ed. or. 2001).
 - Voce «Prima guerra mondiale», in *Enciclopedia Treccani*, treccani.it.
 
-{% embed url="https://drive.google.com/file/d/1JPWRCDA2Bur3VuZF_DZAJD1LMhBtfEU-/view" %}
+{% embed url="https://youtu.be/Jdy0JFsG8Pk" %}
 Video --- Panoramica del capitolo
 {% endembed %}

@@ -18,7 +18,7 @@ Il primo governo del dopoguerra tentò di raccogliere quella spinta radicale: **
 
 Fu in questo Paese ancora convalescente che, il **2 giugno 1946**, gli italiani furono chiamati alle urne — la prima elezione libera dopo venticinque anni. Un Paese che si spaccava a metà su come chiamarsi scelse, nel giro di venti mesi, di darsi insieme un'unica legge fondamentale. Quel giorno si votò per due consultazioni insieme, con un'affluenza altissima, intorno al 90%, e per la prima volta nella storia nazionale con la partecipazione delle donne. Il referendum istituzionale assegnò la vittoria alla **Repubblica**, con circa 12,7 milioni di voti contro i 10,7 della Monarchia — nonostante l'abdicazione dell'ultimo momento di Vittorio Emanuele III in favore del figlio **Umberto II**, un tentativo di salvare la dinastia che non bastò a evitargli l'esilio. Il risultato rivelò comunque una frattura geografica netta, con il Centro-Nord in maggioranza repubblicano e il Sud in maggioranza monarchico — una divisione che l'Italia unita si portava dietro fin dai suoi primi decenni, qui riaffiorata sotto altra forma. Nella stessa giornata si votò, con sistema proporzionale, per l'**Assemblea Costituente**: il risultato sancì il trionfo dei partiti di massa, con la Democrazia Cristiana prima forza al 35,2%, il Partito Socialista di Unità Proletaria al 20,7% e il Partito Comunista Italiano al 19%, mentre le vecchie élite liberali e il Partito d'Azione uscirono duramente sconfitti.
 
-{% embed url="https://drive.google.com/file/d/1fz-I1ehrOegFsmZDYARm4NyviBM0u6hZ/view" %}
+{% embed url="https://youtu.be/7LoZLEkzTug" %}
 Video --- Il 2 giugno 1946
 {% endembed %}
 
@@ -42,7 +42,7 @@ Restava, infine, l'eredità diretta del fascismo, che nel 1946 non aveva ancora 
 {% endhint %}
 
 
-![Infografica --- Chi c'era nel 1946](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info9_Assemblea_Costituente_1946.png)
+![Chi c'era nel 1946](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info9_Assemblea_Costituente_1946.png)
 
 
 I lavori della Costituente si aprirono il 24 giugno 1946, con l'elezione del giurista liberale **Enrico De Nicola** a capo provvisorio dello Stato, e proseguirono per un anno e mezzo sotto la guida di un governo tripartito — DC, socialisti, comunisti — presieduto da **Alcide De Gasperi**. Ma il clima politico si incrinò rapidamente. Nel gennaio 1947, al congresso di Palazzo Barberini, l'ala anticomunista del PSIUP guidata da **Giuseppe Saragat** si staccò per fondare un proprio partito, mentre il resto, con **Pietro Nenni**, mantenne il nome PSI e l'alleanza con i comunisti. E fu il **maggio 1947** a segnare la rottura vera: sotto la pressione delle tensioni sociali interne e del profilarsi della Guerra Fredda internazionale, De Gasperi formò un nuovo governo composto solo da democristiani e tecnici — fra questi, **Luigi Einaudi** —, escludendo comunisti e socialisti dall'esecutivo. Sullo sfondo di questi mesi pesava anche il conto lasciato dalla guerra: nel febbraio 1947 l'Italia firmò il trattato di pace di Parigi, che le costò le colonie, alcune rettifiche di confine a favore della Francia, e il drammatico nodo del confine orientale, segnato dalla violenza delle foibe e dalla perdita dell'Istria e della Dalmazia.
@@ -71,7 +71,7 @@ Risorsa digitale --- La Costituzione risponde
 
 La Costituzione entrò in vigore il **1° gennaio 1948**, chiudendo la fase costituente. Restava da vedere se i partiti che l'avevano scritta insieme, pur già divisi nel governo, avrebbero retto anche alla prova delle urne.
 
-{% embed url="https://drive.google.com/file/d/1Swoj5Oxl3nwG6I-e84B_q11QQ84O7FCP/view" %}
+{% embed url="https://youtu.be/wwfMx-rHcgQ" %}
 Video --- Come nasce la Repubblica
 {% endembed %}
 
@@ -107,7 +107,7 @@ Il quarto cedimento fu criminale, e sanguinoso. Cosa Nostra scelse proprio quei 
 Risorsa digitale --- 1992: quattro crisi in un anno
 {% endembed %}
 
-{% embed url="https://drive.google.com/file/d/1bqIFbDlqXCvJIngOYpBWV5V-X4jOhV5-/view" %}
+{% embed url="https://youtu.be/tN1XtEzHLXc" %}
 Video --- Che cos'è stata Tangentopoli
 {% endembed %}
 
@@ -151,9 +151,9 @@ Chi sostiene la tesi della continuità porta però argomenti altrettanto solidi.
 
 Il punto cieco di chi vede solo rottura è di lasciarsi impressionare dalla superficie istituzionale — nuovi nomi, nuove leggi elettorali — senza verificare se le pratiche di fondo siano davvero cambiate. Il punto cieco di chi vede solo continuità è di sottovalutare che la possibilità stessa di un'alternanza di governo, per quanto imperfetta, era stata preclusa per l'intera durata della Prima Repubblica, e che la sua sola comparsa segna una differenza che nessuna critica alla personalizzazione può cancellare. È una domanda che, a ben vedere, questa intera sezione ha posto più volte in altre forme — quanto un cambiamento di regole cambi davvero la sostanza del potere — e che qui trova, nella storia più recente, il suo banco di prova finale.
 
-![Infografica --- Prima e Seconda Repubblica: che cosa cambia](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info10_Prima_e_Seconda_Repubblica_italiana.png)
+![Prima e Seconda Repubblica: che cosa cambia](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info10_Prima_e_Seconda_Repubblica_italiana.png)
 
-{% embed url="https://drive.google.com/file/d/1Fg_Ts9Xv5Bl16BDP9vHgDll0jCqhENV1/view" %}
+{% embed url="https://youtu.be/gCC4-hMHZZ8" %}
 Video --- I nodi storiografici: Mani Pulite e la Seconda Repubblica
 {% endembed %}
 
@@ -167,6 +167,6 @@ Video --- I nodi storiografici: Mani Pulite e la Seconda Repubblica
 - Aldo Giannuli, *Tangentopoli. Storia di ieri e di oggi*, Ponte alle Grazie, Milano 2020.
 - Voce «Mani pulite», in *Enciclopedia Treccani*, treccani.it.
 
-{% embed url="https://drive.google.com/file/d/11rqZeOxSbVPtASECAIvU9wNoBR_vFZNr/view" %}
+{% embed url="https://youtu.be/STToNRPOKh4" %}
 Video --- Perché la Repubblica non è crollata
 {% endembed %}

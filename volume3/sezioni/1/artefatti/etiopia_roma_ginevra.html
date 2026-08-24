@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Etiopia vista da Roma e da Ginevra</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --roma:#a1665c;
+    --roma-bg:#f2e4e0;
+    --ginevra:#5b7a8f;
+    --ginevra-bg:#e6edf0;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:920px; margin:0 auto; padding:26px 24px 40px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 6px; line-height:1.5;
+  }
+  .progresso{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem; font-weight:600; color:var(--marrone-scuro);
+    margin:0 0 20px;
+  }
+
+  .palco{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:12px;
+    padding:20px 24px; margin-bottom:16px;
+  }
+  .palco-evento{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1rem; font-weight:600; color:var(--marrone-scuro);
+    text-align:center; margin:0 0 18px;
+  }
+
+  .colonne-scelta{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:6px; }
+  @media (max-width:600px){ .colonne-scelta{ grid-template-columns:1fr; } }
+  .colonna-scelta-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.78rem; text-align:center;
+    padding:6px; border-radius:6px 6px 0 0; color:#fff;
+  }
+  .colonna-scelta[data-lato="roma"] .colonna-scelta-titolo{ background:var(--roma); }
+  .colonna-scelta[data-lato="ginevra"] .colonna-scelta-titolo{ background:var(--ginevra); }
+  .colonna-scelta{ border-radius:8px; overflow:hidden; border:1.5px solid var(--marrone); }
+  .opzione-vista{
+    display:block; width:100%; text-align:left;
+    background:#fffdfa; border:none; border-top:1px solid #e5ddd0;
+    padding:11px 14px; cursor:pointer;
+    font-family:Georgia, serif; font-size:0.8rem; line-height:1.45; color:var(--testo);
+    transition:background 0.15s;
+  }
+  .colonna-scelta[data-lato="roma"] .opzione-vista:first-of-type{ border-top:none; }
+  .colonna-scelta[data-lato="ginevra"] .opzione-vista:first-of-type{ border-top:none; }
+  .opzione-vista:hover{ background:var(--grigio); }
+  .opzione-vista.selezionata[data-lato-btn="roma"]{ background:var(--roma-bg); font-weight:bold; }
+  .opzione-vista.selezionata[data-lato-btn="ginevra"]{ background:var(--ginevra-bg); font-weight:bold; }
+
+  .affiancato{
+    display:none;
+    margin-top:18px; padding-top:16px; border-top:1px dashed var(--marrone);
+  }
+  .affiancato.visibile{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:600px){ .affiancato.visibile{ grid-template-columns:1fr; } }
+  .lettura{
+    border-radius:8px; padding:12px 14px;
+    font-family:Georgia, serif; font-size:0.82rem; line-height:1.55;
+  }
+  .lettura[data-lato="roma"]{ background:var(--roma-bg); color:var(--roma); border:1.5px solid var(--roma); }
+  .lettura[data-lato="ginevra"]{ background:var(--ginevra-bg); color:var(--ginevra); border:1.5px solid var(--ginevra); }
+  .lettura strong{ font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; display:block; margin-bottom:4px; }
+
+  .azioni{ text-align:center; margin-bottom:26px; }
+  .btn-continua{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.82rem; font-weight:600;
+    background:var(--marrone-scuro); color:#fff; border:none;
+    padding:11px 28px; border-radius:22px; cursor:pointer;
+    transition:background 0.2s, opacity 0.2s;
+  }
+  .btn-continua:hover{ background:#59492f; }
+  .btn-continua:disabled{ opacity:0.35; cursor:not-allowed; }
+  .btn-continua.secondario{
+    background:transparent; color:var(--marrone-scuro); border:1.5px solid var(--marrone);
+  }
+  .btn-continua.secondario:hover{ background:var(--marrone); color:#fff; }
+
+  .sintesi{
+    display:none;
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:12px;
+    padding:22px 26px;
+  }
+  .sintesi.visibile{ display:block; }
+  .sintesi-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.92rem; color:var(--marrone-scuro);
+    text-align:center; margin:0 0 6px;
+  }
+  .sintesi-istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.74rem; color:#6b6255; text-align:center; margin:0 0 18px;
+  }
+  .sintesi-etichette{
+    display:flex; justify-content:space-between;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.62rem; color:#8a8172; padding:0 4px; margin-bottom:4px;
+  }
+  .sintesi-etichette span{ max-width:70px; text-align:center; line-height:1.25; }
+  .slider-scarto{ width:100%; accent-color:var(--marrone-scuro); margin-bottom:12px; }
+  .sintesi-selezione{
+    text-align:center;
+    font-family:Georgia, serif; font-style:italic; font-size:0.84rem;
+    color:var(--marrone-scuro); margin:0 0 18px; min-height:22px;
+  }
+  .raccordo{
+    display:none;
+    background:var(--grigio); border-left:5px solid var(--marrone); border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif; font-size:0.84rem; line-height:1.65; color:var(--testo);
+  }
+  .raccordo.visibile{ display:block; }
+  .raccordo strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+  .btn-ricomincia-wrap{ text-align:center; margin-top:16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>L'Etiopia vista da Roma e da Ginevra</h1>
+    <p class="sottotitolo">Lo stesso evento, due letture opposte</p>
+  </header>
+
+  <p class="istruzioni">
+    Per ogni evento scegli la formulazione che meglio rappresenta il punto di vista di Roma e quella che meglio rappresenta il punto di vista di Ginevra. Le due letture compariranno affiancate.
+  </p>
+  <p class="progresso" id="progresso">Evento 1 di 6</p>
+
+  <div class="palco" id="palco"></div>
+  <div class="azioni" id="azioni"></div>
+
+  <div class="sintesi" id="sintesi">
+    <p class="sintesi-titolo">Dove lo scarto è massimo?</p>
+    <p class="sintesi-istruzioni">Muovi il cursore sul punto della sequenza in cui, secondo te, le due letture si allontanano di più.</p>
+    <div class="sintesi-etichette" id="sintesiEtichette"></div>
+    <input type="range" class="slider-scarto" id="sliderScarto" min="0" max="5" value="0" step="1">
+    <p class="sintesi-selezione" id="sintesiSelezione"></p>
+    <div class="raccordo" id="raccordo">
+      <strong>Consenso e isolamento, insieme.</strong> Le due letture, opposte, non sono in contraddizione: si producono a vicenda. Più cresce il consenso interno costruito sull'insofferenza verso le sanzioni, più cresce l'isolamento dell'Italia dalle potenze che quelle sanzioni le avevano votate. Alla fine di questa sequenza, l'unica strada che resta aperta è Berlino.
+    </div>
+    <div class="btn-ricomincia-wrap">
+      <button class="btn-continua secondario" id="btnRicomincia">Ricomincia</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var eventi = [
+    {
+      titolo: 'Invasione dell\'Etiopia, ottobre 1935',
+      roma: [
+        { testo:"L'avvio della conquista di uno spazio vitale per l'Italia, presentata come civilizzatrice.", principale:true },
+        { testo:'Un intervento necessario per garantire l\'ordine nella regione.' }
+      ],
+      ginevra: [
+        { testo:'Un atto di aggressione non provocato contro uno Stato membro della Società delle Nazioni.', principale:true },
+        { testo:'Un conflitto coloniale come tanti altri, che non richiede una risposta speciale.' }
+      ]
+    },
+    {
+      titolo: 'Uso di gas asfissianti contro soldati e civili',
+      roma: [
+        { testo:'Un fatto taciuto o minimizzato nella propaganda ufficiale.', principale:true },
+        { testo:'Un episodio isolato, senza rilievo nel racconto della guerra.' }
+      ],
+      ginevra: [
+        { testo:'Una violazione grave e documentata del diritto internazionale bellico.', principale:true },
+        { testo:'Un dettaglio tecnico che non cambia il giudizio complessivo sul conflitto.' }
+      ]
+    },
+    {
+      titolo: 'Sanzioni economiche della Società delle Nazioni',
+      roma: [
+        { testo:'Un\'ingiustizia punitiva decisa da potenze che difendono i propri imperi già acquisiti.', principale:true },
+        { testo:'Una misura comprensibile, che l\'Italia accetta senza reagire.' }
+      ],
+      ginevra: [
+        { testo:'La risposta collettiva minima a un\'aggressione che il patto impone di condannare.', principale:true },
+        { testo:'Un gesto simbolico, senza reali conseguenze economiche.' }
+      ]
+    },
+    {
+      titolo: '«Giornata della fede», 18 dicembre 1935',
+      roma: [
+        { testo:"Mobilitazione patriottica contro l'ingiustizia delle sanzioni straniere.", principale:true },
+        { testo:'Una cerimonia religiosa senza significato politico.' }
+      ],
+      ginevra: [
+        { testo:'Prova della determinazione italiana a proseguire nonostante la condanna internazionale.', principale:true },
+        { testo:'Un evento interno che non riguarda la comunità internazionale.' }
+      ]
+    },
+    {
+      titolo: 'Proclamazione dell\'Impero, maggio 1936',
+      roma: [
+        { testo:"Il culmine trionfale del consenso: l'Italia diventa potenza imperiale.", principale:true },
+        { testo:'Una formalità amministrativa, priva di risonanza popolare.' }
+      ],
+      ginevra: [
+        { testo:'La conferma che le sanzioni non hanno fermato l\'aggressione: la Società delle Nazioni ne esce indebolita.', principale:true },
+        { testo:'Un cambiamento di poco conto negli equilibri internazionali.' }
+      ]
+    },
+    {
+      titolo: 'Isolamento diplomatico dell\'Italia dalle democrazie occidentali',
+      roma: [
+        { testo:'La prova che Francia e Gran Bretagna sono ostili per calcolo, non per principio: un motivo in più per cercare altrove degli alleati.', principale:true },
+        { testo:'Un contrattempo diplomatico temporaneo, destinato a rientrare presto.' }
+      ],
+      ginevra: [
+        { testo:'La conseguenza logica della condanna: un paese che ha violato il patto non può restare nel gruppo dei suoi garanti.', principale:true },
+        { testo:'Una reazione eccessiva rispetto alla gravità dei fatti.' }
+      ]
+    }
+  ];
+
+  var indice = 0;
+  var sceltaRoma = null;
+  var sceltaGinevra = null;
+  var palco = document.getElementById('palco');
+  var azioni = document.getElementById('azioni');
+  var progresso = document.getElementById('progresso');
+  var sintesi = document.getElementById('sintesi');
+
+  function renderColonna(lato, opzioni){
+    var html = '<div class="colonna-scelta" data-lato="' + lato + '">';
+    html += '<div class="colonna-scelta-titolo">' + (lato === 'roma' ? 'Roma' : 'Ginevra') + '</div>';
+    opzioni.forEach(function(op, i){
+      html += '<button class="opzione-vista" data-lato-btn="' + lato + '" data-i="' + i + '">' + op.testo + '</button>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function mostraEvento(){
+    var e = eventi[indice];
+    sceltaRoma = null;
+    sceltaGinevra = null;
+    progresso.textContent = 'Evento ' + (indice + 1) + ' di 6';
+
+    var html = '<p class="palco-evento">' + e.titolo + '</p>';
+    html += '<div class="colonne-scelta">' + renderColonna('roma', e.roma) + renderColonna('ginevra', e.ginevra) + '</div>';
+    html += '<div class="affiancato" id="affiancato"></div>';
+    palco.innerHTML = html;
+
+    palco.querySelectorAll('.opzione-vista').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var lato = btn.getAttribute('data-lato-btn');
+        var i = parseInt(btn.getAttribute('data-i'), 10);
+        palco.querySelectorAll('.opzione-vista[data-lato-btn="' + lato + '"]').forEach(function(b){
+          b.classList.remove('selezionata');
+        });
+        btn.classList.add('selezionata');
+        if(lato === 'roma') sceltaRoma = i; else sceltaGinevra = i;
+        aggiornaAffiancato();
+      });
+    });
+
+    aggiornaBottone();
+  }
+
+  function aggiornaAffiancato(){
+    var e = eventi[indice];
+    var box = document.getElementById('affiancato');
+    if(sceltaRoma !== null && sceltaGinevra !== null){
+      box.innerHTML =
+        '<div class="lettura" data-lato="roma"><strong>Roma</strong>' + e.roma[sceltaRoma].testo + '</div>' +
+        '<div class="lettura" data-lato="ginevra"><strong>Ginevra</strong>' + e.ginevra[sceltaGinevra].testo + '</div>';
+      box.classList.add('visibile');
+    } else {
+      box.classList.remove('visibile');
+      box.innerHTML = '';
+    }
+    aggiornaBottone();
+  }
+
+  function aggiornaBottone(){
+    var pronto = sceltaRoma !== null && sceltaGinevra !== null;
+    if(indice === eventi.length - 1){
+      azioni.innerHTML = '<button class="btn-continua" id="btnAvanti" ' + (pronto ? '' : 'disabled') + '>Vedi la sintesi</button>';
+    } else {
+      azioni.innerHTML = '<button class="btn-continua" id="btnAvanti" ' + (pronto ? '' : 'disabled') + '>Evento successivo</button>';
+    }
+    var btn = document.getElementById('btnAvanti');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(indice === eventi.length - 1){
+          mostraSintesi();
+        } else {
+          indice++;
+          mostraEvento();
+          palco.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+      });
+    }
+  }
+
+  function mostraSintesi(){
+    palco.style.display = 'none';
+    azioni.style.display = 'none';
+    sintesi.classList.add('visibile');
+
+    var etichette = document.getElementById('sintesiEtichette');
+    etichette.innerHTML = '';
+    eventi.forEach(function(e, i){
+      var s = document.createElement('span');
+      s.textContent = (i + 1) + '. ' + e.titolo.split(',')[0].split('«')[0].trim();
+      etichette.appendChild(s);
+    });
+
+    var slider = document.getElementById('sliderScarto');
+    var selezione = document.getElementById('sintesiSelezione');
+    var raccordo = document.getElementById('raccordo');
+
+    function aggiorna(){
+      var i = parseInt(slider.value, 10);
+      selezione.textContent = 'Punto scelto: ' + eventi[i].titolo;
+      raccordo.classList.add('visibile');
+    }
+    slider.addEventListener('input', aggiorna);
+
+    sintesi.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  document.getElementById('btnRicomincia').addEventListener('click', function(){
+    indice = 0;
+    palco.style.display = 'block';
+    azioni.style.display = 'block';
+    sintesi.classList.remove('visibile');
+    document.getElementById('raccordo').classList.remove('visibile');
+    document.getElementById('sintesiSelezione').textContent = '';
+    document.getElementById('sliderScarto').value = 0;
+    mostraEvento();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  mostraEvento();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il sistema del terrore sovietico: partito, polizia, gulag</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --diretta:#5c7a6f;
+    --diretta-bg:#e6edea;
+    --indiretta:#8a7a5a;
+    --indiretta-bg:#efe8d9;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:900px; margin:0 auto; padding:26px 24px 40px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 6px; line-height:1.5;
+  }
+  .progresso{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem; font-weight:600; color:var(--marrone-scuro);
+    margin:0 0 20px;
+  }
+
+  .mappa{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:14px; margin-bottom:26px;
+  }
+  .nodo{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:10px;
+    padding:14px 16px; cursor:pointer;
+    transition:box-shadow 0.15s, transform 0.15s;
+  }
+  .nodo:hover{ transform:translateY(-1px); box-shadow:0 3px 10px rgba(139,115,85,0.18); }
+  .nodo.aperto{ box-shadow:0 3px 10px rgba(107,89,64,0.22); border-color:var(--marrone-scuro); }
+  .nodo-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.86rem; color:var(--marrone-scuro);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nodo-segno{ font-size:0.9rem; color:var(--marrone); }
+  .nodo-testo{
+    display:none;
+    font-family:Georgia, serif; font-size:0.8rem; line-height:1.55;
+    color:var(--testo); margin-top:10px; padding-top:10px;
+    border-top:1px solid #e5ddd0;
+  }
+  .nodo.aperto .nodo-testo{ display:block; }
+  .nodo.esplorato{ background:#fcfaf6; }
+
+  .esercizio{
+    display:none;
+    background:var(--grigio); border:1.5px solid var(--marrone); border-radius:12px;
+    padding:20px 24px;
+  }
+  .esercizio.visibile{ display:block; }
+  .esercizio-intro{
+    font-family:Georgia, serif; font-size:0.85rem; line-height:1.6;
+    margin:0 0 18px; color:var(--testo); text-align:center;
+  }
+  .coppia{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:10px;
+    padding:14px 18px; margin-bottom:14px;
+  }
+  .coppia-testo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.84rem; color:var(--marrone-scuro);
+    margin:0 0 10px; text-align:center;
+  }
+  .coppia-testo .freccia{ color:var(--marrone); font-weight:400; }
+  .coppia-bottoni{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }
+  .btn-scelta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem; font-weight:600;
+    background:#fff; border:1.5px solid var(--marrone); color:var(--marrone-scuro);
+    padding:8px 16px; border-radius:18px; cursor:pointer;
+    transition:background 0.15s, color 0.15s;
+  }
+  .btn-scelta:hover{ background:var(--marrone); color:#fff; }
+  .btn-scelta.scelta-fatta{ opacity:0.55; cursor:default; }
+  .btn-scelta.scelta-fatta:hover{ background:#fff; color:var(--marrone-scuro); }
+  .coppia-spiegazione{
+    display:none;
+    font-family:Georgia, serif; font-size:0.8rem; line-height:1.6;
+    padding:10px 14px; border-radius:7px;
+  }
+  .coppia-spiegazione.visibile{ display:block; }
+  .coppia-spiegazione.diretta{ background:var(--diretta-bg); color:var(--diretta); }
+  .coppia-spiegazione.indiretta{ background:var(--indiretta-bg); color:var(--indiretta); }
+  .coppia-spiegazione strong{ font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; }
+
+  .idea-guida{
+    display:none;
+    margin-top:18px;
+    background:#fffdfa; border-left:5px solid var(--marrone); border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif; font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida.visibile{ display:block; }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Il sistema del terrore sovietico</h1>
+    <p class="sottotitolo">Partito, polizia, gulag</p>
+  </header>
+
+  <p class="istruzioni">
+    Esplora i nodi in qualsiasi ordine, toccandoli per aprirli. Dopo averne aperti almeno cinque si sblocca un esercizio di collegamento.
+  </p>
+  <p class="progresso" id="progresso">0 di 7 esplorati</p>
+
+  <div class="mappa" id="mappa"></div>
+
+  <div class="esercizio" id="esercizio">
+    <p class="esercizio-intro">Per ogni coppia, indica se il legame è una <strong>causa diretta</strong> o solo un <strong>collegamento indiretto</strong> — plausibile, ma non la causa reale secondo il capitolo.</p>
+    <div id="coppie"></div>
+  </div>
+
+  <div class="idea-guida" id="ideaGuida">
+    <strong>Idea-guida.</strong> Il sistema del terrore non è una catena lineare a senso unico né un meccanismo casuale: partito unico, polizia politica, categorie ideologiche come «nemico del popolo» e apparato dei campi si sostengono a vicenda, ma non tutti i legami fra i suoi pezzi sono legami di causa diretta.
+  </div>
+</div>
+
+<script>
+(function(){
+  var nodi = [
+    { id:'partito', titolo:'Partito unico', testo:'La sovrapposizione fra Stato e Partito e il centralismo del sistema sovietico eliminano ogni spazio di opposizione legale: le decisioni si prendono ai vertici del partito, non in istituzioni statali autonome.' },
+    { id:'nkvd', titolo:'NKVD', testo: "La polizia politica sovietica: controllo capillare della società, arresti, interrogatori, esecuzioni. È lo strumento operativo attraverso cui il terrore diventa pratica quotidiana." },
+    { id:'kirov', titolo:'Assassinio di Kirov', testo:'Dicembre 1934: l\'uccisione di Sergej Kirov, figura di primo piano del partito a Leningrado, diventa il pretesto usato da Stalin per scatenare un\'ondata di repressione su vasta scala.' },
+    { id:'processi', titolo:'Processi di Mosca', testo:'1936-1938: processi-spettacolo contro i vecchi dirigenti bolscevichi, costretti a confessioni pubbliche di crimini spesso inventati. Sono il volto pubblico delle Grandi Purghe.' },
+    { id:'gulag', titolo:'Gulag', testo:'Il sistema dei campi di lavoro forzato in cui vengono internati milioni di persone: oppositori politici, ma soprattutto contadini colpiti dalla collettivizzazione forzata e vittime di arresti arbitrari.' },
+    { id:'culto', titolo:'Culto della personalità', testo:'La costruzione dell\'immagine di Stalin come guida infallibile, sostenuta dal realismo socialista imposto da Ždanov: l\'arte e la cultura sovietiche vengono messe al servizio dell\'ideologia di Stato.' },
+    { id:'nemici', titolo:'«Nemici del popolo»', testo:'La categoria che sostituisce la colpa individuale accertata con la semplice appartenenza sospetta: basta essere indicati come «nemici del popolo» per diventare bersaglio legittimo della repressione.' }
+  ];
+
+  var coppie = [
+    { a:'Assassinio di Kirov', b:'Processi di Mosca', tipo:'diretta',
+      spiega:"L'assassinio di Kirov, nel dicembre 1934, viene usato da Stalin come pretesto per scatenare la stagione dei processi-spettacolo e delle Grandi Purghe." },
+    { a:'Gulag', b:'Processi di Mosca', tipo:'indiretta',
+      spiega:"Rapporto reale ma indiretto: i condannati dei processi di Mosca non sono la fonte primaria della popolazione dei gulag, che proviene soprattutto dalla collettivizzazione forzata delle campagne." },
+    { a:'«Nemici del popolo»', b:'NKVD', tipo:'diretta',
+      spiega:"La categoria di «nemico del popolo» è lo strumento concettuale con cui l'NKVD giustifica l'arresto: sostituisce la colpa individuale accertata con la semplice appartenenza a una categoria sospetta." },
+    { a:'Partito unico', b:'NKVD', tipo:'diretta',
+      spiega:"La sovrapposizione fra Stato e Partito e il centralismo del sistema rendono possibile un apparato di polizia politica capillare, che non risponde a un potere esterno al partito stesso." },
+    { a:'Culto della personalità', b:'Gulag', tipo:'indiretta',
+      spiega:"Rapporto reale ma indiretto: il culto della personalità alimenta il clima di sospetto generale, ma il canale diretto che riempie i gulag è la repressione politica ed economica — collettivizzazione e purghe — non il culto in sé." }
+  ];
+
+  var aperti = new Set();
+  var mappa = document.getElementById('mappa');
+  var progresso = document.getElementById('progresso');
+  var esercizio = document.getElementById('esercizio');
+  var ideaGuida = document.getElementById('ideaGuida');
+
+  nodi.forEach(function(n){
+    var el = document.createElement('div');
+    el.className = 'nodo';
+    el.innerHTML = '<div class="nodo-titolo">' + n.titolo + '<span class="nodo-segno">+</span></div><div class="nodo-testo">' + n.testo + '</div>';
+    el.addEventListener('click', function(){
+      var aperto = el.classList.toggle('aperto');
+      el.querySelector('.nodo-segno').textContent = aperto ? '−' : '+';
+      if(aperto){
+        el.classList.add('esplorato');
+        aperti.add(n.id);
+        progresso.textContent = aperti.size + ' di 7 esplorati';
+        if(aperti.size >= 5 && !esercizio.classList.contains('visibile')){
+          esercizio.classList.add('visibile');
+          esercizio.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+      }
+    });
+    mappa.appendChild(el);
+  });
+
+  var coppieBox = document.getElementById('coppie');
+  var risposte = 0;
+  coppie.forEach(function(c, idx){
+    var div = document.createElement('div');
+    div.className = 'coppia';
+    div.innerHTML =
+      '<p class="coppia-testo">' + c.a + ' <span class="freccia">&rarr;</span> ' + c.b + '</p>' +
+      '<div class="coppia-bottoni">' +
+        '<button class="btn-scelta" data-scelta="diretta">Causa diretta</button>' +
+        '<button class="btn-scelta" data-scelta="indiretta">Collegamento indiretto</button>' +
+      '</div>' +
+      '<div class="coppia-spiegazione ' + c.tipo + '" id="spiega' + idx + '"><strong>' + (c.tipo === 'diretta' ? 'Collegamento diretto.' : 'Collegamento indiretto.') + '</strong> ' + c.spiega + '</div>';
+    coppieBox.appendChild(div);
+
+    var bottoni = div.querySelectorAll('.btn-scelta');
+    var spiegazione = div.querySelector('.coppia-spiegazione');
+    var risposto = false;
+    bottoni.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(risposto) return;
+        risposto = true;
+        bottoni.forEach(function(b){ b.classList.add('scelta-fatta'); });
+        spiegazione.classList.add('visibile');
+        risposte++;
+        if(risposte === coppie.length){
+          ideaGuida.classList.add('visibile');
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

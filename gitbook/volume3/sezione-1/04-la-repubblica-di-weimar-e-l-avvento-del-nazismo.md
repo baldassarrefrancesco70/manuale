@@ -35,7 +35,7 @@ Il punto su cui vale la pena riflettere non è che la Costituzione fosse scritta
 {% endhint %}
 
 
-![Infografica --- La Costituzione di Weimar: forza e punto debole](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info2_Paradosso_di_Weimar.png)
+![La Costituzione di Weimar: forza e punto debole](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info2_Paradosso_di_Weimar.png)
 
 
 ## Gli anni difficili (1919-1923)
@@ -60,7 +60,7 @@ Il 1923 fu l'anno in cui le due minacce, economica e politica, si saldarono in u
 
 L'**iperinflazione** che ne seguì polverizzò letteralmente i risparmi del ceto medio. La cartamoneta arrivò a essere stampata in tagli da cinquanta miliardi di marchi; i lavoratori dovevano spendere il proprio salario la mattina stessa dell'incasso, perché nel pomeriggio i prezzi dei generi alimentari erano già raddoppiati; in molti casi la moneta perse ogni funzione e si tornò al baratto puro. Solo a metà del decennio la situazione avrebbe iniziato a normalizzarsi — e sarà proprio da lì, non da qui, che riprenderà il racconto della stabilizzazione.
 
-{% embed url="https://drive.google.com/file/d/1gI4-GBy3SQiOH1iPr2mzikHwg6eWFVZR/view" %}
+{% embed url="https://youtu.be/QIeplKs0hRg" %}
 Video --- L'iperinflazione del 1923
 {% endembed %}
 
@@ -121,7 +121,7 @@ Le cifre restituiscono la scala del collasso. Si stima che oltre il 10% della ri
 
 Era la terza volta in poco più di un decennio che i tedeschi si ritrovavano improvvisamente impoveriti o ridotti alla fame, dopo i sacrifici della guerra e la catastrofe dell'iperinflazione del 1923. Non stupisce che questa terza ondata abbia consumato quel poco di fiducia nelle istituzioni repubblicane che gli anni di Stresemann avevano faticosamente ricostruito. In questo clima di angoscia diffusa, i partiti antisistema tornarono a crescere, accusando il capitalismo finanziario di aver provocato il disastro. Fu il **Partito nazionalsocialista** a sfruttare più abilmente di ogni altro questo malcontento, uscendo dall'isolamento marginale in cui era rimasto per tutti gli anni Venti: **Hitler** fece leva insieme sulla paura della grande borghesia, sulla frustrazione dei ceti medi impoveriti e sulla rabbia dei disoccupati, offrendo loro non soltanto un capro espiatorio a cui addossare la colpa della miseria, ma la promessa di un riscatto nazionale — presentandosi come l'unica forza capace di restituire ordine al Paese e cancellare, insieme, le umiliazioni economiche e quelle diplomatiche degli anni precedenti. Quanto quella promessa si sia effettivamente tradotta in consenso elettorale è ciò che la prossima tappa del capitolo dovrà misurare con i numeri delle urne.
 
-![Infografica --- Il tracollo in numeri, 1928-1932](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info3_Crisi_economica_e_ascesa_nazista.png)
+![Il tracollo in numeri, 1928-1932](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info3_Crisi_economica_e_ascesa_nazista.png)
 
 
 ## L'ascesa elettorale del nazismo (1930-1932)
@@ -171,7 +171,7 @@ Fu un calcolo tragicamente sbagliato, e non fu il primo del suo genere: la stess
 
 Da questa investitura ottenuta per vie del tutto legali, a Hitler sarebbero bastati pochi mesi per ribaltare i rapporti di forza che l'avevano resa possibile. Lo avrebbe fatto non contro la Costituzione di Weimar, ma attraverso di essa — usando gli stessi strumenti d'emergenza che quella Costituzione metteva a disposizione del suo esecutivo. È il passaggio che chiude questo capitolo.
 
-{% embed url="https://drive.google.com/file/d/1u1H59U0EiiHe6q2_KnfJTyV06GC2VleT/view" %}
+{% embed url="https://youtu.be/RpB34jAWdIs" %}
 Video --- Come Hitler è diventato cancelliere
 {% endembed %}
 
@@ -200,13 +200,13 @@ Entro l'estate del 1933, ogni opposizione legale era stata azzerata. A suggellar
 
 In poco più di un anno, una Repubblica nata dalla speranza di rinnovamento e mai riuscita a liberarsi del marchio di «figlia della sconfitta» si era trasformata in uno Stato a partito unico, per una via che non era passata attraverso un solo giorno di sospensione dichiarata della legalità. Resta da vedere se lo stesso percorso — legalità formale, crisi economica, un'élite convinta di poter controllare ciò che aveva contribuito a far crescere — abbia attraversato, con tempi e forme diverse, anche la storia italiana.
 
-![Infografica --- Sei mesi: dal cancelliere alla dittatura](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info4_Dalla_democrazia_alla_dittatura.png)
+![Sei mesi: dal cancelliere alla dittatura](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info4_Dalla_democrazia_alla_dittatura.png)
 
-{% embed url="https://drive.google.com/file/d/114rAM9uPce1cvbhGzijWRIC_vcvdpi3j/view" %}
+{% embed url="https://youtu.be/dKO2rQIggIY" %}
 Video --- I sei mesi che cancellarono la democrazia
 {% endembed %}
 
-{% embed url="https://drive.google.com/file/d/1BShRpt4w5F8422ov9Utz1BwN1xJ0hE2o/view" %}
+{% embed url="https://youtu.be/7x--5dGCHn8" %}
 Video --- «Legale non vuol dire legittimo»: come muore una democrazia dall'interno
 {% endembed %}
 
@@ -224,7 +224,7 @@ Chi privilegia la lettura dell'**errore evitabile** — posizione sostenuta con 
 
 Il punto cieco della prima lettura è quello che l'intero capitolo ha cercato di evitare fin dalla sua apertura di sezione: se la caduta era già scritta nell'architettura costituzionale, la responsabilità di chi scelse — von Papen, Hindenburg, gli industriali che finanziarono il partito — rischia di dissolversi in un destino istituzionale, esattamente l'automatismo che la sezione ha messo in guardia dal Cap. 0 in avanti. Il punto cieco della seconda è però speculare: se tutto si riduce al calcolo sbagliato di poche persone, resta da spiegare perché lo stesso calcolo — usare lo strumento presidenziale per governare senza il Parlamento — si sia ripetuto identico sotto tre cancellieri diversi, come se la struttura offrisse a chiunque la stessa scorciatoia. Il capitolo non risolve la tensione fra le due letture: la lascia aperta, perché è la stessa tensione — struttura contro scelta — che la sezione intera continuerà a interrogare nei capitoli seguenti, a partire dall'Italia liberale che dovrà misurarsi con un dilemma per molti versi analogo.
 
-{% embed url="https://drive.google.com/file/d/1hyVvHdCMmrsDtZjvvv5VTR3fu7CD1j0z/view" %}
+{% embed url="https://youtu.be/ozKOy7P3p30" %}
 Video --- Il nodo storiografico: struttura o scelta?
 {% endembed %}
 
@@ -236,6 +236,6 @@ Video --- Il nodo storiografico: struttura o scelta?
 - Karl Dietrich Bracher, *La dittatura tedesca. Origini, strutture, conseguenze del nazionalsocialismo*, il Mulino, Bologna 1973.
 - Voce «Repubblica di Weimar», in *Enciclopedia Treccani*, treccani.it.
 
-{% embed url="https://drive.google.com/file/d/1PpvpixxJi978onTMk9O2CdOjwEs9Cy46/view" %}
+{% embed url="https://youtu.be/QJvcCT7WHSs" %}
 Video --- Panoramica del capitolo
 {% endembed %}

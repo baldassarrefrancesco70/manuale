@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La lotta per la successione: le tappe della vittoria di Stalin</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --dentro:#6b5940;
+    --dentro-bg:#efe9df;
+    --fuori:#a89a86;
+    --fuori-bg:#f2f0ec;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:860px; margin:0 auto; padding:26px 24px 40px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 22px; line-height:1.5;
+  }
+
+  .timeline-outer{ overflow-x:auto; padding-bottom:6px; margin-bottom:26px; }
+  .timeline{
+    position:relative; display:flex; justify-content:space-between;
+    min-width:760px; padding:18px 6px 0;
+  }
+  .filo{ position:absolute; top:30px; left:4%; right:4%; height:2px; background:var(--marrone); }
+  .tappa-punto{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center; width:78px;
+  }
+  .anno-mini{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.6rem; font-weight:600; color:#9a9184; margin-bottom:5px; text-align:center;
+  }
+  .nodo-mini{
+    width:15px; height:15px; border-radius:50%;
+    background:#fff; border:2.5px solid #c9c1b3;
+  }
+  .tappa-punto.completata .nodo-mini{ background:var(--marrone); border-color:var(--marrone); }
+  .tappa-punto.completata .anno-mini{ color:var(--marrone-scuro); }
+  .tappa-punto.attuale .nodo-mini{
+    background:#fff; border-color:var(--marrone-scuro); border-width:3.5px;
+    box-shadow:0 0 0 3px rgba(107,89,64,0.18);
+  }
+  .tappa-punto.attuale .anno-mini{ color:var(--marrone-scuro); font-weight:700; }
+
+  .palco{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:12px;
+    padding:22px 26px; margin-bottom:16px;
+  }
+  .palco-anno{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem; font-weight:600; color:var(--marrone); letter-spacing:0.03em;
+    text-transform:uppercase; margin:0 0 4px;
+  }
+  .palco-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.02rem; font-weight:600; color:var(--marrone-scuro); margin:0 0 10px;
+  }
+  .palco-testo{
+    font-family:Georgia, serif; font-size:0.86rem; line-height:1.65; color:var(--testo);
+    margin:0 0 18px;
+  }
+
+  .diagramma{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+    margin-bottom:6px; padding:14px; background:var(--grigio); border-radius:8px;
+  }
+  .figura{
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    padding:8px 12px; border-radius:8px; min-width:74px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem; font-weight:600; text-align:center;
+    transition:opacity 0.3s;
+  }
+  .figura.dentro{ background:var(--dentro-bg); color:var(--dentro); border:1.5px solid var(--dentro); }
+  .figura.fuori{ background:var(--fuori-bg); color:var(--fuori); border:1.5px dashed var(--fuori); opacity:0.75; }
+  .figura .badge{
+    font-family:Georgia, serif; font-style:italic; font-weight:400; font-size:0.62rem;
+  }
+
+  .commento{
+    margin-top:16px;
+    background:var(--grigio); border-left:4px solid var(--marrone-scuro); border-radius:6px;
+    padding:12px 16px;
+    font-family:Georgia, serif; font-size:0.83rem; line-height:1.6; color:var(--testo);
+  }
+  .commento strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+
+  .previsione{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:12px;
+    padding:18px 24px; margin-bottom:16px;
+  }
+  .previsione-domanda{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.86rem; color:var(--marrone-scuro);
+    margin:0 0 12px;
+  }
+  .opzione{
+    display:block; width:100%; text-align:left;
+    background:var(--grigio); border:1.5px solid #d8d0c0; border-radius:8px;
+    padding:10px 14px; margin-bottom:8px; cursor:pointer;
+    font-family:Georgia, serif; font-size:0.82rem; color:var(--testo);
+    transition:border-color 0.15s, background 0.15s;
+  }
+  .opzione:hover{ border-color:var(--marrone); }
+  .opzione.selezionata{
+    border-color:var(--marrone-scuro); border-width:2px; background:#fff;
+  }
+
+  .azioni{ text-align:center; }
+  .btn-continua{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.82rem; font-weight:600;
+    background:var(--marrone-scuro); color:#fff; border:none;
+    padding:11px 28px; border-radius:22px; cursor:pointer;
+    transition:background 0.2s, opacity 0.2s;
+  }
+  .btn-continua:hover{ background:#59492f; }
+  .btn-continua:disabled{ opacity:0.4; cursor:not-allowed; }
+  .btn-continua.secondario{
+    background:transparent; color:var(--marrone-scuro); border:1.5px solid var(--marrone);
+  }
+  .btn-continua.secondario:hover{ background:var(--marrone); color:#fff; }
+
+  .chiusura{
+    display:none;
+    background:#fffdfa; border-left:5px solid var(--marrone-scuro); border-radius:6px;
+    padding:16px 20px; margin-top:6px;
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem; line-height:1.65; color:var(--testo);
+  }
+  .chiusura.visibile{ display:block; }
+  .chiusura strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; font-style:normal;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>La lotta per la successione</h1>
+    <p class="sottotitolo">Le tappe della vittoria di Stalin, 1922-1929</p>
+  </header>
+
+  <p class="istruzioni">
+    Segui le tappe una alla volta. A tre snodi ti verrà chiesto di prevedere chi sarà il prossimo a essere isolato: non è un quiz, non c'è un punteggio — conta il meccanismo che scoprirai passo dopo passo.
+  </p>
+
+  <div class="timeline-outer">
+    <div class="timeline" id="timeline">
+      <div class="filo"></div>
+    </div>
+  </div>
+
+  <div class="palco" id="palco"></div>
+  <div class="previsione" id="previsioneBox" style="display:none;"></div>
+  <div class="azioni" id="azioni"></div>
+
+  <div class="chiusura" id="chiusura">
+    <strong>Piano o opportunità?</strong> Stalin ha vinto perché aveva un piano fin dall'inizio, o perché ha sfruttato meglio degli altri le occasioni che si presentavano? È la stessa alternativa che il capitolo sulla strada verso la guerra pone a proposito di Hitler: una domanda che torna ogni volta che si prova a leggere la costruzione di un potere totalitario.
+    <div style="margin-top:14px; text-align:center;">
+      <button class="btn-continua secondario" id="btnRicomincia">Ricomincia</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var tappe = [
+    {
+      anno:'Aprile 1922', titolo:'Stalin diventa segretario generale',
+      testo:'Il Comitato Centrale nomina Stalin alla segreteria generale del partito: una funzione che il resto del gruppo dirigente considera puramente amministrativa.',
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:"Zinov'ev", stato:'dentro'},
+        {nome:'Kamenev', stato:'dentro'}, {nome:'Trockij', stato:'dentro'}, {nome:'Bucharin', stato:'dentro'}
+      ]
+    },
+    {
+      anno:'Dicembre 1922 - Gennaio 1923', titolo:'Il Testamento di Lenin',
+      testo:'Lenin, ormai malato, detta un testamento politico che critica Stalin e ne chiede la rimozione dalla segreteria generale. Il documento resta segreto ai vertici del partito.',
+      diagramma:[
+        {nome:'Stalin', stato:'dentro', badge:'testamento segreto'}, {nome:"Zinov'ev", stato:'dentro'},
+        {nome:'Kamenev', stato:'dentro'}, {nome:'Trockij', stato:'dentro'}, {nome:'Bucharin', stato:'dentro'}
+      ]
+    },
+    {
+      anno:'Gennaio 1924', titolo:'Morte di Lenin',
+      testo:'Lenin muore. Il Testamento non viene reso pubblico al XIII congresso: le sue critiche a Stalin non pesano sulla partita per la successione, che ora si apre.',
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:"Zinov'ev", stato:'dentro'},
+        {nome:'Kamenev', stato:'dentro'}, {nome:'Trockij', stato:'dentro'}, {nome:'Bucharin', stato:'dentro'}
+      ]
+    },
+    {
+      anno:'1924-1925', titolo:'Il fronte contro Trockij',
+      testo:"Stalin si allea con Zinov'ev e Kamenev contro Trockij, intorno al contrasto fra la tesi della rivoluzione permanente e quella del socialismo in un solo paese.",
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:"Zinov'ev", stato:'dentro'}, {nome:'Kamenev', stato:'dentro'},
+        {nome:'Trockij', stato:'fuori', badge:'isolato dal fronte'}, {nome:'Bucharin', stato:'dentro'}
+      ],
+      previsione:{
+        domanda:'Chi sarà il prossimo a essere isolato?',
+        opzioni:['Trockij', "Zinov'ev e Kamenev", 'Bucharin', 'Stalin']
+      }
+    },
+    {
+      anno:'1927', titolo:'Trockij espulso dal partito',
+      testo:'Trockij viene espulso dal partito: il fronte formato nel 1924-25 raggiunge il suo scopo.',
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:"Zinov'ev", stato:'dentro'}, {nome:'Kamenev', stato:'dentro'},
+        {nome:'Trockij', stato:'fuori', badge:'espulso'}, {nome:'Bucharin', stato:'dentro'}
+      ],
+      commento:"Il primo a cadere è chi si oppone apertamente a Stalin fin dall'inizio: l'alleanza con Zinov'ev e Kamenev serviva esattamente a isolarlo, prima che agli altri due toccasse la stessa sorte."
+    },
+    {
+      anno:'1925-1927', titolo:'Il fronte si rompe',
+      testo:"Il fronte anti-Trockij si spacca: Zinov'ev e Kamenev si oppongono ora alla NEP, mentre Bucharin — insieme a Stalin — ne difende la prosecuzione.",
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:'Bucharin', stato:'dentro'},
+        {nome:"Zinov'ev", stato:'fuori', badge:'contro la NEP'}, {nome:'Kamenev', stato:'fuori', badge:'contro la NEP'}
+      ],
+      previsione:{
+        domanda:'Chi sarà il prossimo a essere isolato?',
+        opzioni:["Zinov'ev e Kamenev", 'Bucharin', 'Stalin']
+      }
+    },
+    {
+      anno:'1927', titolo:"Zinov'ev e Kamenev espulsi",
+      testo:"Cercano un'alleanza tardiva con lo stesso Trockij che avevano contribuito a isolare, ma vengono anch'essi espulsi dal partito.",
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:'Bucharin', stato:'dentro'},
+        {nome:"Zinov'ev", stato:'fuori', badge:'espulso'}, {nome:'Kamenev', stato:'fuori', badge:'espulso'}
+      ],
+      commento:"Chi si allea con Stalin per isolare un rivale non ottiene per questo un posto sicuro: appena la loro utilità è esaurita, il turno tocca a loro."
+    },
+    {
+      anno:'1927-1928', titolo:"Stalin rovescia l'alleanza con Bucharin",
+      testo:"Stalin abbandona la difesa della NEP e ne chiude la stagione: l'ultimo alleato rimasto, Bucharin, si trova ora dalla parte sbagliata.",
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:'Bucharin', stato:'fuori', badge:'difende ancora la NEP'}
+      ],
+      previsione:{
+        domanda:'Chi sarà il prossimo a essere isolato?',
+        opzioni:['Bucharin', 'Stalin', 'Nessuno: il gruppo dirigente è ormai stabile']
+      }
+    },
+    {
+      anno:'1929', titolo:'Stalin resta solo al potere',
+      testo:'Trockij è in esilio, Bucharin viene condannato come «deviazionista di destra»: nel giro di sette anni Stalin ha eliminato, uno dopo l\'altro, tutti i suoi possibili rivali.',
+      diagramma:[
+        {nome:'Stalin', stato:'dentro'}, {nome:'Bucharin', stato:'fuori', badge:'deviazionista di destra'},
+        {nome:"Zinov'ev / Kamenev", stato:'fuori', badge:'espulsi'}, {nome:'Trockij', stato:'fuori', badge:'in esilio'}
+      ],
+      commento:"L'ultimo alleato cade come i precedenti: Stalin si allea sempre con chi sta al centro del gruppo dirigente in quel momento, e abbandona l'alleato subito dopo averlo reso inutile."
+    }
+  ];
+
+  var indice = 0;
+  var previsioneScelta = null;
+  var timeline = document.getElementById('timeline');
+  var palco = document.getElementById('palco');
+  var previsioneBox = document.getElementById('previsioneBox');
+  var azioni = document.getElementById('azioni');
+  var chiusura = document.getElementById('chiusura');
+
+  tappe.forEach(function(t, i){
+    var p = document.createElement('div');
+    p.className = 'tappa-punto';
+    p.setAttribute('data-i', i);
+    p.innerHTML = '<div class="anno-mini">' + t.anno.split(' ')[0].split('-')[0] + '</div><div class="nodo-mini"></div>';
+    timeline.appendChild(p);
+  });
+
+  function aggiornaTimeline(){
+    document.querySelectorAll('.tappa-punto').forEach(function(p){
+      var i = parseInt(p.getAttribute('data-i'), 10);
+      p.classList.remove('completata', 'attuale');
+      if(i < indice) p.classList.add('completata');
+      if(i === indice) p.classList.add('attuale');
+    });
+  }
+
+  function renderDiagramma(diagramma){
+    var html = '<div class="diagramma">';
+    diagramma.forEach(function(f){
+      html += '<div class="figura ' + f.stato + '">' + f.nome + (f.badge ? '<span class="badge">' + f.badge + '</span>' : '') + '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function mostraTappa(){
+    var t = tappe[indice];
+    aggiornaTimeline();
+
+    var html = '<p class="palco-anno">' + t.anno + '</p>';
+    html += '<p class="palco-titolo">' + t.titolo + '</p>';
+    html += '<p class="palco-testo">' + t.testo + '</p>';
+    html += renderDiagramma(t.diagramma);
+    if(t.commento){
+      html += '<div class="commento"><strong>Che cosa è successo.</strong> ' + t.commento + '</div>';
+    }
+    palco.innerHTML = html;
+
+    previsioneScelta = null;
+    if(t.previsione){
+      var ph = '<p class="previsione-domanda">' + t.previsione.domanda + '</p>';
+      t.previsione.opzioni.forEach(function(op){
+        ph += '<button class="opzione" data-op="' + op.replace(/"/g,'&quot;') + '">' + op + '</button>';
+      });
+      previsioneBox.innerHTML = ph;
+      previsioneBox.style.display = 'block';
+      document.querySelectorAll('.opzione').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          document.querySelectorAll('.opzione').forEach(function(b){ b.classList.remove('selezionata'); });
+          btn.classList.add('selezionata');
+          previsioneScelta = btn.getAttribute('data-op');
+          aggiornaBottone();
+        });
+      });
+    } else {
+      previsioneBox.style.display = 'none';
+    }
+
+    if(indice === tappe.length - 1){
+      azioni.innerHTML = '';
+      setTimeout(function(){ chiusura.classList.add('visibile'); }, 250);
+    } else {
+      chiusura.classList.remove('visibile');
+      var testoBtn = t.previsione ? 'Continua' : (t.commento ? 'Prosegui' : 'Continua');
+      azioni.innerHTML = '<button class="btn-continua" id="btnContinua">' + testoBtn + '</button>';
+      document.getElementById('btnContinua').addEventListener('click', function(){
+        indice++;
+        mostraTappa();
+        palco.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      });
+      aggiornaBottone();
+    }
+  }
+
+  function aggiornaBottone(){
+    var btn = document.getElementById('btnContinua');
+    if(!btn) return;
+    var t = tappe[indice];
+    btn.disabled = !!(t.previsione && !previsioneScelta);
+  }
+
+  document.getElementById('btnRicomincia').addEventListener('click', function(){
+    indice = 0;
+    chiusura.classList.remove('visibile');
+    mostraTappa();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  mostraTappa();
+})();
+</script>
+</body>
+</html>

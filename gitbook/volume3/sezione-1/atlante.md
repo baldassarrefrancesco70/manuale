@@ -54,6 +54,6 @@ Confrontare questa carta con la precedente rende visibile, in un solo sguardo, l
 Risorsa digitale --- Quattro democrazie sotto pressione
 {% endembed %}
 
-{% embed url="https://drive.google.com/file/d/1R5MNXuXy5NvFtWoBkYPLAH71FTg7qY1G/view" %}
+{% embed url="https://youtu.be/W9pXa9VwsOY" %}
 Video --- Il cerchio si chiude: dai partiti costruttori al loro crollo
 {% endembed %}

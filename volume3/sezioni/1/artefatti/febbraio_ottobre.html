@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Febbraio e Ottobre: due rivoluzioni a confronto</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --febbraio:#5c7a6f;
+    --febbraio-bg:#e6edea;
+    --ottobre:#8a5a3d;
+    --ottobre-bg:#f0e2d6;
+    --prima:#82796a;
+    --prima-bg:#eae6dd;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:980px; margin:0 auto; padding:26px 24px 40px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 6px; line-height:1.5;
+  }
+  .progresso{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem; font-weight:600; color:var(--marrone-scuro);
+    margin:0 0 18px;
+  }
+
+  .colonne{
+    display:grid; grid-template-columns:1fr 1fr 0.85fr; gap:14px;
+    margin-bottom:18px;
+  }
+  .colonna{
+    border:2px solid var(--marrone); border-radius:10px;
+    min-height:120px; padding:10px; cursor:pointer;
+    transition:box-shadow 0.15s, transform 0.15s;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .colonna:hover{ box-shadow:0 0 0 3px rgba(139,115,85,0.18); }
+  .colonna.pronta{ transform:translateY(-2px); box-shadow:0 0 0 3px rgba(139,115,85,0.3); }
+  .colonna[data-cat="febbraio"]{ background:var(--febbraio-bg); border-color:var(--febbraio); }
+  .colonna[data-cat="ottobre"]{ background:var(--ottobre-bg); border-color:var(--ottobre); }
+  .colonna[data-cat="prima"]{ background:var(--prima-bg); border-color:var(--prima); }
+  .colonna-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.82rem; text-align:center;
+    padding:4px 0 8px; border-bottom:1px solid rgba(0,0,0,0.12);
+  }
+  .colonna[data-cat="febbraio"] .colonna-titolo{ color:var(--febbraio); }
+  .colonna[data-cat="ottobre"] .colonna-titolo{ color:var(--ottobre); }
+  .colonna[data-cat="prima"] .colonna-titolo{ color:var(--prima); }
+  .colonna-vuota{
+    font-family:Georgia, serif; font-style:italic; font-size:0.72rem;
+    color:#948c7d; text-align:center; margin-top:10px;
+  }
+
+  .scheda-collocata{
+    background:#fffdfa; border:1.5px solid rgba(0,0,0,0.15); border-radius:7px;
+    padding:8px 10px;
+    font-family:Georgia, serif; font-size:0.76rem; line-height:1.4; color:var(--testo);
+  }
+
+  .pool{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+    margin-bottom:16px; min-height:40px;
+  }
+  .carta{
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:8px;
+    padding:10px 14px; max-width:280px;
+    font-family:Georgia, serif; font-size:0.8rem; line-height:1.45; color:var(--testo);
+    cursor:pointer; transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  }
+  .carta:hover{ transform:translateY(-1px); }
+  .carta.selezionata{
+    border-color:var(--marrone-scuro); border-width:2px;
+    box-shadow:0 2px 8px rgba(107,89,64,0.28);
+    background:#fff;
+  }
+  .carta.errore{ animation:scuoti 0.4s; border-color:var(--ottobre); }
+  @keyframes scuoti{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-5px); }
+    75%{ transform:translateX(5px); }
+  }
+
+  .feedback{
+    max-width:680px; margin:0 auto 20px;
+    min-height:22px;
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem; line-height:1.5;
+    padding:0 10px;
+  }
+  .feedback.ok{ color:#4c6b41; font-weight:600; }
+  .feedback.no{ color:var(--ottobre); }
+  .feedback .spiega{
+    display:block; font-family:Georgia, serif; font-style:italic;
+    font-weight:400; color:#6b6255; margin-top:2px;
+  }
+
+  .sintesi{
+    display:none;
+    max-width:760px; margin:6px auto 26px;
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:10px;
+    padding:16px 22px;
+  }
+  .sintesi.visibile{ display:block; }
+  .sintesi-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.86rem; color:var(--marrone-scuro);
+    margin:0 0 10px; text-align:center;
+  }
+  .sintesi ul{ margin:0; padding-left:20px; }
+  .sintesi li{
+    font-family:Georgia, serif; font-size:0.83rem; line-height:1.6;
+    margin-bottom:6px; color:var(--testo);
+  }
+  .sintesi li strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+
+  .calibratura{
+    display:none;
+    max-width:760px; margin:0 auto;
+    background:var(--grigio); border:1.5px solid var(--marrone); border-radius:10px;
+    padding:18px 22px;
+  }
+  .calibratura.visibile{ display:block; }
+  .calibratura-intro{
+    font-family:Georgia, serif; font-size:0.84rem; line-height:1.6;
+    margin:0 0 14px; color:var(--testo);
+  }
+  .tesi{
+    display:block; width:100%; text-align:left;
+    background:#fffdfa; border:1.5px solid var(--marrone); border-radius:8px;
+    padding:11px 16px; margin-bottom:10px; cursor:pointer;
+    font-family:Georgia, serif; font-size:0.82rem; line-height:1.5; color:var(--testo);
+    transition:background 0.15s, border-color 0.15s;
+  }
+  .tesi:hover{ border-color:var(--marrone-scuro); }
+  .tesi.selezionata{
+    background:#fff; border-color:var(--marrone-scuro); border-width:2px;
+    box-shadow:0 2px 8px rgba(107,89,64,0.22);
+  }
+  .calibratura-nota{
+    margin-top:14px;
+    font-family:Georgia, serif; font-style:italic; font-size:0.78rem;
+    line-height:1.55; color:#6b6255; text-align:center;
+    display:none;
+  }
+  .calibratura-nota.visibile{ display:block; }
+
+  .idea-guida{
+    margin-top:20px;
+    background:#fffdfa; border-left:5px solid var(--marrone); border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif; font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Febbraio e Ottobre</h1>
+    <p class="sottotitolo">Due rivoluzioni a confronto</p>
+  </header>
+
+  <p class="istruzioni">
+    Tocca un'affermazione per selezionarla, poi tocca la colonna in cui vuoi collocarla. Attenzione: una delle dodici affermazioni non appartiene né a Febbraio né a Ottobre.
+  </p>
+  <p class="progresso" id="progresso">0 di 12 collocate</p>
+
+  <div class="colonne" id="colonne">
+    <div class="colonna" data-cat="febbraio">
+      <div class="colonna-titolo">Febbraio</div>
+      <div class="colonna-vuota">—</div>
+    </div>
+    <div class="colonna" data-cat="ottobre">
+      <div class="colonna-titolo">Ottobre</div>
+      <div class="colonna-vuota">—</div>
+    </div>
+    <div class="colonna" data-cat="prima">
+      <div class="colonna-titolo">Prima di entrambe</div>
+      <div class="colonna-vuota">—</div>
+    </div>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+
+  <div class="pool" id="pool"></div>
+
+  <div class="sintesi" id="sintesi">
+    <p class="sintesi-titolo">Che cosa distingue le due rivoluzioni</p>
+    <ul>
+      <li><strong>Spontaneità e pianificazione.</strong> Febbraio esplode da otto giorni di scioperi senza una guida dichiarata; Ottobre è un'insurrezione armata pianificata nei dettagli da un comitato rivoluzionario.</li>
+      <li><strong>Ampiezza della base.</strong> Febbraio coinvolge una massa diffusa di scioperanti, soldati e cittadini di Pietrogrado; Ottobre è condotto da un gruppo ristretto che agisce a nome dei soviet.</li>
+      <li><strong>Esito istituzionale.</strong> Febbraio produce un governo di coalizione fra liberali e socialisti, con un potere parallelo dei soviet; Ottobre produce un governo interamente bolscevico, senza altre forze politiche.</li>
+    </ul>
+  </div>
+
+  <div class="calibratura" id="calibratura">
+    <p class="calibratura-intro">Il capitolo tornerà su questa domanda nei nodi storiografici. Per ora, scegli — senza essere giudicato — quale formulazione ti convince di più:</p>
+    <button class="tesi" data-tesi="colpo">L'Ottobre fu un colpo di Stato di un gruppo organizzato.</button>
+    <button class="tesi" data-tesi="popolare">L'Ottobre fu una rivoluzione popolare che si è data una guida.</button>
+    <button class="tesi" data-tesi="misto">L'Ottobre fu un colpo di Stato reso possibile da un consenso popolare reale.</button>
+    <p class="calibratura-nota" id="calibraturaNota">Nessuna delle tre formulazioni è qui giudicata giusta o sbagliata: è la domanda con cui il capitolo lavorerà nei nodi storiografici.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var items = [
+    { id:1, cat:'febbraio', testo:'Scoppia da otto giorni di scioperi spontanei a Pietrogrado', spiega:'appartiene a Febbraio: nasce da scioperi diffusi, non da un\'azione pianificata.' },
+    { id:2, cat:'febbraio', testo:'Nessun partito rivendica la guida dell\'azione mentre accade', spiega:'appartiene a Febbraio: è il tratto che più lo distingue dall\'insurrezione di Ottobre, guidata da un comitato.' },
+    { id:3, cat:'febbraio', testo:'Lo zar abdica e la dinastia dei Romanov si estingue', spiega:'appartiene a Febbraio: è l\'esito immediato delle giornate di febbraio, non di quelle di ottobre.' },
+    { id:4, cat:'febbraio', testo:'Nasce un governo provvisorio di coalizione liberale e socialista', spiega:'appartiene a Febbraio: il governo che ne nasce è una coalizione, non un governo di un solo partito.' },
+    { id:5, cat:'febbraio', testo:'Si forma accanto al governo un potere parallelo, quello dei soviet', spiega:'appartiene a Febbraio: è la nascita del cosiddetto "doppio potere", non ancora l\'esito di Ottobre.' },
+    { id:6, cat:'ottobre', testo:'È diretta da un comitato rivoluzionario sotto la guida di Trockij', spiega:'appartiene a Ottobre: è l\'insurrezione pianificata, non le giornate spontanee di febbraio.' },
+    { id:7, cat:'ottobre', testo:'Avviene con un\'insurrezione armata pianificata nei dettagli', spiega:'appartiene a Ottobre: è esattamente ciò che la distingue dalla spontaneità di Febbraio.' },
+    { id:8, cat:'ottobre', testo:'Il Palazzo d\'Inverno viene occupato quasi senza resistenza', spiega:'appartiene a Ottobre: è l\'episodio culminante dell\'insurrezione bolscevica.' },
+    { id:9, cat:'ottobre', testo:'Il primo atto del nuovo potere è il decreto sulla pace', spiega:'appartiene a Ottobre: è uno dei primi decreti del governo nato dall\'insurrezione, non di quello di febbraio.' },
+    { id:10, cat:'ottobre', testo:'Il secondo atto è il decreto sulla terra, che assicura l\'appoggio contadino', spiega:'appartiene a Ottobre: segue il decreto sulla pace fra i primi atti del nuovo potere bolscevico.' },
+    { id:11, cat:'ottobre', testo:'Nasce un governo interamente bolscevico, senza altre forze politiche', spiega:'appartiene a Ottobre: a differenza della coalizione nata da Febbraio, qui non ci sono altre forze politiche.' },
+    { id:12, cat:'prima', testo:'La parola d\'ordine «tutto il potere ai soviet» era già circolata da mesi', spiega:'non appartiene in esclusiva né a Febbraio né a Ottobre: precede e attraversa entrambi gli eventi.' }
+  ];
+
+  var selezionata = null;
+  var collocate = 0;
+  var pool = document.getElementById('pool');
+  var feedback = document.getElementById('feedback');
+  var progresso = document.getElementById('progresso');
+  var sintesi = document.getElementById('sintesi');
+  var calibratura = document.getElementById('calibratura');
+
+  function mescola(arr){
+    // ordine fisso ma non sequenziale, per evitare il pattern 1-5 febbraio / 6-11 ottobre
+    var ordine = [3,7,1,9,5,11,2,8,12,4,10,6];
+    return ordine.map(function(id){
+      return arr.filter(function(it){ return it.id === id; })[0];
+    });
+  }
+
+  function creaCarta(item){
+    var el = document.createElement('div');
+    el.className = 'carta';
+    el.setAttribute('data-id', item.id);
+    el.textContent = item.testo;
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.carta').forEach(function(c){ c.classList.remove('selezionata'); });
+      if(selezionata === item.id){
+        selezionata = null;
+        return;
+      }
+      selezionata = item.id;
+      el.classList.add('selezionata');
+    });
+    return el;
+  }
+
+  mescola(items).forEach(function(item){
+    pool.appendChild(creaCarta(item));
+  });
+
+  document.querySelectorAll('.colonna').forEach(function(colonna){
+    colonna.addEventListener('click', function(){
+      if(selezionata === null) return;
+      var item = items.filter(function(it){ return it.id === selezionata; })[0];
+      var cartaEl = pool.querySelector('.carta[data-id="' + selezionata + '"]');
+      var cat = colonna.getAttribute('data-cat');
+
+      if(item.cat === cat){
+        var vuota = colonna.querySelector('.colonna-vuota');
+        if(vuota) vuota.remove();
+        var scheda = document.createElement('div');
+        scheda.className = 'scheda-collocata';
+        scheda.textContent = item.testo;
+        colonna.appendChild(scheda);
+        cartaEl.remove();
+        collocate++;
+        progresso.textContent = collocate + ' di 12 collocate';
+        feedback.className = 'feedback ok';
+        feedback.textContent = 'Corretto.';
+        selezionata = null;
+
+        if(collocate === 12){
+          feedback.textContent = 'Classificazione completata.';
+          sintesi.classList.add('visibile');
+          calibratura.classList.add('visibile');
+          sintesi.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+      } else {
+        cartaEl.classList.add('errore');
+        cartaEl.classList.remove('selezionata');
+        setTimeout(function(){ cartaEl.classList.remove('errore'); }, 400);
+        feedback.className = 'feedback no';
+        feedback.innerHTML = 'Non qui. <span class="spiega">Questa affermazione ' + item.spiega + '</span>';
+        selezionata = null;
+      }
+    });
+  });
+
+  document.querySelectorAll('.tesi').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tesi').forEach(function(t){ t.classList.remove('selezionata'); });
+      btn.classList.add('selezionata');
+      document.getElementById('calibraturaNota').classList.add('visibile');
+    });
+  });
+})();
+</script>
+</body>
+</html>

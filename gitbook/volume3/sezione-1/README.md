@@ -1,9 +1,5 @@
 # La soglia
 
-_Apertura di sezione_
-
-
-
 Il 30 gennaio 1933 **Adolf Hitler** fu nominato cancelliere del Reich. La firma in calce al decreto era quella del presidente della repubblica, la procedura era quella prevista dalla costituzione più democratica d'Europa, il governo era una coalizione in cui il partito nazista occupava tre ministeri su undici. Nessuna legge era stata violata, nessun reparto armato circondava il parlamento, nessun risultato elettorale era stato annullato. Chi quel giorno avesse cercato il momento esatto in cui la democrazia tedesca aveva cessato di esistere non lo avrebbe trovato, e non perché fosse nascosto: quel momento non c'era.
 
 L'idea che una democrazia muoia in un istante identificabile, con i carri armati per strada e il parlamento sciolto dai soldati, è un'idea rassicurante, perché rende la fine visibile e quindi, almeno in linea di principio, contrastabile. I casi raccolti in questa sezione raccontano qualcosa di più scomodo. Il passaggio avviene per gradi, ciascuno dei quali rispetta le forme del diritto, e nessuno di quei gradi si presenta ai contemporanei come l'ultimo. La soglia esiste, perché a un certo punto la Germania e l'Italia non erano più democrazie e nessuno poteva più fingere il contrario; ma è una soglia che si vede solo da dopo, quando è già alle spalle.

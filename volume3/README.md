@@ -28,7 +28,7 @@ Un unico oggetto piatto: `"id": "url"`.
 
 **Convenzione degli id**
 
-- `art1`, `art2`, `art3`, ... per gli artefatti — numerati nell'ordine in cui compaiono nel testo (non deve necessariamente coincidere con il numero nel nome del file in `sezioni/{M}/artefatti/`, vedi `ISTRUZIONI_ASSEMBLAGGIO.md`).
+- `art1`, `art2`, `art3`, ... per gli artefatti — numerati nell'ordine in cui compaiono nel testo (non deve necessariamente coincidere con il numero nel nome del file in `sezioni/{M}/artefatti/`).
 - `video1`, `video2`, `video3`, ... per i video, stessa logica di numerazione per ordine di comparsa.
 
 **Formato degli URL**

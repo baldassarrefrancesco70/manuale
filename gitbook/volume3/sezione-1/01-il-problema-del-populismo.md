@@ -82,7 +82,7 @@ I casi sono tre e rispondono in modo diverso. In Germania la democrazia crolla i
 
 Il problema del populismo, del resto, non nasce oggi, e non si capisce partendo da oggi. Per vedere quando e come una democrazia possa logorarsi dall'interno conviene tornare al momento in cui l'Europa comincia a fare i conti con la politica di massa su una scala mai vista prima, cioè alla Prima guerra mondiale. Non perché la guerra produca il populismo, il che sarebbe di nuovo un automatismo, ma perché è lì che vengono costruiti gli strumenti, la mobilitazione totale, la propaganda di massa, il mito del tradimento interno, che i casi successivi useranno in modi diversi e con esiti diversi.
 
-{% embed url="https://drive.google.com/file/d/15O2Aaryj8hbe9p0JjFAzVybb8CXLAV_n/view" %}
+{% embed url="https://youtu.be/K9G4kNr-m5E" %}
 Video --- Il metodo del detective
 {% endembed %}
 
@@ -102,7 +102,7 @@ Entrambe le posizioni hanno un punto cieco, e conviene vederli tutti e due. Chi 
 
 La domanda che resta non è dunque se il populismo esista, ma che cosa si chieda a una categoria. Se le si chiede di nominare qualcosa di reale, funziona, a condizione di restare una descrizione. Se le si chiede di prevedere, non funziona, e i tre casi mostrano perché: gli stessi tratti producono esiti diversi, e la differenza sta nelle scelte, non nei tratti. Leggendo i capitoli che seguono vale la pena chiedersi, ogni volta che la parola compare, quale dei due usi si stia facendo.
 
-{% embed url="https://drive.google.com/file/d/1oxs-1wgB6vrfx43MZE_N3HJu-_es1enk/view" %}
+{% embed url="https://youtu.be/kSUCSLlEosU" %}
 Video --- Il nodo storiografico: categoria d'analisi o etichetta polemica?
 {% endembed %}
 
@@ -118,6 +118,6 @@ Video --- Il nodo storiografico: categoria d'analisi o etichetta polemica?
 - Nadia Urbinati, *Io, il popolo. Come il populismo trasforma la democrazia*, il Mulino, Bologna 2020.
 - Voce «Populismo», in *Enciclopedia Treccani*, treccani.it.
 
-{% embed url="https://drive.google.com/file/d/1G_mFy5aG5gQx1U1JMzXIhjIPUyXJvDz7/view" %}
+{% embed url="https://youtu.be/pLCB_G0MeLs" %}
 Video --- Il problema del populismo
 {% endembed %}

@@ -22,9 +22,9 @@ Proprio perché descrive una pretesa così estrema, il concetto di totalitarismo
 
 Quella formula, però, va maneggiata con attenzione, perché «imperfetto» non significa «attenuato» nel senso di meno grave. Al di là del dibattito su quale parola sia la più esatta, resta un fatto che nessuna distinzione terminologica deve offuscare: entrambe le esperienze, quella italiana e quella tedesca, furono costruite sulla soppressione delle libertà, sulla violenza sistematica contro gli avversari e sulla manipolazione delle coscienze attraverso la propaganda. Che l'una sia stata totalitaria in modo pieno e l'altra solo in parte è una questione storiografica reale, e la affronteremo; ma nessuna delle due fu, in alcun senso, una dittatura mite. Conviene tenerlo fermo prima di entrare nel confronto, perché analizzare le differenze non significa graduare le colpe.
 
-![Infografica --- Che cos'è un totalitarismo](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info8_Che_cos_%C3%A8_un_totalitarismo.png)
+![Che cos'è un totalitarismo](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info8_Che_cos_%C3%A8_un_totalitarismo.png)
 
-{% embed url="https://drive.google.com/file/d/17xBS1FK2zvBdtWUc8jmTX7ZJy6hKgEPq/view" %}
+{% embed url="https://youtu.be/1NCHVUSQGCY" %}
 Video --- Che cos'è un regime totalitario
 {% endembed %}
 
@@ -110,9 +110,9 @@ A rendere possibile tutto questo non fu solo la volontà del capo. Negli anni Ve
 ## Verso la guerra e il crollo
 
 
-I temi di quest'ultima parte — l'alleanza militare, la guerra, lo sterminio, la caduta dei due regimi — saranno ripresi e sviluppati più avanti. Qui bastano gli elementi essenziali per non perdere il filo, e per capire da dove nasce ciò che verrà dopo.
+Il capitolo seguente ricostruisce per esteso il retroterra diplomatico di questi anni: qui basta il punto d'approdo, per non perdere il filo, e per capire da dove nasce ciò che verrà dopo.
 
-L'avvicinamento fra Italia e Germania, si è visto, era maturato per gradi, e Mussolini l'aveva a lungo inteso come una mossa tattica. Il **22 maggio 1939** quella logica si chiuse con la firma del **Patto d'Acciaio**, un'alleanza militare piena, offensiva oltre che difensiva, che legava il destino dell'Italia a quello della Germania proprio mentre Hitler si preparava a scatenare la guerra. Allo scoppio del conflitto, nel settembre 1939, Mussolini, consapevole dell'impreparazione dell'esercito, si tenne fuori con la formula della «non belligeranza»; ma nel giugno 1940, davanti ai travolgenti successi tedeschi e nella convinzione che la guerra fosse ormai vinta, entrò in campo per non arrivare a mani vuote al tavolo dei vincitori. Fu una scelta di calcolo, e un calcolo sbagliato: l'Italia si rivelò militarmente fragile, la guerra lunga e rovinosa, e il consenso, salito per un attimo all'entrata in guerra, si sgretolò ai primi rovesci.
+L'avvicinamento fra Italia e Germania, maturato per gradi, si chiuse il **22 maggio 1939** nel **Patto d'Acciaio**, un'alleanza militare piena, offensiva oltre che difensiva. Allo scoppio del conflitto, nel settembre 1939, Mussolini, consapevole dell'impreparazione dell'esercito, si tenne fuori con la formula della «non belligeranza»; ma nel giugno 1940, davanti ai travolgenti successi tedeschi e nella convinzione che la guerra fosse ormai vinta, entrò in campo per non arrivare a mani vuote al tavolo dei vincitori. Fu una scelta di calcolo, e un calcolo sbagliato: l'Italia si rivelò militarmente fragile, la guerra lunga e rovinosa, e il consenso, salito per un attimo all'entrata in guerra, si sgretolò ai primi rovesci.
 
 Da quel momento le strade dei due regimi, così a lungo parallele, divergono nel modo più netto, ed è la differenza già emersa a proposito del vertice del potere a spiegarne l'esito. In Italia, quando la guerra volse in disastro, esisteva ancora un'istituzione capace di rovesciare il capo dall'interno: nella notte fra il **24 e il 25 luglio 1943** il Gran Consiglio del Fascismo mise Mussolini in minoranza, e il re lo fece arrestare, applicando quei poteri della Corona che la diarchia aveva conservato. Il fascismo cadde, in un giorno, per una decisione presa dentro le sue stesse istituzioni. Nulla di simile fu mai possibile in Germania, dove nessun organo poteva rimuovere Hitler: il nazismo non fu deposto, fu distrutto militarmente, e resistette fino al suicidio di Hitler e al crollo totale del Reich, nella primavera del **1945**.
 
@@ -120,7 +120,7 @@ Da quel momento le strade dei due regimi, così a lungo parallele, divergono nel
 Risorsa digitale --- Il re o nessuno: perché uno cadde dall'interno e l'altro no
 {% endembed %}
 
-{% embed url="https://drive.google.com/file/d/15IZj9gXnEShYqIu1ooYmwlldZ8CgUfeT/view" %}
+{% embed url="https://youtu.be/8yW_wZ20Y0M" %}
 Video --- Perché il fascismo cadde nel 1943 e il nazismo solo nel 1945
 {% endembed %}
 
@@ -170,7 +170,7 @@ La tesi dell'impianto autonomo, oggi prevalente fra gli storici, risponde però 
 
 Qui i punti ciechi non si equivalgono, ed è bene dirlo. La tesi dell'imitazione ha il difetto più grave, perché offre, sotto forma di spiegazione storica, un'autoassoluzione: attribuendo tutto alla pressione tedesca, cancella la scelta italiana. La tesi dell'autonomia è più solida, ma va tenuta al riparo da un fraintendimento speculare: riconoscere che il razzismo fascista fu autonomo non significa renderlo «peggiore» del nazismo in una gara al fondo, ma solo restituire agli italiani la titolarità delle proprie azioni. La domanda storica «chi lo ha voluto» non serve a distribuire una colpa maggiore o minore, ma a impedire che una responsabilità reale venga fatta sparire dietro un alibi.
 
-{% embed url="https://drive.google.com/file/d/16voT6phXIIudEbmbdnitr-70bs8wSTgz/view" %}
+{% embed url="https://youtu.be/t4fOVq9uDQE" %}
 Video --- I nodi storiografici: che cos'è (davvero) un totalitarismo
 {% endembed %}
 
@@ -185,8 +185,6 @@ Video --- I nodi storiografici: che cos'è (davvero) un totalitarismo
 - Karl Dietrich Bracher, *Il Novecento come secolo delle ideologie*, il Mulino, Bologna 2008.
 - Voce «Totalitarismo», in *Enciclopedia Treccani*, treccani.it.
 
-![Infografica --- Due regimi a confronto: il quadro d'insieme](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info7_Confronto_tra_Fascismo_e_Nazismo.png)
-
-{% embed url="https://drive.google.com/file/d/1p5LwvCJxZBzNYLhinmOGB2K51kN14Etx/view" %}
-Video --- Il confronto: due regimi, una domanda
+{% embed url="https://youtu.be/BlSDjIflRmE" %}
+Video --- Panoramica del capitolo
 {% endembed %}
