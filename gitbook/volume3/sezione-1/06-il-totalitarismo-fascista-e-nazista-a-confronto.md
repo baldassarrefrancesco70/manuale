@@ -186,5 +186,5 @@ Video --- I nodi storiografici: che cos'è (davvero) un totalitarismo
 - Voce «Totalitarismo», in *Enciclopedia Treccani*, treccani.it.
 
 {% embed url="https://youtu.be/BlSDjIflRmE" %}
-Video --- Panoramica del capitolo
+Video --- Panoramica del capitolo (Il totalitarismo a confronto)
 {% endembed %}

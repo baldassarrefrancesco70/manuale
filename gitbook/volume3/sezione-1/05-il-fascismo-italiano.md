@@ -275,7 +275,7 @@ Video --- Il nodo storiografico: parentesi, rivelazione, consenso
 - Voce «Fascismo», in *Enciclopedia Treccani*, treccani.it.
 
 {% embed url="https://youtu.be/tJrLE7nqG54" %}
-Video --- Panoramica del capitolo
+Video --- Panoramica del capitolo (Il fascismo italiano)
 {% endembed %}
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/10-due-morti-a-confronto.html" %}
@@ -283,5 +283,5 @@ Risorsa digitale --- Due morti a confronto: Roma 1922 / Berlino 1933
 {% endembed %}
 
 {% embed url="https://youtu.be/L3EiA7eLtp4" %}
-Video --- Due morti a confronto: Roma 1922 / Berlino 1933
+Video --- «Roma e Berlino»: due democrazie, due morti
 {% endembed %}

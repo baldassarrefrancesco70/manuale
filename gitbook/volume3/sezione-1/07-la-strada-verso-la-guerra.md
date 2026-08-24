@@ -139,5 +139,5 @@ Video --- I nodi storiografici: piano, opportunità, calcolo
 ![Due regimi a confronto: il quadro d'insieme](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info7_Confronto_tra_Fascismo_e_Nazismo.png)
 
 {% embed url="https://youtu.be/KycASp637tQ" %}
-Video --- Il confronto: due regimi una domanda
+Video --- Il confronto: due regimi, una domanda
 {% endembed %}

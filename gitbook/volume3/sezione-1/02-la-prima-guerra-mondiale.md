@@ -356,5 +356,5 @@ Il punto cieco della lettura keynesiana è che, per quanto lucida sul piano econ
 - Voce «Prima guerra mondiale», in *Enciclopedia Treccani*, treccani.it.
 
 {% embed url="https://youtu.be/Jdy0JFsG8Pk" %}
-Video --- Panoramica del capitolo
+Video --- Panoramica del capitolo (La Prima guerra mondiale)
 {% endembed %}

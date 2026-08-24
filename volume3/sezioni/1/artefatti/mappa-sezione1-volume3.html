@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Come muore una democrazia — Mappa della sezione</title>
+<style>
+  :root{
+    --paper: #ece2c8; --ink: #2a2318; --line: #b7a173; --rule: #b7a173; --rule-soft: #cfc09a;
+    --paper-card: #f2e9d2; --paper-deep: #ddcda3; --ink-soft: #5c5136;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+
+    --cornice: #8a7a52;
+    --c1: #5c7343; /* populismo */
+    --c2: #9d4a2b; /* prima guerra mondiale */
+    --c3: #3d5566; /* rivoluzione russa */
+    --c4: #b3792c; /* weimar */
+    --c5: #3c6e63; /* fascismo italiano */
+    --c6: #6b5b7a; /* totalitarismo a confronto */
+    --c7: #4a6b8a; /* strada verso la guerra */
+    --c8: #8a5a4a; /* repubblica dei partiti */
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-card:#241d13; --paper-deep:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --line:#5a4d30; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:0 30px 70px; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,3.6vw,40px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:70ch; margin:0; }
+
+  .controls{ display:flex; gap:10px; margin-top:22px; }
+  .ctrl-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:10px 18px;
+    background:transparent; border:1px solid var(--rule); color:var(--ink); cursor:pointer; }
+  .ctrl-btn:hover{ border-color:var(--ink); }
+
+  .cascade{ position:relative; margin-top:34px; }
+  .connectors-overlay{ position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:visible; }
+  .connectors-overlay path{ fill:none; stroke:var(--rule); stroke-width:1.5; }
+  .row{ position:relative; z-index:1; display:flex; margin-bottom:6px; }
+  .row.align-left{ justify-content:flex-start; }
+  .row.align-center{ justify-content:center; }
+  .row.align-right{ justify-content:flex-end; }
+
+  .node{ display:flex; align-items:center; gap:12px; background:var(--paper-card); border:1px solid var(--rule);
+    border-left:5px solid var(--n-c); padding:13px 20px 13px 16px; cursor:pointer; box-shadow:var(--shadow);
+    font-family:var(--font-label); min-width:280px; max-width:460px; transition:transform .12s ease; position:relative; }
+  .node:hover{ transform:translateY(-2px); }
+  .node.frame{ border-left-style:double; border-left-width:7px; }
+  .node .n-tag{ font-size:9.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--n-c); font-weight:700; white-space:nowrap; }
+  .node .n-title{ font-family:var(--font-body); font-size:16px; color:var(--ink); line-height:1.25; flex:1; }
+  .node .n-chevron{ font-size:13px; color:var(--ink-soft); transition:transform .2s ease; flex-shrink:0; }
+  .node[aria-expanded="true"] .n-chevron{ transform:rotate(90deg); }
+  .node[aria-expanded="true"]{ outline:2px solid var(--n-c); outline-offset:1px; }
+
+  .panel{ max-height:0; overflow:hidden; transition:max-height .3s ease; margin:0 0 6px; }
+  .panel.open{ max-height:2400px; }
+  .panel-inner{ background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--n-c);
+    padding:20px 26px 22px; margin:4px 0 14px; max-width:900px; }
+
+  /* pannello semplice (cornice) */
+  .frame-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px; }
+  .frame-list > li{ padding-left:18px; border-left:2px solid var(--rule-soft); position:relative; }
+  .bullets{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; }
+  .bullets li{ font-size:15px; line-height:1.5; padding-left:15px; position:relative; }
+  .bullets li::before{ content:"–"; position:absolute; left:0; color:var(--n-c); font-weight:700; }
+
+  /* pannello ricco (capitolo) */
+  .cluster{ margin-bottom:20px; }
+  .cluster:last-of-type{ margin-bottom:0; }
+  .cluster-name{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11px; color:var(--n-c); font-weight:700; margin:0 0 10px; }
+  .stmt-chain{ display:flex; flex-direction:column; }
+  .stmt-block{ padding:6px 0; }
+  .stmt-arrow{ font-family:var(--font-label); font-size:11px; color:var(--ink-soft); padding:2px 0 2px 15px; }
+
+  .histo-row{ margin-top:20px; padding-top:16px; border-top:1px dashed var(--rule-soft); display:flex; flex-direction:column; gap:10px; }
+  .histo-item{ font-size:14.5px; line-height:1.5; }
+  .histo-item .htag{ display:block; font-family:var(--font-label); font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:3px; }
+  .histo-item .htag b{ color:var(--n-c); }
+
+  footer.prompt{ margin-top:40px; padding-top:18px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+
+  @media (max-width:760px){
+    .row.align-left, .row.align-center, .row.align-right{ justify-content:flex-start; }
+    .node{ min-width:0; width:100%; max-width:none; }
+    .connector-svg{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Volume 3 · Sezione 1 · Mappa di apertura</p>
+    <h1>Come muore una democrazia</h1>
+    <p class="dek">Dieci tappe, dall'apertura alla chiusura della sezione. Clicca ciascun nodo per aprire il suo pannello — più pannelli possono restare aperti insieme, per confrontare capitoli distanti fra loro.</p>
+  </header>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="expandAll" type="button">Espandi tutto</button>
+    <button class="ctrl-btn" id="collapseAll" type="button">Comprimi tutto</button>
+  </div>
+
+  <div class="cascade" id="cascade">
+    <svg class="connectors-overlay" id="connectors"></svg>
+  </div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    { id:'apertura', kind:'frame', tag:'Apertura', title:'La soglia', color:'var(--cornice)',
+      items:[
+        { bullets:['La soglia si vede solo da dopo.','Il 30 gennaio 1933 nessuna legge fu violata.','Nessun carro armato circondò il parlamento.']},
+        { bullets:['Guardrail della sezione: diffidare di ogni racconto che trasformi una sequenza di scelte in un meccanismo.','Chiedersi sempre: chi ha scelto, quando, sapendo che cosa, con quali alternative.']},
+        { bullets:['Il quarto caso è l\'Italia repubblicana.','È la prova da portare in fondo alla sezione.','Dimostra che l\'esito non era obbligato.']}
+      ] },
+
+    { id:'cap1', kind:'chapter', tag:'Capitolo 1', title:'Il problema del populismo', color:'var(--c1)',
+      clusters:[
+        { name:'Una parola-accusa', progression:false, statements:[
+          ['Nessuno si definisce populista.','La parola vive come accusa in terza persona.','Una categoria che nessuno rivendica è una categoria che nessuno ha bisogno di definire con precisione.'] ] },
+        { name:'Tre tratti, una matrice', progression:false, statements:[
+          ['I tratti ricorrenti derivano tutti dalla stessa pretesa.','Il capo incarna in via esclusiva la volontà di un popolo supposto omogeneo.'] ] },
+        { name:'Tre casi, una domanda', progression:false, statements:[
+          ['«Sono gli anni Trenta» non dice niente di preciso, né come allarme né come rifiuto.','Serve la ricostruzione, non lo slogan.'] ] }
+      ],
+      historio:[ { q:'Il populismo è una categoria d\'analisi o un\'etichetta polemica?', from:'Tre casi, una domanda' } ] },
+
+    { id:'cap2', kind:'chapter', tag:'Capitolo 2', title:'La Prima guerra mondiale', color:'var(--c2)',
+      clusters:[
+        { name:'Un\'Europa in tensione', progression:false, statements:[
+          ['Nel 1914 l\'Europa era più ricca, connessa e pacifica che mai.','La domanda non è se le tensioni esistessero.','La domanda è se rendessero la guerra necessaria o solo possibile.'] ] },
+        { name:'Una crisi non nuova, un esito nuovo', progression:true, statements:[
+          ['Sarajevo, 28 giugno 1914.','Non diversa nei suoi termini da altre crisi austro-serbe già assorbite.'],
+          ['Una guerra per cui non esisteva ancora un nome.','Riscrisse il rapporto Stato-esercito-civili.'],
+          ['L\'Italia entra in guerra il 24 maggio 1915.','La maggioranza del Parlamento non la voleva.'] ] },
+        { name:'I trattati di pace', progression:false, statements:[
+          ['«Pace cartaginese» è un giudizio a posteriori.','I fatti vanno ricostruiti prima di valutarne le conseguenze.'] ] }
+      ],
+      historio:[
+        { q:'La guerra fu voluta o fu una catastrofe involontaria?', from:'Una crisi non nuova, un esito nuovo' },
+        { q:'Le radiose giornate: volontà popolare o colpo di mano?', from:'Una crisi non nuova, un esito nuovo' },
+        { q:'Versailles: pace cartaginese o pace ragionevole mal gestita?', from:'I trattati di pace' }
+      ] },
+
+    { id:'cap3', kind:'chapter', tag:'Capitolo 3', title:'La rivoluzione russa e la società sovietica', color:'var(--c3)',
+      clusters:[
+        { name:'1917, due rivoluzioni', progression:false, statements:[
+          ['L\'autocrazia cade in otto giorni di scioperi.','Non è un colpo isolato.','Sono tre anni di guerra che ne avevano consumato ogni margine di tenuta.'] ] },
+        { name:'Guerra civile, NEP', progression:true, statements:[
+          ['Il comunismo di guerra.','La Russia sovietica in guerra contro se stessa.'],
+          ['La NEP, marzo 1921.','Una ritirata tattica.','Giudicata un tradimento dai comunisti intransigenti.'] ] },
+        { name:'Da Lenin a Stalin', progression:true, statements:[
+          ['Segretario generale nel 1922.','Un incarico considerato amministrativo.','La sottovalutazione che gli permise di costruire un potere personale.'],
+          ['1927-28: la «rivoluzione dall\'alto».','Collettivizzazione e industrializzazione forzata.'] ] },
+        { name:'Il Grande Terrore', progression:false, statements:[
+          ['Le vittime più illustri non furono i nemici della rivoluzione.','Furono i suoi stessi artefici.'] ] }
+      ],
+      historio:[
+        { q:'La Rivoluzione d\'Ottobre fu un colpo di Stato o una rivoluzione popolare?', from:'1917, due rivoluzioni' },
+        { q:'Lo stalinismo fu uno sviluppo coerente del leninismo o un suo tradimento?', from:'Da Lenin a Stalin' },
+        { q:'L\'Holodomor fu una carestia o uno sterminio deliberato?', from:'Il Grande Terrore' }
+      ] },
+
+    { id:'cap4', kind:'chapter', tag:'Capitolo 4', title:'La Repubblica di Weimar e l\'avvento del nazismo', color:'var(--c4)',
+      clusters:[
+        { name:'Una costituzione esposta', progression:false, statements:[
+          ['La costituzione più democratica d\'Europa.','Esposta fin dal primo giorno sotto il peso di Versailles.','La Repubblica difende la propria nascita affidandosi ai nemici della Repubblica stessa.'] ] },
+        { name:'Una ripresa indebitata', progression:true, statements:[
+          ['1924-29: anni di ripresa reale.','Costruita però su un credito non tedesco.'],
+          ['1929: bastarono poche settimane a New York.','Cancellarono cinque anni di ripresa.'] ] },
+        { name:'L\'ascesa e la nomina', progression:true, statements:[
+          ['Il nazismo è marginale fino al 1928.','Non sale per un\'onda inarrestabile.','Sale per una scelta tattica e una crisi sfruttata fino in fondo.'],
+          ['30 gennaio 1933.','Nessun atto di forza.','Una firma secondo la Costituzione.'],
+          ['Meno di sei mesi.','Per liquidare ogni partito capace di opporsi.'] ] }
+      ],
+      historio:[ { q:'Weimar cadde per una debolezza strutturale o per un errore di calcolo?', from:'L\'ascesa e la nomina' } ] },
+
+    { id:'cap5', kind:'chapter', tag:'Capitolo 5', title:'Il fascismo italiano', color:'var(--c5)',
+      clusters:[
+        { name:'Vincitori con la crisi di un paese sconfitto', progression:false, statements:[
+          ['L\'Italia era fra i vincitori.','Eppure il primo dopoguerra somigliò a quello di un paese sconfitto.'] ] },
+        { name:'Un movimento senza programma fisso', progression:true, statements:[
+          ['Nato nel 1919 chiedendo voto alle donne, giornata di otto ore, abolizione del Senato.','La forza sta nella disponibilità a cambiare idee, non nelle idee stesse.'],
+          ['Lo Stato liberale avrebbe potuto fermarlo con gli strumenti ordinari.','Non lo fece per scelta, non per debolezza del movimento.'] ] },
+        { name:'La presa del potere, per gradi', progression:true, statements:[
+          ['Ottobre 1922: né colpo di Stato né successione regolare.','Un ricatto armato accettato dalle istituzioni.'],
+          ['Estate 1924: il delitto Matteotti.','Il momento in cui il regime rischiò davvero di crollare.'],
+          ['Le leggi «fascistissime».','Non un colpo netto come i pieni poteri di Hitler.','Uno svuotamento dall\'interno con gli strumenti del diritto.'] ] }
+      ],
+      historio:[
+        { q:'Il fascismo fu una parentesi o una rivelazione della storia d\'Italia?', from:'Vincitori con la crisi di un paese sconfitto' },
+        { q:'Ci fu consenso, o solo coercizione?', from:'Un movimento senza programma fisso' }
+      ] },
+
+    { id:'cap6', kind:'chapter', tag:'Capitolo 6', title:'Il totalitarismo fascista e nazista a confronto', color:'var(--c6)',
+      clusters:[
+        { name:'Non un grado, un\'ambizione', progression:false, statements:[
+          ['Un regime totalitario non chiede obbedienza, chiede fede.','Vuole fabbricare un «uomo nuovo», non solo governare.'] ] },
+        { name:'Stessa forma, architetture opposte', progression:false, statements:[
+          ['Partito unico e capo idolatrato in entrambi i regimi.','La simmetria si rompe chiedendo chi comandasse davvero, e dentro quali limiti.'],
+          ['La crisi economica occupò posti opposti.','Causa dell\'ascesa in Germania.','Semplice episodio nella gestione di un potere già conquistato in Italia.'] ] },
+        { name:'La differenza di fondo', progression:false, statements:[
+          ['Per il fascismo il mito supremo era lo Stato.','Per il nazionalsocialismo era la razza.','Lo Stato, per Hitler, era solo lo strumento.'] ] }
+      ],
+      historio:[
+        { q:'Il fascismo fu un totalitarismo «a tutti gli effetti» o un totalitarismo «imperfetto»?', from:'Non un grado, un\'ambizione' },
+        { q:'Le leggi razziste italiane: imitazione o impianto autonomo?', from:'La differenza di fondo' }
+      ] },
+
+    { id:'cap7', kind:'chapter', tag:'Capitolo 7', title:'La strada verso la guerra', color:'var(--c7)',
+      clusters:[
+        { name:'Il revisionismo tedesco', progression:false, statements:[
+          ['1933-36: uscita dalla Società delle Nazioni, riarmo, rimilitarizzazione della Renania.','Ogni passo una misura di quanto le democrazie fossero disposte a incassare senza reagire.'] ] },
+        { name:'Dall\'ostilità all\'alleanza', progression:true, statements:[
+          ['Fino a metà anni Trenta la diffidenza di Mussolini verso il nazismo era reale, non tattica.','Un «Brennero ideologico» contro l\'esclusivismo razziale tedesco.'],
+          ['1935-36: l\'aggressione all\'Etiopia.','Un calcolo di politica estera e interna insieme.'],
+          ['Marzo 1938.','Mussolini rinuncia senza colpo ferire all\'indipendenza austriaca.','La stessa che aveva difeso nel 1934.'] ] },
+        { name:'La fine dell\'illusione', progression:false, statements:[
+          ['1939.','Dal Patto d\'Acciaio alla spartizione della Polonia.'] ] }
+      ],
+      historio:[
+        { q:'La politica estera di Hitler seguiva un piano prestabilito o rispondeva all\'opportunità?', from:'Il revisionismo tedesco' },
+        { q:'La guerra d\'Etiopia fu l\'ultimo colonialismo o la vera premessa della guerra mondiale?', from:'Dall\'ostilità all\'alleanza' },
+        { q:'Il patto Molotov-Ribbentrop fu calcolo cinico o difesa strategica?', from:'La fine dell\'illusione' }
+      ] },
+
+    { id:'cap8', kind:'chapter', tag:'Capitolo 8', title:'La Repubblica dei partiti e la crisi di Tangentopoli', color:'var(--c8)',
+      clusters:[
+        { name:'Nascere in ginocchio', progression:false, statements:[
+          ['Aprile 1945: un paese in ginocchio.','Non pronto a scrivere una Costituzione.','«Vento del Nord» contro spinte conservatrici del Sud.'] ] },
+        { name:'Un\'istituzionalità esterna', progression:false, statements:[
+          ['L\'articolo 49 riconosce i partiti.','Ma non ne regola l\'organizzazione interna.','Nasce la «Repubblica dei partiti».'] ] },
+        { name:'Il crollo, senza causa unica', progression:false, statements:[
+          ['1992-94.','Non la fine della Guerra Fredda da sola.','Non il debito da solo.','Non la corruzione da sola.','La coincidenza di crisi diverse insieme.'] ] }
+      ],
+      historio:[
+        { q:'Tangentopoli fu una rivoluzione giudiziaria o un risanamento necessario?', from:'Il crollo, senza causa unica' },
+        { q:'La Seconda Repubblica: rottura reale o continuità sotto altra forma?', from:'Un\'istituzionalità esterna' }
+      ] },
+
+    { id:'chiusura', kind:'frame', tag:'Chiusura', title:'La soglia, rivista', color:'var(--cornice)',
+      items:[
+        { bullets:['La soglia resta visibile solo da dopo.','Non un solo istante, ma molti.','Ciascuno reversibile mentre lo si attraversava.']},
+        { bullets:['Primo guardrail confermato: mai un automatismo.','Sette decisioni nel 1914.','Un calcolo di pochi uomini nel 1933.','Una catena di scelte in Italia.','Cinquant\'anni di decisioni a Tangentopoli.']},
+        { bullets:['Secondo guardrail: anche la fragilità reale non equivale a una condanna.','Il quarto caso ha retto.']},
+        { bullets:['Un\'ambivalenza mai sciolta.','Governo di tecnici, legge elettorale proporzionale, perfino la legalità hanno prodotto esiti opposti.','Tutto dipende da chi li ha impugnati.']},
+        { bullets:['Domanda aperta al presente.','Un sistema di mediazione logorato.','Forze nuove pronte a proporsi come alternativa diretta.']}
+      ] }
+  ];
+
+  var ALIGN = ['left','center','right','left','center','right','left','center','right','center'];
+  var open = {};
+  DATA.forEach(function(n){ open[n.id] = false; });
+
+  var cascade = document.getElementById('cascade');
+  var connectorsSvg = document.getElementById('connectors');
+
+  function bulletList(bullets){
+    var html = '<ul class="bullets">';
+    bullets.forEach(function(b){ html += '<li>'+b+'</li>'; });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildFramePanel(node){
+    var html = '<ul class="frame-list">';
+    node.items.forEach(function(it){
+      html += '<li>' + bulletList(it.bullets) + '</li>';
+    });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildChapterPanel(node){
+    var html = '';
+    node.clusters.forEach(function(cl){
+      html += '<div class="cluster"><div class="cluster-name">'+cl.name+'</div><div class="stmt-chain">';
+      cl.statements.forEach(function(bullets, i){
+        html += '<div class="stmt-block">'+bulletList(bullets)+'</div>';
+        if(cl.progression && i < cl.statements.length - 1){
+          html += '<div class="stmt-arrow">↓</div>';
+        }
+      });
+      html += '</div></div>';
+    });
+    if(node.historio && node.historio.length){
+      html += '<div class="histo-row">';
+      node.historio.forEach(function(h){
+        html += '<div class="histo-item"><span class="htag">Nodo storiografico · da: <b>'+h.from+'</b></span>'+h.q+'</div>';
+      });
+      html += '</div>';
+    }
+    return html;
+  }
+
+  function render(){
+    var rows = cascade.querySelectorAll('.row, .panel');
+    rows.forEach(function(el){ el.remove(); });
+
+    DATA.forEach(function(node, idx){
+      var row = document.createElement('div');
+      row.className = 'row align-' + ALIGN[idx];
+
+      var btn = document.createElement('button');
+      btn.className = 'node' + (node.kind === 'frame' ? ' frame' : '');
+      btn.style.setProperty('--n-c', node.color);
+      btn.type = 'button';
+      btn.setAttribute('data-node-id', node.id);
+      btn.setAttribute('aria-expanded', String(open[node.id]));
+      btn.innerHTML = '<span class="n-tag">'+node.tag+'</span><span class="n-title">'+node.title+'</span><span class="n-chevron">▸</span>';
+      btn.addEventListener('click', function(){ open[node.id] = !open[node.id]; render(); });
+      row.appendChild(btn);
+      cascade.appendChild(row);
+
+      var panel = document.createElement('div');
+      panel.className = 'panel' + (open[node.id] ? ' open' : '');
+      var inner = document.createElement('div');
+      inner.className = 'panel-inner';
+      inner.style.setProperty('--n-c', node.color);
+      inner.innerHTML = node.kind === 'frame' ? buildFramePanel(node) : buildChapterPanel(node);
+      panel.appendChild(inner);
+      cascade.appendChild(panel);
+    });
+
+    requestAnimationFrame(drawConnectors);
+  }
+
+  function drawConnectors(){
+    var anyOpen = Object.keys(open).some(function(k){ return open[k]; });
+    connectorsSvg.style.display = anyOpen ? 'none' : '';
+    if(anyOpen) return;
+
+    var cRect = cascade.getBoundingClientRect();
+    var nodes = cascade.querySelectorAll('.node');
+    connectorsSvg.setAttribute('width', cRect.width);
+    connectorsSvg.setAttribute('height', cascade.scrollHeight);
+    connectorsSvg.setAttribute('viewBox', '0 0 ' + cRect.width + ' ' + cascade.scrollHeight);
+
+    var points = [];
+    nodes.forEach(function(n){
+      var r = n.getBoundingClientRect();
+      points.push({
+        cx: r.left - cRect.left + r.width / 2,
+        top: r.top - cRect.top,
+        bottom: r.top - cRect.top + r.height
+      });
+    });
+
+    var paths = '';
+    for(var i = 0; i < points.length - 1; i++){
+      var a = points[i], b = points[i+1];
+      var midY = (a.bottom + b.top) / 2;
+      var d = 'M ' + a.cx + ' ' + a.bottom +
+              ' C ' + a.cx + ' ' + midY + ', ' + b.cx + ' ' + midY + ', ' + b.cx + ' ' + b.top;
+      paths += '<path d="' + d + '"></path>';
+    }
+    connectorsSvg.innerHTML = paths;
+  }
+
+  window.addEventListener('resize', function(){ requestAnimationFrame(drawConnectors); });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = true; });
+    render();
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = false; });
+    render();
+  });
+
+  render();
+
+})();
+</script>
+</body>
+</html>

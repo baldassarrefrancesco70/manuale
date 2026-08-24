@@ -237,5 +237,5 @@ Video --- Il nodo storiografico: struttura o scelta?
 - Voce «Repubblica di Weimar», in *Enciclopedia Treccani*, treccani.it.
 
 {% embed url="https://youtu.be/QJvcCT7WHSs" %}
-Video --- Panoramica del capitolo
+Video --- Panoramica del capitolo (La Repubblica di Weimar)
 {% endembed %}

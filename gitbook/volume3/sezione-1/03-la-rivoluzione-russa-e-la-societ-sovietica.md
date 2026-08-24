@@ -219,5 +219,5 @@ Video --- Colpo di Stato, tradimento, sterminio: tre letture della rivoluzione
 
 
 {% embed url="https://youtu.be/3AdZM2JyoCk" %}
-Video --- Panoramica del capitolo
+Video --- Panoramica del capitolo (La rivoluzione russa e la società sovietica)
 {% endembed %}
