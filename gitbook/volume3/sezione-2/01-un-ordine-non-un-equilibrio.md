@@ -1,17 +1,8 @@
 # Un ordine, non un equilibrio
 
-{% hint style="info" %}
-**Prerequisiti**
-
-Il capitolo sulla crisi delle democrazie ha già raccontato come si arriva alla Seconda guerra mondiale: la crisi degli stati liberali, l'ascesa dei totalitarismi, il fallimento della Società delle Nazioni come cornice di sicurezza collettiva. Questa sezione non ripercorre quella genesi: la presuppone, e sposta lo sguardo dalla politica interna degli stati che precipitano nella guerra alle regole del sistema internazionale che quella guerra produce e poi distrugge.
-
-Serve anche un richiamo alla Prima guerra mondiale e al sistema di Versailles: il primo, fallito tentativo di scrivere regole comuni dopo un conflitto totale. Tenerlo presente aiuta a misurare la distanza tra il 1919 e il 1945 — e a chiedersi, capitolo dopo capitolo, che cosa i vincitori del secondo dopoguerra abbiano davvero imparato dal fallimento del primo, e che cosa invece abbiano ripetuto.
-
 Un'assunzione va messa in discussione prima di procedere. "Ordine internazionale" suona come sinonimo di stabilità, quasi un equilibrio naturale a cui il sistema tende quando nessuno lo disturba. Non è così: ogni ordine di cui questa sezione parlerà — quello del 1945, quello unipolare degli anni Novanta, quello ancora informe di oggi — è stato scritto da chi aveva vinto un conflitto, per proteggere anzitutto la propria posizione. Le regole comuni e gli interessi di chi le scrive non coincidono quasi mai del tutto: è la tensione che attraversa ogni capitolo che segue, dal veto al Consiglio di Sicurezza fino alla domanda su chi decida oggi le regole del sistema globale.
 
 I nodi da tenere fermi, capitolo dopo capitolo, sono tre: chi ha il potere di scrivere le regole in un dato momento; quale prezzo — e per chi — comporta ogni nuovo ordine fondato; che cosa distingue un ordine che regge da uno che si limita a rinviare la propria crisi.
-{% endhint %}
-
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/1_organizzatore_tre_direttrici.html" %}
 Risorsa digitale --- Mappa dei prerequisiti — i tre nodi dell'ordine internazionale

@@ -50,7 +50,7 @@ Il capitolo segue l'Italia da una guerra parallela combattuta per sedersi al tav
 - **Infografica** --- [La Brigata Maiella e le bande partigiane](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info4_Brigata_Maiella_nella_Resistenza.png)
 - **Video** --- [Le foibe e l'esodo](https://youtu.be/m2sDkkCSSYo)
 - **Infografica** --- [Dalla monarchia alla Repubblica (1943-1946)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info5_Italia_verso_la_democrazia.png)
-- **Video** --- [Dalla Resistenza alla Repubblica](https://youtu.be/OKQ2_0t7J_w)
+- **Video** --- Dalla Resistenza alla Repubblica
 
 
 ## Capitolo · L'ONU e il nuovo ordine mondiale
