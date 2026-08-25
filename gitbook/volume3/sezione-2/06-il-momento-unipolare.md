@@ -50,7 +50,7 @@ La vittoria fu totale, e proprio per questo la decisione che la concluse è la p
 ## La guerra torna in Europa: la dissoluzione della Jugoslavia
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/Bh_jgt5o72M" %}
 Video --- La guerra torna in Europa
 {% endembed %}
 
@@ -63,7 +63,7 @@ Dove le popolazioni erano omogenee, come in Slovenia, la separazione fu quasi in
 
 Fu lì che la «pulizia etnica» divenne il nome di una pratica sistematica: terrorizzare una popolazione per costringerla ad abbandonare la propria terra, con gli assedi (quello di Sarajevo durò anni), le deportazioni, i massacri, lo stupro usato come arma. **Qui vale la pena fermarsi su una distinzione che non è un cavillo, ma un problema aperto del diritto internazionale.** In teoria la pulizia etnica si distingue dal genocidio: la prima mira ad allontanare un gruppo, il secondo ad annientarlo. Ma la Convenzione del 1948 definisce genocidio anche la volontà di distruggere un gruppo «in tutto o in parte», e proprio questa formula rende il confine incerto: il massacro di Srebrenica, nel 1995, in cui migliaia di uomini e ragazzi musulmani furono uccisi in pochi giorni (v), è stato in seguito riconosciuto come genocidio da un tribunale internazionale. La domanda se lo sradicamento di un popolo da una terra sia cosa diversa dal tentativo di distruggerlo attraversa tutta la storia del secolo, e in Bosnia si ripresentò intatta.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/zmldUGuSnR0" %}
 Video --- Pulizia o Genocidio?
 {% endembed %}
 
@@ -100,7 +100,7 @@ Da questa impotenza nacque la tentazione più insidiosa. Nel 1999, per fermare l
 
 Il decennio che si era aperto con la superpotenza sola e trionfante si chiuse con quella stessa superpotenza colpita nel proprio cuore, in una mattina di settembre, da un nemico senza Stato, senza esercito e senza bandiera. **L'11 settembre 2001 dimostrò, in poche ore, ciò che l'intero decennio aveva lasciato intuire: disporre di una potenza senza rivali non significava essere al sicuro.** L'attacco ai simboli del potere economico e militare americano non fu solo il più traumatico atto terroristico dell'età contemporanea; fu la fine dell'illusione di invulnerabilità nata con la caduta del Muro, e il segnale che il conflitto aveva cambiato natura.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/CjnPls2x370" %}
 Video --- 11 settembre 2001: il giorno che cambiò il secolo
 {% endembed %}
 

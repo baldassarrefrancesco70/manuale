@@ -17,6 +17,6 @@ Nel corso di un solo secolo il mondo ha visto scrivere e riscrivere queste regol
 
 Non è una domanda a cui la storia risponda una volta per tutte. È una domanda che la storia continua a riformulare, ogni volta che l'ordine esistente smette di reggere.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/9JnU13L5csU" %}
 Video --- Svelare l'Ordine
 {% endembed %}

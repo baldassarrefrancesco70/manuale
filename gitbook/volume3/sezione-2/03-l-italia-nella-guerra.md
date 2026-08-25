@@ -45,7 +45,7 @@ Lo Stato, in quel momento, si dissolse dall'alto. Il re, la famiglia reale e Bad
 
 Il crollo dello Stato lasciò un vuoto che ciascuno dovette colmare da solo. Scomparsa l'autorità, venuti meno gli ordini e i riferimenti, ogni italiano si trovò davanti a una scelta individuale, e per molti fu il conflitto tra due fedeltà: quella giurata al re e quella giurata al fascismo. La maggior parte dei militari internati in Germania — circa tre su quattro (v) — preferì restare in prigionia piuttosto che aderire alla **Repubblica Sociale** che Mussolini, liberato dai tedeschi, stava fondando al Nord: un rifiuto silenzioso e di massa, la prima grande forma di resistenza dopo l'8 settembre. Italo Calvino avrebbe scritto che in quelle settimane «bastava un nulla» per ritrovarsi da una parte o dall'altra; e tuttavia la scelta non fu casuale. Chi salì in montagna scelse di credere in una patria nuova, ancora da costruire; chi aderì a Salò scelse la fedeltà all'alleanza con la Germania e a un'idea di onore nazionale che il fascismo aveva plasmato. Da quella scelta, moltiplicata per centinaia di migliaia, nacque l'Italia divisa dei venti mesi successivi.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/LgKTnfIZXG0" %}
 Video --- L'8 settembre 1943, il giorno della scelta
 {% endembed %}
 
@@ -64,7 +64,7 @@ La stessa scelta, in forma diversa, toccò gli oltre seicentomila militari cattu
 {% endhint %}
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/XWpU04uPel4" %}
 Video --- Cefalonia e gli internati
 {% endembed %}
 
@@ -152,7 +152,7 @@ A quel trauma si legò, negli anni successivi, l'**esodo** di gran parte della p
 _cfr. [approfondimento in Atlante, cartina 5 --- La questione di Trieste](atlante.md#cartina-5)_
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/m2sDkkCSSYo" %}
 Video --- Le foibe e l'esodo
 {% endembed %}
 
@@ -169,7 +169,7 @@ Da quell'Assemblea sarebbe nata la Costituzione repubblicana, costruita sui valo
 ![Dalla monarchia alla Repubblica (1943-1946)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info5_Italia_verso_la_democrazia.png)
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/OKQ2_0t7J_w" %}
 Video --- Dalla Resistenza alla Repubblica
 {% endembed %}
 

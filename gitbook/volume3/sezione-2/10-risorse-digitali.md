@@ -9,7 +9,7 @@ Le risorse digitali e i video sono già incontrati nel corso del capitolo, nel p
 
 Il capitolo apre la sezione fissando la domanda che la attraverserà tutta — chi scrive le regole di un ordine internazionale, e a quale prezzo — prima ancora di entrare nella cronologia: la risorsa qui introduce il filo che i capitoli seguenti sviluppano uno alla volta.
 
-- **Video** --- [Svelare l'Ordine](https://drive.google.com/file/d//view)
+- **Video** --- [Svelare l'Ordine](https://youtu.be/9JnU13L5csU)
 
 
 ## Capitolo · Un ordine, non un equilibrio
@@ -18,8 +18,8 @@ Il capitolo apre la sezione fissando la domanda che la attraverserà tutta — c
 Il capitolo fissa i tre snodi di un secolo — 1945, 1991, oggi — che reggono l'intera sezione, e li fissa prima di cominciare a raccontarli: le risorse qui orientano il lettore, non riassumono ciò che viene dopo.
 
 - **Risorsa digitale** --- [Mappa dei prerequisiti — i tre nodi dell'ordine internazionale](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/1_organizzatore_tre_direttrici.html)
-- **Video** --- [Arco di una Scelta](https://drive.google.com/file/d//view)
-- **Video** --- [L'Ordine Internazionale](https://drive.google.com/file/d//view)
+- **Video** --- [Arco di una Scelta](https://youtu.be/OKQ2_0t7J_w)
+- **Video** --- [L'Ordine Internazionale](https://youtu.be/TvJ9UxGcxgg)
 
 
 ## Capitolo · La Seconda guerra mondiale
@@ -29,11 +29,11 @@ Il capitolo segue la guerra dalla catena di aggressioni degli anni Trenta fino a
 
 - **Risorsa digitale** --- [Verso la guerra — la catena delle aggressioni (1931-1939)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/2_timeline_catena_aggressioni.html)
 - **Infografica** --- [La guerra totale in cifre](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info1_La_Guerra_Totale_in_cifre.png)
-- **Video** --- [I civili come bersaglio](https://drive.google.com/file/d//view)
+- **Video** --- [I civili come bersaglio](https://youtu.be/70uXI1Jg3ZM)
 - **Infografica** --- [La Shoah, dalla persecuzione allo sterminio](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info2_Cronologia_Shoah_%281933-1945%29.png)
-- **Video** --- [La soglia atomica e l'equilibrio del terrore](https://drive.google.com/file/d//view)
+- **Video** --- [La soglia atomica e l'equilibrio del terrore](https://youtu.be/IdC_n_AYT08)
 - **Risorsa digitale** --- [Le soglie della guerra totale](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/13_soglie_guerra_totale.html)
-- **Video** --- [Monaco 1938: l'illusione](https://drive.google.com/file/d//view)
+- **Video** --- [Monaco 1938: l'illusione](https://youtu.be/lrev_RcgTyw)
 
 
 ## Capitolo · L'Italia nella guerra
@@ -42,15 +42,15 @@ Il capitolo segue la guerra dalla catena di aggressioni degli anni Trenta fino a
 Il capitolo segue l'Italia da una guerra parallela combattuta per sedersi al tavolo della pace fino alla nascita della Repubblica, passando per la cesura dell'8 settembre: le risorse qui aiutano a tenere separate le tre guerre — di liberazione, civile, di classe — che il racconto deve per forza mettere in sequenza.
 
 - **Risorsa digitale** --- [L'Italia nella guerra — cronologia interattiva (1940-1946)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/3_timeline_italia_in_guerra.html)
-- **Video** --- [L'8 settembre 1943, il giorno della scelta](https://drive.google.com/file/d//view)
+- **Video** --- [L'8 settembre 1943, il giorno della scelta](https://youtu.be/LgKTnfIZXG0)
 - **Risorsa digitale** --- [8 settembre 1943: la scelta di ciascuno](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/14_scelta_8_settembre.html)
-- **Video** --- [Cefalonia e gli internati](https://drive.google.com/file/d//view)
+- **Video** --- [Cefalonia e gli internati](https://youtu.be/XWpU04uPel4)
 - **Infografica** --- [Le due Italie dopo l'8 settembre](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info3_due_Italie_del_1943.png)
 - **Risorsa digitale** --- [Le tre guerre della Resistenza](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/4_le_tre_guerre_della_resistenza.html)
 - **Infografica** --- [La Brigata Maiella e le bande partigiane](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info4_Brigata_Maiella_nella_Resistenza.png)
-- **Video** --- [Le foibe e l'esodo](https://drive.google.com/file/d//view)
+- **Video** --- [Le foibe e l'esodo](https://youtu.be/m2sDkkCSSYo)
 - **Infografica** --- [Dalla monarchia alla Repubblica (1943-1946)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info5_Italia_verso_la_democrazia.png)
-- **Video** --- [Dalla Resistenza alla Repubblica](https://drive.google.com/file/d//view)
+- **Video** --- [Dalla Resistenza alla Repubblica](https://youtu.be/OKQ2_0t7J_w)
 
 
 ## Capitolo · L'ONU e il nuovo ordine mondiale
@@ -59,14 +59,14 @@ Il capitolo segue l'Italia da una guerra parallela combattuta per sedersi al tav
 Il capitolo ricostruisce l'architettura del 1945 — Consiglio di Sicurezza, veto, Bretton Woods — insieme alle tensioni che porta già scritte dentro di sé, da Yalta a Norimberga: le risorse qui permettono di maneggiare quella logica, non solo di leggerne la descrizione.
 
 - **Infografica** --- [Due superpotenze asimmetriche (1945)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info6_Superpotenze_Asimmetriche_nel_1945.png)
-- **Video** --- [Il potere del veto](https://drive.google.com/file/d//view)
+- **Video** --- [Il potere del veto](https://youtu.be/tw0U2wT8vFs)
 - **Risorsa digitale** --- [Simula il Consiglio di Sicurezza: la logica del veto](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/15_simula_consiglio_sicurezza.html)
 - **Infografica** --- [Chi decide all'ONU: Assemblea e Consiglio](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info7_Governance_ONU__Assemblea_e_Consiglio.png)
 - **Risorsa digitale** --- [La macchina delle Nazioni Unite](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/5_organigramma_onu.html)
 - **Risorsa digitale** --- [1945: le strade ancora aperte](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/6_1945_strade_aperte.html)
 - **Infografica** --- [Bretton Woods, l'architettura economica](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info8_Architettura_Economica_Bretton_Woods_1945.png)
-- **Video** --- [Yalta: spartizione o fotografia?](https://drive.google.com/file/d//view)
-- **Video** --- [Processo di Norimberga](https://drive.google.com/file/d//view)
+- **Video** --- [Yalta: spartizione o fotografia?](https://youtu.be/Arl2vpeNgNg)
+- **Video** --- [Processo di Norimberga](https://youtu.be/psDtS1UC_f0)
 
 
 ## Capitolo · La guerra fredda
@@ -77,9 +77,9 @@ Il capitolo attraversa oltre quarant'anni di equilibrio del terrore, dalle origi
 - **Risorsa digitale** --- [Il dilemma della sicurezza](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/8_dilemma_sicurezza.html)
 - **Infografica** --- [Due blocchi: alleanze e mercati](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info9_Simmetria_della_Guerra_Fredda.png)
 - **Infografica** --- [La corsa agli armamenti (1949-1987)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info10_corsa_agli_armamenti_nucleari.png)
-- **Video** --- [Tredici giorni sull'orlo: la crisi di Cuba](https://drive.google.com/file/d//view)
+- **Video** --- [Tredici giorni sull'orlo: la crisi di Cuba](https://youtu.be/6s8sluM-CuM)
 - **Risorsa digitale** --- [Sull'orlo del baratro: decidi nella crisi di Cuba](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/16_crisi_cuba.html)
-- **Video** --- [Il Muro di Berlino](https://drive.google.com/file/d//view)
+- **Video** --- [Il Muro di Berlino](https://youtu.be/IwFHPCewtCc)
 - **Infografica** --- [Il crollo del blocco sovietico (1989-1991)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info11_Fine_del_Blocco_Sovietico.png)
 - **Risorsa digitale** --- [La guerra fredda a corsie (1945-1991)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/7_timeline_guerra_fredda_corsie.html)
 
@@ -90,11 +90,11 @@ Il capitolo attraversa oltre quarant'anni di equilibrio del terrore, dalle origi
 Il capitolo segue il decennio in cui un solo ordine sembrava reggere il mondo intero, dalla dissoluzione dell'URSS alla Jugoslavia fino all'11 settembre: le risorse qui aiutano a misurare quanto quell'unipolarità fosse già, fin dall'inizio, meno stabile di come si presentava.
 
 - **Infografica** --- [Il primato americano degli anni Novanta](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info12_primato_americano_anni_novanta%20.png)
-- **Video** --- [La guerra torna in Europa](https://drive.google.com/file/d//view)
-- **Video** --- [Pulizia o Genocidio?](https://drive.google.com/file/d//view)
+- **Video** --- [La guerra torna in Europa](https://youtu.be/Bh_jgt5o72M)
+- **Video** --- [Pulizia o Genocidio?](https://youtu.be/zmldUGuSnR0)
 - **Risorsa digitale** --- [La dissoluzione della Jugoslavia (1991-2008)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/10_dissoluzione_jugoslavia.html)
 - **Infografica** --- [Le guerre del decennio: con o senza l'ONU](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info13_ONU_tra_Ambizione_e_Veto.png)
-- **Video** --- [11 settembre 2001: il giorno che cambiò il secolo](https://drive.google.com/file/d//view)
+- **Video** --- [11 settembre 2001: il giorno che cambiò il secolo](https://youtu.be/CjnPls2x370)
 - **Risorsa digitale** --- [La deriva dell'ONU: dal Golfo all'Iraq](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/17_deriva_onu.html)
 - **Risorsa digitale** --- [Fine della storia o scontro di civiltà?](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/9_fine_storia_scontro_civilta.html)
 - **Infografica** --- [La storia dell'ONU in cinque puntate](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info14_Evoluzione_della_legittimit%C3%A0_internazionale.png)
@@ -105,13 +105,13 @@ Il capitolo segue il decennio in cui un solo ordine sembrava reggere il mondo in
 
 Il capitolo segue la Cina dall'anomalia del 1949 alla sfida odierna all'ordine internazionale, passando per la svolta di Deng e il bivio del 1989: le risorse qui aiutano a distinguere che cosa, in quel percorso, è davvero rottura e che cosa è solo continuità travestita da riforma.
 
-- **Video** --- [La Cina, da Mao a oggi: un profilo in tre tempi](https://drive.google.com/file/d//view)
-- **Video** --- [Il bivio: piazza Tienanmen](https://drive.google.com/file/d//view)
+- **Video** --- [La Cina, da Mao a oggi: un profilo in tre tempi](https://youtu.be/Ia7LG8YpIuU)
+- **Video** --- [Il bivio: piazza Tienanmen](https://youtu.be/zaUEKOYeJF0)
 - **Risorsa digitale** --- [Il bivio del 1989: due strade a confronto](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/11_bivio_1989.html)
 - **Infografica** --- [L'ascesa della Cina, dal 1949 a oggi](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info15_ascesa_della_Cina_moderna.png)
 - **Risorsa digitale** --- [La potenza ibrida: mare contro terra](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/18_potenza_ibrida_cina.html)
 - **Infografica** --- [La Cina e le Nazioni Unite (1949-oggi)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info16_Evoluzione_della_Cina_all_ONU.png)
-- **Video** --- [Nuova Guerra Fredda?](https://drive.google.com/file/d//view)
+- **Video** --- [Nuova Guerra Fredda?](https://youtu.be/FaZB-P7DM4Y)
 
 
 ## Capitolo · Un testo ancora aperto

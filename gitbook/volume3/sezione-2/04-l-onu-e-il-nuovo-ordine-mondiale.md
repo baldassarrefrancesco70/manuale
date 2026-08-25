@@ -51,7 +51,7 @@ Il veto fu preteso con la massima fermezza dall'Unione Sovietica di Stalin, e la
 
 La presenza stessa del veto era già un sintomo. Diceva che, mentre firmavano insieme la Carta, i vincitori non si fidavano più gli uni degli altri, e che la cooperazione da cui l'ordine del 1945 doveva nascere si stava incrinando prima ancora di cominciare. Negli anni della guerra fredda quel diritto sarebbe stato usato a piene mani, paralizzando il Consiglio ogni volta che le due superpotenze si trovavano su fronti opposti: tra il 1946 e il 1964 la sola Unione Sovietica vi ricorse più di cento volte (v). Quanto questa paralisi lasciò all'ONU la possibilità di agire davvero, e in quali crisi riuscì comunque a incidere, è una storia che accompagna tutta la seconda metà del secolo, e che questo manuale seguirà a puntate.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/tw0U2wT8vFs" %}
 Video --- Il potere del veto
 {% endembed %}
 
@@ -149,7 +149,7 @@ Il nodo, però, non si scioglie assegnando la ragione alla seconda lettura e il 
 
 *Tesi da mettere alla prova: «A Yalta gli occidentali potevano ottenere un'Europa orientale non sovietizzata, e non lo fecero.» Su quali prove si regge questa affermazione? Quali rapporti di forza dovrebbe ignorare per essere vera?*
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/Arl2vpeNgNg" %}
 Video --- Yalta: spartizione o fotografia?
 {% endembed %}
 
@@ -157,7 +157,7 @@ Video --- Yalta: spartizione o fotografia?
 ### Norimberga fu giustizia o giustizia dei vincitori?
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/psDtS1UC_f0" %}
 Video --- Processo di Norimberga
 {% endembed %}
 

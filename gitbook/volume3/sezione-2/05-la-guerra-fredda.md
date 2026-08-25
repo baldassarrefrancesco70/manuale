@@ -192,7 +192,7 @@ Poco più di un anno dopo, la stessa logica fu spinta fino all'estremo dall'altr
 
 Quando, nell'autunno del 1962, la ricognizione americana scoprì le rampe in costruzione, il mondo si fermò. Kennedy scartò il bombardamento immediato e scelse una via intermedia, il blocco navale dell'isola, per fermare le navi sovietiche senza sparare il primo colpo. Per giorni la possibilità di una guerra atomica fu concreta come non era mai stata. **Ciò che salvò il mondo non fu la forza, ma la disponibilità di entrambi i leader a lasciare all'altro una via d'uscita che non fosse l'umiliazione totale.** Chruščëv ritirò i missili in cambio dell'impegno americano a non invadere Cuba; e, in segreto, gli Stati Uniti accettarono di smantellare i propri missili installati in Turchia. La parte nascosta dell'accordo fu decisiva, perché permise a Mosca di cedere senza apparire sconfitta, anche se non bastò a evitare a Chruščëv le critiche del proprio partito, di un Castro tenuto fuori dalle trattative, e di una Cina che denunciò l'avventurismo e poi il cedimento dei sovietici.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/6s8sluM-CuM" %}
 Video --- Tredici giorni sull'orlo: la crisi di Cuba
 {% endembed %}
 
@@ -296,7 +296,7 @@ Fu in questo vuoto che nel 1985 emerse Michail Gorbačëv, un dirigente di un'al
 
 La conseguenza più grande, però, maturò in Europa, e Gorbačëv la mise in conto solo in parte. Applicando anche ai paesi dell'Est la sua rinuncia alla forza, egli lasciò cadere la dottrina Brežnev: annunciò cioè che Mosca non sarebbe più intervenuta con i carri armati per tenere in piedi i regimi comunisti dei satelliti. Fu come togliere il puntello a un edificio che si reggeva solo su di esso. **Per quarant'anni quei regimi erano sopravvissuti perché dietro di loro c'era l'Armata Rossa; nel momento in cui quella garanzia venne meno, crollarono uno dopo l'altro, e in pochi mesi.** Nel 1989 la Polonia ebbe il primo governo non comunista dell'Est, portato dal sindacato libero **Solidarność**; l'Ungheria aprì le proprie frontiere; e il 9 novembre, senza che nessuno avesse dato l'ordine di sparare, cadde il Muro di Berlino, il simbolo stesso della divisione del continente. Nel giro di settimane i regimi di Praga, Sofia e Bucarest si dissolsero, e l'anno dopo le due Germanie si riunificarono, con il consenso di una Mosca ormai troppo debole e troppo bisognosa di aiuti per opporsi.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/IwFHPCewtCc" %}
 Video --- Il Muro di Berlino
 {% endembed %}
 

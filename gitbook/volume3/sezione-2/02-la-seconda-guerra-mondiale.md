@@ -159,7 +159,7 @@ Anche sul terreno la superiorità tedesca non fu mai assoluta. Il carro sovietic
 ## I civili come bersaglio
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/70uXI1Jg3ZM" %}
 Video --- I civili come bersaglio
 {% endembed %}
 
@@ -258,7 +258,7 @@ Quella soglia ridisegnò le relazioni tra gli stati per tutto il resto del secol
 
 L'**equilibrio del terrore** ebbe un effetto preciso sulla geografia dei conflitti. La frontiera europea, dove i due blocchi si fronteggiavano più da vicino, rimase congelata proprio perché troppo pericolosa da toccare; le guerre si spostarono altrove, nelle aree periferiche del mondo, dove le superpotenze si affrontarono **per interposte persone**, sostenendo campi opposti in Corea, in Vietnam e in molti altri teatri, senza mai varcare la soglia che le avrebbe trascinate nello scontro diretto. Da tutto questo il capitolo che segue prende le mosse. Perché il paradosso più duro è che l'ordine internazionale costruito nel 1945, di cui si dirà tra poco, avrebbe promesso agli stati una sicurezza collettiva fondata sulla pace e sul diritto, mentre la sicurezza reale del mezzo secolo successivo sarebbe poggiata su qualcosa di opposto: la minaccia condivisa dell'annientamento. È con questa contraddizione alle spalle che i vincitori si sedettero a riscrivere le regole del mondo.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/IdC_n_AYT08" %}
 Video --- La soglia atomica e l'equilibrio del terrore
 {% endembed %}
 
@@ -276,7 +276,7 @@ Gli eventi raccontati in questo capitolo sono tra quelli su cui la ricerca stori
 ### L'appeasement fu ingenuità o scelta razionale?
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/lrev_RcgTyw" %}
 Video --- Monaco 1938: l'illusione
 {% endembed %}
 

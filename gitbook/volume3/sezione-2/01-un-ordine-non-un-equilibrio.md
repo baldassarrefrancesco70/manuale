@@ -25,11 +25,11 @@ Perché guardare proprio al 1945? Perché è lì che comincia la vicenda che que
 
 Per capire come nasce l'ordine che oggi appare in crisi, bisogna partire da come finisce quello precedente. Il sistema uscito da Versailles non crolla all'improvviso nel 1939: mostra le sue crepe già negli anni Venti e Trenta, e la guerra che segue è l'ultimo, definitivo atto di un fallimento che si vedeva da tempo. È da quel doppio fallimento — quello di un ordine, e quello della pace che avrebbe dovuto custodirlo — che nasce l'esigenza di un ordine diverso.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/OKQ2_0t7J_w" %}
 Video --- Arco di una Scelta
 {% endembed %}
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/TvJ9UxGcxgg" %}
 Video --- L'Ordine Internazionale
 {% endembed %}

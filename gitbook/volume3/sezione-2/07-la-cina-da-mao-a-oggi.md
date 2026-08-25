@@ -20,7 +20,7 @@ Furono soprattutto gli esperimenti interni a segnare quegli anni, e a segnarli t
 
 Sul piano internazionale, intanto, la Cina si allontanava dall'Unione Sovietica fino alla rottura aperta. La destalinizzazione e la «coesistenza pacifica» di Chruščëv apparvero a Mao un tradimento della rivoluzione; le divergenze si trasformarono in ostilità, Mosca ritirò i propri tecnici, e nel 1964 la Cina si dotò di una propria bomba atomica, proclamandosi modello alternativo per il Terzo Mondo. Quello **scisma sino-sovietico**, che il capitolo sulla guerra fredda ha già incontrato come prova che il campo comunista non era un blocco compatto, spinse infine Pechino verso una svolta clamorosa: temendo più Mosca che Washington, all'inizio degli anni Settanta la Cina si riavvicinò agli Stati Uniti, tornando dopo decenni di isolamento sulla scena diplomatica mondiale. Quando Mao morì, nel 1976, lasciava un paese immenso, povero, esausto dai propri esperimenti, ma ormai libero da ogni tutela: pronto, senza saperlo, a una trasformazione che nessuno avrebbe previsto.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/Ia7LG8YpIuU" %}
 Video --- La Cina, da Mao a oggi: un profilo in tre tempi
 {% endembed %}
 
@@ -45,7 +45,7 @@ La scintilla fu la morte, nell'aprile del 1989, di Hu Yaobang, un dirigente rifo
 
 A sciogliere il bivio fu Deng Xiaoping, e la sua scelta rivela il principio su cui l'intera Cina contemporanea si regge. Per Deng, artefice della più radicale apertura economica, la stabilità politica era il presupposto non negoziabile di ogni successo, e il monopolio del Partito il limite invalicabile che nessuna riforma poteva toccare. La via del dialogo fu respinta. Il 3 e il 4 giugno 1989 l'esercito ricevette l'ordine di intervenire, e i carri armati entrarono nella piazza aprendo il fuoco sulla folla disarmata, stroncando nel sangue il movimento. L'immagine di un uomo solo e inerme fermo davanti a una colonna di blindati, il «ribelle sconosciuto», divenne in tutto il mondo il simbolo di quella repressione.
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/zaUEKOYeJF0" %}
 Video --- Il bivio: piazza Tienanmen
 {% endembed %}
 
@@ -121,7 +121,7 @@ Anche qui, tenere insieme le due risposte è più fecondo che scegliere. Ridurre
 ### Il confronto tra Stati Uniti e Cina è una nuova guerra fredda?
 
 
-{% embed url="https://drive.google.com/file/d//view" %}
+{% embed url="https://youtu.be/FaZB-P7DM4Y" %}
 Video --- Nuova Guerra Fredda?
 {% endembed %}
 
