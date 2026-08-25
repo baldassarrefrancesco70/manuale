@@ -169,7 +169,7 @@ Da quell'Assemblea sarebbe nata la Costituzione repubblicana, costruita sui valo
 ![Dalla monarchia alla Repubblica (1943-1946)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info5_Italia_verso_la_democrazia.png)
 
 
-{% embed url="" %}
+{% embed url="https://youtu.be/OKQ2_0t7J_w" %}
 Video --- Dalla Resistenza alla Repubblica
 {% endembed %}
 

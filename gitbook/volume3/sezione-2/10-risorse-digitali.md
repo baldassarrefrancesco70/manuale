@@ -18,7 +18,7 @@ Il capitolo apre la sezione fissando la domanda che la attraverserà tutta — c
 Il capitolo fissa i tre snodi di un secolo — 1945, 1991, oggi — che reggono l'intera sezione, e li fissa prima di cominciare a raccontarli: le risorse qui orientano il lettore, non riassumono ciò che viene dopo.
 
 - **Risorsa digitale** --- [Mappa dei prerequisiti — i tre nodi dell'ordine internazionale](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/1_organizzatore_tre_direttrici.html)
-- **Video** --- [Arco di una Scelta](https://youtu.be/OKQ2_0t7J_w)
+- **Video** --- Arco di una Scelta
 - **Video** --- [L'Ordine Internazionale](https://youtu.be/TvJ9UxGcxgg)
 
 
@@ -50,7 +50,7 @@ Il capitolo segue l'Italia da una guerra parallela combattuta per sedersi al tav
 - **Infografica** --- [La Brigata Maiella e le bande partigiane](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info4_Brigata_Maiella_nella_Resistenza.png)
 - **Video** --- [Le foibe e l'esodo](https://youtu.be/m2sDkkCSSYo)
 - **Infografica** --- [Dalla monarchia alla Repubblica (1943-1946)](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/img/info5_Italia_verso_la_democrazia.png)
-- **Video** --- Dalla Resistenza alla Repubblica
+- **Video** --- [Dalla Resistenza alla Repubblica](https://youtu.be/OKQ2_0t7J_w)
 
 
 ## Capitolo · L'ONU e il nuovo ordine mondiale
