@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'ordine come testo: autore, data, esclusi</title>
+<style>
+  :root{
+    --azzurro:#E8F4F8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--azzurro);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:880px; margin:0 auto; padding:26px 24px 36px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 24px; line-height:1.5;
+  }
+  .matrice{
+    display:grid;
+    grid-template-columns: 130px repeat(3, 1fr);
+    gap:8px;
+    margin-bottom:22px;
+  }
+  .angolo{}
+  .intestazione-doc{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:1rem; text-align:center;
+    color:var(--marrone-scuro);
+    background:#fffdfa; border:1.5px solid var(--marrone);
+    border-radius:8px; padding:10px 6px;
+  }
+  .etichetta-campo{
+    display:flex; align-items:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.78rem;
+    color:var(--marrone-scuro);
+    background:#fffdfa; border:1.5px solid var(--marrone);
+    border-radius:8px; padding:10px 12px; line-height:1.3;
+  }
+  .cella{
+    background:var(--grigio);
+    border:1.5px solid var(--marrone);
+    border-radius:8px;
+    padding:10px 12px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    min-height:64px;
+    transition:background 0.25s;
+  }
+  .cella .coperta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem; color:#8a8175; letter-spacing:0.03em;
+  }
+  .cella .testo-cella{
+    display:none;
+    font-family:Georgia, serif; font-size:0.78rem; line-height:1.45; color:var(--testo);
+  }
+  .cella.aperta{
+    background:#fffdfa;
+    cursor:default;
+  }
+  .cella.aperta .coperta{ display:none; }
+  .cella.aperta .testo-cella{ display:block; }
+
+  .idea-guida{
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif;
+    font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+  @media (max-width:640px){
+    .matrice{ grid-template-columns: 1fr; }
+    .angolo{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>L'ordine come testo</h1>
+    <p class="sottotitolo">Autore, data, esclusi</p>
+  </header>
+
+  <p class="istruzioni">
+    Ogni ordine internazionale è un testo. Clicca sui campi per scoprire, per ciascuno dei tre ordini, chi lo ha scritto, quando, e chi ne resta escluso.
+  </p>
+
+  <div class="matrice">
+    <div class="angolo"></div>
+    <div class="intestazione-doc">1945</div>
+    <div class="intestazione-doc">1991</div>
+    <div class="intestazione-doc">oggi</div>
+
+    <div class="etichetta-campo">Chi l'ha scritto</div>
+    <div class="cella" data-cella="1945-autore"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Le potenze vincitrici della Seconda guerra mondiale, riunite a San Francisco: Stati Uniti, Regno Unito, Unione Sovietica, Francia, Cina in testa.</span></div>
+    <div class="cella" data-cella="1991-autore"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Gli Stati Uniti, unica superpotenza rimasta, con l'adesione formale della comunità internazionale riunita nell'ONU.</span></div>
+    <div class="cella" data-cella="oggi-autore"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Nessun autore unico: potenze consolidate (Stati Uniti, Unione Europea) e potenze emergenti (Cina, India e altre) si contendono la scrittura delle regole.</span></div>
+
+    <div class="etichetta-campo">Quando</div>
+    <div class="cella" data-cella="1945-quando"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Nella primavera del 1945, mentre la guerra in Europa si concludeva e quella nel Pacifico proseguiva.</span></div>
+    <div class="cella" data-cella="1991-quando"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Nel momento del crollo sovietico, fra la guerra del Golfo (1991) e la fine dell'URSS.</span></div>
+    <div class="cella" data-cella="oggi-quando"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Un testo ancora in redazione, riscritto giorno per giorno da crisi, alleanze e rotture.</span></div>
+
+    <div class="etichetta-campo">Chi ne è escluso</div>
+    <div class="cella" data-cella="1945-esclusi"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Gli Stati sconfitti (Germania, Giappone, Italia), i popoli ancora sotto dominio coloniale, e chiunque non sedesse fra i vincitori al tavolo delle decisioni.</span></div>
+    <div class="cella" data-cella="1991-esclusi"><span class="coperta">clicca per scoprire</span><span class="testo-cella">La Russia postsovietica, indebolita e in cerca di un ruolo; gli Stati che non condividevano il modello ora presentato come universale.</span></div>
+    <div class="cella" data-cella="oggi-esclusi"><span class="coperta">clicca per scoprire</span><span class="testo-cella">Dipende da chi lo racconta: per alcuni sono le potenze emergenti a restare fuori dalle regole scritte da altri; per altri sono le regole comuni stesse a essere sempre più disattese da chi le aveva scritte.</span></div>
+  </div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Ogni ordine ha i suoi margini: chi lo scrive include se stesso e i propri alleati, e lascia fuori qualcuno. Gli esclusi non scompaiono: tornano sempre, prima o poi, a bussare — o a contestare — quello stesso testo.
+  </div>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.cella').forEach(function(c){
+    c.addEventListener('click', function(){
+      c.classList.add('aperta');
+    });
+  });
+})();
+</script>
+</body>
+</html>

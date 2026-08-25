@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il dilemma della sicurezza</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --usa:#4f7a72;
+    --usa-bg:#e4ece9;
+    --urss:#9c5b45;
+    --urss-bg:#f0e3dd;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:26px 24px 40px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:12px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.88rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem;
+    text-align:center;
+    color:#6b6255;
+    margin:10px 0 22px;
+    line-height:1.5;
+  }
+  .legenda-poli{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    margin-bottom:22px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.74rem;
+    color:#6b6255;
+  }
+  .legenda-poli .voce{ display:flex; align-items:center; gap:6px; }
+  .pallino{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+
+  .progress{
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    margin-bottom:22px;
+  }
+  .progress .puntino{
+    width:9px; height:9px; border-radius:50%;
+    background:#ddd4c4;
+    transition:background 0.2s;
+  }
+  .progress .puntino.fatto{ background:var(--marrone); }
+
+  .log{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-bottom:20px;
+  }
+  .voce-log{
+    background:#fffdfa;
+    border-radius:8px;
+    padding:14px 18px;
+    border-left:5px solid var(--marrone);
+    opacity:0;
+    transform:translateY(6px);
+    animation:comparsa 0.4s ease forwards;
+  }
+  @keyframes comparsa{
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .voce-log.usa{ border-left-color:var(--usa); background:var(--usa-bg); }
+  .voce-log.urss{ border-left-color:var(--urss); background:var(--urss-bg); }
+  .voce-log.esito{ border-left-color:var(--marrone); background:#fffdfa; }
+
+  .voce-log .etichetta-tipo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.62rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    font-weight:600;
+    color:var(--marrone-scuro);
+    display:block;
+    margin-bottom:4px;
+  }
+  .voce-log.usa .etichetta-tipo{ color:var(--usa); }
+  .voce-log.urss .etichetta-tipo{ color:var(--urss); }
+  .voce-log .voce-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.9rem;
+    margin:0 0 6px;
+    color:var(--testo);
+  }
+  .voce-log p{
+    font-family:Georgia, serif;
+    font-size:0.85rem;
+    line-height:1.55;
+    margin:0;
+    color:var(--testo);
+  }
+
+  .controlli{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:10px;
+  }
+  .btn{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.8rem;
+    font-weight:600;
+    border:1.5px solid var(--marrone);
+    background:#fffdfa;
+    color:var(--marrone-scuro);
+    padding:9px 20px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s, opacity 0.2s;
+  }
+  .btn:hover:not(:disabled){ background:var(--marrone); color:#fff; }
+  .btn:disabled{ opacity:0.35; cursor:default; }
+  .btn-primario{ background:var(--marrone); color:#fff; }
+  .btn-primario:hover:not(:disabled){ background:var(--marrone-scuro); }
+
+  .spirale-box{
+    text-align:center;
+    margin:6px 0 4px;
+  }
+  .spirale-box svg{ width:150px; height:150px; }
+
+  .idea-guida{
+    margin-top:6px;
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif;
+    font-size:0.85rem;
+    line-height:1.6;
+    color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Il dilemma della sicurezza</h1>
+    <p class="sottotitolo">Come nasce una spirale, senza che nessuno voglia la guerra</p>
+  </header>
+
+  <p class="istruzioni">
+    Avanza passo per passo: ogni mossa difensiva di una potenza viene mostrata anche con gli occhi dell'altra. Nessun punteggio, nessuna vittoria — segui semplicemente come la spirale si costruisce.
+  </p>
+
+  <div class="legenda-poli">
+    <span class="voce"><span class="pallino" style="background:var(--usa);"></span>Stati Uniti</span>
+    <span class="voce"><span class="pallino" style="background:var(--urss);"></span>Unione Sovietica</span>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <div class="log" id="log"></div>
+
+  <div class="controlli">
+    <button class="btn" id="btnIndietro" disabled>◂ indietro</button>
+    <button class="btn btn-primario" id="btnAvanti">avanti ▸</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var passi = [
+    {
+      side: 'urss', tipo: 'Mossa difensiva — URSS',
+      titolo: "L'URSS costruisce una «zona cuscinetto»",
+      testo: "Dopo aver subito due invasioni da occidente in una generazione, Mosca impone governi comunisti negli Stati dell'Europa orientale liberati dall'Armata Rossa. Nella lettura sovietica, è una misura di sicurezza: un cuscinetto contro un'altra invasione."
+    },
+    {
+      side: 'usa', tipo: 'Vista con gli occhi dell\'altro — Washington',
+      titolo: "Vista da Washington",
+      testo: "Non appare una difesa, ma l'imposizione di un dominio esterno su interi Stati sovrani: una minaccia diretta all'equilibrio e alla libertà dell'Europa."
+    },
+    {
+      side: 'usa', tipo: 'Mossa difensiva — USA',
+      titolo: "Gli Stati Uniti lanciano il Piano Marshall",
+      testo: "Washington finanzia la ricostruzione dell'Europa occidentale per impedire che la crisi economica apra la strada al comunismo. Nella lettura americana, è una misura difensiva."
+    },
+    {
+      side: 'urss', tipo: 'Vista con gli occhi dell\'altro — Mosca',
+      titolo: "Vista da Mosca",
+      testo: "Non appare un aiuto economico neutro, ma uno strumento per legare l'Europa occidentale al blocco americano e isolare, politicamente ed economicamente, l'Unione Sovietica."
+    },
+    {
+      side: 'urss', tipo: 'Contromossa difensiva — URSS',
+      titolo: "L'URSS risponde: Cominform e Patto di Varsavia",
+      testo: "Mosca coordina i partiti comunisti europei e poi costruisce un'alleanza militare fra i paesi dell'Est. Nella lettura sovietica, è una risposta difensiva all'accerchiamento economico e militare occidentale."
+    },
+    {
+      side: 'usa', tipo: 'Vista con gli occhi dell\'altro — Washington',
+      titolo: "Vista da Washington",
+      testo: "Non appare una difesa, ma il consolidamento del controllo sovietico sull'Europa orientale e la creazione di una minaccia militare diretta ai confini dell'Europa occidentale."
+    },
+    {
+      side: 'esito', tipo: 'La spirale',
+      titolo: "Nessun aggressore, eppure lo scontro",
+      testo: "SPIRALE_SVG__Non è servito un aggressore perché la spirale nascesse: sono bastate due potenze che si temevano, ciascuna convinta di difendersi, ciascuna letta dall'altra come una minaccia. È lo stesso meccanismo che il capitolo interroga nel nodo «la guerra fredda era inevitabile?»."
+    }
+  ];
+
+  var log = document.getElementById('log');
+  var progress = document.getElementById('progress');
+  var btnAvanti = document.getElementById('btnAvanti');
+  var btnIndietro = document.getElementById('btnIndietro');
+  var indice = 0;
+
+  var spiraleSVG = '<div class="spirale-box"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+    '<path d="M110,100 L111.55,106.67 L108.33,114.44 L100,120 L88.33,120.21 L76.90,113.33 L70,100 L71.14,83.33 L81.67,68.24 L100,60 L121.67,62.47 L140.42,76.67 L150,100 L146.18,126.67 L128.33,149.08 L100,160 L68.33,154.85 L42.25,133.33 L30,100 L36.51,63.33 L61.67,33.60 L100,20 L141.67,27.90 L175.06,56.67 L190,100" ' +
+    'stroke="#8B7355" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#freccia)"/>' +
+    '<defs><marker id="freccia" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8B7355"/></marker></defs>' +
+    '</svg></div>';
+
+  // progress dots
+  for(var p=0; p<passi.length; p++){
+    var d = document.createElement('span');
+    d.className = 'puntino';
+    progress.appendChild(d);
+  }
+
+  function aggiornaProgress(){
+    var dots = progress.querySelectorAll('.puntino');
+    dots.forEach(function(dot, i){
+      dot.classList.toggle('fatto', i < indice);
+    });
+  }
+
+  function renderLog(){
+    log.innerHTML = '';
+    for(var i=0; i<indice; i++){
+      var passo = passi[i];
+      var div = document.createElement('div');
+      div.className = 'voce-log ' + (passo.side === 'esito' ? 'esito' : passo.side);
+      var testoFinale = passo.testo;
+      var extra = '';
+      if(testoFinale.indexOf('SPIRALE_SVG__') === 0){
+        extra = spiraleSVG;
+        testoFinale = testoFinale.replace('SPIRALE_SVG__', '');
+      }
+      div.innerHTML = '<span class="etichetta-tipo">' + passo.tipo + '</span>' +
+        '<p class="voce-titolo">' + passo.titolo + '</p>' +
+        extra +
+        '<p>' + testoFinale + '</p>';
+      log.appendChild(div);
+    }
+    aggiornaProgress();
+    btnIndietro.disabled = (indice === 0);
+    if(indice >= passi.length){
+      btnAvanti.textContent = 'ricomincia ↺';
+    } else {
+      btnAvanti.textContent = 'avanti ▸';
+    }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  btnAvanti.addEventListener('click', function(){
+    if(indice >= passi.length){
+      indice = 0;
+      renderLog();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    indice++;
+    renderLog();
+  });
+
+  btnIndietro.addEventListener('click', function(){
+    if(indice > 0){
+      indice--;
+      renderLog();
+    }
+  });
+
+  renderLog();
+})();
+</script>
+</body>
+</html>

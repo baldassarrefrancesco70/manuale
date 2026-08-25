@@ -18,3 +18,17 @@
     * [ATLANTE](sezione-1/atlante.md)
     * [Risorse digitali](sezione-1/11-risorse-digitali.md)
 <!-- SEZIONE:sezione-1 END -->
+<!-- SEZIONE:sezione-2 START -->
+<!-- TITOLO:La costruzione e la crisi dell'ordine internazionale -->
+  * [Sezione 2](sezione-2/README.md)
+    * [Un ordine, non un equilibrio](sezione-2/01-un-ordine-non-un-equilibrio.md)
+    * [La Seconda guerra mondiale](sezione-2/02-la-seconda-guerra-mondiale.md)
+    * [L'Italia nella guerra](sezione-2/03-l-italia-nella-guerra.md)
+    * [L'ONU e il nuovo ordine mondiale](sezione-2/04-l-onu-e-il-nuovo-ordine-mondiale.md)
+    * [La guerra fredda](sezione-2/05-la-guerra-fredda.md)
+    * [Il momento unipolare](sezione-2/06-il-momento-unipolare.md)
+    * [La Cina, da Mao a oggi](sezione-2/07-la-cina-da-mao-a-oggi.md)
+    * [Un testo ancora aperto](sezione-2/08-un-testo-ancora-aperto.md)
+    * [ATLANTE](sezione-2/atlante.md)
+    * [Risorse digitali](sezione-2/10-risorse-digitali.md)
+<!-- SEZIONE:sezione-2 END -->

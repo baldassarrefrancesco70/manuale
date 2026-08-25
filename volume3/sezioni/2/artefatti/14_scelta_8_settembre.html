@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8 settembre 1943: la scelta di ciascuno</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --resistere:#6f8f5c;
+    --resistere-bg:#e9eee3;
+    --rsi:#5c6b7a;
+    --rsi-bg:#e4e8ec;
+    --attendismo:#c2a267;
+    --attendismo-bg:#f3ecdd;
+    --imi:#8a5a6b;
+    --imi-bg:#efe4e8;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:880px; margin:0 auto; padding:26px 24px 36px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 20px; line-height:1.5;
+  }
+
+  .nodo-centrale{
+    max-width:340px;
+    margin:0 auto 6px;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:14px 20px;
+    text-align:center;
+  }
+  .nodo-centrale-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.95rem;
+    color:var(--marrone-scuro);
+    margin:0 0 4px;
+  }
+  .nodo-centrale p{
+    font-family:Georgia, serif; font-size:0.8rem; line-height:1.5;
+    margin:0; color:var(--testo);
+  }
+  .linea-giu{
+    width:2px; height:24px; background:var(--marrone); margin:0 auto;
+  }
+
+  .opzioni{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+    margin-bottom:22px;
+  }
+  .opzione{
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .opzione[data-opzione="resistere"]{ border-color:var(--resistere); }
+  .opzione[data-opzione="rsi"]{ border-color:var(--rsi); }
+  .opzione[data-opzione="attendismo"]{ border-color:var(--attendismo); }
+  .opzione[data-opzione="imi"]{ border-color:var(--imi); }
+
+  .opzione-header{
+    padding:12px 16px;
+    cursor:pointer;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.82rem;
+    color:#fff;
+    text-align:center;
+    transition:filter 0.2s;
+  }
+  .opzione[data-opzione="resistere"] .opzione-header{ background:var(--resistere); }
+  .opzione[data-opzione="rsi"] .opzione-header{ background:var(--rsi); }
+  .opzione[data-opzione="attendismo"] .opzione-header{ background:var(--attendismo); }
+  .opzione[data-opzione="imi"] .opzione-header{ background:var(--imi); }
+  .opzione-header:hover{ filter:brightness(1.08); }
+
+  .opzione-corpo{
+    max-height:0;
+    overflow:hidden;
+    padding:0 16px;
+    transition:max-height 0.3s ease, padding 0.3s ease;
+  }
+  .opzione.aperta .opzione-corpo{
+    max-height:320px;
+    padding:12px 16px 14px;
+  }
+  .opzione[data-opzione="resistere"] .opzione-corpo{ background:var(--resistere-bg); }
+  .opzione[data-opzione="rsi"] .opzione-corpo{ background:var(--rsi-bg); }
+  .opzione[data-opzione="attendismo"] .opzione-corpo{ background:var(--attendismo-bg); }
+  .opzione[data-opzione="imi"] .opzione-corpo{ background:var(--imi-bg); }
+
+  .campo-etichetta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem; text-transform:uppercase; letter-spacing:0.04em;
+    font-weight:600; color:var(--marrone-scuro);
+    display:block; margin:8px 0 3px;
+  }
+  .campo-etichetta:first-child{ margin-top:0; }
+  .opzione-corpo p{
+    font-family:Georgia, serif; font-size:0.8rem; line-height:1.5;
+    margin:0; color:var(--testo);
+  }
+
+  .idea-guida{
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif;
+    font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+  @media (max-width:560px){
+    .opzioni{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>8 settembre 1943</h1>
+    <p class="sottotitolo">La scelta di ciascuno</p>
+  </header>
+
+  <p class="istruzioni">
+    Dissolto lo Stato, ogni italiano dovette scegliere. Apri le quattro strade per scoprire chi le percorse e a quale prezzo. Nessuna «vittoria»: il punto è la pluralità delle scelte possibili.
+  </p>
+
+  <div class="nodo-centrale">
+    <p class="nodo-centrale-titolo">8 settembre 1943</p>
+    <p>L'annuncio dell'armistizio dissolve lo Stato e il suo esercito in poche ore: nessun ordine chiaro, nessuna autorità a decidere per i singoli.</p>
+  </div>
+  <div class="linea-giu"></div>
+
+  <div class="opzioni">
+    <div class="opzione" data-opzione="resistere">
+      <div class="opzione-header">Resistere</div>
+      <div class="opzione-corpo">
+        <span class="campo-etichetta">Chi la scelse</span>
+        <p>Militari sbandati, ex antifascisti, giovani che rifiutano la chiamata alle armi della Repubblica Sociale, e una parte della popolazione civile che li sostiene.</p>
+        <span class="campo-etichetta">A quale prezzo</span>
+        <p>Clandestinità, rappresaglie durissime in caso di cattura, il rischio costante di stragi contro i civili che li aiutavano.</p>
+      </div>
+    </div>
+
+    <div class="opzione" data-opzione="rsi">
+      <div class="opzione-header">Aderire alla Repubblica Sociale</div>
+      <div class="opzione-corpo">
+        <span class="campo-etichetta">Chi la scelse</span>
+        <p>Militari e funzionari fedeli al fascismo, chi crede ancora nell'alleanza con la Germania o vi è costretto dalla leva della RSI, chi teme la vendetta tedesca in caso di rifiuto.</p>
+        <span class="campo-etichetta">A quale prezzo</span>
+        <p>Il coinvolgimento in un regime sempre più subordinato ai tedeschi; a guerra finita, l'accusa di collaborazionismo.</p>
+      </div>
+    </div>
+
+    <div class="opzione" data-opzione="attendismo">
+      <div class="opzione-header">Tornare a casa</div>
+      <div class="opzione-corpo">
+        <span class="campo-etichetta">Chi la scelse</span>
+        <p>La maggioranza dei militari sbandati e di molti civili, che scelgono di attendere gli eventi senza schierarsi apertamente («attendismo»).</p>
+        <span class="campo-etichetta">A quale prezzo</span>
+        <p>Il rischio di essere comunque catturati e deportati come lavoratori coatti o renitenti, senza alcuno schieramento a proteggerli.</p>
+      </div>
+    </div>
+
+    <div class="opzione" data-opzione="imi">
+      <div class="opzione-header">Il rifiuto degli Internati Militari</div>
+      <div class="opzione-corpo">
+        <span class="campo-etichetta">Chi la scelse</span>
+        <p>Circa 600.000 soldati italiani catturati dai tedeschi, ai quali viene offerta la scelta di continuare a combattere a fianco della Germania o della RSI: la grande maggioranza rifiuta.</p>
+        <span class="campo-etichetta">A quale prezzo</span>
+        <p>L'internamento nei campi di lavoro tedeschi, in condizioni durissime, per il resto della guerra — una scelta senza armi, pagata con anni di prigionia.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Con il crollo dello Stato, l'8 settembre fu anche il momento in cui la scelta tornò ai singoli: non più un ordine dall'alto da eseguire, ma una decisione personale, presa da ciascuno con le informazioni e le paure di quei giorni. È questa la «morte della patria» di cui parla la storiografia.
+  </div>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.opzione-header').forEach(function(h){
+    h.addEventListener('click', function(){
+      h.parentElement.classList.toggle('aperta');
+    });
+  });
+})();
+</script>
+</body>
+</html>

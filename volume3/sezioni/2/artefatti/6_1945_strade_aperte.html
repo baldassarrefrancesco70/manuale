@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1945: le strade ancora aperte</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --ramo-a:#5f8a7c;
+    --ramo-a-bg:#e5edea;
+    --ramo-b:#b08968;
+    --ramo-b-bg:#f2e8de;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:28px 24px 40px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.35rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.9rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem;
+    text-align:center;
+    color:#6b6255;
+    margin:10px 0 26px;
+    line-height:1.5;
+  }
+  .nodo-1945{
+    max-width:560px;
+    margin:0 auto 8px;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:18px 22px;
+  }
+  .nodo-1945-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    color:var(--marrone-scuro);
+    text-align:center;
+    margin:0 0 10px;
+  }
+  .dati-realta{
+    display:grid;
+    gap:8px;
+  }
+  .dato{
+    font-family:Georgia, serif;
+    font-size:0.84rem;
+    line-height:1.5;
+    margin:0;
+  }
+  .dato .etichetta-dato{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.72rem;
+    color:var(--marrone-scuro);
+    display:block;
+    margin-bottom:2px;
+  }
+  .linea-bivio{
+    width:2px;
+    height:26px;
+    background:var(--marrone);
+    margin:0 auto;
+  }
+  .bivio{
+    display:flex;
+    justify-content:center;
+    gap:36px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .ramo{
+    width:100%;
+    max-width:380px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .ramo-linea-h{
+    display:none;
+  }
+  .ramo-header{
+    width:100%;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px 10px 0 0;
+    padding:12px 16px;
+    text-align:center;
+    cursor:pointer;
+    transition:background 0.2s;
+  }
+  .ramo[data-ramo="a"] .ramo-header{
+    border-color:var(--ramo-a);
+  }
+  .ramo[data-ramo="b"] .ramo-header{
+    border-color:var(--ramo-b);
+  }
+  .ramo-header.aperto[data-fill]{
+    background:inherit;
+  }
+  .ramo[data-ramo="a"] .ramo-header.aperto{
+    background:var(--ramo-a-bg);
+  }
+  .ramo[data-ramo="b"] .ramo-header.aperto{
+    background:var(--ramo-b-bg);
+  }
+  .ramo-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.86rem;
+    line-height:1.35;
+  }
+  .ramo[data-ramo="a"] .ramo-titolo{ color:var(--ramo-a); }
+  .ramo[data-ramo="b"] .ramo-titolo{ color:var(--ramo-b); }
+  .ramo-corpo{
+    width:100%;
+    border:1.5px solid var(--marrone);
+    border-top:none;
+    border-radius:0 0 10px 10px;
+    background:#fffdfa;
+    padding:0 16px;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease, padding 0.3s ease;
+  }
+  .ramo[data-ramo="a"] .ramo-corpo{ border-color:var(--ramo-a); }
+  .ramo[data-ramo="b"] .ramo-corpo{ border-color:var(--ramo-b); }
+  .ramo-corpo.aperto{
+    max-height:420px;
+    padding:14px 16px 16px;
+  }
+  .ramo-blocco{
+    margin-bottom:10px;
+  }
+  .ramo-blocco:last-child{
+    margin-bottom:0;
+  }
+  .ramo-blocco .etichetta-dato{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    display:block;
+    margin-bottom:3px;
+  }
+  .ramo[data-ramo="a"] .ramo-blocco .etichetta-dato{ color:var(--ramo-a); }
+  .ramo[data-ramo="b"] .ramo-blocco .etichetta-dato{ color:var(--ramo-b); }
+  .ramo-blocco p{
+    font-family:Georgia, serif;
+    font-size:0.82rem;
+    line-height:1.5;
+    margin:0;
+    color:var(--testo);
+  }
+  .domanda-finale{
+    text-align:center;
+    margin-top:32px;
+  }
+  .btn-reveal{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.8rem;
+    font-weight:600;
+    background:transparent;
+    border:1.5px solid var(--marrone);
+    color:var(--marrone-scuro);
+    padding:9px 20px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s;
+  }
+  .btn-reveal:hover{
+    background:var(--marrone);
+    color:#fff;
+  }
+  .esito{
+    display:none;
+    max-width:640px;
+    margin:18px auto 0;
+    background:var(--grigio);
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:18px 22px;
+    text-align:left;
+  }
+  .esito.visibile{
+    display:block;
+  }
+  .esito-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.86rem;
+    color:var(--marrone-scuro);
+    margin:0 0 8px;
+  }
+  .esito p{
+    font-family:Georgia, serif;
+    font-size:0.84rem;
+    line-height:1.55;
+    margin:0 0 10px;
+    color:var(--testo);
+  }
+  .esito p:last-child{
+    margin-bottom:0;
+    font-style:italic;
+    color:#5a5248;
+  }
+  @media (min-width:660px){
+    .bivio{ align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>1945: le strade ancora aperte</h1>
+    <p class="sottotitolo">Il futuro, alla fine della guerra, non era ancora scritto</p>
+  </header>
+
+  <p class="istruzioni">
+    Esplora i due rami possibili aperti dal 1945. Nessuno dei due è segnato come "quello vero": scoprirai l'esito solo in fondo alla pagina.
+  </p>
+
+  <div class="nodo-1945">
+    <p class="nodo-1945-titolo">1945</p>
+    <div class="dati-realta">
+      <p class="dato"><span class="etichetta-dato">La cooperazione è ancora in corso</span>l'ONU appena fondata, gli accordi di Yalta, le promesse di libere elezioni nei territori liberati.</p>
+      <p class="dato"><span class="etichetta-dato">Ma la diffidenza cresce</span>il diritto di veto al Consiglio di Sicurezza, le posizioni militari già occupate sul terreno dagli eserciti alleati e sovietici.</p>
+    </div>
+  </div>
+
+  <div class="linea-bivio"></div>
+
+  <div class="bivio" id="bivio">
+    <div class="ramo" data-ramo="a">
+      <div class="ramo-header" data-toggle="a">
+        <p class="ramo-titolo">Un ordine cooperativo tra le potenze vincitrici</p>
+      </div>
+      <div class="ramo-corpo" data-corpo="a">
+        <div class="ramo-blocco">
+          <span class="etichetta-dato">Che cosa avrebbe richiesto</span>
+          <p>Che Stati Uniti e Unione Sovietica accettassero di continuare a decidere insieme, come avevano fatto contro la Germania; che le sfere di influenza restassero provvisorie e negoziabili; che le libere elezioni promesse a Yalta si tenessero davvero.</p>
+        </div>
+        <div class="ramo-blocco">
+          <span class="etichetta-dato">Che cosa lo rendeva difficile</span>
+          <p>Due sistemi politici ed economici incompatibili; l'assenza di fiducia reciproca dopo anni di sospetti; il fatto che ciascuna potenza controllasse già militarmente il territorio che considerava strategico.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ramo" data-ramo="b">
+      <div class="ramo-header" data-toggle="b">
+        <p class="ramo-titolo">La divisione in sfere contrapposte</p>
+      </div>
+      <div class="ramo-corpo" data-corpo="b">
+        <div class="ramo-blocco">
+          <span class="etichetta-dato">Che cosa avrebbe richiesto</span>
+          <p>Che ciascuna potenza rinunciasse a cercare un accordo generale e consolidasse invece il controllo esclusivo sulla propria area di influenza, trattando l'altra sfera come estranea.</p>
+        </div>
+        <div class="ramo-blocco">
+          <span class="etichetta-dato">Che cosa lo rendeva difficile</span>
+          <p>Gli impegni pubblici presi a Yalta e nella Carta dell'ONU, che rendevano costoso in termini di immagine rompere apertamente la cooperazione; l'incertezza su dove tracciare, in pratica, il confine fra le due sfere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="domanda-finale">
+    <button class="btn-reveal" id="btnReveal">Che cosa accadde davvero?</button>
+    <div class="esito" id="esito">
+      <p class="esito-titolo">L'esito storico</p>
+      <p>Nei mesi e negli anni successivi il 1945 prevalse la seconda strada: il mondo si divise in due blocchi contrapposti, e la cooperazione fra le potenze vincitrici lasciò il posto alla guerra fredda.</p>
+      <p>Era davvero l'unico esito possibile? O fu il risultato di scelte — fatte da persone, in momenti precisi — che avrebbero potuto andare diversamente?</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var headers = document.querySelectorAll('[data-toggle]');
+  var btnReveal = document.getElementById('btnReveal');
+  var esito = document.getElementById('esito');
+
+  headers.forEach(function(h){
+    h.addEventListener('click', function(){
+      var id = h.getAttribute('data-toggle');
+      var corpo = document.querySelector('[data-corpo="' + id + '"]');
+      var apertoOra = h.classList.toggle('aperto');
+      corpo.classList.toggle('aperto', apertoOra);
+    });
+  });
+
+  btnReveal.addEventListener('click', function(){
+    var visibile = esito.classList.toggle('visibile');
+    btnReveal.style.display = visibile ? 'none' : 'inline-block';
+  });
+})();
+</script>
+</body>
+</html>

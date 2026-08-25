@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La dissoluzione della Jugoslavia (1991-2008)</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --federale:#e4ddd0;
+    --indipendente:#7fa8a0;
+    --conflitto:#a1473a;
+    --mare:#dce8ee;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:26px 24px 36px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:12px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.88rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.74rem;
+    text-align:center;
+    color:#6b6255;
+    margin:8px 0 18px;
+    line-height:1.5;
+  }
+
+  .tappe{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .tappa-btn{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem;
+    font-weight:600;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    color:var(--marrone-scuro);
+    padding:8px 13px;
+    border-radius:16px;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s;
+    text-align:center;
+    line-height:1.25;
+  }
+  .tappa-btn.attiva{
+    background:var(--marrone);
+    color:#fff;
+  }
+
+  .legenda-mappa{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem;
+    color:#6b6255;
+  }
+  .legenda-mappa .voce{ display:flex; align-items:center; gap:5px; }
+  .swatch{ width:13px; height:13px; border-radius:3px; display:inline-block; border:1px solid var(--marrone); }
+
+  .mappa-box{
+    display:flex;
+    justify-content:center;
+    margin-bottom:18px;
+  }
+  .mappa-box svg{
+    width:100%;
+    max-width:560px;
+    height:auto;
+  }
+  .regione{
+    stroke:var(--marrone);
+    stroke-width:1.4;
+    transition:fill 0.4s ease;
+  }
+  .regione.federale{ fill:var(--federale); }
+  .regione.indipendente{ fill:var(--indipendente); }
+  .regione.contestato{ fill:var(--indipendente); stroke-dasharray:4 3; opacity:0.85; }
+  .overlay-conflitto{
+    fill:var(--conflitto);
+    fill-opacity:0;
+    stroke:none;
+    pointer-events:none;
+    transition:fill-opacity 0.4s ease;
+  }
+  .overlay-conflitto.attivo{ fill-opacity:0.38; }
+  .linea-divisione{
+    stroke:var(--marrone-scuro);
+    stroke-width:1.6;
+    stroke-dasharray:3 2;
+    fill:none;
+    opacity:0;
+    transition:opacity 0.4s ease;
+  }
+  .linea-divisione.visibile{ opacity:1; }
+  .etichetta-regione{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:6.5px;
+    font-weight:600;
+    fill:var(--marrone-scuro);
+    pointer-events:none;
+    text-anchor:middle;
+  }
+  .citta{
+    fill:var(--marrone-scuro);
+    opacity:0;
+    transition:opacity 0.4s ease;
+  }
+  .citta.visibile{ opacity:1; }
+  .etichetta-citta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:5.5px;
+    fill:var(--marrone-scuro);
+    font-style:italic;
+    opacity:0;
+    transition:opacity 0.4s ease;
+    pointer-events:none;
+  }
+  .etichetta-citta.visibile{ opacity:1; }
+
+  .scheda{
+    max-width:700px;
+    margin:0 auto;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:18px 22px;
+  }
+  .scheda-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    color:var(--marrone-scuro);
+    margin:0 0 4px;
+  }
+  .scheda-data{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem;
+    color:#8a8175;
+    margin:0 0 10px;
+    border-bottom:1px solid #e0d8ca;
+    padding-bottom:8px;
+  }
+  .scheda-testo{
+    font-family:Georgia, serif;
+    font-size:0.85rem;
+    line-height:1.6;
+    margin:0;
+    color:var(--testo);
+  }
+
+  .idea-guida{
+    margin-top:18px;
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:13px 18px;
+    font-family:Georgia, serif;
+    font-size:0.82rem;
+    line-height:1.55;
+    color:var(--testo);
+    max-width:700px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>La dissoluzione della Jugoslavia</h1>
+    <p class="sottotitolo">1991 – 2008</p>
+  </header>
+
+  <p class="istruzioni">
+    Clicca sulle tappe in sequenza: la mappa e la scheda si aggiornano a ogni fase. Cartina schematica, non un atlante: proporzioni e posizioni sono indicative.
+  </p>
+
+  <div class="tappe" id="tappe">
+    <button class="tappa-btn attiva" data-fase="1">1991<br>Indipendenze</button>
+    <button class="tappa-btn" data-fase="2">1991-1995<br>Le guerre</button>
+    <button class="tappa-btn" data-fase="3">1995<br>Dayton</button>
+    <button class="tappa-btn" data-fase="4">1998-1999<br>Kosovo</button>
+    <button class="tappa-btn" data-fase="5">2006-2008<br>Ultimi distacchi</button>
+  </div>
+
+  <div class="legenda-mappa">
+    <span class="voce"><span class="swatch" style="background:var(--federale);"></span>ancora parte della federazione</span>
+    <span class="voce"><span class="swatch" style="background:var(--indipendente);"></span>indipendente</span>
+    <span class="voce"><span class="swatch" style="background:var(--indipendente); border-style:dashed;"></span>indipendenza contestata</span>
+    <span class="voce"><span class="swatch" style="background:var(--conflitto);"></span>zona di conflitto</span>
+  </div>
+
+  <div class="mappa-box">
+    <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,55 58,80 52,118 64,160 42,192 0,192" fill="var(--mare)" stroke="none"/>
+
+      <polygon class="regione" data-regione="hr" points="90,42 165,35 172,62 95,70"/>
+      <polygon class="regione" data-regione="hr" points="55,80 88,72 98,120 82,165 62,158 50,115"/>
+      <polygon class="regione" data-regione="si" points="35,20 85,15 95,45 65,58 30,50"/>
+      <polygon class="regione" data-regione="ba" points="98,68 168,60 182,105 150,148 96,140 82,105"/>
+      <polygon class="regione" data-regione="rs" points="170,58 235,50 250,95 225,135 175,128 158,100"/>
+      <polygon class="regione" data-regione="me" points="96,140 128,138 138,165 112,175 92,162"/>
+      <polygon class="regione" data-regione="kosovo" points="175,128 225,135 232,162 185,168 168,148"/>
+      <polygon class="regione" data-regione="mk" points="185,168 232,162 244,192 205,198"/>
+
+      <polygon class="overlay-conflitto" data-conflitto="ba" points="98,68 168,60 182,105 150,148 96,140 82,105"/>
+      <polygon class="overlay-conflitto" data-conflitto="hr" points="55,80 88,72 98,120 82,165 62,158 50,115"/>
+      <polygon class="overlay-conflitto" data-conflitto="kosovo" points="175,128 225,135 232,162 185,168 168,148"/>
+
+      <path class="linea-divisione" data-divisione="ba" d="M100,90 Q135,75 165,95 Q145,120 130,142"/>
+
+      <circle class="citta" data-citta="sarajevo" cx="130" cy="100" r="2.4"/>
+      <text class="etichetta-citta" data-citta="sarajevo" x="134" y="98">Sarajevo</text>
+      <circle class="citta" data-citta="srebrenica" cx="162" cy="93" r="2.2"/>
+      <text class="etichetta-citta" data-citta="srebrenica" x="166" y="91">Srebrenica</text>
+
+      <text class="etichetta-regione" x="58" y="38">SLOVENIA</text>
+      <text class="etichetta-regione" x="128" y="52">CROAZIA</text>
+      <text class="etichetta-regione" x="70" y="128">CROAZIA</text>
+      <text class="etichetta-regione" x="128" y="128">BOSNIA-ERZ.</text>
+      <text class="etichetta-regione" x="205" y="82">SERBIA</text>
+      <text class="etichetta-regione" x="112" y="160">MONTE-<tspan x="112" dy="6">NEGRO</tspan></text>
+      <text class="etichetta-regione" x="200" y="150">KOSOVO</text>
+      <text class="etichetta-regione" x="215" y="182">MACEDONIA</text>
+    </svg>
+  </div>
+
+  <div class="scheda" id="scheda">
+    <p class="scheda-titolo" id="schedaTitolo">1991 — le dichiarazioni di indipendenza</p>
+    <p class="scheda-data" id="schedaData">Prima fase</p>
+    <p class="scheda-testo" id="schedaTesto"></p>
+  </div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Da un unico Stato federale nascono, in meno di vent'anni, sette entità politiche. I nuovi confini non sono arbitrari: ricalcano, quasi sempre, le linee della pulizia etnica e della violenza — la geografia politica di oggi porta impresso il prezzo pagato per tracciarla.
+  </div>
+</div>
+
+<script>
+(function(){
+  var fasi = {
+    1: {
+      titolo: "1991 — le dichiarazioni di indipendenza",
+      data: "Fase 1 di 5",
+      testo: "Slovenia, Croazia e Macedonia dichiarano l'indipendenza dalla Repubblica Socialista Federale di Jugoslavia. L'esercito federale (JNA) interviene: in Slovenia lo scontro dura pochi giorni (la «guerra dei dieci giorni»), in Croazia si apre un conflitto più lungo, legato anche alla presenza di minoranze serbe sul territorio croato.",
+      stati: {si:'indipendente', hr:'federale', ba:'federale', rs:'federale', me:'federale', kosovo:'federale', mk:'indipendente'},
+      conflitti: [],
+      divisioneBosnia: false,
+      citta: []
+    },
+    2: {
+      titolo: "1991-1995 — le guerre in Croazia e in Bosnia",
+      data: "Fase 2 di 5",
+      testo: "Le guerre in Croazia e soprattutto in Bosnia-Erzegovina, dove convivevano bosgnacchi musulmani, serbi ortodossi e croati cattolici, si combattono lungo linee etniche sempre più nette: assedi di città (Sarajevo resta sotto assedio per quasi quattro anni) e pulizia etnica dei territori contesi. Nel luglio 1995 le forze serbo-bosniache uccidono migliaia di uomini e ragazzi bosgnacchi a Srebrenica: un massacro riconosciuto come genocidio dai tribunali internazionali (v).",
+      stati: {si:'indipendente', hr:'indipendente', ba:'federale', rs:'federale', me:'federale', kosovo:'federale', mk:'indipendente'},
+      conflitti: ['ba','hr'],
+      divisioneBosnia: false,
+      citta: ['sarajevo','srebrenica']
+    },
+    3: {
+      titolo: "1995 — gli accordi di Dayton",
+      data: "Fase 3 di 5",
+      testo: "Gli accordi di Dayton pongono fine alla guerra in Bosnia: il paese resta formalmente unito, ma è diviso in due entità politiche — la Federazione di Bosnia ed Erzegovina e la Republika Srpska — che ricalcano in larga parte le conquiste territoriali della guerra.",
+      stati: {si:'indipendente', hr:'indipendente', ba:'federale', rs:'federale', me:'federale', kosovo:'federale', mk:'indipendente'},
+      conflitti: [],
+      divisioneBosnia: true,
+      citta: ['sarajevo','srebrenica']
+    },
+    4: {
+      titolo: "1998-1999 — il Kosovo",
+      data: "Fase 4 di 5",
+      testo: "In Kosovo, provincia a maggioranza albanese all'interno della Serbia, la repressione contro il movimento indipendentista provoca un imponente esodo di profughi. Nel 1999 la NATO interviene con una campagna di bombardamenti, senza un mandato esplicito del Consiglio di Sicurezza dell'ONU, costringendo Belgrado al ritiro delle forze dal Kosovo.",
+      stati: {si:'indipendente', hr:'indipendente', ba:'federale', rs:'federale', me:'federale', kosovo:'federale', mk:'indipendente'},
+      conflitti: ['kosovo'],
+      divisioneBosnia: true,
+      citta: ['sarajevo','srebrenica']
+    },
+    5: {
+      titolo: "2006-2008 — gli ultimi distacchi",
+      data: "Fase 5 di 5",
+      testo: "Nel 2006 il Montenegro si separa pacificamente dalla Serbia, con cui aveva formato un'unione federale dal 1992. Nel 2008 il Kosovo dichiara unilateralmente l'indipendenza: riconosciuta da buona parte della comunità internazionale, resta contestata da Serbia, Russia e da altri Stati.",
+      stati: {si:'indipendente', hr:'indipendente', ba:'federale', rs:'indipendente', me:'indipendente', kosovo:'contestato', mk:'indipendente'},
+      conflitti: [],
+      divisioneBosnia: true,
+      citta: ['sarajevo','srebrenica']
+    }
+  };
+
+  var tappaBtns = document.querySelectorAll('.tappa-btn');
+  var regioni = document.querySelectorAll('.regione');
+  var overlays = document.querySelectorAll('.overlay-conflitto');
+  var linea = document.querySelector('.linea-divisione');
+  var citta = document.querySelectorAll('.citta, .etichetta-citta');
+
+  function mostraFase(n){
+    var f = fasi[n];
+    document.getElementById('schedaTitolo').textContent = f.titolo;
+    document.getElementById('schedaData').textContent = f.data;
+    document.getElementById('schedaTesto').textContent = f.testo;
+
+    regioni.forEach(function(r){
+      var reg = r.getAttribute('data-regione');
+      var stato = f.stati[reg] || 'federale';
+      r.classList.remove('federale','indipendente','contestato');
+      r.classList.add(stato);
+    });
+
+    overlays.forEach(function(o){
+      var reg = o.getAttribute('data-conflitto');
+      o.classList.toggle('attivo', f.conflitti.indexOf(reg) !== -1);
+    });
+
+    linea.classList.toggle('visibile', f.divisioneBosnia);
+
+    citta.forEach(function(c){
+      var id = c.getAttribute('data-citta');
+      c.classList.toggle('visibile', f.citta.indexOf(id) !== -1);
+    });
+
+    tappaBtns.forEach(function(b){
+      b.classList.toggle('attiva', b.getAttribute('data-fase') === String(n));
+    });
+  }
+
+  tappaBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      mostraFase(btn.getAttribute('data-fase'));
+    });
+  });
+
+  mostraFase(1);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La potenza ibrida: mare contro terra</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --terra:#d9d2c2;
+    --mare:#dce8ee;
+    --cina-fill:#e3d9c4;
+    --catena:#5b7a8f;
+    --catena-bg:#e6edf0;
+    --via:#c2953f;
+    --via-bg:#f3ead9;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:920px; margin:0 auto; padding:26px 24px 36px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:8px 0 18px; line-height:1.5;
+  }
+
+  .toggles{
+    display:flex; justify-content:center; gap:12px; flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  .toggle{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.8rem; font-weight:600;
+    background:#fffdfa; border:1.5px solid var(--marrone);
+    padding:9px 18px; border-radius:20px; cursor:pointer;
+    transition:background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .toggle:hover{ transform:translateY(-1px); }
+  .toggle[data-layer="catena"]{ border-color:var(--catena); color:var(--catena); }
+  .toggle[data-layer="catena"].attivo{ background:var(--catena); color:#fff; }
+  .toggle[data-layer="via"]{ border-color:var(--via); color:var(--via); }
+  .toggle[data-layer="via"].attivo{ background:var(--via); color:#fff; }
+
+  .mappa-box{ display:flex; justify-content:center; margin-bottom:16px; }
+  .mappa-box svg{ width:100%; max-width:640px; height:auto; }
+
+  .terraferma{ fill:var(--terra); stroke:var(--marrone); stroke-width:1; }
+  .cina{ fill:var(--cina-fill); stroke:var(--marrone); stroke-width:1.4; }
+  .isola{ fill:var(--terra); stroke:var(--marrone); stroke-width:1; }
+  .etichetta-mappa{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:7px; font-weight:600; fill:var(--marrone-scuro);
+    text-anchor:middle; pointer-events:none;
+  }
+  .etichetta-mappa.piccola{ font-size:5.5px; }
+
+  .livello-catena{ opacity:0; transition:opacity 0.4s ease; }
+  .livello-catena.visibile{ opacity:1; }
+  .linea-catena{
+    fill:none; stroke:var(--catena); stroke-width:2.4;
+    stroke-dasharray:5 4;
+  }
+  .nodo-catena{ fill:var(--catena); }
+
+  .livello-via{ opacity:0; transition:opacity 0.4s ease; }
+  .livello-via.visibile{ opacity:1; }
+  .linea-via{
+    fill:none; stroke:var(--via); stroke-width:2.6;
+  }
+  .nodo-via{ fill:var(--via); }
+
+  .legenda-mappa{
+    display:flex; justify-content:center; gap:20px; flex-wrap:wrap;
+    margin-bottom:20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem; color:#6b6255;
+  }
+  .legenda-mappa .voce{ display:flex; align-items:center; gap:6px; }
+  .linea-legenda{ width:20px; height:0; border-top:2.5px solid; display:inline-block; }
+
+  .idea-guida{
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif;
+    font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>La potenza ibrida</h1>
+    <p class="sottotitolo">Mare contro terra</p>
+  </header>
+
+  <p class="istruzioni">
+    Attiva e disattiva i due livelli per vedere come si sovrappongono sulla stessa carta. Cartina schematica, non un atlante.
+  </p>
+
+  <div class="toggles">
+    <button class="toggle" data-layer="catena">Catena di isole (contenimento USA)</button>
+    <button class="toggle" data-layer="via">Nuova via della seta (Cina)</button>
+  </div>
+
+  <div class="mappa-box">
+    <svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg">
+      <polygon class="mare" points="0,0 380,0 380,300 0,300" fill="var(--mare)"/>
+
+      <polygon class="terraferma" points="0,40 130,35 140,90 90,140 40,160 0,150"/>
+      <text class="etichetta-mappa" x="55" y="90">ASIA CENTRALE</text>
+
+      <polygon class="cina" points="130,45 250,40 275,85 260,135 210,155 150,150 120,110 118,70"/>
+      <text class="etichetta-mappa" x="195" y="100">CINA</text>
+
+      <polygon class="isola" points="290,35 320,30 335,50 315,65 292,58"/>
+      <text class="etichetta-mappa piccola" x="312" y="45">GIAPPONE</text>
+
+      <polygon class="isola" points="262,138 274,135 277,150 265,153"/>
+      <text class="etichetta-mappa piccola" x="270" y="163">TAIWAN</text>
+
+      <polygon class="isola" points="268,175 285,170 292,188 275,195"/>
+      <polygon class="isola" points="250,198 268,205 262,222 245,215"/>
+      <text class="etichetta-mappa piccola" x="270" y="205">FILIPPINE</text>
+
+      <text class="etichetta-mappa" x="15" y="15">EUROPA →</text>
+
+      <g class="livello-catena" data-layer="catena">
+        <path class="linea-catena" d="M312,50 L268,145 L278,182 L258,208"/>
+        <circle class="nodo-catena" cx="312" cy="50" r="3.5"/>
+        <circle class="nodo-catena" cx="268" cy="145" r="3.5"/>
+        <circle class="nodo-catena" cx="278" cy="182" r="3.5"/>
+        <circle class="nodo-catena" cx="258" cy="208" r="3.5"/>
+      </g>
+
+      <g class="livello-via" data-layer="via">
+        <path class="linea-via" d="M150,80 Q100,70 55,75 Q25,78 8,55"/>
+        <path class="linea-via" d="M150,80 Q95,100 55,120 Q25,135 10,140"/>
+        <circle class="nodo-via" cx="150" cy="80" r="3.5"/>
+        <circle class="nodo-via" cx="8" cy="55" r="3.5"/>
+        <circle class="nodo-via" cx="10" cy="140" r="3.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="legenda-mappa">
+    <span class="voce"><span class="linea-legenda" style="border-color:var(--catena); border-style:dashed;"></span>prima catena di isole (Giappone · Taiwan · Filippine)</span>
+    <span class="voce"><span class="linea-legenda" style="border-color:var(--via);"></span>nuova via della seta (corridoi terrestri)</span>
+  </div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> La contesa antica fra chi controlla il cuore continentale e chi lo circonda dal mare torna nel presente: mentre la marina statunitense e i suoi alleati possono, in teoria, contenere la Cina lungo la prima catena di isole, i corridoi terrestri della Via della Seta aprono alla Cina uno sbocco verso l'Asia centrale e l'Europa che aggira quel possibile blocco navale.
+  </div>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var layer = btn.getAttribute('data-layer');
+      var attivo = btn.classList.toggle('attivo');
+      document.querySelectorAll('.livello-' + layer).forEach(function(g){
+        g.classList.toggle('visibile', attivo);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

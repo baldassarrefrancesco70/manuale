@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La deriva dell'ONU: dal Golfo all'Iraq</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --si:#6f8f5c;
+    --no:#a1473a;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:1000px; margin:0 auto; padding:26px 24px 36px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 26px; line-height:1.5;
+  }
+
+  .legenda{
+    display:flex; justify-content:center; gap:20px; margin-bottom:20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem; color:#6b6255;
+  }
+  .legenda .voce{ display:flex; align-items:center; gap:6px; }
+  .pallino{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+
+  .timeline-outer{ overflow-x:auto; padding-bottom:8px; }
+  .timeline{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    min-width:820px;
+    padding:20px 10px 0;
+  }
+  .filo{
+    position:absolute;
+    top:34px; left:6%; right:6%; height:2px;
+    background:var(--marrone);
+  }
+  .tappa{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center;
+    width:140px; cursor:pointer;
+  }
+  .anno{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.72rem;
+    color:var(--marrone-scuro); margin-bottom:6px; text-align:center;
+  }
+  .nodo{
+    width:20px; height:20px; border-radius:50%;
+    background:#fff; border:3px solid var(--marrone);
+    transition:transform 0.2s;
+  }
+  .tappa:hover .nodo{ transform:scale(1.15); }
+  .tappa.aperta .nodo{ background:var(--marrone); }
+  .badge-mandato{
+    margin-top:6px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.6rem; font-weight:600;
+    padding:2px 8px; border-radius:10px;
+    color:#fff;
+  }
+  .badge-mandato.si{ background:var(--si); }
+  .badge-mandato.no{ background:var(--no); }
+  .etichetta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem; color:#7a7265; text-align:center;
+    margin-top:6px; line-height:1.3; max-width:140px;
+  }
+
+  .scheda{
+    max-width:720px; margin:26px auto 0;
+    background:#fffdfa; border:1.5px solid var(--marrone);
+    border-radius:10px; padding:18px 22px;
+    display:none;
+  }
+  .scheda.visibile{ display:block; }
+  .scheda-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.95rem;
+    color:var(--marrone-scuro); margin:0 0 4px;
+  }
+  .scheda-meta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem; margin:0 0 10px;
+    border-bottom:1px solid #e0d8ca; padding-bottom:8px;
+  }
+  .scheda-meta .si{ color:var(--si); font-weight:600; }
+  .scheda-meta .no{ color:var(--no); font-weight:600; }
+  .scheda-testo{
+    font-family:Georgia, serif; font-size:0.85rem; line-height:1.6;
+    margin:0; color:var(--testo);
+  }
+  .segnaposto{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem; color:#9a9184; margin-top:22px;
+  }
+  .idea-guida{
+    margin-top:22px;
+    background:#fffdfa; border-left:5px solid var(--marrone);
+    border-radius:6px; padding:14px 18px;
+    font-family:Georgia, serif; font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>La deriva dell'ONU</h1>
+    <p class="sottotitolo">Dal Golfo all'Iraq: un decennio, cinque tappe</p>
+  </header>
+
+  <p class="istruzioni">
+    Clicca su una tappa per aprire la scheda. Scorrendo la sequenza si legge la curva discendente della legalità multilaterale.
+  </p>
+
+  <div class="legenda">
+    <span class="voce"><span class="pallino" style="background:var(--si);"></span>mandato ONU: sì</span>
+    <span class="voce"><span class="pallino" style="background:var(--no);"></span>mandato ONU: no</span>
+  </div>
+
+  <div class="timeline-outer">
+    <div class="timeline" id="timeline">
+      <div class="filo"></div>
+      <div class="tappa" data-id="golfo">
+        <div class="anno">1991</div>
+        <div class="nodo"></div>
+        <span class="badge-mandato si">sì</span>
+        <div class="etichetta">Guerra del Golfo</div>
+      </div>
+      <div class="tappa" data-id="somalia">
+        <div class="anno">1992-93</div>
+        <div class="nodo"></div>
+        <span class="badge-mandato si">sì</span>
+        <div class="etichetta">Somalia</div>
+      </div>
+      <div class="tappa" data-id="bosnia">
+        <div class="anno">1992-95</div>
+        <div class="nodo"></div>
+        <span class="badge-mandato si">sì*</span>
+        <div class="etichetta">Bosnia</div>
+      </div>
+      <div class="tappa" data-id="kosovo">
+        <div class="anno">1999</div>
+        <div class="nodo"></div>
+        <span class="badge-mandato no">no</span>
+        <div class="etichetta">Kosovo</div>
+      </div>
+      <div class="tappa" data-id="iraq">
+        <div class="anno">2003</div>
+        <div class="nodo"></div>
+        <span class="badge-mandato no">no</span>
+        <div class="etichetta">Iraq</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="segnaposto" id="segnaposto">Clicca su una tappa per iniziare.</p>
+
+  <div class="scheda" data-scheda="golfo">
+    <p class="scheda-titolo">La guerra del Golfo</p>
+    <p class="scheda-meta">1991 · mandato ONU: <span class="si">sì</span></p>
+    <p class="scheda-testo">Dopo l'invasione irachena del Kuwait, il Consiglio di Sicurezza autorizza una coalizione internazionale a guida statunitense a intervenire con la forza. La guerra si conclude in poche settimane con la liberazione del Kuwait: il modello dell'azione collettiva legittimata dall'ONU sembra finalmente realizzarsi.</p>
+  </div>
+  <div class="scheda" data-scheda="somalia">
+    <p class="scheda-titolo">Somalia</p>
+    <p class="scheda-meta">1992-1993 · mandato ONU: <span class="si">sì</span></p>
+    <p class="scheda-testo">Un intervento umanitario autorizzato dall'ONU per garantire gli aiuti in un paese nel caos, con truppe statunitensi in prima linea. Si trasforma presto in un impegno militare diretto contro le milizie locali; dopo perdite pesanti (la battaglia di Mogadiscio, 1993) gli Stati Uniti si ritirano: primo segnale dei limiti dell'intervento multilaterale.</p>
+  </div>
+  <div class="scheda" data-scheda="bosnia">
+    <p class="scheda-titolo">Bosnia</p>
+    <p class="scheda-meta">1992-1995 · mandato ONU: <span class="si">sì, ma inefficace</span></p>
+    <p class="scheda-testo">Le forze di pace ONU (UNPROFOR) hanno un mandato debole e mezzi insufficienti: non riescono a impedire le pulizie etniche né la caduta delle «zone protette» come Srebrenica. Solo l'intervento aereo NATO, nel 1995, costringe le parti al tavolo di Dayton: l'ONU da sola si dimostra incapace di far rispettare le proprie stesse decisioni.</p>
+  </div>
+  <div class="scheda" data-scheda="kosovo">
+    <p class="scheda-titolo">Kosovo</p>
+    <p class="scheda-meta">1999 · mandato ONU: <span class="no">no</span></p>
+    <p class="scheda-testo">Di fronte al prevedibile veto russo in Consiglio di Sicurezza, la NATO interviene con i bombardamenti senza un'autorizzazione esplicita dell'ONU, invocando l'emergenza umanitaria. È il primo grande intervento occidentale che scavalca apertamente il Consiglio di Sicurezza.</p>
+  </div>
+  <div class="scheda" data-scheda="iraq">
+    <p class="scheda-titolo">Iraq</p>
+    <p class="scheda-meta">2003 · mandato ONU: <span class="no">no</span></p>
+    <p class="scheda-testo">Stati Uniti e Regno Unito invadono l'Iraq senza una nuova risoluzione che autorizzi esplicitamente l'uso della forza, nonostante le divisioni interne al Consiglio di Sicurezza. L'ONU viene aggirata apertamente: la sola superpotenza rimasta agisce ormai anche senza il suo consenso.</p>
+  </div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Liberata dal veto contrapposto della guerra fredda, l'ONU vive nel 1991 il suo momento di trionfo — e nel giro di un decennio rivela la propria impotenza di fronte a crisi che richiedono più che un'autorizzazione sulla carta. La sola superpotenza rimasta comincia, progressivamente, a farne a meno.
+  </div>
+</div>
+
+<script>
+(function(){
+  var tappe = document.querySelectorAll('.tappa');
+  var schede = document.querySelectorAll('.scheda');
+  var segnaposto = document.getElementById('segnaposto');
+  var attiva = null;
+
+  function chiudiTutto(){
+    tappe.forEach(function(t){ t.classList.remove('aperta'); });
+    schede.forEach(function(s){ s.classList.remove('visibile'); });
+  }
+
+  tappe.forEach(function(tappa){
+    tappa.addEventListener('click', function(){
+      var id = tappa.getAttribute('data-id');
+      if(attiva === id){
+        chiudiTutto();
+        attiva = null;
+        segnaposto.style.display = 'block';
+        return;
+      }
+      chiudiTutto();
+      attiva = id;
+      tappa.classList.add('aperta');
+      var scheda = document.querySelector('.scheda[data-scheda="' + id + '"]');
+      if(scheda){ scheda.classList.add('visibile'); }
+      segnaposto.style.display = 'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">La costruzione e la crisi dell'ordine internazionale &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Diciotto nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai nodi storiografici della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "La Seconda guerra mondiale":"#9d4a2b",
+    "L'Italia nella guerra":"#b0872e",
+    "L'ONU e il nuovo ordine mondiale":"#3d5566",
+    "La guerra fredda":"#5c6b3d",
+    "Il momento unipolare":"#7a4a6b",
+    "La Cina, da Mao a oggi":"#8a6d1f"
+  };
+  var CAPORDER = ["La Seconda guerra mondiale", "L'Italia nella guerra", "L'ONU e il nuovo ordine mondiale", "La guerra fredda", "Il momento unipolare", "La Cina, da Mao a oggi"];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+        "capitolo": "La Seconda guerra mondiale",
+        "titolo": "L'appeasement fu ingenuità o scelta razionale?",
+        "formulazioni": {
+            "partenza": "La politica di appeasement verso Hitler fu una scelta razionale: Chamberlain comprava tempo per riarmare un paese che nel 1938 non era pronto a un conflitto, e la Gran Bretagna, senza alleati pronti a combattere, non avrebbe potuto scegliere lo scontro immediato se non a un prezzo altissimo pagato da altri.",
+            "ristretta": "L'appeasement fu razionale come guadagno di tempo per un paese non pronto al conflitto nel 1938; ma ebbe l'effetto oggettivo di rafforzare la Germania, perché ogni concessione — la stessa Conferenza di Monaco consegnò al Reich le fortificazioni cecoslovacche — confermò a Hitler la propria impunità, anche senza che questo fosse nelle intenzioni di chi la praticava.",
+            "opposta": "L'appeasement fu una colpevole ingenuità: ogni concessione non fece che confermare a Hitler la propria impunità, e la Conferenza di Monaco, presentata come garanzia di pace, consegnò al Reich le fortificazioni cecoslovacche che avrebbero potuto rendere una guerra successiva assai più difficile da vincere per la Germania."
+        },
+        "affermazioni": [
+            {
+                "testo": "Chamberlain comprava tempo per riarmare un paese che nel 1938 non era pronto a un conflitto, sapendo di non avere alternative migliori sul tavolo.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda la razionalità del guadagno di tempo.",
+                    "opposta": "l'Opposta non nega il movente di Chamberlain, ne contesta l'esito."
+                }
+            },
+            {
+                "testo": "La Gran Bretagna del 1938, con un riarmo appena avviato e senza alleati pronti a combattere, non avrebbe potuto scegliere lo scontro immediato se non a un prezzo altissimo, pagato da altri.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {}
+            },
+            {
+                "testo": "Ogni concessione non fece che confermare a Hitler la propria impunità.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda l'effetto oggettivo di rafforzamento.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "La stessa Conferenza di Monaco, presentata come garanzia di pace, consegnò al Reich le fortificazioni cecoslovacche che avrebbero potuto rendere una guerra successiva assai più difficile da vincere per la Germania.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "Lo stesso governo britannico che aveva scelto l'appeasement dichiarò poi guerra proprio per la Polonia, un paese assai più difficile da difendere della Cecoslovacchia.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "non_decide",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "mostra un cambio di linea, non decide se il precedente fosse razionale.",
+                    "opposta": "compatibile con entrambe le letture del cambio di linea britannico."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La Seconda guerra mondiale",
+        "titolo": "La Shoah è un male unico, o un orrore tra gli altri?",
+        "formulazioni": {
+            "partenza": "Lo sterminio nazista degli ebrei va compreso in relazione ad altre violenze di massa del Novecento: Ernst Nolte sostenne un nesso tra lo sterminio di classe praticato dal bolscevismo sovietico e lo sterminio di razza nazista, leggendo il secondo come una reazione, aberrante, al primo, e isolare la Shoah dalla storia la renderebbe impossibile da spiegare e più difficile da riconoscere quando i suoi tratti ritornano altrove.",
+            "ristretta": "La Shoah va compresa storicamente, dentro il contesto delle violenze di massa del secolo, ma senza legittimare il nesso causale specifico proposto da Nolte fra sterminio sovietico e sterminio nazista, che non è mai stato dimostrato e che rischia di trasformare un crimine in una reazione, attenuandone la responsabilità.",
+            "opposta": "La Shoah è un evento assolutamente unico, incomparabile con qualunque altro crimine del Novecento: le sue radici vanno cercate nella storia della Germania, non in Russia, e la tesi che la collega allo sterminio sovietico fu, secondo Kocka e Habermas, un tentativo di relativizzare il nazismo."
+        },
+        "affermazioni": [
+            {
+                "testo": "Ernst Nolte sostenne un nesso tra lo sterminio di classe praticato dal bolscevismo sovietico e lo sterminio di razza nazista, leggendo il secondo come una reazione, aberrante, al primo.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta concede la comprensione storica generale ma respinge proprio questo nesso causale specifico.",
+                    "opposta": "mostra che un confronto storiografico è stato tentato, anche se contestato: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Se la Shoah è considerata fuori dalla storia, sottratta a ogni confronto, diventa impossibile da spiegare e più difficile riconoscerne i tratti quando ritornano altrove.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "compatibile con la comprensione storica generale che la Ristretta comunque richiede."
+                }
+            },
+            {
+                "testo": "Jürgen Kocka e Jürgen Habermas videro nella tesi di Nolte un tentativo di relativizzare il nazismo, le cui radici vanno cercate nella storia della Germania, non in Russia.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il rifiuto del nesso causale di Nolte.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Trasformare un crimine in una reazione rischia di attenuarne la responsabilità.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "La tesi di Nolte ebbe presa non perché convincesse gli specialisti, ma perché rispondeva al bisogno di una Germania che cercava un rapporto meno schiacciante con il proprio passato.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "spiega perché la tesi fu accolta, non se sia storicamente fondata.",
+                    "ristretta": "rafforza il motivo per diffidare del nesso causale di Nolte al di là del suo merito storiografico.",
+                    "opposta": "compatibile con entrambe le letture del perché la tesi ebbe presa."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La Seconda guerra mondiale",
+        "titolo": "Chi ha ucciso: uomini comuni o antisemiti convinti?",
+        "formulazioni": {
+            "partenza": "Fu un antisemitismo radicato da secoli nella cultura tedesca, non semplici dinamiche di gruppo, a rendere migliaia di tedeschi comuni esecutori volenterosi dello sterminio: secondo Daniel Goldhagen, un «antisemitismo eliminazionista» di lunga durata rese quegli uomini esecutori volontari e persino entusiasti.",
+            "ristretta": "L'antisemitismo radicato culturalmente fu un fattore reale — gli esecutori materiali furono, su questo concordano storici di letture opposte, tedeschi comuni — ma agì insieme a dinamiche di gruppo e obbedienza all'autorità documentate da Christopher Browning negli stessi battaglioni di riserva della polizia: obbedienza, conformismo, difficoltà di tirarsi indietro davanti ai compagni.",
+            "opposta": "Furono fattori di situazione, non un tratto culturale, a rendere possibile lo sterminio: Christopher Browning, studiando i battaglioni di riserva della polizia tedesca, uomini di mezza età spesso non iscritti al partito, conclude che a trasformarli in assassini fu l'obbedienza e il conformismo di gruppo, non una tara nazionale — e attribuire il crimine a una cultura specifica è, in fondo, rassicurante, perché colloca i carnefici in un «altrove» che non ci riguarda."
+        },
+        "affermazioni": [
+            {
+                "testo": "Daniel Goldhagen, nei *Volenterosi carnefici di Hitler*, sostiene che un «antisemitismo eliminazionista» radicato da secoli rese i tedeschi comuni esecutori volontari e persino entusiasti.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta accoglie l'antisemitismo culturale come fattore, ma non nella forma assoluta proposta da Goldhagen."
+                }
+            },
+            {
+                "testo": "Christopher Browning, studiando gli stessi battaglioni di riserva della polizia, conclude che a trasformarli in assassini non fu una tara nazionale ma fattori di situazione: obbedienza, conformismo di gruppo, difficoltà di tirarsi indietro davanti ai compagni.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda l'azione congiunta dei due fattori.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Attribuire il crimine a una cultura specifica e lontana è, in fondo, rassicurante, perché colloca i carnefici in un «altrove» che non ci riguarda.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "non_decide",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza.",
+                    "ristretta": "è un'osservazione di metodo sulla ricezione della tesi, non aggiunge un dato nuovo alla combinazione di fattori."
+                }
+            },
+            {
+                "testo": "Browning studiò i battaglioni di riserva della polizia tedesca, uomini di mezza età, spesso non iscritti al partito.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "dato descrittivo sul campione studiato, non decide da solo fra le letture.",
+                    "ristretta": "è il campione su cui la Ristretta fonda l'osservazione delle dinamiche di gruppo.",
+                    "opposta": "è il campione su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Entrambi gli storici concordano sul fatto che gli esecutori materiali furono tedeschi comuni.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "non_decide",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "opposta": "un accordo sul chi non decide il perché."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La Seconda guerra mondiale",
+        "titolo": "Hiroshima fu una necessità militare o un atto politico?",
+        "formulazioni": {
+            "partenza": "L'uso della bomba atomica su Hiroshima e Nagasaki fu una necessità militare: secondo Richard Overy, senza la bomba il Giappone si sarebbe difeso fino a un logorante suicidio nazionale, e l'ordigno servì ad abbreviare la guerra risparmiando le vite di un'invasione di terra sanguinosissima.",
+            "ristretta": "La bomba fu giustificata militarmente — i decisori si muovevano nell'incertezza sulla reale volontà giapponese di arrendersi — ma accanto al calcolo bellico operò anche un secondo movente politico verso l'Unione Sovietica, non incompatibile con il primo: mostrare a Mosca la propria forza mentre si chiudeva la guerra nel Pacifico.",
+            "opposta": "Fu essenzialmente un atto politico rivolto all'Unione Sovietica, non una necessità bellica contro un Giappone già sconfitto: secondo Eric Hobsbawm, nell'estate 1945 la sconfitta giapponese era già certa, e la bomba rispose a un calcolo politico verso Mosca — «Hiroshima è meno l'ultimo atto della guerra mondiale che il primo della guerra fredda»."
+        },
+        "affermazioni": [
+            {
+                "testo": "Richard Overy sostiene che senza la bomba il Giappone si sarebbe difeso fino a un logorante suicidio nazionale, e che l'ordigno servì ad abbreviare la guerra risparmiando le vite di un'invasione.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda la componente bellica genuina.",
+                    "opposta": "è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Nella lettura di Overy, gli stessi bombardamenti sulle città contribuirono in modo decisivo alla vittoria, costringendo la Germania a distogliere risorse verso la difesa interna.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "rafforza, per analogia, l'idea che i bombardamenti avessero un'efficacia militare reale.",
+                    "ristretta": "riguarda il fronte europeo, non decide direttamente sul movente specifico di Hiroshima."
+                }
+            },
+            {
+                "testo": "Eric Hobsbawm ribalta il ragionamento: nell'estate 1945 la sconfitta giapponese era già certa, quindi la bomba rispose a un calcolo politico — mostrare all'Unione Sovietica la propria forza.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il secondo movente politico.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "In questa lettura, «Hiroshima è meno l'ultimo atto della guerra mondiale che il primo della guerra fredda».",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "I decisori dell'epoca si muovevano nell'incertezza sulla reale volontà giapponese di arrendersi.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "un'incertezza reale rende più plausibile un calcolo prudenziale, militare.",
+                    "ristretta": "è il dato su cui la Ristretta fonda la genuinità del calcolo militare accanto a quello politico.",
+                    "opposta": "compatibile anche con un uso della bomba a fini politici nonostante l'incertezza militare."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "L'Italia nella guerra",
+        "titolo": "La Resistenza fu una guerra di liberazione o una guerra civile?",
+        "formulazioni": {
+            "partenza": "La Resistenza italiana fu, prima di tutto, una guerra di liberazione nazionale contro l'occupante tedesco: per decenni, nel dopoguerra, fu raccontata solo in questi termini, per il timore che riconoscerla anche come guerra civile mettesse sullo stesso piano partigiani e fascisti di Salò, e la componente patriottica contro l'occupante fu certamente una delle dimensioni della lotta.",
+            "ristretta": "La componente patriottica contro l'occupante tedesco fu reale, ma la Resistenza fu anche, senza che questo la sminuisca, una guerra civile: Claudio Pavone ha mostrato che tra il 1943 e il 1945 convissero tre conflitti insieme — patriottico, civile e di classe — vissuti dalle stesse persone, e la nascita della Repubblica Sociale al centro-nord dopo l'8 settembre 1943 ne è la prova materiale.",
+            "opposta": "Riconoscere che fu anche guerra civile è indispensabile: rimuovere questa categoria nascondeva la verità più importante della lotta, che fu prima di tutto una scelta e una rottura con una parte del proprio stesso paese — la Repubblica Sociale Italiana, fondata da Mussolini dopo l'8 settembre 1943, fu quella parte, pur senza che questo equipari moralmente le due parti."
+        },
+        "affermazioni": [
+            {
+                "testo": "Per decenni, nel dopoguerra, la Resistenza fu raccontata solo come guerra di liberazione nazionale, per timore che riconoscerla anche come guerra civile mettesse sullo stesso piano partigiani e fascisti di Salò.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "descrive una scelta storiografica del dopoguerra, non un dato sui fatti del 1943-45.",
+                    "opposta": "è il punto cieco riconosciuto alla lettura di partenza: la rimozione fu una scelta motivata dalla paura, non un dato di fatto storico."
+                }
+            },
+            {
+                "testo": "La componente patriottica contro l'occupante tedesco fu certamente una delle dimensioni della lotta.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato che la Ristretta conserva esplicitamente senza negarlo.",
+                    "opposta": "l'Opposta non nega la componente patriottica, insiste sulla necessità di aggiungervi quella civile."
+                }
+            },
+            {
+                "testo": "Claudio Pavone, in *Una guerra civile* (1991), ha mostrato che tra il 1943 e il 1945 convissero tre conflitti insieme — patriottico, civile e di classe — vissuti dalle stesse persone.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Rimuovere la categoria di guerra civile nascondeva la verità più importante della lotta: che fu, prima di tutto, una scelta, e una rottura con una parte del proprio stesso paese.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "non_decide",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza.",
+                    "ristretta": "la Ristretta accoglie la dimensione civile senza necessariamente sposare questa formulazione più forte.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "La Repubblica Sociale Italiana fu fondata da Mussolini al centro-nord dopo l'8 settembre 1943.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "l'esistenza della RSI è compatibile anche con una lettura a predominanza patriottica.",
+                    "ristretta": "è la prova materiale su cui la Ristretta fonda la dimensione civile."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "L'Italia nella guerra",
+        "titolo": "L'8 settembre fu la morte della patria o la sua rinascita?",
+        "formulazioni": {
+            "partenza": "L'8 settembre 1943 segnò la morte della patria italiana: secondo Ernesto Galli della Loggia, il crollo delle istituzioni e la dissoluzione dell'esercito segnarono la fine del legame di appartenenza a una comunità nazionale, una fragilità che affondava le radici nell'incompiutezza dello Stato nato dal Risorgimento.",
+            "ristretta": "Il crollo delle istituzioni e la dissoluzione dell'esercito nella notte tra l'8 e il 9 settembre 1943 — quando anche il re, la famiglia reale e Badoglio abbandonarono Roma — furono un trauma reale, che rivelò una fragilità autentica dello Stato; ma da quel trauma nacque anche, faticosamente, qualcosa di nuovo, non solo un'agonia.",
+            "opposta": "L'8 settembre fu il punto di partenza per una patria nuova, democratica e repubblicana, non un'agonia: Claudio Pavone e testimoni come Natalia Ginzburg hanno letto quegli eventi come l'inizio faticoso di una nazione nuova, da cui nacque una «patria senza aggettivi», liberata dalle parole del regime."
+        },
+        "affermazioni": [
+            {
+                "testo": "Ernesto Galli della Loggia ha parlato di «morte della patria»: il crollo delle istituzioni e la dissoluzione dell'esercito segnarono la fine del legame di appartenenza a una comunità nazionale.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il trauma reale.",
+                    "opposta": "l'Opposta non nega il crollo istituzionale, ne rifiuta la lettura come agonia definitiva."
+                }
+            },
+            {
+                "testo": "Per Galli della Loggia quella fragilità affondava le radici nell'incompiutezza dello Stato nato dal Risorgimento.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda l'autenticità della fragilità."
+                }
+            },
+            {
+                "testo": "Claudio Pavone e testimoni come Natalia Ginzburg hanno letto quegli eventi in modo opposto: non l'agonia della nazione, ma il punto di partenza faticoso per costruirne una nuova, democratica e repubblicana.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda «nacque anche qualcosa di nuovo».",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Dall'8 settembre nacque, in questa lettura, una «patria senza aggettivi», liberata dalle parole del regime.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "Il re, la famiglia reale e Badoglio abbandonarono Roma nella notte tra l'8 e il 9 settembre 1943.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "mostra concretamente il crollo istituzionale.",
+                    "ristretta": "è il dato materiale su cui la Ristretta fonda il trauma reale.",
+                    "opposta": "compatibile anche con una lettura come inizio di una rinascita, non lo esclude."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "L'Italia nella guerra",
+        "titolo": "Il Mezzogiorno fu attendista?",
+        "formulazioni": {
+            "partenza": "Il Mezzogiorno restò sostanzialmente passivo durante la Resistenza, a differenza del Centro-Nord: a lungo la storiografia ha considerato la Resistenza un fenomeno quasi esclusivamente centro-settentrionale, declassando le ribellioni del Sud a rivolte contadine spontanee, prive di coscienza politica — non ogni sollevazione meridionale fu resistenza politica nel senso pieno, e molte reazioni nacquero dalla difesa della sopravvivenza.",
+            "ristretta": "Non ogni sollevazione del Sud fu resistenza politica nel senso pieno — molte nacquero dalla difesa della sopravvivenza — ma alcune aree ebbero forme precoci di resistenza organizzata: la «guerra in casa» sulla linea Gustav generò, secondo studi come quelli di Costantino Felice, forme di lotta strutturate, senza che questo si possa generalizzare a tutto il Mezzogiorno.",
+            "opposta": "Lo stereotipo dell'attendismo meridionale è infondato: l'esperienza della Brigata Maiella, nata a Casoli attorno all'avvocato Ettore Troilo, dimostra che anche il Mezzogiorno diede un contributo consapevole e organizzato alla lotta, non riducibile a rivolte contadine spontanee."
+        },
+        "affermazioni": [
+            {
+                "testo": "A lungo la storiografia ha considerato la Resistenza un fenomeno quasi esclusivamente centro-settentrionale, declassando le ribellioni del Sud a rivolte contadine spontanee, prive di coscienza politica.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "descrive una lettura storiografica pregressa, corretta solo parzialmente dalla Ristretta.",
+                    "opposta": "mostra che quella narrazione fu a lungo dominante, non un pregiudizio isolato: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Non ogni sollevazione del Sud fu resistenza politica nel senso pieno: molte reazioni nacquero dalla difesa della sopravvivenza, dal rifiuto di cedere il bestiame o la casa.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato che la Ristretta conserva esplicitamente.",
+                    "opposta": "l'Opposta non nega che alcune reazioni fossero di sopravvivenza, insiste che esistettero anche forme consapevoli."
+                }
+            },
+            {
+                "testo": "Studi più recenti, come quelli di Costantino Felice sull'Abruzzo, hanno mostrato che la «guerra in casa» sulla linea Gustav generò forme precoci e organizzate di resistenza.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "L'esperienza della Brigata Maiella dimostra che anche il Mezzogiorno diede un contributo consapevole e organizzato alla lotta.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "La Brigata Maiella nacque a Casoli, attorno all'avvocato Ettore Troilo.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "dato organizzativo, non decide da solo sull'estensione del fenomeno.",
+                    "ristretta": "precisa il caso su cui la Ristretta fonda la propria eccezione."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "L'ONU e il nuovo ordine mondiale",
+        "titolo": "Yalta fu una spartizione o la fotografia dei fatti?",
+        "formulazioni": {
+            "partenza": "A Yalta, nel febbraio 1945, le potenze vincitrici spartirono consensualmente l'Europa in sfere d'influenza: Roosevelt e Churchill riconobbero le sfere d'influenza reciproche e consegnarono di fatto l'Europa orientale al controllo sovietico, un accordo che alimentò per decenni l'accusa di un «tradimento» degli occidentali verso i popoli dell'Est, firmato a un tavolo di conferenza.",
+            "ristretta": "A Yalta si discussero questioni concrete — le zone di occupazione della Germania, l'impegno sovietico a entrare in guerra contro il Giappone, la promessa di libere elezioni in Polonia — che mostrano una conferenza non del tutto passiva; ma nel febbraio 1945 l'Armata Rossa occupava già Polonia e Ungheria, mentre gli angloamericani non avevano ancora attraversato il Reno: la conferenza fotografò per lo più equilibri già decisi sul campo.",
+            "opposta": "Yalta non decise nulla, si limitò a registrare un destino già scritto dagli eserciti: la parola «spartizione» non compare nei documenti del 1945, e nel febbraio di quell'anno l'Armata Rossa occupava già Polonia e Ungheria, mentre gli angloamericani non avevano ancora attraversato il Reno — la lettura realista, oggi prevalente, sostiene appunto che Yalta si limitò a fotografare equilibri militari già decisi."
+        },
+        "affermazioni": [
+            {
+                "testo": "Secondo la lettura della spartizione, a Yalta Roosevelt e Churchill riconobbero le sfere d'influenza reciproche e consegnarono di fatto l'Europa orientale al controllo sovietico.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta non nega che si sia discusso di sfere d'influenza, insiste che l'esito rifletteva equilibri già decisi militarmente.",
+                    "opposta": "un riconoscimento esplicito a un tavolo di conferenza è più di una semplice fotografia: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Questa lettura alimentò per decenni l'accusa di un «tradimento» degli occidentali verso i popoli dell'Est, firmato a un tavolo di conferenza.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "descrive una ricezione politica successiva, non decide sulla natura dell'accordo stesso.",
+                    "opposta": "se Yalta non decise nulla, l'accusa di tradimento imputata alla conferenza stessa risulta mal indirizzata."
+                }
+            },
+            {
+                "testo": "La parola «spartizione» non compare nei documenti del 1945: nel febbraio di quell'anno l'Armata Rossa occupava già Polonia e Ungheria, mentre gli angloamericani non avevano ancora attraversato il Reno.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda la propria lettura.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "La lettura realista, oggi prevalente, sostiene che Yalta non spartì nulla: si limitò a fotografare equilibri militari già decisi sul campo.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "A Yalta si discussero comunque questioni concrete: le zone di occupazione della Germania, l'impegno sovietico a entrare in guerra contro il Giappone, la promessa di libere elezioni in Polonia.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "partenza": "mostra un negoziato attivo, non una semplice presa d'atto.",
+                    "ristretta": "è il dato su cui la Ristretta fonda «non una registrazione del tutto passiva».",
+                    "opposta": "se si negoziarono zone di occupazione e promesse elettorali, qualcosa fu comunque deciso, non solo registrato: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "L'ONU e il nuovo ordine mondiale",
+        "titolo": "Norimberga fu giustizia o giustizia dei vincitori?",
+        "formulazioni": {
+            "partenza": "Il processo di Norimberga fu, nella sostanza, la giustizia dei vincitori: a giudicare erano le quattro potenze vincitrici, a essere giudicati soltanto i vinti, mentre i crimini dei vincitori — dai bombardamenti sulle città tedesche e giapponesi alle deportazioni sovietiche, fino al massacro di Katyń — restarono fuori dall'aula.",
+            "ristretta": "Norimberga fu un processo imperfetto e asimmetrico — solo le potenze vincitrici giudicarono, e i crimini dei vincitori restarono fuori dall'aula — ma comunque un progresso irreversibile rispetto all'alternativa, la fucilazione sommaria proposta da Churchill: da quella giurisprudenza imperfetta nacquero, negli anni successivi, la Convenzione sul genocidio e le nuove Convenzioni di Ginevra.",
+            "opposta": "Norimberga fu un vero progresso del diritto internazionale: per la prima volta si affermò un principio destinato a segnare tutto il diritto internazionale successivo, che esistono crimini troppo gravi per essere coperti dall'obbedienza agli ordini o dalla sovranità dello Stato, e da quella giurisprudenza nacquero la Convenzione sul genocidio e le nuove Convenzioni di Ginevra — l'obiezione della «giustizia dei vincitori», se assolutizzata, renderebbe impunibile ogni crimine di guerra."
+        },
+        "affermazioni": [
+            {
+                "testo": "A giudicare a Norimberga erano le quattro potenze vincitrici, e a essere giudicati soltanto i vinti.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda l'imperfezione e l'asimmetria.",
+                    "opposta": "l'Opposta non nega l'asimmetria dei giudici, la considera non decisiva rispetto al valore del principio affermato."
+                }
+            },
+            {
+                "testo": "I crimini dei vincitori — dai bombardamenti sulle città tedesche e giapponesi alle deportazioni sovietiche, fino al massacro di Katyń — restarono fuori dall'aula.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {}
+            },
+            {
+                "testo": "Per la prima volta si affermò un principio destinato a segnare tutto il diritto internazionale successivo: che esistono crimini troppo gravi per essere coperti dall'obbedienza agli ordini o dalla sovranità dello Stato.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il progresso su cui la Ristretta fonda l'irreversibilità.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "L'alternativa a un processo imperfetto non era un processo perfetto, ma la fucilazione sommaria che Churchill aveva proposto, o la vendetta.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza.",
+                    "ristretta": "è il dato su cui la Ristretta fonda il «progresso rispetto all'alternativa»."
+                }
+            },
+            {
+                "testo": "Dalla giurisprudenza di Norimberga nacquero, negli anni successivi, la Convenzione sul genocidio e le nuove Convenzioni di Ginevra.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "un'eredità giuridica successiva non decide se il processo stesso fosse giustizia o giustizia dei vincitori.",
+                    "ristretta": "è il dato su cui la Ristretta fonda il progresso irreversibile.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La guerra fredda",
+        "titolo": "La guerra fredda era inevitabile?",
+        "formulazioni": {
+            "partenza": "La guerra fredda era inevitabile fin dal 1945, scritta nelle condizioni stesse del dopoguerra: nessuno dei due contendenti «cominciò» la guerra fredda, che nacque dalla situazione in cui due potenze si trovarono a riempire il vuoto lasciato dal conflitto, dentro un dilemma della sicurezza che nessuna delle due controllava del tutto — per la lettura tradizionale, fu l'espansionismo di Stalin, sospinto da un'ideologia che considerava illegittimo il mondo capitalista, a rendere impossibile la cooperazione.",
+            "ristretta": "Le condizioni strutturali del dopoguerra — il vuoto di potere, il dilemma della sicurezza reciproco — resero altamente probabile lo scontro; ma non tolgono responsabilità alle scelte concrete di chi, dentro quelle condizioni, decise: la morte di Roosevelt nell'aprile 1945 e l'irrigidimento della linea verso Mosca sotto Truman furono scelte, non automatismi imposti dalla struttura.",
+            "opposta": "Non fu affatto inevitabile: nacque da una catena di scelte specifiche, non da un destino strutturale — per la lettura revisionista, fu la brusca interruzione americana degli aiuti a Mosca già nel maggio 1945, e l'uso del monopolio atomico come pressione, a chiudere la strada della cooperazione, mentre in più di un momento le strade aperte erano diverse."
+        },
+        "affermazioni": [
+            {
+                "testo": "Nessuno dei due contendenti «cominciò» la guerra fredda: essa nacque dalla situazione in cui due potenze si trovarono a riempire il vuoto lasciato dalla guerra, dentro un dilemma della sicurezza che nessuna delle due controllava del tutto.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato strutturale su cui la Ristretta fonda l'alta probabilità.",
+                    "opposta": "l'Opposta non nega lo sfondo strutturale, insiste che dentro di esso le scelte specifiche contarono."
+                }
+            },
+            {
+                "testo": "Per la lettura tradizionale, fu l'espansionismo di Stalin, sospinto da un'ideologia che considerava illegittimo il mondo capitalista, a rendere impossibile la cooperazione.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "compatibile con la lettura strutturale ma non necessario a fondarla.",
+                    "opposta": "un'ideologia che rende «impossibile» la cooperazione somiglia più a un destino che a una scelta contingente: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Per la lettura revisionista, fu la brusca interruzione americana degli aiuti a Mosca già nel maggio 1945, e l'uso del monopolio atomico come pressione, a chiudere la strada della cooperazione.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è una delle scelte concrete su cui la Ristretta fonda la propria correzione.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "In più di un momento le strade aperte erano diverse: spiegare con la «struttura» non significa che le scelte degli uomini non contassero.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "Roosevelt morì nell'aprile 1945, e il suo successore Truman irrigidì la linea verso Mosca.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "un cambio di leadership è compatibile anche con una lettura strutturale.",
+                    "ristretta": "è l'esempio concreto su cui la Ristretta fonda il peso delle scelte individuali.",
+                    "opposta": "è uno dei dati su cui l'Opposta fonda la «catena di scelte specifiche»."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La guerra fredda",
+        "titolo": "Che cosa fu la guerra fredda: uno scontro di idee o di geografia?",
+        "formulazioni": {
+            "partenza": "Nella guerra fredda l'ideologia fu solo un pretesto: il vero motore era la geografia. Il realismo geopolitico, che si richiama a Mackinder e Spykman, legge l'ideologia come un rivestimento propagandistico, mentre lo scontro reale sarebbe dettato dalla contrapposizione tra chi controlla il cuore continentale eurasiatico e le potenze marittime che lo circondano — una rivalità tra Russia e mondo anglosassone che precede il comunismo e gli è sopravvissuta.",
+            "ristretta": "La geografia diede la scacchiera — la rivalità tra Russia e mondo anglosassone precede il comunismo e prosegue, in altre forme, dopo il 1991 — ma le idee dissero ai giocatori perché valesse la pena giocare: il crollo di un'ideologia non avrebbe potuto trascinare con sé un intero impero se fosse stata mera facciata, e milioni di persone vissero e soffrirono realmente in nome di quelle idee.",
+            "opposta": "La guerra fredda fu essenzialmente uno scontro ideologico tra due modelli di società universali: la lettura puramente geopolitica fatica a spiegare perché due paesi «fratelli» come URSS e Cina, dentro lo stesso blocco geografico, siano arrivati a spararsi al confine, mentre il crollo di un'ideologia trascinò con sé un intero impero, segno che non fu mai mera facciata."
+        },
+        "affermazioni": [
+            {
+                "testo": "Il realismo geopolitico, che si richiama a Mackinder e Spykman, legge l'ideologia come un rivestimento propagandistico, mentre lo scontro reale sarebbe dettato dalla contrapposizione tra chi controlla il cuore continentale eurasiatico e le potenze marittime che lo circondano.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta accoglie il ruolo della geografia come «scacchiera» ma non la riduzione dell'ideologia a puro rivestimento."
+                }
+            },
+            {
+                "testo": "La rivalità tra Russia e mondo anglosassone precede il comunismo e gli è sopravvissuta, il che spiegherebbe perché non si sia dissolta con la caduta dell'URSS.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il ruolo della geografia come scacchiera.",
+                    "opposta": "l'Opposta non nega una componente geopolitica di lunga durata, insiste che lo scontro concreto fu soprattutto ideologico."
+                }
+            },
+            {
+                "testo": "La lettura puramente ideologica fatica a spiegare perché due paesi «fratelli» come URSS e Cina siano arrivati a spararsi al confine — ma se le idee fossero state solo propaganda non si spiegherebbe perché milioni di persone abbiano vissuto e sofferto in loro nome.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il ruolo autonomo delle idee.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Il crollo di un'ideologia non avrebbe potuto trascinare con sé un intero impero, se l'ideologia fosse stata mera facciata.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "L'antagonismo russo-americano è proseguito, in altre forme, dopo il 1991.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "mostra che, caduta l'ideologia comunista, la contrapposizione geopolitica è rimasta.",
+                    "ristretta": "è il dato su cui la Ristretta fonda la persistenza della «scacchiera» oltre le idee.",
+                    "opposta": "compatibile anche con nuove forme di scontro ideologico succedute al 1991."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La guerra fredda",
+        "titolo": "Chi vinse la guerra fredda, e perché finì?",
+        "formulazioni": {
+            "partenza": "Fu Reagan, con il riarmo e lo scudo spaziale, a vincere la guerra fredda: la lettura trionfalistica attribuisce la fine del conflitto alla fermezza americana, che mise l'URSS con le spalle al muro, costringendola alle riforme e poi al collasso.",
+            "ristretta": "La pressione esterna del riarmo americano contribuì — Paul Kennedy nota che anche gli Stati Uniti uscirono relativamente indeboliti dalla competizione, mentre Giappone ed Europa occidentale li superavano economicamente, un segno che la sfida non fu a costo zero per nessuno — ma il crollo venne soprattutto dalle contraddizioni interne del sistema sovietico individuate da Mario Del Pero, e la scelta di Gorbačëv di non usare i carri armati nel 1989 fu comunque una decisione, non un esito automatico.",
+            "opposta": "L'Unione Sovietica non fu sconfitta da nessuno, collassò da sola per cause strutturali proprie: Mario Del Pero individua le cause reali del crollo in un bipolarismo asimmetrico fin dall'origine e in un'economia pianificata incapace di reggere la transizione postindustriale — quella di Gorbačëv fu una sconfitta involontaria, perché voleva salvare il sistema, non seppellirlo."
+        },
+        "affermazioni": [
+            {
+                "testo": "La lettura trionfalistica attribuisce la fine del conflitto alla fermezza americana: il riarmo e lo scudo spaziale degli anni Ottanta misero l'URSS con le spalle al muro, costringendola alle riforme e poi al collasso.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta concede un contributo della pressione esterna ma non l'attribuzione causale principale.",
+                    "opposta": "un effetto «spalle al muro» implica una qualche efficacia della pressione esterna: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Lo storico Mario Del Pero individua le cause reali del crollo nelle contraddizioni strutturali del sistema sovietico — un bipolarismo asimmetrico fin dall'origine, un'economia pianificata incapace di reggere la transizione postindustriale — più che nella spinta esterna.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il peso maggiore delle cause interne.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "In questa prospettiva l'Unione Sovietica non fu tanto sconfitta quanto si smontò da sé: quella di Gorbačëv fu una sconfitta involontaria, perché voleva salvare il sistema, non seppellirlo.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "Paul Kennedy propone una terza lettura, la «sovraestensione imperiale»: anche gli Stati Uniti uscirono relativamente indeboliti dalla competizione, mentre Giappone ed Europa occidentale li superavano economicamente.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "se anche gli USA uscirono indeboliti, è difficile parlare di una vittoria netta di Reagan.",
+                    "ristretta": "è il dato su cui la Ristretta fonda il costo non nullo della pressione anche per gli Stati Uniti.",
+                    "opposta": "compatibile con un collasso sovietico per cause proprie, indipendentemente dalla sorte relativa degli USA."
+                }
+            },
+            {
+                "testo": "Che il 1989 sia stato pacifico dipese da una scelta precisa di Gorbačëv — non usare i carri armati — non da un esito automatico.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "una scelta di non reprimere non decide da sola sull'origine, esterna o interna, della crisi che la rese necessaria.",
+                    "ristretta": "è il dato su cui la Ristretta fonda il ruolo delle scelte concrete accanto alle contraddizioni strutturali.",
+                    "opposta": "compatibile anche con un collasso strutturale che una diversa scelta di Gorbačëv avrebbe forse solo rallentato."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "Il momento unipolare",
+        "titolo": "Un nuovo ordine senza una nuova Yalta?",
+        "formulazioni": {
+            "partenza": "L'allargamento della NATO verso Est fu la causa principale del deterioramento dei rapporti con la Russia dopo il 1991: per la lettura critica, l'Occidente approfittò della debolezza russa per spingere le proprie strutture militari fino ai confini di Mosca, isolando la Russia in una strategia di *roll-back* — un'espansione vissuta come difensiva da una parte, ma percepita come minacciosa dall'altra, lo stesso dilemma della sicurezza già incontrato nella guerra fredda.",
+            "ristretta": "L'allargamento fu un fattore rilevante, letto da Mosca attraverso il dilemma della sicurezza; ma a differenza del 1945 la fine della guerra fredda non ebbe una conferenza che riunisse vincitori e vinti per ridisegnare consensualmente la mappa del mondo, e i paesi dell'Europa orientale furono protagonisti attivi e spesso entusiasti di quell'adesione — non semplici pedine di una partita fra grandi potenze, né l'unica causa del deterioramento.",
+            "opposta": "Fu semplicemente la risposta legittima alla domanda di sicurezza dei paesi usciti dal comunismo: per la lettura prevalente in Occidente, in assenza di un nuovo patto tra potenze furono le istituzioni della democrazia liberale, NATO e Unione Europea, ad allargarsi verso Est estendendo un'area di sicurezza che quei popoli chiedevano di raggiungere, da protagonisti attivi e non da pedine."
+        },
+        "affermazioni": [
+            {
+                "testo": "Per la lettura critica, l'Occidente approfittò della debolezza russa per spingere le proprie strutture militari fino ai confini di Mosca, isolando la Russia — una strategia di *roll-back*.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta riconosce il dilemma della sicurezza percepito da Mosca senza necessariamente sposare una strategia deliberata di roll-back.",
+                    "opposta": "è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Un'espansione vissuta come difensiva da una parte può essere percepita come minacciosa dall'altra: lo stesso dilemma della sicurezza già incontrato a proposito della guerra fredda.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il meccanismo su cui la Ristretta fonda «un fattore rilevante».",
+                    "opposta": "compatibile con una risposta legittima alla sicurezza che comunque generi percezione di minaccia."
+                }
+            },
+            {
+                "testo": "Per la lettura prevalente in Occidente, in assenza di un nuovo patto tra potenze furono le istituzioni della democrazia liberale, NATO e Unione Europea, ad allargarsi verso Est estendendo un'area di sicurezza che i popoli usciti dal comunismo chiedevano di raggiungere.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "non_decide",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta non sposa integralmente né la lettura critica né quella occidentale, le tiene entrambe come fattori parziali.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "La lettura critica rischia di ridurre a pedine di una partita tra grandi potenze i paesi dell'Europa orientale, che di quell'adesione furono invece protagonisti attivi e spesso entusiasti.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza.",
+                    "ristretta": "è il dato su cui la Ristretta fonda «non semplici pedine»."
+                }
+            },
+            {
+                "testo": "A differenza del 1945, la fine della guerra fredda non ebbe una conferenza che riunisse vincitori e vinti per ridisegnare consensualmente la mappa del mondo.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "l'assenza di un accordo consensuale rende più plausibile una lettura come iniziativa unilaterale occidentale.",
+                    "ristretta": "è il dato su cui la Ristretta fonda l'assenza di un quadro condiviso, distinto dal 1945.",
+                    "opposta": "l'assenza di una conferenza non esclude che l'allargamento fosse comunque legittimo e richiesto dai paesi coinvolti."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "Il momento unipolare",
+        "titolo": "Fine della storia o scontro di civiltà?",
+        "formulazioni": {
+            "partenza": "I conflitti del dopo guerra fredda sono, in fondo, sempre lotte per le risorse mascherate da guerre di religione: molti conflitti apparentemente identitari o religiosi — dietro la Bosnia, il Kosovo, la Cecenia — nascondevano interessi assai più concreti, il controllo di risorse, di oleodotti, di territori strategici, con potenze esterne pronte ad alimentare le fazioni locali.",
+            "ristretta": "Gli interessi materiali contano — dietro molti conflitti apparentemente identitari si celavano davvero risorse e territori strategici — ma non spiegano da soli perché le persone siano disposte a uccidere e morire per un'appartenenza: la dissoluzione della Jugoslavia riportò la parola «pulizia etnica» nel cuore dell'Europa, un fenomeno che il puro calcolo degli interessi fatica a rendere conto.",
+            "opposta": "Sono davvero, come sostiene Huntington, conflitti tra civiltà lungo faglie religiose e culturali: spiegare ogni conflitto con gli oleodotti significa non spiegare perché milioni di persone siano disposte a uccidere e a morire in nome di un'appartenenza — la religione e l'identità non sono sempre una maschera degli interessi, a volte sono una forza autonoma, ed è proprio non averlo capito che è costato caro all'Occidente."
+        },
+        "affermazioni": [
+            {
+                "testo": "Molti conflitti apparentemente identitari o religiosi nascondevano interessi assai più concreti — il controllo di risorse, di oleodotti, di territori strategici — con potenze esterne pronte ad alimentare le fazioni locali.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il peso reale degli interessi materiali.",
+                    "opposta": "è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Dietro la Bosnia, il Kosovo, la Cecenia, secondo questa lettura non c'era un'incompatibilità di civiltà ma una lotta per il potere travestita da guerra di religione.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta accoglie il peso degli interessi ma non la riduzione integrale a «travestimento», che nega ogni autonomia all'identitario."
+                }
+            },
+            {
+                "testo": "Spiegare ogni conflitto con gli oleodotti significa non spiegare perché milioni di persone siano disposte a uccidere e a morire in nome di un'appartenenza.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il limite della spiegazione puramente materiale.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "La religione e l'identità non sono sempre una maschera degli interessi; a volte sono una forza autonoma, ed è proprio non averlo capito che è costato caro all'Occidente.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "La dissoluzione della Jugoslavia riportò la parola «pulizia etnica» nel cuore dell'Europa, a poche ore d'aereo da Roma o da Vienna.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "compatibile anche con una lettura degli interessi mascherati, se declinata caso per caso.",
+                    "ristretta": "è il caso su cui la Ristretta fonda il limite della spiegazione materiale.",
+                    "opposta": "è un caso coerente con la lettura identitaria forte."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "Il momento unipolare",
+        "titolo": "L'ingerenza umanitaria: dovere o alibi?",
+        "formulazioni": {
+            "partenza": "Gli interventi umanitari del dopo guerra fredda sono sempre, in ultima istanza, la copertura di interessi di potenza: gli interventi «umanitari» del periodo, dai bombardamenti sulla Jugoslavia nel 1999 all'invasione dell'Iraq nel 2003, furono condotti in modo selettivo e spesso scavalcando l'ONU — si interviene dove ci sono interessi strategici e si distoglie lo sguardo altrove, come se alcune vittime contassero più di altre.",
+            "ristretta": "Il rischio di strumentalizzazione è reale — l'intervento in Libia del 2011, autorizzato per proteggere i civili, si trasformò rapidamente nell'abbattimento di un regime — e va vigilato caso per caso; ma questo non annulla la legittimità del principio in sé: di fronte a un genocidio o a una pulizia etnica, restare fermi in nome della sovranità significa rendersi complici.",
+            "opposta": "Il dovere di proteggere le vittime di un genocidio o di una pulizia etnica prevale sul sospetto verso le intenzioni di chi interviene: i fantasmi della Bosnia e del Ruanda pesano su chi non è intervenuto, e se nessuno ha il diritto di intervenire, chi protegge un popolo dal proprio stesso Stato? La sovranità assoluta è anche lo scudo dietro cui si sono consumati i peggiori massacri del secolo."
+        },
+        "affermazioni": [
+            {
+                "testo": "Gli interventi «umanitari» del periodo, dai bombardamenti sulla Jugoslavia nel 1999 all'invasione dell'Iraq nel 2003, furono condotti in modo selettivo e spesso scavalcando l'ONU.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda il rischio reale di strumentalizzazione.",
+                    "opposta": "l'Opposta non nega la selettività, la considera non decisiva rispetto al dovere di proteggere."
+                }
+            },
+            {
+                "testo": "Si interviene dove ci sono interessi strategici e si distoglie lo sguardo altrove, come se alcune vittime contassero più di altre.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {}
+            },
+            {
+                "testo": "Di fronte a un genocidio o a una pulizia etnica, restare fermi in nome della sovranità significa rendersi complici: i fantasmi della Bosnia e del Ruanda pesano su chi non è intervenuto.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda la legittimità del principio nonostante i rischi.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Se nessuno ha il diritto di intervenire, chi protegge un popolo dal proprio stesso Stato? La sovranità assoluta è anche lo scudo dietro cui si sono consumati i peggiori massacri del secolo.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "L'intervento in Libia del 2011, autorizzato per proteggere i civili, si trasformò rapidamente nell'abbattimento di un regime.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "partenza": "un esempio concreto di intervento che ha finito per servire scopi diversi da quelli dichiarati.",
+                    "ristretta": "è il caso su cui la Ristretta fonda il rischio reale di strumentalizzazione da vigilare caso per caso.",
+                    "opposta": "mostra come anche un intervento autorizzato per proteggere possa scivolare verso altri fini: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La Cina, da Mao a oggi",
+        "titolo": "Con Deng, la Cina ha rotto con Mao o gli è rimasta fedele?",
+        "formulazioni": {
+            "partenza": "Con le riforme di Deng Xiaoping, la Cina ha smesso di essere comunista: Deng smantellò le comuni popolari, reintrodusse proprietà, profitto e mercato, abbandonando l'impalcatura ideologica del marxismo-leninismo per costruire un inedito capitalismo di Stato, con risultati economici — industrializzazione, urbanizzazione di massa, crescita record — così rapidi da apparire una rottura totale col maoismo.",
+            "ristretta": "La Cina ha smesso di essere comunista sul piano economico — le riforme, note come le Quattro Modernizzazioni, smantellarono le comuni popolari e reintrodussero mercato e profitto — ma è rimasta comunista sul piano del potere politico: sotto la superficie del cambiamento economico corre una ferrea continuità, il monopolio del Partito rimase intatto.",
+            "opposta": "La Cina di Deng è rimasta pienamente fedele al comunismo, e il mercato fu solo uno strumento tattico del Partito: sotto la superficie del cambiamento economico corre una ferrea continuità, nulla di ciò che contava davvero fu toccato, e il «socialismo di mercato» non fu una conversione al modello occidentale ma uno strumento pragmatico per far sopravvivere il potere del partito unico attraverso lo sviluppo."
+        },
+        "affermazioni": [
+            {
+                "testo": "Deng smantellò le comuni popolari, reintrodusse proprietà, profitto e mercato, abbandonando l'impalcatura ideologica del marxismo-leninismo per costruire un inedito capitalismo di Stato.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato economico su cui la Ristretta fonda la rottura sul piano economico.",
+                    "opposta": "l'Opposta non nega le riforme economiche, ne contesta il significato come conversione ideologica."
+                }
+            },
+            {
+                "testo": "I risultati economici delle riforme — industrializzazione, urbanizzazione di massa, crescita record — furono così rapidi da apparire una rottura totale col maoismo.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta accoglie la rottura economica ma non necessariamente la sua lettura come «rottura totale».",
+                    "opposta": "l'Opposta non nega la rapidità dei risultati, la legge come effetto di uno strumento tattico."
+                }
+            },
+            {
+                "testo": "Sotto la superficie del cambiamento economico corre una ferrea continuità: il monopolio del Partito rimase intatto, e nulla di ciò che contava davvero fu toccato.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda la continuità sul piano politico.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Il «socialismo di mercato» non fu una conversione al modello occidentale, ma uno strumento pragmatico per far sopravvivere il potere del partito unico attraverso lo sviluppo.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "Il programma delle riforme prese il nome di Quattro Modernizzazioni.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "non_decide",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "un nome di programma non decide da solo sulla portata ideologica del cambiamento.",
+                    "opposta": "dato organizzativo compatibile con tutte le letture."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La Cina, da Mao a oggi",
+        "titolo": "Perché la Cina non crollò come l'Unione Sovietica?",
+        "formulazioni": {
+            "partenza": "Se Gorbačëv avesse represso come Deng a piazza Tienanmen, l'Unione Sovietica sarebbe sopravvissuta: Gorbačëv aprì la politica prima dell'economia e perse il controllo, Deng represse la richiesta di libertà e tenne blindato il Partito, potendo poi proseguire indisturbato le riforme economiche — nello stesso 1989, due regimi comunisti investiti da una crisi simile presero strade opposte e conobbero destini opposti.",
+            "ristretta": "La repressione da sola non sarebbe bastata, perché la Cina riformava anche da condizioni economiche che l'URSS non aveva: la Cina riformava da una posizione di forza, dopo un decennio di crescita che le dava legittimità, mentre l'economia sovietica era ormai morta — la dirigenza cinese, nelle settimane della protesta, era peraltro realmente spaccata tra chi voleva riformare e chi voleva reprimere, segno che nemmeno l'esito cinese fu scontato.",
+            "opposta": "Fu soprattutto la differenza delle condizioni strutturali, non la scelta politica, a separare i due esiti: non due scelte diverse, ma due punti di partenza diversi, perché la Cina riformava da una posizione di forza mentre l'economia sovietica era ormai morta — ridurre tutto alla scelta di Deng rischia una lettura da «grande uomo», che dimentica quanto le condizioni cinesi fossero già più favorevoli di quelle sovietiche."
+        },
+        "affermazioni": [
+            {
+                "testo": "Gorbačëv aprì la politica prima dell'economia e perse il controllo; Deng represse la richiesta di libertà e tenne blindato il Partito, potendo poi proseguire indisturbato le riforme economiche.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "non_decide",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta non nega che le due scelte politiche fossero diverse, insiste che da sole non bastano a spiegare l'esito.",
+                    "opposta": "descrive comunque una scelta politica reale e diversa: è il punto cieco riconosciuto alla lettura opposta."
+                }
+            },
+            {
+                "testo": "Nello stesso 1989, due regimi comunisti investiti da una crisi simile presero strade opposte e conobbero destini opposti.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "confuta",
+                    "opposta": "confuta"
+                },
+                "perche": {
+                    "ristretta": "la Ristretta contesta proprio che la crisi fosse «simile»: i punti di partenza economici erano già diversi.",
+                    "opposta": "per lo stesso motivo, l'Opposta nega che le due situazioni fossero comparabili."
+                }
+            },
+            {
+                "testo": "La Cina riformava da una posizione di forza, dopo un decennio di crescita che le dava legittimità, mentre l'economia sovietica era ormai morta — non due scelte diverse, ma due punti di partenza diversi.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda i diversi punti di partenza.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Ridurre tutto alla scelta di Deng rischia una lettura da «grande uomo», che dimentica quanto le condizioni cinesi fossero già più favorevoli di quelle sovietiche.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "La dirigenza cinese, nelle settimane della protesta, era realmente spaccata tra chi voleva riformare e chi voleva reprimere.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "partenza": "mostra che l'esito cinese non era scontato, ma non decide da solo se scelta o condizioni abbiano fatto la differenza.",
+                    "ristretta": "rafforza l'idea che anche in Cina la scelta politica non bastasse da sola, essendo essa stessa contesa.",
+                    "opposta": "compatibile con entrambe le letture del peso relativo di scelta e struttura."
+                }
+            }
+        ]
+    },
+    {
+        "capitolo": "La Cina, da Mao a oggi",
+        "titolo": "Il confronto tra Stati Uniti e Cina è una nuova guerra fredda?",
+        "formulazioni": {
+            "partenza": "Il confronto attuale tra Stati Uniti e Cina è, a tutti gli effetti, una nuova guerra fredda: l'analogia è comprensibile, due superpotenze, una competizione che investe economia, tecnologia, armamenti, e il confronto tra una democrazia liberale e un capitalismo autoritario, con Taiwan che resta un punto di possibile rottura.",
+            "ristretta": "Il confronto condivide alcuni tratti dello scontro 1947-1991 — due superpotenze, una competizione tecnologica e militare, Taiwan come punto di possibile rottura — ma l'interdipendenza economica, la cosiddetta «Chimerica» coniata da Niall Ferguson e Moritz Schularick, rende questo confronto un fenomeno diverso: uno scontro diretto sarebbe rovinoso per entrambe le economie, così intrecciate da escludere i blocchi quasi impermeabili della guerra fredda.",
+            "opposta": "Chiamarla «guerra fredda» importa categorie che rischiano di far fraintendere ciò che sta davvero accadendo: durante la guerra fredda Stati Uniti e Unione Sovietica guidavano due blocchi economici quasi impermeabili, mentre oggi le due economie sono così intrecciate — la «Chimerica» — che uno scontro diretto sarebbe rovinoso per entrambe; e mentre quella era una sfida ideologica a somma zero, questa somiglia di più a una classica competizione per l'egemonia, senza la stessa carica missionaria."
+        },
+        "affermazioni": [
+            {
+                "testo": "L'analogia è comprensibile: due superpotenze, una competizione che investe economia, tecnologia, armamenti, e il confronto tra una democrazia liberale e un capitalismo autoritario.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda i tratti condivisi con lo scontro 1947-1991.",
+                    "opposta": "l'Opposta non nega questi tratti comuni, insiste che il quadro complessivo sia comunque diverso."
+                }
+            },
+            {
+                "testo": "Taiwan resta un punto di possibile rottura, e l'assenza di blocchi impermeabili non esclude l'escalation.",
+                "classificazione": {
+                    "partenza": "sostiene",
+                    "ristretta": "sostiene",
+                    "opposta": "non_decide"
+                },
+                "perche": {}
+            },
+            {
+                "testo": "Durante la guerra fredda, Stati Uniti e Unione Sovietica guidavano due blocchi economici quasi impermeabili; oggi le due economie sono così intrecciate — la «Chimerica» — che uno scontro diretto sarebbe rovinoso per entrambe.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "ristretta": "è il dato su cui la Ristretta fonda la differenza rispetto allo scontro 1947-1991.",
+                    "opposta": "è il dato su cui l'Opposta si fonda esplicitamente."
+                }
+            },
+            {
+                "testo": "Mentre quella era una sfida ideologica a somma zero, questa somiglia di più a una classica competizione per l'egemonia, senza la stessa carica missionaria.",
+                "classificazione": {
+                    "partenza": "confuta",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "è il punto cieco riconosciuto alla lettura di partenza."
+                }
+            },
+            {
+                "testo": "Il termine «Chimerica» fu coniato dagli storici Niall Ferguson e Moritz Schularick.",
+                "classificazione": {
+                    "partenza": "non_decide",
+                    "ristretta": "sostiene",
+                    "opposta": "sostiene"
+                },
+                "perche": {
+                    "partenza": "un'etichetta storiografica per l'interdipendenza economica, non decide da sola sulla natura del confronto.",
+                    "ristretta": "è la fonte terminologica su cui la Ristretta fonda il riferimento all'interdipendenza.",
+                    "opposta": "la stessa fonte su cui anche l'Opposta si fonda per lo stesso dato."
+                }
+            }
+        ]
+    }
+];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle([0,1,2,3,4]);
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      verifyHint.textContent='Risposte verificate: il segno su ciascuna affermazione mostra se è corretta.';
+    } else if(answered<5){
+      verifyHint.textContent=answered+' su 5 classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e 5 classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

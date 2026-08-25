@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le tre guerre della Resistenza</title>
+<style>
+  :root{
+    --azzurro:#E8F4F8;
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --c-patriottica:#5b8fa8;
+    --c-patriottica-bg:#e4eef2;
+    --c-civile:#8B7355;
+    --c-civile-bg:#efe8dc;
+    --c-classe:#a15c4a;
+    --c-classe-bg:#f2e3de;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:28px 24px 34px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.35rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.9rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem;
+    text-align:center;
+    color:#6b6255;
+    margin:10px 0 24px;
+    line-height:1.5;
+  }
+  .toggles{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .toggle{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.8rem;
+    font-weight:600;
+    background:#fff;
+    border:1.5px solid var(--marrone);
+    color:var(--marrone-scuro);
+    padding:9px 18px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .toggle:hover{
+    transform:translateY(-1px);
+  }
+  .toggle[data-layer="patriottica"].attivo{
+    background:var(--c-patriottica);
+    border-color:var(--c-patriottica);
+    color:#fff;
+  }
+  .toggle[data-layer="civile"].attivo{
+    background:var(--c-civile);
+    border-color:var(--c-civile);
+    color:#fff;
+  }
+  .toggle[data-layer="classe"].attivo{
+    background:var(--c-classe);
+    border-color:var(--c-classe);
+    color:#fff;
+  }
+  .definizioni{
+    display:grid;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .def-card{
+    display:none;
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:12px 16px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+  }
+  .def-card.visibile{
+    display:block;
+  }
+  .def-card[data-def="patriottica"]{ border-left-color:var(--c-patriottica); }
+  .def-card[data-def="civile"]{ border-left-color:var(--c-civile); }
+  .def-card[data-def="classe"]{ border-left-color:var(--c-classe); }
+  .def-titolo{
+    font-weight:600;
+    font-size:0.82rem;
+    margin:0 0 4px;
+    color:var(--testo);
+  }
+  .def-testo{
+    font-family:Georgia, serif;
+    font-size:0.83rem;
+    line-height:1.5;
+    margin:0;
+    color:var(--testo);
+  }
+  .scena-box{
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:22px 26px;
+    margin-bottom:20px;
+  }
+  .scena-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    color:var(--marrone-scuro);
+    margin:0 0 10px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .scena-testo{
+    font-family:Georgia, serif;
+    font-size:0.95rem;
+    line-height:1.75;
+    margin:0;
+  }
+  .scena-testo mark{
+    background:transparent;
+    color:inherit;
+    padding:0 2px;
+    border-radius:3px;
+    transition:background 0.25s, box-shadow 0.25s;
+  }
+  .scena-testo .tag-patriottica.evidenziata{
+    background:var(--c-patriottica-bg);
+    box-shadow:inset 0 -3px 0 var(--c-patriottica);
+  }
+  .scena-testo .tag-civile.evidenziata{
+    background:var(--c-civile-bg);
+    box-shadow:inset 0 -3px 0 var(--c-civile);
+  }
+  .scena-testo .tag-classe.evidenziata{
+    background:var(--c-classe-bg);
+    box-shadow:inset 0 -3px 0 var(--c-classe);
+  }
+  .nota-sovrapposizione{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem;
+    font-style:italic;
+    color:#8a8175;
+    text-align:center;
+    margin:0 0 20px;
+  }
+  .avvertenza{
+    background:var(--grigio);
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:16px 20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem;
+    line-height:1.6;
+    color:#4a453d;
+  }
+  .avvertenza strong{
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Le tre guerre della Resistenza</h1>
+    <p class="sottotitolo">Un solo episodio, letto attraverso tre chiavi (concetto di Claudio Pavone)</p>
+  </header>
+
+  <p class="istruzioni">
+    Attiva uno o più <strong>livelli</strong> qui sotto: le parti del racconto che appartengono a quella guerra si evidenzieranno nel testo. Prova ad attivarli insieme: alcune parole restano evidenziate da più di un livello — segno che lo stesso fatto appartiene contemporaneamente a più conflitti.
+  </p>
+
+  <div class="toggles">
+    <button class="toggle" data-layer="patriottica">Guerra patriottica</button>
+    <button class="toggle" data-layer="civile">Guerra civile</button>
+    <button class="toggle" data-layer="classe">Guerra di classe</button>
+  </div>
+
+  <div class="definizioni">
+    <div class="def-card" data-def="patriottica">
+      <p class="def-titolo">Guerra patriottica</p>
+      <p class="def-testo">La lotta contro l'occupante tedesco, per liberare il territorio nazionale. Esempio: gli attacchi ai presidi e ai convogli della Wehrmacht.</p>
+    </div>
+    <div class="def-card" data-def="civile">
+      <p class="def-titolo">Guerra civile</p>
+      <p class="def-testo">Il conflitto fra italiani: partigiani contro i reparti e i funzionari della Repubblica Sociale Italiana, che a sua volta si considerava legittima erede dello Stato. Esempio: gli scontri tra bande partigiane e la Guardia Nazionale Repubblicana.</p>
+    </div>
+    <div class="def-card" data-def="classe">
+      <p class="def-titolo">Guerra di classe</p>
+      <p class="def-testo">Per l'ala più radicale della Resistenza, in particolare le Brigate Garibaldi, la lotta contro il nazifascismo si intreccia con l'obiettivo di una trasformazione sociale. Esempio: azioni contro i proprietari terrieri e la redistribuzione di beni requisiti.</p>
+    </div>
+  </div>
+
+  <div class="scena-box">
+    <p class="scena-titolo">Un episodio</p>
+    <p class="scena-testo">
+      Nella notte tra il 3 e il 4 marzo 1944, una banda della
+      <mark class="tag-classe">Brigata Garibaldi</mark> attacca un deposito di viveri presso Casale, sorvegliato da un reparto della
+      <mark class="tag-civile">Guardia Nazionale Repubblicana</mark>.
+      L'azione colpisce un
+      <mark class="tag-patriottica">convoglio di rifornimenti destinato alle truppe tedesche</mark>
+      di stanza nella zona, ed è decisa anche per
+      <mark class="tag-classe">redistribuire ai contadini le scorte requisite</mark>,
+      alcuni dei quali si erano rifiutati di consegnare il raccolto ai gerarchi locali. Nello scontro a fuoco che segue, cadono due militi
+      <mark class="tag-civile">italiani della Repubblica Sociale</mark>
+      e un
+      <mark class="tag-patriottica">sottufficiale tedesco</mark>
+      di scorta al convoglio.
+    </p>
+  </div>
+
+  <p class="nota-sovrapposizione">Le parole senza evidenziazione restano invariate: fanno da cornice al racconto, non appartengono in modo specifico a nessuna delle tre chiavi.</p>
+
+  <div class="avvertenza">
+    <strong>Avvertenza.</strong> Riconoscere che nella Resistenza si combatté anche una «guerra civile» descrive un fatto storico — italiani schierati su fronti opposti — e non equivale a pareggiare le ragioni morali e politiche delle due parti.
+  </div>
+</div>
+
+<script>
+(function(){
+  var toggles = document.querySelectorAll('.toggle');
+  var defCards = document.querySelectorAll('.def-card');
+
+  toggles.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var layer = btn.getAttribute('data-layer');
+      var attivo = btn.classList.toggle('attivo');
+
+      var def = document.querySelector('.def-card[data-def="' + layer + '"]');
+      if(def){ def.classList.toggle('visibile', attivo); }
+
+      var spans = document.querySelectorAll('.tag-' + layer);
+      spans.forEach(function(s){ s.classList.toggle('evidenziata', attivo); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronologia della sezione — L'ordine internazionale</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --corsia1:#8B7355;
+    --corsia1-bg:#efe9e1;
+    --corsia2:#5b7a8f;
+    --corsia2-bg:#e6edf0;
+    --corsia3:#7a8a5c;
+    --corsia3-bg:#eaeee2;
+    --corsia4:#9c5b45;
+    --corsia4-bg:#f1e4de;
+    --f1:#ece6da;
+    --f2:#e0d4bd;
+    --f3:#dde8ef;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:1600px; margin:0 auto; padding:26px 22px 34px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.35rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{ font-family:Georgia, serif; font-style:italic; font-size:0.9rem; color:#5a5248; margin:0; }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.74rem; text-align:center; color:#6b6255; margin:8px 0 18px; line-height:1.5;
+  }
+  .filtri{ display:flex; justify-content:center; flex-wrap:wrap; gap:16px; margin-bottom:20px; }
+  .gruppo-filtro{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .gruppo-filtro .titolo-filtro{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.66rem; text-transform:uppercase; letter-spacing:0.05em; color:#8a8175;
+  }
+  .pulsanti-filtro{ display:flex; gap:6px; flex-wrap:wrap; justify-content:center; max-width:520px; }
+  .fbtn{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem; font-weight:600; border:1.5px solid var(--marrone);
+    background:#fffdfa; color:var(--marrone-scuro); padding:5px 11px;
+    border-radius:14px; cursor:pointer; transition:transform 0.15s;
+  }
+  .fbtn:hover{ transform:translateY(-1px); }
+  .fbtn.attivo{ color:#fff; }
+  .fbtn[data-lane="1"].attivo{ background:var(--corsia1); border-color:var(--corsia1); }
+  .fbtn[data-lane="2"].attivo{ background:var(--corsia2); border-color:var(--corsia2); }
+  .fbtn[data-lane="3"].attivo{ background:var(--corsia3); border-color:var(--corsia3); }
+  .fbtn[data-lane="4"].attivo{ background:var(--corsia4); border-color:var(--corsia4); }
+  .fbtn[data-phase].attivo{ background:var(--marrone); border-color:var(--marrone); color:#fff; }
+  .fbtn[data-anno].attivo{ background:#a1473a; border-color:#a1473a; color:#fff; }
+  .btn-reset-filtri{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem; color:#8a8175; background:none; border:none;
+    text-decoration:underline; cursor:pointer; align-self:center;
+  }
+
+  .chart-outer{ overflow-x:auto; border-radius:10px; }
+  .chart-grid{
+    display:grid;
+    grid-template-columns: 130px minmax(1500px, 1fr);
+    min-width:1630px;
+  }
+  .corner{ position:sticky; left:0; z-index:3; background:var(--grigio); }
+  .fase-row-label{ position:relative; height:34px; }
+  .fase-band{
+    position:absolute; top:4px; bottom:4px;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    padding:2px 4px; border-radius:5px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.62rem; line-height:1.2; color:var(--marrone-scuro); font-weight:600;
+    overflow:hidden; cursor:pointer; border:1px solid transparent;
+    transition:opacity 0.25s, border-color 0.2s;
+  }
+  .fase-band.attenuato{ opacity:0.28; }
+  .fase-band.selezionato{ border-color:var(--marrone); }
+
+  .lane-label{
+    position:sticky; left:0; z-index:2; background:var(--grigio);
+    display:flex; align-items:center; padding-right:8px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.7rem; line-height:1.2;
+  }
+  .lane-label .pallino-corsia{ width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:6px; flex:0 0 auto; }
+  .lane-label[data-lane="1"]{ color:var(--corsia1); }
+  .lane-label[data-lane="2"]{ color:var(--corsia2); }
+  .lane-label[data-lane="3"]{ color:var(--corsia3); }
+  .lane-label[data-lane="4"]{ color:var(--corsia4); }
+
+  .lane-track{ position:relative; height:56px; border-bottom:1px dashed #d8d2c4; }
+  .lane-track[data-lane="1"]{ background:var(--corsia1-bg); }
+  .lane-track[data-lane="2"]{ background:var(--corsia2-bg); }
+  .lane-track[data-lane="3"]{ background:var(--corsia3-bg); }
+  .lane-track[data-lane="4"]{
+    background: linear-gradient(to right, var(--corsia4-bg) 0%, var(--corsia4-bg) var(--chiusura, 100%), var(--grigio) var(--chiusura, 100%), var(--grigio) 100%);
+  }
+  .lane-esaurita{
+    position:absolute; top:0; bottom:0; width:1px; background:#c9c0b0;
+  }
+  .lane-esaurita span{
+    position:absolute; top:4px; left:6px; width:150px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.56rem;
+    font-style:italic; color:#8a8175; line-height:1.3;
+  }
+
+  .evento{ position:absolute; top:50%; transform:translateY(-50%); cursor:pointer; transition:opacity 0.25s; }
+  .evento.attenuato{ opacity:0.18; }
+  .evento.punto{ width:14px; height:14px; border-radius:50%; background:#fffdfa; border:3px solid var(--marrone); margin-left:-7px; }
+  .lane-track[data-lane="1"] .evento.punto{ border-color:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.punto{ border-color:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.punto{ border-color:var(--corsia3); }
+  .lane-track[data-lane="4"] .evento.punto{ border-color:var(--corsia4); }
+  .evento.punto.aperto{ background:var(--marrone); }
+  .lane-track[data-lane="1"] .evento.punto.aperto{ background:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.punto.aperto{ background:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.punto.aperto{ background:var(--corsia3); }
+  .lane-track[data-lane="4"] .evento.punto.aperto{ background:var(--corsia4); }
+
+  .evento-etichetta{
+    position:absolute; top:100%; left:50%; transform:translateX(-50%); margin-top:3px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.55rem; color:#6b6255; white-space:nowrap; pointer-events:none;
+  }
+
+  .evento.barra{
+    height:16px; border-radius:5px; background:#fffdfa; border:2px solid var(--marrone);
+    display:flex; align-items:center; justify-content:center; padding:0 4px; overflow:hidden;
+  }
+  .lane-track[data-lane="1"] .evento.barra{ border-color:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.barra{ border-color:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.barra{ border-color:var(--corsia3); }
+  .lane-track[data-lane="4"] .evento.barra{ border-color:var(--corsia4); }
+  .evento.barra.aperto{ background:var(--marrone); }
+  .lane-track[data-lane="1"] .evento.barra.aperto{ background:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.barra.aperto{ background:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.barra.aperto{ background:var(--corsia3); }
+  .lane-track[data-lane="4"] .evento.barra.aperto{ background:var(--corsia4); }
+  .evento.barra .barra-testo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.55rem; font-weight:600; color:var(--testo); white-space:nowrap;
+  }
+  .evento.barra.aperto .barra-testo{ color:#fff; }
+
+  .anni-riga{ position:relative; height:20px; }
+  .anno-tick{
+    position:absolute; top:0;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.6rem; color:#8a8175; transform:translateX(-50%);
+  }
+
+  .scheda{
+    max-width:760px; margin:22px auto 0; background:#fffdfa;
+    border:1.5px solid var(--marrone); border-radius:10px; padding:18px 22px; display:none;
+  }
+  .scheda.visibile{ display:block; }
+  .scheda-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.95rem; color:var(--marrone-scuro); margin:0 0 4px;
+  }
+  .scheda-meta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem; color:#8a8175; margin:0 0 10px; border-bottom:1px solid #e0d8ca; padding-bottom:8px;
+  }
+  .scheda-testo{ font-family:Georgia, serif; font-size:0.86rem; line-height:1.55; margin:0; color:var(--testo); }
+  .segnaposto{ text-align:center; font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; font-size:0.76rem; color:#9a9184; margin-top:20px; }
+  .idea-guida{
+    max-width:900px; margin:22px auto 0; background:#fffdfa; border-left:5px solid var(--marrone);
+    border-radius:6px; padding:13px 18px; font-family:Georgia, serif; font-size:0.82rem;
+    line-height:1.55; color:var(--testo);
+  }
+  .idea-guida strong{ font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif; color:var(--marrone-scuro); }
+  .anno-isolato-banner{
+    display:none; max-width:900px; margin:16px auto 0; background:#f1ddd4; border:1.5px solid #a1473a;
+    border-radius:8px; padding:10px 16px; text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.76rem; color:#7a3327;
+  }
+  .anno-isolato-banner.visibile{ display:block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Cronologia della sezione</h1>
+    <p class="sottotitolo">1939 &ndash; oggi</p>
+  </header>
+
+  <p class="istruzioni">
+    Clicca su un evento per aprire la scheda. Usa i filtri per isolare una corsia, uno snodo o un anno: gli elementi esclusi si attenuano, senza sparire.
+  </p>
+
+  <div class="filtri">
+    <div class="gruppo-filtro">
+      <span class="titolo-filtro">Corsie</span>
+      <div class="pulsanti-filtro">
+        <button class="fbtn" data-lane="1">L'ordine internazionale</button>
+        <button class="fbtn" data-lane="2">Il centro del conflitto</button>
+        <button class="fbtn" data-lane="3">Le periferie</button>
+        <button class="fbtn" data-lane="4">L'Italia (1940-1949)</button>
+      </div>
+    </div>
+    <div class="gruppo-filtro">
+      <span class="titolo-filtro">Snodi</span>
+      <div class="pulsanti-filtro">
+        <button class="fbtn" data-phase="1">1</button>
+        <button class="fbtn" data-phase="2">2</button>
+        <button class="fbtn" data-phase="3">3</button>
+      </div>
+    </div>
+    <div class="gruppo-filtro">
+      <span class="titolo-filtro">Isola un anno</span>
+      <div class="pulsanti-filtro">
+        <button class="fbtn" data-anno="1945">1945</button>
+        <button class="fbtn" data-anno="1955">1955</button>
+        <button class="fbtn" data-anno="1962">1962</button>
+        <button class="fbtn" data-anno="1975">1975</button>
+        <button class="fbtn" data-anno="1989">1989</button>
+        <button class="fbtn" data-anno="1991">1991</button>
+        <button class="fbtn" data-anno="2001">2001</button>
+        <button class="fbtn" data-anno="2003">2003</button>
+        <button class="fbtn" data-anno="2011">2011</button>
+      </div>
+    </div>
+    <button class="btn-reset-filtri" id="btnResetFiltri">azzera filtri</button>
+  </div>
+
+  <p class="anno-isolato-banner" id="annoBanner"></p>
+
+  <div class="chart-outer">
+    <div class="chart-grid" id="chartGrid">
+
+      <div class="corner"></div>
+      <div class="fase-row-label">
+        <div class="fase-band" data-phase="1" style="left:0.00%; width:6.98%; background:var(--f1);">1939-1945 · la guerra</div>
+<div class="fase-band" data-phase="2" style="left:6.98%; width:53.49%; background:var(--f2);">1945-1991 · l'ordine bipolare</div>
+<div class="fase-band" data-phase="3" style="left:60.47%; width:39.53%; background:var(--f3);">1991-oggi · il terzo snodo</div>
+      </div>
+
+      <div class="lane-label" data-lane="1"><span class="pallino-corsia" style="background:var(--corsia1);"></span>L'ordine<br>internazionale</div>
+<div class="lane-track" data-lane="1">
+<div class="evento punto" data-id="l1-1941" data-lane="1" style="left:2.33%;"><span class="evento-etichetta">1941</span></div>
+<div class="evento punto" data-id="l1-1944" data-lane="1" style="left:5.81%;"><span class="evento-etichetta">1944</span></div>
+<div class="evento barra" data-id="l1-1945" data-lane="1" style="left:6.98%; width:1.05%;"><span class="barra-testo">1945</span></div>
+<div class="evento punto" data-id="l1-1948" data-lane="1" style="left:10.47%;"><span class="evento-etichetta">1948</span></div>
+<div class="evento punto" data-id="l1-1949b" data-lane="1" style="left:11.63%;"><span class="evento-etichetta">1949</span></div>
+<div class="evento punto" data-id="l1-1955" data-lane="1" style="left:18.60%;"><span class="evento-etichetta">1955</span></div>
+<div class="evento punto" data-id="l1-1975" data-lane="1" style="left:41.86%;"><span class="evento-etichetta">1975</span></div>
+<div class="evento barra" data-id="l1-1991" data-lane="1" style="left:60.47%; width:1.05%;"><span class="barra-testo">1991</span></div>
+<div class="evento punto" data-id="l1-1995" data-lane="1" style="left:65.12%;"><span class="evento-etichetta">1995</span></div>
+<div class="evento punto" data-id="l1-1999" data-lane="1" style="left:69.77%;"><span class="evento-etichetta">1999</span></div>
+<div class="evento punto" data-id="l1-2001b" data-lane="1" style="left:72.09%;"><span class="evento-etichetta">2001</span></div>
+<div class="evento punto" data-id="l1-2003" data-lane="1" style="left:74.42%;"><span class="evento-etichetta">2003</span></div>
+<div class="evento punto" data-id="l1-2005" data-lane="1" style="left:76.74%;"><span class="evento-etichetta">2005</span></div>
+<div class="evento punto" data-id="l1-2011" data-lane="1" style="left:83.72%;"><span class="evento-etichetta">2011</span></div>
+<div class="evento barra" data-id="l1-oggi" data-lane="1" style="left:91.86%; width:8.14%;"><span class="barra-testo">oggi</span></div>
+
+</div>
+<div class="lane-label" data-lane="2"><span class="pallino-corsia" style="background:var(--corsia2);"></span>Il centro<br>del conflitto</div>
+<div class="lane-track" data-lane="2">
+<div class="evento barra" data-id="l2-guerra" data-lane="2" style="left:0.00%; width:6.98%;"><span class="barra-testo">1939-45</span></div>
+<div class="evento punto" data-id="l2-1945" data-lane="2" style="left:6.98%;"><span class="evento-etichetta">1945</span></div>
+<div class="evento punto" data-id="l2-1947" data-lane="2" style="left:9.30%;"><span class="evento-etichetta">1947</span></div>
+<div class="evento barra" data-id="l2-berlino" data-lane="2" style="left:10.47%; width:1.63%;"><span class="barra-testo">'48-49</span></div>
+<div class="evento punto" data-id="l2-1949" data-lane="2" style="left:11.63%;"><span class="evento-etichetta">1949</span></div>
+<div class="evento barra" data-id="l2-corea" data-lane="2" style="left:12.79%; width:3.49%;"><span class="barra-testo">'50-53</span></div>
+<div class="evento punto" data-id="l2-1955" data-lane="2" style="left:18.60%;"><span class="evento-etichetta">1955</span></div>
+<div class="evento punto" data-id="l2-1956" data-lane="2" style="left:19.77%;"><span class="evento-etichetta">1956</span></div>
+<div class="evento punto" data-id="l2-1961" data-lane="2" style="left:25.58%;"><span class="evento-etichetta">1961</span></div>
+<div class="evento punto" data-id="l2-1962" data-lane="2" style="left:26.74%;"><span class="evento-etichetta">1962</span></div>
+<div class="evento punto" data-id="l2-1968" data-lane="2" style="left:33.72%;"><span class="evento-etichetta">1968</span></div>
+<div class="evento barra" data-id="l2-distensione" data-lane="2" style="left:38.37%; width:4.19%;"><span class="barra-testo">'72-75</span></div>
+<div class="evento punto" data-id="l2-1979" data-lane="2" style="left:46.51%;"><span class="evento-etichetta">1979</span></div>
+<div class="evento punto" data-id="l2-1983" data-lane="2" style="left:51.16%;"><span class="evento-etichetta">1983</span></div>
+<div class="evento barra" data-id="l2-crollo" data-lane="2" style="left:53.49%; width:8.02%;"><span class="barra-testo">'85-91</span></div>
+<div class="evento punto" data-id="l2-1989" data-lane="2" style="left:58.14%;"><span class="evento-etichetta">1989</span></div>
+<div class="evento punto" data-id="l2-2001" data-lane="2" style="left:72.09%;"><span class="evento-etichetta">2001</span></div>
+<div class="evento punto" data-id="l2-2001wto" data-lane="2" style="left:72.09%;"><span class="evento-etichetta">2001</span></div>
+<div class="evento barra" data-id="l2-oggi" data-lane="2" style="left:88.37%; width:11.63%;"><span class="barra-testo">oggi</span></div>
+
+</div>
+<div class="lane-label" data-lane="3"><span class="pallino-corsia" style="background:var(--corsia3);"></span>Le periferie</div>
+<div class="lane-track" data-lane="3">
+<div class="evento barra" data-id="l3-decol" data-lane="3" style="left:6.98%; width:17.44%;"><span class="barra-testo">'45-60</span></div>
+<div class="evento punto" data-id="l3-1953" data-lane="3" style="left:16.28%;"><span class="evento-etichetta">1953</span></div>
+<div class="evento punto" data-id="l3-1954a" data-lane="3" style="left:17.44%;"><span class="evento-etichetta">1954</span></div>
+<div class="evento punto" data-id="l3-1954b" data-lane="3" style="left:17.44%;"><span class="evento-etichetta">1954</span></div>
+<div class="evento punto" data-id="l3-1955" data-lane="3" style="left:18.60%;"><span class="evento-etichetta">1955</span></div>
+<div class="evento punto" data-id="l3-1956" data-lane="3" style="left:19.77%;"><span class="evento-etichetta">1956</span></div>
+<div class="evento punto" data-id="l3-1961" data-lane="3" style="left:25.58%;"><span class="evento-etichetta">1961</span></div>
+<div class="evento barra" data-id="l3-vietnam" data-lane="3" style="left:29.07%; width:13.14%;"><span class="barra-testo">'64-75</span></div>
+<div class="evento punto" data-id="l3-1967" data-lane="3" style="left:32.56%;"><span class="evento-etichetta">1967</span></div>
+<div class="evento punto" data-id="l3-1973b" data-lane="3" style="left:39.53%;"><span class="evento-etichetta">1973</span></div>
+<div class="evento barra" data-id="l3-angola" data-lane="3" style="left:40.70%; width:2.33%;"><span class="barra-testo">'74-76</span></div>
+<div class="evento punto" data-id="l3-1979" data-lane="3" style="left:46.51%;"><span class="evento-etichetta">1979</span></div>
+<div class="evento barra" data-id="l3-jugoslavia" data-lane="3" style="left:60.47%; width:5.70%;"><span class="barra-testo">'91-95</span></div>
+<div class="evento punto" data-id="l3-1995" data-lane="3" style="left:65.12%;"><span class="evento-etichetta">1995</span></div>
+<div class="evento punto" data-id="l3-1999" data-lane="3" style="left:69.77%;"><span class="evento-etichetta">1999</span></div>
+<div class="evento punto" data-id="l3-2001" data-lane="3" style="left:72.09%;"><span class="evento-etichetta">2001</span></div>
+<div class="evento punto" data-id="l3-2003" data-lane="3" style="left:74.42%;"><span class="evento-etichetta">2003</span></div>
+<div class="evento punto" data-id="l3-2011" data-lane="3" style="left:83.72%;"><span class="evento-etichetta">2011</span></div>
+
+</div>
+<div class="lane-label" data-lane="4"><span class="pallino-corsia" style="background:var(--corsia4);"></span>L'Italia<br>(1940-1949)</div>
+<div class="lane-track" data-lane="4" style="--chiusura:11.63%;">
+<div class="evento punto" data-id="l4-1940" data-lane="4" style="left:1.16%;"><span class="evento-etichetta">1940</span></div>
+<div class="evento punto" data-id="l4-1941" data-lane="4" style="left:2.33%;"><span class="evento-etichetta">1941</span></div>
+<div class="evento barra" data-id="l4-1943" data-lane="4" style="left:4.65%; width:0.93%;"><span class="barra-testo">1943</span></div>
+<div class="evento barra" data-id="l4-resistenza" data-lane="4" style="left:5.47%; width:1.86%;"><span class="barra-testo">'43-45</span></div>
+<div class="evento punto" data-id="l4-1944" data-lane="4" style="left:5.81%;"><span class="evento-etichetta">1944</span></div>
+<div class="evento punto" data-id="l4-1945" data-lane="4" style="left:6.98%;"><span class="evento-etichetta">1945</span></div>
+<div class="evento punto" data-id="l4-1946" data-lane="4" style="left:8.14%;"><span class="evento-etichetta">1946</span></div>
+<div class="evento punto" data-id="l4-1947" data-lane="4" style="left:9.30%;"><span class="evento-etichetta">1947</span></div>
+<div class="evento punto" data-id="l4-1949" data-lane="4" style="left:11.63%;"><span class="evento-etichetta">1949</span></div>
+<div class="lane-esaurita" style="left:11.63%;"><span>la corsia si chiude qui: il capitolo sull'Italia continua da sola</span></div>
+</div>
+
+      <div class="corner"></div>
+      <div class="anni-riga">
+        <span class="anno-tick" style="left:1.16%;">1940</span>
+<span class="anno-tick" style="left:12.79%;">1950</span>
+<span class="anno-tick" style="left:24.42%;">1960</span>
+<span class="anno-tick" style="left:36.05%;">1970</span>
+<span class="anno-tick" style="left:47.67%;">1980</span>
+<span class="anno-tick" style="left:59.30%;">1990</span>
+<span class="anno-tick" style="left:70.93%;">2000</span>
+<span class="anno-tick" style="left:82.56%;">2010</span>
+<span class="anno-tick" style="left:94.19%;">2020</span>
+<span class="anno-tick" style="left:100%; transform:translateX(-100%);">oggi</span>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="segnaposto" id="segnaposto">Clicca su un evento per iniziare.</p>
+
+  <!-- Schede -->
+  <div class="scheda" data-scheda="l1-1941" data-anno="1941"><p class="scheda-titolo">La Carta Atlantica</p><p class="scheda-meta">agosto 1941 · L'ordine internazionale</p><p class="scheda-testo">Roosevelt e Churchill fissano, prima ancora che gli Stati Uniti entrino in guerra, i principi del mondo che vogliono costruire dopo la vittoria: autodeterminazione dei popoli, libertà dei mari. L'ordine del 1945 comincia a essere scritto mentre la guerra è ancora tutta da vincere.</p></div>
+<div class="scheda" data-scheda="l1-1944" data-anno="1944"><p class="scheda-titolo">Bretton Woods</p><p class="scheda-meta">luglio 1944 · L'ordine internazionale</p><p class="scheda-testo">Nasce l'architettura economica del dopoguerra: Fondo Monetario Internazionale e Banca Mondiale, pensati per evitare il collasso dei commerci che aveva aggravato la Grande Depressione.</p></div>
+<div class="scheda" data-scheda="l1-1945" data-anno="1945"><p class="scheda-titolo">L'anno della fondazione</p><p class="scheda-meta">1945 · L'ordine internazionale</p><p class="scheda-testo">Yalta (febbraio) discute l'assetto del dopoguerra; a San Francisco nasce l'ONU (26 giugno); a Norimberga e Tokyo si aprono i processi contro i crimini di guerra, il primo tentativo di punire, non solo proclamare, le regole violate.</p></div>
+<div class="scheda" data-scheda="l1-1948" data-anno="1948"><p class="scheda-titolo">Diritti umani e genocidio</p><p class="scheda-meta">1948 · L'ordine internazionale</p><p class="scheda-testo">La Dichiarazione universale dei diritti umani e la Convenzione sul genocidio: dall'ombra di Norimberga nasce un diritto internazionale penale che non esisteva prima della guerra.</p></div>
+<div class="scheda" data-scheda="l1-1949b" data-anno="1949"><p class="scheda-titolo">Convenzioni di Ginevra</p><p class="scheda-meta">1949 · L'ordine internazionale</p><p class="scheda-testo">Riscrivono le regole della guerra: protezione dei civili, dei prigionieri, dei feriti. Il secondo pilastro, dopo Norimberga, del nuovo diritto internazionale umanitario.</p></div>
+<div class="scheda" data-scheda="l1-1955" data-anno="1955"><p class="scheda-titolo">Conferenza di Bandung</p><p class="scheda-meta">1955 · L'ordine internazionale</p><p class="scheda-testo">Nasce il movimento dei paesi non allineati: un terzo polo che rifiuta di scegliere fra i due blocchi, e che l'ordine del 1945 non aveva previsto.</p></div>
+<div class="scheda" data-scheda="l1-1975" data-anno="1975"><p class="scheda-titolo">Accordi di Helsinki</p><p class="scheda-meta">1975 · L'ordine internazionale</p><p class="scheda-testo">Riconoscono i confini postbellici europei e introducono clausole sui diritti umani: il punto più alto della distensione, e insieme un vincolo che si rivolterà contro i regimi dell'Est.</p></div>
+<div class="scheda" data-scheda="l1-1991" data-anno="1991"><p class="scheda-titolo">Il secondo snodo</p><p class="scheda-meta">1991 · L'ordine internazionale</p><p class="scheda-testo">La dissoluzione dell'Unione Sovietica (25 dicembre) lascia una sola potenza a occupare l'intero campo. La guerra del Golfo, negli stessi mesi, alimenta la retorica di un «nuovo ordine mondiale» — un ordine che stavolta, a differenza del 1945, non ha una vera conferenza fondativa.</p></div>
+<div class="scheda" data-scheda="l1-1995" data-anno="1995"><p class="scheda-titolo">Accordi di Dayton</p><p class="scheda-meta">1995 · L'ordine internazionale</p><p class="scheda-testo">Pongono fine alla guerra in Bosnia: la comunità internazionale impone una pace, ma la dissoluzione della Jugoslavia ha già mostrato quanto l'ordine post-1991 sia impotente di fronte a una guerra dentro uno Stato.</p></div>
+<div class="scheda" data-scheda="l1-1999" data-anno="1999"><p class="scheda-titolo">Kosovo, intervento senza mandato</p><p class="scheda-meta">1999 · L'ordine internazionale</p><p class="scheda-testo">La NATO interviene in Kosovo senza l'autorizzazione del Consiglio di Sicurezza, invocando un dovere umanitario superiore alle procedure: un precedente che aprirà la strada a interventi ben più unilaterali.</p></div>
+<div class="scheda" data-scheda="l1-2001b" data-anno="2001"><p class="scheda-titolo">La Cina nel WTO</p><p class="scheda-meta">2001 · L'ordine internazionale</p><p class="scheda-testo">L'ingresso della Cina nell'Organizzazione mondiale del commercio doveva spingerla verso la democrazia. Ne moltiplicò invece la forza economica: la scommessa fu clamorosamente smentita.</p></div>
+<div class="scheda" data-scheda="l1-2003" data-anno="2003"><p class="scheda-titolo">Iraq, invasione senza ONU</p><p class="scheda-meta">2003 · L'ordine internazionale</p><p class="scheda-testo">Gli Stati Uniti invadono l'Iraq senza autorizzazione delle Nazioni Unite: l'esito estremo della deriva anticipata dal Kosovo, non più agire in nome dell'ONU, ma apertamente contro di essa.</p></div>
+<div class="scheda" data-scheda="l1-2005" data-anno="2005"><p class="scheda-titolo">Responsabilità di proteggere</p><p class="scheda-meta">2005 · L'ordine internazionale</p><p class="scheda-testo">Il Vertice mondiale ONU formalizza il principio per cui la sovranità non è più uno scudo assoluto: se uno Stato non protegge la propria popolazione, quel dovere passa alla comunità internazionale.</p></div>
+<div class="scheda" data-scheda="l1-2011" data-anno="2011"><p class="scheda-titolo">Libia</p><p class="scheda-meta">2011 · L'ordine internazionale</p><p class="scheda-testo">Prima applicazione, e prima crisi, della responsabilità di proteggere: un intervento autorizzato per salvare i civili si trasforma rapidamente nell'abbattimento di un regime.</p></div>
+<div class="scheda" data-scheda="l1-oggi" data-anno="2018"><p class="scheda-titolo">Il terzo snodo, ancora aperto</p><p class="scheda-meta">oggi · L'ordine internazionale</p><p class="scheda-testo">«L'ordine è ancora in redazione»: dopo il 1945 e il 1991, il mondo attraversa il terzo dei suoi grandi momenti di riscrittura, e questa volta l'esito non è affatto deciso.</p></div>
+<div class="scheda" data-scheda="l2-guerra" data-anno="1939"><p class="scheda-titolo">La Seconda guerra mondiale</p><p class="scheda-meta">1939-1945 · Il centro del conflitto</p><p class="scheda-testo">Lo scontro diretto che dà origine a tutto il resto: la guerra più distruttiva della storia, e la matrice dell'ordine che i vincitori costruiranno.</p></div>
+<div class="scheda" data-scheda="l2-1945" data-anno="1945"><p class="scheda-titolo">Hiroshima e Nagasaki</p><p class="scheda-meta">6 e 9 agosto 1945 · Il centro del conflitto</p><p class="scheda-testo">Le prime, e finora uniche, bombe atomiche usate in guerra. Chiudono il conflitto con il Giappone e aprono, insieme, l'epoca della deterrenza nucleare.</p></div>
+<div class="scheda" data-scheda="l2-1947" data-anno="1947"><p class="scheda-titolo">Truman, Marshall, Cominform</p><p class="scheda-meta">1947 · Il centro del conflitto</p><p class="scheda-testo">La dottrina Truman (contenimento), il Piano Marshall (aiuti economici all'Europa occidentale) e il Cominform (coordinamento dei partiti comunisti) segnano, nello stesso anno, la fine della cooperazione bellica fra le due potenze.</p></div>
+<div class="scheda" data-scheda="l2-berlino" data-anno="1948"><p class="scheda-titolo">Blocco di Berlino</p><p class="scheda-meta">1948-1949 · Il centro del conflitto</p><p class="scheda-testo">L'URSS blocca gli accessi terrestri a Berlino Ovest; gli Alleati rispondono con un ponte aereo che rifornisce la città per quasi un anno. Primo grande scontro diretto, senza sparare un colpo.</p></div>
+<div class="scheda" data-scheda="l2-1949" data-anno="1949"><p class="scheda-titolo">RFT, RDT, NATO</p><p class="scheda-meta">1949 · Il centro del conflitto</p><p class="scheda-testo">Nascono le due Germanie e il Patto Atlantico; l'URSS si dota della propria bomba atomica, ponendo fine al monopolio nucleare americano.</p></div>
+<div class="scheda" data-scheda="l2-corea" data-anno="1950"><p class="scheda-titolo">Guerra di Corea</p><p class="scheda-meta">1950-1953 · Il centro del conflitto</p><p class="scheda-testo">Primo conflitto armato su larga scala della guerra fredda. Si conclude con un armistizio e la divisione della penisola, tuttora in vigore.</p></div>
+<div class="scheda" data-scheda="l2-1955" data-anno="1955"><p class="scheda-titolo">Patto di Varsavia</p><p class="scheda-meta">1955 · Il centro del conflitto</p><p class="scheda-testo">L'alleanza militare del blocco orientale, risposta simmetrica alla NATO: i due blocchi hanno ora entrambi la propria struttura di comando integrata.</p></div>
+<div class="scheda" data-scheda="l2-1956" data-anno="1956"><p class="scheda-titolo">XX Congresso e Ungheria</p><p class="scheda-meta">1956 · Il centro del conflitto</p><p class="scheda-testo">Chruščëv denuncia i crimini di Stalin al XX Congresso; pochi mesi dopo l'Armata Rossa schiaccia la rivolta ungherese. La destalinizzazione ha un confine netto: non tocca il controllo sui satelliti.</p></div>
+<div class="scheda" data-scheda="l2-1961" data-anno="1961"><p class="scheda-titolo">Muro di Berlino</p><p class="scheda-meta">13 agosto 1961 · Il centro del conflitto</p><p class="scheda-testo">La RDT chiude fisicamente il confine con Berlino Ovest per fermare la fuga di cittadini verso l'Occidente: la divisione dell'Europa diventa un muro di cemento.</p></div>
+<div class="scheda" data-scheda="l2-1962" data-anno="1962"><p class="scheda-titolo">Crisi dei missili di Cuba</p><p class="scheda-meta">1962 · Il centro del conflitto</p><p class="scheda-testo">L'installazione di missili sovietici a Cuba porta il mondo sull'orlo della guerra nucleare. Si risolve con un compromesso diplomatico che nessuno dei due leader rende pubblico per intero.</p></div>
+<div class="scheda" data-scheda="l2-1968" data-anno="1968"><p class="scheda-titolo">Primavera di Praga</p><p class="scheda-meta">1968 · Il centro del conflitto</p><p class="scheda-testo">La Cecoslovacchia tenta un «socialismo dal volto umano»; l'Armata Rossa interviene, e Mosca formalizza la dottrina Brežnev: nessuna via d'uscita dal campo socialista sarà tollerata.</p></div>
+<div class="scheda" data-scheda="l2-distensione" data-anno="1972"><p class="scheda-titolo">SALT e Helsinki</p><p class="scheda-meta">1972-1975 · Il centro del conflitto</p><p class="scheda-testo">Il trattato SALT pone un primo tetto agli armamenti nucleari; gli Accordi di Helsinki riconoscono i confini postbellici in cambio di clausole sui diritti umani: il punto più alto della distensione.</p></div>
+<div class="scheda" data-scheda="l2-1979" data-anno="1979"><p class="scheda-titolo">Afghanistan</p><p class="scheda-meta">1979 · Il centro del conflitto</p><p class="scheda-testo">L'invasione sovietica dell'Afghanistan chiude la distensione: la logica del terrore torna ad essere quella dello scontro aperto, per interposta persona.</p></div>
+<div class="scheda" data-scheda="l2-1983" data-anno="1983"><p class="scheda-titolo">Scudo spaziale</p><p class="scheda-meta">1983 · Il centro del conflitto</p><p class="scheda-testo">Gli Stati Uniti annunciano l'Iniziativa di Difesa Strategica, un sistema antimissile basato anche nello spazio: riaccende la corsa agli armamenti nel pieno della «seconda guerra fredda».</p></div>
+<div class="scheda" data-scheda="l2-crollo" data-anno="1985"><p class="scheda-titolo">Perestrojka e crollo</p><p class="scheda-meta">1985-1991 · Il centro del conflitto</p><p class="scheda-testo">Gorbačëv avvia la perestrojka e la glasnost'; nel 1989 crollano uno dopo l'altro i regimi satelliti; nel 1991 si dissolve l'Unione Sovietica stessa: fine del sistema bipolare.</p></div>
+<div class="scheda" data-scheda="l2-1989" data-anno="1989"><p class="scheda-titolo">Caduta del Muro</p><p class="scheda-meta">9 novembre 1989 · Il centro del conflitto</p><p class="scheda-testo">Senza che nessuno dia l'ordine di sparare, cade il simbolo stesso della divisione del continente.</p></div>
+<div class="scheda" data-scheda="l2-2001" data-anno="2001"><p class="scheda-titolo">11 settembre</p><p class="scheda-meta">2001 · Il centro del conflitto</p><p class="scheda-testo">Gli attacchi dell'11 settembre aprono la «guerra al terrore»: il conflitto cambia natura, da scontro fra Stati a scontro asimmetrico contro reti transnazionali.</p></div>
+<div class="scheda" data-scheda="l2-2001wto" data-anno="2001"><p class="scheda-titolo">Cina nel WTO</p><p class="scheda-meta">2001 · Il centro del conflitto</p><p class="scheda-testo">Nello stesso anno in cui si apre la guerra al terrore, la Cina entra nel commercio mondiale: l'inizio di un'ascesa che ridefinirà, nel nuovo secolo, chi occupa il centro del conflitto.</p></div>
+<div class="scheda" data-scheda="l2-oggi" data-anno="2015"><p class="scheda-titolo">Una nuova guerra fredda?</p><p class="scheda-meta">oggi · Il centro del conflitto</p><p class="scheda-testo">La rivalità Stati Uniti-Cina è discussa, nel capitolo conclusivo, come possibile «ma non scontata» nuova guerra fredda: le economie dei due rivali, a differenza del 1947-1991, sono profondamente intrecciate.</p></div>
+<div class="scheda" data-scheda="l3-decol" data-anno="1945"><p class="scheda-titolo">Decolonizzazione</p><p class="scheda-meta">1945-1960ca · Le periferie</p><p class="scheda-testo">L'indipendenza indiana e la partizione (1947), la guerra d'Algeria (1954-62) e decine di altri percorsi: la fine degli imperi coloniali, spesso accelerata o complicata dalla contesa fra i due blocchi.</p></div>
+<div class="scheda" data-scheda="l3-1953" data-anno="1953"><p class="scheda-titolo">Golpe CIA in Iran</p><p class="scheda-meta">1953 · Le periferie</p><p class="scheda-testo">Rovescia il primo ministro Mossadeq, che aveva nazionalizzato il petrolio: il primo di una lunga serie di interventi coperti americani contro governi ritenuti pericolosi.</p></div>
+<div class="scheda" data-scheda="l3-1954a" data-anno="1954"><p class="scheda-titolo">Dien Bien Phu</p><p class="scheda-meta">1954 · Le periferie</p><p class="scheda-testo">La sconfitta francese e gli accordi di Ginevra dividono il Vietnam lungo il 17° parallelo: la premessa diretta della guerra che seguirà un decennio dopo.</p></div>
+<div class="scheda" data-scheda="l3-1954b" data-anno="1954"><p class="scheda-titolo">Golpe CIA in Guatemala</p><p class="scheda-meta">1954 · Le periferie</p><p class="scheda-testo">Rovescia un presidente colpevole, agli occhi di Washington, di una riforma agraria sgradita alle multinazionali americane.</p></div>
+<div class="scheda" data-scheda="l3-1955" data-anno="1955"><p class="scheda-titolo">Bandung</p><p class="scheda-meta">1955 · Le periferie</p><p class="scheda-testo">La conferenza afroasiatica da cui nasce il movimento dei non allineati.</p></div>
+<div class="scheda" data-scheda="l3-1956" data-anno="1956"><p class="scheda-titolo">Crisi di Suez</p><p class="scheda-meta">1956 · Le periferie</p><p class="scheda-testo">Regno Unito, Francia e Israele intervengono contro l'Egitto di Nasser; USA e URSS convergono nel condannarli, segnando il tramonto delle vecchie potenze coloniali europee.</p></div>
+<div class="scheda" data-scheda="l3-1961" data-anno="1961"><p class="scheda-titolo">Baia dei Porci</p><p class="scheda-meta">1961 · Le periferie</p><p class="scheda-testo">Il fallito sbarco di esuli anticastristi appoggiati dalla CIA spinge Cuba, e Castro, verso un'alleanza aperta con Mosca.</p></div>
+<div class="scheda" data-scheda="l3-vietnam" data-anno="1964"><p class="scheda-titolo">Guerra del Vietnam</p><p class="scheda-meta">1964-1975 · Le periferie</p><p class="scheda-testo">Dagli incidenti del golfo del Tonchino (1964) all'offensiva del Tet (1968) fino alla caduta di Saigon (30 aprile 1975): la guerra per procura più lunga e più costosa del secolo.</p></div>
+<div class="scheda" data-scheda="l3-1967" data-anno="1967"><p class="scheda-titolo">Guerra dei Sei Giorni</p><p class="scheda-meta">1967 · Le periferie</p><p class="scheda-testo">Prima delle due maggiori guerre arabo-israeliane del periodo, con ripercussioni dirette sugli equilibri della guerra fredda in Medio Oriente.</p></div>
+<div class="scheda" data-scheda="l3-1973b" data-anno="1973"><p class="scheda-titolo">Guerra del Kippur</p><p class="scheda-meta">1973 · Le periferie</p><p class="scheda-testo">La seconda grande guerra arabo-israeliana del periodo, e insieme il golpe di Pinochet in Cile, sostenuto dagli Stati Uniti contro un governo democraticamente eletto.</p></div>
+<div class="scheda" data-scheda="l3-angola" data-anno="1974"><p class="scheda-titolo">Fine dell'impero portoghese</p><p class="scheda-meta">1974-1975 · Le periferie</p><p class="scheda-testo">Il crollo dell'ultimo impero coloniale apre in Angola e nel Corno d'Africa guerre per procura in cui Mosca e Washington si schierano apertamente su fronti opposti.</p></div>
+<div class="scheda" data-scheda="l3-1979" data-anno="1979"><p class="scheda-titolo">Afghanistan</p><p class="scheda-meta">1979 · Le periferie</p><p class="scheda-testo">L'invasione sovietica e l'armamento CIA dei mujahidin: la periferia dove la guerra fredda tornerà a farsi più calda negli anni Ottanta.</p></div>
+<div class="scheda" data-scheda="l3-jugoslavia" data-anno="1991"><p class="scheda-titolo">Dissoluzione della Jugoslavia</p><p class="scheda-meta">1991-1995 · Le periferie</p><p class="scheda-testo">La guerra torna in Europa: la pulizia etnica in Bosnia-Erzegovina mostra quanto l'ordine del dopo guerra fredda resti impotente di fronte a un conflitto dentro uno Stato.</p></div>
+<div class="scheda" data-scheda="l3-1995" data-anno="1995"><p class="scheda-titolo">Srebrenica</p><p class="scheda-meta">1995 · Le periferie</p><p class="scheda-testo">Il massacro riconosciuto, anni dopo, come genocidio da un tribunale internazionale: il punto in cui il confine fra pulizia etnica e genocidio si mostra incerto quanto reale.</p></div>
+<div class="scheda" data-scheda="l3-1999" data-anno="1999"><p class="scheda-titolo">Guerra del Kosovo</p><p class="scheda-meta">1999 · Le periferie</p><p class="scheda-testo">L'intervento NATO senza mandato ONU per fermare la pulizia etnica: l'inizio della deriva unilaterale che porterà, pochi anni dopo, all'Iraq.</p></div>
+<div class="scheda" data-scheda="l3-2001" data-anno="2001"><p class="scheda-titolo">Invasione dell'Afghanistan</p><p class="scheda-meta">2001 · Le periferie</p><p class="scheda-testo">La risposta americana all'11 settembre: rapida vittoria militare, seguita da una guerriglia decennale.</p></div>
+<div class="scheda" data-scheda="l3-2003" data-anno="2003"><p class="scheda-titolo">Invasione dell'Iraq</p><p class="scheda-meta">2003 · Le periferie</p><p class="scheda-testo">Condotta senza autorizzazione ONU, sulla base di un'accusa che si rivelerà infondata: spacca l'Occidente stesso e destabilizza la regione per un decennio.</p></div>
+<div class="scheda" data-scheda="l3-2011" data-anno="2011"><p class="scheda-titolo">Libia</p><p class="scheda-meta">2011 · Le periferie</p><p class="scheda-testo">L'intervento per proteggere i civili si trasforma nell'abbattimento di un regime: la prima, contestata applicazione della responsabilità di proteggere.</p></div>
+<div class="scheda" data-scheda="l4-1940" data-anno="1940"><p class="scheda-titolo">L'Italia entra in guerra</p><p class="scheda-meta">10 giugno 1940 · L'Italia</p><p class="scheda-testo">Mussolini dichiara guerra pensando a un conflitto breve: nasce così il progetto, presto fallito, di una «guerra parallela» autonoma da quella tedesca.</p></div>
+<div class="scheda" data-scheda="l4-1941" data-anno="1941"><p class="scheda-titolo">Sconfitte in Africa e Grecia</p><p class="scheda-meta">1941 · L'Italia</p><p class="scheda-testo">Il fallimento della guerra parallela si manifesta subito: l'Italia deve essere soccorsa dai tedeschi sia in Africa Orientale sia in Grecia, e da autonoma la sua guerra diventa subalterna.</p></div>
+<div class="scheda" data-scheda="l4-1943" data-anno="1943"><p class="scheda-titolo">Crollo e frattura</p><p class="scheda-meta">1943 · L'Italia</p><p class="scheda-testo">Lo sbarco alleato in Sicilia porta alla caduta del fascismo (luglio); l'armistizio di Cassibile e l'occupazione tedesca (8 settembre) spaccano il paese in due, e a Salò nasce la Repubblica Sociale.</p></div>
+<div class="scheda" data-scheda="l4-resistenza" data-anno="1943"><p class="scheda-titolo">Resistenza e guerra civile</p><p class="scheda-meta">1943-1945 · L'Italia</p><p class="scheda-testo">Lotta di liberazione, guerra civile e conflitto sociale insieme: le stragi nazifasciste, e le violenze del confine orientale, prima e seconda ondata delle foibe.</p></div>
+<div class="scheda" data-scheda="l4-1944" data-anno="1944"><p class="scheda-titolo">Svolta di Salerno</p><p class="scheda-meta">1944 · L'Italia</p><p class="scheda-testo">Togliatti accantona il pregiudiziale antimonarchico e apre la via ai governi di unità nazionale: la premessa politica della transizione che seguirà la Liberazione.</p></div>
+<div class="scheda" data-scheda="l4-1945" data-anno="1945"><p class="scheda-titolo">Liberazione</p><p class="scheda-meta">25 aprile 1945 · L'Italia</p><p class="scheda-testo">La fine della guerra e dell'occupazione tedesca nel Nord Italia.</p></div>
+<div class="scheda" data-scheda="l4-1946" data-anno="1946"><p class="scheda-titolo">Nasce la Repubblica</p><p class="scheda-meta">2 giugno 1946 · L'Italia</p><p class="scheda-testo">Referendum istituzionale ed elezione della Costituente nello stesso giorno: la prima consultazione a suffragio davvero universale della storia nazionale.</p></div>
+<div class="scheda" data-scheda="l4-1947" data-anno="1947"><p class="scheda-titolo">Trattato di pace</p><p class="scheda-meta">1947 · L'Italia</p><p class="scheda-testo">Cessione di Istria e Dalmazia, avvio dell'esodo della popolazione italiana: il prezzo territoriale della sconfitta, che chiude la vicenda del confine orientale aperta nel 1943.</p></div>
+<div class="scheda" data-scheda="l4-1949" data-anno="1949"><p class="scheda-titolo">L'Italia entra nella NATO</p><p class="scheda-meta">1949 · L'Italia</p><p class="scheda-testo">L'ultimo atto della corsia italiana in questa cronologia: da qui in avanti la vicenda nazionale smette di correre in parallelo a quella internazionale, e la sezione la segue nel solo capitolo a lei dedicato.</p></div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Le quattro corsie non raccontano quattro storie parallele, ma un solo processo osservato a livelli diversi: le regole scritte a tavolino (corsia 1), lo scontro diretto fra chi le scrive (corsia 2), le guerre pagate da chi le subisce (corsia 3), e la vicenda di un singolo paese dentro tutto questo (corsia 4). La corsia dell'Italia, che a differenza delle altre tre si esaurisce già nel 1949, è lo specchio rovesciato della cronologia della sezione precedente: lì l'Italia attraversava l'intero arco temporale mentre le corsie internazionali si esaurivano nel 1945; qui accade l'opposto.
+  </div>
+</div>
+
+<script>
+(function(){
+  var eventi = document.querySelectorAll('.evento');
+  var schede = document.querySelectorAll('.scheda');
+  var segnaposto = document.getElementById('segnaposto');
+  var annoBanner = document.getElementById('annoBanner');
+  var apertoId = null;
+
+  var laneBtns = document.querySelectorAll('.fbtn[data-lane]');
+  var phaseBtns = document.querySelectorAll('.fbtn[data-phase]');
+  var annoBtns = document.querySelectorAll('.fbtn[data-anno]');
+  var faseBande = document.querySelectorAll('.fase-band');
+  var selectedLane = null;
+  var selectedPhase = null;
+  var selectedAnno = null;
+
+  function chiudiSchede(){
+    document.querySelectorAll('.evento.aperto').forEach(function(e){ e.classList.remove('aperto'); });
+    schede.forEach(function(s){ s.classList.remove('visibile'); });
+  }
+
+  eventi.forEach(function(el){
+    el.addEventListener('click', function(){
+      var id = el.getAttribute('data-id');
+      if(apertoId === id){
+        chiudiSchede();
+        apertoId = null;
+        segnaposto.style.display = 'block';
+        return;
+      }
+      chiudiSchede();
+      apertoId = id;
+      el.classList.add('aperto');
+      var scheda = document.querySelector('.scheda[data-scheda="' + id + '"]');
+      if(scheda){ scheda.classList.add('visibile'); }
+      segnaposto.style.display = 'none';
+    });
+  });
+
+  function applicaFiltri(){
+    eventi.forEach(function(el){
+      var lane = el.getAttribute('data-lane');
+      var scheda = document.querySelector('.scheda[data-scheda="' + el.getAttribute('data-id') + '"]');
+      var anno = scheda ? parseInt(scheda.getAttribute('data-anno'), 10) : null;
+      var escluso = false;
+      if(selectedLane && lane !== selectedLane) escluso = true;
+      if(selectedAnno !== null && anno !== selectedAnno) escluso = true;
+      el.classList.toggle('attenuato', !!escluso);
+    });
+    faseBande.forEach(function(fb){
+      var phase = fb.getAttribute('data-phase');
+      var escluso = selectedPhase && phase !== selectedPhase;
+      fb.classList.toggle('attenuato', !!escluso);
+      fb.classList.toggle('selezionato', selectedPhase === phase);
+    });
+  }
+
+  laneBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var lane = btn.getAttribute('data-lane');
+      if(selectedLane === lane){
+        selectedLane = null;
+        laneBtns.forEach(function(b){ b.classList.remove('attivo'); });
+      } else {
+        selectedLane = lane;
+        laneBtns.forEach(function(b){ b.classList.toggle('attivo', b === btn); });
+      }
+      applicaFiltri();
+    });
+  });
+
+  phaseBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var phase = btn.getAttribute('data-phase');
+      if(selectedPhase === phase){
+        selectedPhase = null;
+        phaseBtns.forEach(function(b){ b.classList.remove('attivo'); });
+      } else {
+        selectedPhase = phase;
+        phaseBtns.forEach(function(b){ b.classList.toggle('attivo', b === btn); });
+      }
+      applicaFiltri();
+    });
+  });
+
+  annoBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var anno = parseInt(btn.getAttribute('data-anno'), 10);
+      if(selectedAnno === anno){
+        selectedAnno = null;
+        annoBtns.forEach(function(b){ b.classList.remove('attivo'); });
+        annoBanner.classList.remove('visibile');
+      } else {
+        selectedAnno = anno;
+        annoBtns.forEach(function(b){ b.classList.toggle('attivo', b === btn); });
+        var eventiAnno = [];
+        schede.forEach(function(s){
+          if(parseInt(s.getAttribute('data-anno'), 10) === anno){
+            eventiAnno.push(s.querySelector('.scheda-titolo').textContent);
+          }
+        });
+        annoBanner.textContent = anno + ' — ' + (eventiAnno.length ? eventiAnno.join(' · ') : 'nessun evento puntuale in questo anno nelle corsie visibili');
+        annoBanner.classList.add('visibile');
+      }
+      applicaFiltri();
+    });
+  });
+
+  document.getElementById('btnResetFiltri').addEventListener('click', function(){
+    selectedLane = null;
+    selectedPhase = null;
+    selectedAnno = null;
+    laneBtns.forEach(function(b){ b.classList.remove('attivo'); });
+    phaseBtns.forEach(function(b){ b.classList.remove('attivo'); });
+    annoBtns.forEach(function(b){ b.classList.remove('attivo'); });
+    annoBanner.classList.remove('visibile');
+    applicaFiltri();
+  });
+
+  faseBande.forEach(function(fb){
+    fb.addEventListener('click', function(){
+      var phase = fb.getAttribute('data-phase');
+      var btn = document.querySelector('.fbtn[data-phase="' + phase + '"]');
+      if(btn){ btn.click(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fine della storia o scontro di civiltà?</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --tesiA:#6b8fa3;
+    --tesiA-bg:#e6edf0;
+    --tesiB:#b06a3f;
+    --tesiB-bg:#f2e6dc;
+    --terza:#7d8a6e;
+    --terza-bg:#eaece4;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--beige);
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:26px 24px 36px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:12px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.88rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.74rem;
+    text-align:center;
+    color:#6b6255;
+    margin:10px 0 22px;
+    line-height:1.5;
+  }
+
+  .tesi-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:24px;
+  }
+  .tesi-card{
+    flex:1 1 320px;
+    max-width:380px;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:14px 18px;
+  }
+  .tesi-card[data-tesi="a"]{ border-color:var(--tesiA); }
+  .tesi-card[data-tesi="b"]{ border-color:var(--tesiB); }
+  .tesi-etichetta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.66rem;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    font-weight:600;
+    display:block;
+    margin-bottom:4px;
+  }
+  .tesi-card[data-tesi="a"] .tesi-etichetta{ color:var(--tesiA); }
+  .tesi-card[data-tesi="b"] .tesi-etichetta{ color:var(--tesiB); }
+  .tesi-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.88rem;
+    margin:0 0 6px;
+    color:var(--testo);
+  }
+  .tesi-card p.tesi-testo{
+    font-family:Georgia, serif;
+    font-size:0.82rem;
+    line-height:1.5;
+    margin:0;
+    color:var(--testo);
+  }
+
+  .casi-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:#8a8175;
+    text-align:center;
+    margin:0 0 8px;
+  }
+  .casi{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+  }
+  .caso-btn{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem;
+    font-weight:600;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    color:var(--marrone-scuro);
+    padding:9px 16px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .caso-btn:hover{ transform:translateY(-1px); }
+  .caso-btn.attivo{
+    background:var(--marrone);
+    color:#fff;
+  }
+
+  .caso-panel{
+    display:none;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:20px 24px;
+    margin-bottom:20px;
+  }
+  .caso-panel.visibile{ display:block; }
+  .caso-panel-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    color:var(--marrone-scuro);
+    margin:0 0 4px;
+  }
+  .caso-panel-data{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem;
+    color:#8a8175;
+    margin:0 0 14px;
+  }
+
+  .lenti{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .lente-btn{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem;
+    font-weight:600;
+    background:#fff;
+    border:1.5px solid var(--marrone);
+    padding:6px 13px;
+    border-radius:16px;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s;
+  }
+  .lente-btn[data-lente="a"]{ border-color:var(--tesiA); color:var(--tesiA); }
+  .lente-btn[data-lente="a"].attivo{ background:var(--tesiA); color:#fff; }
+  .lente-btn[data-lente="b"]{ border-color:var(--tesiB); color:var(--tesiB); }
+  .lente-btn[data-lente="b"].attivo{ background:var(--tesiB); color:#fff; }
+  .lente-btn[data-lente="c"]{ border-color:var(--terza); color:var(--terza); }
+  .lente-btn[data-lente="c"].attivo{ background:var(--terza); color:#fff; }
+
+  .letture{
+    display:grid;
+    gap:10px;
+  }
+  .lettura{
+    display:none;
+    border-radius:8px;
+    padding:12px 16px;
+    border-left:5px solid var(--marrone);
+  }
+  .lettura.visibile{ display:block; }
+  .lettura[data-lente="a"]{ border-left-color:var(--tesiA); background:var(--tesiA-bg); }
+  .lettura[data-lente="b"]{ border-left-color:var(--tesiB); background:var(--tesiB-bg); }
+  .lettura[data-lente="c"]{ border-left-color:var(--terza); background:var(--terza-bg); }
+  .lettura p{
+    font-family:Georgia, serif;
+    font-size:0.83rem;
+    line-height:1.55;
+    margin:0;
+    color:var(--testo);
+  }
+
+  .segnaposto-caso{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem;
+    color:#9a9184;
+    margin-bottom:20px;
+  }
+
+  .idea-guida{
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif;
+    font-size:0.84rem;
+    line-height:1.6;
+    color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Fine della storia o scontro di civiltà?</h1>
+    <p class="sottotitolo">Due profezie degli anni Novanta messe alla prova dei fatti</p>
+  </header>
+
+  <p class="istruzioni">
+    Scegli un caso, poi prova a leggerlo con ciascuna delle lenti disponibili: le due tesi e una terza chiave, quella degli interessi concreti. Nessuna, da sola, basta.
+  </p>
+
+  <div class="tesi-row">
+    <div class="tesi-card" data-tesi="a">
+      <span class="tesi-etichetta">Tesi A — Fukuyama</span>
+      <p class="tesi-titolo">«La fine della storia»</p>
+      <p class="tesi-testo">Con la vittoria della democrazia liberale sul comunismo, la storia dei grandi conflitti ideologici è arrivata al capolinea: non ci sono più alternative di sistema capaci di sfidarla su scala globale.</p>
+    </div>
+    <div class="tesi-card" data-tesi="b">
+      <span class="tesi-etichetta">Tesi B — Huntington</span>
+      <p class="tesi-titolo">«Lo scontro di civiltà»</p>
+      <p class="tesi-testo">Tramontate le ideologie del Novecento, i conflitti del nuovo secolo si combatteranno lungo le grandi faglie culturali e religiose che dividono le civiltà del mondo.</p>
+    </div>
+  </div>
+
+  <p class="casi-titolo">Metti alla prova le due tesi</p>
+  <div class="casi">
+    <button class="caso-btn" data-caso="jugoslavia">Dissoluzione della Jugoslavia</button>
+    <button class="caso-btn" data-caso="kosovo">Kosovo (1998-99)</button>
+    <button class="caso-btn" data-caso="undicisettembre">11 settembre 2001</button>
+    <button class="caso-btn" data-caso="iraq">Guerra in Iraq (2003)</button>
+  </div>
+
+  <p class="segnaposto-caso" id="segnaposto">Scegli un caso per iniziare.</p>
+
+  <!-- Pannelli caso -->
+  <div class="caso-panel" data-panel="jugoslavia">
+    <p class="caso-panel-titolo">La dissoluzione della Jugoslavia</p>
+    <p class="caso-panel-data">1991-1995</p>
+    <div class="lenti">
+      <button class="lente-btn" data-lente="a">Tesi A</button>
+      <button class="lente-btn" data-lente="b">Tesi B</button>
+      <button class="lente-btn" data-lente="c">Interessi concreti</button>
+    </div>
+    <div class="letture">
+      <div class="lettura" data-lente="a"><p>Fatica a spiegarla: non fu uno scontro fra democrazia liberale e un'ideologia rivale, ma il collasso interno di uno Stato federale in un mondo postcomunista. Se mai, la "fine della storia" descrive l'assenza di un modello capace di tenere insieme il paese — non la causa del conflitto.</p></div>
+      <div class="lettura" data-lente="b"><p>Coglie meglio la superficie: il conflitto corre lungo linee etniche e religiose — cattolici croati, ortodossi serbi, musulmani bosgnacchi. Ma riduce a "faglia di civiltà" un processo guidato anche da leadership politiche che mobilitarono l'identità per consolidare il proprio potere.</p></div>
+      <div class="lettura" data-lente="c"><p>Il controllo di territori, risorse e apparati dello Stato jugoslavo in dissoluzione fu una posta reale, non solo simbolica. Ma questo non spiega perché la mobilitazione abbia preso la forma di una pulizia etnica, e non di un conflitto puramente politico o economico.</p></div>
+    </div>
+  </div>
+
+  <div class="caso-panel" data-panel="kosovo">
+    <p class="caso-panel-titolo">Il Kosovo</p>
+    <p class="caso-panel-data">1998-1999</p>
+    <div class="lenti">
+      <button class="lente-btn" data-lente="a">Tesi A</button>
+      <button class="lente-btn" data-lente="b">Tesi B</button>
+      <button class="lente-btn" data-lente="c">Interessi concreti</button>
+    </div>
+    <div class="letture">
+      <div class="lettura" data-lente="a"><p>La comunità internazionale interviene invocando principi liberali — diritti umani, protezione dei civili — e sembra confermare l'espansione del modello liberale. Ma l'intervento NATO senza mandato ONU mostra anche i limiti di un ordine "unico" fondato su regole condivise.</p></div>
+      <div class="lettura" data-lente="b"><p>La faglia etnico-religiosa fra serbi ortodossi e albanesi musulmani è innegabile. Ma non spiega da sola perché l'Occidente sia intervenuto a fianco della popolazione musulmana kosovara — contro la logica di uno scontro fra blocchi di civiltà contrapposti.</p></div>
+      <div class="lettura" data-lente="c"><p>Stabilità regionale, credibilità della NATO nel dopo guerra fredda, contenimento di un flusso di profughi verso l'Europa: motivazioni concrete che si affiancano alla componente identitaria del conflitto, senza sostituirla.</p></div>
+    </div>
+  </div>
+
+  <div class="caso-panel" data-panel="undicisettembre">
+    <p class="caso-panel-titolo">L'11 settembre 2001</p>
+    <p class="caso-panel-data">2001</p>
+    <div class="lenti">
+      <button class="lente-btn" data-lente="a">Tesi A</button>
+      <button class="lente-btn" data-lente="b">Tesi B</button>
+      <button class="lente-btn" data-lente="c">Interessi concreti</button>
+    </div>
+    <div class="letture">
+      <div class="lettura" data-lente="a"><p>Mette in crisi radicalmente la tesi della "fine della storia": la violenza politica di matrice ideologica non è finita, ha solo cambiato forma e attore — non più Stati, ma reti transnazionali.</p></div>
+      <div class="lettura" data-lente="b"><p>Sembra confermare lo scontro di civiltà — un attacco rivendicato in nome di una lettura radicale dell'Islam contro l'Occidente. Ma Huntington stesso parlava di civiltà come blocchi ampi ed eterogenei, mentre al-Qaeda è un'organizzazione minoritaria che non rappresenta il mondo islamico nel suo insieme.</p></div>
+      <div class="lettura" data-lente="c"><p>La presenza militare americana in Arabia Saudita, il sostegno a Israele, le guerre del Golfo sono fra le motivazioni politiche esplicite di al-Qaeda. Ma da sole non spiegano la scelta di una violenza a sfondo religioso-identitario così radicale.</p></div>
+    </div>
+  </div>
+
+  <div class="caso-panel" data-panel="iraq">
+    <p class="caso-panel-titolo">La guerra in Iraq</p>
+    <p class="caso-panel-data">2003</p>
+    <div class="lenti">
+      <button class="lente-btn" data-lente="a">Tesi A</button>
+      <button class="lente-btn" data-lente="b">Tesi B</button>
+      <button class="lente-btn" data-lente="c">Interessi concreti</button>
+    </div>
+    <div class="letture">
+      <div class="lettura" data-lente="a"><p>Gli Stati Uniti giustificano l'intervento anche come esportazione della democrazia liberale. Ma l'esito — instabilità, guerra civile settaria — smentisce l'idea che il modello liberale si affermi quasi automaticamente dopo la fine della guerra fredda.</p></div>
+      <div class="lettura" data-lente="b"><p>Il conflitto post-invasione assume forma etnico-confessionale — sunniti, sciiti, curdi — apparentemente in linea con la tesi delle faglie di civiltà. Ma quelle stesse divisioni erano state tenute insieme per decenni sotto un regime laico e repressivo: la faglia non era né naturale né inevitabile.</p></div>
+      <div class="lettura" data-lente="c"><p>Petrolio, egemonia regionale, sicurezza: motivazioni discusse fin da subito. Ma anche qui, gli interessi da soli non spiegano la forma settaria che il conflitto ha assunto una volta caduto lo Stato centrale.</p></div>
+    </div>
+  </div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Accanto alle due tesi, una terza lente: dietro molti conflitti "identitari" ci sono interessi concreti — risorse, territori, potere. Ma ridurre tutto a questo non spiega perché, in nome di un'appartenenza, si sia disposti a morire. Nessuna spiegazione unica basta da sola: l'artefatto non dà la risposta, allena a diffidarne.
+  </div>
+</div>
+
+<script>
+(function(){
+  var casoBtns = document.querySelectorAll('.caso-btn');
+  var pannelli = document.querySelectorAll('.caso-panel');
+  var segnaposto = document.getElementById('segnaposto');
+  var casoAttivo = null;
+
+  casoBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var caso = btn.getAttribute('data-caso');
+      if(casoAttivo === caso){
+        casoBtns.forEach(function(b){ b.classList.remove('attivo'); });
+        pannelli.forEach(function(p){ p.classList.remove('visibile'); });
+        casoAttivo = null;
+        segnaposto.style.display = 'block';
+        return;
+      }
+      casoBtns.forEach(function(b){ b.classList.toggle('attivo', b === btn); });
+      pannelli.forEach(function(p){ p.classList.toggle('visibile', p.getAttribute('data-panel') === caso); });
+      casoAttivo = caso;
+      segnaposto.style.display = 'none';
+    });
+  });
+
+  document.querySelectorAll('.caso-panel').forEach(function(panel){
+    var lentiBtns = panel.querySelectorAll('.lente-btn');
+    var letture = panel.querySelectorAll('.lettura');
+    lentiBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var lente = btn.getAttribute('data-lente');
+        var attivo = btn.classList.toggle('attivo');
+        var lettura = panel.querySelector('.lettura[data-lente="' + lente + '"]');
+        if(lettura){ lettura.classList.toggle('visibile', attivo); }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

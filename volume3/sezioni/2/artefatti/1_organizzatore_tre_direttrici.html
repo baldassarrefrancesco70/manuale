@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le tre direttrici nei tre snodi</title>
+<style>
+  :root{
+    --azzurro:#E8F4F8;
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--azzurro);
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 24px 34px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.5rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.95rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem;
+    text-align:center;
+    color:#6b6255;
+    margin:10px 0 22px;
+    line-height:1.5;
+  }
+  .toolbar{
+    display:flex;
+    justify-content:center;
+    margin-bottom:18px;
+  }
+  .btn-reset{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem;
+    background:#fff;
+    border:1.5px solid var(--marrone);
+    color:var(--marrone-scuro);
+    padding:7px 16px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover{
+    background:var(--marrone);
+    color:#fff;
+  }
+  .grid-outer{
+    overflow-x:auto;
+  }
+  table.matrix{
+    border-collapse:separate;
+    border-spacing:6px;
+    width:100%;
+    min-width:640px;
+    table-layout:fixed;
+  }
+  table.matrix th, table.matrix td{
+    vertical-align:middle;
+    text-align:center;
+  }
+  .corner{
+    background:transparent;
+  }
+  th.col-head{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--marrone-scuro);
+    background:#fff;
+    border:1.5px solid var(--marrone);
+    border-radius:8px;
+    padding:10px 6px;
+    cursor:pointer;
+    user-select:none;
+    transition:background 0.2s, color 0.2s, transform 0.15s;
+  }
+  th.col-head:hover{
+    background:var(--beige);
+  }
+  th.col-head.active{
+    background:var(--marrone);
+    color:#fff;
+  }
+  th.row-head{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    line-height:1.25;
+    color:var(--marrone-scuro);
+    background:#fff;
+    border:1.5px solid var(--marrone);
+    border-radius:8px;
+    padding:10px 10px;
+    cursor:pointer;
+    user-select:none;
+    width:180px;
+    transition:background 0.2s, color 0.2s;
+  }
+  th.row-head:hover{
+    background:var(--beige);
+  }
+  th.row-head.active{
+    background:var(--marrone);
+    color:#fff;
+  }
+  td.cell{
+    border:1.5px solid var(--marrone);
+    border-radius:8px;
+    background:var(--grigio);
+    padding:0;
+    height:130px;
+    cursor:pointer;
+    position:relative;
+    transition:background 0.2s, box-shadow 0.2s;
+  }
+  td.cell.highlight{
+    box-shadow:0 0 0 3px rgba(139,115,85,0.35) inset;
+  }
+  td.cell .face{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    border-radius:6px;
+    backface-visibility:hidden;
+    transition:opacity 0.25s ease;
+  }
+  td.cell .face-covered{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem;
+    color:#8a8175;
+    letter-spacing:0.03em;
+    opacity:1;
+  }
+  td.cell .face-covered .icona{
+    display:block;
+    font-size:1.3rem;
+    margin-bottom:4px;
+    color:var(--marrone);
+  }
+  td.cell .face-testo{
+    font-family:Georgia, serif;
+    font-size:0.82rem;
+    line-height:1.4;
+    color:var(--testo);
+    background:#fffdfa;
+    opacity:0;
+    pointer-events:none;
+  }
+  td.cell.aperta{
+    background:#fffdfa;
+  }
+  td.cell.aperta .face-covered{
+    opacity:0;
+  }
+  td.cell.aperta .face-testo{
+    opacity:1;
+  }
+  td.cell:hover:not(.aperta){
+    background:#e6e6e6;
+  }
+  .legenda{
+    margin-top:20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem;
+    text-align:center;
+    color:#7a7265;
+    line-height:1.6;
+  }
+  @media (max-width:700px){
+    table.matrix{min-width:560px;}
+    th.row-head{width:130px; font-size:0.75rem;}
+    td.cell{height:150px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Le tre direttrici nei tre snodi</h1>
+    <p class="sottotitolo">Mappa concettuale d'apertura della sezione</p>
+  </header>
+
+  <p class="istruzioni">
+    Clicca su una <strong>cella</strong> per scoprire la frase corrispondente · clicca su un'<strong>etichetta di riga</strong> per seguire una lente nel tempo · clicca su un'<strong>etichetta di colonna</strong> per confrontare le tre lenti in un solo momento.
+  </p>
+
+  <div class="toolbar">
+    <button class="btn-reset" id="btnReset">Richiudi tutte le celle</button>
+  </div>
+
+  <div class="grid-outer">
+    <table class="matrix" id="matrix">
+      <thead>
+        <tr>
+          <th class="corner"></th>
+          <th class="col-head" data-col="0">1945</th>
+          <th class="col-head" data-col="1">1991</th>
+          <th class="col-head" data-col="2">oggi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-row="0">
+          <th class="row-head" data-row="0">Ordine concordato / imposto</th>
+          <td class="cell" data-row="0" data-col="0">
+            <div class="face face-covered"><span class="icona">&#9679;</span>concordato / imposto — 1945</div>
+            <div class="face face-testo">ONU, Carta e Bretton Woods (regole concordate) nascono insieme al veto delle grandi potenze e alla spartizione fra i vincitori (ordine imposto).</div>
+          </td>
+          <td class="cell" data-row="0" data-col="1">
+            <div class="face face-covered"><span class="icona">&#9679;</span>concordato / imposto — 1991</div>
+            <div class="face face-testo">Le regole appaiono finalmente universali; la guerra del Golfo autorizzata dall'ONU sembra il modello, ma resterà l'eccezione.</div>
+          </td>
+          <td class="cell" data-row="0" data-col="2">
+            <div class="face face-covered"><span class="icona">&#9679;</span>concordato / imposto — oggi</div>
+            <div class="face face-testo">Le regole comuni sono contestate; tornano sfere d'influenza e fatti compiuti.</div>
+          </td>
+        </tr>
+        <tr data-row="1">
+          <th class="row-head" data-row="1">Unilateralismo / bipolarismo / multipolarismo</th>
+          <td class="cell" data-row="1" data-col="0">
+            <div class="face face-covered"><span class="icona">&#9679;</span>unilat. / bipol. / multipol. — 1945</div>
+            <div class="face face-testo">Bipolarismo: il mondo si divide in due blocchi.</div>
+          </td>
+          <td class="cell" data-row="1" data-col="1">
+            <div class="face face-covered"><span class="icona">&#9679;</span>unilat. / bipol. / multipol. — 1991</div>
+            <div class="face face-testo">Unipolarismo: una sola superpotenza senza rivali.</div>
+          </td>
+          <td class="cell" data-row="1" data-col="2">
+            <div class="face face-covered"><span class="icona">&#9679;</span>unilat. / bipol. / multipol. — oggi</div>
+            <div class="face face-testo">Multipolarismo contestato: più centri, nessuno dominante.</div>
+          </td>
+        </tr>
+        <tr data-row="2">
+          <th class="row-head" data-row="2">Egemonia / interdipendenza</th>
+          <td class="cell" data-row="2" data-col="0">
+            <div class="face face-covered"><span class="icona">&#9679;</span>egemonia / interdipendenza — 1945</div>
+            <div class="face face-testo">Egemonia americana; Bretton Woods costruisce un'interdipendenza economica governata dal dollaro.</div>
+          </td>
+          <td class="cell" data-row="2" data-col="1">
+            <div class="face face-covered"><span class="icona">&#9679;</span>egemonia / interdipendenza — 1991</div>
+            <div class="face face-testo">Egemonia unica e globalizzazione: l'interdipendenza si estende al mondo intero.</div>
+          </td>
+          <td class="cell" data-row="2" data-col="2">
+            <div class="face face-covered"><span class="icona">&#9679;</span>egemonia / interdipendenza — oggi</div>
+            <div class="face face-testo">Rivalità fra potenze dentro una fitta interdipendenza economica: le due logiche convivono e si scontrano.</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="legenda">Le celle di «1991» e «oggi» anticipano capitoli ancora da studiare: tienile come domande a cui il percorso risponderà.</p>
+</div>
+
+<script>
+(function(){
+  var cells = document.querySelectorAll('td.cell');
+  var colHeads = document.querySelectorAll('th.col-head');
+  var rowHeads = document.querySelectorAll('th.row-head');
+  var activeRow = null;
+  var activeCol = null;
+
+  cells.forEach(function(cell){
+    cell.addEventListener('click', function(){
+      cell.classList.toggle('aperta');
+    });
+  });
+
+  function clearHighlight(){
+    cells.forEach(function(c){ c.classList.remove('highlight'); });
+    colHeads.forEach(function(h){ h.classList.remove('active'); });
+    rowHeads.forEach(function(h){ h.classList.remove('active'); });
+  }
+
+  colHeads.forEach(function(head){
+    head.addEventListener('click', function(){
+      var col = head.getAttribute('data-col');
+      if(activeCol === col){
+        clearHighlight();
+        activeCol = null;
+        return;
+      }
+      clearHighlight();
+      activeCol = col;
+      head.classList.add('active');
+      cells.forEach(function(c){
+        if(c.getAttribute('data-col') === col){ c.classList.add('highlight'); }
+      });
+    });
+  });
+
+  rowHeads.forEach(function(head){
+    head.addEventListener('click', function(){
+      var row = head.getAttribute('data-row');
+      if(activeRow === row){
+        clearHighlight();
+        activeRow = null;
+        return;
+      }
+      clearHighlight();
+      activeRow = row;
+      head.classList.add('active');
+      cells.forEach(function(c){
+        if(c.getAttribute('data-row') === row){ c.classList.add('highlight'); }
+      });
+    });
+  });
+
+  document.getElementById('btnReset').addEventListener('click', function(){
+    cells.forEach(function(c){ c.classList.remove('aperta'); });
+  });
+})();
+</script>
+</body>
+</html>

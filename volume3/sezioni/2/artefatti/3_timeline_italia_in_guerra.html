@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Italia nella guerra: cronologia interattiva (1940-1946)</title>
+<style>
+  :root{
+    --azzurro:#E8F4F8;
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:#faf9f6;
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+    padding:28px 24px 34px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.35rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.9rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem;
+    text-align:center;
+    color:#6b6255;
+    margin:10px 0 20px;
+    line-height:1.5;
+  }
+  .legenda-fasi{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:26px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.74rem;
+    color:#6b6255;
+  }
+  .legenda-fasi .voce{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .pallino{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    display:inline-block;
+    border:1px solid var(--marrone);
+  }
+  .timeline-outer{
+    overflow-x:auto;
+    padding-bottom:8px;
+  }
+  .fasce{
+    position:relative;
+    min-width:1080px;
+  }
+  .fascia-colore{
+    position:absolute;
+    top:0;
+    height:6px;
+    border-radius:3px;
+  }
+  .timeline{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    min-width:1080px;
+    padding:20px 10px 0;
+  }
+  .tappa{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:112px;
+    cursor:pointer;
+  }
+  .data{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.72rem;
+    color:var(--marrone-scuro);
+    margin-bottom:6px;
+    text-align:center;
+    line-height:1.3;
+  }
+  .nodo{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#fff;
+    border:3px solid var(--marrone);
+    transition:background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .tappa:hover .nodo{
+    transform:scale(1.15);
+  }
+  .tappa.aperta .nodo{
+    background:var(--marrone);
+    box-shadow:0 0 0 5px rgba(139,115,85,0.25);
+  }
+  .etichetta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem;
+    color:#7a7265;
+    text-align:center;
+    margin-top:8px;
+    line-height:1.3;
+    max-width:112px;
+  }
+  .scheda{
+    max-width:760px;
+    margin:26px auto 0;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:20px 24px;
+    display:none;
+  }
+  .scheda.visibile{
+    display:block;
+  }
+  .scheda .scheda-data{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    color:var(--marrone-scuro);
+    margin:0 0 10px;
+    border-bottom:1px solid #e0d8ca;
+    padding-bottom:8px;
+  }
+  .scheda-testo{
+    font-family:Georgia, serif;
+    font-size:0.86rem;
+    line-height:1.55;
+    color:var(--testo);
+    margin:0;
+  }
+  .segnaposto{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem;
+    color:#9a9184;
+    margin-top:24px;
+  }
+  .legenda{
+    margin-top:24px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.72rem;
+    text-align:center;
+    color:#7a7265;
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>L'Italia nella guerra</h1>
+    <p class="sottotitolo">Cronologia interattiva — 1940-1946</p>
+  </header>
+
+  <p class="istruzioni">
+    Clicca su una <strong>tappa</strong> per aprire la scheda con i fatti essenziali. La banda colorata sopra la linea segue le tre fasi del capitolo.
+  </p>
+
+  <div class="legenda-fasi">
+    <span class="voce"><span class="pallino" style="background:var(--grigio);"></span>la guerra fascista (1940-43)</span>
+    <span class="voce"><span class="pallino" style="background:var(--beige);"></span>la spaccatura e la Resistenza (1943-45)</span>
+    <span class="voce"><span class="pallino" style="background:var(--azzurro);"></span>la transizione repubblicana (1945-46)</span>
+  </div>
+
+  <div class="timeline-outer">
+    <div class="fasce">
+      <div class="fascia-colore" style="left:0%; width:33.3%; background:var(--grigio);"></div>
+      <div class="fascia-colore" style="left:33.3%; width:44.4%; background:var(--beige);"></div>
+      <div class="fascia-colore" style="left:77.7%; width:22.3%; background:var(--azzurro);"></div>
+
+      <div class="timeline" id="timeline">
+        <div class="tappa" data-id="1940giugno">
+          <div class="data">10 giu. 1940</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Entrata in guerra</div>
+        </div>
+
+        <div class="tappa" data-id="1940-43">
+          <div class="data">1940–1943</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Le disfatte</div>
+        </div>
+
+        <div class="tappa" data-id="1943luglio10">
+          <div class="data">10 lug. 1943</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Sbarco in Sicilia</div>
+        </div>
+
+        <div class="tappa" data-id="1943luglio25">
+          <div class="data">25 lug. 1943</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Caduta di Mussolini</div>
+        </div>
+
+        <div class="tappa" data-id="1943settembre">
+          <div class="data">8 set. 1943</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Armistizio</div>
+        </div>
+
+        <div class="tappa" data-id="1943autunno">
+          <div class="data">autunno 1943</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Italia divisa</div>
+        </div>
+
+        <div class="tappa" data-id="1944">
+          <div class="data">1944</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Salerno · Roma</div>
+        </div>
+
+        <div class="tappa" data-id="1945aprile">
+          <div class="data">25 apr. 1945</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Liberazione</div>
+        </div>
+
+        <div class="tappa" data-id="1946giugno">
+          <div class="data">2 giu. 1946</div>
+          <div class="nodo"></div>
+          <div class="etichetta">Referendum</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="segnaposto" id="segnaposto">Clicca su una tappa per iniziare.</p>
+
+  <!-- Schede -->
+  <div class="scheda" data-scheda="1940giugno" style="background:var(--grigio);">
+    <p class="scheda-data">10 giugno 1940 — l'Italia entra in guerra</p>
+    <p class="scheda-testo">Mussolini dichiara guerra a Francia e Regno Unito, convinto di un conflitto ormai vinto dalla Germania. È l'inizio della «guerra parallela»: un fronte autonomo, non concordato con l'alleato tedesco.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1940-43" style="background:var(--grigio);">
+    <p class="scheda-data">1940–1943 — le disfatte</p>
+    <p class="scheda-testo">La «guerra parallela» si rivela un susseguirsi di rovesci: il fronte greco-albanese si blocca, le forze italiane in Africa Orientale e Settentrionale arretrano fino alla resa finale in Tunisia, nel maggio 1943.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1943luglio10" style="background:var(--beige);">
+    <p class="scheda-data">10 luglio 1943 — sbarco alleato in Sicilia</p>
+    <p class="scheda-testo">Le truppe angloamericane sbarcano in Sicilia: la guerra arriva per la prima volta sul suolo nazionale e il regime fascista entra nella sua crisi finale.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1943luglio25" style="background:var(--beige);">
+    <p class="scheda-data">25 luglio 1943 — caduta di Mussolini</p>
+    <p class="scheda-testo">Il Gran Consiglio del Fascismo sfiducia Mussolini, che viene arrestato; il re affida il governo a Badoglio. Si aprono i «quarantacinque giorni», tra fine ufficiale del fascismo e incertezza sul futuro della guerra.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1943settembre" style="background:var(--beige);">
+    <p class="scheda-data">8 settembre 1943 — armistizio</p>
+    <p class="scheda-testo">L'annuncio dell'armistizio con gli Alleati coglie di sorpresa esercito e popolazione: lo Stato e il suo apparato militare si dissolvono nel giro di poche ore («tutti a casa»), lasciando l'esercito senza ordini di fronte ai tedeschi.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1943autunno" style="background:var(--beige);">
+    <p class="scheda-data">Autunno 1943 — l'Italia divisa</p>
+    <p class="scheda-testo">Il paese si spacca in due: al Sud il Regno d'Italia sotto tutela alleata, al Centro-Nord la Repubblica Sociale Italiana, protettorato tedesco guidato da Mussolini. Nelle zone occupate nasce e si organizza la Resistenza.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1944" style="background:var(--beige);">
+    <p class="scheda-data">1944 — svolta di Salerno e liberazione di Roma</p>
+    <p class="scheda-testo">A Salerno i partiti antifascisti accettano di collaborare con la monarchia fino alla fine della guerra, superando lo scoglio istituzionale. In giugno gli Alleati liberano Roma, che diventa sede del governo.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1945aprile" style="background:var(--azzurro);">
+    <p class="scheda-data">25 aprile 1945 — insurrezione e liberazione</p>
+    <p class="scheda-testo">Il Comitato di Liberazione Nazionale proclama l'insurrezione generale nelle città del Nord ancora occupate; nei giorni successivi la Resistenza e gli Alleati completano la liberazione del paese.</p>
+  </div>
+
+  <div class="scheda" data-scheda="1946giugno" style="background:var(--azzurro);">
+    <p class="scheda-data">2 giugno 1946 — referendum: nasce la Repubblica</p>
+    <p class="scheda-testo">Gli italiani, per la prima volta con il voto esteso alle donne, scelgono tra monarchia e repubblica: prevale la Repubblica. Nello stesso giorno si eleggono i membri dell'Assemblea Costituente.</p>
+  </div>
+
+  <p class="legenda">La banda colorata segna le tre fasi del capitolo: guerra fascista · spaccatura e Resistenza · transizione repubblicana. Le schede riportano solo i fatti essenziali.</p>
+</div>
+
+<script>
+(function(){
+  var tappe = document.querySelectorAll('.tappa');
+  var schede = document.querySelectorAll('.scheda');
+  var segnaposto = document.getElementById('segnaposto');
+  var attiva = null;
+
+  function chiudiTutto(){
+    tappe.forEach(function(t){ t.classList.remove('aperta'); });
+    schede.forEach(function(s){ s.classList.remove('visibile'); });
+  }
+
+  tappe.forEach(function(tappa){
+    tappa.addEventListener('click', function(){
+      var id = tappa.getAttribute('data-id');
+      if(attiva === id){
+        chiudiTutto();
+        attiva = null;
+        segnaposto.style.display = 'block';
+        return;
+      }
+      chiudiTutto();
+      attiva = id;
+      tappa.classList.add('aperta');
+      var scheda = document.querySelector('.scheda[data-scheda="' + id + '"]');
+      if(scheda){ scheda.classList.add('visibile'); }
+      segnaposto.style.display = 'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>

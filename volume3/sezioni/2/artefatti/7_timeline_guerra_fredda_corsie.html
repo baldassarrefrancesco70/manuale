@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La guerra fredda a corsie (1945-1991)</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --corsia1:#8B7355;
+    --corsia1-bg:#efe9e1;
+    --corsia2:#5b7a8f;
+    --corsia2-bg:#e6edf0;
+    --corsia3:#7a8a5c;
+    --corsia3-bg:#eaeee2;
+    --f1:#ece6da;
+    --f2:#e6ddcc;
+    --f3:#e0d4bd;
+    --f4:#dde8df;
+    --f5:#e3cfc4;
+    --f6:#dde8ef;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%;
+    min-height:100%;
+  }
+  .wrap{
+    max-width:1500px;
+    margin:0 auto;
+    padding:26px 22px 34px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:12px;
+  }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.35rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--marrone-scuro);
+    margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:0.9rem;
+    color:#5a5248;
+    margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.74rem;
+    text-align:center;
+    color:#6b6255;
+    margin:8px 0 18px;
+    line-height:1.5;
+  }
+  .filtri{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:20px;
+  }
+  .gruppo-filtro{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+  }
+  .gruppo-filtro .titolo-filtro{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.66rem;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:#8a8175;
+  }
+  .pulsanti-filtro{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .fbtn{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem;
+    font-weight:600;
+    border:1.5px solid var(--marrone);
+    background:#fffdfa;
+    color:var(--marrone-scuro);
+    padding:5px 11px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:transform 0.15s;
+  }
+  .fbtn:hover{ transform:translateY(-1px); }
+  .fbtn.attivo{
+    color:#fff;
+  }
+  .fbtn[data-lane="1"].attivo{ background:var(--corsia1); border-color:var(--corsia1); }
+  .fbtn[data-lane="2"].attivo{ background:var(--corsia2); border-color:var(--corsia2); }
+  .fbtn[data-lane="3"].attivo{ background:var(--corsia3); border-color:var(--corsia3); }
+  .fbtn[data-phase].attivo{ background:var(--marrone); border-color:var(--marrone); color:#fff; }
+  .btn-reset-filtri{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.68rem;
+    color:#8a8175;
+    background:none;
+    border:none;
+    text-decoration:underline;
+    cursor:pointer;
+    align-self:center;
+  }
+
+  .chart-outer{
+    overflow-x:auto;
+    border-radius:10px;
+  }
+  .chart-grid{
+    display:grid;
+    grid-template-columns: 148px minmax(1300px, 1fr);
+    min-width:1448px;
+  }
+  .corner{
+    position:sticky;
+    left:0;
+    z-index:3;
+    background:var(--grigio);
+  }
+  .fase-row-label{
+    position:relative;
+    height:40px;
+  }
+  .fase-band{
+    position:absolute;
+    top:4px;
+    bottom:4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2px 4px;
+    border-radius:5px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.6rem;
+    line-height:1.2;
+    color:var(--marrone-scuro);
+    font-weight:600;
+    overflow:hidden;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:opacity 0.25s, border-color 0.2s;
+  }
+  .fase-band.attenuato{ opacity:0.28; }
+  .fase-band.selezionato{ border-color:var(--marrone); }
+
+  .lane-label{
+    position:sticky;
+    left:0;
+    z-index:2;
+    background:var(--grigio);
+    display:flex;
+    align-items:center;
+    padding-right:10px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.72rem;
+    line-height:1.25;
+  }
+  .lane-label .pallino-corsia{
+    width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:6px; flex:0 0 auto;
+  }
+  .lane-label[data-lane="1"]{ color:var(--corsia1); }
+  .lane-label[data-lane="2"]{ color:var(--corsia2); }
+  .lane-label[data-lane="3"]{ color:var(--corsia3); }
+
+  .lane-track{
+    position:relative;
+    height:64px;
+    border-bottom:1px dashed #d8d2c4;
+  }
+  .lane-track[data-lane="1"]{ background:var(--corsia1-bg); }
+  .lane-track[data-lane="2"]{ background:var(--corsia2-bg); }
+  .lane-track[data-lane="3"]{ background:var(--corsia3-bg); }
+
+  .evento{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    transition:opacity 0.25s;
+  }
+  .evento.attenuato{ opacity:0.22; }
+
+  .evento.punto{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#fffdfa;
+    border:3px solid var(--marrone);
+    margin-left:-8px;
+  }
+  .lane-track[data-lane="1"] .evento.punto{ border-color:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.punto{ border-color:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.punto{ border-color:var(--corsia3); }
+  .evento.punto.aperto{ background:var(--marrone); }
+  .lane-track[data-lane="1"] .evento.punto.aperto{ background:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.punto.aperto{ background:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.punto.aperto{ background:var(--corsia3); }
+
+  .evento-etichetta{
+    position:absolute;
+    top:100%;
+    left:50%;
+    transform:translateX(-50%);
+    margin-top:3px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.58rem;
+    color:#6b6255;
+    white-space:nowrap;
+    pointer-events:none;
+  }
+
+  .evento.barra{
+    height:18px;
+    border-radius:5px;
+    background:#fffdfa;
+    border:2px solid var(--marrone);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 4px;
+    overflow:hidden;
+  }
+  .lane-track[data-lane="1"] .evento.barra{ border-color:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.barra{ border-color:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.barra{ border-color:var(--corsia3); }
+  .evento.barra.aperto{ background:var(--marrone); }
+  .lane-track[data-lane="1"] .evento.barra.aperto{ background:var(--corsia1); }
+  .lane-track[data-lane="2"] .evento.barra.aperto{ background:var(--corsia2); }
+  .lane-track[data-lane="3"] .evento.barra.aperto{ background:var(--corsia3); }
+  .evento.barra .barra-testo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.58rem;
+    font-weight:600;
+    color:var(--testo);
+    white-space:nowrap;
+  }
+  .evento.barra.aperto .barra-testo{ color:#fff; }
+
+  .anni-riga{
+    position:relative;
+    height:20px;
+  }
+  .anno-tick{
+    position:absolute;
+    top:0;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.6rem;
+    color:#8a8175;
+    transform:translateX(-50%);
+  }
+
+  .scheda{
+    max-width:740px;
+    margin:22px auto 0;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:18px 22px;
+    display:none;
+  }
+  .scheda.visibile{ display:block; }
+  .scheda-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    color:var(--marrone-scuro);
+    margin:0 0 4px;
+  }
+  .scheda-meta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem;
+    color:#8a8175;
+    margin:0 0 10px;
+    border-bottom:1px solid #e0d8ca;
+    padding-bottom:8px;
+  }
+  .scheda-testo{
+    font-family:Georgia, serif;
+    font-size:0.86rem;
+    line-height:1.55;
+    margin:0;
+    color:var(--testo);
+  }
+  .segnaposto{
+    text-align:center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem;
+    color:#9a9184;
+    margin-top:20px;
+  }
+  .idea-guida{
+    margin-top:22px;
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:13px 18px;
+    font-family:Georgia, serif;
+    font-size:0.82rem;
+    line-height:1.55;
+    color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>La guerra fredda a corsie</h1>
+    <p class="sottotitolo">1945 – 1991</p>
+  </header>
+
+  <p class="istruzioni">
+    Clicca su un evento per aprire la scheda. Usa i filtri per isolare una corsia o una fase: gli elementi esclusi si attenuano, senza sparire.
+  </p>
+
+  <div class="filtri">
+    <div class="gruppo-filtro">
+      <span class="titolo-filtro">Corsie</span>
+      <div class="pulsanti-filtro">
+        <button class="fbtn" data-lane="1">Il centro</button>
+        <button class="fbtn" data-lane="2">Armamenti</button>
+        <button class="fbtn" data-lane="3">Periferia</button>
+      </div>
+    </div>
+    <div class="gruppo-filtro">
+      <span class="titolo-filtro">Fasi</span>
+      <div class="pulsanti-filtro">
+        <button class="fbtn" data-phase="1">1</button>
+        <button class="fbtn" data-phase="2">2</button>
+        <button class="fbtn" data-phase="3">3</button>
+        <button class="fbtn" data-phase="4">4</button>
+        <button class="fbtn" data-phase="5">5</button>
+        <button class="fbtn" data-phase="6">6</button>
+      </div>
+    </div>
+    <button class="btn-reset-filtri" id="btnResetFiltri">azzera filtri</button>
+  </div>
+
+  <div class="chart-outer">
+    <div class="chart-grid" id="chartGrid">
+
+      <div class="corner"></div>
+      <div class="fase-row-label">
+        <div class="fase-band" data-phase="1" style="left:0%; width:8.70%; background:var(--f1);">scoppio e bipolarismo<br>1945-1950</div>
+        <div class="fase-band" data-phase="2" style="left:8.70%; width:15.21%; background:var(--f2);">globalizzazione e coesistenza<br>1949-1956</div>
+        <div class="fase-band" data-phase="3" style="left:23.91%; width:15.22%; background:var(--f3);">destalinizzazione e deterrenza<br>1956-1963</div>
+        <div class="fase-band" data-phase="4" style="left:39.13%; width:19.57%; background:var(--f4);">distensione<br>1963-1972</div>
+        <div class="fase-band" data-phase="5" style="left:58.70%; width:19.56%; background:var(--f5);">crisi della distensione, seconda guerra fredda<br>1972-1981</div>
+        <div class="fase-band" data-phase="6" style="left:78.26%; width:21.74%; background:var(--f6);">fine e crollo<br>1981-1991</div>
+      </div>
+
+      <div class="lane-label" data-lane="1"><span class="pallino-corsia" style="background:var(--corsia1);"></span>Il centro<br>(USA-URSS)</div>
+      <div class="lane-track" data-lane="1">
+        <div class="evento punto" data-id="c1-1947" data-lane="1" data-phase="1" style="left:4.35%;"><span class="evento-etichetta">1947</span></div>
+        <div class="evento barra" data-id="c1-1948" data-lane="1" data-phase="2" style="left:6.52%; width:2.17%;"><span class="barra-testo">Berlino</span></div>
+        <div class="evento barra" data-id="c1-1950" data-lane="1" data-phase="2" style="left:10.87%; width:6.52%;"><span class="barra-testo">Corea</span></div>
+        <div class="evento punto" data-id="c1-1961" data-lane="1" data-phase="3" style="left:34.78%;"><span class="evento-etichetta">1961</span></div>
+        <div class="evento punto" data-id="c1-1962" data-lane="1" data-phase="3" style="left:36.96%;"><span class="evento-etichetta">1962</span></div>
+        <div class="evento barra" data-id="c1-distensione" data-lane="1" data-phase="4" style="left:39.13%; width:19.57%;"><span class="barra-testo">distensione</span></div>
+        <div class="evento barra" data-id="c1-seconda" data-lane="1" data-phase="5" style="left:58.70%; width:19.56%;"><span class="barra-testo">seconda guerra fredda</span></div>
+        <div class="evento barra" data-id="c1-crollo" data-lane="1" data-phase="6" style="left:95.65%; width:4.35%;"><span class="barra-testo">'89-91</span></div>
+      </div>
+
+      <div class="lane-label" data-lane="2"><span class="pallino-corsia" style="background:var(--corsia2);"></span>Armamenti<br>e trattati</div>
+      <div class="lane-track" data-lane="2">
+        <div class="evento punto" data-id="c2-1949" data-lane="2" data-phase="2" style="left:8.70%;"><span class="evento-etichetta">1949</span></div>
+        <div class="evento barra" data-id="c2-bombaH" data-lane="2" data-phase="2" style="left:15.22%; width:2.17%;"><span class="barra-testo">H</span></div>
+        <div class="evento punto" data-id="c2-1957" data-lane="2" data-phase="3" style="left:26.09%;"><span class="evento-etichetta">1957</span></div>
+        <div class="evento punto" data-id="c2-1972" data-lane="2" data-phase="4" style="left:58.70%;"><span class="evento-etichetta">1972</span></div>
+        <div class="evento punto" data-id="c2-1975" data-lane="2" data-phase="5" style="left:65.22%;"><span class="evento-etichetta">1975</span></div>
+        <div class="evento punto" data-id="c2-1983" data-lane="2" data-phase="6" style="left:82.61%;"><span class="evento-etichetta">1983</span></div>
+        <div class="evento punto" data-id="c2-1987" data-lane="2" data-phase="6" style="left:91.30%;"><span class="evento-etichetta">1987</span></div>
+      </div>
+
+      <div class="lane-label" data-lane="3"><span class="pallino-corsia" style="background:var(--corsia3);"></span>Periferia<br>(Terzo Mondo)</div>
+      <div class="lane-track" data-lane="3">
+        <div class="evento punto" data-id="c3-1955" data-lane="3" data-phase="3" style="left:21.74%;"><span class="evento-etichetta">1955</span></div>
+        <div class="evento punto" data-id="c3-1956" data-lane="3" data-phase="3" style="left:23.91%;"><span class="evento-etichetta">1956</span></div>
+        <div class="evento barra" data-id="c3-vietnam" data-lane="3" data-phase="4" style="left:41.30%; width:23.91%;"><span class="barra-testo">Vietnam</span></div>
+        <div class="evento barra" data-id="c3-angola" data-lane="3" data-phase="5" style="left:63.04%; width:8.70%;"><span class="barra-testo">Angola</span></div>
+        <div class="evento barra" data-id="c3-afghanistan" data-lane="3" data-phase="5" style="left:73.91%; width:21.74%;"><span class="barra-testo">Afghanistan</span></div>
+      </div>
+
+      <div class="corner"></div>
+      <div class="anni-riga">
+        <span class="anno-tick" style="left:0%;">1945</span>
+        <span class="anno-tick" style="left:21.74%;">1955</span>
+        <span class="anno-tick" style="left:43.48%;">1965</span>
+        <span class="anno-tick" style="left:65.22%;">1975</span>
+        <span class="anno-tick" style="left:86.96%;">1985</span>
+        <span class="anno-tick" style="left:100%; transform:translateX(-100%);">1991</span>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="segnaposto" id="segnaposto">Clicca su un evento per iniziare.</p>
+
+  <!-- Schede -->
+  <div class="scheda" data-scheda="c1-1947"><p class="scheda-titolo">La rottura</p><p class="scheda-meta">1947 · Il centro</p><p class="scheda-testo">Con la dottrina Truman e la politica del contenimento si chiude la cooperazione bellica fra le due potenze: è la data convenzionale d'inizio della guerra fredda.</p></div>
+  <div class="scheda" data-scheda="c1-1948"><p class="scheda-titolo">Il blocco di Berlino</p><p class="scheda-meta">1948-1949 · Il centro</p><p class="scheda-testo">L'URSS blocca gli accessi terrestri a Berlino Ovest; gli Alleati rispondono con un ponte aereo che rifornisce la città per quasi un anno. Primo grande scontro diretto, senza sparare un colpo.</p></div>
+  <div class="scheda" data-scheda="c1-1950"><p class="scheda-titolo">La guerra di Corea</p><p class="scheda-meta">1950-1953 · Il centro</p><p class="scheda-testo">Primo conflitto armato su larga scala della guerra fredda: la Corea del Nord, sostenuta da URSS e Cina, invade il Sud; l'intervento ONU a guida americana lo respinge. Si conclude con un armistizio e la divisione della penisola, tuttora in vigore.</p></div>
+  <div class="scheda" data-scheda="c1-1961"><p class="scheda-titolo">Il Muro di Berlino</p><p class="scheda-meta">1961 · Il centro</p><p class="scheda-testo">La RDT chiude fisicamente il confine con Berlino Ovest per fermare la fuga di cittadini verso l'Occidente: la divisione dell'Europa diventa un muro di cemento.</p></div>
+  <div class="scheda" data-scheda="c1-1962"><p class="scheda-titolo">La crisi di Cuba</p><p class="scheda-meta">1962 · Il centro</p><p class="scheda-testo">L'installazione di missili sovietici a Cuba porta il mondo sull'orlo della guerra nucleare. Kennedy sceglie il blocco navale invece del bombardamento; la crisi si risolve con un compromesso diplomatico reciproco.</p></div>
+  <div class="scheda" data-scheda="c1-distensione"><p class="scheda-titolo">La distensione</p><p class="scheda-meta">1963-1972 · Il centro</p><p class="scheda-testo">Dopo Cuba, le due superpotenze cercano un allentamento controllato della tensione: linea rossa diretta, negoziati sugli armamenti, maggiore prevedibilità reciproca.</p></div>
+  <div class="scheda" data-scheda="c1-seconda"><p class="scheda-titolo">La seconda guerra fredda</p><p class="scheda-meta">1972-1981 · Il centro</p><p class="scheda-testo">La distensione entra in crisi: nuova corsa agli armamenti, tensioni sui diritti umani, e soprattutto l'invasione sovietica dell'Afghanistan (1979), che chiude la fase di dialogo.</p></div>
+  <div class="scheda" data-scheda="c1-crollo"><p class="scheda-titolo">Il crollo</p><p class="scheda-meta">1989-1991 · Il centro</p><p class="scheda-testo">Cadono uno dopo l'altro i regimi comunisti dell'Europa orientale; il 1991 si chiude con la dissoluzione dell'Unione Sovietica: fine del sistema bipolare.</p></div>
+
+  <div class="scheda" data-scheda="c2-1949"><p class="scheda-titolo">La bomba sovietica</p><p class="scheda-meta">1949 · Armamenti e trattati</p><p class="scheda-testo">L'URSS testa il suo primo ordigno nucleare, ponendo fine al monopolio atomico statunitense e aprendo la corsa agli armamenti.</p></div>
+  <div class="scheda" data-scheda="c2-bombaH"><p class="scheda-titolo">La bomba all'idrogeno</p><p class="scheda-meta">1952-1953 · Armamenti e trattati</p><p class="scheda-testo">Stati Uniti (1952) e poi Unione Sovietica (1953) sviluppano la bomba a fusione, di potenza molto superiore alla bomba atomica: la posta in gioco della corsa agli armamenti si alza di un ordine di grandezza.</p></div>
+  <div class="scheda" data-scheda="c2-1957"><p class="scheda-titolo">Lo Sputnik</p><p class="scheda-meta">1957 · Armamenti e trattati</p><p class="scheda-testo">L'URSS lancia il primo satellite artificiale e testa il primo missile intercontinentale: dimostra di poter colpire il territorio statunitense a distanza, aprendo anche la corsa allo spazio.</p></div>
+  <div class="scheda" data-scheda="c2-1972"><p class="scheda-titolo">SALT 1</p><p class="scheda-meta">1972 · Armamenti e trattati</p><p class="scheda-testo">Primo accordo che pone un tetto al numero di vettori nucleari e limita i sistemi di difesa antimissile: il controllo degli armamenti diventa oggetto di trattato, non solo di corsa.</p></div>
+  <div class="scheda" data-scheda="c2-1975"><p class="scheda-titolo">Gli Accordi di Helsinki</p><p class="scheda-meta">1975 · Armamenti e trattati</p><p class="scheda-testo">Riconoscono i confini postbellici in Europa e introducono clausole sui diritti umani, in cambio di un riconoscimento reciproco di stabilità fra i blocchi.</p></div>
+  <div class="scheda" data-scheda="c2-1983"><p class="scheda-titolo">SDI, lo scudo spaziale</p><p class="scheda-meta">1983 · Armamenti e trattati</p><p class="scheda-testo">Gli Stati Uniti annunciano un sistema di difesa antimissile basato anche nello spazio: riaccende la corsa agli armamenti proprio mentre si apre la "seconda guerra fredda".</p></div>
+  <div class="scheda" data-scheda="c2-1987"><p class="scheda-titolo">Il trattato INF</p><p class="scheda-meta">1987 · Armamenti e trattati</p><p class="scheda-testo">Per la prima volta USA e URSS eliminano un'intera categoria di missili nucleari a raggio intermedio: segna l'avvio reale della fine della corsa agli armamenti.</p></div>
+
+  <div class="scheda" data-scheda="c3-1955"><p class="scheda-titolo">La conferenza di Bandung</p><p class="scheda-meta">1955 · Periferia</p><p class="scheda-testo">Prima grande conferenza afroasiatica: nasce il movimento dei paesi non allineati, che rifiuta di schierarsi con uno dei due blocchi.</p></div>
+  <div class="scheda" data-scheda="c3-1956"><p class="scheda-titolo">La crisi di Suez</p><p class="scheda-meta">1956 · Periferia</p><p class="scheda-testo">Regno Unito, Francia e Israele intervengono contro l'Egitto di Nasser; USA e URSS convergono nel condannare l'intervento, segnando il tramonto delle vecchie potenze coloniali europee.</p></div>
+  <div class="scheda" data-scheda="c3-vietnam"><p class="scheda-titolo">La guerra del Vietnam</p><p class="scheda-meta">1964-1975 · Periferia</p><p class="scheda-testo">Guerra per procura nel Sud-Est asiatico, con il coinvolgimento militare diretto degli Stati Uniti contro il Vietnam del Nord comunista: si conclude con la vittoria comunista e la riunificazione del paese.</p></div>
+  <div class="scheda" data-scheda="c3-angola"><p class="scheda-titolo">Angola e Corno d'Africa</p><p class="scheda-meta">anni Settanta · Periferia</p><p class="scheda-testo">Conflitti civili e regionali in cui le superpotenze sostengono fazioni opposte tramite aiuti, consiglieri militari e alleati locali, prolungando lo scontro nella periferia del sistema.</p></div>
+  <div class="scheda" data-scheda="c3-afghanistan"><p class="scheda-titolo">L'Afghanistan</p><p class="scheda-meta">1979-1989 · Periferia</p><p class="scheda-testo">L'URSS invade l'Afghanistan per sostenere il regime comunista locale; la resistenza armata, sostenuta dagli Stati Uniti, logora militarmente ed economicamente l'Unione Sovietica fino al ritiro.</p></div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Gli eventi delle tre corsie si condizionano a vicenda: non sono tre storie parallele ma un solo processo osservato da tre angolazioni. L'invasione sovietica dell'Afghanistan (periferia, 1979) chiude la distensione e apre la seconda guerra fredda (centro); la corsa agli armamenti (SDI, 1983) è la traduzione tecnica di quella stessa rottura.
+  </div>
+</div>
+
+<script>
+(function(){
+  var eventi = document.querySelectorAll('.evento');
+  var schede = document.querySelectorAll('.scheda');
+  var segnaposto = document.getElementById('segnaposto');
+  var apertoId = null;
+
+  var laneBtns = document.querySelectorAll('.fbtn[data-lane]');
+  var phaseBtns = document.querySelectorAll('.fbtn[data-phase]');
+  var faseBande = document.querySelectorAll('.fase-band');
+  var selectedLane = null;
+  var selectedPhase = null;
+
+  function chiudiSchede(){
+    document.querySelectorAll('.evento.aperto').forEach(function(e){ e.classList.remove('aperto'); });
+    schede.forEach(function(s){ s.classList.remove('visibile'); });
+  }
+
+  eventi.forEach(function(el){
+    el.addEventListener('click', function(){
+      var id = el.getAttribute('data-id');
+      if(apertoId === id){
+        chiudiSchede();
+        apertoId = null;
+        segnaposto.style.display = 'block';
+        return;
+      }
+      chiudiSchede();
+      apertoId = id;
+      el.classList.add('aperto');
+      var scheda = document.querySelector('.scheda[data-scheda="' + id + '"]');
+      if(scheda){ scheda.classList.add('visibile'); }
+      segnaposto.style.display = 'none';
+    });
+  });
+
+  function applicaFiltri(){
+    eventi.forEach(function(el){
+      var lane = el.getAttribute('data-lane');
+      var phase = el.getAttribute('data-phase');
+      var escluso = (selectedLane && lane !== selectedLane) || (selectedPhase && phase !== selectedPhase);
+      el.classList.toggle('attenuato', !!escluso);
+    });
+    faseBande.forEach(function(fb){
+      var phase = fb.getAttribute('data-phase');
+      var escluso = selectedPhase && phase !== selectedPhase;
+      fb.classList.toggle('attenuato', !!escluso);
+      fb.classList.toggle('selezionato', selectedPhase === phase);
+    });
+  }
+
+  laneBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var lane = btn.getAttribute('data-lane');
+      if(selectedLane === lane){
+        selectedLane = null;
+        laneBtns.forEach(function(b){ b.classList.remove('attivo'); });
+      } else {
+        selectedLane = lane;
+        laneBtns.forEach(function(b){ b.classList.toggle('attivo', b === btn); });
+      }
+      applicaFiltri();
+    });
+  });
+
+  phaseBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var phase = btn.getAttribute('data-phase');
+      if(selectedPhase === phase){
+        selectedPhase = null;
+        phaseBtns.forEach(function(b){ b.classList.remove('attivo'); });
+      } else {
+        selectedPhase = phase;
+        phaseBtns.forEach(function(b){ b.classList.toggle('attivo', b === btn); });
+      }
+      applicaFiltri();
+    });
+  });
+
+  document.getElementById('btnResetFiltri').addEventListener('click', function(){
+    selectedLane = null;
+    selectedPhase = null;
+    laneBtns.forEach(function(b){ b.classList.remove('attivo'); });
+    phaseBtns.forEach(function(b){ b.classList.remove('attivo'); });
+    applicaFiltri();
+  });
+
+  faseBande.forEach(function(fb){
+    fb.addEventListener('click', function(){
+      var phase = fb.getAttribute('data-phase');
+      var btn = document.querySelector('.fbtn[data-phase="' + phase + '"]');
+      if(btn){ btn.click(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

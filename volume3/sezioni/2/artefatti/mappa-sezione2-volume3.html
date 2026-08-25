@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La costruzione e la crisi dell'ordine internazionale — Mappa della sezione</title>
+<style>
+  :root{
+    --paper: #ece2c8; --ink: #2a2318; --line: #b7a173; --rule: #b7a173; --rule-soft: #cfc09a;
+    --paper-card: #f2e9d2; --paper-deep: #ddcda3; --ink-soft: #5c5136;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+
+    --cornice: #8B7355;
+    --c1: #9d4a2b; /* la seconda guerra mondiale */
+    --c2: #b0872e; /* l'italia nella guerra */
+    --c3: #3d5566; /* l'onu e il nuovo ordine mondiale */
+    --c4: #5c6b3d; /* la guerra fredda */
+    --c5: #7a4a6b; /* il momento unipolare */
+    --c6: #8a6d1f; /* la cina, da mao a oggi */
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-card:#241d13; --paper-deep:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --line:#5a4d30; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:0 30px 70px; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,3.6vw,40px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:70ch; margin:0; }
+
+  .controls{ display:flex; gap:10px; margin-top:22px; }
+  .ctrl-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:10px 18px;
+    background:transparent; border:1px solid var(--rule); color:var(--ink); cursor:pointer; }
+  .ctrl-btn:hover{ border-color:var(--ink); }
+
+  .cascade{ position:relative; margin-top:34px; }
+  .connectors-overlay{ position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:visible; }
+  .connectors-overlay path{ fill:none; stroke:var(--rule); stroke-width:1.5; }
+  .row{ position:relative; z-index:1; display:flex; margin-bottom:6px; }
+  .row.align-left{ justify-content:flex-start; }
+  .row.align-center{ justify-content:center; }
+  .row.align-right{ justify-content:flex-end; }
+
+  .node{ display:flex; align-items:center; gap:12px; background:var(--paper-card); border:1px solid var(--rule);
+    border-left:5px solid var(--n-c); padding:13px 20px 13px 16px; cursor:pointer; box-shadow:var(--shadow);
+    font-family:var(--font-label); min-width:280px; max-width:460px; transition:transform .12s ease; position:relative; }
+  .node:hover{ transform:translateY(-2px); }
+  .node.frame{ border-left-style:double; border-left-width:7px; }
+  .node .n-tag{ font-size:9.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--n-c); font-weight:700; white-space:nowrap; }
+  .node .n-title{ font-family:var(--font-body); font-size:16px; color:var(--ink); line-height:1.25; flex:1; }
+  .node .n-chevron{ font-size:13px; color:var(--ink-soft); transition:transform .2s ease; flex-shrink:0; }
+  .node[aria-expanded="true"] .n-chevron{ transform:rotate(90deg); }
+  .node[aria-expanded="true"]{ outline:2px solid var(--n-c); outline-offset:1px; }
+
+  .panel{ max-height:0; overflow:hidden; transition:max-height .3s ease; margin:0 0 6px; }
+  .panel.open{ max-height:2400px; }
+  .panel-inner{ background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--n-c);
+    padding:20px 26px 22px; margin:4px 0 14px; max-width:900px; }
+
+  /* pannello semplice (cornice) */
+  .frame-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px; }
+  .frame-list > li{ padding-left:18px; border-left:2px solid var(--rule-soft); position:relative; }
+  .bullets{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; }
+  .bullets li{ font-size:15px; line-height:1.5; padding-left:15px; position:relative; }
+  .bullets li::before{ content:"–"; position:absolute; left:0; color:var(--n-c); font-weight:700; }
+
+  /* pannello ricco (capitolo) */
+  .cluster{ margin-bottom:20px; }
+  .cluster:last-of-type{ margin-bottom:0; }
+  .cluster-name{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11px; color:var(--n-c); font-weight:700; margin:0 0 10px; }
+  .stmt-chain{ display:flex; flex-direction:column; }
+  .stmt-block{ padding:6px 0; }
+  .stmt-arrow{ font-family:var(--font-label); font-size:11px; color:var(--ink-soft); padding:2px 0 2px 15px; }
+
+  .histo-row{ margin-top:20px; padding-top:16px; border-top:1px dashed var(--rule-soft); display:flex; flex-direction:column; gap:10px; }
+  .histo-item{ font-size:14.5px; line-height:1.5; }
+  .histo-item .htag{ display:block; font-family:var(--font-label); font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:3px; }
+  .histo-item .htag b{ color:var(--n-c); }
+
+  footer.prompt{ margin-top:40px; padding-top:18px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+
+  @media (max-width:760px){
+    .row.align-left, .row.align-center, .row.align-right{ justify-content:flex-start; }
+    .node{ min-width:0; width:100%; max-width:none; }
+    .connector-svg{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Volume 3 · Sezione 2 · Mappa di apertura</p>
+    <h1>La costruzione e la crisi dell'ordine internazionale</h1>
+    <p class="dek">Otto tappe, dall'apertura alla chiusura della sezione. Clicca ciascun nodo per aprire il suo pannello — più pannelli possono restare aperti insieme, per confrontare capitoli distanti fra loro.</p>
+  </header>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="expandAll" type="button">Espandi tutto</button>
+    <button class="ctrl-btn" id="collapseAll" type="button">Comprimi tutto</button>
+  </div>
+
+  <div class="cascade" id="cascade">
+    <svg class="connectors-overlay" id="connectors"></svg>
+  </div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    { id:'apertura', kind:'frame', tag:'Apertura', title:'Chi scrive le regole', color:'var(--cornice)',
+      items:[
+        { bullets:['Un ordine internazionale non è un equilibrio che si trova: è un testo che qualcuno scrive, dopo aver vinto qualcosa.','Chi vive dentro un ordine lo scambia per lo stato naturale delle cose — finché non crolla.']},
+        { bullets:['Tre volte in un secolo le regole sono state scritte e riscritte: nel 1945, nel 1991, oggi.','Una sola domanda attraversa tutti e tre i momenti: chi comanda nel mondo, e con quale diritto?']},
+        { bullets:['Guardrail della sezione: ogni ordine ha un autore, una data, degli esclusi.','Non basta chiedersi chi vince. Bisogna chiedersi a che prezzo, e per chi.']}
+      ] },
+
+    { id:'cap1', kind:'chapter', tag:'Capitolo 1', title:'La Seconda guerra mondiale', color:'var(--c1)',
+      clusters:[
+        { name:'Verso la guerra', progression:true, statements:[
+          ['Il sistema di Versailles non crolla di colpo nel 1939.','Mostra le crepe già negli anni Venti e Trenta.'],
+          ['1931 la Manciuria, 1935 l\'Etiopia, 1936 la Renania.','Ogni aggressione non contrastata misura quanto le democrazie sono disposte a incassare.'],
+          ['Monaco, settembre 1938.','Guadagno di tempo razionale, o colpevole ingenuità che confermò a Hitler la propria impunità?'] ] },
+        { name:'Una guerra planetaria', progression:true, statements:[
+          ['Agosto 1939: il patto Molotov-Ribbentrop apre la strada alla Polonia.','Calcolo cinico fra aggressori, o difesa strategica sovietica?'],
+          ['Non fu una guerra europea allargata: fu planetaria fin dal principio.','Il Pacifico, il Nordafrica, le colonie di tre continenti.'],
+          ['La produzione, non solo gli eserciti, decise l\'esito.','Una guerra dei materiali, prima ancora che delle armi.'] ] },
+        { name:'La guerra sui civili', progression:false, statements:[
+          ['Per la prima volta i civili diventano un obiettivo, non un effetto collaterale.','Bombardamenti, occupazione, sterminio.'],
+          ['Un antisemitismo radicato da secoli, o l\'obbedienza di uomini comuni?','Le due letture spostano la responsabilità in luoghi diversi.'] ] },
+        { name:'La soglia atomica', progression:false, statements:[
+          ['6 e 9 agosto 1945: Hiroshima e Nagasaki.','Necessità militare per abbreviare la guerra, o primo atto della guerra fredda?'] ] }
+      ],
+      historio:[
+        { q:'L\'appeasement fu ingenuità o scelta razionale?', from:'Verso la guerra' },
+        { q:'La Shoah è un male unico, o un orrore tra gli altri?', from:'La guerra sui civili' },
+        { q:'Chi ha ucciso: uomini comuni o antisemiti convinti?', from:'La guerra sui civili' },
+        { q:'Hiroshima fu una necessità militare o un atto politico?', from:'La soglia atomica' }
+      ] },
+
+    { id:'cap2', kind:'chapter', tag:'Capitolo 2', title:'L\'Italia nella guerra', color:'var(--c2)',
+      clusters:[
+        { name:'Una guerra parallela', progression:true, statements:[
+          ['Mussolini entra in guerra per sedersi al tavolo della pace, non per combatterla.','Il fallimento è quasi immediato.'],
+          ['25 luglio 1943: il Gran Consiglio sfiducia Mussolini.','Il re lo fa arrestare la sera stessa.'] ] },
+        { name:'L\'8 settembre', progression:true, statements:[
+          ['8 settembre 1943: l\'armistizio è annunciato, l\'esercito non ha ordini.','Morte della patria, o punto di partenza per una patria nuova?'],
+          ['Da quel giorno, due Italie.','La Repubblica Sociale al Centro-Nord, il Regno del Sud.'] ] },
+        { name:'La Resistenza', progression:false, statements:[
+          ['Guerra di liberazione, guerra civile, guerra di classe: tre conflitti, le stesse persone.','Il Mezzogiorno restò davvero a guardare?'] ] },
+        { name:'Dalla guerra alla Repubblica', progression:false, statements:[
+          ['2 giugno 1946: la Repubblica, e un\'Assemblea Costituente.','Il paese sconfitto scrive la propria Costituzione, non la riceve.'] ] }
+      ],
+      historio:[
+        { q:'La Resistenza fu una guerra di liberazione o una guerra civile?', from:'La Resistenza' },
+        { q:'L\'8 settembre fu la morte della patria o la sua rinascita?', from:'L\'8 settembre' },
+        { q:'Il Mezzogiorno fu attendista?', from:'La Resistenza' }
+      ] },
+
+    { id:'cap3', kind:'chapter', tag:'Capitolo 3', title:'L\'ONU e il nuovo ordine mondiale', color:'var(--c3)',
+      clusters:[
+        { name:'Un secondo tentativo', progression:true, statements:[
+          ['La Società delle Nazioni era fallita senza le grandi potenze dentro.','San Francisco riprova, questa volta con tutti i vincitori al tavolo.'],
+          ['Norimberga: per la prima volta si giudicano i vinti in nome di un diritto nuovo.','Ma a giudicare sono solo i vincitori.'] ] },
+        { name:'Il veto e la sua logica', progression:false, statements:[
+          ['Cinque seggi permanenti, cinque diritti di veto.','Le stesse regole non valgono per chi le scrive e per chi le riceve.'] ] },
+        { name:'Yalta, le strade ancora aperte', progression:false, statements:[
+          ['Febbraio 1945, Crimea: l\'Armata Rossa occupa già Polonia e Ungheria.','Spartizione consensuale, o fotografia di equilibri già decisi sul campo?'] ] },
+        { name:'Chi governa l\'economia', progression:false, statements:[
+          ['Bretton Woods, luglio 1944: dollaro, FMI, Banca Mondiale.','Le regole dell\'economia mondiale, scritte anch\'esse dai vincitori.'] ] }
+      ],
+      historio:[
+        { q:'Yalta fu una spartizione o la fotografia dei fatti?', from:'Yalta, le strade ancora aperte' },
+        { q:'Norimberga fu giustizia o giustizia dei vincitori?', from:'Un secondo tentativo' }
+      ] },
+
+    { id:'cap4', kind:'chapter', tag:'Capitolo 4', title:'La guerra fredda', color:'var(--c4)',
+      clusters:[
+        { name:'Le origini', progression:true, statements:[
+          ['1945-47: da alleati a nemici in meno di due anni.','Inevitabile fin dal principio, o esito di scelte precise?'],
+          ['1949: due Germanie, due modelli, un solo continente diviso.'] ] },
+        { name:'L\'equilibrio del terrore', progression:false, statements:[
+          ['La bomba non si usa più: si esibisce.','La deterrenza tiene il mondo sospeso a un equilibrio di paura.'],
+          ['Uno scontro di idee, o di geografia?','Mackinder e Spykman contro il marxismo-leninismo: due chiavi per la stessa rivalità.'] ] },
+        { name:'Crisi e distensione', progression:true, statements:[
+          ['1962: tredici giorni sull\'orlo del baratro a Cuba.','Il mondo intero trattiene il fiato per un equilibrio che nessuno controlla del tutto.'],
+          ['Il Terzo Mondo rifiuta di scegliere un campo.','Le guerre per procura si combattono sulle sue periferie, non al centro.'] ] },
+        { name:'Fine della guerra fredda', progression:false, statements:[
+          ['1985-91: Gorbačëv apre la politica prima dell\'economia.','Vinse Reagan, o l\'URSS collassò da sola?'] ] }
+      ],
+      historio:[
+        { q:'La guerra fredda era inevitabile?', from:'Le origini' },
+        { q:'Che cosa fu la guerra fredda: uno scontro di idee o di geografia?', from:'L\'equilibrio del terrore' },
+        { q:'Chi vinse la guerra fredda, e perché finì?', from:'Fine della guerra fredda' }
+      ] },
+
+    { id:'cap5', kind:'chapter', tag:'Capitolo 5', title:'Il momento unipolare', color:'var(--c5)',
+      clusters:[
+        { name:'Un mondo, una potenza', progression:true, statements:[
+          ['1991: crolla un impero senza che nessuno tracci una nuova mappa.','Nessuna conferenza, nessuna nuova Yalta.'],
+          ['La NATO si allarga verso Est.','Risposta legittima alla sicurezza di chi esce dal comunismo, o roll-back ai confini di Mosca?'] ] },
+        { name:'La guerra torna in Europa', progression:false, statements:[
+          ['Bosnia, 1992-95: la parola «pulizia etnica» torna nel cuore dell\'Europa.','Lotta per le risorse mascherata da guerra di religione, o scontro di civiltà?'],
+          ['Restare fermi in nome della sovranità è complicità, o intervenire è sempre un alibi?'] ] },
+        { name:'L\'11 settembre', progression:false, statements:[
+          ['11 settembre 2001: il momento unipolare finisce nel momento in cui sembrava più solido.','Una superpotenza sola non basta a garantire un ordine.'] ] }
+      ],
+      historio:[
+        { q:'Un nuovo ordine senza una nuova Yalta?', from:'Un mondo, una potenza' },
+        { q:'Fine della storia o scontro di civiltà?', from:'La guerra torna in Europa' },
+        { q:'L\'ingerenza umanitaria: dovere o alibi?', from:'La guerra torna in Europa' }
+      ] },
+
+    { id:'cap6', kind:'chapter', tag:'Capitolo 6', title:'La Cina, da Mao a oggi', color:'var(--c6)',
+      clusters:[
+        { name:'1949, l\'anomalia', progression:false, statements:[
+          ['1949: la rivoluzione comunista vince in un paese contadino, non industriale.','Un\'anomalia rispetto al modello sovietico fin dall\'origine.'] ] },
+        { name:'La svolta di Deng', progression:false, statements:[
+          ['Deng smantella le comuni popolari, reintroduce mercato e profitto.','Ha smesso di essere comunista, o il mercato è solo uno strumento del Partito?'] ] },
+        { name:'Il bivio del 1989', progression:false, statements:[
+          ['1989: Gorbačëv apre, Deng reprime.','Nello stesso anno, due regimi comunisti, due destini opposti.'] ] },
+        { name:'La sfida all\'ordine', progression:false, statements:[
+          ['Due economie così intrecciate — la «Chimerica» — che uno scontro diretto sarebbe rovinoso per entrambe.','È già una nuova guerra fredda, o le vecchie categorie non bastano più a leggerla?'] ] }
+      ],
+      historio:[
+        { q:'Con Deng, la Cina ha rotto con Mao o gli è rimasta fedele?', from:'La svolta di Deng' },
+        { q:'Perché la Cina non crollò come l\'Unione Sovietica?', from:'Il bivio del 1989' },
+        { q:'Il confronto tra Stati Uniti e Cina è una nuova guerra fredda?', from:'La sfida all\'ordine' }
+      ] },
+
+    { id:'chiusura', kind:'frame', tag:'Chiusura', title:'Un testo ancora aperto', color:'var(--cornice)',
+      items:[
+        { bullets:['Un ordine internazionale non è un equilibrio che si trova: è un testo che qualcuno scrive, dopo aver vinto qualcosa.','Il percorso lungo il secolo lo ha confermato a ogni tappa.']},
+        { bullets:['1945: un ordine dai due volti, uno concordato e uno imposto.','1991: un ordine scritto da un solo vincitore — e per questo, in un certo senso, non scritto affatto.']},
+        { bullets:['A Yalta le strade erano più di una. Nel 1989 la stessa crisi produsse a Mosca il crollo e a Pechino la sopravvivenza.','Niente di tutto questo era scritto in anticipo.']},
+        { bullets:['Gli esclusi non sono mai scomparsi: popoli coloniali, periferie della guerra fredda, civili delle pulizie etniche.','La domanda resta la stessa: chi comanda, e con quale diritto?']},
+        { bullets:['L\'ordine di oggi è ancora in redazione.','Non sappiamo chi terrà la penna.']}
+      ] }
+  ];
+
+  var ALIGN = ['left','center','right','left','center','right','left','center'];
+  var open = {};
+  DATA.forEach(function(n){ open[n.id] = false; });
+
+  var cascade = document.getElementById('cascade');
+  var connectorsSvg = document.getElementById('connectors');
+
+  function bulletList(bullets){
+    var html = '<ul class="bullets">';
+    bullets.forEach(function(b){ html += '<li>'+b+'</li>'; });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildFramePanel(node){
+    var html = '<ul class="frame-list">';
+    node.items.forEach(function(it){
+      html += '<li>' + bulletList(it.bullets) + '</li>';
+    });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildChapterPanel(node){
+    var html = '';
+    node.clusters.forEach(function(cl){
+      html += '<div class="cluster"><div class="cluster-name">'+cl.name+'</div><div class="stmt-chain">';
+      cl.statements.forEach(function(bullets, i){
+        html += '<div class="stmt-block">'+bulletList(bullets)+'</div>';
+        if(cl.progression && i < cl.statements.length - 1){
+          html += '<div class="stmt-arrow">↓</div>';
+        }
+      });
+      html += '</div></div>';
+    });
+    if(node.historio && node.historio.length){
+      html += '<div class="histo-row">';
+      node.historio.forEach(function(h){
+        html += '<div class="histo-item"><span class="htag">Nodo storiografico · da: <b>'+h.from+'</b></span>'+h.q+'</div>';
+      });
+      html += '</div>';
+    }
+    return html;
+  }
+
+  function render(){
+    var rows = cascade.querySelectorAll('.row, .panel');
+    rows.forEach(function(el){ el.remove(); });
+
+    DATA.forEach(function(node, idx){
+      var row = document.createElement('div');
+      row.className = 'row align-' + ALIGN[idx];
+
+      var btn = document.createElement('button');
+      btn.className = 'node' + (node.kind === 'frame' ? ' frame' : '');
+      btn.style.setProperty('--n-c', node.color);
+      btn.type = 'button';
+      btn.setAttribute('data-node-id', node.id);
+      btn.setAttribute('aria-expanded', String(open[node.id]));
+      btn.innerHTML = '<span class="n-tag">'+node.tag+'</span><span class="n-title">'+node.title+'</span><span class="n-chevron">▸</span>';
+      btn.addEventListener('click', function(){ open[node.id] = !open[node.id]; render(); });
+      row.appendChild(btn);
+      cascade.appendChild(row);
+
+      var panel = document.createElement('div');
+      panel.className = 'panel' + (open[node.id] ? ' open' : '');
+      var inner = document.createElement('div');
+      inner.className = 'panel-inner';
+      inner.style.setProperty('--n-c', node.color);
+      inner.innerHTML = node.kind === 'frame' ? buildFramePanel(node) : buildChapterPanel(node);
+      panel.appendChild(inner);
+      cascade.appendChild(panel);
+    });
+
+    requestAnimationFrame(drawConnectors);
+  }
+
+  function drawConnectors(){
+    var anyOpen = Object.keys(open).some(function(k){ return open[k]; });
+    connectorsSvg.style.display = anyOpen ? 'none' : '';
+    if(anyOpen) return;
+
+    var cRect = cascade.getBoundingClientRect();
+    var nodes = cascade.querySelectorAll('.node');
+    connectorsSvg.setAttribute('width', cRect.width);
+    connectorsSvg.setAttribute('height', cascade.scrollHeight);
+    connectorsSvg.setAttribute('viewBox', '0 0 ' + cRect.width + ' ' + cascade.scrollHeight);
+
+    var points = [];
+    nodes.forEach(function(n){
+      var r = n.getBoundingClientRect();
+      points.push({
+        cx: r.left - cRect.left + r.width / 2,
+        top: r.top - cRect.top,
+        bottom: r.top - cRect.top + r.height
+      });
+    });
+
+    var paths = '';
+    for(var i = 0; i < points.length - 1; i++){
+      var a = points[i], b = points[i+1];
+      var midY = (a.bottom + b.top) / 2;
+      var d = 'M ' + a.cx + ' ' + a.bottom +
+              ' C ' + a.cx + ' ' + midY + ', ' + b.cx + ' ' + midY + ', ' + b.cx + ' ' + b.top;
+      paths += '<path d="' + d + '"></path>';
+    }
+    connectorsSvg.innerHTML = paths;
+  }
+
+  window.addEventListener('resize', function(){ requestAnimationFrame(drawConnectors); });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = true; });
+    render();
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = false; });
+    render();
+  });
+
+  render();
+
+})();
+</script>
+</body>
+</html>

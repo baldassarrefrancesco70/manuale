@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simula il Consiglio di Sicurezza</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --testo:#3a3530;
+    --favore:#6f8f5c;
+    --favore-bg:#e9eee3;
+    --contrario:#a1473a;
+    --contrario-bg:#f5e6e3;
+    --astensione:#9c9484;
+    --astensione-bg:#ece9e2;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--grigio);
+    color:var(--testo);
+    width:100%; min-height:100%;
+  }
+  .wrap{ max-width:900px; margin:0 auto; padding:26px 24px 36px; }
+  header{ text-align:center; margin-bottom:12px; }
+  h1{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:1.3rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--marrone-scuro); margin:0 0 6px;
+  }
+  .sottotitolo{
+    font-family:Georgia, serif; font-style:italic; font-size:0.88rem;
+    color:#5a5248; margin:0;
+  }
+  .istruzioni{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.75rem; text-align:center; color:#6b6255;
+    margin:10px 0 18px; line-height:1.5;
+  }
+
+  .risoluzione-box{
+    max-width:640px;
+    margin:0 auto 20px;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:14px 20px;
+    text-align:center;
+  }
+  .risoluzione-etichetta{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.66rem; text-transform:uppercase; letter-spacing:0.05em;
+    color:#8a8175; display:block; margin-bottom:4px;
+  }
+  .risoluzione-testo{
+    font-family:Georgia, serif; font-style:italic;
+    font-size:0.86rem; line-height:1.5; margin:0; color:var(--testo);
+  }
+
+  .legenda-voto{
+    display:flex; justify-content:center; gap:18px; flex-wrap:wrap;
+    margin-bottom:16px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem; color:#6b6255;
+  }
+  .legenda-voto .voce{ display:flex; align-items:center; gap:5px; }
+  .swatch{ width:12px; height:12px; border-radius:3px; display:inline-block; border:1px solid var(--marrone); }
+
+  .sezione-titolo{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em;
+    color:#8a8175; text-align:center; margin:0 0 8px;
+  }
+
+  .membri-permanenti{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:8px;
+    margin-bottom:20px;
+  }
+  .membri-rotazione{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:8px;
+    margin-bottom:22px;
+  }
+  .membro{
+    background:#fffdfa;
+    border:2px solid var(--marrone);
+    border-radius:8px;
+    padding:10px 6px;
+    text-align:center;
+    cursor:pointer;
+    transition:background 0.25s, border-color 0.25s;
+    user-select:none;
+  }
+  .membro.permanente{ border-width:2.5px; }
+  .membro-nome{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.72rem;
+    color:var(--marrone-scuro);
+    line-height:1.25;
+    margin-bottom:3px;
+  }
+  .membro-tag{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.56rem; color:#8a8175;
+    text-transform:uppercase; letter-spacing:0.03em;
+    margin-bottom:5px;
+  }
+  .membro-stato{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.62rem; font-weight:600;
+    color:#8a8175;
+  }
+  .membro.favore{ background:var(--favore-bg); border-color:var(--favore); }
+  .membro.favore .membro-stato{ color:var(--favore); }
+  .membro.contrario{ background:var(--contrario-bg); border-color:var(--contrario); }
+  .membro.contrario .membro-stato{ color:var(--contrario); }
+  .membro.astensione{ background:var(--astensione-bg); border-color:var(--astensione); }
+  .membro.astensione .membro-stato{ color:var(--astensione); }
+
+  .pannello-esito{
+    max-width:640px;
+    margin:0 auto 20px;
+    background:#fffdfa;
+    border:1.5px solid var(--marrone);
+    border-radius:10px;
+    padding:16px 22px;
+    text-align:center;
+  }
+  .conteggio{
+    display:flex; justify-content:center; gap:22px;
+    margin-bottom:12px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.78rem; color:var(--testo);
+  }
+  .conteggio b{ font-size:1rem; color:var(--marrone-scuro); }
+  .esito{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight:600; font-size:0.92rem;
+    padding:10px 14px;
+    border-radius:8px;
+  }
+  .esito.approvata{ background:var(--favore-bg); color:var(--favore); }
+  .esito.bloccata{ background:var(--contrario-bg); color:var(--contrario); }
+  .esito.insufficiente{ background:var(--astensione-bg); color:#6b6255; }
+
+  .controlli{
+    display:flex; justify-content:center; margin-bottom:20px;
+  }
+  .btn-reset{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size:0.76rem; font-weight:600;
+    background:transparent; border:1.5px solid var(--marrone);
+    color:var(--marrone-scuro);
+    padding:8px 18px; border-radius:18px; cursor:pointer;
+    transition:background 0.2s, color 0.2s;
+  }
+  .btn-reset:hover{ background:var(--marrone); color:#fff; }
+
+  .idea-guida{
+    background:#fffdfa;
+    border-left:5px solid var(--marrone);
+    border-radius:6px;
+    padding:14px 18px;
+    font-family:Georgia, serif;
+    font-size:0.84rem; line-height:1.6; color:var(--testo);
+  }
+  .idea-guida strong{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color:var(--marrone-scuro);
+  }
+  @media (max-width:620px){
+    .membri-permanenti, .membri-rotazione{ grid-template-columns:repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Simula il Consiglio di Sicurezza</h1>
+    <p class="sottotitolo">La logica del veto</p>
+  </header>
+
+  <p class="istruzioni">
+    Clicca su ciascun membro per far cambiare il suo voto (favorevole → contrario → astenuto → favorevole). Prova a far approvare la risoluzione.
+  </p>
+
+  <div class="risoluzione-box">
+    <span class="risoluzione-etichetta">Risoluzione in votazione</span>
+    <p class="risoluzione-testo">Condannare un atto di aggressione armata e autorizzare sanzioni economiche contro lo Stato responsabile.</p>
+  </div>
+
+  <div class="legenda-voto">
+    <span class="voce"><span class="swatch" style="background:var(--favore-bg); border-color:var(--favore);"></span>favorevole</span>
+    <span class="voce"><span class="swatch" style="background:var(--contrario-bg); border-color:var(--contrario);"></span>contrario</span>
+    <span class="voce"><span class="swatch" style="background:var(--astensione-bg); border-color:var(--astensione);"></span>astenuto</span>
+  </div>
+
+  <p class="sezione-titolo">I 5 membri permanenti (diritto di veto)</p>
+  <div class="membri-permanenti" id="permanenti"></div>
+
+  <p class="sezione-titolo">I 10 membri a rotazione (eletti per due anni)</p>
+  <div class="membri-rotazione" id="rotazione"></div>
+
+  <div class="pannello-esito">
+    <div class="conteggio">
+      <span>Favorevoli: <b id="numFavore">0</b>/15</span>
+      <span>Contrari: <b id="numContrario">0</b></span>
+      <span>Astenuti: <b id="numAstensione">0</b></span>
+    </div>
+    <div class="esito insufficiente" id="esito">Nessun voto ancora espresso.</div>
+  </div>
+
+  <div class="controlli">
+    <button class="btn-reset" id="btnReset">Azzera tutti i voti</button>
+  </div>
+
+  <div class="idea-guida">
+    <strong>Idea-guida.</strong> Le grandi potenze che fondarono l'ONU si riservarono, con il veto, il diritto di sottrarsi alle regole comuni ogni volta che lo avessero ritenuto necessario: qualunque maggioranza si formi fra i quindici membri, basta un solo permanente contrario perché la risoluzione cada.
+  </div>
+</div>
+
+<script>
+(function(){
+  var permanenti = [
+    {nome:"Stati Uniti", permanente:true},
+    {nome:"Regno Unito", permanente:true},
+    {nome:"Francia", permanente:true},
+    {nome:"Russia", permanente:true},
+    {nome:"Cina", permanente:true}
+  ];
+  var rotazione = [];
+  for(var i=1;i<=10;i++){
+    rotazione.push({nome:"Seggio non permanente " + i, permanente:false});
+  }
+
+  var stati = ['nessuno','favore','contrario','astensione'];
+
+  function creaMembro(m){
+    var div = document.createElement('div');
+    div.className = 'membro' + (m.permanente ? ' permanente' : '');
+    div.setAttribute('data-stato','nessuno');
+    div.innerHTML = '<div class="membro-nome">' + m.nome + '</div>' +
+      '<div class="membro-tag">' + (m.permanente ? 'permanente · veto' : 'a rotazione') + '</div>' +
+      '<div class="membro-stato">non ancora votato</div>';
+    div.addEventListener('click', function(){
+      var attuale = div.getAttribute('data-stato');
+      var idx = stati.indexOf(attuale);
+      var prossimo = stati[(idx + 1) % stati.length];
+      if(prossimo === 'nessuno'){ prossimo = 'favore'; }
+      div.setAttribute('data-stato', prossimo);
+      div.classList.remove('favore','contrario','astensione');
+      var etichette = {favore:'favorevole', contrario:'contrario', astensione:'astenuto'};
+      if(prossimo !== 'nessuno'){
+        div.classList.add(prossimo);
+        div.querySelector('.membro-stato').textContent = etichette[prossimo];
+      }
+      aggiornaEsito();
+    });
+    return div;
+  }
+
+  var contPermanenti = document.getElementById('permanenti');
+  var contRotazione = document.getElementById('rotazione');
+  var tuttiMembri = [];
+
+  permanenti.forEach(function(m){
+    var el = creaMembro(m);
+    contPermanenti.appendChild(el);
+    tuttiMembri.push({el:el, permanente:true});
+  });
+  rotazione.forEach(function(m){
+    var el = creaMembro(m);
+    contRotazione.appendChild(el);
+    tuttiMembri.push({el:el, permanente:false});
+  });
+
+  function aggiornaEsito(){
+    var favore = 0, contrario = 0, astensione = 0, vetoDa = [];
+    tuttiMembri.forEach(function(m){
+      var stato = m.el.getAttribute('data-stato');
+      if(stato === 'favore'){ favore++; }
+      if(stato === 'contrario'){
+        contrario++;
+        if(m.permanente){ vetoDa.push(m.el.querySelector('.membro-nome').textContent); }
+      }
+      if(stato === 'astensione'){ astensione++; }
+    });
+
+    document.getElementById('numFavore').textContent = favore;
+    document.getElementById('numContrario').textContent = contrario;
+    document.getElementById('numAstensione').textContent = astensione;
+
+    var esitoEl = document.getElementById('esito');
+    esitoEl.classList.remove('approvata','bloccata','insufficiente');
+
+    if(vetoDa.length > 0){
+      esitoEl.classList.add('bloccata');
+      esitoEl.textContent = 'Risoluzione bloccata dal veto di: ' + vetoDa.join(', ') + '.';
+    } else if(favore >= 9){
+      esitoEl.classList.add('approvata');
+      esitoEl.textContent = 'Risoluzione approvata (' + favore + '/15 favorevoli, nessun veto).';
+    } else {
+      esitoEl.classList.add('insufficiente');
+      esitoEl.textContent = 'Voti favorevoli insufficienti: servono almeno 9 su 15 (attuali: ' + favore + ').';
+    }
+  }
+
+  document.getElementById('btnReset').addEventListener('click', function(){
+    tuttiMembri.forEach(function(m){
+      m.el.setAttribute('data-stato','nessuno');
+      m.el.classList.remove('favore','contrario','astensione');
+      m.el.querySelector('.membro-stato').textContent = 'non ancora votato';
+    });
+    aggiornaEsito();
+  });
+
+  aggiornaEsito();
+})();
+</script>
+</body>
+</html>
