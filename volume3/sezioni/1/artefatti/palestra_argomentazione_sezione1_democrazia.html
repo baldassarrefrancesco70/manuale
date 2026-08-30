@@ -1,553 +1,817 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Palestra di argomentazione — Come muore una democrazia</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione</title>
 <style>
   :root{
-    --bg:#F5F0E8;
-    --card:#fffdfa;
-    --accent:#8B7355;
-    --sostiene:#5b7a8f;
-    --confuta:#9c5b45;
-    --nondecide:#7a8a5c;
-    --text:#2b2723;
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;}
-  h1,h2,h3,.ui,button,.chapter-title,.node-item,.badge,.ctitle,.calib-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
-  .layout{display:flex;min-height:100vh;max-width:1400px;margin:0 auto;}
-  .sidebar{width:290px;flex:0 0 290px;background:#efe7d8;border-right:1px solid var(--accent);padding:18px 14px;overflow-y:auto;max-height:100vh;position:sticky;top:0;}
-  .sidebar h1{font-size:1.05rem;line-height:1.3;margin:0 0 4px;}
-  .sidebar .intro{font-size:.75rem;color:#6b6355;line-height:1.5;margin-bottom:16px;}
-  .chapter-block{margin-bottom:6px;}
-  .chapter-title{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:#6b6355;padding:8px 6px 4px;font-weight:600;}
-  .node-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:.86rem;line-height:1.35;color:var(--text);margin-bottom:2px;}
-  .node-item:hover{background:#e2d8c3;}
-  .node-item.active{background:var(--accent);color:#fff;}
-  .node-dotstatus{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:#d8cfba;}
-  .node-item.active .node-dotstatus{background:#fff;}
-  .node-dotstatus.done{background:#6b8f5b;}
-  .node-item.active .node-dotstatus.done{background:#cfe8c2;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
 
-  .main{flex:1;padding:26px 34px 60px;overflow-y:auto;}
-  .main-inner{max-width:820px;}
-  .crumbs{font-size:.75rem;color:#8a8271;margin-bottom:8px;font-family:'Gill Sans',sans-serif;}
-  .tesi-box{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:18px 22px;margin-bottom:22px;}
-  .tesi-box .tlabel{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#8a8271;font-family:'Gill Sans',sans-serif;margin-bottom:6px;}
-  .tesi-box h2{font-size:1.15rem;margin:0;line-height:1.4;font-weight:600;}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
 
-  .sort-instructions{font-size:.85rem;color:#5a554e;margin-bottom:16px;line-height:1.5;}
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
 
-  .pool{margin-bottom:22px;}
-  .pool-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:#8a8271;margin-bottom:8px;}
-  .statement-card{background:var(--card);border:1px solid #d9cfb8;border-left:4px solid #d9cfb8;border-radius:6px;padding:12px 14px;margin-bottom:9px;}
-  .statement-card p{margin:0 0 9px;font-size:.92rem;line-height:1.5;}
-  .assign-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-  .assign-btn{border:1.3px solid #c9bfa6;background:#fff;border-radius:14px;padding:4px 11px;font-size:.72rem;cursor:pointer;color:#5a554e;transition:background .15s,color .15s,border-color .15s;}
-  .assign-btn:hover{background:#f2ece0;}
-  .assign-btn.active-sostiene{background:var(--sostiene);border-color:var(--sostiene);color:#fff;}
-  .assign-btn.active-confuta{background:var(--confuta);border-color:var(--confuta);color:#fff;}
-  .assign-btn.active-nondecide{background:var(--nondecide);border-color:var(--nondecide);color:#fff;}
-  .compare-tag{font-size:.68rem;font-family:'Gill Sans',sans-serif;color:#8a8271;margin-left:4px;}
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
 
-  .columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:22px;}
-  .col{border-radius:8px;padding:12px;min-height:70px;}
-  .col.sostiene{background:#eaf0f3;border:1px solid var(--sostiene);}
-  .col.confuta{background:#f4e9e5;border:1px solid var(--confuta);}
-  .col.nondecide{background:#eef1e7;border:1px solid var(--nondecide);}
-  .col-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:8px;}
-  .col.sostiene .col-title{color:var(--sostiene);}
-  .col.confuta .col-title{color:var(--confuta);}
-  .col.nondecide .col-title{color:var(--nondecide);}
-  .col .statement-card{border-left-width:4px;}
-  .col.sostiene .statement-card{border-left-color:var(--sostiene);}
-  .col.confuta .statement-card{border-left-color:var(--confuta);}
-  .col.nondecide .statement-card{border-left-color:var(--nondecide);}
-  .col-empty{font-size:.76rem;color:#a89e88;font-style:italic;}
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
 
-  .compare-toggle{display:inline-block;margin-bottom:18px;border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:6px;padding:7px 13px;font-size:.8rem;cursor:pointer;font-family:'Gill Sans',sans-serif;}
-  .compare-toggle:hover{background:#f6f1e8;}
-  .compare-toggle.on{background:var(--accent);color:#fff;}
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
 
-  .calib-section{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:18px 22px;margin-top:8px;}
-  .calib-section.locked{opacity:.5;}
-  .calib-title{font-size:.95rem;font-weight:600;margin:0 0 6px;}
-  .calib-note{font-size:.78rem;color:#8a8271;margin-bottom:14px;line-height:1.5;}
-  .calib-lock-msg{font-size:.85rem;color:#8a8271;font-style:italic;}
-  .calib-option{display:flex;gap:10px;align-items:flex-start;border:1.3px solid #d9cfb8;border-radius:8px;padding:12px 14px;margin-bottom:10px;cursor:pointer;background:#fff;transition:background .15s,border-color .15s;}
-  .calib-option:hover{background:#f8f4ea;}
-  .calib-option.selected{border-color:var(--accent);background:#f2e9d8;}
-  .calib-radio{width:16px;height:16px;border-radius:50%;border:1.5px solid #b8ac90;flex:0 0 auto;margin-top:2px;position:relative;}
-  .calib-option.selected .calib-radio{border-color:var(--accent);}
-  .calib-option.selected .calib-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--accent);}
-  .calib-option p{margin:0;font-size:.9rem;line-height:1.5;}
-  .calib-done{margin-top:10px;font-size:.8rem;color:#5f7a4f;font-style:italic;}
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
 
-  .reset-btn{margin-top:16px;border:none;background:none;color:#a89e88;font-size:.76rem;cursor:pointer;text-decoration:underline;font-family:'Gill Sans',sans-serif;}
-  .reset-btn:hover{color:var(--accent);}
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
 
-  @media (max-width:820px){
-    .layout{flex-direction:column;}
-    .sidebar{width:100%;flex:none;position:relative;max-height:none;border-right:none;border-bottom:1px solid var(--accent);}
-    .columns{grid-template-columns:1fr;}
-  }
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
 </style>
 </head>
 <body>
-<div class="layout">
-  <div class="sidebar">
-    <h1>Palestra di argomentazione</h1>
-    <p class="intro">«Come muore una democrazia». Per ogni nodo storiografico: distribuisci le affermazioni fra i tre contenitori, poi chiudi con la calibratura della tesi. Nessun punteggio: l'esercizio serve a mettere alla prova il proprio giudizio, non a ottenere una risposta esatta.</p>
-    <div id="indexList"></div>
+  <div class="eyebrow">Come muore una democrazia &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Diciassette nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
   </div>
-  <div class="main">
-    <div class="main-inner" id="mainInner"></div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
   </div>
-</div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai capitoli della sezione: nessuna &egrave; inventata.</p>
 
 <script>
 (function(){
-  const DATA = [
-    { chapter: "Il problema del populismo", nodes: [
-      { q: "Il populismo è una categoria d'analisi o un'etichetta polemica?",
-        tesi: "«Populismo» è un termine descrittivo neutro, utile a identificare un fenomeno politico reale e riconoscibile.",
-        statements: [
-          {t:"Storici e politologi lo usano per accomunare movimenti lontani nel tempo e nello spazio (narodniki, People's Party, movimenti del Novecento) che condividono tratti riconoscibili: appello diretto al popolo contro le élite, sfiducia nelle mediazioni istituzionali.", c:"sostiene"},
-          {t:"Il termine permette confronti comparativi altrimenti impossibili fra fenomeni politici distanti.", c:"sostiene"},
-          {t:"Nell'uso politico corrente è quasi sempre un'accusa pronunciata in terza persona: nessun movimento si definisce populista da sé.", c:"confuta"},
-          {t:"Classificare una richiesta come «populista» è spesso un modo per non rispondere nel merito, non per analizzarla.", c:"confuta"},
-          {t:"Il termine nasce nell'Ottocento come autodefinizione di due movimenti specifici (narodniki russi, People's Party americano).", c:"nondecide"},
-          {t:"Il capitolo introduce, insieme al populismo, il «metodo del detective» come approccio da applicare a tutta la sezione.", c:"nondecide"}
-        ],
-        calibratura: [
-          "«Populismo» è un termine neutro e analiticamente utile.",
-          "È un termine utile solo nell'uso storiografico rigoroso, non nel dibattito pubblico corrente.",
-          "«Populismo» è sempre e comunque un'etichetta polemica, mai una categoria neutra."
-        ]
-      }
-    ]},
-    { chapter: "La Prima guerra mondiale", nodes: [
-      { q: "La guerra fu voluta o fu una catastrofe involontaria?",
-        tesi: "Nessuna delle grandi potenze voleva, nel luglio 1914, la guerra che ne seguì: fu il risultato di un meccanismo che sfuggì al controllo di tutti.",
-        statements: [
-          {t:"Le cinque cause di sfondo (nazionalismo, alleanze, corsa agli armamenti, imperialismo, sistema delle mobilitazioni) crearono una situazione esplosiva senza che nessun governo la progettasse a tavolino.", c:"sostiene"},
-          {t:"Una volta avviate, le mobilitazioni militari seguivano tempistiche tecniche che i governi non riuscirono più a governare politicamente.", c:"sostiene"},
-          {t:"Il capitolo insiste che ogni tappa della crisi di luglio fu una scelta con un'alternativa reale, non un ingranaggio che scattava da solo.", c:"confuta"},
-          {t:"La Germania concesse all'Austria-Ungheria la «cambiale in bianco» consapevole del rischio di un conflitto generale.", c:"confuta"},
-          {t:"L'attentato di Sarajevo, 28 giugno 1914, fu il detonatore immediato della crisi.", c:"nondecide"},
-          {t:"La guerra durò quattro anni, non le poche settimane previste da tutti gli stati maggiori.", c:"nondecide"}
-        ],
-        calibratura: [
-          "La guerra fu una catastrofe involontaria.",
-          "Fu involontaria nell'esito complessivo (durata, scala), ma ogni singola scelta lungo la strada fu deliberata.",
-          "La guerra fu voluta, quantomeno da alcuni degli attori coinvolti, che scelsero consapevolmente di rischiarla."
-        ]
-      },
-      { q: "Le radiose giornate: volontà popolare o colpo di mano?",
-        tesi: "L'ingresso dell'Italia in guerra nel maggio 1915 rifletté una volontà popolare diffusa, mobilitata dalle piazze interventiste.",
-        statements: [
-          {t:"Le piazze di Roma, Milano e altre città furono realmente affollate da manifestazioni interventiste nei giorni di maggio 1915.", c:"sostiene"},
-          {t:"Salandra e Sonnino avevano già firmato il Patto di Londra il 26 aprile 1915, prima delle manifestazioni di piazza.", c:"nondecide"},
-          {t:"Le stesse giornate videro anche intimidazione fisica dei deputati neutralisti, che componevano la maggioranza parlamentare.", c:"confuta"},
-          {t:"Il Parlamento eletto nel 1913 era in larga maggioranza neutralista o giolittiano: l'intervento fu deciso nonostante quella maggioranza, non grazie a essa.", c:"confuta"},
-          {t:"L'Italia dichiarò guerra all'Austria-Ungheria il 24 maggio 1915.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Le radiose giornate espressero la volontà popolare italiana.",
-          "Espressero la volontà di una minoranza attiva e rumorosa, non della maggioranza silenziosa del paese.",
-          "Le radiose giornate furono un colpo di mano orchestrato contro una maggioranza parlamentare neutralista."
-        ]
-      },
-      { q: "Versailles: pace cartaginese o pace ragionevole mal gestita?",
-        tesi: "Il trattato di Versailles impose alla Germania condizioni economicamente insostenibili, la cosiddetta «pace cartaginese» denunciata da Keynes.",
-        statements: [
-          {t:"Keynes, presente alla Conferenza di Parigi, giudicò le riparazioni economicamente rovinose e politicamente pericolose già nel 1919.", c:"sostiene"},
-          {t:"La propaganda revisionista tedesca sfruttò sistematicamente il giudizio di severità del trattato per legittimare pretese ben più ampie.", c:"sostiene"},
-          {t:"Storici più recenti (MacMillan) mostrano che le riparazioni furono in buona parte rinegoziate già negli anni Venti e non erano, per gli standard dell'epoca, eccezionali.", c:"confuta"},
-          {t:"Il vero problema fu l'applicazione incoerente del trattato, non la sua severità sulla carta.", c:"confuta"},
-          {t:"Il trattato fu firmato il 28 giugno 1919, esattamente cinque anni dopo l'attentato di Sarajevo.", c:"nondecide"},
-          {t:"La Germania non fu ammessa a partecipare ai negoziati che stabilirono le proprie condizioni di pace.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Versailles fu una pace cartaginese, economicamente punitiva.",
-          "Fu punitiva nella percezione soggettiva tedesca, anche se non nei dati economici oggettivi.",
-          "Versailles fu una pace ragionevole per gli standard dell'epoca, resa disastrosa solo dalla sua applicazione incoerente."
-        ]
-      }
-    ]},
-    { chapter: "La rivoluzione russa e la società sovietica", nodes: [
-      { q: "La Rivoluzione d'Ottobre fu un colpo di Stato o una rivoluzione popolare?",
-        tesi: "La presa del potere bolscevica del 7 novembre 1917 fu un atto di forza pianificato da un gruppo ristretto, non l'espressione di un movimento di massa.",
-        statements: [
-          {t:"L'assalto al Palazzo d'Inverno fu pianificato militarmente da Trockij e incontrò pochissima resistenza spontanea.", c:"sostiene"},
-          {t:"L'Assemblea Costituente, eletta a suffragio universale nel gennaio 1918, fu sciolta con la forza non appena il suo verdetto si rivelò sfavorevole ai bolscevichi.", c:"sostiene"},
-          {t:"I bolscevichi avevano già conquistato, nelle settimane precedenti, la maggioranza nei soviet di Pietrogrado e Mosca.", c:"confuta"},
-          {t:"I primi decreti del nuovo potere (pace, terra) risposero a domande già diffuse e reali fra le masse.", c:"confuta"},
-          {t:"Alle elezioni dell'Assemblea Costituente, i socialrivoluzionari ottennero oltre 400 seggi contro i 175 dei bolscevichi.", c:"nondecide"},
-          {t:"La rivoluzione di Febbraio, otto mesi prima, era stata invece un'insurrezione spontanea senza guida di partito.", c:"nondecide"}
-        ],
-        calibratura: [
-          "L'Ottobre fu un colpo di Stato di un gruppo organizzato.",
-          "Fu un colpo di Stato reso possibile da un consenso popolare reale, non contro di esso.",
-          "L'Ottobre fu una rivoluzione popolare che si diede, in corsa, una guida organizzata."
-        ]
-      },
-      { q: "Lo stalinismo fu uno sviluppo coerente del leninismo o un suo tradimento?",
-        tesi: "Il terrore staliniano degli anni Trenta era già scritto nelle premesse organizzative poste da Lenin durante la guerra civile.",
-        statements: [
-          {t:"Polizia politica, tribunali speciali, messa fuori legge dei partiti d'opposizione e primi campi di lavoro forzato furono introdotti già sotto la guida diretta di Lenin.", c:"sostiene"},
-          {t:"Lo scioglimento dell'Assemblea Costituente nel 1918 anticipa, nella logica, la soppressione di ogni dialettica interna successiva.", c:"sostiene"},
-          {t:"Trockij stesso, in esilio, parlò di «reazione termidoriana»: una frattura reale rispetto al partito di Lenin, che conservava una dialettica interna vivace.", c:"confuta"},
-          {t:"Il terrore di massa degli anni Trenta colpì la stessa vecchia guardia bolscevica che aveva fatto la rivoluzione: una differenza di scala rispetto alla repressione leniniana.", c:"confuta"},
-          {t:"Stalin fu nominato segretario generale del partito nell'aprile 1922, un incarico ritenuto allora puramente amministrativo.", c:"nondecide"},
-          {t:"Il Testamento di Lenin, che ne chiedeva la rimozione, restò segreto ai vertici del partito.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Lo stalinismo fu lo sviluppo coerente delle premesse leniniane.",
-          "Ne fu uno sviluppo possibile ma non l'unico, fra altri esiti compatibili con le stesse premesse.",
-          "Lo stalinismo fu un tradimento e una rottura rispetto al leninismo, non la sua continuazione."
-        ]
-      },
-      { q: "L'Holodomor fu una carestia o uno sterminio deliberato?",
-        tesi: "La carestia ucraina del 1932-33 fu il risultato di un'arma politica usata deliberatamente contro l'Ucraina.",
-        statements: [
-          {t:"Il regime rifiutò ogni soccorso alle popolazioni colpite e proseguì le requisizioni di grano destinato all'esportazione.", c:"sostiene"},
-          {t:"Stalin considerava l'Ucraina «la questione principale» per il rischio di una resistenza contadina e nazionale insieme (lettera a Kaganovič, agosto 1932).", c:"sostiene"},
-          {t:"Cause concomitanti non intenzionali — pianificazione centralizzata rigida, siccità reale, resistenza contadina che aveva già ridotto il patrimonio zootecnico — contribuirono alla crisi.", c:"confuta"},
-          {t:"Chiamare «genocidio» l'Holodomor richiede di dimostrare un'intenzione di eliminare gli ucraini in quanto tali, non solo una spietatezza applicata in modo diseguale.", c:"confuta"},
-          {t:"Il parlamento ucraino ha riconosciuto ufficialmente l'Holodomor come genocidio.", c:"nondecide"},
-          {t:"Le vittime ucraine si stimano fra i quattro e i cinque milioni.", c:"nondecide"}
-        ],
-        calibratura: [
-          "L'Holodomor fu uno sterminio deliberato.",
-          "Fu una spietatezza deliberata verso l'intera popolazione contadina sovietica, non un'intenzione specificamente anti-ucraina.",
-          "L'Holodomor fu una carestia con cause concomitanti, aggravata ma non causata da una scelta politica."
-        ]
-      }
-    ]},
-    { chapter: "La Repubblica di Weimar e l'avvento del nazismo", nodes: [
-      { q: "Weimar cadde per una debolezza strutturale o per un errore di calcolo?",
-        tesi: "La Repubblica di Weimar era condannata fin dall'origine da difetti strutturali della propria Costituzione (proporzionale pura, articolo 48, dualismo dei poteri).",
-        statements: [
-          {t:"La proporzionale pura senza soglia di sbarramento produsse governi che duravano, in media, meno di un anno.", c:"sostiene"},
-          {t:"L'articolo 48 fu usato come governo ordinario per decreto già dal 1930, ben prima di Hitler, abituando la Germania ad aggirare il Parlamento.", c:"sostiene"},
-          {t:"Hitler ottenne la cancelleria per una decisione di calcolo politico di Papen e Hindenburg, convinti di poterlo controllare — un errore di persone, non un automatismo costituzionale.", c:"confuta"},
-          {t:"Altre repubbliche nate dalla stessa guerra (Austria, Cecoslovacchia) non collassarono nello stesso modo né negli stessi tempi, pur condividendo un'origine traumatica.", c:"confuta"},
-          {t:"La Costituzione di Weimar fu, sulla carta, fra le più avanzate d'Europa nel 1919.", c:"nondecide"},
-          {t:"Hitler fu nominato cancelliere il 30 gennaio 1933 per via legale.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Weimar cadde per una debolezza strutturale della propria Costituzione.",
-          "La debolezza strutturale rese possibile, ma non inevitabile, il crollo — servì anche l'errore di calcolo del gennaio 1933.",
-          "Weimar cadde per un errore di calcolo di singoli attori politici, non per un difetto della propria architettura istituzionale."
-        ]
-      }
-    ]},
-    { chapter: "Il fascismo italiano", nodes: [
-      { q: "Il fascismo fu una parentesi o una rivelazione della storia d'Italia?",
-        tesi: "Il fascismo fu una parentesi anomala nella storia italiana, resa possibile da circostanze eccezionali del primo dopoguerra, non un esito coerente con la storia precedente del paese.",
-        statements: [
-          {t:"Il fascismo nacque dal disagio specifico del primo dopoguerra: biennio rosso, disagio dei ceti medi, crisi dello Stato liberale.", c:"sostiene"},
-          {t:"Mussolini guidò la marcia su Roma il 28 ottobre 1922.", c:"nondecide"},
-          {t:"Lo squadrismo agrario e la violenza come metodo si radicano in tensioni sociali (rapporto Stato-società, debolezza delle istituzioni liberali) precedenti alla guerra.", c:"confuta"},
-          {t:"L'impotenza dei governi liberali di fronte alla violenza squadrista rivela una fragilità di lungo periodo del sistema politico italiano, non solo una crisi congiunturale.", c:"confuta"},
-          {t:"Il PNF nacque nel 1921 dalla trasformazione dei Fasci di combattimento.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Il fascismo fu una parentesi anomala.",
-          "Fu una parentesi resa possibile da debolezze reali ma preesistenti dello Stato liberale, non un fulmine a ciel sereno.",
-          "Il fascismo fu la rivelazione di tratti strutturali già presenti nella storia italiana precedente."
-        ]
-      },
-      { q: "Ci fu consenso, o solo coercizione?",
-        tesi: "Il regime fascista si resse principalmente sul consenso reale di larga parte della popolazione italiana, non sulla sola repressione.",
-        statements: [
-          {t:"L'apparato repressivo del regime era numericamente esiguo rispetto alla popolazione: la sola coercizione non basta a spiegarne la lunga durata.", c:"sostiene"},
-          {t:"Il regime seppe costruire consenso attraverso organizzazioni di massa, propaganda e la fabbricazione di un'identità collettiva.", c:"sostiene"},
-          {t:"Quel consenso si formava dentro un sistema in cui l'alternativa era il confino o il carcere, l'informazione controllata, il dissenso vietato.", c:"confuta"},
-          {t:"Un consenso ottenuto sopprimendo ogni voce contraria non è la stessa cosa di un consenso espresso in condizioni di libertà.", c:"confuta"},
-          {t:"Le leggi «fascistissime» del 1925-26 misero fuori legge i partiti d'opposizione.", c:"nondecide"},
-          {t:"Il delitto Matteotti, 1924, provocò una crisi di legittimità che il regime riuscì comunque a superare.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Il fascismo si resse sul consenso reale, non sulla sola coercizione.",
-          "Il consenso fu reale ma va misurato dentro un sistema che aveva già eliminato ogni alternativa possibile.",
-          "Il fascismo si resse essenzialmente sulla coercizione, e il consenso apparente fu un suo prodotto, non una sua causa."
-        ]
-      }
-    ]},
-    { chapter: "Il totalitarismo fascista e nazista a confronto", nodes: [
-      { q: "Il fascismo fu un totalitarismo «a tutti gli effetti» o un totalitarismo «imperfetto»?",
-        tesi: "Il regime fascista italiano raggiunse un grado di totalitarismo pieno, paragonabile a quello nazista.",
-        statements: [
-          {t:"Fascismo e nazismo condividono partito unico, polizia politica, tribunali speciali, propaganda pervasiva, culto del capo, tentativo di forgiare un «uomo nuovo».", c:"sostiene"},
-          {t:"Mussolini non eliminò mai la monarchia: il re restò capo dello Stato e comandante supremo, dando vita a una diarchia che in Germania non aveva equivalenti.", c:"confuta"},
-          {t:"Fu proprio il re, nel luglio 1943, a destituire Mussolini applicando le regole che il regime stesso si era dato — un contropotere reale che in Germania non esisteva.", c:"confuta"},
-          {t:"Il termine «totalitario» nacque come insulto degli antifascisti italiani, poi rivendicato con orgoglio da Mussolini stesso.", c:"nondecide"},
-          {t:"In Germania il potere ruotava attorno al Führerprinzip, senza alcun contrappeso istituzionale residuo.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Il fascismo fu un totalitarismo pieno, non diverso dal nazismo.",
-          "Fu totalitario per la pretesa e per gli strumenti impiegati, ma restò imperfetto per la persistenza di un contropotere reale (la monarchia).",
-          "Il fascismo non fu mai un vero totalitarismo, restò una dittatura autoritaria con ambizioni totalitarie mai realizzate fino in fondo."
-        ]
-      },
-      { q: "Le leggi razziste italiane: imitazione o impianto autonomo?",
-        tesi: "Le leggi razziste italiane del 1938 furono un'imitazione tardiva di Norimberga, imposta per compiacere l'alleato tedesco.",
-        statements: [
-          {t:"Le leggi arrivarono nel 1938, dopo l'Asse Roma-Berlino e dopo che il regime aveva già importato altri elementi di facciata dalla Germania.", c:"sostiene"},
-          {t:"Il razzismo di dominio era già codificato in Africa Orientale Italiana, prima ancora che nascesse l'antisemitismo di Stato in Italia (regio decreto del 19 aprile 1937).", c:"confuta"},
-          {t:"In alcuni ambiti la legislazione italiana fu, per un periodo, più drastica di quella tedesca coeva (espulsione dei docenti ebrei, 5 settembre 1938, precedette misure scolastiche tedesche altrettanto totali).", c:"confuta"},
-          {t:"Il razzismo italiano ebbe un carattere più «politico» che «biologico»: un prodotto interno dell'ideologia fascista, non un calco della teoria ariana tedesca.", c:"confuta"},
-          {t:"Il Manifesto della razza fu pubblicato nel luglio 1938.", c:"nondecide"},
-          {t:"Circa duecentomila ebrei fuggirono dalla Germania fra il 1933 e il 1939.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Le leggi razziste italiane furono un'imitazione tardiva di Norimberga.",
-          "Furono un'imitazione nel tempismo (dopo l'Asse) ma un impianto autonomo nei contenuti e nelle radici (il laboratorio coloniale).",
-          "Le leggi razziste italiane furono un impianto interamente autonomo, indipendente dall'alleanza con la Germania."
-        ]
-      }
-    ]},
-    { chapter: "La strada verso la guerra", nodes: [
-      { q: "La politica estera di Hitler seguiva un piano prestabilito o rispondeva all'opportunità?",
-        tesi: "L'espansionismo tedesco degli anni Trenta seguì un piano già delineato nel Mein Kampf del 1925, eseguito con fedeltà crescente.",
-        statements: [
-          {t:"La distruzione dell'ordine di Versailles, l'unione di tutti i tedeschi, la conquista dello spazio vitale a est furono annunciate nel Mein Kampf e realizzate una dopo l'altra.", c:"sostiene"},
-          {t:"La direzione di marcia (spazio vitale a est, distruzione degli slavi come popoli) restò identica dal primo giorno all'ultimo.", c:"sostiene"},
-          {t:"La rapidità stessa della rimilitarizzazione della Renania fu decisa con margini di incertezza e rischio che un piano davvero prestabilito avrebbe dovuto evitare.", c:"confuta"},
-          {t:"Ogni mossa concreta sfruttò volta per volta le divisioni e la paralisi delle democrazie occidentali, più che seguire un calendario fisso.", c:"confuta"},
-          {t:"Il Mein Kampf fu scritto durante la detenzione di Hitler dopo il fallito putsch di Monaco del 1923.", c:"nondecide"},
-          {t:"Il riarmo tedesco fu dichiarato apertamente nel 1935.", c:"nondecide"}
-        ],
-        calibratura: [
-          "La politica estera di Hitler seguì un piano prestabilito.",
-          "Il progetto ideologico di fondo era fisso, ma il calendario e la sequenza dipesero dall'opportunità.",
-          "Fu interamente opportunistica, senza alcun disegno predeterminato oltre la propaganda retrospettiva."
-        ]
-      },
-      { q: "La guerra d'Etiopia fu l'ultimo colonialismo o la vera premessa della guerra mondiale?",
-        tesi: "La guerra d'Etiopia fu il vero punto di svolta che rese possibile la Seconda guerra mondiale, non un episodio coloniale isolato.",
-        statements: [
-          {t:"Fu la guerra d'Etiopia a spezzare il fronte di Stresa e a isolare l'Italia dalle democrazie occidentali, spingendola verso la Germania.", c:"sostiene"},
-          {t:"La remissività con cui Francia e Gran Bretagna reagirono all'aggressione convinse Hitler che l'Europa democratica non avrebbe opposto resistenze reali.", c:"sostiene"},
-          {t:"Per lungo tempo la storiografia l'ha letta come l'ultimo sussulto tardivo del colonialismo ottocentesco, un episodio a sé.", c:"confuta"},
-          {t:"La rimilitarizzazione della Renania, avvenuta nello stesso periodo, e la successiva Conferenza di Monaco mostrarono la stessa remissività occidentale indipendentemente dall'Etiopia.", c:"confuta"},
-          {t:"L'invasione iniziò nell'ottobre 1935 e Mussolini proclamò l'Impero nel maggio 1936.", c:"nondecide"},
-          {t:"Le sanzioni della Società delle Nazioni non toccavano il petrolio né vincolavano Stati Uniti e Germania.", c:"nondecide"}
-        ],
-        calibratura: [
-          "La guerra d'Etiopia fu la vera premessa della guerra mondiale.",
-          "Fu una prova decisiva ma non l'unica in una catena più lunga di episodi che mostrarono la stessa remissività occidentale.",
-          "Fu l'ultimo episodio del colonialismo ottocentesco, senza un peso causale diretto sulla guerra che seguì."
-        ]
-      },
-      { q: "Il patto Molotov-Ribbentrop fu calcolo cinico o difesa strategica?",
-        tesi: "Il patto Molotov-Ribbentrop dell'agosto 1939 fu una mossa di autodifesa razionale da parte sovietica, non un'alleanza cinica fra aggressori.",
-        statements: [
-          {t:"A Monaco, nel 1938, Francia e Gran Bretagna avevano trattato con Hitler escludendo l'URSS dal tavolo, nonostante Mosca avesse proposto un'alleanza difensiva comune.", c:"sostiene"},
-          {t:"Le trattative militari anglo-franco-sovietiche dell'estate 1939 fallirono per la diffidenza reciproca e il rifiuto di Polonia e Romania di concedere il transito all'Armata Rossa.", c:"sostiene"},
-          {t:"La spartizione della Polonia e delle repubbliche baltiche, prevista nel protocollo segreto, non è un atto di prudenza ma un'occupazione pianificata in anticipo.", c:"confuta"},
-          {t:"L'invasione tedesca della Polonia, resa possibile dal patto, avvenne appena una settimana dopo la firma.", c:"confuta"},
-          {t:"Stalin sostituì il filo-occidentale Litvinov con Molotov il 3 maggio 1939.", c:"nondecide"},
-          {t:"Il patto fu firmato il 23 agosto 1939 da Molotov e Ribbentrop a Mosca.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Il patto fu un calcolo cinico fra aggressori.",
-          "Fu un calcolo cinico nella forma (i protocolli segreti di spartizione), ma con un movente difensivo reale sullo sfondo.",
-          "Fu una mossa interamente difensiva e strategica, senza alcun elemento predatorio."
-        ]
-      }
-    ]},
-    { chapter: "La Repubblica dei partiti e la crisi di Tangentopoli", nodes: [
-      { q: "Tangentopoli fu una rivoluzione giudiziaria o un risanamento necessario?",
-        tesi: "Mani Pulite fu una rivoluzione giudiziaria che superò i propri limiti istituzionali, sostituendo la magistratura al giudizio politico degli elettori.",
-        statements: [
-          {t:"Le inchieste smontarono in pochi mesi un sistema di partiti che aveva governato l'Italia per quasi cinquant'anni, senza passare da un voto popolare.", c:"sostiene"},
-          {t:"Il sistema dei partiti era già in una crisi profonda, aggravata da altri tre cedimenti simultanei (economico, internazionale, criminale con le stragi di mafia).", c:"confuta"},
-          {t:"Il finanziamento illecito dei partiti era una pratica sistemica e diffusa, non un'invenzione dei magistrati.", c:"confuta"},
-          {t:"Le inchieste di Mani Pulite iniziarono il 17 febbraio 1992.", c:"nondecide"},
-          {t:"Le stragi di Capaci e via D'Amelio avvennero nello stesso anno, 1992.", c:"nondecide"}
-        ],
-        calibratura: [
-          "Tangentopoli fu una rivoluzione giudiziaria che superò i propri limiti.",
-          "Fu un intervento giudiziario legittimo su un sistema già in crisi per cause proprie, non la causa principale del crollo.",
-          "Mani Pulite fu semplicemente il risanamento necessario di un sistema di corruzione sistemica, senza eccessi da correggere."
-        ]
-      },
-      { q: "La Seconda Repubblica: rottura reale o continuità sotto altra forma?",
-        tesi: "La cosiddetta «Seconda Repubblica» segna una rottura reale nella storia politica italiana rispetto al sistema dei partiti del dopoguerra.",
-        statements: [
-          {t:"Il sistema politico che governò l'Italia per quasi cinquant'anni si dissolse nel giro di due anni, fra il 1992 e il 1994.", c:"sostiene"},
-          {t:"Nuovi soggetti politici e nuove regole elettorali sostituirono quasi integralmente i partiti storici della Prima Repubblica.", c:"sostiene"},
-          {t:"Nessuna nuova Costituzione fu mai scritta: l'espressione «Seconda Repubblica» dà per acquisita proprio la rottura che dovrebbe dimostrare.", c:"confuta"},
-          {t:"Molte delle logiche di fondo del sistema politico italiano (frammentazione, instabilità di governo) sopravvissero sotto forme diverse.", c:"confuta"},
-          {t:"Le elezioni del 28 marzo 1994 videro l'affermazione di nuovi soggetti politici.", c:"nondecide"},
-          {t:"La Costituzione del 1948 non fu mai sostituita.", c:"nondecide"}
-        ],
-        calibratura: [
-          "La Seconda Repubblica fu una rottura reale.",
-          "Fu una rottura nel sistema dei partiti e nelle regole elettorali, ma non nell'architettura costituzionale.",
-          "La «Seconda Repubblica» è un'etichetta convenzionale che nasconde una sostanziale continuità con la Prima."
-        ]
-      }
-    ]}
+  var CAPCOLORS = {
+    "Il problema del populismo":"#5c7343",
+    "La Prima guerra mondiale":"#9d4a2b",
+    "La rivoluzione russa e la società sovietica":"#3d5566",
+    "La Repubblica di Weimar e l'avvento del nazismo":"#b3792c",
+    "Il fascismo italiano":"#3c6e63",
+    "Il totalitarismo fascista e nazista a confronto":"#6b5b7a",
+    "La strada verso la guerra":"#4a6b8a",
+    "La Repubblica dei partiti e la crisi di Tangentopoli":"#8a5a4a"
+  };
+  var CAPORDER = [
+    "Il problema del populismo",
+    "La Prima guerra mondiale",
+    "La rivoluzione russa e la società sovietica",
+    "La Repubblica di Weimar e l'avvento del nazismo",
+    "Il fascismo italiano",
+    "Il totalitarismo fascista e nazista a confronto",
+    "La strada verso la guerra",
+    "La Repubblica dei partiti e la crisi di Tangentopoli"
   ];
 
-  const CAT_LABELS = {sostiene:"La sostiene", confuta:"La confuta", nondecide:"Non la decide"};
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
 
-  // Flatten with ids and state
-  let flatNodes = [];
-  DATA.forEach((ch, ci) => {
-    ch.nodes.forEach((n, ni) => {
-      const id = ci + '-' + ni;
-      flatNodes.push({
-        id, chapterIdx: ci, nodeIdx: ni, chapterTitle: ch.chapter, q: n.q, tesi: n.tesi,
-        statements: n.statements.map((s, si) => ({...s, id: id+'-s'+si, assigned: null})),
-        calibChoice: null
-      });
+  var NODI = [
+    {
+      capitolo:"Il problema del populismo",
+      titolo:"Il populismo è una categoria d'analisi o un'etichetta polemica?",
+      formulazioni:{
+        partenza:"«Populismo» è un termine descrittivo neutro, utile a identificare un fenomeno politico reale e riconoscibile.",
+        ristretta:"È un termine utile solo nell'uso storiografico rigoroso, non nel dibattito pubblico corrente.",
+        opposta:"«Populismo» è sempre e comunque un'etichetta polemica, mai una categoria neutra."
+      },
+      affermazioni:[
+        {testo:"Storici e politologi lo usano per accomunare movimenti lontani nel tempo e nello spazio (narodniki, People's Party, movimenti del Novecento) che condividono tratti riconoscibili: appello diretto al popolo contro le élite, sfiducia nelle mediazioni istituzionali.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è precisamente l'uso storiografico rigoroso che la Ristretta considera legittimo."}},
+        {testo:"Il termine permette confronti comparativi altrimenti impossibili fra fenomeni politici distanti.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Nell'uso politico corrente è quasi sempre un'accusa pronunciata in terza persona: nessun movimento si definisce populista da sé.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è esattamente il \"dibattito pubblico corrente\" che la Ristretta esclude dall'uso legittimo."}},
+        {testo:"Classificare una richiesta come «populista» è spesso un modo per non rispondere nel merito, non per analizzarla.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il termine nasce nell'Ottocento come autodefinizione di due movimenti specifici (narodniki russi, People's Party americano).",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il capitolo introduce, insieme al populismo, il «metodo del detective» come approccio da applicare a tutta la sezione.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La Prima guerra mondiale",
+      titolo:"La guerra fu voluta o fu una catastrofe involontaria?",
+      formulazioni:{
+        partenza:"Nessuna delle grandi potenze voleva, nel luglio 1914, la guerra che ne seguì: fu il risultato di un meccanismo che sfuggì al controllo di tutti.",
+        ristretta:"Fu involontaria nell'esito complessivo (durata, scala), ma ogni singola scelta lungo la strada fu deliberata.",
+        opposta:"La guerra fu voluta, quantomeno da alcuni degli attori coinvolti, che scelsero consapevolmente di rischiarla."
+      },
+      affermazioni:[
+        {testo:"Le cinque cause di sfondo (nazionalismo, alleanze, corsa agli armamenti, imperialismo, sistema delle mobilitazioni) crearono una situazione esplosiva senza che nessun governo la progettasse a tavolino.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Una volta avviate, le mobilitazioni militari seguivano tempistiche tecniche che i governi non riuscirono più a governare politicamente.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il capitolo insiste che ogni tappa della crisi di luglio fu una scelta con un'alternativa reale, non un ingranaggio che scattava da solo.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente \"ogni singola scelta... fu deliberata\", il nucleo della Ristretta."}},
+        {testo:"La Germania concesse all'Austria-Ungheria la «cambiale in bianco» consapevole del rischio di un conflitto generale.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"L'attentato di Sarajevo, 28 giugno 1914, fu il detonatore immediato della crisi.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La guerra durò quattro anni, non le poche settimane previste da tutti gli stati maggiori.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La Prima guerra mondiale",
+      titolo:"Le radiose giornate: volontà popolare o colpo di mano?",
+      formulazioni:{
+        partenza:"L'ingresso dell'Italia in guerra nel maggio 1915 rifletté una volontà popolare diffusa, mobilitata dalle piazze interventiste.",
+        ristretta:"Espressero la volontà di una minoranza attiva e rumorosa, non della maggioranza silenziosa del paese.",
+        opposta:"Le radiose giornate furono un colpo di mano orchestrato contro una maggioranza parlamentare neutralista."
+      },
+      affermazioni:[
+        {testo:"Le piazze di Roma, Milano e altre città furono realmente affollate da manifestazioni interventiste nei giorni di maggio 1915.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"le piazze affollate sono compatibili con una minoranza rumorosa quanto con una maggioranza reale: la Ristretta non nega che fossero affollate, ne contesta la rappresentatività."}},
+        {testo:"Salandra e Sonnino avevano già firmato il Patto di Londra il 26 aprile 1915, prima delle manifestazioni di piazza.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{opposta:"un accordo segreto firmato prima delle piazze sostiene l'idea di un esito deciso a monte, non dal consenso popolare."}},
+        {testo:"Le stesse giornate videro anche intimidazione fisica dei deputati neutralisti, che componevano la maggioranza parlamentare.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il Parlamento eletto nel 1913 era in larga maggioranza neutralista o giolittiano: l'intervento fu deciso nonostante quella maggioranza, non grazie a essa.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"L'Italia dichiarò guerra all'Austria-Ungheria il 24 maggio 1915.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La Prima guerra mondiale",
+      titolo:"Versailles: pace cartaginese o pace ragionevole mal gestita?",
+      formulazioni:{
+        partenza:"Il trattato di Versailles impose alla Germania condizioni economicamente insostenibili, la cosiddetta «pace cartaginese» denunciata da Keynes.",
+        ristretta:"Fu punitiva nella percezione soggettiva tedesca, anche se non nei dati economici oggettivi.",
+        opposta:"Versailles fu una pace ragionevole per gli standard dell'epoca, resa disastrosa solo dalla sua applicazione incoerente."
+      },
+      affermazioni:[
+        {testo:"Keynes, presente alla Conferenza di Parigi, giudicò le riparazioni economicamente rovinose e politicamente pericolose già nel 1919.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{ristretta:"è un giudizio economico tecnico, non la \"percezione soggettiva tedesca\" su cui la Ristretta si concentra: non la testa direttamente."}},
+        {testo:"La propaganda revisionista tedesca sfruttò sistematicamente il giudizio di severità del trattato per legittimare pretese ben più ampie.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è esattamente la percezione soggettiva, sfruttata politicamente, su cui la Ristretta si fonda."}},
+        {testo:"Storici più recenti (MacMillan) mostrano che le riparazioni furono in buona parte rinegoziate già negli anni Venti e non erano, per gli standard dell'epoca, eccezionali.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"conferma che i dati economici oggettivi non erano eccezionali, lasciando la severità solo nella percezione."}},
+        {testo:"Il vero problema fu l'applicazione incoerente del trattato, non la sua severità sulla carta.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il trattato fu firmato il 28 giugno 1919, esattamente cinque anni dopo l'attentato di Sarajevo.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La Germania non fu ammessa a partecipare ai negoziati che stabilirono le proprie condizioni di pace.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"l'esclusione dai negoziati alimenta direttamente la percezione tedesca di un'imposizione ingiusta."}}
+      ]
+    },
+    {
+      capitolo:"La rivoluzione russa e la società sovietica",
+      titolo:"La Rivoluzione d'Ottobre fu un colpo di Stato o una rivoluzione popolare?",
+      formulazioni:{
+        partenza:"La presa del potere bolscevica del 7 novembre 1917 fu un atto di forza pianificato da un gruppo ristretto, non l'espressione di un movimento di massa.",
+        ristretta:"Fu un colpo di Stato reso possibile da un consenso popolare reale, non contro di esso.",
+        opposta:"L'Ottobre fu una rivoluzione popolare che si diede, in corsa, una guida organizzata."
+      },
+      affermazioni:[
+        {testo:"L'assalto al Palazzo d'Inverno fu pianificato militarmente da Trockij e incontrò pochissima resistenza spontanea.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'Assemblea Costituente, eletta a suffragio universale nel gennaio 1918, fu sciolta con la forza non appena il suo verdetto si rivelò sfavorevole ai bolscevichi.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"I bolscevichi avevano già conquistato, nelle settimane precedenti, la maggioranza nei soviet di Pietrogrado e Mosca.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente il \"consenso popolare reale\" che rende possibile il colpo di Stato secondo la Ristretta."}},
+        {testo:"I primi decreti del nuovo potere (pace, terra) risposero a domande già diffuse e reali fra le masse.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Alle elezioni dell'Assemblea Costituente, i socialrivoluzionari ottennero oltre 400 seggi contro i 175 dei bolscevichi.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{opposta:"un voto perso alle elezioni generali complica la lettura di una rivoluzione ampiamente popolare."}},
+        {testo:"La rivoluzione di Febbraio, otto mesi prima, era stata invece un'insurrezione spontanea senza guida di partito.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La rivoluzione russa e la società sovietica",
+      titolo:"Lo stalinismo fu uno sviluppo coerente del leninismo o un suo tradimento?",
+      formulazioni:{
+        partenza:"Il terrore staliniano degli anni Trenta era già scritto nelle premesse organizzative poste da Lenin durante la guerra civile.",
+        ristretta:"Ne fu uno sviluppo possibile ma non l'unico, fra altri esiti compatibili con le stesse premesse.",
+        opposta:"Lo stalinismo fu un tradimento e una rottura rispetto al leninismo, non la sua continuazione."
+      },
+      affermazioni:[
+        {testo:"Polizia politica, tribunali speciali, messa fuori legge dei partiti d'opposizione e primi campi di lavoro forzato furono introdotti già sotto la guida diretta di Lenin.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Lo scioglimento dell'Assemblea Costituente nel 1918 anticipa, nella logica, la soppressione di ogni dialettica interna successiva.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Trockij stesso, in esilio, parlò di «reazione termidoriana»: una frattura reale rispetto al partito di Lenin, che conservava una dialettica interna vivace.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"una \"frattura reale\" eccede il semplice \"esito non unico\" concesso dalla Ristretta, ma non lo contraddice apertamente."}},
+        {testo:"Il terrore di massa degli anni Trenta colpì la stessa vecchia guardia bolscevica che aveva fatto la rivoluzione: una differenza di scala rispetto alla repressione leniniana.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"una differenza di scala, non di natura, è compatibile con \"uno sviluppo possibile fra altri\"."}},
+        {testo:"Stalin fu nominato segretario generale del partito nell'aprile 1922, un incarico ritenuto allora puramente amministrativo.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il Testamento di Lenin, che ne chiedeva la rimozione, restò segreto ai vertici del partito.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{opposta:"Lenin che chiede la rimozione di Stalin sostiene l'idea che Stalin rappresentasse un allontanamento dalle sue intenzioni."}}
+      ]
+    },
+    {
+      capitolo:"La rivoluzione russa e la società sovietica",
+      titolo:"L'Holodomor fu una carestia o uno sterminio deliberato?",
+      formulazioni:{
+        partenza:"La carestia ucraina del 1932-33 fu il risultato di un'arma politica usata deliberatamente contro l'Ucraina.",
+        ristretta:"Fu una spietatezza deliberata verso l'intera popolazione contadina sovietica, non un'intenzione specificamente anti-ucraina.",
+        opposta:"L'Holodomor fu una carestia con cause concomitanti, aggravata ma non causata da una scelta politica."
+      },
+      affermazioni:[
+        {testo:"Il regime rifiutò ogni soccorso alle popolazioni colpite e proseguì le requisizioni di grano destinato all'esportazione.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Stalin considerava l'Ucraina «la questione principale» per il rischio di una resistenza contadina e nazionale insieme (lettera a Kaganovič, agosto 1932).",
+         classificazione:{partenza:"sostiene", ristretta:"confuta", opposta:"confuta"},
+         perche:{ristretta:"trattare l'Ucraina come \"la questione principale\" è proprio l'intenzione specificamente anti-ucraina che la Ristretta esclude."}},
+        {testo:"Cause concomitanti non intenzionali — pianificazione centralizzata rigida, siccità reale, resistenza contadina che aveva già ridotto il patrimonio zootecnico — contribuirono alla crisi.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Chiamare «genocidio» l'Holodomor richiede di dimostrare un'intenzione di eliminare gli ucraini in quanto tali, non solo una spietatezza applicata in modo diseguale.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente la distinzione fra spietatezza generale e intenzione anti-ucraina specifica su cui la Ristretta si fonda."}},
+        {testo:"Il parlamento ucraino ha riconosciuto ufficialmente l'Holodomor come genocidio.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Le vittime ucraine si stimano fra i quattro e i cinque milioni.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La Repubblica di Weimar e l'avvento del nazismo",
+      titolo:"Weimar cadde per una debolezza strutturale o per un errore di calcolo?",
+      formulazioni:{
+        partenza:"La Repubblica di Weimar era condannata fin dall'origine da difetti strutturali della propria Costituzione (proporzionale pura, articolo 48, dualismo dei poteri).",
+        ristretta:"La debolezza strutturale rese possibile, ma non inevitabile, il crollo — servì anche l'errore di calcolo del gennaio 1933.",
+        opposta:"Weimar cadde per un errore di calcolo di singoli attori politici, non per un difetto della propria architettura istituzionale."
+      },
+      affermazioni:[
+        {testo:"La proporzionale pura senza soglia di sbarramento produsse governi che duravano, in media, meno di un anno.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'articolo 48 fu usato come governo ordinario per decreto già dal 1930, ben prima di Hitler, abituando la Germania ad aggirare il Parlamento.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Hitler ottenne la cancelleria per una decisione di calcolo politico di Papen e Hindenburg, convinti di poterlo controllare — un errore di persone, non un automatismo costituzionale.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente \"l'errore di calcolo del gennaio 1933\" che la Ristretta aggiunge come co-causa."}},
+        {testo:"Altre repubbliche nate dalla stessa guerra (Austria, Cecoslovacchia) non collassarono nello stesso modo né negli stessi tempi, pur condividendo un'origine traumatica.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"il confronto mostra che la debolezza strutturale non bastava da sola: \"resa possibile, ma non inevitabile\"."}},
+        {testo:"La Costituzione di Weimar fu, sulla carta, fra le più avanzate d'Europa nel 1919.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Hitler fu nominato cancelliere il 30 gennaio 1933 per via legale.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Il fascismo italiano",
+      titolo:"Il fascismo fu una parentesi o una rivelazione della storia d'Italia?",
+      formulazioni:{
+        partenza:"Il fascismo fu una parentesi anomala nella storia italiana, resa possibile da circostanze eccezionali del primo dopoguerra, non un esito coerente con la storia precedente del paese.",
+        ristretta:"Fu una parentesi resa possibile da debolezze reali ma preesistenti dello Stato liberale, non un fulmine a ciel sereno.",
+        opposta:"Il fascismo fu la rivelazione di tratti strutturali già presenti nella storia italiana precedente."
+      },
+      affermazioni:[
+        {testo:"Il fascismo nacque dal disagio specifico del primo dopoguerra: biennio rosso, disagio dei ceti medi, crisi dello Stato liberale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Mussolini guidò la marcia su Roma il 28 ottobre 1922.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Lo squadrismo agrario e la violenza come metodo si radicano in tensioni sociali (rapporto Stato-società, debolezza delle istituzioni liberali) precedenti alla guerra.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"sono precisamente le \"debolezze reali ma preesistenti\" su cui la Ristretta si fonda."}},
+        {testo:"L'impotenza dei governi liberali di fronte alla violenza squadrista rivela una fragilità di lungo periodo del sistema politico italiano, non solo una crisi congiunturale.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il PNF nacque nel 1921 dalla trasformazione dei Fasci di combattimento.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Il fascismo italiano",
+      titolo:"Ci fu consenso, o solo coercizione?",
+      formulazioni:{
+        partenza:"Il regime fascista si resse principalmente sul consenso reale di larga parte della popolazione italiana, non sulla sola repressione.",
+        ristretta:"Il consenso fu reale ma va misurato dentro un sistema che aveva già eliminato ogni alternativa possibile.",
+        opposta:"Il fascismo si resse essenzialmente sulla coercizione, e il consenso apparente fu un suo prodotto, non una sua causa."
+      },
+      affermazioni:[
+        {testo:"L'apparato repressivo del regime era numericamente esiguo rispetto alla popolazione: la sola coercizione non basta a spiegarne la lunga durata.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il regime seppe costruire consenso attraverso organizzazioni di massa, propaganda e la fabbricazione di un'identità collettiva.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{opposta:"\"fabbricazione\" di un'identità collettiva è compatibile con l'idea che il consenso fosse un prodotto costruito dal regime, non una sua causa autonoma."}},
+        {testo:"Quel consenso si formava dentro un sistema in cui l'alternativa era il confino o il carcere, l'informazione controllata, il dissenso vietato.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è esattamente il \"sistema che aveva già eliminato ogni alternativa possibile\"."}},
+        {testo:"Un consenso ottenuto sopprimendo ogni voce contraria non è la stessa cosa di un consenso espresso in condizioni di libertà.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Le leggi «fascistissime» del 1925-26 misero fuori legge i partiti d'opposizione.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il meccanismo concreto con cui il sistema eliminò le alternative possibili."}},
+        {testo:"Il delitto Matteotti, 1924, provocò una crisi di legittimità che il regime riuscì comunque a superare.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Il totalitarismo fascista e nazista a confronto",
+      titolo:"Il fascismo fu un totalitarismo «a tutti gli effetti» o un totalitarismo «imperfetto»?",
+      formulazioni:{
+        partenza:"Il regime fascista italiano raggiunse un grado di totalitarismo pieno, paragonabile a quello nazista.",
+        ristretta:"Fu totalitario per la pretesa e per gli strumenti impiegati, ma restò imperfetto per la persistenza di un contropotere reale (la monarchia).",
+        opposta:"Il fascismo non fu mai un vero totalitarismo, restò una dittatura autoritaria con ambizioni totalitarie mai realizzate fino in fondo."
+      },
+      affermazioni:[
+        {testo:"Fascismo e nazismo condividono partito unico, polizia politica, tribunali speciali, propaganda pervasiva, culto del capo, tentativo di forgiare un «uomo nuovo».",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"l'Opposta non nega che questi strumenti e ambizioni esistessero, contesta solo che abbiano raggiunto piena efficacia: l'elenco da solo non decide la questione."}},
+        {testo:"Mussolini non eliminò mai la monarchia: il re restò capo dello Stato e comandante supremo, dando vita a una diarchia che in Germania non aveva equivalenti.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente \"la persistenza di un contropotere reale\" che rende il totalitarismo fascista imperfetto secondo la Ristretta."}},
+        {testo:"Fu proprio il re, nel luglio 1943, a destituire Mussolini applicando le regole che il regime stesso si era dato — un contropotere reale che in Germania non esisteva.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il termine «totalitario» nacque come insulto degli antifascisti italiani, poi rivendicato con orgoglio da Mussolini stesso.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"In Germania il potere ruotava attorno al Führerprinzip, senza alcun contrappeso istituzionale residuo.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"il confronto con l'assenza tedesca di contrappesi mette in risalto, per contrasto, la persistenza di quello italiano."}}
+      ]
+    },
+    {
+      capitolo:"Il totalitarismo fascista e nazista a confronto",
+      titolo:"Le leggi razziste italiane: imitazione o impianto autonomo?",
+      formulazioni:{
+        partenza:"Le leggi razziste italiane del 1938 furono un'imitazione tardiva di Norimberga, imposta per compiacere l'alleato tedesco.",
+        ristretta:"Furono un'imitazione nel tempismo (dopo l'Asse) ma un impianto autonomo nei contenuti e nelle radici (il laboratorio coloniale).",
+        opposta:"Le leggi razziste italiane furono un impianto interamente autonomo, indipendente dall'alleanza con la Germania."
+      },
+      affermazioni:[
+        {testo:"Le leggi arrivarono nel 1938, dopo l'Asse Roma-Berlino e dopo che il regime aveva già importato altri elementi di facciata dalla Germania.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"conferma l'\"imitazione nel tempismo\" che la Ristretta concede, senza dire nulla sui contenuti."}},
+        {testo:"Il razzismo di dominio era già codificato in Africa Orientale Italiana, prima ancora che nascesse l'antisemitismo di Stato in Italia (regio decreto del 19 aprile 1937).",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente il \"laboratorio coloniale\" citato dalla Ristretta come radice autonoma."}},
+        {testo:"In alcuni ambiti la legislazione italiana fu, per un periodo, più drastica di quella tedesca coeva (espulsione dei docenti ebrei, 5 settembre 1938, precedette misure scolastiche tedesche altrettanto totali).",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il razzismo italiano ebbe un carattere più «politico» che «biologico»: un prodotto interno dell'ideologia fascista, non un calco della teoria ariana tedesca.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il Manifesto della razza fu pubblicato nel luglio 1938.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Circa duecentomila ebrei fuggirono dalla Germania fra il 1933 e il 1939.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La strada verso la guerra",
+      titolo:"La politica estera di Hitler seguiva un piano prestabilito o rispondeva all'opportunità?",
+      formulazioni:{
+        partenza:"L'espansionismo tedesco degli anni Trenta seguì un piano già delineato nel Mein Kampf del 1925, eseguito con fedeltà crescente.",
+        ristretta:"Il progetto ideologico di fondo era fisso, ma il calendario e la sequenza dipesero dall'opportunità.",
+        opposta:"Fu interamente opportunistica, senza alcun disegno predeterminato oltre la propaganda retrospettiva."
+      },
+      affermazioni:[
+        {testo:"La distruzione dell'ordine di Versailles, l'unione di tutti i tedeschi, la conquista dello spazio vitale a est furono annunciate nel Mein Kampf e realizzate una dopo l'altra.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"La direzione di marcia (spazio vitale a est, distruzione degli slavi come popoli) restò identica dal primo giorno all'ultimo.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è precisamente \"il progetto ideologico di fondo\" che la Ristretta considera fisso."}},
+        {testo:"La rapidità stessa della rimilitarizzazione della Renania fu decisa con margini di incertezza e rischio che un piano davvero prestabilito avrebbe dovuto evitare.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è esattamente \"il calendario e la sequenza\" lasciati all'opportunità dalla Ristretta."}},
+        {testo:"Ogni mossa concreta sfruttò volta per volta le divisioni e la paralisi delle democrazie occidentali, più che seguire un calendario fisso.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il Mein Kampf fu scritto durante la detenzione di Hitler dopo il fallito putsch di Monaco del 1923.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il riarmo tedesco fu dichiarato apertamente nel 1935.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La strada verso la guerra",
+      titolo:"La guerra d'Etiopia fu l'ultimo colonialismo o la vera premessa della guerra mondiale?",
+      formulazioni:{
+        partenza:"La guerra d'Etiopia fu il vero punto di svolta che rese possibile la Seconda guerra mondiale, non un episodio coloniale isolato.",
+        ristretta:"Fu una prova decisiva ma non l'unica in una catena più lunga di episodi che mostrarono la stessa remissività occidentale.",
+        opposta:"Fu l'ultimo episodio del colonialismo ottocentesco, senza un peso causale diretto sulla guerra che seguì."
+      },
+      affermazioni:[
+        {testo:"Fu la guerra d'Etiopia a spezzare il fronte di Stresa e a isolare l'Italia dalle democrazie occidentali, spingendola verso la Germania.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"La remissività con cui Francia e Gran Bretagna reagirono all'aggressione convinse Hitler che l'Europa democratica non avrebbe opposto resistenze reali.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Per lungo tempo la storiografia l'ha letta come l'ultimo sussulto tardivo del colonialismo ottocentesco, un episodio a sé.",
+         classificazione:{partenza:"confuta", ristretta:"confuta", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta la considera una prova decisiva dentro una catena, non \"un episodio a sé\"."}},
+        {testo:"La rimilitarizzazione della Renania, avvenuta nello stesso periodo, e la successiva Conferenza di Monaco mostrarono la stessa remissività occidentale indipendentemente dall'Etiopia.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è esattamente \"la catena più lunga di episodi\" della Ristretta."}},
+        {testo:"L'invasione iniziò nell'ottobre 1935 e Mussolini proclamò l'Impero nel maggio 1936.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Le sanzioni della Società delle Nazioni non toccavano il petrolio né vincolavano Stati Uniti e Germania.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La strada verso la guerra",
+      titolo:"Il patto Molotov-Ribbentrop fu calcolo cinico o difesa strategica?",
+      formulazioni:{
+        partenza:"Il patto Molotov-Ribbentrop dell'agosto 1939 fu una mossa di autodifesa razionale da parte sovietica, non un'alleanza cinica fra aggressori.",
+        ristretta:"Fu un calcolo cinico nella forma (i protocolli segreti di spartizione), ma con un movente difensivo reale sullo sfondo.",
+        opposta:"Il patto fu un calcolo cinico fra aggressori."
+      },
+      affermazioni:[
+        {testo:"A Monaco, nel 1938, Francia e Gran Bretagna avevano trattato con Hitler escludendo l'URSS dal tavolo, nonostante Mosca avesse proposto un'alleanza difensiva comune.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"sostiene il \"movente difensivo reale\" anche se la forma finale del patto restò cinica."}},
+        {testo:"Le trattative militari anglo-franco-sovietiche dell'estate 1939 fallirono per la diffidenza reciproca e il rifiuto di Polonia e Romania di concedere il transito all'Armata Rossa.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"La spartizione della Polonia e delle repubbliche baltiche, prevista nel protocollo segreto, non è un atto di prudenza ma un'occupazione pianificata in anticipo.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"è precisamente \"il calcolo cinico nella forma\" che la Ristretta riconosce."}},
+        {testo:"L'invasione tedesca della Polonia, resa possibile dal patto, avvenne appena una settimana dopo la firma.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Stalin sostituì il filo-occidentale Litvinov con Molotov il 3 maggio 1939.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il patto fu firmato il 23 agosto 1939 da Molotov e Ribbentrop a Mosca.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"La Repubblica dei partiti e la crisi di Tangentopoli",
+      titolo:"Tangentopoli fu una rivoluzione giudiziaria o un risanamento necessario?",
+      formulazioni:{
+        partenza:"Mani Pulite fu una rivoluzione giudiziaria che superò i propri limiti istituzionali, sostituendo la magistratura al giudizio politico degli elettori.",
+        ristretta:"Fu un intervento giudiziario legittimo su un sistema già in crisi per cause proprie, non la causa principale del crollo.",
+        opposta:"Mani Pulite fu semplicemente il risanamento necessario di un sistema di corruzione sistemica, senza eccessi da correggere."
+      },
+      affermazioni:[
+        {testo:"Le inchieste smontarono in pochi mesi un sistema di partiti che aveva governato l'Italia per quasi cinquant'anni, senza passare da un voto popolare.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{ristretta:"la rapidità del crollo non decide da sola se fu la causa principale o solo l'occasione di un crollo già in atto."}},
+        {testo:"Il sistema dei partiti era già in una crisi profonda, aggravata da altri tre cedimenti simultanei (economico, internazionale, criminale con le stragi di mafia).",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è precisamente \"un sistema già in crisi per cause proprie\", il nucleo della Ristretta."}},
+        {testo:"Il finanziamento illecito dei partiti era una pratica sistemica e diffusa, non un'invenzione dei magistrati.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Le inchieste di Mani Pulite iniziarono il 17 febbraio 1992.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Le stragi di Capaci e via D'Amelio avvennero nello stesso anno, 1992.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è uno dei \"tre cedimenti simultanei\" (quello criminale) che la Ristretta affianca all'intervento giudiziario."}}
+      ]
+    },
+    {
+      capitolo:"La Repubblica dei partiti e la crisi di Tangentopoli",
+      titolo:"La Seconda Repubblica: rottura reale o continuità sotto altra forma?",
+      formulazioni:{
+        partenza:"La cosiddetta «Seconda Repubblica» segna una rottura reale nella storia politica italiana rispetto al sistema dei partiti del dopoguerra.",
+        ristretta:"Fu una rottura nel sistema dei partiti e nelle regole elettorali, ma non nell'architettura costituzionale.",
+        opposta:"La «Seconda Repubblica» è un'etichetta convenzionale che nasconde una sostanziale continuità con la Prima."
+      },
+      affermazioni:[
+        {testo:"Il sistema politico che governò l'Italia per quasi cinquant'anni si dissolse nel giro di due anni, fra il 1992 e il 1994.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Nuovi soggetti politici e nuove regole elettorali sostituirono quasi integralmente i partiti storici della Prima Repubblica.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"è precisamente la rottura \"nel sistema dei partiti e nelle regole elettorali\" che la Ristretta riconosce."}},
+        {testo:"Nessuna nuova Costituzione fu mai scritta: l'espressione «Seconda Repubblica» dà per acquisita proprio la rottura che dovrebbe dimostrare.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"conferma esattamente il limite che la Ristretta pone: nessuna rottura \"nell'architettura costituzionale\"."}},
+        {testo:"Molte delle logiche di fondo del sistema politico italiano (frammentazione, instabilità di governo) sopravvissero sotto forme diverse.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Le elezioni del 28 marzo 1994 videro l'affermazione di nuovi soggetti politici.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La Costituzione del 1948 non fu mai sostituita.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"è il fatto puntuale che fissa il limite costituzionale della rottura riconosciuta dalla Ristretta."}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
     });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle(NODI[i].affermazioni.map(function(_,k){return k;}));
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var total=n.affermazioni.length;
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su '+total+' affermazioni totali).';
+    } else if(answered<total){
+      verifyHint.textContent=answered+' su '+total+' classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e '+total+' classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
   });
 
-  let activeId = flatNodes[0].id;
-  let compareOn = false;
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
 
-  const indexList = document.getElementById('indexList');
-  const mainInner = document.getElementById('mainInner');
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
 
-  function isNodeDone(n){
-    return n.statements.every(s => s.assigned !== null) && n.calibChoice !== null;
-  }
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
 
-  function renderIndex(){
-    indexList.innerHTML = '';
-    DATA.forEach((ch, ci) => {
-      const block = document.createElement('div');
-      block.className = 'chapter-block';
-      const title = document.createElement('div');
-      title.className = 'chapter-title';
-      title.textContent = ch.chapter;
-      block.appendChild(title);
-      ch.nodes.forEach((n, ni) => {
-        const id = ci + '-' + ni;
-        const fn = flatNodes.find(f => f.id === id);
-        const item = document.createElement('div');
-        item.className = 'node-item' + (id === activeId ? ' active' : '');
-        item.innerHTML = '<span class="node-dotstatus' + (isNodeDone(fn) ? ' done' : '') + '"></span>' + n.q;
-        item.addEventListener('click', () => { activeId = id; compareOn = false; renderAll(); });
-        block.appendChild(item);
-      });
-      indexList.appendChild(block);
-    });
-  }
-
-  function renderMain(){
-    const n = flatNodes.find(f => f.id === activeId);
-    let html = '';
-    html += '<div class="crumbs">' + n.chapterTitle + '</div>';
-    html += '<div class="tesi-box"><div class="tlabel">Tesi da mettere alla prova</div><h2>' + n.tesi + '</h2></div>';
-    html += '<p class="sort-instructions">Classifica ciascuna affermazione: la sostiene, la confuta, oppure non prende posizione sulla tesi. Un secondo clic sullo stesso pulsante annulla la scelta.</p>';
-
-    html += '<button class="compare-toggle' + (compareOn ? ' on' : '') + '" id="compareBtn">' +
-      (compareOn ? 'Nascondi il confronto' : 'Confronta con la lettura del capitolo') + '</button>';
-    if(compareOn){
-      html += '<p class="calib-note">Non è un punteggio: è la classificazione proposta dal capitolo, utile per confrontarla con la tua e discutere i casi in cui non coincidono.</p>';
-    }
-
-    const unassigned = n.statements.filter(s => s.assigned === null);
-    html += '<div class="pool"><div class="pool-title">Da classificare</div>';
-    if(unassigned.length === 0){
-      html += '<div class="col-empty">Tutte le affermazioni sono state classificate.</div>';
-    } else {
-      unassigned.forEach(s => { html += statementCardHtml(s); });
-    }
-    html += '</div>';
-
-    html += '<div class="columns">';
-    ['sostiene','confuta','nondecide'].forEach(cat => {
-      const items = n.statements.filter(s => s.assigned === cat);
-      html += '<div class="col ' + cat + '"><div class="col-title">' + CAT_LABELS[cat] + '</div>';
-      if(items.length === 0){ html += '<div class="col-empty">—</div>'; }
-      else { items.forEach(s => { html += statementCardHtml(s); }); }
-      html += '</div>';
-    });
-    html += '</div>';
-
-    const allAssigned = n.statements.every(s => s.assigned !== null);
-    html += '<div class="calib-section' + (allAssigned ? '' : ' locked') + '">';
-    html += '<div class="calib-title">Calibratura della tesi</div>';
-    if(!allAssigned){
-      html += '<div class="calib-lock-msg">Classifica tutte le affermazioni per procedere alla calibratura.</div>';
-    } else {
-      html += '<div class="calib-note">Scegli la formulazione che, alla luce di come hai distribuito le affermazioni, ti sembra oggi più difendibile. Nessuna delle tre è indicata come corretta.</div>';
-      n.calibratura.forEach((opt, oi) => {
-        html += '<div class="calib-option' + (n.calibChoice === oi ? ' selected' : '') + '" data-oi="' + oi + '">' +
-          '<div class="calib-radio"></div><p>' + opt + '</p></div>';
-      });
-      if(n.calibChoice !== null){
-        html += '<div class="calib-done">Scelta registrata. Puoi cambiarla in qualsiasi momento.</div>';
-      }
-    }
-    html += '</div>';
-
-    html += '<button class="reset-btn" id="resetBtn">Azzera questo nodo</button>';
-
-    mainInner.innerHTML = html;
-
-    document.getElementById('compareBtn').addEventListener('click', () => {
-      compareOn = !compareOn;
-      renderAll();
-    });
-
-    mainInner.querySelectorAll('.assign-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const sid = btn.dataset.sid, cat = btn.dataset.cat;
-        const st = n.statements.find(s => s.id === sid);
-        st.assigned = (st.assigned === cat) ? null : cat;
-        renderAll();
-      });
-    });
-
-    mainInner.querySelectorAll('.calib-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const oi = parseInt(opt.dataset.oi, 10);
-        n.calibChoice = (n.calibChoice === oi) ? null : oi;
-        renderAll();
-      });
-    });
-
-    const resetBtn = document.getElementById('resetBtn');
-    if(resetBtn){
-      resetBtn.addEventListener('click', () => {
-        n.statements.forEach(s => s.assigned = null);
-        n.calibChoice = null;
-        compareOn = false;
-        renderAll();
-      });
-    }
-  }
-
-  function statementCardHtml(s){
-    let html = '<div class="statement-card"><p>' + s.t + '</p><div class="assign-row">';
-    ['sostiene','confuta','nondecide'].forEach(cat => {
-      const active = s.assigned === cat ? ' active-' + cat : '';
-      html += '<button class="assign-btn' + active + '" data-sid="' + s.id + '" data-cat="' + cat + '">' + CAT_LABELS[cat] + '</button>';
-    });
-    if(compareOn){
-      html += '<span class="compare-tag">— lettura del capitolo: ' + CAT_LABELS[s.c] + '</span>';
-    }
-    html += '</div></div>';
-    return html;
-  }
-
-  function renderAll(){
-    renderIndex();
-    renderMain();
-  }
-
-  renderAll();
+  buildChips();
+  renderList();
 })();
 </script>
 </body>
