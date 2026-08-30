@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palestra di argomentazione — La fine degli imperi e la terra contesa</title>
+<style>
+  :root{
+    --bg:#F5F0E8;
+    --card:#fffdfa;
+    --accent:#8B7355;
+    --sostiene:#5b7a8f;
+    --confuta:#9c5b45;
+    --nondecide:#7a8a5c;
+    --text:#2b2723;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;}
+  h1,h2,h3,.ui,button,.chapter-title,.node-item,.badge,.ctitle,.calib-note{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  .layout{display:flex;min-height:100vh;max-width:1400px;margin:0 auto;}
+  .sidebar{width:290px;flex:0 0 290px;background:#efe7d8;border-right:1px solid var(--accent);padding:18px 14px;overflow-y:auto;max-height:100vh;position:sticky;top:0;}
+  .sidebar h1{font-size:1.05rem;line-height:1.3;margin:0 0 4px;}
+  .sidebar .intro{font-size:.75rem;color:#6b6355;line-height:1.5;margin-bottom:16px;}
+  .chapter-block{margin-bottom:6px;}
+  .chapter-title{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:#6b6355;padding:8px 6px 4px;font-weight:600;}
+  .node-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:.86rem;line-height:1.35;color:var(--text);margin-bottom:2px;}
+  .node-item:hover{background:#e2d8c3;}
+  .node-item.active{background:var(--accent);color:#fff;}
+  .node-dotstatus{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:#d8cfba;}
+  .node-item.active .node-dotstatus{background:#fff;}
+  .node-dotstatus.done{background:#6b8f5b;}
+  .node-item.active .node-dotstatus.done{background:#cfe8c2;}
+
+  .main{flex:1;padding:26px 34px 60px;overflow-y:auto;}
+  .main-inner{max-width:820px;}
+  .crumbs{font-size:.75rem;color:#8a8271;margin-bottom:8px;font-family:'Gill Sans',sans-serif;}
+  .tesi-box{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:18px 22px;margin-bottom:22px;}
+  .tesi-box .tlabel{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#8a8271;font-family:'Gill Sans',sans-serif;margin-bottom:6px;}
+  .tesi-box h2{font-size:1.15rem;margin:0;line-height:1.4;font-weight:600;}
+
+  .sort-instructions{font-size:.85rem;color:#5a554e;margin-bottom:16px;line-height:1.5;}
+
+  .pool{margin-bottom:22px;}
+  .pool-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:#8a8271;margin-bottom:8px;}
+  .statement-card{background:var(--card);border:1px solid #d9cfb8;border-left:4px solid #d9cfb8;border-radius:6px;padding:12px 14px;margin-bottom:9px;}
+  .statement-card p{margin:0 0 9px;font-size:.92rem;line-height:1.5;}
+  .assign-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .assign-btn{border:1.3px solid #c9bfa6;background:#fff;border-radius:14px;padding:4px 11px;font-size:.72rem;cursor:pointer;color:#5a554e;transition:background .15s,color .15s,border-color .15s;}
+  .assign-btn:hover{background:#f2ece0;}
+  .assign-btn.active-sostiene{background:var(--sostiene);border-color:var(--sostiene);color:#fff;}
+  .assign-btn.active-confuta{background:var(--confuta);border-color:var(--confuta);color:#fff;}
+  .assign-btn.active-nondecide{background:var(--nondecide);border-color:var(--nondecide);color:#fff;}
+  .compare-tag{font-size:.68rem;font-family:'Gill Sans',sans-serif;color:#8a8271;margin-left:4px;}
+
+  .columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:22px;}
+  .col{border-radius:8px;padding:12px;min-height:70px;}
+  .col.sostiene{background:#eaf0f3;border:1px solid var(--sostiene);}
+  .col.confuta{background:#f4e9e5;border:1px solid var(--confuta);}
+  .col.nondecide{background:#eef1e7;border:1px solid var(--nondecide);}
+  .col-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:8px;}
+  .col.sostiene .col-title{color:var(--sostiene);}
+  .col.confuta .col-title{color:var(--confuta);}
+  .col.nondecide .col-title{color:var(--nondecide);}
+  .col .statement-card{border-left-width:4px;}
+  .col.sostiene .statement-card{border-left-color:var(--sostiene);}
+  .col.confuta .statement-card{border-left-color:var(--confuta);}
+  .col.nondecide .statement-card{border-left-color:var(--nondecide);}
+  .col-empty{font-size:.76rem;color:#a89e88;font-style:italic;}
+
+  .compare-toggle{display:inline-block;margin-bottom:18px;border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:6px;padding:7px 13px;font-size:.8rem;cursor:pointer;font-family:'Gill Sans',sans-serif;}
+  .compare-toggle:hover{background:#f6f1e8;}
+  .compare-toggle.on{background:var(--accent);color:#fff;}
+
+  .calib-section{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:18px 22px;margin-top:8px;}
+  .calib-section.locked{opacity:.5;}
+  .calib-title{font-size:.95rem;font-weight:600;margin:0 0 6px;}
+  .calib-note{font-size:.78rem;color:#8a8271;margin-bottom:14px;line-height:1.5;}
+  .calib-lock-msg{font-size:.85rem;color:#8a8271;font-style:italic;}
+  .calib-option{display:flex;gap:10px;align-items:flex-start;border:1.3px solid #d9cfb8;border-radius:8px;padding:12px 14px;margin-bottom:10px;cursor:pointer;background:#fff;transition:background .15s,border-color .15s;}
+  .calib-option:hover{background:#f8f4ea;}
+  .calib-option.selected{border-color:var(--accent);background:#f2e9d8;}
+  .calib-radio{width:16px;height:16px;border-radius:50%;border:1.5px solid #b8ac90;flex:0 0 auto;margin-top:2px;position:relative;}
+  .calib-option.selected .calib-radio{border-color:var(--accent);}
+  .calib-option.selected .calib-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--accent);}
+  .calib-option p{margin:0;font-size:.9rem;line-height:1.5;}
+  .calib-done{margin-top:10px;font-size:.8rem;color:#5f7a4f;font-style:italic;}
+
+  .reset-btn{margin-top:16px;border:none;background:none;color:#a89e88;font-size:.76rem;cursor:pointer;text-decoration:underline;font-family:'Gill Sans',sans-serif;}
+  .reset-btn:hover{color:var(--accent);}
+
+  @media (max-width:820px){
+    .layout{flex-direction:column;}
+    .sidebar{width:100%;flex:none;position:relative;max-height:none;border-right:none;border-bottom:1px solid var(--accent);}
+    .columns{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <h1>Palestra di argomentazione</h1>
+    <p class="intro">«La fine degli imperi e la terra contesa». Per ogni nodo storiografico: distribuisci le affermazioni fra i tre contenitori, poi chiudi con la calibratura della tesi. Nessun punteggio: l'esercizio serve a mettere alla prova il proprio giudizio, non a ottenere una risposta esatta.</p>
+    <div id="indexList"></div>
+  </div>
+  <div class="main">
+    <div class="main-inner" id="mainInner"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const DATA = [
+    { chapter: "Cap. 1 — La fine degli imperi coloniali", nodes: [
+      { q: "Indipendenza politica, sovranità economica: la decolonizzazione fu mai completa?",
+        tesi: "Il neocolonialismo economico ha reso la decolonizzazione politica sostanzialmente fittizia.",
+        statements: [
+          {t:"L'esportazione di materie prime verso gli stessi mercati che li avevano colonizzati, la dipendenza dai capitali stranieri e il debito estero contratto per la modernizzazione sono elementi difficilmente contestabili.", c:"sostiene"},
+          {t:"Le teorie della dipendenza, elaborate tra gli anni Sessanta e Settanta, leggono questa continuità come prova che la decolonizzazione formale mascherò una nuova forma di dominio.", c:"sostiene"},
+          {t:"Paesi partiti da condizioni simili conobbero sviluppi molto diversi: la sola dipendenza economica non spiega le traiettorie divergenti degli Stati postcoloniali.", c:"confuta"},
+          {t:"Ridurre ogni fallimento istituzionale, dittature, guerre civili, corruzione, a un effetto del neocolonialismo rischia di privare gli attori locali della propria responsabilità storica.", c:"confuta"},
+          {t:"La lettura neocolonialista ha avuto una presa duratura sulla storiografia e sull'opinione pubblica.", c:"nondecide"},
+          {t:"Il capitolo tratta insieme la decolonizzazione politica africana e asiatica e quella mediorientale come un unico fenomeno globale.", c:"nondecide"}
+        ],
+        calibratura: [
+          "Il neocolonialismo economico ha reso la decolonizzazione politica sostanzialmente fittizia.",
+          "Il neocolonialismo economico ha limitato, ma non annullato, la sovranità reale degli Stati postcoloniali.",
+          "La sovranità economica dipese soprattutto dalle scelte delle classi dirigenti locali, non da un vincolo neocoloniale strutturale."
+        ]
+      }
+    ]},
+    { chapter: "Cap. 2 — Due vie a confronto: India e Algeria", nodes: [
+      { q: "Il disimpegno britannico: lungimiranza politica o resa economica?",
+        tesi: "Il ritiro britannico dall'impero fu una scelta lungimirante di apertura al Commonwealth, non un ripiegamento imposto dai conti pubblici.",
+        statements: [
+          {t:"La storiografia classica descrive la decolonizzazione britannica come un processo elastico, che concede gradualmente costituzioni e autogoverno per trasformare l'impero in un Commonwealth di Stati associati.", c:"sostiene"},
+          {t:"La retorica del graduale trasferimento dei poteri accompagnò concessioni politiche reali, in India come altrove.", c:"sostiene"},
+          {t:"Già negli anni Trenta la disoccupazione aveva iniziato a colpire i coloni britannici d'oltremare, invertendo i flussi migratori verso il Regno Unito.", c:"confuta"},
+          {t:"Nel secondo dopoguerra, con le casse dello Stato prosciugate dalla guerra e la priorità rivolta al Welfare State, Londra comprese che i benefici dell'impero non compensavano più i costi del suo mantenimento (lettura di Trevor Lloyd).", c:"confuta"},
+          {t:"Il Regno Unito applicò la via negoziata anche in Ghana e in gran parte dell'Africa anglofona, un decennio dopo l'India.", c:"nondecide"},
+          {t:"Anche la Francia, pur con un modello coloniale più rigido, si piegò alla via negoziata in Marocco e Tunisia.", c:"nondecide"}
+        ],
+        calibratura: [
+          "Il ritiro britannico dall'impero fu una scelta lungimirante di apertura al Commonwealth, non un ripiegamento imposto dai conti pubblici.",
+          "Fu un ripiegamento economico rivestito, solo in parte e a posteriori, della retorica della lungimiranza.",
+          "Fu interamente un ripiegamento imposto dai conti pubblici, senza alcun disegno politico autonomo."
+        ]
+      },
+      { q: "La non violenza e il sangue della Partizione: colpa della fretta, o delle fratture identitarie?",
+        tesi: "La violenza della Partizione era già scritta nella frattura identitaria tra Congresso e Lega Musulmana, indipendentemente da come fu condotta la transizione.",
+        statements: [
+          {t:"La spaccatura confessionale tra il Partito del Congresso e la Lega Musulmana di Jinnah era una frattura identitaria di lungo periodo.", c:"sostiene"},
+          {t:"Jinnah temeva di restare minoranza permanente in un'India a maggioranza indù: un timore strutturale, non contingente.", c:"sostiene"},
+          {t:"Il viceré Mountbatten anticipò la data della transizione e tracciò il confine in poche settimane, lasciando alle autorità locali un tempo insufficiente per organizzare i trasferimenti di popolazione.", c:"confuta"},
+          {t:"Il movimento indiano si era imposto all'attenzione del mondo per la propria dottrina della non violenza: un metodo che la fretta della transizione non permise di applicare alla gestione del confine.", c:"confuta"},
+          {t:"La violenza costò oltre centomila morti e costrinse diciassette milioni di persone a fuggire.", c:"nondecide"},
+          {t:"Gandhi stesso fu assassinato nel gennaio 1948 da un estremista indù che lo riteneva troppo conciliante verso i musulmani.", c:"nondecide"}
+        ],
+        calibratura: [
+          "La violenza della Partizione era già scritta nella frattura identitaria tra Congresso e Lega Musulmana, indipendentemente da come fu condotta la transizione.",
+          "La frattura identitaria rese probabile la violenza, ma la fretta del disimpegno britannico ne aggravò la scala.",
+          "La violenza fu soprattutto il prodotto della fretta e della cattiva gestione materiale della transizione, non di una frattura identitaria inevitabile."
+        ]
+      },
+      { q: "Una partizione, due destini istituzionali: perché?",
+        tesi: "La solidità organizzativa di un movimento nazionalista prima dell'indipendenza determina la stabilità istituzionale dello Stato che ne nasce.",
+        statements: [
+          {t:"Il Partito del Congresso era un'organizzazione di massa radicata su tutto il territorio, con decenni di pratica politica e amministrativa alle spalle.", c:"sostiene"},
+          {t:"L'India ha consolidato, pur tra tensioni profondissime, una democrazia parlamentare stabile.", c:"sostiene"},
+          {t:"La Lega Musulmana era nata più tardi attorno a una rivendicazione essenzialmente difensiva, e dovette costruire dal nulla le istituzioni di uno Stato che prima non esisteva.", c:"confuta"},
+          {t:"Un'altra lettura guarda alle asimmetrie territoriali create dalla partizione stessa, un Pakistan diviso in due tronconi lontanissimi, come causa strutturale dell'instabilità.", c:"confuta"},
+          {t:"Il Pakistan ha conosciuto una storia segnata da colpi di Stato e da ricorrenti dittature militari.", c:"nondecide"},
+          {t:"Nessuna delle due letture esaurisce da sola la domanda, secondo il capitolo stesso.", c:"nondecide"}
+        ],
+        calibratura: [
+          "La solidità organizzativa di un movimento nazionalista prima dell'indipendenza determina la stabilità istituzionale dello Stato che ne nasce.",
+          "La solidità organizzativa pesa, ma solo insieme ad altri fattori strutturali, come la continuità territoriale dello Stato che ne nasce.",
+          "Furono soprattutto le asimmetrie territoriali ereditate dalla partizione, non la storia organizzativa dei movimenti, a decidere la stabilità istituzionale successiva."
+        ]
+      },
+      { q: "Guerra o rivoluzione? Come chiamare il 1954-1962 algerino",
+        tesi: "Chiamare il conflitto algerino \"guerra\" invece che \"rivoluzione\" è già una scelta di parte, non una scelta neutra di lessico.",
+        statements: [
+          {t:"\"Guerra d'Algeria\" pone l'accento sul trauma subito dalla Francia stessa: la crisi della Quarta Repubblica, la spaccatura tra francesi di Francia e francesi d'Algeria.", c:"sostiene"},
+          {t:"\"Rivoluzione algerina\" sposta il fuoco sulla rottura radicale con il passato coloniale, un atto fondativo più che una guerra subita.", c:"sostiene"},
+          {t:"Le due etichette non descrivono eventi diversi, ma scelgono da quale lato della frontiera raccontare lo stesso evento: potrebbero quindi convivere come prospettive, non escludersi.", c:"confuta"},
+          {t:"Il capitolo stesso tratta il problema del nome come un problema di metodo storiografico, non come un giudizio politico da prendere.", c:"confuta"},
+          {t:"Gli accordi di Evian, nel marzo 1962, sancirono il cessate il fuoco; in luglio l'Algeria proclamò l'indipendenza.", c:"nondecide"},
+          {t:"Circa un milione di pieds-noirs dovette abbandonare l'Algeria dopo l'indipendenza.", c:"nondecide"}
+        ],
+        calibratura: [
+          "Chiamare il conflitto algerino \"guerra\" invece che \"rivoluzione\" è già una scelta di parte, non una scelta neutra di lessico.",
+          "Le due etichette orientano la lettura senza esaurirla: restano scelte di prospettiva più che di parte in senso pieno.",
+          "Il nome scelto non implica di per sé un giudizio di parte: descrive semplicemente da quale angolo si sceglie di raccontare l'evento."
+        ]
+      }
+    ]},
+    { chapter: "Cap. 3 — Dal sionismo al mandato britannico", nodes: [
+      { q: "Il \"transfer\": intenzione fondativa o lettura retrospettiva?",
+        tesi: "L'idea del trasferimento della popolazione araba era presente fin dalle origini del sionismo come orientamento diffuso, non come posizione marginale di pochi isolati.",
+        statements: [
+          {t:"I \"nuovi storici\" israeliani, tra cui Benny Morris, sostengono che i riferimenti al transfer, tutt'altro che isolati, testimoniano una linea di pensiero presente fin dalle origini del movimento.", c:"sostiene"},
+          {t:"Già nel 1895 Herzl annotava nel proprio diario la necessità di \"far espatriare discretamente la popolazione povera\"; nel 1897 e nel 1905 altri dirigenti del movimento tornarono sulla stessa idea.", c:"sostiene"},
+          {t:"Una parte della storiografia insiste sul carattere marginale di queste dichiarazioni, espresse da singoli individui in un diario privato o in un pamphlet ideologico.", c:"confuta"},
+          {t:"La strategia dichiarata del movimento restò per decenni l'acquisto legale della terra, non la sua conquista con la forza.", c:"confuta"},
+          {t:"Il nodo si riproporrà, in una forma ancora più diretta, a proposito dell'esodo palestinese del 1948.", c:"nondecide"},
+          {t:"Il Fondo Nazionale Ebraico acquistava terra secondo un principio dichiarato di legalità, non di espulsione.", c:"nondecide"}
+        ],
+        calibratura: [
+          "L'idea del trasferimento della popolazione araba era presente fin dalle origini del sionismo come orientamento diffuso, non come posizione marginale di pochi isolati.",
+          "L'idea del transfer circolava fin dalle origini, ma restò minoritaria rispetto alla strategia ufficiale dell'acquisto legale della terra.",
+          "Il transfer fu una posizione marginale di pochi ideologi, priva di reale peso sulla strategia politica del movimento sionista delle origini."
+        ]
+      }
+    ]},
+    { chapter: "Cap. 4 — La nascita di Israele e le guerre arabo-israeliane", nodes: [
+      { q: "Guerra d'indipendenza o pulizia etnica pianificata? Il 1948 tra due letture",
+        tesi: "L'esodo palestinese del 1948 fu il risultato di un piano sistematico di pulizia etnica deciso prima dell'invasione degli eserciti arabi.",
+        statements: [
+          {t:"Il Piano Dalet, adottato il 10 marzo 1948, includeva esplicitamente lo sgombero di villaggi arabi, prima ancora dell'invasione degli eserciti arabi il 15 maggio.", c:"sostiene"},
+          {t:"Ilan Pappé sostiene l'esistenza di un piano sistematico di pulizia etnica, deciso a tavolino prima dell'invasione.", c:"sostiene"},
+          {t:"Benny Morris parla di espulsioni ricorrenti ma non di un disegno preordinato unitario, riconducendole piuttosto alla logica di una guerra percepita come esistenziale.", c:"confuta"},
+          {t:"La storiografia israeliana tradizionale ha raccontato per decenni l'esodo come conseguenza quasi naturale di una guerra difensiva, con fughe spesso su invito degli stessi governi arabi.", c:"confuta"},
+          {t:"Circa 250.000 palestinesi erano già stati sradicati dalle proprie case prima ancora della proclamazione dello Stato di Israele.", c:"nondecide"},
+          {t:"L'apertura degli archivi militari israeliani, a partire dagli anni Ottanta, ha permesso ai \"nuovi storici\" di documentare un quadro diverso da quello tradizionale.", c:"nondecide"}
+        ],
+        calibratura: [
+          "L'esodo palestinese del 1948 fu il risultato di un piano sistematico di pulizia etnica deciso prima dell'invasione degli eserciti arabi.",
+          "Il Piano Dalet previde espulsioni mirate in alcuni contesti, senza costituire un disegno unico e sistematico esteso a tutta la Palestina.",
+          "L'esodo fu soprattutto l'esito di una guerra vissuta come esistenziale da entrambe le parti, non di un piano di pulizia etnica deciso in anticipo."
+        ]
+      }
+    ]},
+    { chapter: "Cap. 5 — La questione palestinese, dall'OLP a Oslo", nodes: [
+      { q: "Chi ha fatto fallire Camp David 2000?",
+        tesi: "Il fallimento di Camp David 2000 fu dovuto principalmente al rifiuto di Arafat di un'offerta israeliana genuinamente generosa.",
+        statements: [
+          {t:"Dennis Ross ha attribuito la responsabilità quasi per intero ad Arafat: Barak avrebbe offerto la concessione territoriale più generosa mai messa sul tavolo da un governo israeliano.", c:"sostiene"},
+          {t:"Arafat rifiutò la proposta di Barak senza presentare una controfferta.", c:"sostiene"},
+          {t:"Robert Malley e Hussein Agha hanno contestato questa ricostruzione: l'offerta israeliana era meno generosa di come fu presentata, frammentata in enclave non contigue e priva di reale sovranità su Gerusalemme.", c:"confuta"},
+          {t:"Una terza lettura, quella di Pappé, sposta l'attenzione sulla struttura stessa di Oslo: aver rinviato per sette anni la questione del 1948 rendeva impossibile un accordo definitivo su basi mai affrontate.", c:"confuta"},
+          {t:"La Knesset aveva già approvato una legge che vietava di negoziare sul diritto al ritorno dei profughi.", c:"nondecide"},
+          {t:"Il summit fu convocato da Bill Clinton nell'estate del 2000, sette anni dopo gli accordi di Oslo.", c:"nondecide"}
+        ],
+        calibratura: [
+          "Il fallimento di Camp David 2000 fu dovuto principalmente al rifiuto di Arafat di un'offerta israeliana genuinamente generosa.",
+          "Il rifiuto di Arafat pesò, ma su un'offerta meno generosa di come fu presentata all'opinione pubblica.",
+          "Il fallimento fu soprattutto strutturale, l'esito di un processo che aveva rinviato per anni i nodi decisivi, non la responsabilità di un singolo rifiuto."
+        ]
+      },
+      { q: "Una rivolta spontanea o pianificata? Il dibattito sulla seconda Intifada",
+        tesi: "La seconda Intifada fu pianificata a tavolino dalla leadership palestinese come strumento di pressione politica dopo Camp David.",
+        statements: [
+          {t:"Una parte della pubblicistica israeliana ha sostenuto che la rivolta fosse stata pianificata a tavolino dalla leadership palestinese come strumento di pressione dopo il fallimento del negoziato.", c:"sostiene"},
+          {t:"La freddezza con cui Arafat aveva lasciato Camp David senza controfferta alimentò il sospetto di un calcolo politico successivo.", c:"sostiene"},
+          {t:"La maggioranza della storiografia internazionale legge la rivolta come un'esplosione spontanea, innescata dalla visita di Sharon alla Spianata delle Moschee il 28 settembre 2000.", c:"confuta"},
+          {t:"La risposta militare israeliana, sproporzionata rispetto alle prime proteste, contribuì ad amplificare una spirale che né Arafat né Sharon controllarono mai del tutto.", c:"confuta"},
+          {t:"Sharon visitò la Spianata scortato da mille soldati, un gesto che i palestinesi non lessero come religioso ma come rivendicazione di sovranità.", c:"nondecide"},
+          {t:"Il bilancio finale della seconda Intifada superò i quattromila morti palestinesi e i mille morti israeliani.", c:"nondecide"}
+        ],
+        calibratura: [
+          "La seconda Intifada fu pianificata a tavolino dalla leadership palestinese come strumento di pressione politica dopo Camp David.",
+          "La leadership palestinese non pianificò la rivolta, ma ne sfruttò politicamente lo sviluppo una volta iniziata.",
+          "La seconda Intifada fu un'esplosione spontanea di rabbia popolare, amplificata da una risposta militare sproporzionata, non un calcolo politico dall'alto."
+        ]
+      }
+    ]},
+    { chapter: "Cap. 6 — Il Medio Oriente nella guerra fredda", nodes: [
+      { q: "Vittoria o sconfitta? Lo Yom Kippur tra due letture",
+        tesi: "La guerra dello Yom Kippur fu, nella sostanza, una vittoria militare israeliana, a prescindere da come fu percepita nel mondo arabo.",
+        statements: [
+          {t:"L'esercito israeliano ribaltò la sorte del conflitto in due settimane, attraversando a sua volta il canale di Suez e circondando la Terza armata egiziana.", c:"sostiene"},
+          {t:"Il cessate il fuoco lasciò Israele in netto vantaggio territoriale su entrambi i fronti.", c:"sostiene"},
+          {t:"La guerra produsse in Israele una commissione d'inchiesta che travolse la classe dirigente, a cominciare da Golda Meir, per un fallimento dell'intelligence giudicato inaccettabile.", c:"confuta"},
+          {t:"Per la storiografia e la memoria pubblica egiziana e siriana, il 1973 fu una vittoria a prescindere dall'esito militare finale: aver sorpreso Israele bastò a restituire dignità all'orgoglio arabo.", c:"confuta"},
+          {t:"L'attacco a sorpresa del 6 ottobre 1973 colse Israele impreparata nelle prime quarantott'ore.", c:"nondecide"},
+          {t:"La guerra offrì a Sadat la legittimità politica interna necessaria per trattare, pochi anni dopo, la pace con Israele.", c:"nondecide"}
+        ],
+        calibratura: [
+          "La guerra dello Yom Kippur fu, nella sostanza, una vittoria militare israeliana, a prescindere da come fu percepita nel mondo arabo.",
+          "Fu una vittoria militare israeliana costosa, che sul piano politico interno funzionò anche come sconfitta per la classe dirigente che l'aveva gestita.",
+          "Le due letture misurano il conflitto con unità di misura diverse, l'esito militare e il significato politico: nessuna delle due, da sola, coglie l'evento per intero."
+        ]
+      }
+    ]},
+    { chapter: "Cap. 7 — L'Iran, dalla rivoluzione a oggi", nodes: [
+      { q: "Proxy o alleati? Come descrivere la rete regionale iraniana",
+        tesi: "Hezbollah e le milizie sciite regionali sono strumenti che l'Iran controlla per procura, non attori dotati di reale autonomia strategica.",
+        statements: [
+          {t:"Una lettura diffusa negli ambienti occidentali e israeliani descrive Hezbollah, la Jihad islamica e le milizie sciite irachene come vere e proprie proxy, strumenti attraverso cui Teheran persegue i propri obiettivi strategici.", c:"sostiene"},
+          {t:"Questa lettura coglie una dipendenza materiale, finanziaria e militare, difficilmente contestabile, di questi gruppi da Teheran.", c:"sostiene"},
+          {t:"Un'altra lettura insiste sul fatto che organizzazioni come Hezbollah abbiano proprie basi sociali, proprie agende politiche interne e margini di autonomia decisionale reali.", c:"confuta"},
+          {t:"Hezbollah è al tempo stesso un partito politico libanese radicato e la milizia più addestrata della rete regionale, non solo uno strumento esterno.", c:"confuta"},
+          {t:"Hamas, di ispirazione sunnita, mantiene con l'Iran sciita una convergenza più tattica che ideologica.", c:"nondecide"},
+          {t:"Teheran ha sostenuto, sul piano logistico e finanziario, anche organizzazioni sunnite come la Jihad islamica e in parte la stessa Hamas.", c:"nondecide"}
+        ],
+        calibratura: [
+          "Hezbollah e le milizie sciite regionali sono strumenti che l'Iran controlla per procura, non attori dotati di reale autonomia strategica.",
+          "Hezbollah dipende materialmente da Teheran ma conserva margini reali di autonomia politica interna, diversi da caso a caso nella rete regionale.",
+          "Gli attori della rete regionale iraniana agiscono soprattutto per convenienza propria: la dipendenza da Teheran è reale ma secondaria rispetto alla loro autonomia strategica."
+        ]
+      }
+    ]},
+    { chapter: "Cap. 8 — Il 7 ottobre 2023 e le sue conseguenze", nodes: [
+      { q: "Guerra o genocidio? Una domanda aperta sulla campagna militare a Gaza",
+        tesi: "La campagna militare israeliana a Gaza soddisfa i criteri giuridici di un genocidio ai sensi della Convenzione del 1948.",
+        statements: [
+          {t:"Storici e giuristi come Omer Bartov e Raz Segal fondano il proprio giudizio sull'intreccio tra la scala delle vittime civili, le dichiarazioni pubbliche di alcuni ministri israeliani e le condizioni materiali imposte al territorio.", c:"sostiene"},
+          {t:"Nel gennaio 2024 la Corte internazionale di giustizia ha ordinato a Israele misure provvisorie per prevenire atti genocidiari.", c:"sostiene"},
+          {t:"Il governo israeliano respinge integralmente l'accusa, rivendicando il carattere di guerra di autodifesa contro un'organizzazione che considera l'unica responsabile di aver esposto la popolazione civile al rischio.", c:"confuta"},
+          {t:"Un'altra parte della comunità accademica giudica il termine genocidio giuridicamente prematuro o improprio, non ravvisando il livello di intenzionalità distruttiva richiesto dalla Convenzione del 1948.", c:"confuta"},
+          {t:"Il procedimento della Corte, alla data di redazione del capitolo, è ancora nella sua fase istruttoria, senza una sentenza definitiva.", c:"nondecide"},
+          {t:"Il Sudafrica ha portato Israele davanti alla Corte internazionale di giustizia nel dicembre 2023.", c:"nondecide"}
+        ],
+        calibratura: [
+          "La campagna militare israeliana a Gaza soddisfa i criteri giuridici di un genocidio ai sensi della Convenzione del 1948.",
+          "Gli elementi raccolti sollevano un sospetto giuridicamente serio, ma la questione resta aperta finché la Corte internazionale di giustizia non si pronuncia nel merito.",
+          "La campagna militare israeliana a Gaza è una condotta bellica, per quanto brutale e sproporzionata, che non soddisfa il livello di intenzionalità distruttiva richiesto dalla Convenzione del 1948."
+        ]
+      }
+    ]}
+  ];
+
+  const CAT_LABELS = {sostiene:"La sostiene", confuta:"La confuta", nondecide:"Non la decide"};
+
+  let flatNodes = [];
+  DATA.forEach((ch, ci) => {
+    ch.nodes.forEach((n, ni) => {
+      const id = ci + '-' + ni;
+      flatNodes.push({
+        id, chapterIdx: ci, nodeIdx: ni, chapterTitle: ch.chapter, q: n.q, tesi: n.tesi,
+        statements: n.statements.map((s, si) => ({...s, id: id+'-s'+si, assigned: null})),
+        calibChoice: null
+      });
+    });
+  });
+
+  let activeId = flatNodes[0].id;
+  let compareOn = false;
+
+  const indexList = document.getElementById('indexList');
+  const mainInner = document.getElementById('mainInner');
+
+  function isNodeDone(n){
+    return n.statements.every(s => s.assigned !== null) && n.calibChoice !== null;
+  }
+
+  function renderIndex(){
+    indexList.innerHTML = '';
+    DATA.forEach((ch, ci) => {
+      const block = document.createElement('div');
+      block.className = 'chapter-block';
+      const title = document.createElement('div');
+      title.className = 'chapter-title';
+      title.textContent = ch.chapter;
+      block.appendChild(title);
+      ch.nodes.forEach((n, ni) => {
+        const id = ci + '-' + ni;
+        const fn = flatNodes.find(f => f.id === id);
+        const item = document.createElement('div');
+        item.className = 'node-item' + (id === activeId ? ' active' : '');
+        item.innerHTML = '<span class="node-dotstatus' + (isNodeDone(fn) ? ' done' : '') + '"></span>' + n.q;
+        item.addEventListener('click', () => { activeId = id; compareOn = false; renderAll(); });
+        block.appendChild(item);
+      });
+      indexList.appendChild(block);
+    });
+  }
+
+  function renderMain(){
+    const n = flatNodes.find(f => f.id === activeId);
+    let html = '';
+    html += '<div class="crumbs">' + n.chapterTitle + '</div>';
+    html += '<div class="tesi-box"><div class="tlabel">Tesi da mettere alla prova</div><h2>' + n.tesi + '</h2></div>';
+    html += '<p class="sort-instructions">Classifica ciascuna affermazione: la sostiene, la confuta, oppure non prende posizione sulla tesi. Un secondo clic sullo stesso pulsante annulla la scelta.</p>';
+
+    html += '<button class="compare-toggle' + (compareOn ? ' on' : '') + '" id="compareBtn">' +
+      (compareOn ? 'Nascondi il confronto' : 'Confronta con la lettura del capitolo') + '</button>';
+    if(compareOn){
+      html += '<p class="calib-note">Non è un punteggio: è la classificazione proposta dal capitolo, utile per confrontarla con la tua e discutere i casi in cui non coincidono.</p>';
+    }
+
+    const unassigned = n.statements.filter(s => s.assigned === null);
+    html += '<div class="pool"><div class="pool-title">Da classificare</div>';
+    if(unassigned.length === 0){
+      html += '<div class="col-empty">Tutte le affermazioni sono state classificate.</div>';
+    } else {
+      unassigned.forEach(s => { html += statementCardHtml(s); });
+    }
+    html += '</div>';
+
+    html += '<div class="columns">';
+    ['sostiene','confuta','nondecide'].forEach(cat => {
+      const items = n.statements.filter(s => s.assigned === cat);
+      html += '<div class="col ' + cat + '"><div class="col-title">' + CAT_LABELS[cat] + '</div>';
+      if(items.length === 0){ html += '<div class="col-empty">—</div>'; }
+      else { items.forEach(s => { html += statementCardHtml(s); }); }
+      html += '</div>';
+    });
+    html += '</div>';
+
+    const allAssigned = n.statements.every(s => s.assigned !== null);
+    html += '<div class="calib-section' + (allAssigned ? '' : ' locked') + '">';
+    html += '<div class="calib-title">Calibratura della tesi</div>';
+    if(!allAssigned){
+      html += '<div class="calib-lock-msg">Classifica tutte le affermazioni per procedere alla calibratura.</div>';
+    } else {
+      html += '<div class="calib-note">Scegli la formulazione che, alla luce di come hai distribuito le affermazioni, ti sembra oggi più difendibile. Nessuna delle tre è indicata come corretta.</div>';
+      n.calibratura.forEach((opt, oi) => {
+        html += '<div class="calib-option' + (n.calibChoice === oi ? ' selected' : '') + '" data-oi="' + oi + '">' +
+          '<div class="calib-radio"></div><p>' + opt + '</p></div>';
+      });
+      if(n.calibChoice !== null){
+        html += '<div class="calib-done">Scelta registrata. Puoi cambiarla in qualsiasi momento.</div>';
+      }
+    }
+    html += '</div>';
+
+    html += '<button class="reset-btn" id="resetBtn">Azzera questo nodo</button>';
+
+    mainInner.innerHTML = html;
+
+    document.getElementById('compareBtn').addEventListener('click', () => {
+      compareOn = !compareOn;
+      renderAll();
+    });
+
+    mainInner.querySelectorAll('.assign-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sid = btn.dataset.sid, cat = btn.dataset.cat;
+        const st = n.statements.find(s => s.id === sid);
+        st.assigned = (st.assigned === cat) ? null : cat;
+        renderAll();
+      });
+    });
+
+    mainInner.querySelectorAll('.calib-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const oi = parseInt(opt.dataset.oi, 10);
+        n.calibChoice = (n.calibChoice === oi) ? null : oi;
+        renderAll();
+      });
+    });
+
+    const resetBtn = document.getElementById('resetBtn');
+    if(resetBtn){
+      resetBtn.addEventListener('click', () => {
+        n.statements.forEach(s => s.assigned = null);
+        n.calibChoice = null;
+        compareOn = false;
+        renderAll();
+      });
+    }
+  }
+
+  function statementCardHtml(s){
+    let html = '<div class="statement-card"><p>' + s.t + '</p><div class="assign-row">';
+    ['sostiene','confuta','nondecide'].forEach(cat => {
+      const active = s.assigned === cat ? ' active-' + cat : '';
+      html += '<button class="assign-btn' + active + '" data-sid="' + s.id + '" data-cat="' + cat + '">' + CAT_LABELS[cat] + '</button>';
+    });
+    if(compareOn){
+      html += '<span class="compare-tag">— lettura del capitolo: ' + CAT_LABELS[s.c] + '</span>';
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  function renderAll(){
+    renderIndex();
+    renderMain();
+  }
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

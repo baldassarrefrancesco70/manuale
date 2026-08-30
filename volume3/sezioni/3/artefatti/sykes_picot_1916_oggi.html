@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sykes-Picot, 1916 → oggi</title>
+<style>
+  :root{
+    --bg:#F2F2F2; --card:#fffdfa; --accent:#8B7355; --text:#2b2723;
+    --francia:#5b7a8f; --gb:#9c5b45; --intl:#7a8a5c; --russia:#8a7a9c;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--serif);}
+  h1,h2,.ui,button,select,.legend,.eyebrow,.tag{font-family:var(--sans);}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 26px 40px;}
+  .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:#8a8271;margin-bottom:4px;}
+  h1{font-size:1.5rem;margin:0 0 6px;font-weight:600;}
+  .subtitle{font-size:.92rem;color:#5a554e;margin:0 0 18px;max-width:900px;line-height:1.55;}
+
+  .stage{display:flex;gap:20px;flex-wrap:wrap;}
+  .mapcard{flex:1 1 620px;background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 18px;}
+  .sidecard{flex:1 1 300px;background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 18px;min-height:200px;}
+
+  .controls{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+  .modebtns{display:flex;gap:8px;flex-wrap:wrap;}
+  .modebtns button{border:1.5px solid var(--accent);background:#fff;border-radius:20px;padding:6px 14px;font-size:.8rem;cursor:pointer;color:var(--text);}
+  .modebtns button.active{background:var(--accent);color:#fff;}
+  .sliderow{display:flex;align-items:center;gap:12px;}
+  .sliderow input[type=range]{flex:1;accent-color:var(--accent);}
+  .yearlabel{font-size:.85rem;font-weight:600;min-width:64px;text-align:right;}
+
+  svg{width:100%;height:auto;display:block;border-radius:6px;background:#eef1e0;}
+  .zone{stroke:#fff;stroke-width:1.2;cursor:pointer;transition:opacity .3s;}
+  .zone-label{font-family:var(--sans);font-size:11px;fill:#fff;text-anchor:middle;pointer-events:none;font-weight:600;}
+  .modern-border{fill:none;stroke:#2b2723;stroke-width:1.4;stroke-dasharray:0;transition:opacity .3s;}
+  .modern-label{font-family:var(--sans);font-size:10.5px;fill:#2b2723;text-anchor:middle;pointer-events:none;}
+  .sykes-line{stroke:#c0392b;stroke-width:2.5;stroke-dasharray:6 3;fill:none;transition:opacity .3s;}
+  .callout{cursor:pointer;}
+  .callout circle{fill:#c0392b;stroke:#fff;stroke-width:1.5;}
+  .callout text{font-family:var(--sans);font-size:10px;fill:#fff;text-anchor:middle;dominant-baseline:central;font-weight:700;pointer-events:none;}
+
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.72rem;color:#5a554e;}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .sw{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .sidecard h2{font-size:.95rem;margin:0 0 8px;}
+  .sidecard p{font-size:.88rem;line-height:1.55;margin:0 0 10px;}
+  .sidecard .tag{font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:#8a8271;margin-bottom:4px;}
+  .placeholder{color:#a89e88;font-style:italic;font-size:.85rem;}
+
+  .reading{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 20px;margin-top:16px;}
+  .reading p{font-size:.92rem;line-height:1.6;margin:0 0 10px;}
+  .note{font-size:.74rem;color:#8a8271;margin-top:18px;border-top:1px solid #ddd6c4;padding-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">La fine degli imperi e la terra contesa &middot; Apertura di sezione</div>
+  <h1>Sykes-Picot, 1916 → oggi</h1>
+  <p class="subtitle">Nel 1916 due diplomatici, l'inglese Mark Sykes e il francese François Georges-Picot, tracciarono su una carta una linea che divideva il Medio Oriente tra le sfere di influenza dei loro due imperi. Sposta il cursore dal 1916 a oggi, o confronta le due mappe fianco a fianco: la linea che segue non corrisponde a nessun confine etnico, linguistico o religioso preesistente, e gli Stati realmente emersi dai mandati del dopoguerra non coincidono con le zone che Londra e Parigi si erano spartite a tavolino.</p>
+
+  <div class="stage">
+    <div class="mapcard">
+      <div class="controls">
+        <div class="modebtns">
+          <button data-mode="slider" class="active">Slider 1916 → oggi</button>
+          <button data-mode="compare">Confronta fianco a fianco</button>
+        </div>
+        <div class="sliderow" id="sliderRow">
+          <span style="font-size:.78rem;color:#8a8271;">1916</span>
+          <input type="range" id="yearSlider" min="0" max="100" value="0">
+          <span class="yearlabel" id="yearLabel">1916</span>
+        </div>
+      </div>
+      <svg id="svgMap" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--francia)"></span>Zona di influenza francese (1916)</span>
+        <span><span class="sw" style="background:var(--gb)"></span>Zona di influenza britannica (1916)</span>
+        <span><span class="sw" style="background:var(--intl)"></span>Palestina, amministrazione internazionale prevista (1916)</span>
+        <span><span class="sw" style="background:var(--russia)"></span>Zona russa (1916, mai attuata)</span>
+      </div>
+    </div>
+    <div class="sidecard" id="sidecard">
+      <div class="tag">Punto di lettura</div>
+      <p class="placeholder">Clicca su uno dei punti rossi sulla mappa per leggere il commento su quel caso.</p>
+    </div>
+  </div>
+
+  <div class="reading">
+    <p>Confrontare la linea del 1916 con le frontiere effettivamente emerse dai mandati del dopoguerra permette di leggere in anticipo un problema che la sezione ritroverà, nella sua forma più acuta, a proposito della Palestina: il Libano ritagliato per garantire una maggioranza cristiana oggi non più tale, l'Iraq che tiene insieme sunniti, sciiti e curdi entro un confine amministrativo, la Siria che riunisce comunità religiose diversissime sotto un unico Stato. Nessuno degli abitanti di quei territori fu consultato: la linea rispondeva a una logica di spartizione tra potenze, non alla geografia umana della regione.</p>
+  </div>
+
+  <p class="note">Manuale di Storia &middot; Liceo Classico G. B. Vico, Chieti &middot; La fine degli imperi e la terra contesa &middot; Cfr. Atlante, Cartina 1</p>
+</div>
+
+<script>
+(function(){
+  // Schematic (non-cartographic) polygons: illustrate the logic of the partition,
+  // not a precise GIS boundary. Coordinates are a simplified stylised layout.
+  const ZONES_1916 = [
+    {id:'a', name:"Zona A (Francia)\nSiria interna", color:'var(--francia)', pts:"260,90 360,90 380,160 300,190 240,150", lx:305,ly:130},
+    {id:'blue', name:"Costa siro-libanese\n(amm. diretta francese)", color:'var(--francia)', pts:"230,90 260,90 240,150 210,140", lx:235,ly:118},
+    {id:'b', name:"Zona B (Gran Bretagna)\nGiordania / Iraq del nord", color:'var(--gb)', pts:"300,190 380,160 460,190 470,280 340,300 300,240", lx:390,ly:230},
+    {id:'red', name:"Bassa Mesopotamia\n(amm. diretta britannica)", color:'var(--gb)', pts:"340,300 470,280 500,360 380,380", lx:420,ly:335},
+    {id:'brown', name:"Palestina\n(amm. internazionale prevista)", color:'var(--intl)', pts:"210,140 240,150 300,240 260,300 200,260", lx:245,ly:210},
+    {id:'russia', name:"Zona russa (Anatolia orientale)\nmai attuata", color:'var(--russia)', pts:"260,20 380,20 380,90 260,90", lx:320,ly:55}
+  ];
+
+  const BORDERS_OGGI = [
+    {id:'lebanon', name:'Libano', pts:"205,130 232,128 238,152 212,158", lx:222,ly:142},
+    {id:'syria', name:'Siria', pts:"212,158 260,90 380,90 380,180 340,300 260,300 200,260 210,140", lx:300,ly:160},
+    {id:'iraq', name:'Iraq', pts:"340,300 470,280 500,360 380,380 340,340", lx:410,ly:320},
+    {id:'jordan', name:'Giordania', pts:"260,300 340,300 340,340 300,380 260,360", lx:295,ly:335},
+    {id:'israel_pal', name:'Israele / Territori palestinesi', pts:"200,260 260,300 260,360 220,340 195,300", lx:225,ly:305},
+    {id:'turkey', name:'Turchia', pts:"260,20 380,20 380,90 260,90", lx:320,ly:55}
+  ];
+
+  const SYKES_LINE = "M 210,140 L 500,360";
+
+  const CALLOUTS = [
+    {x:222,y:142,label:"1",title:"Libano",
+     text:"Ritagliato dalla Francia nel 1920 per garantire una maggioranza cristiana maronita: un equilibrio demografico che oggi non esiste più, e che il sistema politico libanese continua però a presupporre nella distribuzione delle cariche istituzionali."},
+    {x:300,y:200,label:"2",title:"Siria",
+     text:"Il confine mandatario francese riunisce sotto un unico Stato comunità sunnite, alawite, curde, drusa e cristiane che non condividevano una storia politica comune: una delle linee di frattura che la guerra civile del 2011 avrebbe riportato in superficie."},
+    {x:410,y:320,label:"3",title:"Iraq",
+     text:"Il mandato britannico tiene insieme, in un solo Stato, la maggioranza sciita del sud, la minoranza sunnita del centro e la popolazione curda del nord: un accostamento amministrativo che continuerà a pesare sulla storia irachena ben oltre la fine del mandato."},
+    {x:225,y:305,label:"4",title:"Palestina",
+     text:"Prevista nel 1916 come zona di amministrazione internazionale, non nazionale: la sezione racconterà come da questa stessa terra nascano, nei decenni successivi, due rivendicazioni nazionali sulla stessa terra, mai ricomposte."}
+  ];
+
+  const svg = document.getElementById('svgMap');
+  const NS = "http://www.w3.org/2000/svg";
+
+  function el(tag, attrs){
+    const e = document.createElementNS(NS, tag);
+    for(const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  let mode = 'slider';
+  let sliderVal = 0; // 0..100, 0=1916, 100=oggi
+
+  function build(){
+    svg.innerHTML = '';
+
+    if(mode === 'compare'){
+      // two side-by-side viewboxes emulated via two groups translated
+      const g1916 = el('g', {transform:'translate(0,0) scale(0.47)'});
+      const gOggi = el('g', {transform:'translate(330,0) scale(0.47)'});
+      drawZones(g1916, 1);
+      drawSykesLine(g1916, 1);
+      drawBorders(gOggi, 1, true);
+      const lbl1 = el('text', {x:150, y:20, class:'modern-label', style:'font-weight:700;font-size:15px;'});
+      lbl1.textContent = '1916';
+      const lbl2 = el('text', {x:150, y:20, class:'modern-label', style:'font-weight:700;font-size:15px;', transform:'translate(330,0)'});
+      lbl2.textContent = 'Oggi';
+      svg.appendChild(g1916); svg.appendChild(gOggi);
+      svg.appendChild(lbl1); svg.appendChild(lbl2);
+      drawCallouts(svg, null);
+      return;
+    }
+
+    const t = sliderVal/100;
+    drawZones(svg, 1-t);
+    drawSykesLine(svg, 1);
+    drawBorders(svg, t, false);
+    drawCallouts(svg, t);
+  }
+
+  function drawZones(container, opacity){
+    if(opacity <= 0.02) return;
+    ZONES_1916.forEach(z=>{
+      const poly = el('polygon', {points:z.pts, class:'zone', style:'fill:'+z.color+';opacity:'+opacity.toFixed(2)});
+      container.appendChild(poly);
+      const lines = z.name.split('\n');
+      lines.forEach((ln,i)=>{
+        const t = el('text', {x:z.lx, y:z.ly+i*11-5, class:'zone-label', style:'opacity:'+opacity.toFixed(2)});
+        t.textContent = ln;
+        container.appendChild(t);
+      });
+    });
+  }
+
+  function drawSykesLine(container, opacity){
+    const p = el('path', {d:SYKES_LINE, class:'sykes-line', style:'opacity:'+opacity});
+    container.appendChild(p);
+  }
+
+  function drawBorders(container, opacity, alwaysLabel){
+    if(opacity <= 0.02 && !alwaysLabel) return;
+    const op = alwaysLabel ? 1 : opacity;
+    BORDERS_OGGI.forEach(b=>{
+      const poly = el('polygon', {points:b.pts, class:'modern-border', style:'opacity:'+op.toFixed(2)});
+      container.appendChild(poly);
+      if(op > 0.35){
+        const t = el('text', {x:b.lx, y:b.ly, class:'modern-label', style:'opacity:'+((op-0.35)/0.65).toFixed(2)});
+        t.textContent = b.name;
+        container.appendChild(t);
+      }
+    });
+  }
+
+  function drawCallouts(container, tOrNull){
+    CALLOUTS.forEach(c=>{
+      const g = el('g', {class:'callout', 'data-idx':CALLOUTS.indexOf(c)});
+      const circ = el('circle', {cx:c.x, cy:c.y, r:9});
+      const txt = el('text', {x:c.x, y:c.y+1});
+      txt.textContent = c.label;
+      g.appendChild(circ); g.appendChild(txt);
+      g.addEventListener('click', ()=> showSide(c));
+      container.appendChild(g);
+    });
+  }
+
+  function showSide(c){
+    const sc = document.getElementById('sidecard');
+    sc.innerHTML = '<div class="tag">Punto ' + c.label + '</div><h2>' + c.title + '</h2><p>' + c.text + '</p>';
+  }
+
+  document.querySelectorAll('.modebtns button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.modebtns button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      document.getElementById('sliderRow').style.display = (mode==='slider') ? 'flex' : 'none';
+      build();
+    });
+  });
+
+  const slider = document.getElementById('yearSlider');
+  const yearLabel = document.getElementById('yearLabel');
+  slider.addEventListener('input', ()=>{
+    sliderVal = parseInt(slider.value,10);
+    const year = Math.round(1916 + (2026-1916) * (sliderVal/100));
+    yearLabel.textContent = sliderVal >= 98 ? 'Oggi' : (sliderVal <= 2 ? '1916' : year);
+    build();
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>

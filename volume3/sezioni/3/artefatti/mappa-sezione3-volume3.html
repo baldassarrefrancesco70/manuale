@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La fine degli imperi e la terra contesa — Mappa della sezione</title>
+<style>
+  :root{
+    --paper: #ece2c8; --ink: #2a2318; --line: #b7a173; --rule: #b7a173; --rule-soft: #cfc09a;
+    --paper-card: #f2e9d2; --paper-deep: #ddcda3; --ink-soft: #5c5136;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+
+    --cornice: #8a7a52;
+    --c0: #6b5b7a; /* una terra, molte narrazioni */
+    --c1: #5c7343; /* fine degli imperi coloniali */
+    --c2: #9d6b2b; /* india e algeria */
+    --c3: #3d5566; /* sionismo e mandato */
+    --c4: #7a4a3d; /* nascita di israele */
+    --c5: #4a6b5c; /* questione palestinese, oslo */
+    --c6: #8a5a2b; /* guerra fredda in medio oriente */
+    --c7: #5a4a7a; /* iran */
+    --c8: #6b3d3d; /* 7 ottobre 2023 */
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-card:#241d13; --paper-deep:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --line:#5a4d30; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:0 30px 70px; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,3.6vw,40px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:70ch; margin:0; }
+
+  .controls{ display:flex; gap:10px; margin-top:22px; }
+  .ctrl-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:10px 18px;
+    background:transparent; border:1px solid var(--rule); color:var(--ink); cursor:pointer; }
+  .ctrl-btn:hover{ border-color:var(--ink); }
+
+  .cascade{ position:relative; margin-top:34px; }
+  .connectors-overlay{ position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:visible; }
+  .connectors-overlay path{ fill:none; stroke:var(--rule); stroke-width:1.5; }
+  .row{ position:relative; z-index:1; display:flex; margin-bottom:6px; }
+  .row.align-left{ justify-content:flex-start; }
+  .row.align-center{ justify-content:center; }
+  .row.align-right{ justify-content:flex-end; }
+
+  .node{ display:flex; align-items:center; gap:12px; background:var(--paper-card); border:1px solid var(--rule);
+    border-left:5px solid var(--n-c); padding:13px 20px 13px 16px; cursor:pointer; box-shadow:var(--shadow);
+    font-family:var(--font-label); min-width:280px; max-width:460px; transition:transform .12s ease; position:relative; }
+  .node:hover{ transform:translateY(-2px); }
+  .node.frame{ border-left-style:double; border-left-width:7px; }
+  .node .n-tag{ font-size:9.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--n-c); font-weight:700; white-space:nowrap; }
+  .node .n-title{ font-family:var(--font-body); font-size:16px; color:var(--ink); line-height:1.25; flex:1; }
+  .node .n-chevron{ font-size:13px; color:var(--ink-soft); transition:transform .2s ease; flex-shrink:0; }
+  .node[aria-expanded="true"] .n-chevron{ transform:rotate(90deg); }
+  .node[aria-expanded="true"]{ outline:2px solid var(--n-c); outline-offset:1px; }
+
+  .panel{ max-height:0; overflow:hidden; transition:max-height .3s ease; margin:0 0 6px; }
+  .panel.open{ max-height:2400px; }
+  .panel-inner{ background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--n-c);
+    padding:20px 26px 22px; margin:4px 0 14px; max-width:900px; }
+
+  .frame-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px; }
+  .frame-list > li{ padding-left:18px; border-left:2px solid var(--rule-soft); position:relative; }
+  .bullets{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; }
+  .bullets li{ font-size:15px; line-height:1.5; padding-left:15px; position:relative; }
+  .bullets li::before{ content:"–"; position:absolute; left:0; color:var(--n-c); font-weight:700; }
+
+  .cluster{ margin-bottom:20px; }
+  .cluster:last-of-type{ margin-bottom:0; }
+  .cluster-name{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11px; color:var(--n-c); font-weight:700; margin:0 0 10px; }
+  .stmt-chain{ display:flex; flex-direction:column; }
+  .stmt-block{ padding:6px 0; }
+  .stmt-arrow{ font-family:var(--font-label); font-size:11px; color:var(--ink-soft); padding:2px 0 2px 15px; }
+
+  .histo-row{ margin-top:20px; padding-top:16px; border-top:1px dashed var(--rule-soft); display:flex; flex-direction:column; gap:10px; }
+  .histo-item{ font-size:14.5px; line-height:1.5; }
+  .histo-item .htag{ display:block; font-family:var(--font-label); font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:3px; }
+  .histo-item .htag b{ color:var(--n-c); }
+
+  footer.prompt{ margin-top:40px; padding-top:18px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+
+  @media (max-width:760px){
+    .row.align-left, .row.align-center, .row.align-right{ justify-content:flex-start; }
+    .node{ min-width:0; width:100%; max-width:none; }
+    .connector-svg{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Volume 3 · Sezione 3 · Mappa di apertura</p>
+    <h1>La fine degli imperi e la terra contesa</h1>
+    <p class="dek">Undici tappe, dall'apertura alla chiusura della sezione. Clicca ciascun nodo per aprire il suo pannello — più pannelli possono restare aperti insieme, per confrontare capitoli distanti fra loro.</p>
+  </header>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="expandAll" type="button">Espandi tutto</button>
+    <button class="ctrl-btn" id="collapseAll" type="button">Comprimi tutto</button>
+  </div>
+
+  <div class="cascade" id="cascade">
+    <svg class="connectors-overlay" id="connectors"></svg>
+  </div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    { id:'apertura', kind:'frame', tag:'Apertura', title:'La linea sulla sabbia', color:'var(--cornice)',
+      items:[
+        { bullets:['1916, una stanza a Londra: due diplomatici tracciano una linea su un Medio Oriente che non hanno mai visitato.','Nessuno degli abitanti fu consultato.']},
+        { bullets:['La domanda che apre la sezione non nasce con la Palestina.','Che cosa succede ai confini quando chi li ha tracciati se ne va?']},
+        { bullets:['Guardrail della sezione: pluralità dichiarata delle fonti, non equidistanza morale.','Raccontare più voci, senza sciogliere la tensione in una sintesi consolatoria.']}
+      ] },
+
+    { id:'cap0', kind:'chapter', tag:'Capitolo 0', title:'Una terra, molte narrazioni', color:'var(--c0)',
+      clusters:[
+        { name:'Una domanda più vecchia del 1948', progression:false, statements:[
+          ['Trattare il 1948 come un principio è già una scelta interpretativa, non un dato di fatto.','La domanda sui confini ereditati è più antica, e non riguarda solo la Palestina.'] ] },
+        { name:'Due nomi, una scelta di metodo', progression:false, statements:[
+          ['Guerra d\'Indipendenza per Israele, Nakba per la Palestina: stesso evento, due racconti mai ricomposti.','Il principio guida non è l\'equidistanza morale, è la pluralità dichiarata delle fonti.'] ] },
+        { name:'Gli imperi, non il conflitto', progression:false, statements:[
+          ['La sezione non parte dalla Palestina: parte dalla fine di tutti gli imperi coloniali del Novecento.','Un caso estremo di un problema comune, non un\'eccezione da spiegare a parte.'] ] }
+      ] },
+
+    { id:'cap1', kind:'chapter', tag:'Capitolo 1', title:'La fine degli imperi coloniali', color:'var(--c1)',
+      clusters:[
+        { name:'Le ondate della decolonizzazione', progression:true, statements:[
+          ['1945-1949 l\'Asia, anni Cinquanta-Settanta Africa e Medio Oriente: non casi isolati, un unico fenomeno globale.','Bandung, 1955: ventinove Stati si riconoscono come Terzo Mondo, non allineato a nessuno dei due blocchi.'],
+          ['Sovranità politica conquistata, sovranità economica quasi mai: il nodo del neocolonialismo.'] ] },
+        { name:'Due vie, nessuna garanzia', progression:false, statements:[
+          ['Concessione negoziata, o lotta armata: nessuna delle due garantisce, di per sé, un esito pacifico.'] ] },
+        { name:'Il problema dei confini ereditati', progression:false, statements:[
+          ['Confini disegnati per convenienza amministrativa, non per la geografia umana dei territori.','La Nigeria, la guerra del Biafra: un problema che si ritroverà, più acuto e più duraturo, in Medio Oriente.'] ] }
+      ],
+      historio:[
+        { q:'Indipendenza politica, sovranità economica: la decolonizzazione fu mai completa?', from:'Le ondate della decolonizzazione' }
+      ] },
+
+    { id:'cap2', kind:'chapter', tag:'Capitolo 2', title:'Due vie a confronto: India e Algeria', color:'var(--c2)',
+      clusters:[
+        { name:'India, 1947', progression:true, statements:[
+          ['Indipendenza negoziata, pagata comunque con la Partizione: oltre centomila morti, diciassette milioni di profughi.'],
+          ['Gandhi assassinato nel 1948 da un estremista indù che lo riteneva troppo conciliante verso i musulmani.'] ] },
+        { name:'Algeria, 1954-1962', progression:true, statements:[
+          ['Indipendenza conquistata con le armi: oltre un milione di coloni non disposti a cedere i propri privilegi.'],
+          ['La Battaglia di Algeri, 1957: vittoria militare per Parigi, sconfitta politica.'] ] },
+        { name:'Due esiti, nessuna via che abbia pagato meno', progression:false, statements:[
+          ['L\'India, una democrazia parlamentare nonostante tutto. L\'Algeria, un regime a partito unico.'] ] }
+      ],
+      historio:[
+        { q:'Il disimpegno britannico: lungimiranza politica o resa economica?', from:'India, 1947' },
+        { q:'La non violenza e il sangue della Partizione: colpa della fretta, o delle fratture identitarie?', from:'India, 1947' },
+        { q:'Una partizione, due destini istituzionali: perché?', from:'India, 1947' },
+        { q:'Guerra o rivoluzione? Come chiamare il 1954-1962 algerino', from:'Algeria, 1954-1962' }
+      ] },
+
+    { id:'cap3', kind:'chapter', tag:'Capitolo 3', title:'Dal sionismo al mandato britannico', color:'var(--c3)',
+      clusters:[
+        { name:'Il movimento sionista', progression:false, statements:[
+          ['Nasce in Europa, non in Palestina: risposta all\'assimilazione negata e ai pogrom zaristi.','Herzl, l\'affare Dreyfus, *Lo Stato ebraico*, 1896.'] ] },
+        { name:'Una terra "vuota"?', progression:false, statements:[
+          ['450.000 arabi contro 25.000 ebrei, a fine Ottocento.','L\'idea del transfer: precoce e marginale, o già presente nelle origini?'] ] },
+        { name:'La Dichiarazione Balfour, 1917', progression:false, statements:[
+          ['Sessantasette parole, due impegni incompatibili fin dal primo giorno.'] ] },
+        { name:'Il mandato britannico', progression:false, statements:[
+          ['Una decolonizzazione al contrario: si ritira lasciando due rivendicazioni nazionali sulla stessa terra.'] ] }
+      ],
+      historio:[
+        { q:'Il "transfer": intenzione fondativa o lettura retrospettiva?', from:'Una terra "vuota"?' }
+      ] },
+
+    { id:'cap4', kind:'chapter', tag:'Capitolo 4', title:'La nascita di Israele e le guerre arabo-israeliane', color:'var(--c4)',
+      clusters:[
+        { name:'Il piano di spartizione ONU, 1947', progression:false, statements:[
+          ['33 voti a favore, 13 contrari: trionfo storico da una parte, ingiustizia coloniale dall\'altra.'] ] },
+        { name:'1948 — un evento, due nomi', progression:false, statements:[
+          ['Guerra d\'Indipendenza, o Nakba: 700.000-800.000 palestinesi in fuga o espulsi.'] ] },
+        { name:'Tre guerre, 1948-1967', progression:true, statements:[
+          ['1956, Suez: sconfitto sul campo, Nasser vince politicamente.'],
+          ['1967, sei giorni: la mappa del Medio Oriente cambia più che nei diciannove anni precedenti.'] ] }
+      ],
+      historio:[
+        { q:'Guerra d\'indipendenza o pulizia etnica pianificata? Il 1948 tra due letture', from:'1948 — un evento, due nomi' }
+      ] },
+
+    { id:'cap5', kind:'chapter', tag:'Capitolo 5', title:'La questione palestinese, dall\'OLP a Oslo', color:'var(--c5)',
+      clusters:[
+        { name:'Dall\'OLP alla lotta armata, 1964-1973', progression:false, statements:[
+          ['Nata come strumento della diplomazia araba, diventa tutt\'altro dopo la disfatta del 1967.','Settembre Nero, Monaco 1972.'] ] },
+        { name:'Da Camp David a Oslo', progression:true, statements:[
+          ['1978, Sadat a Gerusalemme: trent\'anni di ostilità aperta si interrompono in una visita.'],
+          ['1993, riconoscimento reciproco che nessuno, un decennio prima, avrebbe creduto possibile.'],
+          ['Oslo II: la Cisgiordania in tre fasce, centosessantacinque enclave isolate.'] ] },
+        { name:'Il fallimento di Oslo', progression:false, statements:[
+          ['I nodi più difficili rinviati a un domani che non arriva: Gerusalemme, i profughi, le colonie.','Camp David 2000: il vertice fallisce, e con esso la fiducia nella via negoziale.'] ] },
+        { name:'Le due Intifade', progression:true, statements:[
+          ['1987, sassi e disobbedienza civile.'],
+          ['2000, attentati suicidi e omicidi mirati.'],
+          ['2007: Gaza sotto Hamas, Cisgiordania sotto l\'Autorità nazionale palestinese.'] ] }
+      ],
+      historio:[
+        { q:'Chi ha fatto fallire Camp David 2000?', from:'Il fallimento di Oslo' },
+        { q:'Una rivolta spontanea o pianificata? Il dibattito sulla seconda Intifada', from:'Le due Intifade' }
+      ] },
+
+    { id:'cap6', kind:'chapter', tag:'Capitolo 6', title:'Il Medio Oriente nella guerra fredda', color:'var(--c6)',
+      clusters:[
+        { name:'1973, lo Yom Kippur', progression:false, statements:[
+          ['Sconfitta militare per Egitto e Siria, vittoria politica: per la prima volta dal 1948 Israele rischia sul serio.'] ] },
+        { name:'L\'arma del petrolio', progression:false, statements:[
+          ['L\'embargo OAPEC quadruplica il prezzo del greggio in pochi mesi.','Il Medio Oriente non è più solo terreno di scontro per procura: è un attore che condiziona le superpotenze.'] ] },
+        { name:'Il fondamentalismo sunnita', progression:true, statements:[
+          ['1928, i Fratelli Musulmani.'],
+          ['1979-89, il jihad afghano: nasce al-Qaeda.'],
+          ['2003-2014, dal vuoto iracheno all\'ISIS: una genealogia, non un\'unica organizzazione continua.'] ] }
+      ],
+      historio:[
+        { q:'Vittoria o sconfitta? Lo Yom Kippur tra due letture', from:'1973, lo Yom Kippur' }
+      ] },
+
+    { id:'cap7', kind:'chapter', tag:'Capitolo 7', title:'L\'Iran, dalla rivoluzione a oggi', color:'var(--c7)',
+      clusters:[
+        { name:'1979, la rivoluzione', progression:false, statements:[
+          ['Khomeini rovescia lo scià, instaura una teocrazia repubblicana.','444 giorni di ostaggi all\'ambasciata americana.'] ] },
+        { name:'Riforme fallite, proteste represse', progression:true, statements:[
+          ['1997, Khatami e la Primavera di Teheran.'],
+          ['2009, l\'Onda Verde: «Dov\'è il mio voto?».'],
+          ['2022, «Donna, vita, libertà»: due grandi ondate, due repressioni.'] ] },
+        { name:'La proiezione regionale', progression:false, statements:[
+          ['Hezbollah, Jihad islamica, milizie sciite irachene, Houthi.','Hamas, sunnita: convergenza tattica più che affinità ideologica con Teheran.'] ] }
+      ],
+      historio:[
+        { q:'Proxy o alleati? Come descrivere la rete regionale iraniana', from:'La proiezione regionale' }
+      ] },
+
+    { id:'cap8', kind:'chapter', tag:'Capitolo 8', title:'Il 7 ottobre 2023 e le sue conseguenze', color:'var(--c8)',
+      clusters:[
+        { name:'Il 7 ottobre 2023', progression:false, statements:[
+          ['Circa 1.200 morti, oltre 250 ostaggi: la giornata più letale nella storia di Israele.'] ] },
+        { name:'La guerra a Gaza, 2023-2025', progression:false, statements:[
+          ['Un bilancio delle vittime conteso fin dalle sue stesse cifre.','Collasso delle infrastrutture, sfollamento di massa, rischio di carestia.'] ] },
+        { name:'Il piano di pace, 2025-2026', progression:false, statements:[
+          ['Prima fase completata, seconda fase ancora indefinita.','Nessuna garanzia esplicita di uno Stato palestinese.'] ] }
+      ],
+      historio:[
+        { q:'Guerra o genocidio? Una domanda aperta sulla campagna militare a Gaza', from:'La guerra a Gaza, 2023-2025' }
+      ] },
+
+    { id:'chiusura', kind:'frame', tag:'Chiusura', title:'La linea sulla sabbia, rivista', color:'var(--cornice)',
+      items:[
+        { bullets:['1916: una linea che pretendeva di avere risolto un problema.','Ha aperto invece una domanda che ha attraversato indenne un secolo intero.']},
+        { bullets:['Un mandato che si ritira senza scioglierla, cinque guerre convenzionali, due Intifade.','Un processo di pace naufragato sui suoi stessi nodi irrisolti.','Il 7 ottobre 2023 ha reso quella domanda più urgente e più dolorosa di quanto fosse mai stata.']},
+        { bullets:['Non equidistanza morale: pluralità dichiarata delle fonti.','La narrazione israeliana e quella palestinese, i "nuovi storici" e la storiografia tradizionale, il negoziatore americano e il rifugiato di Gaza.']},
+        { bullets:['Se una linea sulla sabbia si può ancora rivedere, la storia qui raccontata non lo dice.','Dice soltanto che, finché quella domanda resterà aperta, la terra su cui fu tracciata continuerà a essere contesa.']}
+      ] }
+  ];
+
+  var ALIGN = ['left','center','right','left','center','right','left','center','right','left','center'];
+  var open = {};
+  DATA.forEach(function(n){ open[n.id] = false; });
+
+  var cascade = document.getElementById('cascade');
+  var connectorsSvg = document.getElementById('connectors');
+
+  function bulletList(bullets){
+    var html = '<ul class="bullets">';
+    bullets.forEach(function(b){ html += '<li>'+b+'</li>'; });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildFramePanel(node){
+    var html = '<ul class="frame-list">';
+    node.items.forEach(function(it){
+      html += '<li>' + bulletList(it.bullets) + '</li>';
+    });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildChapterPanel(node){
+    var html = '';
+    node.clusters.forEach(function(cl){
+      html += '<div class="cluster"><div class="cluster-name">'+cl.name+'</div><div class="stmt-chain">';
+      cl.statements.forEach(function(bullets, i){
+        html += '<div class="stmt-block">'+bulletList(bullets)+'</div>';
+        if(cl.progression && i < cl.statements.length - 1){
+          html += '<div class="stmt-arrow">↓</div>';
+        }
+      });
+      html += '</div></div>';
+    });
+    if(node.historio && node.historio.length){
+      html += '<div class="histo-row">';
+      node.historio.forEach(function(h){
+        html += '<div class="histo-item"><span class="htag">Nodo storiografico · da: <b>'+h.from+'</b></span>'+h.q+'</div>';
+      });
+      html += '</div>';
+    }
+    return html;
+  }
+
+  function render(){
+    var rows = cascade.querySelectorAll('.row, .panel');
+    rows.forEach(function(el){ el.remove(); });
+
+    DATA.forEach(function(node, idx){
+      var row = document.createElement('div');
+      row.className = 'row align-' + ALIGN[idx];
+
+      var btn = document.createElement('button');
+      btn.className = 'node' + (node.kind === 'frame' ? ' frame' : '');
+      btn.style.setProperty('--n-c', node.color);
+      btn.type = 'button';
+      btn.setAttribute('data-node-id', node.id);
+      btn.setAttribute('aria-expanded', String(open[node.id]));
+      btn.innerHTML = '<span class="n-tag">'+node.tag+'</span><span class="n-title">'+node.title+'</span><span class="n-chevron">▸</span>';
+      btn.addEventListener('click', function(){ open[node.id] = !open[node.id]; render(); });
+      row.appendChild(btn);
+      cascade.appendChild(row);
+
+      var panel = document.createElement('div');
+      panel.className = 'panel' + (open[node.id] ? ' open' : '');
+      var inner = document.createElement('div');
+      inner.className = 'panel-inner';
+      inner.style.setProperty('--n-c', node.color);
+      inner.innerHTML = node.kind === 'frame' ? buildFramePanel(node) : buildChapterPanel(node);
+      panel.appendChild(inner);
+      cascade.appendChild(panel);
+    });
+
+    requestAnimationFrame(drawConnectors);
+  }
+
+  function drawConnectors(){
+    var anyOpen = Object.keys(open).some(function(k){ return open[k]; });
+    connectorsSvg.style.display = anyOpen ? 'none' : '';
+    if(anyOpen) return;
+
+    var cRect = cascade.getBoundingClientRect();
+    var nodes = cascade.querySelectorAll('.node');
+    connectorsSvg.setAttribute('width', cRect.width);
+    connectorsSvg.setAttribute('height', cascade.scrollHeight);
+    connectorsSvg.setAttribute('viewBox', '0 0 ' + cRect.width + ' ' + cascade.scrollHeight);
+
+    var points = [];
+    nodes.forEach(function(n){
+      var r = n.getBoundingClientRect();
+      points.push({
+        cx: r.left - cRect.left + r.width / 2,
+        top: r.top - cRect.top,
+        bottom: r.top - cRect.top + r.height
+      });
+    });
+
+    var paths = '';
+    for(var i = 0; i < points.length - 1; i++){
+      var a = points[i], b = points[i+1];
+      var midY = (a.bottom + b.top) / 2;
+      var d = 'M ' + a.cx + ' ' + a.bottom +
+              ' C ' + a.cx + ' ' + midY + ', ' + b.cx + ' ' + midY + ', ' + b.cx + ' ' + b.top;
+      paths += '<path d="' + d + '"></path>';
+    }
+    connectorsSvg.innerHTML = paths;
+  }
+
+  window.addEventListener('resize', function(){ requestAnimationFrame(drawConnectors); });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = true; });
+    render();
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = false; });
+    render();
+  });
+
+  render();
+
+})();
+</script>
+</body>
+</html>

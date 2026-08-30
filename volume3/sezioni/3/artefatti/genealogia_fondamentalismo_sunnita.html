@@ -1,0 +1,101 @@
+<!-- ARTEFATTO 10 — Genealogia del fondamentalismo sunnita -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genealogia del fondamentalismo sunnita</title>
+<style>
+  :root{--focus:#F5F0E8;--bianco-caldo:#fffdfa;--marrone:#8B7355;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--focus);font-family:Georgia,'Times New Roman',serif;color:#2c2a26;padding:18px 14px 26px;}
+  .wrap{max-width:680px;margin:0 auto;}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;font-weight:600;color:#3a352c;margin:0 0 2px;}
+  .sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#6b6455;margin:0 0 14px;}
+  .panel{background:var(--bianco-caldo);border:1px solid var(--marrone);border-radius:10px;padding:20px 22px;}
+  .chain{display:flex;flex-direction:column;align-items:stretch;}
+  .node{
+    border:1.5px solid var(--marrone);border-radius:8px;padding:11px 16px;cursor:pointer;
+    background:#fbf8f2;transition:.2s;
+  }
+  .node:hover{background:#f3ead9;}
+  .node.open{background:var(--marrone);color:#fff;}
+  .node .ttl{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:600;font-size:.94rem;display:flex;justify-content:space-between;align-items:center;}
+  .node .yr{font-size:.76rem;font-weight:400;opacity:.8;}
+  .detail{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:.86rem;line-height:1.5;}
+  .detail-inner{padding-top:10px;}
+  .node.open + .detail{max-height:260px;}
+  .arrow-between{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.72rem;font-style:italic;
+    color:#6b6455;padding:6px 0;
+  }
+  .arrow-between::before,.arrow-between::after{content:"";flex:0 0 22px;height:0;border-top:1.6px dashed var(--marrone);}
+  .branch-note{
+    margin-top:18px;border:1.5px dashed var(--marrone);border-radius:8px;padding:11px 16px;
+    background:#f6f1e8;font-size:.84rem;line-height:1.5;
+  }
+  .branch-note .ttl{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:600;color:var(--marrone);margin-bottom:4px;}
+  .src{margin-top:10px;font-size:.72rem;color:#847c6c;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Genealogia del fondamentalismo sunnita</h1>
+  <p class="sub">Clicca su ogni tappa: è una genealogia di idee e reti che si trasformano, non un'unica organizzazione continua.</p>
+  <div class="panel">
+    <div class="chain" id="chain"></div>
+    <div class="branch-note">
+      <div class="ttl">Un filone distinto: Hamas e la Jihad islamica</div>
+      <div>Nati da una rivendicazione territoriale specifica, quella della Palestina, questi movimenti islamisti di carattere nazionale vanno tenuti distinti da questa genealogia transnazionale, ostile a ogni forma di Stato nazionale esistente.</div>
+    </div>
+    <div class="src">Fonte: testo del capitolo, Focus «Il fondamentalismo sunnita, dai Fratelli Musulmani all'ISIS».</div>
+  </div>
+</div>
+<script>
+const nodes=[
+ {t:"Società dei Fratelli Musulmani",y:"1928, Egitto",
+  d:"Fondata da Hassan al-Banna: precede di decenni le guerre arabo-israeliane ed è già un tentativo di rispondere, attraverso il ritorno a un islam politico rigoroso, alla domanda lasciata aperta prima dal colonialismo, poi dal nazionalismo laico."},
+ {t:"Sayyid Qutb",y:"teorico, giustiziato nel 1966",
+  d:"Il pensiero del teorico più radicale dei Fratelli Musulmani, giustiziato da Nasser, fornisce dopo la sua morte parte del vocabolario ideologico a movimenti assai più intransigenti dei Fratelli Musulmani stessi.",arrow:"ispira"},
+ {t:"Jihad afghano",y:"anni Ottanta",
+  d:"L'invasione sovietica dell'Afghanistan (1979) offre un terreno di addestramento e mobilitazione senza precedenti: migliaia di volontari arabi, sostenuti anche da finanziamenti statunitensi e sauditi in funzione anti-sovietica. È qui che il saudita Osama bin Laden costruisce la rete che diventerà al-Qaeda.",arrow:"fornisce il vocabolario a"},
+ {t:"al-Qaeda",y:"dal 1989",
+  d:"Il ritiro sovietico del 1989 non scioglie la rete di bin Laden: la riorienta contro un nuovo bersaglio, gli Stati Uniti e i governi arabi considerati loro alleati.",arrow:"forma"},
+ {t:"Invasione USA dell'Iraq e collasso dello Stato",y:"2003",
+  d:"Il collasso dello Stato iracheno e la marginalizzazione della minoranza sunnita che aveva retto il vecchio regime offrono un secondo terreno fertile, non meno del primo.",arrow:"si riorienta dopo"},
+ {t:"al-Qaeda in Iraq → Stato Islamico (ISIS)",y:"califfato proclamato nel 2014",
+  d:"Nel vuoto di potere lasciato dalla caduta di Saddam Hussein, un gruppo affiliato ad al-Qaeda in Iraq si trasforma nell'ISIS, capace di proclamare un califfato territoriale a cavallo tra Iraq e Siria.",arrow:"offre il terreno a"},
+ {t:"Guerra civile siriana",y:"dal 2011",
+  d:"Esplosa dalla repressione delle proteste contro Bashar al-Assad, offre all'ISIS lo spazio ulteriore per espandersi, prima che una coalizione internazionale, insieme alle milizie curde, ne smantelli il controllo territoriale tra il 2017 e il 2019.",arrow:"si trasforma in"}
+];
+const chain=document.getElementById("chain");
+nodes.forEach((n,i)=>{
+  if(i>0){
+    const a=document.createElement("div");
+    a.className="arrow-between";
+    a.textContent=n.arrow||"";
+    chain.appendChild(a);
+  }
+  const el=document.createElement("div");
+  el.className="node";
+  el.innerHTML=`<div class="ttl"><span>${n.t}</span><span class="yr">${n.y}</span></div>`;
+  const det=document.createElement("div");
+  det.className="detail";
+  det.innerHTML=`<div class="detail-inner">${n.d}</div>`;
+  el.addEventListener("click",()=>{
+    const wasOpen=el.classList.contains("open");
+    document.querySelectorAll(".node").forEach(x=>x.classList.remove("open"));
+    document.querySelectorAll(".detail").forEach(x=>x.style.maxHeight=null);
+    if(!wasOpen){
+      el.classList.add("open");
+      det.style.maxHeight="260px";
+    }
+  });
+  chain.appendChild(el);
+  chain.appendChild(det);
+});
+</script>
+</body>
+</html>

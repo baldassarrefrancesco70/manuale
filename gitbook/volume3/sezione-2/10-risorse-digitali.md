@@ -18,7 +18,7 @@ Il capitolo apre la sezione fissando la domanda che la attraverserà tutta — c
 Il capitolo fissa i tre snodi di un secolo — 1945, 1991, oggi — che reggono l'intera sezione, e li fissa prima di cominciare a raccontarli: le risorse qui orientano il lettore, non riassumono ciò che viene dopo.
 
 - **Risorsa digitale** --- [Mappa dei prerequisiti — i tre nodi dell'ordine internazionale](https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/2/artefatti/1_organizzatore_tre_direttrici.html)
-- **Video** --- Arco di una Scelta
+- **Video** --- Arco di una Scelta (video non ancora pubblicato)
 - **Video** --- [L'Ordine Internazionale](https://youtu.be/TvJ9UxGcxgg)
 
 

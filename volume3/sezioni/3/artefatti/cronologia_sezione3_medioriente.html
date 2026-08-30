@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronologia della sezione — La fine degli imperi e la terra contesa</title>
+<style>
+  :root{
+    --bg:#F2F2F2;
+    --card:#fffdfa;
+    --accent:#8B7355;
+    --tecnica:#8B7355;
+    --economia:#5b7a8f;
+    --societa:#9c5b45;
+    --idee:#7a8a5c;
+    --text:#2b2723;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;}
+  h1,h2,h3,.label,.ui,button,select,.legend,.filters,.axis-year,.node-date,.eyebrow{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  .wrap{max-width:1500px;margin:0 auto;padding:22px 26px 40px;}
+  .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:#8a8271;margin-bottom:4px;}
+  h1{font-size:1.5rem;margin:0 0 6px;color:var(--text);font-weight:600;letter-spacing:.2px;}
+  .subtitle{font-size:.92rem;color:#5a554e;margin:0 0 18px;max-width:920px;line-height:1.55;}
+  .panel{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:14px 18px;margin-bottom:16px;}
+  .controls{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start;}
+  .control-group{display:flex;flex-direction:column;gap:6px;}
+  .control-group .ctitle{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#7a746b;margin-bottom:2px;}
+  .lane-buttons{display:flex;flex-wrap:wrap;gap:8px;}
+  .lane-btn{display:flex;align-items:center;gap:7px;border:1.5px solid var(--accent);background:#fff;border-radius:20px;padding:5px 12px 5px 8px;cursor:pointer;font-size:.8rem;color:var(--text);transition:opacity .2s,background .2s;}
+  .lane-btn .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto;}
+  .lane-btn.active{background:#efe9dc;}
+  .lane-btn.dimmed-off{opacity:.4;}
+  .year-select{display:flex;gap:8px;align-items:center;}
+  select{border:1.5px solid var(--accent);border-radius:6px;padding:6px 8px;font-size:.82rem;background:#fff;color:var(--text);}
+  .clear-btn{border:1px solid var(--accent);background:#fff;border-radius:6px;padding:6px 10px;font-size:.76rem;cursor:pointer;color:var(--accent);}
+  .clear-btn:hover{background:#f6f1e8;}
+  .clear-btn:disabled{opacity:.35;cursor:default;}
+  .active-year-note{font-size:.78rem;color:#5a554e;margin-top:6px;min-height:1.2em;}
+
+  .chart-shell{overflow-x:auto;overflow-y:hidden;border:1px solid var(--accent);border-radius:8px;background:#fff;position:relative;}
+  .chart-inner{position:relative;height:340px;}
+  .lane-row-label{position:sticky;left:0;width:140px;display:flex;align-items:center;gap:8px;padding:0 10px;background:linear-gradient(90deg,#fff 82%,rgba(255,255,255,0));font-size:.82rem;font-weight:600;z-index:6;pointer-events:none;}
+  .lane-row-label .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto;}
+
+  .lane-track{position:absolute;height:2px;background:#e4dfd3;border-radius:2px;}
+  .year-tick{position:absolute;top:0;bottom:0;border-left:1px dashed #e2ddd2;}
+  .year-tick-label{position:absolute;font-size:.66rem;color:#a39c8f;top:2px;}
+  .decade-tick{border-left:1px solid #d0c8b4;}
+  .decade-tick .year-tick-label{color:#7a746b;font-weight:600;}
+
+  .node{position:absolute;cursor:pointer;transition:opacity .25s, transform .15s;}
+  .node.dimmed{opacity:.18;}
+  .node-dot{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);}
+  .node-bar{height:12px;border-radius:6px;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);}
+  .node.selected .node-dot,.node.selected .node-bar{box-shadow:0 0 0 3px rgba(139,115,85,.55);}
+  .node-date{position:absolute;font-size:.64rem;white-space:nowrap;color:#5a554e;transform-origin:left top;transform:rotate(-30deg);top:16px;left:2px;}
+
+  .cursor-line{position:absolute;top:0;bottom:0;width:2px;background:#c0392b;opacity:0;pointer-events:none;z-index:5;transition:left .2s;}
+  .cursor-line.show{opacity:.75;}
+
+  .detail{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 20px;margin-top:16px;min-height:70px;}
+  .detail .dtitle{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#8a8271;margin-bottom:4px;font-family:'Gill Sans',sans-serif;}
+  .detail h3{margin:0 0 6px;font-size:1.05rem;}
+  .detail p{margin:0 0 6px;font-size:.92rem;line-height:1.5;}
+  .detail .ref{font-size:.78rem;color:#8a8271;font-style:italic;}
+  .detail .placeholder{color:#a89e88;font-style:italic;font-size:.88rem;}
+
+  .note{font-size:.74rem;color:#8a8271;margin-top:18px;border-top:1px solid #ddd6c4;padding-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">La fine degli imperi e la terra contesa &middot; Apparati</div>
+  <h1>Cronologia della sezione</h1>
+  <p class="subtitle">Quattro corsie, dal 1896 al 2026: tecnica, economia, società, idee. Le barre indicano fenomeni di lunga durata, i punti eventi singoli. Il piano Dalet e l'attentato al King David Hotel sono eventi tecnico-militari isolati; il programma nucleare iraniano e il muro di separazione sono processi che durano decenni: la cronologia mostra insieme le due scale, e rende visibile che cosa accade nello stesso momento in corsie diverse, cosa che il racconto per capitoli, per forza di cose, deve sempre mettere in sequenza.</p>
+
+  <div class="panel">
+    <div class="controls">
+      <div class="control-group">
+        <div class="ctitle">Corsie</div>
+        <div class="lane-buttons" id="laneButtons"></div>
+      </div>
+      <div class="control-group">
+        <div class="ctitle">Vai a un anno</div>
+        <div class="year-select">
+          <select id="yearSelect"><option value="">— scegli —</option></select>
+          <button class="clear-btn" id="clearYear" disabled>Azzera</button>
+        </div>
+        <div class="active-year-note" id="yearNote"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-shell">
+    <div class="chart-inner" id="chartInner"></div>
+  </div>
+
+  <div class="detail" id="detail"><p class="placeholder">Passa il mouse su un punto o una barra, o seleziona un anno, per leggerne la scheda.</p></div>
+
+  <p class="note">Manuale di Storia &middot; Liceo Classico G. B. Vico, Chieti &middot; La fine degli imperi e la terra contesa</p>
+</div>
+
+<script>
+(function(){
+  const LANES = [
+    {id:'tecnica', label:'Tecnica', color:'var(--tecnica)'},
+    {id:'economia', label:'Economia', color:'var(--economia)'},
+    {id:'societa', label:'Società', color:'var(--societa)'},
+    {id:'idee', label:'Idee', color:'var(--idee)'}
+  ];
+
+  const EVENTS = [
+    // TECNICA
+    {lane:'tecnica', from:1907, to:null, t:"Primi kibbutz", d:"Nascono i primi insediamenti agricoli collettivi ebraici in Palestina, frutto delle tecniche di bonifica agricola del movimento sionista.", ref:"Il Congresso di Basilea e gli strumenti dell'insediamento — Cap. 3"},
+    {lane:'tecnica', from:1946, to:null, t:"Attentato al King David Hotel", d:"L'Irgun colpisce con un attentato la sede dell'amministrazione mandataria britannica a Gerusalemme: novanta morti, l'episodio più clamoroso della campagna per accelerare il ritiro britannico.", ref:"Il mandato britannico sulla Palestina — Cap. 3"},
+    {lane:'tecnica', from:1956, to:null, t:"Coordinamento anglo-franco-israeliano a Suez", d:"Francia, Gran Bretagna e Israele rispondono alla nazionalizzazione del canale con un attacco militare coordinato e segreto.", ref:"La crisi di Suez, 1956 — Cap. 4"},
+    {lane:'tecnica', from:1967, to:null, t:"Attacco aereo preventivo israeliano", d:"Il 5 giugno l'aviazione israeliana distrugge al suolo, in poche ore, oltre il 60% dei caccia egiziani: l'apertura della guerra dei Sei giorni.", ref:"La guerra dei Sei giorni, 1967 — Cap. 4"},
+    {lane:'tecnica', from:1973, to:null, t:"Ponte aereo USA; riarmo sovietico", d:"Washington rifornisce Israele, Mosca rifornisce Egitto e Siria: la guerra dello Yom Kippur diventa anche un banco di prova per gli arsenali delle due superpotenze.", ref:"1973: la guerra dello Yom Kippur e l'arma del petrolio — Cap. 6"},
+    {lane:'tecnica', from:1979, to:2026, t:"Programma nucleare iraniano", d:"Dalla rivoluzione islamica a oggi, il programma di arricchimento dell'uranio iraniano attraversa fasi di accelerazione, negoziato (JCPOA, 2015) e ripresa dopo il ritiro americano del 2018.", ref:"L'Iran, dalla rivoluzione a oggi — Cap. 7"},
+    {lane:'tecnica', from:2002, to:2026, t:"Muro di separazione in Cisgiordania", d:"712 chilometri di barriera, costruita a partire dal 2002 e più volte ampliata, tracciata in modo da includere sul lato israeliano decine di insediamenti.", ref:"Le due Intifade, il Muro, la frattura tra Gaza e Cisgiordania — Cap. 5"},
+    {lane:'tecnica', from:2006, to:2026, t:"Arsenale missilistico di Hezbollah e Houthi", d:"La rete regionale iraniana costruisce, nel tempo, capacità missilistiche crescenti in Libano e in Yemen.", ref:"La proiezione regionale: l'asse sciita e i suoi limiti — Cap. 7"},
+    {lane:'tecnica', from:2023, to:2025, t:"Tunnel di Gaza, Iron Dome, guerra dei droni", d:"La guerra 2023-2025 mostra un conflitto combattuto anche sottoterra e negli intercettori, con l'aggiunta di attacchi missilistici diretti tra Israele e Iran.", ref:"La guerra a Gaza (2023-2025) — Cap. 8"},
+
+    // ECONOMIA
+    {lane:'economia', from:1901, to:1948, t:"Fondo Nazionale Ebraico", d:"Acquisti sistematici di terra in Palestina, condizione che la terra comprata potesse essere lavorata solo da ebrei.", ref:"Il Congresso di Basilea e gli strumenti dell'insediamento — Cap. 3"},
+    {lane:'economia', from:1956, to:null, t:"Nazionalizzazione della Compagnia del canale di Suez", d:"Nasser nazionalizza il canale dopo che Stati Uniti e Banca mondiale bloccano i finanziamenti per la diga di Assuan.", ref:"La crisi di Suez, 1956 — Cap. 4"},
+    {lane:'economia', from:1973, to:null, t:"Shock petrolifero, embargo OAPEC", d:"I paesi arabi produttori di petrolio tagliano coordinatamente la produzione: il prezzo del greggio quadruplica in pochi mesi.", ref:"1973: la guerra dello Yom Kippur e l'arma del petrolio — Cap. 6"},
+    {lane:'economia', from:1990, to:1991, t:"Guerra del Golfo, espulsione dei lavoratori palestinesi", d:"Dopo l'appoggio di Arafat all'Iraq, il Kuwait espelle circa mezzo milione di lavoratori palestinesi e le monarchie del Golfo tagliano i finanziamenti all'OLP.", ref:"Il fallimento di Oslo e le sue conseguenze — Cap. 5"},
+    {lane:'economia', from:1993, to:2000, t:"Aiuti internazionali all'Autorità palestinese", d:"Dopo Oslo, la nuova Autorità nazionale palestinese riceve finanziamenti internazionali per costruire un'amministrazione autonoma.", ref:"Da Camp David a Oslo (1978-1995) — Cap. 5"},
+    {lane:'economia', from:2006, to:2007, t:"Isolamento economico di Gaza dopo la vittoria di Hamas", d:"La vittoria elettorale di Hamas nel 2006 provoca un isolamento internazionale dell'Autorità palestinese, culminato nella frattura del 2007.", ref:"Le due Intifade, il Muro, la frattura tra Gaza e Cisgiordania — Cap. 5"},
+    {lane:'economia', from:2006, to:2015, t:"Sanzioni internazionali all'Iran per il nucleare", d:"Il Consiglio di sicurezza dell'ONU delibera sanzioni dopo la ripresa unilaterale dell'arricchimento dell'uranio voluta da Ahmadinejad.", ref:"Ahmadinejad, l'Onda Verde e il nucleare (2005-2018) — Cap. 7"},
+    {lane:'economia', from:2018, to:null, t:"Ritiro USA dal JCPOA, nuove sanzioni", d:"L'amministrazione Trump ritira gli Stati Uniti dall'accordo sul nucleare del 2015 e ripristina le sanzioni.", ref:"Ahmadinejad, l'Onda Verde e il nucleare (2005-2018) — Cap. 7"},
+    {lane:'economia', from:2022, to:2026, t:"Crisi economica e inflazione in Iran", d:"Il ripristino delle sanzioni, unito a inflazione crescente e corruzione diffusa, spinge l'Iran verso una crisi economica e sociale.", ref:"\"Donna, vita, libertà\" e la teocrazia sotto pressione — Cap. 7"},
+    {lane:'economia', from:2023, to:2026, t:"Blocco e restrizione degli aiuti umanitari a Gaza", d:"Periodi prolungati di blocco o forte restrizione degli aiuti spingono più volte le agenzie dell'ONU a denunciare il rischio di carestia.", ref:"La guerra a Gaza (2023-2025) — Cap. 8"},
+
+    // SOCIETÀ
+    {lane:'societa', from:1936, to:1939, t:"Grande rivolta araba in Palestina", d:"Nata dal timore che l'immigrazione sionista rendesse gli arabi minoranza nella propria terra, la rivolta è repressa duramente dalle autorità britanniche.", ref:"Il mandato britannico sulla Palestina — Cap. 3"},
+    {lane:'societa', from:1947, to:null, t:"Partizione dell'India", d:"Circa diciassette milioni di persone in fuga tra India e Pakistan lungo il nuovo confine di Radcliffe.", ref:"India, 1947 — l'indipendenza negoziata e la partizione violenta — Cap. 2"},
+    {lane:'societa', from:1947, to:1949, t:"Esodo palestinese", d:"Circa 700.000-800.000 palestinesi in fuga o espulsi nella guerra del 1948-49.", ref:"1948 — un evento, due nomi — Cap. 4"},
+    {lane:'societa', from:1962, to:null, t:"Esodo dei pieds-noirs dall'Algeria", d:"Circa un milione di coloni europei d'Algeria abbandona il paese dopo l'indipendenza.", ref:"Algeria, 1954-1962 — l'indipendenza conquistata con le armi — Cap. 2"},
+    {lane:'societa', from:1987, to:1993, t:"Prima Intifada", d:"Disobbedienza civile di massa, scioperi, boicottaggi fiscali: la \"rivolta delle pietre\" nasce a Jabalya nel dicembre 1987.", ref:"Le due Intifade, il Muro, la frattura tra Gaza e Cisgiordania — Cap. 5"},
+    {lane:'societa', from:2000, to:2005, t:"Seconda Intifada", d:"Attentati suicidi e risposta militare israeliana: oltre quattromila morti palestinesi e mille morti israeliani.", ref:"Le due Intifade, il Muro, la frattura tra Gaza e Cisgiordania — Cap. 5"},
+    {lane:'societa', from:2009, to:null, t:"Movimento Verde in Iran", d:"Milioni di iraniani scendono in piazza dopo la contestata rielezione di Ahmadinejad, chiedendo «Dov'è il mio voto?».", ref:"Ahmadinejad, l'Onda Verde e il nucleare (2005-2018) — Cap. 7"},
+    {lane:'societa', from:2011, to:2026, t:"Guerra civile siriana, esodo di profughi", d:"La repressione delle proteste contro Assad apre una guerra civile che dura oltre un decennio e produce milioni di profughi.", ref:"Il fondamentalismo sunnita, dai Fratelli Musulmani all'ISIS — Cap. 6"},
+    {lane:'societa', from:2022, to:2023, t:"\"Donna, vita, libertà\" in Iran", d:"La morte di Mahsa Amini scatena la più ampia mobilitazione di piazza contro il sistema teocratico nella storia della Repubblica islamica.", ref:"\"Donna, vita, libertà\" e la teocrazia sotto pressione — Cap. 7"},
+    {lane:'societa', from:2023, to:2026, t:"Sfollamento di massa della popolazione di Gaza", d:"Ripetuto spostamento forzato di gran parte della popolazione della Striscia all'interno di un territorio sempre più ristretto.", ref:"La guerra a Gaza (2023-2025) — Cap. 8"},
+
+    // IDEE
+    {lane:'idee', from:1896, to:null, t:"Herzl, Lo Stato ebraico", d:"Herzl pubblica il testo fondativo del sionismo politico, dopo l'affare Dreyfus.", ref:"Herzl e l'affare Dreyfus — Cap. 3"},
+    {lane:'idee', from:1917, to:null, t:"Dichiarazione Balfour", d:"Sessantasette parole del ministro degli Esteri britannico ipotecano il destino della Palestina.", ref:"La Dichiarazione Balfour, 1917 — Cap. 3"},
+    {lane:'idee', from:1928, to:null, t:"Fondazione dei Fratelli Musulmani", d:"Hassan al-Banna fonda in Egitto la Società dei Fratelli Musulmani, tentativo di rispondere attraverso l'islam politico alla domanda lasciata aperta dal colonialismo.", ref:"Il fondamentalismo sunnita, dai Fratelli Musulmani all'ISIS — Cap. 6"},
+    {lane:'idee', from:1955, to:null, t:"Conferenza di Bandung, nascita del terzomondismo", d:"Ventinove Stati africani e asiatici si riconoscono per la prima volta come soggetto collettivo, non allineato a nessuno dei due blocchi.", ref:"Le ondate della decolonizzazione — Cap. 1"},
+    {lane:'idee', from:1958, to:1961, t:"Panarabismo nasseriano, Repubblica araba unita", d:"Siria ed Egitto fondono le proprie sovranità sotto la presidenza di Nasser; l'unione si scioglie nel 1961.", ref:"La crisi di Suez, 1956 — Cap. 4"},
+    {lane:'idee', from:1968, to:null, t:"Carta dell'OLP", d:"La nuova Carta, approvata dopo la disfatta del 1967, proclama apertamente l'obiettivo della \"liquidazione dell'entità sionista\".", ref:"La nascita dell'OLP e la stagione della lotta armata (1964-73) — Cap. 5"},
+    {lane:'idee', from:1979, to:null, t:"Rivoluzione khomeinista, velayat-e faqih", d:"Khomeini instaura una teocrazia repubblicana fondata sul governo del giurista islamico.", ref:"1979: la rivoluzione e la Repubblica islamica — Cap. 7"},
+    {lane:'idee', from:1980, to:2026, t:"Dibattito dei \"nuovi storici\" israeliani su 1948", d:"A partire dagli anni Ottanta, l'apertura degli archivi militari israeliani apre un dibattito storiografico sull'esodo palestinese che non si è mai chiuso.", ref:"Guerra d'indipendenza o pulizia etnica pianificata? Il 1948 tra due letture — Cap. 4"},
+    {lane:'idee', from:2003, to:2011, t:"Genealogia del jihadismo sunnita, da al-Qaeda in Iraq all'ISIS", d:"Dal vuoto di potere lasciato dalla caduta di Saddam Hussein nasce il filone che porterà, nel 2014, alla proclamazione del califfato.", ref:"Il fondamentalismo sunnita, dai Fratelli Musulmani all'ISIS — Cap. 6"},
+    {lane:'idee', from:2024, to:2026, t:"Dibattito \"guerra o genocidio\" e procedimento alla Corte dell'Aja", d:"Il Sudafrica porta Israele davanti alla Corte internazionale di giustizia: il procedimento resta, alla data di redazione, senza sentenza definitiva.", ref:"Guerra o genocidio? Una domanda aperta sulla campagna militare a Gaza — Cap. 8"}
+  ];
+
+  const YEAR_MIN = 1896, YEAR_MAX = 2026;
+  const PX_PER_YEAR = 11;
+  const CHART_WIDTH = (YEAR_MAX - YEAR_MIN) * PX_PER_YEAR + 60;
+  const LEFT_PAD = 150;
+  const LANE_HEIGHT = 70;
+  const TOP_PAD = 26;
+
+  let activeLanes = new Set(LANES.map(l=>l.id));
+  let selectedYear = null;
+
+  function yx(year){ return LEFT_PAD + (year - YEAR_MIN) * PX_PER_YEAR; }
+
+  const laneButtons = document.getElementById('laneButtons');
+  LANES.forEach(l=>{
+    const btn = document.createElement('button');
+    btn.className = 'lane-btn active';
+    btn.dataset.lane = l.id;
+    btn.innerHTML = '<span class="dot" style="background:' + l.color + '"></span>' + l.label;
+    btn.addEventListener('click', ()=>{
+      if(activeLanes.has(l.id)) activeLanes.delete(l.id); else activeLanes.add(l.id);
+      btn.classList.toggle('dimmed-off', !activeLanes.has(l.id));
+      render();
+    });
+    laneButtons.appendChild(btn);
+  });
+
+  const yearSelect = document.getElementById('yearSelect');
+  const yearsSet = Array.from(new Set(EVENTS.flatMap(e=> e.to ? [e.from, e.to] : [e.from]))).sort((a,b)=>a-b);
+  yearsSet.forEach(y=>{
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    yearSelect.appendChild(opt);
+  });
+  yearSelect.addEventListener('change', ()=>{
+    selectedYear = yearSelect.value ? parseInt(yearSelect.value,10) : null;
+    document.getElementById('clearYear').disabled = !selectedYear;
+    render();
+  });
+  document.getElementById('clearYear').addEventListener('click', ()=>{
+    selectedYear = null; yearSelect.value=''; document.getElementById('clearYear').disabled = true; render();
+  });
+
+  const chartInner = document.getElementById('chartInner');
+  const detail = document.getElementById('detail');
+
+  function showDetail(e){
+    detail.innerHTML = '<div class="dtitle">' + LANES.find(l=>l.id===e.lane).label + (e.to ? (' &middot; ' + e.from + '-' + e.to) : (' &middot; ' + e.from)) + '</div>' +
+      '<h3>' + e.t + '</h3><p>' + e.d + '</p><p class="ref">Cfr. ' + e.ref + '</p>';
+  }
+
+  function render(){
+    chartInner.style.width = CHART_WIDTH + 'px';
+    chartInner.style.height = (TOP_PAD + LANES.length * LANE_HEIGHT + 30) + 'px';
+    let html = '';
+
+    // decade/year ticks
+    for(let y = 1900; y <= YEAR_MAX; y += 5){
+      const isDecade = (y % 10 === 0);
+      html += '<div class="year-tick' + (isDecade?' decade-tick':'') + '" style="left:' + yx(y) + 'px;top:' + TOP_PAD + 'px;height:' + (LANES.length*LANE_HEIGHT) + 'px;">' +
+        (isDecade ? '<span class="year-tick-label">' + y + '</span>' : '') + '</div>';
+    }
+
+    LANES.forEach((l, li)=>{
+      const top = TOP_PAD + li*LANE_HEIGHT;
+      const on = activeLanes.has(l.id);
+      html += '<div class="lane-row-label" style="top:' + (top+LANE_HEIGHT/2-9) + 'px;' + (on?'':'opacity:.3;') + '"><span class="sw" style="background:' + l.color + '"></span>' + l.label + '</div>';
+      html += '<div class="lane-track" style="left:' + LEFT_PAD + 'px;width:' + (CHART_WIDTH-LEFT_PAD-20) + 'px;top:' + (top+LANE_HEIGHT/2) + 'px;"></div>';
+    });
+
+    EVENTS.forEach((e, ei)=>{
+      const li = LANES.findIndex(l=>l.id===e.lane);
+      const top = TOP_PAD + li*LANE_HEIGHT + LANE_HEIGHT/2;
+      const on = activeLanes.has(e.lane);
+      let dimmed = !on;
+      if(selectedYear !== null){
+        const hit = e.to ? (selectedYear >= e.from && selectedYear <= e.to) : (Math.abs(selectedYear - e.from) <= 1);
+        if(!hit) dimmed = true;
+      }
+      const color = LANES[li].color;
+      if(e.to){
+        const x1 = yx(e.from), x2 = yx(e.to);
+        html += '<div class="node' + (dimmed?' dimmed':'') + '" data-idx="' + ei + '" style="left:' + x1 + 'px;top:' + (top-6) + 'px;">' +
+          '<div class="node-bar" style="width:' + (x2-x1) + 'px;background:' + color + '"></div></div>';
+      } else {
+        const x = yx(e.from);
+        html += '<div class="node' + (dimmed?' dimmed':'') + '" data-idx="' + ei + '" style="left:' + (x-7) + 'px;top:' + (top-7) + 'px;">' +
+          '<div class="node-dot" style="background:' + color + '"></div></div>';
+      }
+    });
+
+    chartInner.innerHTML = html;
+    chartInner.querySelectorAll('.node').forEach(n=>{
+      n.addEventListener('mouseenter', ()=> showDetail(EVENTS[parseInt(n.dataset.idx,10)]));
+      n.addEventListener('click', ()=> showDetail(EVENTS[parseInt(n.dataset.idx,10)]));
+    });
+
+    const note = document.getElementById('yearNote');
+    if(selectedYear !== null){
+      const hits = EVENTS.filter(e=> e.to ? (selectedYear>=e.from && selectedYear<=e.to) : (Math.abs(selectedYear-e.from)<=1));
+      note.textContent = hits.length + ' eventi/processi attivi intorno al ' + selectedYear + ', nelle corsie: ' + Array.from(new Set(hits.map(h=>LANES.find(l=>l.id===h.lane).label))).join(', ') + '.';
+    } else {
+      note.textContent = '';
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

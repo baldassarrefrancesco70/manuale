@@ -32,3 +32,19 @@
     * [ATLANTE](sezione-2/atlante.md)
     * [Risorse digitali](sezione-2/10-risorse-digitali.md)
 <!-- SEZIONE:sezione-2 END -->
+<!-- SEZIONE:sezione-3 START -->
+<!-- TITOLO:La fine degli imperi e la terra contesa -->
+  * [Sezione 3](sezione-3/README.md)
+    * [Una terra, molte narrazioni](sezione-3/01-una-terra-molte-narrazioni.md)
+    * [La fine degli imperi coloniali](sezione-3/02-la-fine-degli-imperi-coloniali.md)
+    * [Due vie a confronto: India e Algeria](sezione-3/03-due-vie-a-confronto-india-e-algeria.md)
+    * [Dal sionismo al mandato britannico](sezione-3/04-dal-sionismo-al-mandato-britannico.md)
+    * [La nascita di Israele e le guerre arabo-israeliane](sezione-3/05-la-nascita-di-israele-e-le-guerre-arabo-israeliane.md)
+    * [La questione palestinese, dall'OLP a Oslo](sezione-3/06-la-questione-palestinese-dall-olp-a-oslo.md)
+    * [Il Medio Oriente nella guerra fredda](sezione-3/07-il-medio-oriente-nella-guerra-fredda.md)
+    * [L'Iran, dalla rivoluzione a oggi](sezione-3/08-l-iran-dalla-rivoluzione-a-oggi.md)
+    * [Il 7 ottobre 2023 e le sue conseguenze](sezione-3/09-il-7-ottobre-2023-e-le-sue-conseguenze.md)
+    * [La linea sulla sabbia, rivista](sezione-3/10-la-linea-sulla-sabbia-rivista.md)
+    * [ATLANTE](sezione-3/atlante.md)
+    * [Risorse digitali](sezione-3/12-risorse-digitali.md)
+<!-- SEZIONE:sezione-3 END -->

@@ -1,0 +1,68 @@
+# Riepilogo materiali caricati — manuale/volume3/sezioni/3
+
+_17 immagini, 10 cartine, 19 artefatti_
+
+Sito pubblicato (GitHub Pages): https://baldassarrefrancesco70.github.io/manuale/
+
+La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale nel tuo sito personale (immagini con `<img src=...>`, pagine HTML con link diretto o `<iframe>`).
+
+## Immagini (`img/`)
+
+| File | Link esteso (sito pubblicato) | Pagina GitHub |
+|---|---|---|
+| info10_Confronto_tra_le_due_Intifade.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info10_Confronto_tra_le_due_Intifade.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info10_Confronto_tra_le_due_Intifade.png) |
+| info11_Lo_Shock_Petrolifero_del_1973.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info11_Lo_Shock_Petrolifero_del_1973.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info11_Lo_Shock_Petrolifero_del_1973.png) |
+| info12_Genealogia_del_fondamentalismo_sunnita.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info12_Genealogia_del_fondamentalismo_sunnita.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info12_Genealogia_del_fondamentalismo_sunnita.png) |
+| info13_Mappa_confessionale_del_Medio_Oriente.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info13_Mappa_confessionale_del_Medio_Oriente.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info13_Mappa_confessionale_del_Medio_Oriente.png) |
+| info14_Geometria_della_Rete_Iraniana.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info14_Geometria_della_Rete_Iraniana.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info14_Geometria_della_Rete_Iraniana.png) |
+| info15_Roadmap_per_il_futuro_di_Gaza.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info15_Roadmap_per_il_futuro_di_Gaza.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info15_Roadmap_per_il_futuro_di_Gaza.png) |
+| info16_Cronologia_del_conflitto_2023-2025.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info16_Cronologia_del_conflitto_2023-2025.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info16_Cronologia_del_conflitto_2023-2025.png) |
+| info1_Le_vie_della_decolonizzazione.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info1_Le_vie_della_decolonizzazione.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info1_Le_vie_della_decolonizzazione.png) |
+| info2_Confini_Ereditati__Linee_e_Conflitti.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info2_Confini_Ereditati__Linee_e_Conflitti.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info2_Confini_Ereditati__Linee_e_Conflitti.png) |
+| info3_India_e_Algeria_a_confronto.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info3_India_e_Algeria_a_confronto.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info3_India_e_Algeria_a_confronto.png) |
+| info4_prezzo_della_decolonizzazione.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info4_prezzo_della_decolonizzazione.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info4_prezzo_della_decolonizzazione.png) |
+| info5_Dichiarazione_Balfour__Analisi_Storica.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info5_Dichiarazione_Balfour__Analisi_Storica.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info5_Dichiarazione_Balfour__Analisi_Storica.png) |
+| info6_Demografia_e_territorio_della_Palestina.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info6_Demografia_e_territorio_della_Palestina.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info6_Demografia_e_territorio_della_Palestina.png) |
+| info7_1948__Un_Evento,_Due_Nomi.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info7_1948__Un_Evento%2C_Due_Nomi.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info7_1948__Un_Evento%2C_Due_Nomi.png) |
+| info8_Nasser_e_il_panarabismo_radicale.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info8_Nasser_e_il_panarabismo_radicale.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info8_Nasser_e_il_panarabismo_radicale.png) |
+| info9_Cisgiordania__Mosaico_di_Oslo_II.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/info9_Cisgiordania__Mosaico_di_Oslo_II.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/info9_Cisgiordania__Mosaico_di_Oslo_II.png) |
+| mappa-sezione3-volume3.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/mappa-sezione3-volume3.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/mappa-sezione3-volume3.png) |
+
+## Cartine (`img/cartine/`)
+
+| File | Link esteso (sito pubblicato) | Pagina GitHub |
+|---|---|---|
+| 7_ottobre.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/7_ottobre.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/7_ottobre.png) |
+| Accordi_Sykes-Picot.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Accordi_Sykes-Picot.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Accordi_Sykes-Picot.png) |
+| Algeria Francese.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Algeria%20Francese.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Algeria%20Francese.png) |
+| Divisione_India.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Divisione_India.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Divisione_India.png) |
+| Gaza2026.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Gaza2026.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Gaza2026.png) |
+| Israele1947-49.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Israele1947-49.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Israele1947-49.png) |
+| Medioriente_dopo_guerra_sei_giorni.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Medioriente_dopo_guerra_sei_giorni.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Medioriente_dopo_guerra_sei_giorni.png) |
+| Palestina(pianoONU).png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Palestina%28pianoONU%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Palestina%28pianoONU%29.png) |
+| Palestina1917-1947.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Palestina1917-1947.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Palestina1917-1947.png) |
+| Popolazione sciita.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/img/cartine/Popolazione%20sciita.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/img/cartine/Popolazione%20sciita.png) |
+
+## Artefatti interattivi (`artefatti/`)
+
+| File | Link esteso (sito pubblicato) | Pagina GitHub |
+|---|---|---|
+| 7_ottobre_2023_localita_colpite.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/7_ottobre_2023_localita_colpite.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/7_ottobre_2023_localita_colpite.html) |
+| crescita_demografica_palestina.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/crescita_demografica_palestina.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/crescita_demografica_palestina.html) |
+| cronologia_sezione3_medioriente.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/cronologia_sezione3_medioriente.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/cronologia_sezione3_medioriente.html) |
+| dallolp_a_oslo_1964_2007.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/dallolp_a_oslo_1964_2007.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/dallolp_a_oslo_1964_2007.html) |
+| genealogia_fondamentalismo_sunnita.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/genealogia_fondamentalismo_sunnita.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/genealogia_fondamentalismo_sunnita.html) |
+| geografia_confessionale_medio_oriente.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/geografia_confessionale_medio_oriente.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/geografia_confessionale_medio_oriente.html) |
+| glossario_sezione3_medioriente.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/glossario_sezione3_medioriente.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/glossario_sezione3_medioriente.html) |
+| guerra_algeria_1954_1962.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/guerra_algeria_1954_1962.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/guerra_algeria_1954_1962.html) |
+| guerra_gaza_linee_controllo.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/guerra_gaza_linee_controllo.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/guerra_gaza_linee_controllo.html) |
+| guerra_yom_kippur_1973.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/guerra_yom_kippur_1973.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/guerra_yom_kippur_1973.html) |
+| iran_1979_oggi.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/iran_1979_oggi.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/iran_1979_oggi.html) |
+| mappa-sezione3-volume3.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/mappa-sezione3-volume3.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/mappa-sezione3-volume3.html) |
+| mappa_ondate_decolonizzazione.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/mappa_ondate_decolonizzazione.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/mappa_ondate_decolonizzazione.html) |
+| oslo_ii_aree_abc_cisgiordania.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/oslo_ii_aree_abc_cisgiordania.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/oslo_ii_aree_abc_cisgiordania.html) |
+| palestra_argomentazione_sezione3_medioriente.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/palestra_argomentazione_sezione3_medioriente.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/palestra_argomentazione_sezione3_medioriente.html) |
+| partizione_india_1947.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/partizione_india_1947.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/partizione_india_1947.html) |
+| piano_onu_1947_vs_linea_verde_1949.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/piano_onu_1947_vs_linea_verde_1949.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/piano_onu_1947_vs_linea_verde_1949.html) |
+| sykes_picot_1916_oggi.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/sykes_picot_1916_oggi.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/sykes_picot_1916_oggi.html) |
+| tre_guerre_arabo_israeliane.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/3/artefatti/tre_guerre_arabo_israeliane.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/3/artefatti/tre_guerre_arabo_israeliane.html) |

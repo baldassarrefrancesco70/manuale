@@ -1,0 +1,106 @@
+<!-- ARTEFATTO 8 — Dall'OLP a Oslo, 1964-2007 -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dall'OLP a Oslo, 1964-2007</title>
+<style>
+  :root{--grigio:#F2F2F2;--bianco-caldo:#fffdfa;--marrone:#8B7355;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--grigio);font-family:Georgia,'Times New Roman',serif;color:#2c2a26;padding:18px 14px 26px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;font-weight:600;color:#3a352c;margin:0 0 2px;}
+  .sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.82rem;color:#6b6455;margin:0 0 14px;}
+  .panel{background:var(--bianco-caldo);border:1px solid var(--marrone);border-radius:10px;padding:18px 18px 20px;}
+  .scrollarea{overflow-x:auto;padding-bottom:6px;}
+  .timeline{position:relative;padding-top:26px;min-width:1400px;}
+  .timeline-line{position:absolute;top:32px;left:14px;right:14px;height:2px;background:var(--marrone);}
+  .nodes{position:relative;display:flex;justify-content:space-between;padding:0 14px;}
+  .node{display:flex;flex-direction:column;align-items:center;cursor:pointer;flex:1;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;text-align:center;padding:0 4px;}
+  .node .dot{width:14px;height:14px;border-radius:50%;background:var(--bianco-caldo);border:2.5px solid var(--marrone);margin-bottom:6px;transition:.2s;}
+  .node.open .dot{background:var(--marrone);}
+  .node .yr{font-size:.72rem;font-weight:600;color:#3a352c;}
+  .node .kw{font-size:.64rem;color:#6b6455;}
+  .card{margin-top:18px;background:#faf6ef;border:1px solid var(--marrone);border-radius:8px;padding:14px 18px;font-size:.9rem;line-height:1.55;display:none;}
+  .card.on{display:block;}
+  .card .card-title{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:600;color:var(--marrone);margin-bottom:5px;font-size:1rem;}
+  .card .src{margin-top:8px;font-size:.74rem;color:#847c6c;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  .hint{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:.7rem;color:#a49b89;margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Dall'OLP a Oslo, 1964–2007</h1>
+  <p class="sub">Clicca su un nodo per aprire la scheda. Scorri orizzontalmente per vedere l'intera cronologia.</p>
+  <div class="panel">
+    <div class="scrollarea">
+      <div class="timeline">
+        <div class="timeline-line"></div>
+        <div class="nodes" id="nodes"></div>
+      </div>
+    </div>
+    <div class="hint">← scorri per vedere tutti i 12 nodi →</div>
+    <div class="card" id="card"></div>
+  </div>
+</div>
+<script>
+const events=[
+ {y:"1964",kw:"Fondazione dell'OLP",
+  text:"La Lega Araba istituisce l'Organizzazione per la Liberazione della Palestina al vertice del Cairo: non nasce come movimento rivoluzionario autonomo, ma come strumento della diplomazia araba, guidato da Ahmad al-Shuqayri, legato al re Hussein di Giordania.",
+  src:"Testo del capitolo, «La nascita dell'OLP e la stagione della lotta armata (1964-73)»."},
+ {y:"1970",kw:"Settembre Nero",
+  text:"Tra il 1968 e il 1970 l'OLP si comporta in Giordania come una sovranità parallela. Dopo il dirottamento di quattro aerei di linea, re Hussein risponde con un'offensiva durissima: le stime dei morti palestinesi oscillano tra i tremila e i diecimila; nel 1971 l'OLP è espulsa in massa dalla Giordania.",
+  src:"Testo del capitolo."},
+ {y:"1972",kw:"Monaco",
+  text:"Un gruppo scisso da al-Fatah, che assume il nome di Settembre Nero, sequestra e uccide undici atleti israeliani alle Olimpiadi di Monaco. La risposta della premier Golda Meir, l'operazione del Mossad «Ira di Dio», dà la caccia per oltre un decennio ai responsabili.",
+  src:"Testo del capitolo."},
+ {y:"1978",kw:"Camp David / Sadat",
+  text:"Begin invita Sadat a Gerusalemme: sotto la mediazione di Carter, gli Accordi di Camp David portano Israele a restituire l'intero Sinai. Il mondo arabo vive la pace separata come un tradimento; l'Egitto è espulso dalla Lega Araba.",
+  src:"Testo del capitolo, «Da Camp David a Oslo (1978-1995)»."},
+ {y:"1987",kw:"Prima Intifada",
+  text:"A Jabalya un incidente stradale incendia vent'anni di frustrazione: nasce la «rivolta delle pietre», disobbedienza civile di massa. Nello stesso clima nasce Hamas, erede dei Fratelli Musulmani locali, con una doppia natura sociale e armata.",
+  src:"Testo del capitolo."},
+ {y:"1993",kw:"Oslo",
+  text:"Il 13 settembre, alla Casa Bianca, l'OLP rinuncia formalmente alla lotta armata e riconosce il diritto di Israele a esistere; Israele riconosce l'OLP e ne accetta l'autogoverno su parte dei territori occupati nel 1967, tramite la nuova Autorità nazionale palestinese.",
+  src:"Testo del capitolo."},
+ {y:"1995",kw:"Assassinio di Rabin",
+  text:"Il 4 novembre Rabin è assassinato a Tel Aviv da Yigal Amir, un giovane di estrema destra israeliana convinto di punire un tradimento. La stagione del dialogo diretto si chiude bruscamente.",
+  src:"Testo del capitolo."},
+ {y:"2000",kw:"Camp David 2000",
+  text:"Al vertice convocato da Clinton tra Barak e Arafat, per la prima volta i negoziatori palestinesi pongono al centro dell'agenda la responsabilità israeliana nell'esodo del 1948. Arafat rifiuta la proposta di Barak senza controfferta: il summit fallisce.",
+  src:"Testo del capitolo, «Il fallimento di Oslo e le sue conseguenze»."},
+ {y:"2000",kw:"Seconda Intifada",
+  text:"Il 28 settembre la visita di Ariel Sharon alla Spianata delle Moschee, scortato da mille soldati, innesca una rivolta di natura diversa dalla prima: agli attentati suicidi risponde una repressione militare durissima. Il bilancio finale supera i quattromila morti palestinesi e i mille morti israeliani.",
+  src:"Testo del capitolo, «Le due Intifade, il Muro, la frattura tra Gaza e Cisgiordania»."},
+ {y:"2005",kw:"Disimpegno da Gaza",
+  text:"Il governo Sharon smantella unilateralmente le colonie di Gaza, ritirando circa 8.500 coloni. Il consigliere Dov Weissglas ammette che l'obiettivo era «congelare il processo di pace», rimuovendo a tempo indeterminato la discussione su confini, Gerusalemme e profughi.",
+  src:"Testo del capitolo."},
+ {y:"2006",kw:"Vittoria di Hamas",
+  text:"Hamas vince le elezioni legislative palestinesi, provocando un isolamento internazionale dell'Autorità nazionale palestinese.",
+  src:"Testo del capitolo."},
+ {y:"2007",kw:"Frattura Gaza-Cisgiordania",
+  text:"Lo scontro tra Hamas e al-Fatah sfocia in una guerra civile che divide il territorio in due entità separate e ostili: Gaza sotto Hamas, la Cisgiordania sotto l'Autorità nazionale palestinese guidata da Abu Mazen.",
+  src:"Testo del capitolo."}
+];
+const nodesDiv=document.getElementById("nodes");
+const card=document.getElementById("card");
+let openIndex=null;
+events.forEach((e,i)=>{
+  const n=document.createElement("div");
+  n.className="node";
+  n.innerHTML=`<div class="dot"></div><div class="yr">${e.y}</div><div class="kw">${e.kw}</div>`;
+  n.addEventListener("click",()=>{
+    if(openIndex===i){ card.classList.remove("on"); n.classList.remove("open"); openIndex=null; return; }
+    document.querySelectorAll(".node").forEach(el=>el.classList.remove("open"));
+    n.classList.add("open");
+    card.innerHTML=`<div class="card-title">${e.y} — ${e.kw}</div><div>${e.text}</div><div class="src">${e.src}</div>`;
+    card.classList.add("on");
+    openIndex=i;
+  });
+  nodesDiv.appendChild(n);
+});
+</script>
+</body>
+</html>
