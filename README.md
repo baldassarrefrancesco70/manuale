@@ -27,9 +27,15 @@ manuale/
 
 ## Volumi e sezioni
 
-- [Volume 2 · Sezione 1](volume2/sezioni/1/README.md) — 22 immagini, 15 artefatti
-- [Volume 2 · Sezione 2](volume2/sezioni/2/README.md) — 29 immagini, 24 artefatti
-- [Volume 3 · Sezione 1](volume3/sezioni/1/README.md) — immagini, infografiche, artefatti
+- [Volume 2 · Sezione 1 — Come nasce l'economia del mondo moderno](volume2/sezioni/1/README.md) — 32 immagini (di cui 4 cartine), 16 artefatti
+- [Volume 2 · Sezione 2 — Come nasce la politica del mondo moderno](volume2/sezioni/2/README.md) — 30 immagini (di cui 6 cartine), 28 artefatti
+- [Volume 2 · Sezione 3 — Nazioni e nazionalismi](volume2/sezioni/3/README.md) — 22 immagini, 23 artefatti
+- [Volume 2 · Sezione 4 — Come nasce l'Italia](volume2/sezioni/4/README.md) — 12 immagini, 12 artefatti
+- [Volume 2 · Sezione 5 — Il mondo fuori dall'Europa](volume2/sezioni/5/README.md) — 21 immagini, 12 artefatti
+- [Volume 3 · Sezione 1 — Come muore una democrazia](volume3/sezioni/1/README.md) — 18 immagini, 27 artefatti
+- [Volume 3 · Sezione 2 — La costruzione e la crisi dell'ordine internazionale](volume3/sezioni/2/README.md) — 29 immagini (di cui 12 cartine), 22 artefatti
+- [Volume 3 · Sezione 3 — La fine degli imperi e la terra contesa](volume3/sezioni/3/README.md) — 27 immagini (di cui 10 cartine), 19 artefatti
+- [Volume 3 · Sezione 4 — Chi paga quando il sistema salta](volume3/sezioni/4/README.md) — 23 immagini (di cui 5 cartine), 19 artefatti
 
 ## Video Volume 2 · Sezione 1 (Google Drive)
 

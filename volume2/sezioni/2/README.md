@@ -1,6 +1,6 @@
 # Riepilogo materiali caricati — manuale/volume2/sezioni/2
 
-_Aggiornato automaticamente — 29 immagini, 24 artefatti_
+_24 immagini, 6 cartine, 28 artefatti_
 
 Sito pubblicato (GitHub Pages): https://baldassarrefrancesco70.github.io/manuale/
 
@@ -33,14 +33,20 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | info7_La_Fine_del_Feudalesimo.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info7_La_Fine_del_Feudalesimo.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info7_La_Fine_del_Feudalesimo.png) |
 | info8_Il_Ciclo_dell_Assegnato.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info8_Il_Ciclo_dell_Assegnato.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info8_Il_Ciclo_dell_Assegnato.png) |
 | info9_Democrazia_a_Imbuto_(1789-1791).png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/info9_Democrazia_a_Imbuto_%281789-1791%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/info9_Democrazia_a_Imbuto_%281789-1791%29.png) |
-| cartine/europa-napoleonica-1812.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/europa-napoleonica-1812.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/europa-napoleonica-1812.png) |
-| cartine/europa-potenze-1740.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/europa-potenze-1740.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/europa-potenze-1740.png) |
-| cartine/francia-1793.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/francia-1793.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/francia-1793.png) |
-| cartine/francia-antico-regime.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/francia-antico-regime.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/francia-antico-regime.png) |
-| cartine/grande-paura-1789.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/grande-paura-1789.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/grande-paura-1789.png) |
-| cartine/spartizioni-polonia.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/spartizioni-polonia.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/spartizioni-polonia.png) |
+| mappa_sezione2.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/mappa_sezione2.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/mappa_sezione2.png) |
 
-## Artefatti (`artefatti/`)
+## Cartine (`img/cartine/`)
+
+| File | Link esteso (sito pubblicato) | Pagina GitHub |
+|---|---|---|
+| europa-napoleonica-1812.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/europa-napoleonica-1812.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/europa-napoleonica-1812.png) |
+| europa-potenze-1740.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/europa-potenze-1740.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/europa-potenze-1740.png) |
+| francia-1793.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/francia-1793.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/francia-1793.png) |
+| francia-antico-regime.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/francia-antico-regime.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/francia-antico-regime.png) |
+| grande-paura-1789.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/grande-paura-1789.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/grande-paura-1789.png) |
+| spartizioni-polonia.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/img/cartine/spartizioni-polonia.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/img/cartine/spartizioni-polonia.png) |
+
+## Artefatti interattivi (`artefatti/`)
 
 | File | Link esteso (sito pubblicato) | Pagina GitHub |
 |---|---|---|
@@ -68,3 +74,7 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | artefatto-22-il-sorteggio.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-22-il-sorteggio.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/artefatti/artefatto-22-il-sorteggio.html) |
 | artefatto-23-tre-statuti-una-mappa.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-23-tre-statuti-una-mappa.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/artefatti/artefatto-23-tre-statuti-una-mappa.html) |
 | artefatto-24-esportazione-o-dominio.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-24-esportazione-o-dominio.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/artefatti/artefatto-24-esportazione-o-dominio.html) |
+| artefatto-25-cronologia-politica.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-25-cronologia-politica.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/artefatti/artefatto-25-cronologia-politica.html) |
+| artefatto-26-glossario-politica.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-26-glossario-politica.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/artefatti/artefatto-26-glossario-politica.html) |
+| artefatto-27-palestra-politica.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/artefatto-27-palestra-politica.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/artefatti/artefatto-27-palestra-politica.html) |
+| mappa-politica.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/2/artefatti/mappa-politica.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/2/artefatti/mappa-politica.html) |

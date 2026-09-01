@@ -1,6 +1,6 @@
 # Riepilogo materiali caricati — manuale/volume3/sezioni/1
 
-_Aggiornato automaticamente — 14 immagini, 18 artefatti_
+_18 immagini, 27 artefatti_
 
 Sito pubblicato (GitHub Pages): https://baldassarrefrancesco70.github.io/manuale/
 
@@ -13,7 +13,10 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | Alleanze.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Alleanze.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/Alleanze.png) |
 | Europa 1914.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Europa%201914.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/Europa%201914.png) |
 | Europa 1919.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Europa%201919.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/Europa%201919.png) |
+| Evoluzione_Politica_Estera_(1933-1939).png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Evoluzione_Politica_Estera_%281933-1939%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/Evoluzione_Politica_Estera_%281933-1939%29.png) |
 | Fronte italiano(1915-18).png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/Fronte%20italiano%281915-18%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/Fronte%20italiano%281915-18%29.png) |
+| I_Piani_Quinquennali_Sovietici.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/I_Piani_Quinquennali_Sovietici.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/I_Piani_Quinquennali_Sovietici.png) |
+| La_NEP_e_il_Comunismo.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/La_NEP_e_il_Comunismo.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/La_NEP_e_il_Comunismo.png) |
 | info10_Prima_e_Seconda_Repubblica_italiana.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info10_Prima_e_Seconda_Repubblica_italiana.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info10_Prima_e_Seconda_Repubblica_italiana.png) |
 | info1_Fattori_della_guerra_totale.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info1_Fattori_della_guerra_totale.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info1_Fattori_della_guerra_totale.png) |
 | info2_Paradosso_di_Weimar.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info2_Paradosso_di_Weimar.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info2_Paradosso_di_Weimar.png) |
@@ -22,10 +25,11 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | info5_ascesa_del_fascismo_(1919-1922).png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info5_ascesa_del_fascismo_%281919-1922%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info5_ascesa_del_fascismo_%281919-1922%29.png) |
 | info6_Leggi_Fascistissime_(1925-1926).png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info6_Leggi_Fascistissime_%281925-1926%29.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info6_Leggi_Fascistissime_%281925-1926%29.png) |
 | info7_Confronto_tra_Fascismo_e_Nazismo.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info7_Confronto_tra_Fascismo_e_Nazismo.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info7_Confronto_tra_Fascismo_e_Nazismo.png) |
-| info8_Che_cos_è_un_totalitarismo.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info8_Che_cos_e%CC%80_un_totalitarismo.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info8_Che_cos_e%CC%80_un_totalitarismo.png) |
+| info8_Che_cos_è_un_totalitarismo.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info8_Che_cos_%C3%A8_un_totalitarismo.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info8_Che_cos_%C3%A8_un_totalitarismo.png) |
 | info9_Assemblea_Costituente_1946.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/info9_Assemblea_Costituente_1946.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/info9_Assemblea_Costituente_1946.png) |
+| mappa-sezione1-volume3.png | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/img/mappa-sezione1-volume3.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/img/mappa-sezione1-volume3.png) |
 
-## Artefatti (`artefatti/`)
+## Artefatti interattivi (`artefatti/`)
 
 | File | Link esteso (sito pubblicato) | Pagina GitHub |
 |---|---|---|
@@ -47,3 +51,12 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | 16-la-costituzione-risponde.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/16-la-costituzione-risponde.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/16-la-costituzione-risponde.html) |
 | 17-1992-quattro-crisi.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/17-1992-quattro-crisi.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/17-1992-quattro-crisi.html) |
 | 18-quattro-democrazie-sotto-pressione.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/18-quattro-democrazie-sotto-pressione.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/18-quattro-democrazie-sotto-pressione.html) |
+| 1939_sei_mosse.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/1939_sei_mosse.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/1939_sei_mosse.html) |
+| cronologia_sezione1_democrazia.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/cronologia_sezione1_democrazia.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/cronologia_sezione1_democrazia.html) |
+| etiopia_roma_ginevra.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/etiopia_roma_ginevra.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/etiopia_roma_ginevra.html) |
+| febbraio_ottobre.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/febbraio_ottobre.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/febbraio_ottobre.html) |
+| glossario_sezione1_democrazia.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/glossario_sezione1_democrazia.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/glossario_sezione1_democrazia.html) |
+| lotta_successione.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/lotta_successione.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/lotta_successione.html) |
+| mappa-sezione1-volume3.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/mappa-sezione1-volume3.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/mappa-sezione1-volume3.html) |
+| palestra_argomentazione_sezione1_democrazia.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/palestra_argomentazione_sezione1_democrazia.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/palestra_argomentazione_sezione1_democrazia.html) |
+| sistema_terrore_sovietico.html | https://baldassarrefrancesco70.github.io/manuale/volume3/sezioni/1/artefatti/sistema_terrore_sovietico.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume3/sezioni/1/artefatti/sistema_terrore_sovietico.html) |
