@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il crollo del 2008</title>
+<style>
+  :root{--grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 22px;}
+  .wrap{max-width:1000px;margin:0 auto;}
+
+  .timeline-box{background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:26px 20px 16px;overflow-x:auto;}
+  .timeline{position:relative;min-width:760px;height:80px;}
+  .filo{position:absolute;top:38px;left:20px;right:20px;height:3px;background:var(--marrone);}
+  .nodo{
+    position:absolute;top:22px;
+    width:34px;height:34px;border-radius:50%;
+    background:#d8d2c4;border:3px solid var(--marrone);
+    cursor:pointer;transform:translateX(-50%);
+    display:flex;align-items:center;justify-content:center;
+    transition:background .2s;
+  }
+  .nodo:hover, .nodo.active{background:var(--marrone);}
+  .nodo-label{
+    position:absolute;top:64px;transform:translateX(-50%);
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.72rem;font-weight:bold;
+    color:var(--marrone-scuro);text-align:center;width:120px;
+  }
+
+  #scheda{margin-top:18px;background:var(--card);border:1px solid var(--marrone);border-left:6px solid var(--marrone);border-radius:8px;padding:18px 22px;display:none;}
+  #scheda.show{display:block;}
+  #scheda h2{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.05rem;margin:0 0 4px;color:var(--marrone-scuro);}
+  #scheda .data{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.8rem;color:#7a6f5c;margin-bottom:10px;}
+  #scheda p{margin:0 0 8px;line-height:1.55;}
+  .cifra{display:inline-block;background:var(--grigio);border:1px solid var(--marrone);border-radius:6px;padding:3px 10px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.83rem;font-weight:bold;color:var(--marrone-scuro);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Il crollo del 2008</h1>
+  <p class="sottotitolo">Dalla bolla immobiliare al credit crunch globale</p>
+
+  <div class="timeline-box">
+    <div class="timeline" id="timeline">
+      <div class="filo"></div>
+    </div>
+  </div>
+
+  <div id="scheda"></div>
+</div>
+
+<script>
+const tappe = [
+  {pos:8, label:"2007", titolo:"Le prime insolvenze subprime", data:"2007", testo:"I tassi variabili dei mutui subprime cominciano a risalire e le insolvenze a moltiplicarsi: le prime crepe del sistema, in gran parte ignorate dai mercati.", cifra:""},
+  {pos:30, label:"Marzo 2008", titolo:"Il salvataggio di Bear Stearns", data:"Marzo 2008", testo:"La banca d'investimento Bear Stearns, sull'orlo del collasso, è salvata con un intervento pubblico e ceduta a prezzo di saldo a JPMorgan Chase: un primo campanello d'allarme che i mercati, in gran parte, scelgono di ignorare.", cifra:""},
+  {pos:55, label:"15 settembre 2008", titolo:"Il fallimento di Lehman Brothers", data:"15 settembre 2008", testo:"Lehman Brothers, quarta banca d'investimento americana, dichiara bancarotta senza che nessuno intervenga a salvarla: la più grande bancarotta della storia finanziaria statunitense.", cifra:""},
+  {pos:75, label:"Autunno 2008", titolo:"Il congelamento del credito interbancario", data:"Autunno 2008", testo:"Il fallimento Lehman innesca un panico che paralizza in poche settimane il credito interbancario in tutto il mondo: nessuna banca è più disposta a fidarsi di un'altra, non sapendo quanti titoli tossici ne infarciscano i bilanci.", cifra:""},
+  {pos:95, label:"2009", titolo:"La contrazione della produzione industriale mondiale", data:"2009", testo:"La produzione industriale mondiale conosce la contrazione più severa dal secondo dopoguerra; negli Stati Uniti la disoccupazione sale fino a sfiorare il 10%, mentre milioni di famiglie perdono la casa per pignoramento.", cifra:"disoccupazione USA: quasi il 10%"}
+];
+
+const timeline = document.getElementById('timeline');
+tappe.forEach((t,i)=>{
+  const nodo = document.createElement('div');
+  nodo.className='nodo';
+  nodo.style.left = t.pos+'%';
+  nodo.dataset.i = i;
+  timeline.appendChild(nodo);
+
+  const label = document.createElement('div');
+  label.className='nodo-label';
+  label.style.left = t.pos+'%';
+  label.textContent = t.label;
+  timeline.appendChild(label);
+
+  nodo.addEventListener('click', ()=>{
+    document.querySelectorAll('.nodo').forEach(n=>n.classList.remove('active'));
+    nodo.classList.add('active');
+    showScheda(t);
+  });
+});
+
+const scheda = document.getElementById('scheda');
+function showScheda(t){
+  scheda.innerHTML = `<h2>${t.titolo}</h2><div class="data">${t.data}</div><p>${t.testo}</p>` + (t.cifra ? `<div class="cifra">${t.cifra}</div>` : '');
+  scheda.classList.add('show');
+}
+
+document.querySelector('.nodo').click();
+</script>
+</body>
+</html>

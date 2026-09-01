@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossario — Chi paga quando il sistema salta</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --contesa:#9c3d23;
+    --ok:#4b6b3d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.96rem;margin:0 0 1rem}
+
+  .controls{margin-bottom:6px}
+  .search{width:100%;font-family:var(--serif);font-size:.98rem;color:var(--ink);
+    background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;
+    padding:9px 12px;margin-bottom:12px}
+  .search:focus{outline:none;border-color:var(--ink-soft)}
+  .search::placeholder{color:var(--ink-soft);font-family:var(--sans);font-size:.84rem}
+
+  .chiprow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .chiprow + .chiprow{margin-bottom:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.76rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button[aria-pressed="false"]{opacity:.45}
+  .chips button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink-soft)}
+
+  .modebar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:14px}
+  .count{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+  .switch{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 12px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .switch[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .list{display:flex;flex-direction:column;gap:10px}
+  .card{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:11px 14px}
+  .card.ordinaria{border-left-color:var(--rule)}
+  .card.contesa{border-left-color:var(--contesa)}
+  .card .head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+  .card h3{margin:0;font-size:1.05rem;font-weight:600}
+  .tag-contesa{font-family:var(--sans);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--contesa);border:1px solid var(--contesa);border-radius:2px;padding:2px 6px;white-space:nowrap}
+  .loc{font-family:var(--sans);font-size:.7rem;color:var(--ink-soft);margin:0 0 6px}
+  .def{margin:0;font-size:.94rem}
+  .perche{margin:8px 0 0;padding-top:7px;border-top:1px dotted var(--line);font-size:.9rem;
+    font-style:italic;color:var(--ink-soft)}
+  .perche .k{font-family:var(--sans);font-style:normal;font-size:.66rem;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--contesa);margin-right:5px}
+  .empty{font-family:var(--sans);font-size:.85rem;color:var(--ink-soft);font-style:italic;padding:20px 0}
+
+  .quiz{display:none;border:1px solid var(--rule);border-left-width:3px;border-left-color:var(--ink);
+    border-radius:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:16px 18px}
+  .quiz.show{display:block}
+  .quiz-instructions{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);margin:0 0 14px;
+    padding-bottom:10px;border-bottom:1px dotted var(--line)}
+  .quiz .loc{margin-bottom:10px}
+  .quiz .def{font-size:1rem;line-height:1.55;margin:0 0 18px}
+  .quiz .def b{background:var(--paper-2);border-bottom:2px dotted var(--ink-soft);padding:0 2px}
+
+  .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:4px}
+  @media(max-width:560px){.options{grid-template-columns:minmax(0,1fr)}}
+  .option{appearance:none;text-align:left;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--serif);font-size:.94rem;color:var(--ink);padding:10px 13px;border-radius:2px;
+    cursor:pointer;line-height:1.35}
+  .option:hover:not(:disabled){border-color:var(--ink-soft)}
+  .option:disabled{cursor:default}
+  .option.correct{border-color:var(--ok);border-width:2px;background:#e3ead9}
+  .option.wrong{border-color:var(--contesa);border-width:2px;background:#f1ddd4}
+
+  .quiz-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .quiz-actions button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--sans);font-size:.8rem;padding:8px 14px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .quiz-actions button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .quiz-actions button:disabled{opacity:.4;cursor:default}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Chi paga quando il sistema salta &middot; Apparati</div>
+  <h1>Glossario</h1>
+  <p class="sub">Ventiquattro voci dai sei capitoli della sezione, ricercabili e filtrabili per capitolo. Le voci segnate come <strong>parole contese</strong> non hanno solo una definizione: portano anche la storia di chi le ha coniate e contro chi, o il giudizio che nascondono sotto l'apparenza della descrizione. C'&egrave; una modalit&agrave; attiva, con una frase reale del manuale e il termine da indovinare fra quattro opzioni.</p>
+
+  <div class="controls">
+    <input class="search" id="search" type="text" placeholder="Cerca un termine o una parola nella definizione&hellip;" autocomplete="off">
+    <div class="chiprow"><div class="chips" id="chapChips"></div></div>
+    <div class="chiprow"><div class="chips" id="typeChips">
+      <button data-type="all" aria-pressed="true">Tutte</button>
+      <button data-type="ordinaria" aria-pressed="false">Ordinarie</button>
+      <button data-type="contesa" aria-pressed="false">Contese</button>
+    </div></div>
+    <div class="modebar">
+      <span class="count" id="count"></span>
+      <button class="switch" id="quizToggle" aria-pressed="false" type="button">Modalit&agrave; attiva</button>
+    </div>
+  </div>
+
+  <div class="list" id="list"></div>
+  <div class="quiz" id="quiz"></div>
+
+  <p class="note">Manuale di Storia &middot; Liceo Classico G. B. Vico, Chieti &middot; Chi paga quando il sistema salta</p>
+
+<script>
+(function(){
+  const CAPS = [
+    "Cap. 1 — La crisi del 1929 e il New Deal",
+    "Cap. 2 — I trent'anni gloriosi e lo Stato sociale",
+    "Cap. 3 — Lo shock petrolifero del 1973",
+    "Cap. 4 — La svolta neoliberista — Reagan e Thatcher",
+    "Cap. 5 — La crisi del 2008",
+    "Cap. 6 — Verso il presente"
+  ];
+
+  const TERMS = [
+    {t:"Gold standard", cap:0, def:"Sistema monetario ottocentesco che ancora ogni moneta nazionale a un rapporto fisso di conversione in oro.", contesa:false,
+      frase:"A garantire questo sistema globale era il ___: ogni moneta nazionale veniva ancorata a un rapporto fisso di conversione in oro, e le banche centrali dovevano essere pronte a convertire la cartamoneta su richiesta."},
+    {t:"Liberismo classico", cap:0, def:"Dottrina economica, elaborata da Smith e Ricardo, secondo cui il mercato lasciato a se stesso tende spontaneamente all'equilibrio.", contesa:false,
+      frase:"Il ___, elaborato da Adam Smith e sviluppato da David Ricardo, poggiava su un presupposto preciso: il mercato, lasciato a se stesso, tende spontaneamente all'equilibrio tra domanda e offerta."},
+    {t:"Riparazioni di guerra", cap:0, def:"I risarcimenti imposti alla Germania sconfitta dal trattato di Versailles, fissati nel 1921 a 132 miliardi di marchi oro.", contesa:false,
+      frase:"Nel 1921 la commissione per le ___ fissò la somma a 132 miliardi di marchi oro, una cifra pari a una volta e mezzo il reddito nazionale tedesco del 1929."},
+    {t:"New Deal", cap:0, def:"Il programma di riforme e opere pubbliche varato da Roosevelt dal 1933 per rispondere alla Grande Depressione.", contesa:false,
+      frase:"Il ___, la rottura interventista con cui Roosevelt rispose alla Grande Depressione, si affiancò a risposte di segno opposto in Germania e in Italia."},
+    {t:"Piano quinquennale", cap:0, def:"Strumento di pianificazione economica centralizzata adottato dall'URSS a partire dal 1928.", contesa:false,
+      frase:"Guidata dai ___ avviati nel 1928, la produzione industriale sovietica triplicava almeno tra il 1929 e il 1940, mentre l'Occidente sprofondava nella disoccupazione di massa."},
+    {t:"Economia mista", cap:1, def:"Il modello del secondo dopoguerra in cui la proprietà privata resta intatta ma è inserita in una cornice di programmazione pubblica.", contesa:false,
+      frase:"Nel modello di ___ del secondo dopoguerra, la proprietà privata resta intatta, ma viene inserita in una cornice di programmazione pubblica che nessuno, a destra o a sinistra, mette in discussione."},
+    {t:"Patto sociale triangolare", cap:1, def:"Accordo implicito tra governi, imprenditori e sindacati che sostenne la crescita dei Trent'anni gloriosi.", contesa:false,
+      frase:"Il ___ tra Stato, imprese e sindacati sostenne, per un quarto di secolo, la crescita dei Trent'anni gloriosi."},
+    {t:"Welfare State", cap:1, def:"Il sistema di protezione sociale universale teorizzato dal rapporto Beveridge (1942) ed esteso nel secondo dopoguerra.", contesa:false,
+      frase:"Il ___, teorizzato dal rapporto Beveridge del 1942, si estese nel secondo dopoguerra fino a diventare un tratto costitutivo dell'Età dell'oro europea."},
+    {t:"Stagflazione", cap:2, def:"La combinazione simultanea di stagnazione economica e inflazione elevata, comparsa per la prima volta dopo lo shock petrolifero del 1973.", contesa:false,
+      frase:"Stagnazione e inflazione insieme: da qui il neologismo ___, comparso per la prima volta nel biennio 1974-75."},
+    {t:"Petrodollari", cap:2, def:"I proventi in dollari accumulati dai paesi OPEC dopo il rincaro del petrolio del 1973, reinvestiti nel sistema bancario internazionale.", contesa:false,
+      frase:"I ___ accumulati dai paesi OPEC dopo il rincaro del 1973 furono depositati presso le grandi banche di Londra e New York, alimentando il mercato degli eurodollari."},
+    {t:"Fordismo", cap:2, def:"Modello produttivo basato sulla catena di montaggio e su salari sufficientemente alti da sostenere i consumi di massa.", contesa:false,
+      frase:"Il ___ classico, gli enormi stabilimenti integrati verticalmente organizzati intorno alla catena di montaggio, aveva garantito per mezzo secolo economie di scala formidabili."},
+    {t:"Produzione snella (toyotismo)", cap:2, def:"Modello giapponese fondato su just-in-time, qualità totale ed esternalizzazione, alternativo alla rigidità fordista.", contesa:false,
+      frase:"All'interno della Toyota si affermò un modello di ___ fondato su tre principi complementari: just-in-time, qualità totale, esternalizzazione."},
+    {t:"Delocalizzazione", cap:2, def:"Lo spostamento della produzione industriale verso paesi a basso costo del lavoro, avviato su scala globale dagli anni Ottanta.", contesa:false,
+      frase:"La stessa logica di flessibilità, applicata su scala globale, produsse un effetto ben più dirompente: la ___."},
+    {t:"Monetarismo", cap:3, def:"Dottrina economica, associata a Milton Friedman, secondo cui il controllo della quantità di moneta in circolazione è il compito principale dello Stato in economia.", contesa:false,
+      frase:"Friedman spostava il bersaglio dalla filosofia politica alla tecnica monetaria: nasceva così il ___, fondato sull'idea che l'unico compito legittimo dello Stato in economia sia controllare la quantità di moneta in circolazione."},
+    {t:"Deregulation", cap:3, def:"La rimozione dei vincoli amministrativi, fiscali e sindacali sulle imprese, cardine del programma di Thatcher e Reagan.", contesa:false,
+      frase:"La ___, la rimozione dei vincoli amministrativi, fiscali e sindacali sulle imprese, fu il cardine del programma di Thatcher e Reagan."},
+    {t:"Cartolarizzazione", cap:4, def:"Il meccanismo con cui un insieme di mutui viene impacchettato in titoli finanziari e rivenduto a investitori terzi.", contesa:false,
+      frase:"Il meccanismo, noto come ___, scaricava il rischio dall'origine del debito su chi lo comprava a valle, spesso senza alcun modo di verificare la qualità reale dei mutui sottostanti."},
+    {t:"Mutuo subprime", cap:4, def:"Un mutuo concesso a mutuatari a reddito basso o irregolare, spesso a tasso variabile crescente.", contesa:false,
+      frase:"Le banche allargarono progressivamente la platea dei mutuatari fino a includere famiglie a reddito basso o irregolare, i cosiddetti ___, spesso con contratti a tasso variabile che partivano bassi per poi salire."},
+    {t:"Shadow banking", cap:4, def:"Il sistema bancario ombra — fondi speculativi, veicoli fuori bilancio — cresciuto accanto al sistema bancario tradizionale con leva alta e poche regole prudenziali.", contesa:false,
+      frase:"Accanto al sistema bancario tradizionale crebbe così un sistema di ___, fondi speculativi e veicoli finanziari fuori bilancio, con una leva finanziaria altissima e quasi nessuna regola prudenziale."},
+    {t:"Indice di Gini", cap:5, def:"Misura statistica della disuguaglianza di reddito all'interno di una popolazione.", contesa:false,
+      frase:"L'___ misura la disuguaglianza di reddito all'interno di una popolazione, ed è tornato a salire negli Stati Uniti a partire dagli anni della svolta neoliberista."},
+    {t:"Salvataggio", cap:4, def:"L'eufemismo con cui si è chiamato l'intervento pubblico a favore delle banche nel 2008.", contesa:true,
+      perche:"Il termine, nella sua neutralità apparente, evita di nominare esplicitamente il trasferimento di risorse pubbliche a istituti privati, che una parte del dibattito ha chiamato invece «socialismo per i ricchi».",
+      frase:"Nessuno lo chiamò socialismo, benché la parola fosse già pronta: fu chiamato, con un eufemismo che è già una tesi, ___."},
+    {t:"Meno Stato", cap:3, def:"Lo slogan con cui Thatcher e Reagan hanno presentato il proprio programma.", contesa:true,
+      perche:"Come mostra il Focus «Due modi di ridurre lo Stato», nessuno dei due governi ridusse davvero la spesa pubblica complessiva: la cambiò di destinazione, non di dimensione.",
+      frase:"Thatcher e Reagan condivisero la stessa retorica, «___, più mercato», ma applicarono ricette fiscalmente opposte."},
+    {t:"Trickle-down", cap:3, def:"La teoria secondo cui gli sgravi fiscali ai redditi più alti si traducono in investimenti e benessere diffuso.", contesa:true,
+      perche:"La contesa riguarda la sua persistenza nel dibattito pubblico come argomento politico, nonostante i dati raccolti dal capitolo la smentiscano.",
+      frase:"Secondo la teoria del ___, gli sgravi fiscali ai redditi più alti si traducono in investimenti e benessere diffuso: i capitali liberati, in prevalenza, finanziarono altro."},
+    {t:"Troppo grandi per fallire", cap:4, def:"Il principio, sancito di fatto dai salvataggi del 2008, secondo cui alcuni istituti finanziari sono troppo interconnessi per essere lasciati fallire.", contesa:true,
+      perche:"Legittima, a posteriori, un privilegio sistemico che nessuna legge aveva mai formalizzato prima della crisi.",
+      frase:"I salvataggi del 2008 sancirono di fatto un principio mai formalizzato prima: alcuni istituti finanziari sono ___ per essere lasciati fallire."},
+    {t:"Protezionismo", cap:5, def:"Termine con cui si designano i dazi doganali e le barriere commerciali.", contesa:true,
+      perche:"Porta un giudizio di valore implicito, «protezione» contro chi minaccia, non solo restrizione del commercio, che il capitolo prova a rendere esplicito distinguendo la funzione difensiva dai suoi rischi storici.",
+      frase:"I dazi doganali e le barriere commerciali tornano a comparire nei programmi di governo sotto il nome di ___."}
+  ];
+
+  const CONTESA_COUNT = TERMS.filter(x=>x.contesa).length;
+
+  const chapChips = document.getElementById('chapChips');
+  const typeChips = document.getElementById('typeChips');
+  const listEl = document.getElementById('list');
+  const quizEl = document.getElementById('quiz');
+  const countEl = document.getElementById('count');
+  const searchEl = document.getElementById('search');
+  const quizToggle = document.getElementById('quizToggle');
+
+  let activeChap = 'all';
+  let activeType = 'all';
+  let quizMode = false;
+  let query = '';
+  let quizState = null;
+
+  function buildChapChips(){
+    let html = '<button data-cap="all" aria-pressed="true">Tutti i capitoli</button>';
+    CAPS.forEach((c,i)=>{ html += '<button data-cap="'+i+'" aria-pressed="false">Cap. '+(i+1)+'</button>'; });
+    chapChips.innerHTML = html;
+    chapChips.querySelectorAll('button').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        activeChap = b.dataset.cap;
+        chapChips.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b ? 'true':'false'));
+        renderAll();
+      });
+    });
+  }
+
+  typeChips.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      activeType = b.dataset.type;
+      typeChips.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b?'true':'false'));
+      renderAll();
+    });
+  });
+
+  searchEl.addEventListener('input', ()=>{ query = searchEl.value.trim().toLowerCase(); renderAll(); });
+
+  quizToggle.addEventListener('click', ()=>{
+    quizMode = !quizMode;
+    quizToggle.setAttribute('aria-pressed', quizMode ? 'true':'false');
+    quizToggle.textContent = quizMode ? 'Torna al glossario' : 'Modalità attiva';
+    listEl.style.display = quizMode ? 'none' : '';
+    quizEl.classList.toggle('show', quizMode);
+    if(quizMode) newQuiz();
+    renderAll();
+  });
+
+  function filtered(){
+    return TERMS.filter(x=>{
+      if(activeChap !== 'all' && String(x.cap) !== activeChap) return false;
+      if(activeType === 'ordinaria' && x.contesa) return false;
+      if(activeType === 'contesa' && !x.contesa) return false;
+      if(query){
+        const hay = (x.t + ' ' + x.def).toLowerCase();
+        if(hay.indexOf(query) === -1) return false;
+      }
+      return true;
+    });
+  }
+
+  function renderList(){
+    const items = filtered();
+    countEl.textContent = items.length + ' su ' + TERMS.length + ' voci (' + CONTESA_COUNT + ' contese)';
+    if(items.length === 0){ listEl.innerHTML = '<div class="empty">Nessuna voce corrisponde alla ricerca.</div>'; return; }
+    let html = '';
+    items.forEach(x=>{
+      html += '<div class="card ' + (x.contesa?'contesa':'ordinaria') + '">';
+      html += '<div class="head"><h3>' + x.t + '</h3>' + (x.contesa ? '<span class="tag-contesa">Parola contesa</span>' : '') + '</div>';
+      html += '<p class="loc">' + CAPS[x.cap] + '</p>';
+      html += '<p class="def">' + x.def + '</p>';
+      if(x.contesa){ html += '<p class="perche"><span class="k">Perché è contesa</span>' + x.perche + '</p>'; }
+      html += '</div>';
+    });
+    listEl.innerHTML = html;
+  }
+
+  function newQuiz(){
+    const idx = Math.floor(Math.random()*TERMS.length);
+    let pool = TERMS.filter((x,i)=>i!==idx).map(x=>x.t);
+    pool.sort(()=>Math.random()-0.5);
+    const wrong = pool.slice(0,3);
+    const options = [TERMS[idx].t, ...wrong].sort(()=>Math.random()-0.5);
+    quizState = {idx, options, answered:false, chosen:null};
+  }
+
+  function renderQuiz(){
+    if(!quizMode) return;
+    if(!quizState) newQuiz();
+    const term = TERMS[quizState.idx];
+    let html = '<p class="quiz-instructions">Leggi la frase del manuale con il termine oscurato, poi indovinalo fra le quattro opzioni.</p>';
+    html += '<p class="loc">' + CAPS[term.cap] + '</p>';
+    html += '<p class="def">' + term.frase + '</p>';
+    html += '<div class="options">';
+    quizState.options.forEach(opt=>{
+      let cls = 'option';
+      if(quizState.answered){
+        if(opt === term.t) cls += ' correct';
+        else if(opt === quizState.chosen) cls += ' wrong';
+      }
+      html += '<button class="' + cls + '" data-opt="' + encodeURIComponent(opt) + '" ' + (quizState.answered?'disabled':'') + '>' + opt + '</button>';
+    });
+    html += '</div>';
+    html += '<div class="quiz-actions">';
+    html += '<button class="primary" id="nextQuiz" ' + (quizState.answered?'':'disabled') + '>Prossimo termine</button>';
+    html += '</div>';
+    quizEl.innerHTML = html;
+    quizEl.querySelectorAll('.option').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        quizState.chosen = decodeURIComponent(b.dataset.opt);
+        quizState.answered = true;
+        renderQuiz();
+      });
+    });
+    const nb = document.getElementById('nextQuiz');
+    if(nb) nb.addEventListener('click', ()=>{ newQuiz(); renderQuiz(); });
+  }
+
+  function renderAll(){
+    renderList();
+    renderQuiz();
+  }
+
+  buildChapChips();
+  renderAll();
+})();
+</script>
+</body>
+</html>

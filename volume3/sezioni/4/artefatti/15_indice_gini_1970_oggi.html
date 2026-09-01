@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'indice di Gini, 1970-oggi</title>
+<style>
+  :root{--grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620; --usa:#5b7a8f; --germania:#9c5b45; --giappone:#7a8a5c;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 18px;}
+  .wrap{max-width:920px;margin:0 auto;}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:16px;}
+  .chip{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;font-weight:bold;padding:8px 16px;border-radius:20px;border:2px solid var(--marrone);background:#fff;color:var(--marrone-scuro);cursor:pointer;opacity:0.5;}
+  .chip.active{opacity:1;color:#fff;}
+  .chip[data-s="usa"].active{background:var(--usa);border-color:var(--usa);}
+  .chip[data-s="germania"].active{background:var(--germania);border-color:var(--germania);}
+  .chip[data-s="giappone"].active{background:var(--giappone);border-color:var(--giappone);}
+  .chart-box{background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:16px;}
+  svg{width:100%;height:auto;display:block;}
+  .gridline{stroke:#e3ddd0;stroke-width:1;}
+  .annot-text{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;fill:#7a6f5c;}
+  .serie{fill:none;stroke-width:2.5;stroke-dasharray:6 4;opacity:0;transition:opacity .3s;}
+  .serie.show{opacity:1;}
+  .dot{cursor:pointer;}
+  .tooltip{position:absolute;background:var(--marrone-scuro);color:#fff;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.78rem;padding:6px 10px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10;max-width:220px;}
+  .avviso{
+    margin-top:14px;background:#fdf6ea;border:1px solid var(--marrone);border-left:6px solid var(--marrone);border-radius:8px;
+    padding:14px 18px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.82rem;line-height:1.55;color:var(--marrone-scuro);
+  }
+  .nota-metodo{max-width:780px;margin:14px auto 0;text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.74rem;color:#7a6f5c;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>L'indice di Gini, 1970-oggi</h1>
+  <p class="sottotitolo">Stati Uniti, Germania (Europa continentale), Giappone: la disuguaglianza torna a crescere</p>
+
+  <div class="controls">
+    <button class="chip active" data-s="usa">Stati Uniti</button>
+    <button class="chip active" data-s="germania">Germania</button>
+    <button class="chip active" data-s="giappone">Giappone</button>
+  </div>
+
+  <div class="chart-box">
+    <svg id="chart" viewBox="0 0 860 420"></svg>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+
+
+</div>
+
+<script>
+const series = {
+  usa: {color:'#5b7a8f', label:'Stati Uniti', points:[[1970,0.394],[1980,0.403],[1990,0.428],[2000,0.462],[2010,0.440],[2019,0.484]]},
+  germania: {color:'#9c5b45', label:'Germania', points:[[1985,0.26],[1995,0.27],[2008,0.30],[2019,0.31]]},
+  giappone: {color:'#7a8a5c', label:'Giappone', points:[[1985,0.30],[1995,0.32],[2008,0.33],[2018,0.34]]}
+};
+
+const svg = document.getElementById('chart');
+const W=860,H=420,M={t:20,r:20,b:40,l:50};
+const plotW=W-M.l-M.r, plotH=H-M.t-M.b;
+const yearMin=1970, yearMax=2023;
+const xScale = y => M.l + ((y-yearMin)/(yearMax-yearMin))*plotW;
+const yMin=0.20, yMax=0.55;
+const yScale = v => M.t + plotH - ((v-yMin)/(yMax-yMin))*plotH;
+
+let html='';
+for(let v=0.20; v<=0.55; v+=0.05){
+  html += `<line class="gridline" x1="${M.l}" y1="${yScale(v)}" x2="${W-M.r}" y2="${yScale(v)}"/>`;
+  html += `<text class="annot-text" x="${M.l-8}" y="${yScale(v)+4}" text-anchor="end">${v.toFixed(2)}</text>`;
+}
+for(let y=1970; y<=2023; y+=10){
+  html += `<text class="annot-text" x="${xScale(y)}" y="${H-M.b+18}" text-anchor="middle">${y}</text>`;
+}
+
+Object.keys(series).forEach(key=>{
+  const s = series[key];
+  const pts = s.points.map(p=> xScale(p[0])+','+yScale(p[1])).join(' ');
+  html += `<polyline class="serie show" data-s="${key}" points="${pts}" style="stroke:${s.color}"/>`;
+  s.points.forEach(p=>{
+    html += `<circle class="dot" data-s="${key}" cx="${xScale(p[0])}" cy="${yScale(p[1])}" r="5" fill="${s.color}" data-year="${p[0]}" data-val="${p[1]}" data-label="${s.label}"/>`;
+  });
+});
+svg.innerHTML = html;
+
+function updateVisibility(){
+  const active = new Set(Array.from(document.querySelectorAll('.chip.active')).map(c=>c.dataset.s));
+  document.querySelectorAll('[data-s]').forEach(el=>{
+    const on = active.has(el.dataset.s);
+    if(el.tagName==='polyline') el.classList.toggle('show', on);
+    if(el.tagName==='circle') el.style.display = on ? '' : 'none';
+  });
+}
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{ chip.classList.toggle('active'); updateVisibility(); });
+});
+updateVisibility();
+
+const tooltip = document.getElementById('tooltip');
+svg.addEventListener('mousemove', (e)=>{
+  if(e.target.tagName==='circle' && e.target.style.display !== 'none'){
+    tooltip.style.opacity=1;
+    tooltip.style.left=(e.pageX+12)+'px';
+    tooltip.style.top=(e.pageY-30)+'px';
+    tooltip.textContent = e.target.dataset.label+' · '+e.target.dataset.year+': '+e.target.dataset.val;
+  } else {
+    tooltip.style.opacity=0;
+  }
+});
+</script>
+</body>
+</html>

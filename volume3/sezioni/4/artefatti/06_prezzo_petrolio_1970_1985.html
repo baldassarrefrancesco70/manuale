@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il prezzo del petrolio, 1970-1985</title>
+<style>
+  :root{--grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620; --linea:#9c5b45; --occ:#5b7a8f; --est:#9c5b45;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 18px;}
+  .wrap{max-width:900px;margin:0 auto;}
+  .chart-box{background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:16px;}
+  svg{width:100%;height:auto;display:block;}
+  .gridline{stroke:#e3ddd0;stroke-width:1;}
+  .annot-text{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;fill:#7a6f5c;}
+  .linea-prezzo{fill:none;stroke:var(--linea);stroke-width:3;}
+  .marker-line{stroke:var(--marrone);stroke-width:1.5;stroke-dasharray:4 3;}
+  .marker-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;fill:var(--marrone-scuro);font-weight:bold;}
+  .dot{cursor:pointer;}
+  .tooltip{position:absolute;background:var(--marrone-scuro);color:#fff;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.78rem;padding:6px 10px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10;max-width:220px;}
+
+  .toggle-wrap{text-align:center;margin:18px 0 10px;}
+  .toggle-btn{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:bold;font-size:0.85rem;
+    padding:9px 18px;border-radius:24px;border:2px solid var(--marrone);background:#fff;color:var(--marrone-scuro);cursor:pointer;
+  }
+  .toggle-btn.active{background:var(--marrone);color:#fff;}
+  .livello2{display:none;background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:16px 18px;margin-top:6px;}
+  .livello2.show{display:block;}
+  .barrow{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .barrow .etichetta{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;width:150px;flex:none;}
+  .barrow .track{flex:1;background:#efe9db;border-radius:6px;height:24px;position:relative;overflow:hidden;}
+  .barrow .fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.78rem;font-weight:bold;}
+  .livello2 h3{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.95rem;margin:0 0 12px;color:var(--marrone-scuro);}
+  .livello2 p{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.8rem;color:#5a5348;margin:10px 0 0;line-height:1.5;}
+  .nota-metodo{max-width:760px;margin:16px auto 0;text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;color:#7a6f5c;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Il prezzo del petrolio, 1970-1985</h1>
+  <p class="sottotitolo">Dallo shock del 1973 al contro-shock: il prezzo del barile in dollari correnti</p>
+
+  <div class="chart-box">
+    <svg id="chart" viewBox="0 0 860 400"></svg>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+
+  <div class="toggle-wrap">
+    <button class="toggle-btn" id="toggleLivello2">+ Livello opzionale: chi ha risparmiato energia, Occidente o blocco sovietico?</button>
+  </div>
+  <div class="livello2" id="livello2">
+    <h3>Il calo dei consumi energetici, 1973-1985</h3>
+    <div class="barrow">
+      <div class="etichetta">Occidente</div>
+      <div class="track"><div class="fill" style="width:40%;background:var(--occ);">-40%</div></div>
+    </div>
+    <div class="barrow">
+      <div class="etichetta">Blocco sovietico</div>
+      <div class="track"><div class="fill" style="width:20%;background:var(--est);">-20%</div></div>
+    </div>
+    <p>Le economie pianificate si dimostrarono incapaci di adattarsi al risparmio energetico quanto l'Occidente: un ritardo che, unito all'esaurimento dei giacimenti, avrebbe contribuito alla crisi energetica sovietica dei primi anni Ottanta (vedi il Focus "La lotteria di Breznev").</p>
+  </div>
+
+</div>
+
+<script>
+const points = [
+  {year:1970, price:1.8, label:null},
+  {year:1971, price:2.2, label:null},
+  {year:1972, price:2.5, label:null},
+  {year:1973, price:3.3, label:"Ottobre 1973 — embargo OPEC: il prezzo quadruplica"},
+  {year:1974, price:11.6, label:null},
+  {year:1975, price:11.5, label:null},
+  {year:1976, price:12.0, label:null},
+  {year:1977, price:13.0, label:null},
+  {year:1978, price:13.0, label:null},
+  {year:1979, price:20.0, label:"1979 — rivoluzione iraniana: il prezzo supera di dieci volte quello di inizio decennio"},
+  {year:1980, price:30.0, label:null},
+  {year:1981, price:34.0, label:null},
+  {year:1982, price:32.0, label:null},
+  {year:1983, price:29.0, label:null},
+  {year:1984, price:28.0, label:null},
+  {year:1985, price:27.0, label:"metà anni Ottanta — inizio del contro-shock"}
+];
+
+const svg = document.getElementById('chart');
+const W=860,H=400,M={t:30,r:20,b:40,l:50};
+const plotW=W-M.l-M.r, plotH=H-M.t-M.b;
+const xScale = i => M.l + (i/(points.length-1))*plotW;
+const yMax = 36;
+const yScale = v => M.t + plotH - (v/yMax)*plotH;
+
+let html='';
+for(let v=0; v<=yMax; v+=6){
+  html += `<line class="gridline" x1="${M.l}" y1="${yScale(v)}" x2="${W-M.r}" y2="${yScale(v)}"/>`;
+  html += `<text class="annot-text" x="${M.l-8}" y="${yScale(v)+4}" text-anchor="end">$${v}</text>`;
+}
+points.forEach((p,i)=>{
+  if(i%2===0) html += `<text class="annot-text" x="${xScale(i)}" y="${H-M.b+18}" text-anchor="middle">${p.year}</text>`;
+});
+
+const pts = points.map((p,i)=> xScale(i)+','+yScale(p.price)).join(' ');
+html += `<polyline class="linea-prezzo" points="${pts}"/>`;
+
+points.forEach((p,i)=>{
+  if(p.label){
+    html += `<line class="marker-line" x1="${xScale(i)}" y1="${M.t}" x2="${xScale(i)}" y2="${H-M.b}"/>`;
+  }
+  html += `<circle class="dot" cx="${xScale(i)}" cy="${yScale(p.price)}" r="4.5" fill="#9c5b45" data-year="${p.year}" data-price="${p.price}"/>`;
+});
+
+// place label texts above chart, wrapped simply
+const labelPositions = points.filter(p=>p.label);
+labelPositions.forEach((p,idx)=>{
+  const i = points.indexOf(p);
+  const yOff = M.t + 12 + idx*14;
+  html += `<text class="marker-label" x="${Math.min(xScale(i)+6, W-260)}" y="${yOff}">${p.label}</text>`;
+});
+
+svg.innerHTML = html;
+
+const tooltip = document.getElementById('tooltip');
+svg.addEventListener('mousemove', (e)=>{
+  if(e.target.tagName==='circle'){
+    tooltip.style.opacity=1;
+    tooltip.style.left=(e.pageX+12)+'px';
+    tooltip.style.top=(e.pageY-30)+'px';
+    tooltip.textContent = e.target.dataset.year+': circa $'+e.target.dataset.price+' al barile';
+  } else {
+    tooltip.style.opacity=0;
+  }
+});
+
+document.getElementById('toggleLivello2').addEventListener('click', function(){
+  this.classList.toggle('active');
+  document.getElementById('livello2').classList.toggle('show');
+});
+</script>
+</body>
+</html>

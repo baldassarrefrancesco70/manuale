@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dal fordismo alla fabbrica globale</title>
+<style>
+  :root{--grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620;
+    --rust:#9c5b45; --deloc:#5b7a8f; --terza:#7a8a5c;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 18px;}
+  .wrap{max-width:1000px;margin:0 auto;}
+
+  .layer-toggles{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .ltoggle{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:bold;font-size:0.82rem;
+    padding:9px 16px;border-radius:20px;border:2px solid var(--marrone);background:#fff;color:var(--marrone-scuro);cursor:pointer;opacity:.5;
+  }
+  .ltoggle.active{opacity:1;color:#fff;}
+  .ltoggle[data-l="rust"].active{background:var(--rust);border-color:var(--rust);}
+  .ltoggle[data-l="deloc"].active{background:var(--deloc);border-color:var(--deloc);}
+  .ltoggle[data-l="terza"].active{background:var(--terza);border-color:var(--terza);}
+
+  .map-box{background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:12px;}
+  svg{width:100%;height:auto;display:block;}
+  .landmass{fill:#e5ddce;stroke:#c9bfa8;stroke-width:1;}
+  .continente-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;fill:#8a7d63;font-weight:bold;}
+
+  .layer{opacity:0;transition:opacity .35s;pointer-events:none;}
+  .layer.show{opacity:1;pointer-events:auto;}
+
+  .marker{cursor:pointer;}
+  .marker circle{stroke:#fffdfa;stroke-width:2;}
+  .marker text{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;fill:var(--testo);}
+
+  .flowarrow{fill:none;stroke-width:3;stroke-dasharray:7 5;}
+
+  #scheda{margin-top:16px;background:var(--card);border:1px solid var(--marrone);border-left:6px solid var(--marrone);border-radius:8px;padding:14px 18px;display:none;}
+  #scheda.show{display:block;}
+  #scheda h2{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1rem;margin:0 0 6px;color:var(--marrone-scuro);}
+  #scheda p{margin:0;line-height:1.5;font-size:0.9rem;}
+  .hint{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.78rem;color:#7a6f5c;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Dal fordismo alla fabbrica globale</h1>
+  <p class="sottotitolo">La nuova divisione internazionale del lavoro: tre livelli sovrapponibili</p>
+
+  <div class="layer-toggles">
+    <button class="ltoggle active" data-l="rust">Le vecchie regioni fordiste (rust belt)</button>
+    <button class="ltoggle active" data-l="deloc">Le direttrici della delocalizzazione</button>
+    <button class="ltoggle" data-l="terza">La Terza Italia (via alternativa)</button>
+  </div>
+
+  <div class="map-box">
+    <svg viewBox="0 0 950 460" id="mapSvg">
+      <path class="landmass" d="M30,140 L220,100 L280,180 L260,300 L170,380 L80,350 L20,240 Z"/>
+      <path class="landmass" d="M460,90 L620,70 L680,130 L650,220 L560,250 L470,200 Z"/>
+      <path class="landmass" d="M700,60 L900,50 L930,180 L880,320 L760,360 L680,260 L700,150 Z"/>
+      <text x="130" y="230" text-anchor="middle" class="continente-label">NORD AMERICA</text>
+      <text x="560" y="170" text-anchor="middle" class="continente-label">EUROPA</text>
+      <text x="810" y="210" text-anchor="middle" class="continente-label">ASIA</text>
+
+      <!-- Layer: rust belt -->
+      <g class="layer show" id="layerRust">
+        <g class="marker" data-txt="rust-detroit"><circle cx="150" cy="200" r="9" fill="var(--rust)"/><text x="164" y="196">Detroit</text></g>
+        <g class="marker" data-txt="rust-torino"><circle cx="530" cy="200" r="9" fill="var(--rust)"/><text x="544" y="196">Torino</text></g>
+        <g class="marker" data-txt="rust-ruhr"><circle cx="560" cy="150" r="9" fill="var(--rust)"/><text x="574" y="146">Ruhr</text></g>
+      </g>
+
+      <!-- Layer: delocalizzazione -->
+      <g class="layer show" id="layerDeloc">
+        <path class="flowarrow" stroke="var(--deloc)" d="M600,180 C700,160 780,180 830,240" marker-end="url(#arrD)"/>
+        <path class="flowarrow" stroke="var(--deloc)" d="M200,230 C400,260 650,280 830,260" marker-end="url(#arrD)"/>
+        <g class="marker" data-txt="deloc-tigri"><circle cx="850" cy="250" r="9" fill="var(--deloc)"/><text x="864" y="246">Tigri asiatiche</text></g>
+        <g class="marker" data-txt="deloc-cina"><circle cx="800" cy="300" r="9" fill="var(--deloc)"/><text x="814" y="296">Cina</text></g>
+        <g class="marker" data-txt="deloc-india"><circle cx="740" cy="320" r="9" fill="var(--deloc)"/><text x="754" y="316">India</text></g>
+        <defs><marker id="arrD" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5b7a8f"/></marker></defs>
+      </g>
+
+      <!-- Layer: Terza Italia -->
+      <g class="layer" id="layerTerza">
+        <g class="marker" data-txt="terza-veneto"><circle cx="580" cy="185" r="8" fill="var(--terza)"/><text x="594" y="181">Veneto</text></g>
+        <g class="marker" data-txt="terza-emilia"><circle cx="565" cy="205" r="8" fill="var(--terza)"/><text x="579" y="222">Emilia-Romagna</text></g>
+        <g class="marker" data-txt="terza-toscana"><circle cx="545" cy="225" r="8" fill="var(--terza)"/><text x="480" y="245">Toscana</text></g>
+      </g>
+    </svg>
+  </div>
+
+  <div id="scheda"></div>
+  <p class="hint">Attiva o disattiva i livelli. Clicca su un punto per leggerne la scheda.</p>
+</div>
+
+<script>
+const testi = {
+  'rust-detroit': {t:"Detroit", d:"Città-simbolo del fordismo classico, catena di montaggio e grande industria integrata verticalmente. La delocalizzazione e l'automazione degli anni Ottanta la trasformano in una delle \"rust belt\", le cinture della ruggine: posti perduti che non tornano."},
+  'rust-torino': {t:"Torino", d:"Come Detroit, una città-monopolio costruita intorno alla grande fabbrica fordista, esposta agli stessi limiti di rigidità quando i costi dell'energia smettono di scendere in modo prevedibile."},
+  'rust-ruhr': {t:"La Ruhr", d:"Cuore industriale della Germania, fondato su siderurgia e grande industria pesante: un'altra delle vecchie regioni fordiste che l'automazione e la delocalizzazione trasformano in area industriale in declino."},
+  'deloc-tigri': {t:"Le tigri asiatiche", d:"Corea del Sud, Taiwan, Singapore: le prime economie a industrializzarsi a ritmi che l'Europa ottocentesca non aveva mai conosciuto, grazie al basso costo del lavoro e alla rivoluzione dei trasporti e delle telecomunicazioni."},
+  'deloc-cina': {t:"Cina", d:"Dopo le tigri asiatiche, un gigante che si industrializza attirando reparti produttivi interi delle imprese occidentali: un singolo prodotto può nascere in decine di paesi diversi prima di essere assemblato in uno solo."},
+  'deloc-india': {t:"India", d:"Come la Cina, protagonista della nuova divisione internazionale del lavoro: l'Occidente si avvia alla deindustrializzazione, compensata dalla crescita del settore terziario."},
+  'terza-veneto': {t:"Veneto", d:"Una delle regioni della \"Terza Italia\": non grandi concentrazioni industriali, ma una fitta rete di piccole e medie imprese specializzate."},
+  'terza-emilia': {t:"Emilia-Romagna", d:"Piccola e media impresa diffusa, spesso integrata con un tessuto agricolo e artigianale di lunga tradizione: una via alternativa alla grande fabbrica fordista."},
+  'terza-toscana': {t:"Toscana", d:"Come Veneto ed Emilia-Romagna, protagonista della \"Terza Italia\": flessibilità produttiva su scala regionale invece che su scala globale."}
+};
+
+document.querySelectorAll('.ltoggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    btn.classList.toggle('active');
+    const layer = document.getElementById('layer'+btn.dataset.l.charAt(0).toUpperCase()+btn.dataset.l.slice(1));
+    layer.classList.toggle('show');
+  });
+});
+
+const scheda = document.getElementById('scheda');
+document.querySelectorAll('.marker').forEach(m=>{
+  m.addEventListener('click', ()=>{
+    const info = testi[m.dataset.txt];
+    scheda.innerHTML = `<h2>${info.t}</h2><p>${info.d}</p>`;
+    scheda.classList.add('show');
+  });
+});
+</script>
+</body>
+</html>

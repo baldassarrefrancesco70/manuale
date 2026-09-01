@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tre risposte alla crisi</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --card:#fffdfa;
+    --testo:#2b2620;
+    --usa:#5b7a8f;
+    --italia:#7a8a5c;
+    --germania:#9c5b45;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  .ui{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 20px;}
+  .wrap{max-width:980px;margin:0 auto;}
+
+  .toggles{display:flex;justify-content:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+  .toggle-btn{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:bold;
+    padding:10px 20px;
+    border-radius:30px;
+    border:2px solid var(--marrone);
+    background:#fff;
+    color:var(--marrone-scuro);
+    cursor:pointer;
+    font-size:0.95rem;
+    transition:all .25s;
+  }
+  .toggle-btn[data-col="usa"].active{background:var(--usa);color:#fff;border-color:var(--usa);}
+  .toggle-btn[data-col="italia"].active{background:var(--italia);color:#fff;border-color:var(--italia);}
+  .toggle-btn[data-col="germania"].active{background:var(--germania);color:#fff;border-color:var(--germania);}
+
+  .common-banner{
+    max-width:700px;margin:0 auto 18px;
+    background:var(--card);
+    border:2px dashed var(--marrone);
+    border-radius:10px;
+    padding:12px 20px;
+    text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    color:var(--marrone-scuro);
+    font-weight:bold;
+    display:none;
+  }
+  .common-banner.show{display:block;}
+
+  .columns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .col{
+    flex:1 1 280px;
+    max-width:320px;
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-top:6px solid var(--marrone);
+    border-radius:10px;
+    padding:16px 18px;
+    opacity:0;
+    max-height:0;
+    overflow:hidden;
+    transition:opacity .35s, max-height .35s, padding .35s;
+    padding-top:0;padding-bottom:0;
+  }
+  .col.show{opacity:1;max-height:700px;padding-top:16px;padding-bottom:18px;}
+  .col[data-col="usa"]{border-top-color:var(--usa);}
+  .col[data-col="italia"]{border-top-color:var(--italia);}
+  .col[data-col="germania"]{border-top-color:var(--germania);}
+  .col h2{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:1.05rem;margin:0 0 2px;
+  }
+  .col[data-col="usa"] h2{color:var(--usa);}
+  .col[data-col="italia"] h2{color:var(--italia);}
+  .col[data-col="germania"] h2{color:var(--germania);}
+  .col .paese{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.78rem;color:#7a6f5c;margin-bottom:12px;}
+  .riga{margin-bottom:14px;}
+  .riga .etichetta{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.72rem;text-transform:uppercase;letter-spacing:.04em;
+    color:#8a7d63;margin-bottom:3px;
+  }
+  .riga p{margin:0;line-height:1.45;font-size:0.94rem;}
+
+  .nota{
+    max-width:700px;margin:22px auto 0;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.8rem;color:#5a5348;
+    text-align:center;
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tre risposte alla stessa crisi</h1>
+  <p class="sottotitolo">New Deal, IRI, piano quadriennale nazista: lo stesso strumento, scopi diversi</p>
+
+  <div class="toggles">
+    <button class="toggle-btn" data-col="usa">Stati Uniti</button>
+    <button class="toggle-btn" data-col="italia">Italia</button>
+    <button class="toggle-btn" data-col="germania">Germania</button>
+  </div>
+
+  <div class="common-banner" id="commonBanner">Lo Stato entra nell'economia: tre governi, tre ideologie inconciliabili, uno stesso strumento.</div>
+
+  <div class="columns">
+    <div class="col" data-col="usa">
+      <h2>Stati Uniti</h2>
+      <div class="paese">New Deal</div>
+      <div class="riga"><div class="etichetta">Anno di avvio</div><p>1933, insediamento di Franklin Delano Roosevelt</p></div>
+      <div class="riga"><div class="etichetta">Strumento principale</div><p>Opere pubbliche (WPA, CCC, TVA), riforma finanziaria e, dal 1935, riforma strutturale del welfare (Social Security Act, Wagner Act)</p></div>
+      <div class="riga"><div class="etichetta">Effetto sulla disoccupazione</div><p>Riduzione progressiva rispetto al 24% del 1932, ma la piena occupazione arriva solo con la mobilitazione bellica del 1941</p></div>
+      <div class="riga"><div class="etichetta">Costo in libertà politica</div><p>Nessuno smantellamento delle istituzioni democratiche; il NIRA impone comunque limiti alla concorrenza tra imprese</p></div>
+    </div>
+
+    <div class="col" data-col="italia">
+      <h2>Italia</h2>
+      <div class="paese">Istituto per la Ricostruzione Industriale (IRI)</div>
+      <div class="riga"><div class="etichetta">Anno di avvio</div><p>1933, fondazione dell'IRI</p></div>
+      <div class="riga"><div class="etichetta">Strumento principale</div><p>Salvataggio di banche e industrie travolte dal panico finanziario: lo Stato rileva pacchetti azionari e crediti in sofferenza, diventando proprietario di interi settori (siderurgia, cantieri navali)</p></div>
+      <div class="riga"><div class="etichetta">Effetto sulla disoccupazione</div><p>Il testo non fornisce una cifra specifica: l'intervento nasce come salvataggio difensivo del sistema bancario-industriale, non come programma diretto contro la disoccupazione</p></div>
+      <div class="riga"><div class="etichetta">Costo in libertà politica</div><p>Interviene in un regime già privo di libertà sindacali e politiche indipendenti; a differenza delle misure americane e tedesche, la nazionalizzazione non viene smantellata a crisi finita</p></div>
+    </div>
+
+    <div class="col" data-col="germania">
+      <h2>Germania</h2>
+      <div class="paese">Piano quadriennale nazista</div>
+      <div class="riga"><div class="etichetta">Anno di avvio</div><p>1933, insediamento di Hitler</p></div>
+      <div class="riga"><div class="etichetta">Strumento principale</div><p>Riarmo e grandi opere pubbliche, non il rilancio dei consumi delle famiglie</p></div>
+      <div class="riga"><div class="etichetta">Effetto sulla disoccupazione</div><p>Azzerata rispetto ai circa sei milioni di disoccupati del 1933</p></div>
+      <div class="riga"><div class="etichetta">Costo in libertà politica</div><p>Distruzione dei sindacati indipendenti; l'intervento è messo al servizio di un obiettivo dichiaratamente bellico, la conquista dello spazio vitale a est</p></div>
+    </div>
+  </div>
+
+  <p class="nota">Il punto su cui riflettere non è se l'intervento pubblico abbia funzionato — in tutti e tre i casi, con esiti diversissimi, funzionò a ridurre la disoccupazione — ma a quali fini, e con quali costi in termini di libertà, venga messo al servizio.</p>
+</div>
+
+<script>
+const buttons = document.querySelectorAll('.toggle-btn');
+const cols = document.querySelectorAll('.col');
+const banner = document.getElementById('commonBanner');
+
+function updateBanner(){
+  const activeCount = document.querySelectorAll('.toggle-btn.active').length;
+  banner.classList.toggle('show', activeCount === 3);
+}
+
+buttons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const key = btn.dataset.col;
+    btn.classList.toggle('active');
+    document.querySelector('.col[data-col="'+key+'"]').classList.toggle('show');
+    updateBanner();
+  });
+});
+</script>
+</body>
+</html>

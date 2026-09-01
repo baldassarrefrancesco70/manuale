@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Come nasce un titolo tossico</title>
+<style>
+  :root{--grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620;
+    --sicura:#7a8a5c; --media:#b08d57; --rischiosa:#9c5b45;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 18px;}
+  .wrap{max-width:920px;margin:0 auto;}
+
+  .diagram-box{background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:18px;}
+  svg{width:100%;height:auto;display:block;}
+  .stage{opacity:0.15;transition:opacity .4s;}
+  .stage.show{opacity:1;}
+  .lbl{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;fill:var(--testo);text-anchor:middle;}
+  .lbl-b{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;font-weight:bold;fill:var(--marrone-scuro);text-anchor:middle;}
+  .arrowd{fill:none;stroke:var(--marrone);stroke-width:2.5;opacity:0.15;transition:opacity .4s;}
+  .arrowd.show{opacity:1;}
+
+  .distanza-box{margin-top:16px;background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:14px 20px;}
+  .distanza-box .titolo{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.82rem;color:#7a6f5c;margin-bottom:8px;}
+  .distanza-track{background:#efe9db;border-radius:8px;height:16px;position:relative;overflow:hidden;}
+  .distanza-fill{height:100%;background:linear-gradient(90deg,var(--sicura),var(--rischiosa));border-radius:8px;transition:width .5s;}
+  .distanza-labels{display:flex;justify-content:space-between;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.72rem;color:#8a7d63;margin-top:4px;}
+
+  .controls{display:flex;justify-content:center;align-items:center;gap:14px;margin:16px 0;}
+  .navbtn{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:bold;background:var(--marrone);color:#fff;border:none;border-radius:8px;padding:10px 18px;cursor:pointer;font-size:0.9rem;}
+  .navbtn:disabled{opacity:0.4;cursor:default;}
+  .steps-dots{display:flex;gap:8px;}
+  .step-dot{width:10px;height:10px;border-radius:50%;background:#d8d2c4;cursor:pointer;}
+  .step-dot.active{background:var(--marrone);}
+
+  #scheda{background:var(--card);border:1px solid var(--marrone);border-left:6px solid var(--marrone);border-radius:8px;padding:16px 20px;}
+  #scheda h2{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.05rem;margin:0 0 8px;color:var(--marrone-scuro);}
+  #scheda p{margin:0;line-height:1.55;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Come nasce un titolo tossico</h1>
+  <p class="sottotitolo">La cartolarizzazione passo per passo</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 900 280" id="diagram">
+      <!-- Stage 0: mutui -->
+      <g class="stage show" id="stage0">
+        <rect x="20" y="30" width="140" height="26" rx="4" fill="#d8d2c4"/>
+        <rect x="20" y="62" width="140" height="26" rx="4" fill="#d8d2c4"/>
+        <rect x="20" y="94" width="140" height="26" rx="4" fill="#d8d2c4"/>
+        <rect x="20" y="126" width="140" height="26" rx="4" fill="#d8d2c4"/>
+        <text class="lbl" x="90" y="20">Migliaia di mutui</text>
+      </g>
+
+      <path class="arrowd" id="arrow01" d="M170,95 L215,95" marker-end="url(#ah)"/>
+
+      <!-- Stage 1: fondo -->
+      <g class="stage" id="stage1">
+        <rect x="220" y="40" width="130" height="110" rx="8" fill="#fffdfa" stroke="var(--marrone)" stroke-width="2"/>
+        <text class="lbl-b" x="285" y="30">Il fondo</text>
+        <text class="lbl" x="285" y="98">tutti i mutui</text>
+        <text class="lbl" x="285" y="114">raggruppati insieme</text>
+      </g>
+
+      <path class="arrowd" id="arrow12" d="M360,95 L405,95" marker-end="url(#ah)"/>
+
+      <!-- Stage 2: tranche -->
+      <g class="stage" id="stage2">
+        <text class="lbl-b" x="480" y="20">Tranche per priorità</text>
+        <rect x="415" y="35" width="130" height="28" rx="4" fill="var(--sicura)"/>
+        <text class="lbl" x="480" y="53" fill="#fff">Sicura — AAA</text>
+        <rect x="415" y="68" width="130" height="28" rx="4" fill="var(--media)"/>
+        <text class="lbl" x="480" y="86" fill="#fff">Intermedia</text>
+        <rect x="415" y="101" width="130" height="28" rx="4" fill="var(--rischiosa)"/>
+        <text class="lbl" x="480" y="119" fill="#fff">Rischiosa</text>
+        <text class="lbl" x="480" y="148" font-size="10.5">rendimento crescente,</text>
+        <text class="lbl" x="480" y="160" font-size="10.5">rimborso all'ultimo posto</text>
+      </g>
+
+      <path class="arrowd" id="arrow23" d="M550,95 L595,95" marker-end="url(#ah)"/>
+
+      <!-- Stage 3: rating -->
+      <g class="stage" id="stage3">
+        <rect x="605" y="55" width="110" height="80" rx="8" fill="#fffdfa" stroke="var(--marrone)" stroke-width="2"/>
+        <text class="lbl-b" x="660" y="45">Rating</text>
+        <text class="lbl" x="660" y="90">stessa affidabilità</text>
+        <text class="lbl" x="660" y="106">di un titolo di Stato</text>
+        <text class="lbl-b" x="660" y="122" fill="var(--sicura)">AAA</text>
+      </g>
+
+      <path class="arrowd" id="arrow34" d="M720,95 L765,95" marker-end="url(#ah)"/>
+
+      <!-- Stage 4: investitori -->
+      <g class="stage" id="stage4">
+        <text class="lbl-b" x="835" y="20">Investitori globali</text>
+        <rect x="775" y="35" width="130" height="24" rx="4" fill="#d8d2c4"/>
+        <text class="lbl" x="840" y="52" font-size="10.5">Fondi pensione</text>
+        <rect x="775" y="64" width="130" height="24" rx="4" fill="#d8d2c4"/>
+        <text class="lbl" x="840" y="81" font-size="10.5">Banche europee</text>
+        <rect x="775" y="93" width="130" height="24" rx="4" fill="#d8d2c4"/>
+        <text class="lbl" x="840" y="110" font-size="10.5">Assicurazioni</text>
+      </g>
+
+      <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8B7355"/></marker></defs>
+    </svg>
+  </div>
+
+  <div class="distanza-box">
+    <div class="titolo">Distanza tra il mutuatario originario e l'investitore finale</div>
+    <div class="distanza-track"><div class="distanza-fill" id="distanzaFill" style="width:5%"></div></div>
+    <div class="distanza-labels"><span>vicina, misurabile</span><span>lontana, non più misurabile</span></div>
+  </div>
+
+  <div class="controls">
+    <button class="navbtn" id="prevBtn">← Indietro</button>
+    <div class="steps-dots" id="dots"></div>
+    <button class="navbtn" id="nextBtn">Avanti →</button>
+  </div>
+
+  <div id="scheda"></div>
+</div>
+
+<script>
+const steps = [
+  {stages:[0], arrows:[], dist:5, titolo:"Il punto di partenza: migliaia di mutui", testo:"Migliaia di mutui, anche molto diversi tra loro per rischio e qualità, sono pronti per essere raggruppati."},
+  {stages:[0,1], arrows:['arrow01'], dist:25, titolo:"Il fondo", testo:"I mutui vengono raggruppati in un unico fondo, mescolando insieme rischi molto diversi."},
+  {stages:[0,1,2], arrows:['arrow01','arrow12'], dist:50, titolo:"La suddivisione in tranche", testo:"Il fondo è diviso in fasce (tranche) ordinate per priorità di rimborso: la fascia più sicura è ripagata per prima; le fasce successive, più rischiose, offrono rendimenti maggiori a chi accetta di essere ripagato per ultimo."},
+  {stages:[0,1,2,3], arrows:['arrow01','arrow12','arrow23'], dist:75, titolo:"Il rating", testo:"Le agenzie di rating, pagate dalle stesse banche che chiedono la valutazione, assegnano alla tranche più sicura il giudizio più alto possibile: la tripla A, la stessa affidabilità di un titolo di Stato."},
+  {stages:[0,1,2,3,4], arrows:['arrow01','arrow12','arrow23','arrow34'], dist:98, titolo:"La vendita a investitori globali", testo:"I titoli vengono venduti a investitori di tutto il mondo — fondi pensione, banche europee, assicurazioni — spesso senza alcun modo di verificare la qualità reale dei mutui che ne stanno alla base. La distanza tra la famiglia che non riesce a pagare la rata e chi detiene, senza saperlo, una piccola quota di quel mutuo, si è fatta troppo lunga per essere percorsa a ritroso in tempo di crisi."}
+];
+
+let current = 0;
+
+function render(){
+  const s = steps[current];
+  for(let i=0;i<5;i++){
+    document.getElementById('stage'+i).classList.toggle('show', s.stages.includes(i));
+  }
+  document.querySelectorAll('.arrowd').forEach(a=>a.classList.remove('show'));
+  s.arrows.forEach(id=>document.getElementById(id).classList.add('show'));
+
+  document.getElementById('distanzaFill').style.width = s.dist+'%';
+  document.getElementById('scheda').innerHTML = `<h2>${s.titolo}</h2><p>${s.testo}</p>`;
+
+  document.getElementById('prevBtn').disabled = current===0;
+  document.getElementById('nextBtn').disabled = current===steps.length-1;
+  document.querySelectorAll('.step-dot').forEach((d,i)=>d.classList.toggle('active', i===current));
+}
+
+const dotsWrap = document.getElementById('dots');
+steps.forEach((s,i)=>{
+  const d = document.createElement('div');
+  d.className='step-dot';
+  d.addEventListener('click', ()=>{current=i; render();});
+  dotsWrap.appendChild(d);
+});
+
+document.getElementById('prevBtn').addEventListener('click', ()=>{if(current>0){current--; render();}});
+document.getElementById('nextBtn').addEventListener('click', ()=>{if(current<steps.length-1){current++; render();}});
+
+render();
+</script>
+</body>
+</html>

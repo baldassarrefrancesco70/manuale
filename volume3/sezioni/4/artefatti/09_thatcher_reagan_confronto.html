@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thatcher e Reagan a confronto</title>
+<style>
+  :root{--grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620; --uk:#5b7a8f; --usa:#9c5b45;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 18px;}
+  .wrap{max-width:920px;margin:0 auto;}
+
+  .paradosso{
+    max-width:760px;margin:0 auto 18px;text-align:center;
+    background:var(--card);border:2px dashed var(--marrone);border-radius:10px;
+    padding:12px 20px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;color:var(--marrone-scuro);font-weight:bold;font-size:0.88rem;
+  }
+
+  .toggle-wrap{text-align:center;margin-bottom:18px;}
+  .toggle-btn{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:bold;font-size:0.9rem;
+    padding:9px 20px;border:2px solid var(--marrone);background:#fff;color:var(--marrone-scuro);cursor:pointer;
+  }
+  .toggle-btn:first-child{border-radius:20px 0 0 20px;}
+  .toggle-btn:last-child{border-radius:0 20px 20px 0;}
+  .toggle-btn.active{background:var(--marrone);color:#fff;}
+
+  .columns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .col{flex:1 1 380px;max-width:430px;background:var(--card);border:1px solid var(--marrone);border-top:6px solid var(--marrone);border-radius:10px;padding:16px 20px;}
+  .col[data-c="uk"]{border-top-color:var(--uk);}
+  .col[data-c="usa"]{border-top-color:var(--usa);}
+  .col h2{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.05rem;margin:0 0 2px;}
+  .col[data-c="uk"] h2{color:var(--uk);}
+  .col[data-c="usa"] h2{color:var(--usa);}
+  .col .sub{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.78rem;color:#7a6f5c;margin-bottom:14px;}
+
+  .indicatore{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #e7e0d0;}
+  .indicatore:last-child{border-bottom:none;}
+  .indicatore .nome{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;text-transform:uppercase;letter-spacing:.03em;color:#8a7d63;margin-bottom:4px;}
+  .indicatore .valore{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.15rem;font-weight:bold;color:var(--testo);}
+  .indicatore .anno{font-size:0.75rem;color:#9a8f7a;font-weight:normal;}
+  .indicatore .desc{font-size:0.88rem;margin-top:3px;line-height:1.4;}
+  .nd{color:#9a8f7a;font-style:italic;font-size:0.88rem;}
+
+  .nota-metodo{max-width:760px;margin:18px auto 0;text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;color:#7a6f5c;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Due modi di ridurre lo Stato</h1>
+  <p class="sottotitolo">Thatcher e Reagan: stessa retorica, ricette fiscali opposte</p>
+
+  <div class="paradosso">"Meno Stato" non ha mai significato, in nessuno dei due casi, uno Stato realmente più piccolo — ma uno Stato che cambiava a chi indirizzare le proprie risorse.</div>
+
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" data-p="inizio">Inizio del periodo</button>
+    <button class="toggle-btn" data-p="fine">Fine del periodo</button>
+  </div>
+
+  <div class="columns">
+    <div class="col" data-c="uk">
+      <h2>Regno Unito — Thatcher</h2>
+      <div class="sub">Primo ministro dal 1979 al 1990</div>
+
+      <div class="indicatore">
+        <div class="nome">Spesa pubblica / pressione fiscale</div>
+        <div data-p="inizio" class="v"><span class="nd">livello ereditato dai laburisti (il testo non fornisce una cifra)</span></div>
+        <div data-p="fine" class="v" style="display:none"><span class="valore">leggermente più alta</span><div class="desc">di quella ereditata quattordici anni prima, nonostante la promessa di uno Stato più leggero</div></div>
+      </div>
+      <div class="indicatore">
+        <div class="nome">Inflazione</div>
+        <div data-p="inizio" class="v"><span class="valore">13,5%<span class="anno"> (1980)</span></span></div>
+        <div data-p="fine" class="v" style="display:none"><span class="valore">5,2%<span class="anno"> (1984)</span></span></div>
+      </div>
+      <div class="indicatore">
+        <div class="nome">Disoccupazione</div>
+        <div data-p="inizio" class="v"><span class="valore">7%<span class="anno"> (1984)</span></span></div>
+        <div data-p="fine" class="v" style="display:none"><span class="valore">9,7%<span class="anno"> (1993)</span></span></div>
+      </div>
+      <div class="indicatore">
+        <div class="nome">Deficit di bilancio</div>
+        <div class="v"><span class="nd">il capitolo non fornisce una cifra specifica per il Regno Unito</span></div>
+      </div>
+    </div>
+
+    <div class="col" data-c="usa">
+      <h2>Stati Uniti — Reagan</h2>
+      <div class="sub">Presidente dal 1981 al 1989</div>
+
+      <div class="indicatore">
+        <div class="nome">Spesa pubblica / PIL</div>
+        <div class="v"><span class="nd">non quantificata direttamente; il capitolo segnala il paradosso di un deficit alimentato dalla spesa militare, non dal welfare</span></div>
+      </div>
+      <div class="indicatore">
+        <div class="nome">Inflazione</div>
+        <div data-p="inizio" class="v"><span class="valore">8,2%<span class="anno"> (av. disinflazione)</span></span></div>
+        <div data-p="fine" class="v" style="display:none"><span class="valore">3,8%<span class="anno"> (dopo la stretta di Volcker)</span></span><div class="desc">Il merito va attribuito a Paul Volcker (Fed), non alla Reaganomics: la stretta monetaria risale al 1979.</div></div>
+      </div>
+      <div class="indicatore">
+        <div class="nome">Disoccupazione</div>
+        <div class="v"><span class="nd">il capitolo non fornisce una cifra specifica per gli anni Ottanta statunitensi</span></div>
+      </div>
+      <div class="indicatore">
+        <div class="nome">Spesa militare / debito pubblico</div>
+        <div data-p="inizio" class="v"><span class="valore">80 miliardi $<span class="anno"> (1970, spesa militare)</span></span></div>
+        <div data-p="fine" class="v" style="display:none"><span class="valore">380 miliardi $<span class="anno"> (1988, spesa militare)</span></span><div class="desc">Debito pubblico complessivo: circa 3.000 miliardi di dollari a fine anni Ottanta.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.toggle-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const p = btn.dataset.p;
+    document.querySelectorAll('.v[data-p]').forEach(v=>{
+      v.style.display = v.dataset.p === p ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>

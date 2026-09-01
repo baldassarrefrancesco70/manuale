@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione — Chi paga quando il sistema salta</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Chi paga quando il sistema salta &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Otto nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai capitoli della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "Cap. 1 — La crisi del 1929 e il New Deal":"#5c7343",
+    "Cap. 2 — I trent'anni gloriosi e lo Stato sociale":"#3d5566",
+    "Cap. 3 — Lo shock petrolifero del 1973":"#9d6b2b",
+    "Cap. 4 — La svolta neoliberista — Reagan e Thatcher":"#7a4a3d",
+    "Cap. 5 — La crisi del 2008":"#4a6b5c",
+    "Cap. 6 — Verso il presente":"#5a4a7a"
+  };
+  var CAPORDER = [
+    "Cap. 1 — La crisi del 1929 e il New Deal",
+    "Cap. 2 — I trent'anni gloriosi e lo Stato sociale",
+    "Cap. 3 — Lo shock petrolifero del 1973",
+    "Cap. 4 — La svolta neoliberista — Reagan e Thatcher",
+    "Cap. 5 — La crisi del 2008",
+    "Cap. 6 — Verso il presente"
+  ];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"Cap. 1 — La crisi del 1929 e il New Deal",
+      titolo:"Le riparazioni tedesche: un peso insostenibile o un alibi politico?",
+      formulazioni:{
+        partenza:"Le riparazioni imposte alla Germania a Versailles erano economicamente insostenibili, non solo politicamente inaccettabili.",
+        ristretta:"Le riparazioni erano economicamente gravose e politicamente destabilizzanti, ma la Germania disponeva di margini reali per onorarne almeno una parte.",
+        opposta:"Le riparazioni erano economicamente sostenibili: la Germania scelse sistematicamente di presentarsi come insolvente per ottenere revisioni del trattato."
+      },
+      affermazioni:[
+        {testo:"Keynes, che aveva partecipato di persona ai negoziati di Versailles, sostenne già nel 1920 che la cifra pretesa dagli Alleati eccedesse di gran lunga la reale capacità di pagamento tedesca.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Étienne Mantoux criticò duramente Keynes, sostenendo che la Germania disponesse di risorse sufficienti a onorare almeno una parte consistente del debito.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"\"almeno una parte\" è esattamente il margine che la Ristretta concede, senza sposare per intero la tesi opposta."}},
+        {testo:"I pagamenti effettivamente versati furono in gran parte finanziati da prestiti esteri, non perché la Germania non potesse fare altrimenti, ma perché le conveniva indebitarsi piuttosto che tassare i propri cittadini.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"descrive una scelta di convenienza politica, compatibile sia con un margine reale di pagamento sia con un'insostenibilità di fondo: da sola non discrimina fra le due."}},
+        {testo:"La tesi di Keynes fatica a spiegare perché anche paesi non gravati da riparazioni, come gli Stati Uniti, siano stati travolti dalla stessa crisi economica mondiale.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Nel 1921 la commissione per le riparazioni fissò la somma a 132 miliardi di marchi oro, una cifra pari a una volta e mezzo il reddito nazionale tedesco del 1929.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"un debito pari a una volta e mezzo il reddito nazionale è un dato oggettivo di insostenibilità, difficile da ridurre a semplice scelta di negoziazione."}},
+        {testo:"Il Piano Dawes (1924) e il Piano Young (1929) rateizzarono il debito e provarono a renderlo sostenibile, ma non toccarono il problema di fondo.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 1 — La crisi del 1929 e il New Deal",
+      titolo:"Che cosa causò la Grande Depressione: il mercato o le sue regole?",
+      formulazioni:{
+        partenza:"Fu la contrazione della moneta decisa dalla Federal Reserve, non la speculazione di mercato, a trasformare la recessione del 1929 in una depressione decennale.",
+        ristretta:"La contrazione monetaria della Fed aggravò significativamente la crisi, ma non ne fu l'unica causa: la speculazione di mercato aveva già creato una fragilità strutturale.",
+        opposta:"Fu la speculazione sfrenata e la sovrapproduzione industriale, non un errore della banca centrale, la causa profonda della Grande Depressione."
+      },
+      affermazioni:[
+        {testo:"Milton Friedman e Anna Schwartz sostennero che fu la contrazione dell'offerta di moneta decisa dalla Fed dopo il 1929 a trasformare una recessione ordinaria in una depressione decennale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"La lettura più diffusa individua nella speculazione sfrenata e nella sovrapproduzione industriale le cause profonde della crisi, come nelle pagine di Galbraith sul crollo di Wall Street.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette che la fragilità speculativa preesistesse: questa lettura non la smentisce, la integra."}},
+        {testo:"A partire dal 1928 gli investitori dirottarono risorse verso la speculazione azionaria, spesso comprando titoli a credito: finché le quotazioni salivano il meccanismo si autoalimentava.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Novemila banche fallirono tra il 1930 e il 1933, frammentate com'erano in migliaia di piccoli istituti locali privi della solidità delle grandi banche nazionali.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"In questa lettura, non fu il laissez-faire a fallire, ma un intervento pubblico maldestro, la politica monetaria della Fed, a peggiorare drasticamente una crisi che il mercato avrebbe forse riassorbito più rapidamente.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Nell'estate del 1929 la produzione industriale reale aveva già iniziato a flettere, ma l'euforia speculativa ignorò i segnali fino all'ultimo.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"un cedimento reale precedente al crollo borsistico è compatibile con entrambe le letture causali principali: da solo non decide fra Fed e speculazione."}}
+      ]
+    },
+    {
+      capitolo:"Cap. 2 — I trent'anni gloriosi e lo Stato sociale",
+      titolo:"Il Welfare State: conquista sociale o argine anticomunista?",
+      formulazioni:{
+        partenza:"Lo Stato sociale del secondo dopoguerra fu, prima di tutto, uno strumento della Guerra fredda, non il compimento di una parabola di giustizia già in corso.",
+        ristretta:"La Guerra fredda accelerò e rese più generoso lo Stato sociale già in costruzione, senza esserne l'unica motivazione.",
+        opposta:"Lo Stato sociale del secondo dopoguerra fu il compimento di una parabola di giustizia sociale già in corso da decenni, indipendente dalla Guerra fredda."
+      },
+      affermazioni:[
+        {testo:"Il rapporto Beveridge, che getta le basi teoriche del Welfare State universale, fu pubblicato nel 1942, quando la Guerra fredda non era ancora iniziata.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Le prime forme di assicurazione sociale obbligatoria risalgono alla Germania di Bismarck negli anni Ottanta dell'Ottocento, introdotte a scopo dichiaratamente anti-socialista.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{ristretta:"mostra una genealogia lunga dell'uso anti-socialista dello strumento, che rafforza la funzione di argine anche prima della Guerra fredda vera e propria."}},
+        {testo:"L'espansione più generosa dello Stato sociale europeo si concentra proprio nel decennio in cui il modello sovietico appariva più attraente agli occhi delle classi lavoratrici occidentali.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il patto sociale triangolare tra Stato, imprese e sindacati rispondeva anche a una domanda di sicurezza economica maturata già durante la Grande Depressione, un decennio prima della Guerra fredda.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"\"anche\" è la parola chiave: la Ristretta ammette una genealogia precedente insieme all'accelerazione della Guerra fredda, senza che le due si escludano."}},
+        {testo:"Il rapporto Beveridge nasce dall'esperienza della mobilitazione bellica totale, non da un calcolo geopolitico rivolto contro l'URSS.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La spesa sociale nei quattro paesi confrontati dall'artefatto cresce in modo pressoché continuo dal 1920 al 1990, senza un'impennata isolabile nel solo dopoguerra.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 3 — Lo shock petrolifero del 1973",
+      titolo:"Che cosa causò la stagflazione: lo shock petrolifero o la rigidità dei salari?",
+      formulazioni:{
+        partenza:"Senza i meccanismi di indicizzazione automatica dei salari, lo shock petrolifero del 1973 non avrebbe prodotto una spirale inflazionistica altrettanto lunga.",
+        ristretta:"I meccanismi di indicizzazione salariale aggravarono e prolungarono la spirale inflazionistica innescata dallo shock petrolifero, senza esserne l'unica causa.",
+        opposta:"Lo shock petrolifero da solo, indipendentemente dalla rigidità salariale, sarebbe bastato a produrre una crisi lunga e profonda."
+      },
+      affermazioni:[
+        {testo:"La lettura più diffusa individua nello shock esterno del 1973 la causa scatenante, indipendente da qualunque squilibrio interno alle economie occidentali.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Senza i meccanismi di indicizzazione automatica dei salari, l'aumento del costo dell'energia si sarebbe scaricato sui prezzi una sola volta, senza innescare la spirale prezzi-salari.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il vero problema, in questa lettura critica, non era il petrolio arabo, ma il potere contrattuale che i sindacati occidentali avevano accumulato negli anni della piena occupazione.",
+         classificazione:{partenza:"sostiene", ristretta:"confuta", opposta:"confuta"},
+         perche:{ristretta:"la Ristretta non esclude il petrolio come causa scatenante, mentre questa affermazione lo sostituisce del tutto: è più forte di quanto la Ristretta conceda."}},
+        {testo:"In Italia e Gran Bretagna l'inflazione sfiorò il 20% annuo nel biennio 1974-75, un livello che i soli rincari petroliferi non avrebbero raggiunto nei paesi privi di scala mobile.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Gli strumenti keynesiani, tarati sull'alternativa fra stimolare o raffreddare la domanda, si rivelarono impotenti di fronte a un problema che nasceva dal lato dell'offerta.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La prima lettura lascia intatta la fiducia nel compromesso keynesiano, colpito da un evento esterno e imprevedibile; la seconda ne mette in discussione le fondamenta stesse.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 4 — La svolta neoliberista — Reagan e Thatcher",
+      titolo:"La svolta neoliberista: una cura efficace o un conto rinviato?",
+      formulazioni:{
+        partenza:"La svolta di Reagan e Thatcher ha funzionato nei termini in cui fu concepita, domare l'inflazione, a prescindere dai suoi costi di lungo periodo.",
+        ristretta:"La svolta ha domato l'inflazione nel breve periodo, ma a un costo di lungo periodo che ne ridimensiona il successo complessivo.",
+        opposta:"La svolta neoliberista non ha davvero risolto il problema che si proponeva di risolvere: i suoi stessi costi di lungo periodo ne smentiscono l'efficacia anche nei termini ristretti in cui fu concepita."
+      },
+      affermazioni:[
+        {testo:"L'inflazione, che negli anni Settanta sembrava fuori controllo, fu effettivamente domata, e le economie britannica e americana tornarono a crescere.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Le disuguaglianze di reddito, rimaste stabili per mezzo secolo, ripresero a crescere proprio a partire dagli anni della svolta.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"la Partenza dichiara irrilevanti al giudizio i costi di lungo periodo: questo fatto li rende invece rilevanti, e quindi la confuta."}},
+        {testo:"I capitali liberati dagli sgravi fiscali non finanziarono, in prevalenza, nuovi investimenti produttivi, ma la speculazione finanziaria.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La deregolamentazione bancaria avviata in quegli anni pose le condizioni perché una crisi finanziaria potesse propagarsi, una volta innescata, con una violenza mai vista dagli anni Trenta.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Quando la sinistra tornò al governo su entrambe le sponde dell'Atlantico negli anni Novanta, non smontò l'impianto ereditato: lo amministrò.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"l'accettazione bipartisan dell'impianto è un segno di successo duraturo nei suoi stessi termini, che l'Opposta nega."}},
+        {testo:"È possibile che una cura abbia funzionato nel breve periodo esattamente nei termini in cui era stata concepita, e abbia allo stesso tempo generato, nel lungo periodo, un problema più grande di quello che pretendeva di risolvere.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 5 — La crisi del 2008",
+      titolo:"Che cosa causò la crisi del 2008: l'avidità di Wall Street o gli squilibri globali?",
+      formulazioni:{
+        partenza:"La deregolamentazione finanziaria e l'azzardo morale di Wall Street furono la causa primaria della crisi del 2008, non un canale secondario di uno squilibrio globale già esistente.",
+        ristretta:"La deregolamentazione finanziaria fu la causa immediata e necessaria della crisi, anche se squilibri globali preesistenti ne fornirono la liquidità.",
+        opposta:"Furono gli squilibri globali, il risparmio estero riversato sui mercati occidentali, non l'azzardo morale di Wall Street, la causa primaria della crisi del 2008."
+      },
+      affermazioni:[
+        {testo:"L'abrogazione del Glass-Steagall Act nel 1999 rimosse il diaframma tra banche commerciali e banche d'investimento, aprendo la strada a un azzardo morale strutturale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Le agenzie di rating, pagate dalle stesse banche che chiedevano loro di valutare i titoli, assegnarono la tripla A a gran parte dei prodotti cartolarizzati: un conflitto d'interesse strutturale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il paradosso del finanziamento asiatico mostra ingenti capitali provenienti dalle economie emergenti riversarsi sui mercati occidentali, comprimendo i tassi d'interesse e alimentando la bolla del credito.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette gli squilibri globali come fornitori di liquidità, non come causa immediata: questo fatto la conferma senza risolverla del tutto."}},
+        {testo:"Senza tassi d'interesse compressi dall'afflusso di capitali esteri, la stessa espansione dei mutui subprime sarebbe stata più difficile da sostenere.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il sistema bancario ombra operava con una leva finanziaria altissima e quasi nessuna delle regole prudenziali imposte alle banche tradizionali.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La crisi si originò nel mercato immobiliare di un solo paese, gli Stati Uniti, prima di propagarsi al sistema finanziario mondiale.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 6 — Verso il presente",
+      titolo:"Le disuguaglianze del nuovo secolo: destino tecnologico o scelta politica?",
+      formulazioni:{
+        partenza:"La disuguaglianza cresciuta dagli anni Ottanta è il risultato di scelte politiche reversibili, non un effetto inevitabile del progresso tecnologico.",
+        ristretta:"Le scelte politiche degli anni Ottanta hanno amplificato una tendenza che la tecnologia e la globalizzazione avrebbero comunque prodotto, in misura minore.",
+        opposta:"La disuguaglianza crescente è soprattutto l'effetto di forze strutturali, tecnologia e globalizzazione, indipendenti dalle scelte politiche di un singolo decennio."
+      },
+      affermazioni:[
+        {testo:"Piketty rimette al centro del dibattito pubblico l'idea che la disuguaglianza crescente sia una scelta politica reversibile, non un destino tecnologico.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Gli sgravi fiscali ai redditi più alti, promessi come motore di investimenti diffusi secondo la teoria del trickle-down, non si sono tradotti in prevalenza in nuovi investimenti produttivi.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'automazione e la robotica hanno sostituito il lavoro umano nelle linee di montaggio a un ritmo superiore a quello con cui il mercato creava nuova occupazione, indipendentemente dalla legislazione fiscale di ciascun paese.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La delocalizzazione verso paesi a basso costo del lavoro è un fenomeno globale che ha investito economie con politiche fiscali e sindacali molto diverse tra loro.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il potere contrattuale dei sindacati, eroso dalle politiche degli anni Ottanta, condiziona la distribuzione dei guadagni di produttività indipendentemente dal ritmo del cambiamento tecnologico.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'indice di Gini statunitense riprende a salire proprio a partire dagli anni Settanta-Ottanta, in coincidenza con la svolta neoliberista più che con un'accelerazione tecnologica isolabile in quel decennio.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 6 — Verso il presente",
+      titolo:"Il ritorno dei dazi: autodifesa legittima o rischio di un nuovo 1929?",
+      formulazioni:{
+        partenza:"Il ritorno dei dazi doganali rischia di innescare la stessa spirale di ritorsioni che aggravò, invece di correggere, la Grande Depressione.",
+        ristretta:"I dazi odierni condividono con quelli degli anni Trenta il rischio di ritorsioni a catena, ma operano in un contesto di istituzioni multilaterali che allora non esistevano.",
+        opposta:"Il contesto economico globale odierno è troppo diverso da quello del 1930 perché il precedente Smoot-Hawley sia un termine di paragone utile per i dazi di oggi."
+      },
+      affermazioni:[
+        {testo:"Il commercio mondiale, travolto da un'ondata di protezionismo di ritorsione, si contrasse di oltre il sessanta per cento tra il 1929 e il 1932.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La guerra dei dazi USA-Cina, avviata nel 2016, ha già innescato ritorsioni reciproche su beni di larga scala.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Istituzioni multilaterali come l'Organizzazione mondiale del commercio, inesistenti negli anni Trenta, offrono oggi sedi di negoziazione e regole condivise per contenere le ritorsioni.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"la Ristretta ammette il rischio strutturale insieme a un contesto istituzionale diverso: le due cose insieme, non l'una contro l'altra."}},
+        {testo:"Le economie di oggi sono legate da catene del valore globali molto più interdipendenti di quelle del 1930, il che potrebbe amplificare, non ridurre, il costo di una guerra commerciale.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il dazio Smoot-Hawley del 1930 fu approvato negli Stati Uniti nonostante le proteste di oltre mille economisti americani.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il commercio mondiale, per la sua stessa scala attuale, ha una capacità di assorbimento delle frizioni commerciali che il mondo frammentato degli anni Trenta non possedeva.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle([0,1,2,3,4,5]);
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su 6 affermazioni totali).';
+    } else if(answered<6){
+      verifyHint.textContent=answered+' su 6 classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e 6 classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

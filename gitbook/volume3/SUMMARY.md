@@ -48,3 +48,16 @@
     * [ATLANTE](sezione-3/atlante.md)
     * [Risorse digitali](sezione-3/12-risorse-digitali.md)
 <!-- SEZIONE:sezione-3 END -->
+<!-- SEZIONE:sezione-4 START -->
+<!-- TITOLO:Chi paga quando il sistema salta -->
+  * [Sezione 4](sezione-4/README.md)
+    * [La crisi del 1929 e il New Deal](sezione-4/01-la-crisi-del-1929-e-il-new-deal.md)
+    * [I trent'anni gloriosi e lo Stato sociale](sezione-4/02-i-trent-anni-gloriosi-e-lo-stato-sociale.md)
+    * [Lo shock petrolifero del 1973](sezione-4/03-lo-shock-petrolifero-del-1973.md)
+    * [La svolta neoliberista — Reagan e Thatcher](sezione-4/04-la-svolta-neoliberista-reagan-e-thatcher.md)
+    * [La crisi del 2008](sezione-4/05-la-crisi-del-2008.md)
+    * [Verso il presente](sezione-4/06-verso-il-presente.md)
+    * [Il pendolo, rivisto](sezione-4/07-il-pendolo-rivisto.md)
+    * [ATLANTE](sezione-4/atlante.md)
+    * [Risorse digitali](sezione-4/09-risorse-digitali.md)
+<!-- SEZIONE:sezione-4 END -->

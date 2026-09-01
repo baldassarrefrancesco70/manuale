@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La produzione industriale mondiale, 1929-1940</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --card:#fffdfa;
+    --testo:#2b2620;
+    --occidente:#5b7a8f;
+    --urss:#9c5b45;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  .ui{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 20px;}
+  .wrap{max-width:760px;margin:0 auto;}
+
+  .toggles{display:flex;justify-content:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+  .toggle-btn{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:bold;
+    padding:9px 18px;
+    border-radius:30px;
+    border:2px solid var(--marrone);
+    background:#fff;
+    color:var(--marrone-scuro);
+    cursor:pointer;
+    font-size:0.92rem;
+    transition:all .25s;
+  }
+  .toggle-btn[data-serie="occidente"].active{background:var(--occidente);color:#fff;border-color:var(--occidente);}
+  .toggle-btn[data-serie="urss"].active{background:var(--urss);color:#fff;border-color:var(--urss);}
+
+  .chart-card{
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-radius:10px;
+    padding:18px 14px 8px;
+  }
+  svg{display:block;width:100%;height:auto;}
+  .griglia line{stroke:#e2ddd2;stroke-width:1;}
+  .asse text{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;fill:#7a6f5c;}
+  .linea{fill:none;stroke-width:3;opacity:0;transition:opacity .4s;}
+  .linea.show{opacity:1;}
+  .linea[data-serie="occidente"]{stroke:var(--occidente);}
+  .linea[data-serie="urss"]{stroke:var(--urss);}
+  .punto{r:4;opacity:0;transition:opacity .4s;cursor:pointer;}
+  .punto.show{opacity:1;}
+  .punto[data-serie="occidente"]{fill:var(--occidente);}
+  .punto[data-serie="urss"]{fill:var(--urss);}
+  .base-line{stroke:#b8ae9a;stroke-width:1;stroke-dasharray:4 3;}
+  .base-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:9px;fill:#8a7d63;}
+
+  #tooltip{
+    display:none;
+    position:absolute;
+    background:var(--marrone-scuro);
+    color:#fff;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.78rem;
+    padding:6px 10px;
+    border-radius:6px;
+    pointer-events:none;
+    white-space:nowrap;
+    transform:translate(-50%,-115%);
+  }
+  .chart-wrap{position:relative;}
+
+  .stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:18px 0 4px;}
+  .stat{
+    flex:1 1 210px;max-width:250px;
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-top:5px solid var(--marrone);
+    border-radius:10px;
+    padding:12px 14px;
+    text-align:center;
+  }
+  .stat[data-serie="occidente"]{border-top-color:var(--occidente);}
+  .stat[data-serie="urss"]{border-top-color:var(--urss);}
+  .stat .num{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:bold;font-size:1.3rem;}
+  .stat[data-serie="occidente"] .num{color:var(--occidente);}
+  .stat[data-serie="urss"] .num{color:var(--urss);}
+  .stat .lab{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.72rem;color:#7a6f5c;text-transform:uppercase;letter-spacing:.03em;margin-top:2px;}
+
+  .nota{
+    max-width:680px;margin:18px auto 0;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.8rem;color:#5a5348;
+    text-align:center;
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>La produzione industriale mondiale, 1929-1940</h1>
+  <p class="sottotitolo">Indice 1929 = 100. Occidente in crisi, URSS fuori dal ciclo capitalistico</p>
+
+  <div class="toggles">
+    <button class="toggle-btn active" data-serie="occidente">Occidente (media Stati Uniti, Gran Bretagna, Francia)</button>
+    <button class="toggle-btn active" data-serie="urss">URSS</button>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-wrap">
+      <svg viewBox="0 0 640 320" id="chart">
+        <g class="griglia"></g>
+        <g class="asse"></g>
+        <line class="base-line" x1="60" y1="0" x2="620" y2="0"></line>
+        <text class="base-label" x="624" y="4">100</text>
+        <path class="linea" data-serie="occidente" d=""></path>
+        <path class="linea" data-serie="urss" d=""></path>
+        <g id="punti-occidente"></g>
+        <g id="punti-urss"></g>
+      </svg>
+      <div id="tooltip"></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat" data-serie="occidente">
+      <div class="num">&minus;30%</div>
+      <div class="lab">produzione industriale mondiale al minimo, 1932</div>
+    </div>
+    <div class="stat" data-serie="urss">
+      <div class="num">&times;3</div>
+      <div class="lab">produzione sovietica, 1929&ndash;1940</div>
+    </div>
+    <div class="stat" data-serie="urss">
+      <div class="num">5% &rarr; 18%</div>
+      <div class="lab">quota URSS sulla produzione manifatturiera mondiale</div>
+    </div>
+  </div>
+
+  <p class="nota">Le due curve non raccontano solo un contrasto statistico: raccontano perché, negli anni Trenta, la parola "piano" smise di appartenere al solo vocabolario marxista ed entrò in quello di socialdemocratici, liberali riformisti e persino, con esiti opposti, del regime nazista. Passa il mouse sui punti per i valori anno per anno.</p>
+</div>
+
+<script>
+const dati = {
+  occidente: [
+    {anno:1929, valore:100},
+    {anno:1930, valore:88},
+    {anno:1931, valore:78},
+    {anno:1932, valore:70},
+    {anno:1933, valore:76},
+    {anno:1934, valore:83},
+    {anno:1935, valore:91},
+    {anno:1936, valore:99},
+    {anno:1937, valore:103},
+    {anno:1938, valore:94},
+    {anno:1939, valore:106},
+    {anno:1940, valore:115}
+  ],
+  urss: [
+    {anno:1929, valore:100},
+    {anno:1930, valore:122},
+    {anno:1931, valore:141},
+    {anno:1932, valore:157},
+    {anno:1933, valore:168},
+    {anno:1934, valore:194},
+    {anno:1935, valore:224},
+    {anno:1936, valore:264},
+    {anno:1937, valore:285},
+    {anno:1938, valore:295},
+    {anno:1939, valore:312},
+    {anno:1940, valore:330}
+  ]
+};
+
+const margine = {sinistra:60, destra:620, alto:16, basso:290};
+const annoMin = 1929, annoMax = 1940;
+const valMin = 0, valMax = 340;
+
+function x(anno){
+  return margine.sinistra + (anno - annoMin) / (annoMax - annoMin) * (margine.destra - margine.sinistra);
+}
+function y(valore){
+  return margine.basso - (valore - valMin) / (valMax - valMin) * (margine.basso - margine.alto);
+}
+
+const svg = document.getElementById('chart');
+
+// griglia orizzontale + etichette asse Y
+const griglia = svg.querySelector('.griglia');
+const asse = svg.querySelector('.asse');
+[0,100,200,300].forEach(v=>{
+  const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1', margine.sinistra); l.setAttribute('x2', margine.destra);
+  l.setAttribute('y1', y(v)); l.setAttribute('y2', y(v));
+  griglia.appendChild(l);
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x', margine.sinistra - 10); t.setAttribute('y', y(v)+3);
+  t.setAttribute('text-anchor','end');
+  t.textContent = v;
+  asse.appendChild(t);
+});
+// etichette asse X (anni pari)
+for(let a=annoMin; a<=annoMax; a++){
+  if(a % 1 === 0){
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', x(a)); t.setAttribute('y', margine.basso + 16);
+    t.setAttribute('text-anchor','middle');
+    t.textContent = "'" + String(a).slice(2);
+    asse.appendChild(t);
+  }
+}
+// riposiziona la linea di base (100) e la sua etichetta, disegnate a mano nell'svg statico
+const baseLine = svg.querySelector('.base-line');
+baseLine.setAttribute('y1', y(100)); baseLine.setAttribute('y2', y(100));
+const baseLabel = svg.querySelector('.base-label');
+baseLabel.setAttribute('y', y(100) + 4);
+
+function disegnaSerie(serie){
+  const punti = dati[serie];
+  const path = svg.querySelector('.linea[data-serie="'+serie+'"]');
+  const d = punti.map((p,i)=> (i===0?'M':'L') + x(p.anno) + ' ' + y(p.valore)).join(' ');
+  path.setAttribute('d', d);
+  path.classList.add('show');
+
+  const gruppo = document.getElementById('punti-'+serie);
+  gruppo.innerHTML = '';
+  punti.forEach(p=>{
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('class','punto show');
+    c.setAttribute('data-serie', serie);
+    c.setAttribute('cx', x(p.anno));
+    c.setAttribute('cy', y(p.valore));
+    c.setAttribute('r', 4);
+    c.addEventListener('mouseenter', (e)=> mostraTooltip(e, serie, p));
+    c.addEventListener('mouseleave', nascondiTooltip);
+    gruppo.appendChild(c);
+  });
+}
+
+const tooltip = document.getElementById('tooltip');
+function mostraTooltip(e, serie, p){
+  const nomi = {occidente:'Occidente', urss:'URSS'};
+  tooltip.textContent = nomi[serie] + ', ' + p.anno + ': indice ' + p.valore;
+  tooltip.style.display = 'block';
+  const rect = svg.getBoundingClientRect();
+  const scala = rect.width / 640;
+  tooltip.style.left = (x(p.anno) * scala) + 'px';
+  tooltip.style.top = (y(p.valore) * scala) + 'px';
+}
+function nascondiTooltip(){ tooltip.style.display = 'none'; }
+
+disegnaSerie('occidente');
+disegnaSerie('urss');
+
+document.querySelectorAll('.toggle-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const serie = btn.dataset.serie;
+    btn.classList.toggle('active');
+    const attivo = btn.classList.contains('active');
+    svg.querySelector('.linea[data-serie="'+serie+'"]').classList.toggle('show', attivo);
+    document.querySelectorAll('.punto[data-serie="'+serie+'"]').forEach(p=>p.classList.toggle('show', attivo));
+    document.querySelectorAll('.stat[data-serie="'+serie+'"]').forEach(s=> s.style.opacity = attivo ? '1' : '0.3');
+  });
+});
+</script>
+</body>
+</html>

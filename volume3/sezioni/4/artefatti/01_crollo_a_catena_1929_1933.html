@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il crollo a catena, 1929-1933</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --marrone-scuro:#6b5940;
+    --card:#fffdfa;
+    --testo:#2b2620;
+    --usa:#5b7a8f;
+    --europa:#9c5b45;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:24px 20px 32px;
+    background:var(--grigio);
+    font-family:Georgia,'Times New Roman',serif;
+    color:var(--testo);
+  }
+  .ui{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  h1{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:1.35rem;
+    text-align:center;
+    margin:0 0 4px;
+    color:var(--marrone-scuro);
+  }
+  .sottotitolo{
+    text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.85rem;
+    color:#5a5348;
+    margin:0 0 20px;
+  }
+  .wrap{max-width:1000px;margin:0 auto;}
+
+  /* Slider */
+  .slider-box{
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-radius:10px;
+    padding:16px 24px 20px;
+    margin-bottom:20px;
+  }
+  .slider-row{display:flex;align-items:center;gap:14px;}
+  .slider-row button{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    background:var(--marrone);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    width:38px;height:38px;
+    font-size:1rem;
+    cursor:pointer;
+    flex:none;
+  }
+  .slider-row button:hover{background:var(--marrone-scuro);}
+  input[type=range]{
+    flex:1;
+    accent-color:var(--marrone);
+    height:6px;
+  }
+  .slider-label{
+    text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:bold;
+    color:var(--marrone-scuro);
+    margin-top:10px;
+    font-size:1.05rem;
+  }
+
+  /* Map */
+  .map-box{
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-radius:10px;
+    padding:10px;
+    position:relative;
+  }
+  svg{width:100%;height:auto;display:block;}
+  .landmass{fill:#e5ddce;stroke:#c9bfa8;stroke-width:1;}
+  .flow{
+    fill:none;
+    stroke-width:3;
+    stroke-dasharray:6 5;
+    opacity:0;
+    transition:opacity .5s ease;
+  }
+  .flow.active{opacity:0.85;}
+  .flow-usa-eu{stroke:var(--usa);}
+  .flow-eu-eu{stroke:var(--europa);}
+  .node{
+    cursor:pointer;
+  }
+  .node circle{
+    fill:#d8d2c4;
+    stroke:var(--marrone);
+    stroke-width:2;
+    transition:fill .3s, r .3s;
+  }
+  .node.visible circle{fill:var(--marrone);}
+  .node.selected circle{fill:var(--marrone-scuro);r:12;}
+  .node text.city-label{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:12px;
+    fill:var(--testo);
+  }
+  .node{opacity:0.25;transition:opacity .4s;}
+  .node.visible{opacity:1;}
+
+  .legend{
+    display:flex;gap:18px;flex-wrap:wrap;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.78rem;
+    margin-top:8px;
+    padding:0 6px;
+    color:#5a5348;
+  }
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:14px;height:4px;border-radius:2px;display:inline-block;}
+
+  /* Card */
+  #scheda{
+    margin-top:18px;
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-left:6px solid var(--marrone);
+    border-radius:8px;
+    padding:18px 22px;
+    display:none;
+  }
+  #scheda.show{display:block;}
+  #scheda h2{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:1.05rem;
+    margin:0 0 6px;
+    color:var(--marrone-scuro);
+  }
+  #scheda .data{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.82rem;
+    color:#7a6f5c;
+    margin-bottom:10px;
+  }
+  #scheda p{margin:0 0 8px;line-height:1.5;}
+  .cifra{
+    display:inline-block;
+    background:var(--grigio);
+    border:1px solid var(--marrone);
+    border-radius:6px;
+    padding:2px 8px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.85rem;
+    font-weight:bold;
+    color:var(--marrone-scuro);
+    margin-top:4px;
+  }
+  .hint{
+    text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.78rem;
+    color:#7a6f5c;
+    margin-top:10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Il crollo a catena, 1929-1933</h1>
+  <p class="sottotitolo">Dal crollo di Wall Street alla fine del gold standard: come una crisi di Borsa diventò una crisi mondiale</p>
+
+  <div class="slider-box">
+    <div class="slider-row">
+      <button id="btnPlay" title="Avanza/Pausa">▶</button>
+      <input type="range" id="slider" min="0" max="5" step="1" value="0">
+      <button id="btnReset" title="Riparti dall'inizio">⟲</button>
+    </div>
+    <div class="slider-label" id="sliderLabel">Ottobre 1929</div>
+  </div>
+
+  <div class="map-box">
+    <svg viewBox="0 0 900 420" id="mapSvg">
+      <!-- schematic landmasses -->
+      <path class="landmass" d="M40,120 L230,90 L280,160 L260,260 L180,320 L90,300 L30,220 Z"/>
+      <path class="landmass" d="M560,80 L760,60 L830,120 L800,220 L700,280 L600,260 L540,180 Z"/>
+      <text x="130" y="200" text-anchor="middle" class="ui" font-size="15" fill="#8a7d63" font-weight="bold">STATI UNITI</text>
+      <text x="690" y="150" text-anchor="middle" class="ui" font-size="15" fill="#8a7d63" font-weight="bold">EUROPA</text>
+
+      <!-- flows -->
+      <path id="flowCredito" class="flow flow-usa-eu" d="M260,190 C400,150 520,150 610,170"/>
+      <path id="flowRitiro" class="flow flow-usa-eu" d="M610,190 C520,220 400,220 265,205" marker-end="url(#arrowUsa)"/>
+      <path id="flowContagio" class="flow flow-eu-eu" d="M700,190 C660,160 630,140 615,140" marker-end="url(#arrowEu)"/>
+      <path id="flowContagioUK" class="flow flow-eu-eu" d="M660,150 C640,110 610,90 590,100" marker-end="url(#arrowEu)"/>
+
+      <defs>
+        <marker id="arrowUsa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5b7a8f"/></marker>
+        <marker id="arrowEu" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9c5b45"/></marker>
+      </defs>
+
+      <!-- nodes -->
+      <g class="node" data-id="0" transform="translate(160,220)">
+        <circle r="10"/><text class="city-label" x="14" y="4">New York</text>
+      </g>
+      <g class="node" data-id="1" transform="translate(180,260)">
+        <circle r="10"/><text class="city-label" x="14" y="4">Banche USA</text>
+      </g>
+      <g class="node" data-id="2" transform="translate(700,190)">
+        <circle r="10"/><text class="city-label" x="14" y="20">Vienna</text>
+      </g>
+      <g class="node" data-id="3" transform="translate(650,150)">
+        <circle r="10"/><text class="city-label" x="14" y="-8">Berlino</text>
+      </g>
+      <g class="node" data-id="4" transform="translate(600,95)">
+        <circle r="10"/><text class="city-label" x="14" y="-8">Londra</text>
+      </g>
+      <g class="node" data-id="5" transform="translate(600,95)">
+        <circle r="10"/>
+      </g>
+    </svg>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--usa)"></span>flusso di credito USA ↔ Europa</span>
+      <span><span class="swatch" style="background:var(--europa)"></span>contagio bancario in Europa</span>
+    </div>
+  </div>
+
+  <div id="scheda">
+    <h2 id="schedaTitolo"></h2>
+    <div class="data" id="schedaData"></div>
+    <p id="schedaTesto"></p>
+    <div class="cifra" id="schedaCifra"></div>
+  </div>
+
+  <p class="hint">Trascina il cursore o premi ▶ per avanzare tappa per tappa. Clicca su un nodo comparso sulla mappa per leggerne la scheda.</p>
+</div>
+
+<script>
+const tappe = [
+  {
+    label: "Ottobre 1929",
+    nodo: 0,
+    flows: [],
+    titolo: "Il crollo di Wall Street",
+    testo: "Il Giovedì Nero (24 ottobre) e il Martedì Nero (29 ottobre) travolgono la Borsa di New York: gli investitori indebitati sono costretti a liquidare i titoli per far fronte alle richieste di margine delle banche. A metà novembre le quotazioni si sono dimezzate.",
+    cifra: "13 milioni di azioni scambiate il 24/10 · 16 milioni il 29/10"
+  },
+  {
+    label: "1930",
+    nodo: 1,
+    flows: ["flowRitiro"],
+    titolo: "Le banche USA si prosciugano di liquidità",
+    testo: "Le banche statunitensi, esposte nella speculazione, bloccano nuovi prestiti e richiedono il rientro di quelli in corso. Per recuperare liquidità ritirano anche i capitali investiti in Europa: il canale che aveva finanziato la ricostruzione tedesca negli anni Venti si inverte.",
+    cifra: "tra il 1930 e il 1933 falliscono 9.000 banche americane"
+  },
+  {
+    label: "1930-31",
+    nodo: 1,
+    flows: ["flowRitiro"],
+    titolo: "La crisi si trasmette all'economia reale",
+    testo: "Meno credito significa meno consumi, meno produzione, meno occupazione: una spirale che si autoalimenta. La produzione automobilistica si dimezza tra il 1929 e il 1931.",
+    cifra: "disoccupati USA: da poche unità a 14 milioni"
+  },
+  {
+    label: "Maggio 1931",
+    nodo: 2,
+    flows: ["flowRitiro","flowContagio"],
+    titolo: "Il fallimento della Creditanstalt di Vienna",
+    testo: "Privata dei prestiti americani da cui dipendeva l'architettura delle riparazioni, la Germania sprofonda in recessione. Nel maggio 1931 il fallimento della Creditanstalt di Vienna innesca un panico bancario che si propaga dall'Austria alla Germania.",
+    cifra: "disoccupazione tedesca oltre i 6 milioni"
+  },
+  {
+    label: "Estate 1931",
+    nodo: 3,
+    flows: ["flowRitiro","flowContagio","flowContagioUK"],
+    titolo: "Il contagio raggiunge la Gran Bretagna",
+    testo: "Le banche britanniche, fortemente esposte nell'Europa centrale, sono travolte a loro volta dal panico bancario che si propaga dalla Germania.",
+    cifra: "canale di trasmissione: esposizione bancaria diretta, non un ritardo casuale"
+  },
+  {
+    label: "21 settembre 1931",
+    nodo: 4,
+    flows: ["flowRitiro","flowContagio","flowContagioUK"],
+    titolo: "La Gran Bretagna abbandona il gold standard",
+    testo: "Con le riserve auree ormai esaurite, la Banca d'Inghilterra sospende la convertibilità della sterlina. È la fine del primato finanziario britannico e del gold standard classico: nei mesi successivi decine di paesi seguiranno l'esempio.",
+    cifra: "commercio mondiale: -60% circa tra il 1929 e il 1932"
+  }
+];
+
+const slider = document.getElementById('slider');
+const label = document.getElementById('sliderLabel');
+const scheda = document.getElementById('scheda');
+const schedaTitolo = document.getElementById('schedaTitolo');
+const schedaData = document.getElementById('schedaData');
+const schedaTesto = document.getElementById('schedaTesto');
+const schedaCifra = document.getElementById('schedaCifra');
+const nodes = document.querySelectorAll('.node');
+const flowEls = { flowCredito:document.getElementById('flowCredito'), flowRitiro:document.getElementById('flowRitiro'), flowContagio:document.getElementById('flowContagio'), flowContagioUK:document.getElementById('flowContagioUK') };
+
+let playing = false;
+let timer = null;
+let selectedNode = null;
+
+function render(step){
+  const t = tappe[step];
+  label.textContent = t.label;
+
+  nodes.forEach(n=>{
+    const id = parseInt(n.dataset.id);
+    n.classList.toggle('visible', id <= step);
+  });
+
+  Object.keys(flowEls).forEach(k=>{
+    flowEls[k].classList.toggle('active', t.flows.includes(k));
+  });
+
+  if(selectedNode === null || parseInt(selectedNode.dataset.id) > step){
+    showScheda(step);
+  }
+}
+
+function showScheda(step){
+  const t = tappe[step];
+  schedaTitolo.textContent = t.titolo;
+  schedaData.textContent = t.label;
+  schedaTesto.textContent = t.testo;
+  schedaCifra.textContent = t.cifra;
+  scheda.classList.add('show');
+}
+
+slider.addEventListener('input', ()=>{
+  selectedNode = null;
+  nodes.forEach(n=>n.classList.remove('selected'));
+  render(parseInt(slider.value));
+});
+
+nodes.forEach(n=>{
+  n.addEventListener('click', ()=>{
+    const id = parseInt(n.dataset.id);
+    if(id > parseInt(slider.value)) return;
+    nodes.forEach(x=>x.classList.remove('selected'));
+    n.classList.add('selected');
+    selectedNode = n;
+    showScheda(id);
+  });
+});
+
+document.getElementById('btnPlay').addEventListener('click', ()=>{
+  playing = !playing;
+  document.getElementById('btnPlay').textContent = playing ? '❚❚' : '▶';
+  if(playing){
+    timer = setInterval(()=>{
+      let v = parseInt(slider.value);
+      if(v >= parseInt(slider.max)){
+        playing = false;
+        document.getElementById('btnPlay').textContent = '▶';
+        clearInterval(timer);
+        return;
+      }
+      slider.value = v+1;
+      selectedNode = null;
+      nodes.forEach(n=>n.classList.remove('selected'));
+      render(v+1);
+    }, 1800);
+  } else {
+    clearInterval(timer);
+  }
+});
+
+document.getElementById('btnReset').addEventListener('click', ()=>{
+  playing = false;
+  clearInterval(timer);
+  document.getElementById('btnPlay').textContent = '▶';
+  slider.value = 0;
+  selectedNode = null;
+  nodes.forEach(n=>n.classList.remove('selected'));
+  render(0);
+});
+
+render(0);
+</script>
+</body>
+</html>

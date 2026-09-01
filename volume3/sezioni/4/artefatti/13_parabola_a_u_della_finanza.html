@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La parabola a U della finanza</title>
+<style>
+  :root{--grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620; --linea:#9c5b45; --banda:#e8f4f8;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 18px;}
+  .wrap{max-width:900px;margin:0 auto;}
+  .chart-box{background:var(--card);border:1px solid var(--marrone);border-radius:10px;padding:16px;}
+  svg{width:100%;height:auto;display:block;}
+  .gridline{stroke:#e3ddd0;stroke-width:1;}
+  .annot-text{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;fill:#7a6f5c;}
+  .banda-regolazione{fill:var(--banda);opacity:0.6;}
+  .linea{fill:none;stroke:var(--linea);stroke-width:3;}
+  .peak-line{stroke:var(--marrone);stroke-width:1.5;stroke-dasharray:4 3;}
+  .peak-label{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11.5px;fill:var(--marrone-scuro);font-weight:bold;text-anchor:middle;}
+  .dot{cursor:pointer;}
+  .tooltip{position:absolute;background:var(--marrone-scuro);color:#fff;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.78rem;padding:6px 10px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10;}
+  .domanda-box{margin-top:16px;background:var(--card);border:1px solid var(--marrone);border-left:6px solid var(--marrone);border-radius:8px;padding:16px 20px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.88rem;line-height:1.55;font-style:italic;color:var(--marrone-scuro);}
+  .nota-metodo{max-width:760px;margin:14px auto 0;text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;color:#7a6f5c;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>La parabola a U della finanza, 1900-oggi</h1>
+  <p class="sottotitolo">Profitti e stipendi del settore finanziario: due picchi, un lungo minimo in mezzo</p>
+
+  <div class="chart-box">
+    <svg id="chart" viewBox="0 0 860 420"></svg>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+
+  <div class="domanda-box">Se l'ipertrofia del settore finanziario tende a precedere le crisi più gravi, la deregolamentazione che l'ha resa possibile è stata la condizione della crescita, o la premessa del collasso?</div>
+
+</div>
+
+<script>
+const years = [1900,1910,1920,1929,1940,1950,1960,1970,1980,1990,2000,2006,2015,2023];
+const vals =  [11,  13,  15,  20,   9,   8,   9,  10,  14,  18,  22,  27,   18,  20];
+
+const svg = document.getElementById('chart');
+const W=860,H=420,M={t:20,r:20,b:40,l:50};
+const plotW=W-M.l-M.r, plotH=H-M.t-M.b;
+const xScale = i => M.l + (i/(years.length-1))*plotW;
+const yMax = 30;
+const yScale = v => M.t + plotH - (v/yMax)*plotH;
+
+let html='';
+// regulation band 1933-1973 (approx indices 3 to 7 -> use fractional position)
+const idx1933 = 3 + (1933-1929)/(1940-1929);
+const idx1973 = 6 + (1973-1960)/(1970-1960);
+html += `<rect class="banda-regolazione" x="${xScale(idx1933)}" y="${M.t}" width="${xScale(idx1973)-xScale(idx1933)}" height="${plotH}"/>`;
+html += `<text class="annot-text" x="${(xScale(idx1933)+xScale(idx1973))/2}" y="${M.t+14}" text-anchor="middle" font-style="italic">Regolamentazione: dal Glass-Steagall a Bretton Woods</text>`;
+
+for(let v=0; v<=yMax; v+=5){
+  html += `<line class="gridline" x1="${M.l}" y1="${yScale(v)}" x2="${W-M.r}" y2="${yScale(v)}"/>`;
+  html += `<text class="annot-text" x="${M.l-8}" y="${yScale(v)+4}" text-anchor="end">${v}</text>`;
+}
+years.forEach((y,i)=>{
+  html += `<text class="annot-text" x="${xScale(i)}" y="${H-M.b+18}" text-anchor="middle">${y}</text>`;
+});
+
+const pts = vals.map((v,i)=> xScale(i)+','+yScale(v)).join(' ');
+html += `<polyline class="linea" points="${pts}"/>`;
+
+// peaks
+[3,11].forEach(i=>{
+  html += `<line class="peak-line" x1="${xScale(i)}" y1="${M.t}" x2="${xScale(i)}" y2="${H-M.b}"/>`;
+  html += `<text class="peak-label" x="${xScale(i)}" y="${M.t+30}">${years[i]}</text>`;
+});
+
+vals.forEach((v,i)=>{
+  html += `<circle class="dot" cx="${xScale(i)}" cy="${yScale(v)}" r="4.5" fill="#9c5b45" data-year="${years[i]}" data-val="${v}"/>`;
+});
+
+svg.innerHTML = html;
+
+const tooltip = document.getElementById('tooltip');
+svg.addEventListener('mousemove', (e)=>{
+  if(e.target.tagName==='circle'){
+    tooltip.style.opacity=1;
+    tooltip.style.left=(e.pageX+12)+'px';
+    tooltip.style.top=(e.pageY-30)+'px';
+    tooltip.textContent = e.target.dataset.year+': indice qualitativo '+e.target.dataset.val;
+  } else {
+    tooltip.style.opacity=0;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tre modelli di Stato sociale in Europa</title>
+<style>
+  :root{
+    --grigio:#F2F2F2; --marrone:#8B7355; --marrone-scuro:#6b5940; --card:#fffdfa; --testo:#2b2620;
+    --residuale:#5b7a8f; --particolaristico:#9c5b45; --universalistico:#7a8a5c; --altro:#c9bfa8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:24px 20px 32px;background:var(--grigio);font-family:Georgia,serif;color:var(--testo);}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.3rem;text-align:center;margin:0 0 4px;color:var(--marrone-scuro);}
+  .sottotitolo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.85rem;color:#5a5348;margin:0 0 6px;}
+  .periodo{text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;color:#8a7d63;margin:0 0 18px;font-style:italic;}
+  .wrap{max-width:900px;margin:0 auto;}
+
+  .layout{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;justify-content:center;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(5, 74px);
+    grid-template-rows:repeat(5, 74px);
+    gap:8px;
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-radius:10px;
+    padding:16px;
+  }
+  .cell{
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.7rem;font-weight:bold;color:#fff;
+    cursor:pointer;
+    padding:4px;
+    line-height:1.15;
+    transition:transform .15s, box-shadow .15s;
+    border:2px solid transparent;
+  }
+  .cell:hover, .cell.active{transform:scale(1.06);box-shadow:0 2px 8px rgba(0,0,0,0.18);border-color:var(--marrone-scuro);}
+  .cell.residuale{background:var(--residuale);}
+  .cell.particolaristico{background:var(--particolaristico);}
+  .cell.universalistico{background:var(--universalistico);}
+  .cell.altro{background:var(--altro);color:#5a5348;font-weight:normal;}
+  .cell.empty{visibility:hidden;}
+
+  .side{
+    flex:1 1 260px;
+    max-width:300px;
+  }
+  .legend{
+    background:var(--card);border:1px solid var(--marrone);border-radius:10px;
+    padding:14px 16px;margin-bottom:14px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.8rem;
+  }
+  .legend .item{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .legend .sw{width:16px;height:16px;border-radius:4px;flex:none;}
+  .legend .item:last-child{margin-bottom:0;}
+
+  #scheda{
+    background:var(--card);border:1px solid var(--marrone);border-left:6px solid var(--marrone);
+    border-radius:8px;padding:14px 16px;min-height:150px;
+  }
+  #scheda h2{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1rem;margin:0 0 6px;color:var(--marrone-scuro);}
+  #scheda .modello{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;color:#7a6f5c;margin-bottom:8px;text-transform:uppercase;letter-spacing:.03em;}
+  #scheda p{margin:0;line-height:1.5;font-size:0.9rem;}
+  #scheda .placeholder{color:#9a8f7a;font-style:italic;font-size:0.85rem;}
+
+  .nota-metodo{max-width:760px;margin:16px auto 0;text-align:center;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;color:#7a6f5c;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tre modelli di Stato sociale in Europa</h1>
+  <p class="sottotitolo">Residuale, particolaristico, universalistico: tre risposte diverse, non tre tappe di un'unica evoluzione</p>
+  <p class="periodo">Fotografia del secondo dopoguerra — non della situazione attuale dei sistemi di welfare, in parte ibridati</p>
+
+  <div class="layout">
+    <div class="grid" id="grid"></div>
+    <div class="side">
+      <div class="legend">
+        <div class="item"><span class="sw" style="background:var(--residuale)"></span>Modello residuale</div>
+        <div class="item"><span class="sw" style="background:var(--particolaristico)"></span>Modello particolaristico</div>
+        <div class="item"><span class="sw" style="background:var(--universalistico)"></span>Modello universalistico</div>
+        <div class="item"><span class="sw" style="background:var(--altro)"></span>Blocco orientale / non descritto nel capitolo</div>
+      </div>
+      <div id="scheda"><p class="placeholder">Clicca su un paese per leggerne il meccanismo.</p></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// grid: 5 cols x 5 rows, row0 = nord
+const paesi = [
+  {r:0,c:1,nome:"Norvegia",modello:"universalistico",testo:"Le prestazioni derivano dallo status di cittadino, non dal lavoro svolto, e sono finanziate da una tassazione fortemente progressiva."},
+  {r:0,c:2,nome:"Svezia",modello:"universalistico",testo:"Caso di riferimento del modello universalistico: accesso alle prestazioni legato alla cittadinanza, non alla posizione lavorativa o al bisogno dimostrato."},
+  {r:0,c:3,nome:"Finlandia",modello:"universalistico",testo:"Come Svezia e Norvegia, prestazioni universali finanziate da una tassazione progressiva, indipendenti dal reddito o dal lavoro svolto."},
+  {r:1,c:0,nome:"Irlanda",modello:"residuale",testo:"Lo Stato interviene quando il bisogno è dimostrato; per il resto prevale l'affidamento ad assicurazioni e previdenza privata."},
+  {r:1,c:1,nome:"Regno Unito",modello:"residuale",testo:"Servizio sanitario pubblico universale (NHS), ma sussidi e pensioni integrative restano in larga parte legati a un bisogno dimostrato o ad assicurazioni private."},
+  {r:1,c:3,nome:"Danimarca",modello:"universalistico",testo:"Prestazioni universali legate alla cittadinanza, finanziate da un prelievo fiscale fortemente progressivo."},
+  {r:2,c:2,nome:"Paesi Bassi",modello:"particolaristico",testo:"Diritti sociali legati ai contributi versati e alla posizione lavorativa: si riceve in proporzione a quanto si è versato."},
+  {r:2,c:3,nome:"Germania",modello:"particolaristico",testo:"L'erede diretta del modello bismarckiano: assicurazioni sociali obbligatorie legate allo status di lavoratore, non alla sola cittadinanza."},
+  {r:2,c:4,nome:"Polonia",modello:"altro",testo:"Blocco orientale a economia pianificata: un sistema di protezione sociale strutturalmente diverso, non trattato nel capitolo."},
+  {r:3,c:2,nome:"Belgio",modello:"particolaristico",testo:"Sistema assicurativo organizzato per categoria professionale: prestazioni proporzionali ai contributi versati."},
+  {r:3,c:1,nome:"Francia",modello:"particolaristico",testo:"I diritti sociali restano legati alla posizione lavorativa e ai contributi versati, secondo il modello particolaristico dell'Europa continentale."},
+  {r:3,c:4,nome:"Austria",modello:"particolaristico",testo:"Come Germania e Francia, protezione sociale organizzata per categorie professionali e finanziata da contributi legati al lavoro."},
+  {r:4,c:0,nome:"Spagna",modello:"altro",testo:"Non trattata nel capitolo per questo periodo: negli anni del secondo dopoguerra vive sotto la dittatura franchista, fuori dal compromesso keynesiano occidentale."},
+  {r:4,c:3,nome:"Italia",modello:"particolaristico",testo:"Modello particolaristico, ma con un'eccezione segnalata nel capitolo: a differenza degli altri paesi occidentali, il patto sociale triangolare non riuscì a includere stabilmente la sinistra comunista, la forza politica più esposta all'esclusione dal compromesso."}
+];
+
+const grid = document.getElementById('grid');
+for(let r=0;r<5;r++){
+  for(let c=0;c<5;c++){
+    const p = paesi.find(x=>x.r===r && x.c===c);
+    const div = document.createElement('div');
+    if(p){
+      div.className = 'cell '+p.modello;
+      div.textContent = p.nome;
+      div.dataset.nome = p.nome;
+      div.addEventListener('click', ()=>{
+        document.querySelectorAll('.cell').forEach(el=>el.classList.remove('active'));
+        div.classList.add('active');
+        showScheda(p);
+      });
+    } else {
+      div.className = 'cell empty';
+    }
+    grid.appendChild(div);
+  }
+}
+
+const scheda = document.getElementById('scheda');
+const modelliLabel = {residuale:'Modello residuale', particolaristico:'Modello particolaristico', universalistico:'Modello universalistico', altro:'Fuori dai tre modelli descritti'};
+
+function showScheda(p){
+  scheda.innerHTML = `<h2>${p.nome}</h2><div class="modello">${modelliLabel[p.modello]}</div><p>${p.testo}</p>`;
+}
+</script>
+</body>
+</html>
