@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione — Un continente unito, per scelta</title>
+<style>
+  :root{
+    --paper:#e9edf0; --paper-2:#dde4e8; --ink:#20242b; --ink-soft:#525c66;
+    --line:#b9c4cc; --rule:#94a3ac;
+    --pro:#436b8a; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#eef2f4,#e3e9ec);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#eef2f4,#e3e9ec)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Un continente unito, per scelta &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Nove nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai capitoli della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "Cap. 1 — Le origini":"#436b8a",
+    "Cap. 2 — Dalla CEE a Maastricht":"#3d5566",
+    "Cap. 3 — L'euro e l'Europa a 25":"#7a4a3d",
+    "Cap. 4 — Le crisi":"#5a4a7a"
+  };
+  var CAPORDER = [
+    "Cap. 1 — Le origini",
+    "Cap. 2 — Dalla CEE a Maastricht",
+    "Cap. 3 — L'euro e l'Europa a 25",
+    "Cap. 4 — Le crisi"
+  ];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"Cap. 1 — Le origini",
+      titolo:"Il funzionalismo di Monnet fu una strategia deliberata o un ripiego imposto dalle circostanze?",
+      formulazioni:{
+        partenza:"Il metodo dei piccoli passi fu, fin dal 1950, un disegno lucido per arrivare all'unione politica, non una razionalizzazione successiva del fallimento della via più ambiziosa.",
+        ristretta:"Monnet aveva in mente fin dal 1950 che l'integrazione economica avrebbe generato pressioni politiche, ma il percorso concreto che ne è seguito non era scritto in anticipo in nessun documento del 1950.",
+        opposta:"Il funzionalismo non fu un disegno ma la conseguenza di un fallimento: l'economia divenne il terreno prevalente dell'integrazione solo perché la via più ambiziosa, quella della CED, si era chiusa nel 1954."
+      },
+      affermazioni:[
+        {testo:"La Dichiarazione Schuman parla esplicitamente di «prima tappa della Federazione Europea», e gran parte della storiografia europeista ha ripreso questa lettura presentando la CECA come il primo passo consapevole di un percorso già immaginato nella sua interezza.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"La via più ambiziosa, quella della difesa e della politica comuni, fu tentata per prima con la CED, e naufragò nel 1954 non per scelta ma per il voto contrario di un parlamento nazionale.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{ristretta:"mostra solo che la via politica fallì, non se il ricorso all'economia fosse disegno o ripiego: da sola non discrimina fra le due letture."}},
+        {testo:"Il modo specifico in cui la pressione economica si è tradotta in fatti, dal crollo della CED al ripiegamento sul Mercato Comune, non era scritto in anticipo in nessun documento del 1950.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Monnet aveva effettivamente in mente, fin dal 1950, che l'integrazione economica avrebbe generato pressioni verso l'integrazione politica, e la Dichiarazione Schuman lo conferma.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'economia divenne il terreno prevalente dell'integrazione non perché fosse la scelta ottimale fin dall'inizio, ma perché era l'unica strada rimasta aperta dopo che quella politica si era chiusa.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{ristretta:"riguarda il perché l'economia abbia prevalso, non se Monnet avesse un'intuizione di lungo periodo: le due cose, nella Ristretta, convivono."}},
+        {testo:"Distinguere fra l'intuizione strategica di lungo periodo e la sequenza contingente degli eventi che l'hanno effettivamente realizzata è forse l'unico modo per leggere questa storia senza cadere né nel mito del disegno perfetto né nella sua negazione.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 1 — Le origini",
+      titolo:"La CED fu un'occasione mancata per l'Europa politica, o un progetto condannato fin dall'inizio?",
+      formulazioni:{
+        partenza:"Se il parlamento francese avesse ratificato la CED nel 1954, l'Europa avrebbe potuto raggiungere l'integrazione politica e militare con decenni di anticipo.",
+        ristretta:"La CED arrivò più vicino di ogni altro momento a un potere politico-militare comune, ma la sua ratifica restava tutt'altro che scontata anche a prescindere dal voto francese del 1954.",
+        opposta:"La CED era condannata fin dall'inizio: chiedeva ai governi di rinunciare in un colpo solo al monopolio della forza armata, in un momento in cui nessuna opinione pubblica europea era pronta ad accettarlo."
+      },
+      affermazioni:[
+        {testo:"Un trattato firmato da sei governi, un articolo che apriva esplicitamente la strada a una Comunità Politica Europea, una classe dirigente che credeva nel progetto e vi aveva investito capitale politico reale.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"La CED chiedeva ai governi nazionali di rinunciare, in un colpo solo, al monopolio della forza armata, la prerogativa più identitaria di uno Stato sovrano.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La stessa urgenza che aveva reso pensabile il progetto, il timore di un'aggressione sovietica, si era già ridimensionata nel 1953 con la morte di Stalin: mancata la pressione, il progetto perse il proprio argomento più forte.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Trattare la ratifica come un ostacolo procedurale significa dimenticare che era la sede in cui il conflitto reale doveva consumarsi: se un parlamento nazionale poteva affossare il progetto, il consenso su cui si reggeva era più fragile di quanto i negoziati diplomatici lasciassero intendere.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il voto dell'Assemblea Nazionale francese del 30 agosto 1954 fu tutt'altro che scontato, e un allineamento politico anche di poco diverso avrebbe potuto produrre un risultato differente.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Fu la prima e, fino a oggi, unica volta che un progetto di esercito comune europeo arrivò alla firma di un trattato internazionale.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 2 — Dalla CEE a Maastricht",
+      titolo:"Il Regno Unito nella Comunità: pragmatismo utile o presenza a metà?",
+      formulazioni:{
+        partenza:"L'insistenza britannica su libero scambio e disciplina di bilancio ha tenuto la Comunità ancorata a un pragmatismo necessario, più che indebolirne la coesione.",
+        ristretta:"L'atteggiamento britannico ha portato benefici reali di disciplina economica, ma al prezzo di una tensione permanente sulla propria appartenenza che nessun altro Stato membro ha mai riprodotto alla stessa scala.",
+        opposta:"La sequenza di eccezioni britanniche, dal rabat agli opt-out, non è la prova di un compromesso riuscito ma il sintomo di un'appartenenza mai realmente accettata, di cui la Brexit del 2016 è la conclusione coerente."
+      },
+      affermazioni:[
+        {testo:"L'insistenza di Londra sul libero scambio, sulla disciplina di bilancio e sulla cautela verso ogni cessione di sovranità avrebbe contribuito a tenere la Comunità ancorata a un pragmatismo che i soli paesi fondatori difficilmente avrebbero garantito da soli.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Un paese che entra per convenienza, ottiene eccezioni permanenti su ogni passo politicamente significativo, moneta, frontiere, carta sociale, e trasforma la propria presenza in una costante rinegoziazione dei termini di appartenenza.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Se ogni paese avesse rivendicato per sé lo stesso diritto a un'eccezione permanente su ogni materia sensibile, l'edificio comunitario non avrebbe retto.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{partenza:"è proprio il punto cieco che il capitolo imputa alla lettura del pragmatismo utile: generalizzato, l'atteggiamento britannico avrebbe reso impossibile ogni decisione comune."}},
+        {testo:"Nel 1975 un primo referendum britannico sulla permanenza nella Comunità fu vinto con largo margine dai favorevoli: la scelta del 2016 fu tutt'altro che una traiettoria coerente e scontata.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il rabat ottenuto da Thatcher nel 1984 risolveva uno squilibrio reale fra i contributi versati dal Regno Unito e i benefici ricevuti dalla Politica Agricola Comune, che nessun altro Stato membro aveva interesse a correggere spontaneamente.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'adesione britannica del 1973 nacque dal confronto fra il ristagno dell'economia nazionale e il dinamismo dei sei fondatori, non da una conversione all'ideale europeista.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 2 — Dalla CEE a Maastricht",
+      titolo:"L'euro deciso a Maastricht fu un calcolo lucido o un azzardo?",
+      formulazioni:{
+        partenza:"Gli architetti di Maastricht sapevano di costruire una moneta senza Stato, e contavano consapevolmente sulla pressione delle crisi future per completare l'unione politica.",
+        ristretta:"Gli architetti di Maastricht conoscevano il rischio della «moneta senza Stato» e accettarono comunque la scommessa, ma senza alcuna garanzia che la crisi futura avrebbe prodotto più integrazione invece di più disgregazione.",
+        opposta:"Confidare nella pressione di una crisi futura per completare l'unione politica non è una strategia ma una scommessa senza rete, e nessun documento dell'epoca dimostra che i negoziatori del 1992 avessero davvero quella lungimiranza."
+      },
+      affermazioni:[
+        {testo:"I federalisti avevano da tempo avvertito che una moneta unica senza un governo politico e un bilancio federale sarebbe rimasta una «moneta senza Stato», e i governi accettarono comunque la scommessa.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"conferma solo che il rischio era noto, non che i negoziatori contassero sulla crisi futura come leva politica."}},
+        {testo:"Il linguaggio dei trattati parla di convergenza economica e di stabilità dei prezzi, non di un piano per usare le crisi come leva politica.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Gli architetti dell'Unione economica e monetaria erano, in buona parte, gli stessi uomini che avevano già visto il metodo funzionalista funzionare due volte, dalla CECA al Mercato Comune e dal Mercato Comune all'Atto Unico.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Non è affatto garantito che una crisi produca sempre più integrazione anziché più disgregazione, e chi decise a Maastricht non aveva alcuna certezza su quale dei due esiti si sarebbe realizzato.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"In Francia il sì al trattato prevalse nel settembre 1992 con un margine minimo, e in Danimarca gli elettori lo respinsero in un primo voto.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Fra il 1992 e il 1993 gli attacchi speculativi contro lo SME costrinsero sterlina e lira a uscire dal sistema di cambi: l'instabilità monetaria non era un rischio teorico, ma qualcosa che stava già accadendo mentre il trattato veniva ratificato.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 3 — L'euro e l'Europa a 25",
+      titolo:"L'allargamento a est fu una riparazione storica o un'espansione affrettata?",
+      formulazioni:{
+        partenza:"L'ammissione rapida dei paesi centro-orientali nel 2004-2013 era il prezzo necessario per rendere irreversibile una scelta democratica che nessuno poteva permettersi di lasciare a metà.",
+        ristretta:"L'allargamento era necessario per evitare un limbo geopolitico pericoloso, ma un percorso più graduale, con requisiti di convergenza più stringenti, avrebbe potuto ridurre gli shock senza rinunciare all'ancoraggio occidentale.",
+        opposta:"La fretta dell'allargamento 2004-2013 ha avuto un costo reale: un'Unione che si allarga più velocemente di quanto riesca a riformare le proprie istituzioni, culminata nel fallimento del Trattato costituzionale del 2005."
+      },
+      affermazioni:[
+        {testo:"Lasciare l'Europa centro-orientale in un limbo geopolitico fra un'Unione che non la voleva e una Russia che tornava ad affacciarsi sulla scena avrebbe ricreato, sotto altra forma, la stessa linea di frattura che aveva diviso il continente per quarant'anni.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La formula di Barbara Spinelli, «inscatolare, non integrare», coglie l'allargamento come atto amministrativo riuscito e come progetto politico rimasto incompiuto.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Nel 2005 la bocciatura del Trattato costituzionale europeo nei referendum di Francia e Paesi Bassi mostra un'Unione allargata che non aveva ancora una cornice istituzionale adeguata al proprio numero di membri.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Un percorso più graduale, con requisiti di convergenza economica più stringenti prima dell'ingresso, avrebbe potuto ridurre gli shock senza lasciare i paesi candidati fuori dall'ancoraggio occidentale.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Nel 2004 nessuno poteva garantire che un'attesa più lunga avrebbe prodotto convergenza economica anziché disillusione.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{}},
+        {testo:"Integrare oltre centoventi milioni di persone partendo da livelli di reddito molto bassi rispetto alla media europea richiedeva un'opera di modernizzazione paragonabile, per dimensione, al Piano Marshall.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{opposta:"sottolinea la sproporzione dello sforzo richiesto, coerente con la lettura che vede nella fretta un costo reale."}}
+      ]
+    },
+    {
+      capitolo:"Cap. 3 — L'euro e l'Europa a 25",
+      titolo:"Il sovranismo dell'Est europeo è una difesa legittima dell'identità o la strumentalizzazione di un trauma?",
+      formulazioni:{
+        partenza:"La resistenza di paesi come Ungheria e Polonia a ulteriori cessioni di sovranità è una reazione comprensibile di nazioni che hanno riconquistato l'indipendenza da poco, non solo una tecnica retorica di potere.",
+        ristretta:"La memoria del trauma sovietico è un fattore reale nella resistenza di Ungheria e Polonia, ma non spiega da sola perché venga usata proprio per giustificare lo smantellamento dei contrappesi dello Stato di diritto.",
+        opposta:"L'equiparazione fra i richiami europei sullo Stato di diritto e i diktat sovietici non è un'analisi storica ma una tecnica retorica, utile soprattutto a consolidare il potere interno di leader come Orbán."
+      },
+      affermazioni:[
+        {testo:"Chiedere a chi è appena uscito da quarant'anni di tutela sovietica di accettare senza discutere nuovi vincoli imposti da un centro esterno rischia di apparire, ai loro occhi, come una ripetizione della stessa logica subita in passato.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Questa retorica è utile a leader come Orbán per giustificare un progressivo smantellamento dei contrappesi dello Stato di diritto, dalla libertà di stampa all'indipendenza della magistratura.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"L'equiparazione fra i richiami europei sullo Stato di diritto e i diktat sovietici non è un'analisi storica ma una tecnica retorica, tanto più efficace quanto più la memoria del trauma resta viva.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Entrambe le letture rischiano di trattare l'intera opinione pubblica dell'Europa centro-orientale come se pensasse con una sola voce, quando le società di quei paesi restano attraversate da divisioni interne profonde.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"La sostanza dell'esperienza sovietica e quella dell'appartenenza all'Unione sono profondamente diverse, anche quando la percezione soggettiva le equipara.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Resta una domanda aperta: quali strumenti ha, o dovrebbe avere, un'unione di Stati sovrani per difendere i propri principi fondativi quando un governo membro legittimamente eletto sceglie di allontanarsene?",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 4 — Le crisi",
+      titolo:"L'austerità imposta alla Grecia e agli altri paesi in crisi fu la cura necessaria o l'errore che ha aggravato la malattia?",
+      formulazioni:{
+        partenza:"La disciplina di bilancio imposta dal 2010 in avanti era la condizione indispensabile perché la fiducia dei mercati verso l'intera area euro non collassasse.",
+        ristretta:"Un certo risanamento dei conti pubblici era indispensabile perché i paesi in crisi tornassero a finanziarsi sui mercati, ma l'intensità e i tempi imposti dal 2010 furono più duri di quanto la sola credibilità richiedesse.",
+        opposta:"L'austerità applicata a economie già in recessione ha avuto un effetto prociclico documentato: ha approfondito la crisi invece di correggerla, scaricandone il costo sui ceti più deboli."
+      },
+      affermazioni:[
+        {testo:"I conti pubblici di più di uno Stato membro erano semplicemente insostenibili, e nessuna unione monetaria può reggere se alcuni dei suoi membri accumulano debiti che gli altri devono poi contribuire a sostenere.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'austerità, applicata a economie già in recessione, ha avuto un effetto prociclico documentato: tagliando la spesa pubblica mentre l'economia si contraeva, ha approfondito la recessione invece di correggerla.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"L'Unione disponeva, e ha infine usato solo più tardi con Draghi, di strumenti capaci di calmierare i mercati senza scaricare l'intero peso dell'aggiustamento sulla spesa sociale.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Senza un minimo di risanamento nessun paese in crisi di credibilità avrebbe potuto tornare a finanziarsi sui mercati a condizioni sostenibili.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Una disoccupazione giovanile che in Grecia e in Spagna ha superato per anni il cinquanta per cento è il prezzo sociale più alto pagato dalla linea del rigore.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"I tagli lineari a sanità, istruzione e pensioni hanno eroso il ceto medio che fino a quel momento aveva garantito stabilità alle democrazie europee del dopoguerra.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 4 — Le crisi",
+      titolo:"L'apertura di Merkel del 2015 fu un atto di coraggio morale o un errore di calcolo politico?",
+      formulazioni:{
+        partenza:"La decisione di Merkel del 2015 ha salvato centinaia di migliaia di vite ed è stata, nella sostanza, la scelta giusta, a prescindere dalle conseguenze politiche successive.",
+        ristretta:"L'apertura di Merkel fu moralmente comprensibile e ha salvato vite, ma la sua unilateralità, senza un accordo preventivo sulla redistribuzione, ne ha aggravato inutilmente il costo politico.",
+        opposta:"Una scelta presa senza un accordo preventivo con gli altri Stati membri ha finito per polarizzare l'opinione pubblica e rafforzare le destre radicali dall'AfD ai partiti di Visegrád: un errore di calcolo politico."
+      },
+      affermazioni:[
+        {testo:"L'apertura del 2015 ha salvato centinaia di migliaia di vite e ha impedito che l'Unione si presentasse al mondo come incapace di rispondere a un'emergenza alle proprie porte.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Una scelta presa senza un accordo preventivo con gli altri Stati membri sulla redistribuzione dei richiedenti asilo ha finito per polarizzare l'opinione pubblica tedesca ed europea.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Nell'estate del 2015 nessun meccanismo di redistribuzione condivisa esisteva già pronto all'uso, e attendere di costruirne uno avrebbe richiesto un tempo che l'emergenza umanitaria non concedeva.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"La crisi ha rafforzato le destre radicali dall'AfD ai partiti di Visegrád, e Orbán vi ha trovato un nuovo argomento per la propria idea di «democrazia illiberale».",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Valutare la decisione solo per le sue intenzioni e per il suo esito umanitario immediato, senza considerare le conseguenze politiche della sua unilateralità, è un punto cieco della lettura più favorevole a Merkel.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Nei Länder orientali l'arrivo dei profughi fu percepito da una parte della popolazione come l'ennesima decisione presa altrove e imposta dall'alto, non come una prova di generosità nazionale.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 4 — Le crisi",
+      titolo:"La Brexit è stata un'anomalia tutta britannica o il sintomo di un malessere condiviso da tutta l'Unione?",
+      formulazioni:{
+        partenza:"Il Regno Unito era, per la propria storia nella Comunità, strutturalmente diverso dagli altri Stati membri, e la Brexit è la conclusione coerente di quel rapporto sempre tenuto a distanza.",
+        ristretta:"La storia britannica nella Comunità rende la Brexit più comprensibile che altrove, ma il malessere di fondo, verso la globalizzazione e le élite tecnocratiche, non è un sentimento esclusivamente britannico.",
+        opposta:"Il rancore verso la globalizzazione, la sfiducia verso le élite di Bruxelles e la paura della concorrenza migratoria attraversano l'intero continente: il referendum del 2016 ha semplicemente offerto a quei sentimenti uno sbocco istituzionale che altrove non esisteva."
+      },
+      affermazioni:[
+        {testo:"Nessun altro Stato membro, nemmeno quelli più critici verso Bruxelles, ha mai portato la propria popolazione a votare sull'uscita.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Il rancore verso una globalizzazione percepita come fuori controllo e la sfiducia verso le élite tecnocratiche di Bruxelles attraversano, con intensità diverse, l'intero continente.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Un'adesione dettata da necessità economica nel 1973 e una sequenza di opt-out su moneta, frontiere e carta sociale resero il Regno Unito, per quarant'anni, uno spettatore critico più che un protagonista del progetto politico europeo.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"In altri paesi, i sondaggi degli stessi anni mostravano un risultato simile tutt'altro che improbabile se fosse stato messo ai voti.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Il sistema elettorale britannico e la scommessa personale di Cameron nell'indire il referendum nel 2016 furono determinanti per trasformare un malessere diffuso in un referendum vinto.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"la Opposta minimizza il peso delle circostanze specifiche britanniche: questa affermazione le rende invece decisive, e quindi la confuta."}},
+        {testo:"Lo slogan «Take back control» condensava sia il rancore verso una globalizzazione incontrollabile sia la promessa, tutta da verificare, che uscire dall'Unione l'avrebbe restituito.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle([0,1,2,3,4,5]);
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su 6 affermazioni totali).';
+    } else if(answered<6){
+      verifyHint.textContent=answered+' su 6 classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e 6 classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

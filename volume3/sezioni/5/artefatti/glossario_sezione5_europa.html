@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossario — Un continente unito, per scelta</title>
+<style>
+  :root{
+    --paper:#e9edf0; --paper-2:#dde4e8; --ink:#20242b; --ink-soft:#525c66;
+    --line:#b9c4cc; --rule:#94a3ac;
+    --contesa:#9c3d23;
+    --ok:#4b6b3d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.5rem;font-weight:600;margin:.15rem 0 .1rem}
+  .sub{color:var(--ink-soft);font-size:.96rem;margin:0 0 1rem}
+
+  .controls{margin-bottom:6px}
+  .search{width:100%;font-family:var(--serif);font-size:.98rem;color:var(--ink);
+    background:var(--paper-2);border:1px solid var(--rule);border-radius:2px;
+    padding:9px 12px;margin-bottom:12px}
+  .search:focus{outline:none;border-color:var(--ink-soft)}
+  .search::placeholder{color:var(--ink-soft);font-family:var(--sans);font-size:.84rem}
+
+  .chiprow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .chiprow + .chiprow{margin-bottom:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.76rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button[aria-pressed="false"]{opacity:.45}
+  .chips button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink-soft)}
+
+  .modebar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:14px}
+  .count{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+  .switch{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 12px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .switch[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .list{display:flex;flex-direction:column;gap:10px}
+  .card{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;
+    background:linear-gradient(180deg,#eef2f4,#e3e9ec);padding:11px 14px}
+  .card.ordinaria{border-left-color:var(--rule)}
+  .card.contesa{border-left-color:var(--contesa)}
+  .card .head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+  .card h3{margin:0;font-size:1.05rem;font-weight:600}
+  .tag-contesa{font-family:var(--sans);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--contesa);border:1px solid var(--contesa);border-radius:2px;padding:2px 6px;white-space:nowrap}
+  .loc{font-family:var(--sans);font-size:.7rem;color:var(--ink-soft);margin:0 0 6px}
+  .def{margin:0;font-size:.94rem}
+  .perche{margin:8px 0 0;padding-top:7px;border-top:1px dotted var(--line);font-size:.9rem;
+    font-style:italic;color:var(--ink-soft)}
+  .perche .k{font-family:var(--sans);font-style:normal;font-size:.66rem;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--contesa);margin-right:5px}
+  .empty{font-family:var(--sans);font-size:.85rem;color:var(--ink-soft);font-style:italic;padding:20px 0}
+
+  .quiz{display:none;border:1px solid var(--rule);border-left-width:3px;border-left-color:var(--ink);
+    border-radius:2px;background:linear-gradient(180deg,#eef2f4,#e3e9ec);padding:16px 18px}
+  .quiz.show{display:block}
+  .quiz-instructions{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);margin:0 0 14px;
+    padding-bottom:10px;border-bottom:1px dotted var(--line)}
+  .quiz .loc{margin-bottom:10px}
+  .quiz .def{font-size:1rem;line-height:1.55;margin:0 0 18px}
+  .quiz .def b{background:var(--paper-2);border-bottom:2px dotted var(--ink-soft);padding:0 2px}
+
+  .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:4px}
+  @media(max-width:560px){.options{grid-template-columns:minmax(0,1fr)}}
+  .option{appearance:none;text-align:left;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--serif);font-size:.94rem;color:var(--ink);padding:10px 13px;border-radius:2px;
+    cursor:pointer;line-height:1.35}
+  .option:hover:not(:disabled){border-color:var(--ink-soft)}
+  .option:disabled{cursor:default}
+  .option.correct{border-color:var(--ok);border-width:2px;background:#e3ead9}
+  .option.wrong{border-color:var(--contesa);border-width:2px;background:#f1ddd4}
+
+  .quiz-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .quiz-actions button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:var(--sans);font-size:.8rem;padding:8px 14px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .quiz-actions button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .quiz-actions button:disabled{opacity:.4;cursor:default}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Un continente unito, per scelta &middot; Apparati</div>
+  <h1>Glossario</h1>
+  <p class="sub">Ventidue voci dai quattro capitoli della sezione, ricercabili e filtrabili per capitolo. Le voci segnate come <strong>parole contese</strong> non hanno solo una definizione: portano anche la storia di chi le ha coniate e contro chi, o il giudizio che nascondono sotto l'apparenza della descrizione. C'&egrave; una modalit&agrave; attiva, con una frase reale del manuale e il termine da indovinare fra quattro opzioni.</p>
+
+  <div class="controls">
+    <input class="search" id="search" type="text" placeholder="Cerca un termine o una parola nella definizione&hellip;" autocomplete="off">
+    <div class="chiprow"><div class="chips" id="chapChips"></div></div>
+    <div class="chiprow"><div class="chips" id="typeChips">
+      <button data-type="all" aria-pressed="true">Tutte</button>
+      <button data-type="ordinaria" aria-pressed="false">Ordinarie</button>
+      <button data-type="contesa" aria-pressed="false">Contese</button>
+    </div></div>
+    <div class="modebar">
+      <span class="count" id="count"></span>
+      <button class="switch" id="quizToggle" aria-pressed="false" type="button">Modalit&agrave; attiva</button>
+    </div>
+  </div>
+
+  <div class="list" id="list"></div>
+  <div class="quiz" id="quiz"></div>
+
+  <p class="note">Manuale di Storia &middot; Liceo Classico G. B. Vico, Chieti &middot; Un continente unito, per scelta</p>
+
+<script>
+(function(){
+  const CAPS = [
+    "Cap. 1 — Le origini",
+    "Cap. 2 — Dalla CEE a Maastricht",
+    "Cap. 3 — L'euro e l'Europa a 25",
+    "Cap. 4 — Le crisi"
+  ];
+
+  const TERMS = [
+    {t:"CECA", cap:0, def:"Comunità Europea del Carbone e dell'Acciaio, istituita dal Trattato di Parigi (1951): la prima organizzazione sovranazionale europea.", contesa:false,
+      frase:"Il 18 aprile 1951 il Trattato di Parigi traduce la Dichiarazione Schuman in istituzioni, dando vita alla ___, la Comunità Europea del Carbone e dell'Acciaio."},
+    {t:"Metodo funzionalista (metodo Monnet)", cap:0, def:"Strategia di integrazione per piccoli passi settoriali, che affida a un meccanismo di traboccamento, non a un atto costituente, il raggiungimento dell'unione politica.", contesa:false,
+      frase:"Dietro la scelta di partire da carbone e acciaio, invece che da una dichiarazione di unione politica, c'è una filosofia precisa, quella che la storiografia ha chiamato ___, o metodo Monnet."},
+    {t:"Spillover (effetto di traboccamento)", cap:0, def:"Il meccanismo per cui l'integrazione di un settore economico rende prima o poi necessaria l'integrazione del settore successivo.", contesa:false,
+      frase:"Questo meccanismo, che la storiografia definisce ___ o effetto di traboccamento, è la vera scommessa del metodo funzionalista."},
+    {t:"CED", cap:0, def:"Comunità Europea di Difesa: il progetto di esercito europeo integrato firmato nel 1952 e bocciato dal parlamento francese nel 1954.", contesa:false,
+      frase:"Il primo ministro René Pleven propone la ___: un esercito europeo integrato, con un bilancio comune e un comando unificato."},
+    {t:"CEE", cap:0, def:"Comunità Economica Europea, istituita dai Trattati di Roma (1957) insieme all'Euratom.", contesa:false,
+      frase:"I negoziati avviati a Messina sfociano il 25 marzo 1957 nella firma dei Trattati di Roma, che istituiscono la ___ e l'Euratom."},
+    {t:"Rabat britannico", cap:1, def:"Lo sconto permanente sul contributo al bilancio comunitario ottenuto dal Regno Unito nel 1984.", contesa:false,
+      frase:"La tensione esplode negli anni Ottanta con Margaret Thatcher, che nel 1984, dietro lo slogan «I want my money back», ottiene uno sconto permanente sul contributo britannico al bilancio comune, il cosiddetto ___."},
+    {t:"Atto Unico Europeo", cap:1, def:"Il trattato del 1986 che fissa la scadenza del 1992 per il completamento del mercato interno e introduce il voto a maggioranza qualificata.", contesa:false,
+      frase:"Il risultato confluisce nell'___, firmato a Lussemburgo nel febbraio 1986 ed entrato in vigore l'anno successivo."},
+    {t:"Trattato di Maastricht", cap:1, def:"Il trattato del 1992 che istituisce l'Unione Europea, fissa i criteri di convergenza per la moneta unica e introduce la cittadinanza europea.", contesa:false,
+      frase:"Il trattato firmato il 7 febbraio 1992, noto come ___, ridisegna l'architettura comunitaria attorno a tre pilastri di natura molto diversa fra loro."},
+    {t:"Criteri di convergenza", cap:1, def:"Le soglie su inflazione, tassi, cambio, deficit e debito che uno Stato deve rispettare per adottare l'euro.", contesa:false,
+      frase:"Il trattato fissa anche la tabella di marcia per la moneta unica, vincolando i paesi candidati al rispetto di ___ rigorosi."},
+    {t:"Opt-out", cap:1, def:"La clausola che permette a uno Stato membro di restare fuori da una politica comune, come la moneta unica o Schengen.", contesa:false,
+      frase:"Un paese che entra per convenienza, ottiene eccezioni permanenti su ogni passo politicamente significativo: in questa lettura la sequenza degli ___ non è la prova di un compromesso riuscito ma il sintomo di un'appartenenza mai realmente accettata."},
+    {t:"Unione Monetaria Europea", cap:2, def:"L'area valutaria comune inaugurata nel 1998-1999, che porta all'introduzione dell'euro.", contesa:false,
+      frase:"L'___ viene inaugurata nel maggio del 1998 con undici Stati che dimostrano di soddisfare i criteri fissati a Maastricht."},
+    {t:"Patto di Stabilità e Crescita", cap:2, def:"L'accordo del 1997 che irrigidisce i criteri di convergenza di Maastricht su deficit e debito pubblico.", contesa:false,
+      frase:"Rispettare i parametri fissati a Maastricht, e irrigiditi nel 1997 dal ___, richiede a più di un governo un risanamento severo."},
+    {t:"Sovranismo", cap:2, def:"L'orientamento politico, diffuso soprattutto in alcuni paesi dell'Europa centro-orientale, che rivendica il primato della sovranità nazionale sulle cessioni di potere all'Unione.", contesa:false,
+      frase:"È su questa asimmetria che fanno leva i movimenti ___ della regione, dall'Ungheria di Viktor Orbán alla Polonia dei fratelli Kaczyński."},
+    {t:"Fiscal compact", cap:3, def:"L'accordo del 2012 che rafforza la disciplina di bilancio degli Stati dell'eurozona in risposta alla crisi del debito.", contesa:false,
+      frase:"La risposta immediata dell'Unione punta su prestiti condizionati a un risanamento severo, imposto attraverso il Fondo salva-Stati e irrigidito dal ___."},
+    {t:"Spazio Schengen", cap:3, def:"L'area di libera circolazione delle persone senza controlli alle frontiere interne, nata nel 1985 e incorporata nel diritto dell'Unione nel 1997.", contesa:false,
+      frase:"Lo ___, nato nel 1985 come accordo intergovernativo fra alcuni Stati fondatori e incorporato nella legislazione dell'Unione solo nel 1997, aveva abolito i controlli alle frontiere interne."},
+    {t:"Regole di Dublino", cap:3, def:"Il sistema che assegna la competenza sulle domande d'asilo al solo paese europeo di primo approdo del richiedente.", contesa:false,
+      frase:"Le ___, che assegnano l'onere della registrazione al solo paese di primo approdo, scaricano il peso pressoché per intero sugli Stati di frontiera meridionale, Italia e Grecia in testa."},
+    {t:"Federazione europea", cap:0, def:"La formula usata dalla Dichiarazione Schuman per indicare l'orizzonte finale dell'integrazione.", contesa:true,
+      perche:"Il testo lascia esplicitamente aperto se il funzionalismo fosse una strategia deliberata per arrivarci o un ripiego imposto dal fallimento della CED: la stessa Dichiarazione la nomina, ma il modo in cui l'integrazione vi è arrivata non era scritto in anticipo.",
+      frase:"«La fusione delle produzioni di carbone e di acciaio assicurerà subito la costituzione di basi comuni per lo sviluppo economico, prima tappa della ___», recita la Dichiarazione Schuman."},
+    {t:"Moneta senza Stato", cap:2, def:"La formula, diventata proverbiale, con cui i federalisti hanno descritto l'euro fin da Maastricht.", contesa:true,
+      perche:"Il testo la presenta sia come previsione lucida, nota già ai negoziatori del 1992, sia come critica che solo la crisi del 2010 ha reso pienamente visibile.",
+      frase:"I federalisti avevano da tempo avvertito che una moneta unica senza un governo politico e un bilancio federale sarebbe rimasta, nelle parole poi diventate proverbiali, una «___»."},
+    {t:"Inscatolare, non integrare", cap:2, def:"La formula di Barbara Spinelli sull'allargamento a est.", contesa:true,
+      perche:"Riassume un giudizio critico sul metodo dell'allargamento che il nodo storiografico del capitolo espone accanto alla lettura opposta, quella dell'allargamento come riparazione storica dovuta.",
+      frase:"La giornalista Barbara Spinelli ha sintetizzato il problema con una formula severa: l'allargamento è avvenuto «___», riducendo l'Unione, nella fretta di includere, a un contenitore più che a un progetto condiviso."},
+    {t:"«Whatever it takes»", cap:3, def:"La formula con cui, nel luglio 2012, il presidente della BCE Mario Draghi annuncia che l'istituto farà tutto il necessario per difendere l'euro.", contesa:true,
+      perche:"Il testo segnala la sua natura duplice: dimostra la forza dell'Unione come blocco unico, ma certifica anche che la decisione più critica della crisi non è stata presa da rappresentanti eletti, bensì da un banchiere centrale che nessun elettore aveva scelto.",
+      frase:"Il presidente della Banca Centrale Europea Mario Draghi dichiara a Londra che l'istituto farà «___», tutto il necessario, per difendere la moneta unica."},
+    {t:"Austerità", cap:3, def:"Le politiche di risanamento imposte agli Stati in crisi dal 2010.", contesa:true,
+      perche:"Il nodo storiografico del capitolo la presenta esplicitamente come cura necessaria per alcuni e come errore che ha aggravato la crisi per altri, senza risolvere il dissenso.",
+      frase:"Chi difende la linea del rigore imposta dal 2010 in avanti osserva che la disciplina di bilancio non era un capriccio ideologico del Nord Europa; chi critica la stessa linea di ___ ne denuncia invece l'effetto prociclico."},
+    {t:"Take back control", cap:3, def:"Lo slogan della campagna per il Leave nel referendum Brexit.", contesa:true,
+      perche:"Il testo lo presenta come sintesi di un rancore reale verso una globalizzazione percepita come incontrollabile, la cui capacità di essere davvero soddisfatto dall'uscita resta lasciata aperta dal nodo storiografico del capitolo.",
+      frase:"Lo slogan della campagna per l'uscita, «___», riprendere il controllo, condensa in tre parole sia il rancore verso una globalizzazione percepita come incontrollabile sia la promessa, tutta da verificare, che uscire dall'Unione l'avrebbe restituito."}
+  ];
+
+  const CONTESA_COUNT = TERMS.filter(x=>x.contesa).length;
+
+  const chapChips = document.getElementById('chapChips');
+  const typeChips = document.getElementById('typeChips');
+  const listEl = document.getElementById('list');
+  const quizEl = document.getElementById('quiz');
+  const countEl = document.getElementById('count');
+  const searchEl = document.getElementById('search');
+  const quizToggle = document.getElementById('quizToggle');
+
+  let activeChap = 'all';
+  let activeType = 'all';
+  let quizMode = false;
+  let query = '';
+  let quizState = null;
+
+  function buildChapChips(){
+    let html = '<button data-cap="all" aria-pressed="true">Tutti i capitoli</button>';
+    CAPS.forEach((c,i)=>{ html += '<button data-cap="'+i+'" aria-pressed="false">Cap. '+(i+1)+'</button>'; });
+    chapChips.innerHTML = html;
+    chapChips.querySelectorAll('button').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        activeChap = b.dataset.cap;
+        chapChips.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b ? 'true':'false'));
+        renderAll();
+      });
+    });
+  }
+
+  typeChips.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      activeType = b.dataset.type;
+      typeChips.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b?'true':'false'));
+      renderAll();
+    });
+  });
+
+  searchEl.addEventListener('input', ()=>{ query = searchEl.value.trim().toLowerCase(); renderAll(); });
+
+  quizToggle.addEventListener('click', ()=>{
+    quizMode = !quizMode;
+    quizToggle.setAttribute('aria-pressed', quizMode ? 'true':'false');
+    quizToggle.textContent = quizMode ? 'Torna al glossario' : 'Modalità attiva';
+    listEl.style.display = quizMode ? 'none' : '';
+    quizEl.classList.toggle('show', quizMode);
+    if(quizMode) newQuiz();
+    renderAll();
+  });
+
+  function filtered(){
+    return TERMS.filter(x=>{
+      if(activeChap !== 'all' && String(x.cap) !== activeChap) return false;
+      if(activeType === 'ordinaria' && x.contesa) return false;
+      if(activeType === 'contesa' && !x.contesa) return false;
+      if(query){
+        const hay = (x.t + ' ' + x.def).toLowerCase();
+        if(hay.indexOf(query) === -1) return false;
+      }
+      return true;
+    });
+  }
+
+  function renderList(){
+    const items = filtered();
+    countEl.textContent = items.length + ' su ' + TERMS.length + ' voci (' + CONTESA_COUNT + ' contese)';
+    if(items.length === 0){ listEl.innerHTML = '<div class="empty">Nessuna voce corrisponde alla ricerca.</div>'; return; }
+    let html = '';
+    items.forEach(x=>{
+      html += '<div class="card ' + (x.contesa?'contesa':'ordinaria') + '">';
+      html += '<div class="head"><h3>' + x.t + '</h3>' + (x.contesa ? '<span class="tag-contesa">Parola contesa</span>' : '') + '</div>';
+      html += '<p class="loc">' + CAPS[x.cap] + '</p>';
+      html += '<p class="def">' + x.def + '</p>';
+      if(x.contesa){ html += '<p class="perche"><span class="k">Perché è contesa</span>' + x.perche + '</p>'; }
+      html += '</div>';
+    });
+    listEl.innerHTML = html;
+  }
+
+  function newQuiz(){
+    const idx = Math.floor(Math.random()*TERMS.length);
+    let pool = TERMS.filter((x,i)=>i!==idx).map(x=>x.t);
+    pool.sort(()=>Math.random()-0.5);
+    const wrong = pool.slice(0,3);
+    const options = [TERMS[idx].t, ...wrong].sort(()=>Math.random()-0.5);
+    quizState = {idx, options, answered:false, chosen:null};
+  }
+
+  function renderQuiz(){
+    if(!quizMode) return;
+    if(!quizState) newQuiz();
+    const term = TERMS[quizState.idx];
+    let html = '<p class="quiz-instructions">Leggi la frase del manuale con il termine oscurato, poi indovinalo fra le quattro opzioni.</p>';
+    html += '<p class="loc">' + CAPS[term.cap] + '</p>';
+    html += '<p class="def">' + term.frase + '</p>';
+    html += '<div class="options">';
+    quizState.options.forEach(opt=>{
+      let cls = 'option';
+      if(quizState.answered){
+        if(opt === term.t) cls += ' correct';
+        else if(opt === quizState.chosen) cls += ' wrong';
+      }
+      html += '<button class="' + cls + '" data-opt="' + encodeURIComponent(opt) + '" ' + (quizState.answered?'disabled':'') + '>' + opt + '</button>';
+    });
+    html += '</div>';
+    html += '<div class="quiz-actions">';
+    html += '<button class="primary" id="nextQuiz" ' + (quizState.answered?'':'disabled') + '>Prossimo termine</button>';
+    html += '</div>';
+    quizEl.innerHTML = html;
+    quizEl.querySelectorAll('.option').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        quizState.chosen = decodeURIComponent(b.dataset.opt);
+        quizState.answered = true;
+        renderQuiz();
+      });
+    });
+    const nb = document.getElementById('nextQuiz');
+    if(nb) nb.addEventListener('click', ()=>{ newQuiz(); renderQuiz(); });
+  }
+
+  function renderAll(){
+    renderList();
+    renderQuiz();
+  }
+
+  buildChapChips();
+  renderAll();
+})();
+</script>
+</body>
+</html>

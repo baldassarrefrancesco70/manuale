@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Due velocità: l'integrazione economica e quella della difesa, 1950-oggi</title>
+<style>
+  :root{
+    --azzurro:#E8F4F8;
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --card:#fffdfa;
+    --ced:#9c5b45;
+    --ced-dark:#7a4536;
+    --testo:#2e2a24;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--grigio);
+    font-family:Georgia,'Times New Roman',serif;
+    color:var(--testo);
+    padding:28px 20px 40px;
+  }
+  .wrap{max-width:1150px;margin:0 auto;}
+  h1{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:1.5rem;
+    font-weight:600;
+    color:#4a3b2c;
+    margin:0 0 4px;
+    text-align:center;
+  }
+  .sottotitolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-align:center;
+    color:#6b5c4a;
+    font-size:0.95rem;
+    margin:0 0 28px;
+  }
+  .legenda{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    flex-wrap:wrap;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.82rem;
+    color:#5a4d3d;
+    margin-bottom:34px;
+  }
+  .legenda span{display:inline-flex;align-items:center;gap:6px;}
+  .puntino{width:12px;height:12px;border-radius:50%;display:inline-block;}
+  .p-eco{background:var(--marrone);}
+  .p-dif{background:var(--ced);}
+
+  .binari-area{
+    position:relative;
+    height:260px;
+    margin:0 10px 10px;
+  }
+  .etichetta-binario{
+    position:absolute;
+    left:0;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:#8a7a63;
+  }
+  .asse-eco{
+    position:absolute;
+    top:60px;
+    left:0;
+    right:0;
+    height:3px;
+    background:var(--marrone);
+    border-radius:2px;
+  }
+  .asse-dif{
+    position:absolute;
+    top:171px;
+    height:2px;
+    background:repeating-linear-gradient(90deg,var(--ced) 0 8px,transparent 8px 14px);
+  }
+  .asse-dif.interrotto{background:none;border-top:2px dashed var(--ced);opacity:.55;}
+  .rottura{
+    position:absolute;
+    top:171px;
+    transform:translate(-50%,-50%);
+    font-size:1.1rem;
+    color:var(--ced);
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:700;
+  }
+  .nodo{
+    position:absolute;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor:pointer;
+    width:130px;
+    text-align:center;
+  }
+  .nodo .cerchio{
+    width:22px;height:22px;border-radius:50%;
+    background:var(--card);
+    border:3px solid var(--marrone);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .nodo.dif .cerchio{border-color:var(--ced);}
+  .nodo .anno{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:600;
+    font-size:0.8rem;
+    color:#4a3b2c;
+    margin-top:6px;
+  }
+  .nodo .etichetta{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.75rem;
+    color:#6b5c4a;
+    line-height:1.2;
+    margin-top:2px;
+  }
+  .nodo.eco{top:30px;}
+  .nodo.dif{top:160px;}
+  .nodo:hover .cerchio{transform:scale(1.15);box-shadow:0 0 0 5px rgba(139,115,85,.15);}
+  .nodo.dif:hover .cerchio{box-shadow:0 0 0 5px rgba(156,91,69,.18);}
+  .nodo.attivo .cerchio{background:var(--marrone);}
+  .nodo.dif.attivo .cerchio{background:var(--ced);}
+  .nodo.attivo .anno{color:var(--marrone);}
+  .nodo.dif.attivo .anno{color:var(--ced-dark);}
+
+  .oggi{
+    position:absolute;
+    right:0;
+    top:0;
+    bottom:0;
+    width:1px;
+    border-left:1px dotted #b3a892;
+  }
+  .oggi-label{
+    position:absolute;
+    right:0;
+    top:6px;
+    transform:translateX(50%);
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.68rem;
+    color:#a89a80;
+  }
+
+  .scheda{
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-left:5px solid var(--marrone);
+    border-radius:4px;
+    padding:20px 24px;
+    min-height:90px;
+    box-shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  .scheda.dif{border-left-color:var(--ced);}
+  .scheda .titolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:600;
+    font-size:1.02rem;
+    color:#4a3b2c;
+    margin-bottom:8px;
+  }
+  .scheda.dif .titolo{color:var(--ced-dark);}
+  .scheda p{margin:0 0 6px;font-size:0.95rem;line-height:1.55;}
+  .scheda .fonte{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.75rem;
+    color:#8a7a63;
+    font-style:normal;
+    margin-top:10px;
+  }
+  .placeholder{
+    color:#9a8c78;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.9rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+  }
+  .chiusura{
+    text-align:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.86rem;
+    color:#6b5c4a;
+    font-style:italic;
+    margin:26px auto 0;
+    max-width:780px;
+    line-height:1.5;
+  }
+  @media (max-width:640px){
+    .binari-area{height:250px;}
+    .nodo{width:82px;}
+    .nodo .etichetta{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Due velocità</h1>
+  <p class="sottotitolo">L'integrazione economica e quella della difesa, 1950&ndash;oggi</p>
+
+  <div class="legenda">
+    <span><span class="puntino p-eco"></span>il binario economico: avanza con continuità</span>
+    <span><span class="puntino p-dif"></span>il binario politico-militare: si interrompe due volte</span>
+  </div>
+
+  <div class="binari-area" id="binariArea">
+    <div class="etichetta-binario" style="top:8px">Economia</div>
+    <div class="etichetta-binario" style="top:138px">Difesa e politica</div>
+
+    <div class="asse-eco"></div>
+    <div class="asse-dif" style="left:8%;width:14%"></div>
+    <div class="rottura" style="left:22%">&#10005;</div>
+    <div class="asse-dif interrotto" style="left:35%;width:20%"></div>
+    <div class="oggi"></div>
+    <div class="oggi-label">oggi</div>
+
+    <!-- nodi binario economico -->
+    <div class="nodo eco" data-id="ceca" style="left:8%"><div class="cerchio"></div><div class="anno">1951</div><div class="etichetta">CECA</div></div>
+    <div class="nodo eco" data-id="roma" style="left:22%"><div class="cerchio"></div><div class="anno">1957</div><div class="etichetta">Trattati di Roma</div></div>
+    <div class="nodo eco" data-id="attounico" style="left:52%"><div class="cerchio"></div><div class="anno">1986</div><div class="etichetta">Atto Unico Europeo</div></div>
+    <div class="nodo eco" data-id="euro" style="left:75%"><div class="cerchio"></div><div class="anno">1999-2002</div><div class="etichetta">Euro, moneta unica</div></div>
+    <div class="nodo eco" data-id="est" style="left:94%"><div class="cerchio"></div><div class="anno">2004-2013</div><div class="etichetta">Allargamento a est</div></div>
+
+    <!-- nodi binario militare/politico -->
+    <div class="nodo dif" data-id="ced" style="left:8%"><div class="cerchio"></div><div class="anno">1952-1954</div><div class="etichetta">CED: firmata e bocciata</div></div>
+    <div class="nodo dif" data-id="pesc" style="left:35%"><div class="cerchio"></div><div class="anno">1992</div><div class="etichetta">PESC di Maastricht, intergovernativa</div></div>
+    <div class="nodo dif" data-id="oggi-dif" style="left:94%"><div class="cerchio"></div><div class="anno">oggi</div><div class="etichetta">Nessun esercito comune</div></div>
+  </div>
+
+  <div class="scheda" id="scheda">
+    <div class="placeholder">Clicca su un nodo, su uno dei due binari, per leggerne il contenuto.</div>
+  </div>
+
+  <p class="chiusura">Lo stesso arco di tempo, due velocità diverse: leggi i nodi in ordine e osserva come lo scarto fra i due binari non si chiude mai, si allarga.</p>
+</div>
+
+<script>
+const eventi = {
+  ceca:{
+    dif:false,
+    titolo:"1951 &mdash; La CECA",
+    testo:["Il Trattato di Parigi mette in comune, sotto un'autorità sovranazionale indipendente dai governi, la produzione di carbone e acciaio di sei Stati. È il primo passo del metodo funzionalista: integrare un settore economico alla volta."],
+    fonte:"La CECA, 1951"
+  },
+  roma:{
+    dif:false,
+    titolo:"1957 &mdash; I Trattati di Roma",
+    testo:["Nascono la CEE e l'Euratom. Il Mercato Comune, costruito sulle quattro libertà di circolazione, non chiude il processo di integrazione economica, lo rilancia: ogni passo genera la pressione per il successivo."],
+    fonte:"I Trattati di Roma, 1957"
+  },
+  attounico:{
+    dif:false,
+    titolo:"1986 &mdash; L'Atto Unico Europeo",
+    testo:["Circa trecento misure legislative completano il mercato interno entro il 1992 e introducono il voto a maggioranza qualificata: il binario economico prosegue senza interruzioni, un passo tecnico alla volta."],
+    fonte:"L'Atto Unico Europeo e il completamento del mercato"
+  },
+  euro:{
+    dif:false,
+    titolo:"1999-2002 &mdash; L'euro",
+    testo:["Dalla moneta di conto alle banconote in tasca: la scommessa monetaria decisa a Maastricht diventa un oggetto quotidiano. Nessun esercito comune accompagna, nello stesso torno di anni, questo passo."],
+    fonte:"Una moneta senza uno Stato"
+  },
+  est:{
+    dif:false,
+    titolo:"2004-2013 &mdash; L'allargamento a est",
+    testo:["Il maggiore allargamento della storia comunitaria estende il perimetro economico e politico dell'Unione fino a un continente che la Guerra fredda aveva diviso in due. Il binario economico arriva fin qui: quello militare resta molto più indietro."],
+    fonte:"L'allargamento a est"
+  },
+  ced:{
+    dif:true,
+    titolo:"1952-1954 &mdash; La CED, firmata e bocciata",
+    testo:["Il trattato per un esercito europeo integrato viene firmato a Parigi nel 1952, con un articolo che apre la strada a una Comunità Politica Europea. Il 30 agosto 1954 l'Assemblea Nazionale francese ne rinvia sine die la ratifica, seppellendo insieme i due progetti.","È il primo, e per decenni l'unico, tentativo di applicare alla difesa il metodo che sull'economia aveva già funzionato. Il binario si interrompe qui."],
+    fonte:"Il sogno interrotto: la Comunità Europea di Difesa"
+  },
+  pesc:{
+    dif:true,
+    titolo:"1992 &mdash; La PESC di Maastricht",
+    testo:["Il Trattato di Maastricht istituisce la Politica Estera e di Sicurezza Comune, ma la colloca nel secondo pilastro, intergovernativo: decisioni prese all'unanimità dai governi nazionali, con la Commissione ridotta a un ruolo consultivo.","È una ripresa timida, non un rilancio: il binario torna a muoversi, ma non con la continuità del metodo sovranazionale che regge il primo pilastro economico."],
+    fonte:"Maastricht, 1992"
+  },
+  "oggi-dif":{
+    dif:true,
+    titolo:"Oggi &mdash; Nessun esercito comune",
+    testo:["Settant'anni dopo la CECA, l'Unione condivide una banca centrale ma non uno stato maggiore: nessun soldato europeo risponde a un comando europeo. Il binario militare non è mai arrivato al punto in cui quello economico si trova da tempo."],
+    fonte:"Una moneta prima di un esercito"
+  }
+};
+
+let attivo = null;
+const scheda = document.getElementById('scheda');
+document.querySelectorAll('.nodo').forEach(nodo=>{
+  nodo.addEventListener('click', ()=>{
+    const id = nodo.dataset.id;
+    document.querySelectorAll('.nodo').forEach(n=>n.classList.remove('attivo'));
+    if(attivo === id){
+      attivo = null;
+      scheda.className = 'scheda';
+      scheda.innerHTML = '<div class="placeholder">Clicca su un nodo, su uno dei due binari, per leggerne il contenuto.</div>';
+      return;
+    }
+    attivo = id;
+    nodo.classList.add('attivo');
+    const ev = eventi[id];
+    scheda.className = 'scheda' + (ev.dif ? ' dif' : '');
+    scheda.innerHTML = '<div class="titolo">'+ev.titolo+'</div>' +
+      ev.testo.map(p=>'<p>'+p+'</p>').join('') +
+      '<div class="fonte">Fonte nel testo: &laquo;'+ev.fonte+'&raquo;</div>';
+  });
+});
+</script>
+</body>
+</html>

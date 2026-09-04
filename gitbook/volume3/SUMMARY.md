@@ -61,3 +61,15 @@
     * [ATLANTE](sezione-4/atlante.md)
     * [Risorse digitali](sezione-4/09-risorse-digitali.md)
 <!-- SEZIONE:sezione-4 END -->
+<!-- SEZIONE:sezione-5 START -->
+<!-- TITOLO:Un continente unito, per scelta -->
+  * [Sezione 5](sezione-5/README.md)
+    * [Introduzione — Un progetto, non un destino](sezione-5/01-introduzione-un-progetto-non-un-destino.md)
+    * [Le origini](sezione-5/02-le-origini.md)
+    * [Dalla CEE a Maastricht](sezione-5/03-dalla-cee-a-maastricht.md)
+    * [L'euro e l'Europa a 25](sezione-5/04-l-euro-e-l-europa-a-25.md)
+    * [Le crisi](sezione-5/05-le-crisi.md)
+    * [Una moneta prima di un esercito, rivista](sezione-5/06-una-moneta-prima-di-un-esercito-rivista.md)
+    * [ATLANTE](sezione-5/atlante.md)
+    * [Risorse digitali](sezione-5/08-risorse-digitali.md)
+<!-- SEZIONE:sezione-5 END -->

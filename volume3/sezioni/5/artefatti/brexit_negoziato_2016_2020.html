@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brexit: il negoziato, 2016-2020</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --card:#fffdfa;
+    --testo:#2e2a24;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--grigio);font-family:Georgia,'Times New Roman',serif;color:var(--testo);padding:26px 18px 40px;}
+  .wrap{max-width:1150px;margin:0 auto;}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.5rem;font-weight:600;color:#4a3b2c;text-align:center;margin:0 0 4px;}
+  .sottotitolo{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;text-align:center;color:#6b5c4a;font-size:0.95rem;margin:0 0 28px;}
+
+  .timeline-scroll{overflow-x:auto;padding-bottom:8px;}
+  .timeline-area{position:relative;height:150px;min-width:980px;margin:0 10px;}
+  .asse{position:absolute;top:60px;left:0;right:0;height:3px;background:var(--marrone);border-radius:2px;}
+  .nodo{
+    position:absolute;top:0;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;cursor:pointer;width:130px;text-align:center;
+  }
+  .nodo .cerchio{width:20px;height:20px;border-radius:50%;background:var(--card);border:3px solid var(--marrone);transition:transform .15s ease,box-shadow .15s ease;}
+  .nodo .data{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:600;font-size:0.76rem;color:#4a3b2c;margin-top:6px;}
+  .nodo .etichetta{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.72rem;color:#6b5c4a;line-height:1.2;margin-top:2px;}
+  .nodo:hover .cerchio{transform:scale(1.15);box-shadow:0 0 0 5px rgba(139,115,85,.15);}
+  .nodo.attivo .cerchio{background:var(--marrone);}
+  .nodo.attivo .data{color:var(--marrone);}
+
+  .scheda{
+    background:var(--card);border:1px solid var(--marrone);border-left:5px solid var(--marrone);border-radius:4px;
+    padding:20px 24px;min-height:90px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-top:14px;
+  }
+  .scheda .titolo{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-weight:600;font-size:1.02rem;color:#4a3b2c;margin-bottom:8px;}
+  .scheda p{margin:0 0 6px;font-size:0.95rem;line-height:1.55;}
+  .scheda .fonte{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.75rem;color:#8a7a63;margin-top:10px;}
+  .placeholder{color:#9a8c78;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.9rem;display:flex;align-items:center;justify-content:center;height:100%;}
+
+  .nota{margin-top:16px;font-size:0.82rem;color:#6b5c4a;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;line-height:1.55;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Brexit: il negoziato</h1>
+  <p class="sottotitolo">2016&ndash;2020 &mdash; dal referendum alla fine del periodo di transizione</p>
+
+  <div class="timeline-scroll">
+    <div class="timeline-area">
+      <div class="asse"></div>
+      <div class="nodo" data-id="referendum" style="left:4%"><div class="cerchio"></div><div class="data">23 giugno 2016</div><div class="etichetta">Referendum</div></div>
+      <div class="nodo" data-id="art50" style="left:19%"><div class="cerchio"></div><div class="data">marzo 2017</div><div class="etichetta">Attivazione dell'articolo 50</div></div>
+      <div class="nodo" data-id="elezioni" style="left:34%"><div class="cerchio"></div><div class="data">2017</div><div class="etichetta">Elezioni anticipate di May</div></div>
+      <div class="nodo" data-id="respinti" style="left:49%"><div class="cerchio"></div><div class="data">2018-2019</div><div class="etichetta">Accordi respinti dal parlamento</div></div>
+      <div class="nodo" data-id="johnson" style="left:64%"><div class="cerchio"></div><div class="data">2019</div><div class="etichetta">Johnson sostituisce May</div></div>
+      <div class="nodo" data-id="uscita" style="left:79%"><div class="cerchio"></div><div class="data">31 gennaio 2020</div><div class="etichetta">Accordo di recesso e uscita formale</div></div>
+      <div class="nodo" data-id="transizione" style="left:95%"><div class="cerchio"></div><div class="data">31 dicembre 2020</div><div class="etichetta">Fine del periodo di transizione</div></div>
+    </div>
+  </div>
+
+  <div class="scheda" id="scheda">
+    <div class="placeholder">Clicca su un nodo della linea del tempo per leggerne il contenuto.</div>
+  </div>
+</div>
+
+<script>
+const eventi = {
+  referendum:{
+    titolo:"23 giugno 2016 &mdash; Il referendum",
+    testo:["Il primo ministro conservatore David Cameron indice il referendum soprattutto per ragioni di tenuta interna al proprio partito, sperando di usare la minaccia del voto come leva negoziale con Bruxelles: un azzardo paragonato dagli storici a giocare con un fiammifero accanto a una tanica di benzina.","Il leave prevale con il 51,89% contro il 48,11% del remain: un margine stretto che nasconde una spaccatura geografica netta, con l'Inghilterra rurale per l'uscita e Londra, la Scozia e il Galles per la permanenza."],
+    fonte:"Brexit, 2016-2020"
+  },
+  art50:{
+    titolo:"Marzo 2017 &mdash; Attivazione dell'articolo 50",
+    testo:["Il governo britannico notifica formalmente all'Unione l'intenzione di recedere, dando avvio al negoziato di uscita previsto dai trattati."],
+    fonte:"cronologia pubblica del negoziato"
+  },
+  elezioni:{
+    titolo:"2017 &mdash; Le elezioni anticipate di Theresa May",
+    testo:["La prima ministra Theresa May indice elezioni anticipate nel tentativo di rafforzare la propria maggioranza in vista del negoziato, ma il voto le fa perdere la maggioranza assoluta ai Comuni."],
+    fonte:"cronologia pubblica del negoziato"
+  },
+  respinti:{
+    titolo:"2018-2019 &mdash; Gli accordi respinti dal parlamento",
+    testo:["Più tentativi di accordo negoziati dal governo May con l'Unione vengono respinti dal parlamento britannico, in un logoramento istituzionale che paralizza il negoziato per mesi."],
+    fonte:"cronologia pubblica del negoziato"
+  },
+  johnson:{
+    titolo:"2019 &mdash; Boris Johnson sostituisce Theresa May",
+    testo:["Dopo le ripetute bocciature parlamentari, Theresa May si dimette. Boris Johnson diventa primo ministro e rilancia il negoziato su posizioni più nette a favore di un'uscita rapida."],
+    fonte:"cronologia pubblica del negoziato"
+  },
+  uscita:{
+    titolo:"31 gennaio 2020 &mdash; L'accordo di recesso e l'uscita formale",
+    testo:["Il Regno Unito esce formalmente dall'Unione Europea sulla base dell'accordo di recesso negoziato dal governo Johnson, aprendo un periodo di transizione durante il quale restano in vigore le regole comunitarie."],
+    fonte:"cronologia pubblica del negoziato"
+  },
+  transizione:{
+    titolo:"31 dicembre 2020 &mdash; La fine del periodo di transizione",
+    testo:["Si conclude formalmente il periodo di transizione, al termine di quattro anni di negoziati logoranti per sciogliere un legame istituzionale, giuridico ed economico costruito in quasi mezzo secolo di integrazione."],
+    fonte:"Brexit, 2016-2020"
+  }
+};
+
+let attivo = null;
+const scheda = document.getElementById('scheda');
+document.querySelectorAll('.nodo').forEach(nodo=>{
+  nodo.addEventListener('click', ()=>{
+    const id = nodo.dataset.id;
+    document.querySelectorAll('.nodo').forEach(n=>n.classList.remove('attivo'));
+    if(attivo === id){
+      attivo = null;
+      scheda.innerHTML = '<div class="placeholder">Clicca su un nodo della linea del tempo per leggerne il contenuto.</div>';
+      return;
+    }
+    attivo = id;
+    nodo.classList.add('attivo');
+    const ev = eventi[id];
+    scheda.innerHTML = '<div class="titolo">'+ev.titolo+'</div>' +
+      ev.testo.map(p=>'<p>'+p+'</p>').join('') +
+      '<div class="fonte">Fonte: '+ev.fonte+'</div>';
+  });
+});
+</script>
+</body>
+</html>

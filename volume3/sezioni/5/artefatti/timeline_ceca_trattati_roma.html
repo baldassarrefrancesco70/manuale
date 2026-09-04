@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dalla CECA ai Trattati di Roma, 1950-1957</title>
+<style>
+  :root{
+    --azzurro:#E8F4F8;
+    --beige:#F5F0E8;
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --card:#fffdfa;
+    --ced:#9c5b45;
+    --ced-dark:#7a4536;
+    --testo:#2e2a24;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--grigio);
+    font-family:Georgia,'Times New Roman',serif;
+    color:var(--testo);
+    padding:28px 20px 40px;
+  }
+  .wrap{max-width:1100px;margin:0 auto;}
+  h1{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:1.5rem;
+    font-weight:600;
+    color:#4a3b2c;
+    margin:0 0 4px;
+    text-align:center;
+  }
+  .sottotitolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-align:center;
+    color:#6b5c4a;
+    font-size:0.95rem;
+    margin:0 0 28px;
+  }
+  .legenda{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    flex-wrap:wrap;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.82rem;
+    color:#5a4d3d;
+    margin-bottom:30px;
+  }
+  .legenda span{display:inline-flex;align-items:center;gap:6px;}
+  .puntino{width:12px;height:12px;border-radius:50%;display:inline-block;}
+  .p-main{background:var(--marrone);}
+  .p-ced{background:var(--ced);}
+
+  .timeline-area{
+    position:relative;
+    height:230px;
+    margin:0 10px 10px;
+  }
+  .asse-principale{
+    position:absolute;
+    top:70px;
+    left:0;
+    right:0;
+    height:3px;
+    background:var(--marrone);
+    border-radius:2px;
+  }
+  .asse-ced{
+    position:absolute;
+    top:168px;
+    height:2px;
+    background:repeating-linear-gradient(90deg,var(--ced) 0 8px,transparent 8px 14px);
+  }
+  .connettore{
+    position:absolute;
+    top:73px;
+    width:2px;
+    height:95px;
+    background:repeating-linear-gradient(180deg,var(--ced) 0 6px,transparent 6px 11px);
+  }
+  .nodo{
+    position:absolute;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor:pointer;
+    width:150px;
+    text-align:center;
+  }
+  .nodo .cerchio{
+    width:22px;height:22px;border-radius:50%;
+    background:var(--card);
+    border:3px solid var(--marrone);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .nodo.ced .cerchio{border-color:var(--ced);}
+  .nodo .anno{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:600;
+    font-size:0.8rem;
+    color:#4a3b2c;
+    margin-top:6px;
+  }
+  .nodo .etichetta{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.75rem;
+    color:#6b5c4a;
+    line-height:1.2;
+    margin-top:2px;
+  }
+  .nodo.main{top:0;}
+  .nodo.ramo{top:98px;}
+  .nodo:hover .cerchio{transform:scale(1.15);box-shadow:0 0 0 5px rgba(139,115,85,.15);}
+  .nodo.ced:hover .cerchio{box-shadow:0 0 0 5px rgba(156,91,69,.18);}
+  .nodo.attivo .cerchio{background:var(--marrone);}
+  .nodo.ced.attivo .cerchio{background:var(--ced);}
+  .nodo.attivo .anno{color:var(--marrone);}
+  .nodo.ced.attivo .anno{color:var(--ced-dark);}
+
+  .fine-ramo{
+    position:absolute;
+    top:167px;
+    transform:translate(-50%,-50%);
+    font-size:1rem;
+    color:var(--ced);
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:700;
+  }
+
+  .scheda{
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-left:5px solid var(--marrone);
+    border-radius:4px;
+    padding:20px 24px;
+    min-height:90px;
+    box-shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  .scheda.ced{border-left-color:var(--ced);}
+  .scheda .titolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:600;
+    font-size:1.02rem;
+    color:#4a3b2c;
+    margin-bottom:8px;
+  }
+  .scheda.ced .titolo{color:var(--ced-dark);}
+  .scheda p{margin:0 0 6px;font-size:0.95rem;line-height:1.55;}
+  .scheda .fonte{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.75rem;
+    color:#8a7a63;
+    font-style:normal;
+    margin-top:10px;
+  }
+  .placeholder{
+    color:#9a8c78;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.9rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+  }
+  @media (max-width:640px){
+    .timeline-area{height:210px;}
+    .nodo{width:90px;}
+    .nodo .etichetta{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Dalla CECA ai Trattati di Roma</h1>
+  <p class="sottotitolo">1950&ndash;1957 &mdash; un percorso non lineare</p>
+
+  <div class="legenda">
+    <span><span class="puntino p-main"></span>il percorso che porta ai Trattati di Roma</span>
+    <span><span class="puntino p-ced"></span>la Comunità Europea di Difesa: un ramo che si interrompe</span>
+  </div>
+
+  <div class="timeline-area" id="timelineArea">
+    <div class="asse-principale"></div>
+    <!-- nodi principali -->
+    <div class="nodo main" data-id="schuman" style="left:6%"><div class="cerchio"></div><div class="anno">9 maggio 1950</div><div class="etichetta">Dichiarazione Schuman</div></div>
+    <div class="nodo main" data-id="parigi" style="left:24%"><div class="cerchio"></div><div class="anno">18 aprile 1951</div><div class="etichetta">Trattato di Parigi &mdash; nasce la CECA</div></div>
+    <div class="nodo main" data-id="messina" style="left:70%"><div class="cerchio"></div><div class="anno">giugno 1955</div><div class="etichetta">Conferenza di Messina</div></div>
+    <div class="nodo main" data-id="roma" style="left:94%"><div class="cerchio"></div><div class="anno">25 marzo 1957</div><div class="etichetta">Trattati di Roma</div></div>
+    <!-- connettore verso il ramo CED -->
+    <div class="connettore" style="left:24%"></div>
+    <div class="asse-ced" style="left:24%;width:26%"></div>
+    <!-- nodi ramo CED -->
+    <div class="nodo ramo ced" data-id="pleven" style="left:24%"><div class="cerchio"></div><div class="anno">ott. 1950 &ndash; mag. 1952</div><div class="etichetta">Proposta Pleven e firma del trattato CED</div></div>
+    <div class="nodo ramo ced" data-id="bocciatura" style="left:50%"><div class="cerchio"></div><div class="anno">30 agosto 1954</div><div class="etichetta">L'Assemblea francese boccia la CED</div></div>
+    <div class="fine-ramo" style="left:50%">&#10005;</div>
+  </div>
+
+  <div class="scheda" id="scheda">
+    <div class="placeholder">Clicca su un nodo della linea del tempo per leggerne il contenuto.</div>
+  </div>
+</div>
+
+<script>
+const eventi = {
+  schuman:{
+    ced:false,
+    titolo:"9 maggio 1950 &mdash; La Dichiarazione Schuman",
+    testo:["Il ministro degli Esteri francese Robert Schuman legge, nel salone dell'orologio del Quai d'Orsay, un testo ideato da Jean Monnet: mettere in comune, sotto un'autorità sovranazionale indipendente dai governi, l'intera produzione di carbone e acciaio di Francia e Germania.","Non è un'alleanza contro la guerra: è un disarmo strutturale mascherato da accordo commerciale, pensato per rendere la prossima guerra franco-tedesca materialmente impossibile da combattere."],
+    fonte:"La dichiarazione Schuman e il metodo funzionalista"
+  },
+  parigi:{
+    ced:false,
+    titolo:"18 aprile 1951 &mdash; Il Trattato di Parigi e la nascita della CECA",
+    testo:["Il trattato traduce in istituzioni la Dichiarazione Schuman: nasce la Comunità Europea del Carbone e dell'Acciaio. Aderiscono Francia, Germania Ovest, Italia e i tre paesi del Benelux.","Il Regno Unito rifiuta di parteciparvi, fedele a una concezione della sovranità che non ammette interferenze sovranazionali: una scelta il cui costo si rivelerà solo in retrospettiva."],
+    fonte:"La CECA, 1951"
+  },
+  messina:{
+    ced:false,
+    titolo:"Giugno 1955 &mdash; La Conferenza di Messina",
+    testo:["I ministri degli Esteri dei sei paesi, su impulso di Paul-Henri Spaak e Gaetano Martino, rilanciano l'integrazione a partire dal precedente riuscito della CECA, questa volta estendendola all'intera economia.","È la ripresa del capitale di fiducia che il crollo della CED avrebbe potuto disperdere, reinvestito però su un terreno meno esposto: di nuovo l'economia, non la difesa."],
+    fonte:"I Trattati di Roma, 1957"
+  },
+  roma:{
+    ced:false,
+    titolo:"25 marzo 1957 &mdash; I Trattati di Roma",
+    testo:["Vengono istituiti la Comunità Economica Europea e l'Euratom. A differenza dei trattati tradizionali, la CEE nasce senza scadenza: un'istituzione pensata per durare, non un accordo da rinnovare.","Al centro c'è il Mercato Comune, costruito sulle quattro libertà di circolazione (merci, persone, servizi, capitali) e sull'abbattimento graduale delle barriere doganali interne."],
+    fonte:"I Trattati di Roma, 1957"
+  },
+  pleven:{
+    ced:true,
+    titolo:"Ottobre 1950 &ndash; Maggio 1952 &mdash; La proposta Pleven e la firma della CED",
+    testo:["Dopo lo scoppio della guerra di Corea, gli Stati Uniti chiedono un contributo militare tedesco alla difesa occidentale. Il 24 ottobre 1950 il primo ministro francese René Pleven propone la Comunità Europea di Difesa: un esercito europeo integrato, con bilancio e comando unificati.","Il trattato viene firmato a Parigi il 27 maggio 1952. Su impulso di De Gasperi e Spinelli vi si inserisce l'articolo 38, che apre la strada a una futura Comunità Politica Europea."],
+    fonte:"Il sogno interrotto: la Comunità Europea di Difesa"
+  },
+  bocciatura:{
+    ced:true,
+    titolo:"30 agosto 1954 &mdash; L'Assemblea Nazionale francese boccia la CED",
+    testo:["La morte di Stalin, nel marzo 1953, allenta la percezione dell'urgenza. In Francia si compatta un fronte trasversale fra comunisti (ostili al riarmo) e gollisti (ostili a ogni cessione di sovranità militare).","L'Assemblea Nazionale rinvia sine die la ratifica: un rinvio che seppellisce insieme la CED e la Comunità Politica Europea che ne avrebbe dovuto essere il completamento democratico. Per la prima e unica volta, un progetto di esercito comune europeo arriva alla firma di un trattato &mdash; e viene affossato dal voto di un parlamento nazionale."],
+    fonte:"Il sogno interrotto: la Comunità Europea di Difesa"
+  }
+};
+
+let attivo = null;
+const scheda = document.getElementById('scheda');
+document.querySelectorAll('.nodo').forEach(nodo=>{
+  nodo.addEventListener('click', ()=>{
+    const id = nodo.dataset.id;
+    document.querySelectorAll('.nodo').forEach(n=>n.classList.remove('attivo'));
+    if(attivo === id){
+      attivo = null;
+      scheda.className = 'scheda';
+      scheda.innerHTML = '<div class="placeholder">Clicca su un nodo della linea del tempo per leggerne il contenuto.</div>';
+      return;
+    }
+    attivo = id;
+    nodo.classList.add('attivo');
+    const ev = eventi[id];
+    scheda.className = 'scheda' + (ev.ced ? ' ced' : '');
+    scheda.innerHTML = '<div class="titolo">'+ev.titolo+'</div>' +
+      ev.testo.map(p=>'<p>'+p+'</p>').join('') +
+      '<div class="fonte">Fonte nel testo: &laquo;'+ev.fonte+'&raquo;</div>';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tre visioni per l'Europa</title>
+<style>
+  :root{
+    --beige:#F5F0E8;
+    --marrone:#8B7355;
+    --card:#fffdfa;
+    --testo:#2e2a24;
+    --monnet:#5b7a8f;
+    --spinelli:#8B7355;
+    --degaulle:#7a8a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--beige);
+    font-family:Georgia,'Times New Roman',serif;
+    color:var(--testo);
+    padding:26px 18px 40px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  h1{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:1.5rem;font-weight:600;color:#4a3b2c;
+    text-align:center;margin:0 0 4px;
+  }
+  .sottotitolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    text-align:center;color:#6b5c4a;font-size:0.95rem;margin:0 0 26px;
+  }
+  .colonne{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  @media (max-width:820px){ .colonne{grid-template-columns:1fr;} }
+
+  .colonna{
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-top:6px solid var(--col);
+    border-radius:6px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .col-monnet{--col:var(--monnet);}
+  .col-spinelli{--col:var(--spinelli);}
+  .col-degaulle{--col:var(--degaulle);}
+
+  .intestazione{
+    padding:18px 18px 14px;
+    cursor:pointer;
+    text-align:center;
+    border-bottom:1px solid #e6ddd0;
+  }
+  .intestazione:hover{background:#faf7f1;}
+  .ritratto{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--col);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:700;font-size:1.3rem;
+    margin:0 auto 10px;
+  }
+  .nome{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:700;font-size:1.05rem;color:#3a3126;
+  }
+  .corrente{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.78rem;color:var(--col);
+    text-transform:uppercase;letter-spacing:.04em;
+    margin-top:2px;
+  }
+  .suggerimento{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.72rem;color:#a0917c;margin-top:8px;
+  }
+
+  .corpo{padding:16px 18px 18px;flex:1;}
+  .voce{margin-bottom:14px;}
+  .voce:last-child{margin-bottom:0;}
+  .voce .etichetta{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.72rem;font-weight:700;color:var(--col);
+    text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;
+  }
+  .voce p{margin:0;font-size:0.9rem;line-height:1.5;}
+
+  .bio{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+    background:#faf7f1;
+    border-top:1px dashed #d8cdbb;
+  }
+  .bio-inner{padding:16px 18px;}
+  .bio-inner p{margin:0 0 8px;font-size:0.87rem;line-height:1.55;}
+  .bio-inner p:last-child{margin-bottom:0;}
+  .colonna.aperta .bio{max-height:900px;}
+  .colonna.aperta .intestazione .suggerimento{display:none;}
+  .chiudi-hint{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.72rem;color:#a0917c;
+  }
+
+  .banner{
+    margin-top:26px;
+    background:var(--card);
+    border:1px solid var(--marrone);
+    border-left:5px solid var(--marrone);
+    border-radius:4px;
+    padding:16px 22px;
+    font-size:0.92rem;
+    line-height:1.6;
+  }
+  .banner .titolo{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-weight:700;color:#4a3b2c;margin-bottom:6px;
+    font-size:0.95rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tre visioni per l'Europa</h1>
+  <p class="sottotitolo">Funzionalismo, federalismo, confederalismo &mdash; premesse a confronto negli anni delle origini</p>
+
+  <div class="colonne">
+
+    <div class="colonna col-monnet" data-persona="monnet">
+      <div class="intestazione">
+        <div class="ritratto">JM</div>
+        <div class="nome">Jean Monnet</div>
+        <div class="corrente">Funzionalismo</div>
+        <div class="suggerimento">clicca per la biografia</div>
+      </div>
+      <div class="corpo">
+        <div class="voce"><div class="etichetta">Premessa di fondo</div><p>L'unione politica non può essere decretata di colpo: va preparata da una rete di interdipendenze economiche concrete, capaci di generare pressioni irreversibili verso l'integrazione successiva.</p></div>
+        <div class="voce"><div class="etichetta">Metodo proposto</div><p>Integrare un settore economico alla volta &mdash; il metodo Monnet &mdash; lasciando che ogni passo generi, per spillover, la pressione necessaria al successivo.</p></div>
+        <div class="voce"><div class="etichetta">Idea di sovranità</div><p>Si supera non per proclamazione, ma per progressiva delega a istituzioni tecniche indipendenti dai governi.</p></div>
+        <div class="voce"><div class="etichetta">Esito nel periodo (1950-1957)</div><p>Prevale: ispira la CECA (1951) e, dopo il crollo della CED, guida il rilancio che porta ai Trattati di Roma (1957).</p></div>
+      </div>
+      <div class="bio"><div class="bio-inner">
+        <p>Jean Monnet è, nel 1950, commissario al piano di ricostruzione dell'industria francese. È lui a concludere che l'unico modo per disinnescare lo storico antagonismo franco-tedesco sia un gesto mai compiuto prima: mettere in comune, sotto un'autorità sovranazionale indipendente, l'intera produzione di carbone e acciaio dei due paesi.</p>
+        <p>Il testo che Robert Schuman legge il 9 maggio 1950 nasce dalla sua idea. È lui a scartare, deliberatamente, sia la via costituente di Spinelli sia la via intergovernativa poi difesa da de Gaulle, scegliendo una terza strada più lenta: un settore alla volta.</p>
+        <p class="chiudi-hint">Clicca di nuovo per richiudere.</p>
+      </div></div>
+    </div>
+
+    <div class="colonna col-spinelli" data-persona="spinelli">
+      <div class="intestazione">
+        <div class="ritratto">AS</div>
+        <div class="nome">Altiero Spinelli</div>
+        <div class="corrente">Federalismo</div>
+        <div class="suggerimento">clicca per la biografia</div>
+      </div>
+      <div class="corpo">
+        <div class="voce"><div class="etichetta">Premessa di fondo</div><p>Il funzionalismo, portato alle sue conseguenze estreme, rischia di produrre una tecnocrazia capace di regolare aspetti secondari della vita quotidiana e incapace di decidere democraticamente su difesa, politica estera, governo dell'economia.</p></div>
+        <div class="voce"><div class="etichetta">Metodo proposto</div><p>La via costituente: un'Assemblea eletta a suffragio universale, un potere federale responsabile davanti ai cittadini, non davanti ai governi nazionali.</p></div>
+        <div class="voce"><div class="etichetta">Idea di sovranità</div><p>Va trasferita subito e apertamente a un'autorità sovranazionale democratica, non delegata per gradi a organismi tecnici.</p></div>
+        <div class="voce"><div class="etichetta">Esito nel periodo (1950-1957)</div><p>Convince De Gasperi a inserire nel trattato CED l'articolo 38, che apre la strada a una Comunità Politica Europea (1952); il progetto naufraga con la CED nel 1954.</p></div>
+      </div>
+      <div class="bio"><div class="bio-inner">
+        <p>Nato a Roma nel 1907, Spinelli entra giovanissimo nelle file del Partito Comunista Italiano in opposizione al fascismo. Arrestato a vent'anni dal Tribunale Speciale, trascorre un decennio fra carcere e confino: un'esperienza che lo allontana dallo stalinismo sovietico fino all'espulsione dal partito, nel 1937.</p>
+        <p>È durante il confino sull'isola di Ventotene che, insieme a Ernesto Rossi, scrive nel 1941 il <em>Manifesto per un'Europa libera e unita</em>, individuando nel superamento dello Stato nazionale l'unica barriera credibile contro il ritorno del totalitarismo.</p>
+        <p>Dopo il naufragio della CED nel 1954, Spinelli continua la battaglia dall'interno delle istituzioni, fino a guidare, come parlamentare europeo, l'approvazione nel 1984 di un progetto di trattato costituzionale che i governi nazionali respingono, ma che influenzerà i negoziati di Maastricht quasi un decennio più tardi.</p>
+        <p class="chiudi-hint">Clicca di nuovo per richiudere.</p>
+      </div></div>
+    </div>
+
+    <div class="colonna col-degaulle" data-persona="degaulle">
+      <div class="intestazione">
+        <div class="ritratto">CDG</div>
+        <div class="nome">Charles de Gaulle</div>
+        <div class="corrente">Confederalismo</div>
+        <div class="suggerimento">clicca per la biografia</div>
+      </div>
+      <div class="corpo">
+        <div class="voce"><div class="etichetta">Premessa di fondo</div><p>Qualunque cessione di sovranità è un cedimento inaccettabile: l'Europa deve restare un'Europa di Stati sovrani, non un progetto sovranazionale.</p></div>
+        <div class="voce"><div class="etichetta">Metodo proposto</div><p>L'"Europa delle patrie": Stati sovrani che cooperano strettamente tramite semplici accordi intergovernativi, senza mai delegare potere a un'autorità superiore.</p></div>
+        <div class="voce"><div class="etichetta">Idea di sovranità</div><p>Resta piena e nazionale; una burocrazia sovranazionale è, nelle sue stesse parole, composta da &laquo;tecnocrati senza patria&raquo;.</p></div>
+        <div class="voce"><div class="etichetta">Esito nel periodo (1950-1957)</div><p>Nel 1957 è fuori dal potere: le sue obiezioni restano sullo sfondo. Torneranno al centro della scena una volta rientrato all'Eliseo.</p></div>
+      </div>
+      <div class="bio"><div class="bio-inner">
+        <p>Nel 1957, quando i Trattati di Roma vengono firmati, Charles de Gaulle è fuori dal potere: le sue obiezioni al metodo comunitario restano sullo sfondo del racconto di questo capitolo.</p>
+        <p>Torneranno al centro della scena una volta rientrato all'Eliseo, quando la resistenza francese a ogni ulteriore cessione di sovranità produrrà uno scontro istituzionale che la sezione racconta più avanti &mdash; compreso il doppio veto opposto, nel 1963 e nel 1967, all'adesione britannica alla Comunità.</p>
+        <p class="chiudi-hint">Clicca di nuovo per richiudere.</p>
+      </div></div>
+    </div>
+
+  </div>
+
+  <div class="banner">
+    <div class="titolo">Un solo processo storico, tre visioni non chiuse</div>
+    <p>Il funzionalismo ha vinto la partita degli anni Cinquanta, ma non ha chiuso il dibattito: ogni volta che l'Unione affronta una crisi che il metodo dei piccoli passi non basta a contenere, le domande di Spinelli e le resistenze di de Gaulle tornano a farsi sentire.</p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.intestazione').forEach(intest=>{
+  intest.addEventListener('click', ()=>{
+    intest.closest('.colonna').classList.toggle('aperta');
+  });
+});
+</script>
+</body>
+</html>

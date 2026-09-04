@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronologia della sezione — Un continente unito, per scelta</title>
+<style>
+  :root{
+    --bg:#F2F2F2;
+    --card:#fffdfa;
+    --accent:#3d5a73;
+    --tecnica:#8B7355;
+    --economia:#3d5a73;
+    --societa:#9c5b45;
+    --idee:#5c7a5c;
+    --text:#2b2723;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;}
+  h1,h2,h3,.label,.ui,button,select,.legend,.filters,.axis-year,.node-date,.eyebrow{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  .wrap{max-width:1500px;margin:0 auto;padding:22px 26px 40px;}
+  .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:#8a8271;margin-bottom:4px;}
+  h1{font-size:1.5rem;margin:0 0 6px;color:var(--text);font-weight:600;letter-spacing:.2px;}
+  .subtitle{font-size:.92rem;color:#5a554e;margin:0 0 18px;max-width:920px;line-height:1.55;}
+  .panel{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:14px 18px;margin-bottom:16px;}
+  .controls{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start;}
+  .control-group{display:flex;flex-direction:column;gap:6px;}
+  .control-group .ctitle{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#7a746b;margin-bottom:2px;}
+  .lane-buttons{display:flex;flex-wrap:wrap;gap:8px;}
+  .lane-btn{display:flex;align-items:center;gap:7px;border:1.5px solid var(--accent);background:#fff;border-radius:20px;padding:5px 12px 5px 8px;cursor:pointer;font-size:.8rem;color:var(--text);transition:opacity .2s,background .2s;}
+  .lane-btn .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto;}
+  .lane-btn.active{background:#eaeff2;}
+  .lane-btn.dimmed-off{opacity:.4;}
+  .year-select{display:flex;gap:8px;align-items:center;}
+  select{border:1.5px solid var(--accent);border-radius:6px;padding:6px 8px;font-size:.82rem;background:#fff;color:var(--text);}
+  .clear-btn{border:1px solid var(--accent);background:#fff;border-radius:6px;padding:6px 10px;font-size:.76rem;cursor:pointer;color:var(--accent);}
+  .clear-btn:hover{background:#eef3f6;}
+  .clear-btn:disabled{opacity:.35;cursor:default;}
+  .active-year-note{font-size:.78rem;color:#5a554e;margin-top:6px;min-height:1.2em;}
+
+  .chart-shell{overflow-x:auto;overflow-y:hidden;border:1px solid var(--accent);border-radius:8px;background:#fff;position:relative;}
+  .chart-inner{position:relative;height:340px;}
+  .lane-row-label{position:sticky;left:0;width:140px;display:flex;align-items:center;gap:8px;padding:0 10px;background:linear-gradient(90deg,#fff 82%,rgba(255,255,255,0));font-size:.82rem;font-weight:600;z-index:6;pointer-events:none;}
+  .lane-row-label .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto;}
+
+  .lane-track{position:absolute;height:2px;background:#e4e6e4;border-radius:2px;}
+  .year-tick{position:absolute;top:0;bottom:0;border-left:1px dashed #e2ddd2;}
+  .year-tick-label{position:absolute;font-size:.66rem;color:#a39c8f;top:2px;}
+  .decade-tick{border-left:1px solid #d0c8b4;}
+  .decade-tick .year-tick-label{color:#7a746b;font-weight:600;}
+
+  .node{position:absolute;cursor:pointer;transition:opacity .25s, transform .15s;}
+  .node.dimmed{opacity:.18;}
+  .node-dot{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);}
+  .node-bar{height:12px;border-radius:6px;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);}
+  .node.selected .node-dot,.node.selected .node-bar{box-shadow:0 0 0 3px rgba(61,90,115,.55);}
+
+  .cursor-line{position:absolute;top:0;bottom:0;width:2px;background:#c0392b;opacity:0;pointer-events:none;z-index:5;transition:left .2s;}
+  .cursor-line.show{opacity:.75;}
+
+  .detail{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 20px;margin-top:16px;min-height:70px;}
+  .detail .dtitle{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#8a8271;margin-bottom:4px;font-family:'Gill Sans',sans-serif;}
+  .detail h3{margin:0 0 6px;font-size:1.05rem;}
+  .detail p{margin:0 0 6px;font-size:.92rem;line-height:1.5;}
+  .detail .ref{font-size:.78rem;color:#8a8271;font-style:italic;}
+  .detail .placeholder{color:#a89e88;font-style:italic;font-size:.88rem;}
+
+  .note{font-size:.74rem;color:#8a8271;margin-top:18px;border-top:1px solid #ddd6c4;padding-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Un continente unito, per scelta &middot; Apparati</div>
+  <h1>Cronologia della sezione</h1>
+  <p class="subtitle">Quattro corsie, dal 1941 al 2020: tecnica, economia, società, idee. Il Manifesto di Ventotene e la Dichiarazione Schuman maturano negli stessi anni in cui l'Europa esce dalla fame del dopoguerra; il crollo della CED nel 1954 e la crisi del debito del 2010 sono, a distanza di decenni, lo stesso meccanismo che si ferma nello stesso punto. La cronologia mostra insieme le due scale, lunga durata e evento singolo, e rende visibile che cosa accade nello stesso momento in corsie diverse — cosa che il racconto per capitoli, per forza di cose, deve sempre mettere in sequenza.</p>
+
+  <div class="panel">
+    <div class="controls">
+      <div class="control-group">
+        <div class="ctitle">Corsie</div>
+        <div class="lane-buttons" id="laneButtons"></div>
+      </div>
+      <div class="control-group">
+        <div class="ctitle">Vai a un anno</div>
+        <div class="year-select">
+          <select id="yearSelect"><option value="">— scegli —</option></select>
+          <button class="clear-btn" id="clearYear" disabled>Azzera</button>
+        </div>
+        <div class="active-year-note" id="yearNote"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-shell">
+    <div class="chart-inner" id="chartInner"></div>
+  </div>
+
+  <div class="detail" id="detail"><p class="placeholder">Passa il mouse su un punto o una barra, o seleziona un anno, per leggerne la scheda.</p></div>
+
+  <p class="note">Manuale di Storia &middot; Liceo Classico G. B. Vico, Chieti &middot; Un continente unito, per scelta</p>
+</div>
+
+<script>
+(function(){
+  const LANES = [
+    {id:'tecnica', label:'Tecnica', color:'var(--tecnica)'},
+    {id:'economia', label:'Economia', color:'var(--economia)'},
+    {id:'societa', label:'Società', color:'var(--societa)'},
+    {id:'idee', label:'Idee', color:'var(--idee)'}
+  ];
+
+  const CAP1 = "Le origini";
+  const CAP2 = "Dalla CEE a Maastricht";
+  const CAP3 = "L'euro e l'Europa a 25";
+  const CAP4 = "Le crisi";
+
+  const EVENTS = [
+    // TECNICA
+    {lane:'tecnica', from:1944, to:null, t:"Bretton Woods: cambi fissi", d:"L'ordine economico dei cambi fissi e delle istituzioni finanziarie internazionali dentro cui matura, sei anni dopo, la scelta della CECA.", ref:"I prerequisiti — " + CAP1},
+    {lane:'tecnica', from:1950, to:1951, t:"Dalla Dichiarazione Schuman al Trattato di Parigi: nasce la CECA", d:"Il 9 maggio 1950 Schuman legge la dichiarazione; il 18 aprile 1951 il Trattato di Parigi la traduce in istituzioni, con l'Alta Autorità sovranazionale come cuore del nuovo modello.", ref:"La CECA, 1951 — " + CAP1},
+    {lane:'tecnica', from:1968, to:null, t:"Completamento dell'unione doganale della CEE", d:"L'abbattimento graduale delle barriere doganali interne previsto dai Trattati di Roma si completa in undici anni.", ref:"I Trattati di Roma, 1957 — " + CAP1},
+    {lane:'tecnica', from:1979, to:null, t:"ECU e Sistema Monetario Europeo", d:"Una griglia di fluttuazione controllata fra le valute, costruita attorno all'ECU: il Regno Unito sceglie di restarne fuori.", ref:"Il primo allargamento e gli anni della crescita — " + CAP2},
+    {lane:'tecnica', from:1985, to:1992, t:"Il Libro Bianco Delors e il completamento del mercato interno", d:"Circa trecento misure legislative per abbattere le barriere fisiche, tecniche e fiscali residue, con scadenza fissata al 31 dicembre 1992 dall'Atto Unico Europeo.", ref:"L'Atto Unico Europeo e il completamento del mercato — " + CAP2},
+    {lane:'tecnica', from:1985, to:1997, t:"Lo spazio Schengen, dall'accordo intergovernativo al diritto dell'Unione", d:"Nato nel 1985 come accordo fra alcuni Stati fondatori, abolisce i controlli alle frontiere interne; entra nella legislazione dell'Unione solo nel 1997 con il Trattato di Amsterdam.", ref:"La crisi migratoria, 2015 — " + CAP4},
+    {lane:'tecnica', from:1999, to:2002, t:"L'euro, da moneta di conto a moneta fisica", d:"Il 1° gennaio 1999 l'euro entra in vigore per le sole transazioni finanziarie; il 1° gennaio 2002 banconote e monete arrivano nelle tasche dei cittadini.", ref:"Una moneta senza uno Stato — " + CAP3},
+    {lane:'tecnica', from:2012, to:null, t:"La BCE avvia l'OMT", d:"Dopo il «whatever it takes» di Draghi, la Banca Centrale Europea inizia ad acquistare titoli di debito pubblico degli Stati in difficoltà su larga scala.", ref:"La crisi del debito sovrano, 2010-2015 — " + CAP4},
+
+    // ECONOMIA
+    {lane:'economia', from:1944, to:1971, t:"Il sistema di Bretton Woods", d:"L'ordine dei cambi fissi che fa da cornice, nel 1950, alla scommessa della CECA sulla cooperazione economica vincolante come argine ai conflitti.", ref:"I prerequisiti — " + CAP1},
+    {lane:'economia', from:1973, to:null, t:"Il primo shock petrolifero", d:"Interrompe la fase espansiva del dopoguerra e spinge più di uno Stato membro verso il protezionismo.", ref:"Il primo allargamento e gli anni della crescita — " + CAP2},
+    {lane:'economia', from:1979, to:null, t:"Il secondo shock petrolifero", d:"Aggrava l'instabilità monetaria e il rallentamento industriale già aperti dalla crisi del 1973.", ref:"Il primo allargamento e gli anni della crescita — " + CAP2},
+    {lane:'economia', from:1984, to:null, t:"Il rabat britannico sul bilancio comunitario", d:"Thatcher ottiene, dietro lo slogan «I want my money back», uno sconto permanente sul contributo britannico al bilancio comune.", ref:"Il primo allargamento e gli anni della crescita — " + CAP2},
+    {lane:'economia', from:1988, to:null, t:"La riforma dei fondi strutturali", d:"Raddoppia le risorse destinate a colmare il divario fra le regioni comunitarie più ricche e quelle più arretrate.", ref:"Verso Sud: Grecia, Spagna, Portogallo — " + CAP2},
+    {lane:'economia', from:1992, to:1997, t:"Criteri di convergenza e Patto di Stabilità e Crescita", d:"Le soglie su inflazione, tassi, cambio, deficit e debito fissate a Maastricht vengono irrigidite nel 1997.", ref:"Maastricht, 1992 — " + CAP2},
+    {lane:'economia', from:1999, to:2008, t:"Un decennio di moneta unica senza crisi sistemiche", d:"La moneta circola e l'allargamento si compie senza che nessuno sia costretto a verificare se le fondamenta reggano davvero.", ref:"La crisi del debito sovrano, 2010-2015 — " + CAP4},
+    {lane:'economia', from:2010, to:2015, t:"La crisi del debito sovrano e i programmi di assistenza", d:"Ad Atene, nel 2010, i conti pubblici falsificati fanno temere il contagio verso Italia e Spagna: prestiti condizionati a un risanamento severo.", ref:"La crisi del debito sovrano, 2010-2015 — " + CAP4},
+    {lane:'economia', from:2012, to:null, t:"«Whatever it takes»: Draghi e la BCE", d:"Nel luglio 2012 il presidente della BCE dichiara che l'istituto farà tutto il necessario per difendere l'euro.", ref:"La crisi del debito sovrano, 2010-2015 — " + CAP4},
+    {lane:'economia', from:2016, to:2020, t:"Il negoziato della Brexit", d:"Quattro anni di negoziati per sciogliere un legame istituzionale, giuridico ed economico costruito in quasi mezzo secolo, fino alla fine del periodo di transizione il 31 dicembre 2020.", ref:"Brexit, 2016-2020 — " + CAP4},
+
+    // SOCIETÀ
+    {lane:'societa', from:1945, to:1950, t:"La «grande fame» e la ricostruzione postbellica", d:"Gli anni immediatamente successivi alla resa tedesca, ricordati come quelli della «grande fame», eredità diretta di un'economia piegata allo sforzo bellico.", ref:"Un continente da ricostruire — " + CAP1},
+    {lane:'societa', from:1974, to:1975, t:"Le tre transizioni democratiche del Sud Europa", d:"Portogallo, Grecia e Spagna escono dalla dittatura quasi nello stesso biennio, per tre strade completamente diverse.", ref:"Verso Sud: Grecia, Spagna, Portogallo — " + CAP2},
+    {lane:'societa', from:2004, to:2013, t:"L'allargamento a est: oltre 120 milioni di nuovi cittadini", d:"Dieci nuovi membri nel 2004, Bulgaria e Romania nel 2007, la Croazia nel 2013: il maggiore allargamento della storia comunitaria.", ref:"L'allargamento a est — " + CAP3},
+    {lane:'societa', from:2008, to:2015, t:"Disoccupazione giovanile record in Grecia e Spagna", d:"Negli anni della crisi del debito supera per anni il cinquanta per cento della fascia d'età.", ref:"La crisi del debito sovrano, 2010-2015 — " + CAP4},
+    {lane:'societa', from:2015, to:null, t:"La crisi migratoria: rotta mediterranea e rotta balcanica", d:"Centinaia di migliaia di persone in fuga da guerre e persecuzioni percorrono le due rotte principali verso l'Europa.", ref:"La crisi migratoria, 2015 — " + CAP4},
+    {lane:'societa', from:2015, to:null, t:"Le proteste di Dresda: «Integriert doch erst mal uns!»", d:"Nei Länder orientali tedeschi il malessere verso l'accoglienza si salda a un sentimento di cittadinanza di seconda classe mai risolto dalla riunificazione.", ref:"Focus — La Germania divisa in due, di nuovo — " + CAP4},
+    {lane:'societa', from:2016, to:null, t:"Il referendum sulla Brexit", d:"Il 23 giugno 2016 il leave prevale con il 51,89% contro il 48,11% del remain, con una spaccatura geografica netta.", ref:"Brexit, 2016-2020 — " + CAP4},
+
+    // IDEE
+    {lane:'idee', from:1941, to:null, t:"Il Manifesto di Ventotene", d:"Spinelli e Rossi, durante il confino, scrivono il manifesto che individua nel superamento dello Stato nazionale l'unica barriera credibile contro il ritorno del totalitarismo.", ref:"Focus — Tre visioni per l'Europa — " + CAP1},
+    {lane:'idee', from:1946, to:null, t:"Il discorso di Churchill a Zurigo", d:"Un appello alla riconciliazione franco-tedesca e alla nascita di «un qualche tipo di Stati Uniti d'Europa».", ref:"Un continente da ricostruire — " + CAP1},
+    {lane:'idee', from:1950, to:null, t:"La Dichiarazione Schuman, 9 maggio", d:"Propone di mettere in comune la produzione di carbone e acciaio di Francia e Germania: «prima tappa della Federazione Europea».", ref:"La dichiarazione Schuman e il metodo funzionalista — " + CAP1},
+    {lane:'idee', from:1954, to:null, t:"La bocciatura della CED", d:"Il 30 agosto 1954 l'Assemblea Nazionale francese rinvia sine die la ratifica, seppellendo insieme la CED e la Comunità Politica Europea.", ref:"Il sogno interrotto: la Comunità Europea di Difesa — " + CAP1},
+    {lane:'idee', from:1984, to:null, t:"Il progetto di trattato costituzionale di Spinelli", d:"Il Parlamento europeo approva il progetto guidato da Spinelli; i governi nazionali lo respingono, ma influenzerà i negoziati di Maastricht.", ref:"Focus — Tre visioni per l'Europa — " + CAP1},
+    {lane:'idee', from:1992, to:null, t:"Il Trattato di Maastricht: compare la parola «Unione»", d:"Per la prima volta dal 1950 i governi scrivono in un trattato la parola che la Dichiarazione Schuman aveva pronunciato solo come orizzonte lontano.", ref:"Maastricht, 1992 — " + CAP2},
+    {lane:'idee', from:2004, to:2020, t:"Il sovranismo dell'Est europeo e il dibattito sullo Stato di diritto", d:"Dall'Ungheria di Orbán alla Polonia dei Kaczyński, la resistenza a ulteriori cessioni di sovranità arriva ad accostare i richiami europei ai vecchi diktat di Mosca.", ref:"L'allargamento a est — " + CAP3},
+    {lane:'idee', from:2005, to:null, t:"La bocciatura del Trattato costituzionale in Francia e Paesi Bassi", d:"La paura della concorrenza salariale, personificata nell'«idraulico polacco», contribuisce alla bocciatura di un progetto pensato per l'Unione allargata.", ref:"L'allargamento a est — " + CAP3}
+  ];
+
+  const YEAR_MIN = 1941, YEAR_MAX = 2020;
+  const PX_PER_YEAR = 8.5;
+  const CHART_WIDTH = (YEAR_MAX - YEAR_MIN) * PX_PER_YEAR + 60;
+  const LEFT_PAD = 150;
+  const LANE_HEIGHT = 70;
+  const TOP_PAD = 26;
+
+  let activeLanes = new Set(LANES.map(l=>l.id));
+  let selectedYear = null;
+
+  function yx(year){ return LEFT_PAD + (year - YEAR_MIN) * PX_PER_YEAR; }
+
+  const laneButtons = document.getElementById('laneButtons');
+  LANES.forEach(l=>{
+    const btn = document.createElement('button');
+    btn.className = 'lane-btn active';
+    btn.dataset.lane = l.id;
+    btn.innerHTML = '<span class="dot" style="background:' + l.color + '"></span>' + l.label;
+    btn.addEventListener('click', ()=>{
+      if(activeLanes.has(l.id)) activeLanes.delete(l.id); else activeLanes.add(l.id);
+      btn.classList.toggle('dimmed-off', !activeLanes.has(l.id));
+      render();
+    });
+    laneButtons.appendChild(btn);
+  });
+
+  const yearSelect = document.getElementById('yearSelect');
+  const yearsSet = Array.from(new Set(EVENTS.flatMap(e=> e.to ? [e.from, e.to] : [e.from]))).sort((a,b)=>a-b);
+  yearsSet.forEach(y=>{
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    yearSelect.appendChild(opt);
+  });
+  yearSelect.addEventListener('change', ()=>{
+    selectedYear = yearSelect.value ? parseInt(yearSelect.value,10) : null;
+    document.getElementById('clearYear').disabled = !selectedYear;
+    render();
+  });
+  document.getElementById('clearYear').addEventListener('click', ()=>{
+    selectedYear = null; yearSelect.value=''; document.getElementById('clearYear').disabled = true; render();
+  });
+
+  const chartInner = document.getElementById('chartInner');
+  const detail = document.getElementById('detail');
+
+  function showDetail(e){
+    detail.innerHTML = '<div class="dtitle">' + LANES.find(l=>l.id===e.lane).label + (e.to ? (' &middot; ' + e.from + '-' + e.to) : (' &middot; ' + e.from)) + '</div>' +
+      '<h3>' + e.t + '</h3><p>' + e.d + '</p><p class="ref">Cfr. ' + e.ref + '</p>';
+  }
+
+  function render(){
+    chartInner.style.width = CHART_WIDTH + 'px';
+    chartInner.style.height = (TOP_PAD + LANES.length * LANE_HEIGHT + 30) + 'px';
+    let html = '';
+
+    for(let y = YEAR_MIN + 1; y <= YEAR_MAX; y += 1){
+      const isDecade = (y % 10 === 0);
+      if(!isDecade && y % 5 !== 0) continue;
+      html += '<div class="year-tick' + (isDecade?' decade-tick':'') + '" style="left:' + yx(y) + 'px;top:' + TOP_PAD + 'px;height:' + (LANES.length*LANE_HEIGHT) + 'px;">' +
+        (isDecade ? '<span class="year-tick-label">' + y + '</span>' : '') + '</div>';
+    }
+
+    LANES.forEach((l, li)=>{
+      const top = TOP_PAD + li*LANE_HEIGHT;
+      const on = activeLanes.has(l.id);
+      html += '<div class="lane-row-label" style="top:' + (top+LANE_HEIGHT/2-9) + 'px;' + (on?'':'opacity:.3;') + '"><span class="sw" style="background:' + l.color + '"></span>' + l.label + '</div>';
+      html += '<div class="lane-track" style="left:' + LEFT_PAD + 'px;width:' + (CHART_WIDTH-LEFT_PAD-20) + 'px;top:' + (top+LANE_HEIGHT/2) + 'px;"></div>';
+    });
+
+    EVENTS.forEach((e, ei)=>{
+      const li = LANES.findIndex(l=>l.id===e.lane);
+      const top = TOP_PAD + li*LANE_HEIGHT + LANE_HEIGHT/2;
+      const on = activeLanes.has(e.lane);
+      let dimmed = !on;
+      if(selectedYear !== null){
+        const hit = e.to ? (selectedYear >= e.from && selectedYear <= e.to) : (Math.abs(selectedYear - e.from) <= 1);
+        if(!hit) dimmed = true;
+      }
+      const color = LANES[li].color;
+      if(e.to){
+        const x1 = yx(e.from), x2 = yx(e.to);
+        html += '<div class="node' + (dimmed?' dimmed':'') + '" data-idx="' + ei + '" style="left:' + x1 + 'px;top:' + (top-6) + 'px;">' +
+          '<div class="node-bar" style="width:' + (x2-x1) + 'px;background:' + color + '"></div></div>';
+      } else {
+        const x = yx(e.from);
+        html += '<div class="node' + (dimmed?' dimmed':'') + '" data-idx="' + ei + '" style="left:' + (x-7) + 'px;top:' + (top-7) + 'px;">' +
+          '<div class="node-dot" style="background:' + color + '"></div></div>';
+      }
+    });
+
+    chartInner.innerHTML = html;
+    chartInner.querySelectorAll('.node').forEach(n=>{
+      n.addEventListener('mouseenter', ()=> showDetail(EVENTS[parseInt(n.dataset.idx,10)]));
+      n.addEventListener('click', ()=> showDetail(EVENTS[parseInt(n.dataset.idx,10)]));
+    });
+
+    const note = document.getElementById('yearNote');
+    if(selectedYear !== null){
+      const hits = EVENTS.filter(e=> e.to ? (selectedYear>=e.from && selectedYear<=e.to) : (Math.abs(selectedYear-e.from)<=1));
+      note.textContent = hits.length + ' eventi/processi attivi intorno al ' + selectedYear + ', nelle corsie: ' + Array.from(new Set(hits.map(h=>LANES.find(l=>l.id===h.lane).label))).join(', ') + '.';
+    } else {
+      note.textContent = '';
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

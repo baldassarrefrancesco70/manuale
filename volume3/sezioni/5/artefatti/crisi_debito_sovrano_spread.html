@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La crisi del debito sovrano: spread a confronto</title>
+<style>
+  :root{
+    --grigio:#F2F2F2;
+    --marrone:#8B7355;
+    --card:#fffdfa;
+    --testo:#2e2a24;
+    --grecia:#9c5b45;
+    --portogallo:#7a8a5c;
+    --irlanda:#5b7a8f;
+    --spagna:#b08d57;
+    --italia:#6b5a63;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--grigio);font-family:Georgia,'Times New Roman',serif;color:var(--testo);padding:26px 18px 40px;}
+  .wrap{max-width:900px;margin:0 auto;}
+  h1{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:1.5rem;font-weight:600;color:#4a3b2c;text-align:center;margin:0 0 4px;}
+  .sottotitolo{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;text-align:center;color:#6b5c4a;font-size:0.95rem;margin:0 0 20px;}
+
+  .chip-riga{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+  .chip{
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:0.82rem;
+    padding:6px 14px;border-radius:16px;cursor:pointer;user-select:none;
+    border:1.5px solid var(--col);color:var(--col);background:var(--card);
+    transition:background .15s ease,color .15s ease;
+  }
+  .chip.attivo{background:var(--col);color:#fff;}
+
+  .grafico-riquadro{background:var(--card);border:1px solid var(--marrone);border-radius:6px;padding:18px;}
+  svg{width:100%;height:auto;display:block;}
+  .griglia{stroke:#e6ddd0;stroke-width:1;}
+  .asse{stroke:#8a7a63;stroke-width:1.2;}
+  .etichetta-asse{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;fill:#6b5c4a;}
+  .linea{fill:none;stroke-width:2.6;transition:opacity .2s ease;}
+  .punto{stroke:#fff;stroke-width:1.4;transition:opacity .2s ease;}
+  .marker-draghi{stroke:#8B7355;stroke-width:1.5;stroke-dasharray:5 4;}
+  .marker-testo{font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;fill:#5a4d3d;}
+
+  .tooltip{
+    position:absolute;background:#3a3126;color:#fdfaf3;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.75rem;padding:6px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity .1s ease;
+    white-space:nowrap;transform:translate(-50%,-120%);z-index:10;
+  }
+  .tooltip.visibile{opacity:1;}
+  .grafico-wrap{position:relative;}
+
+  .controlli{display:flex;align-items:center;gap:14px;margin-top:16px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;}
+  .btn-play{background:var(--marrone);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:0.95rem;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center;}
+  input[type=range]{flex:1;accent-color:var(--marrone);}
+  .anno-corrente{font-weight:700;color:#4a3b2c;min-width:46px;text-align:center;}
+
+  .nota{margin-top:16px;font-size:0.82rem;color:#6b5c4a;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;line-height:1.55;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>La crisi del debito sovrano</h1>
+  <p class="sottotitolo">Spread rispetto al Bund tedesco, 2010&ndash;2015 &mdash; intensità a confronto fra i paesi coinvolti</p>
+
+  <div class="chip-riga" id="chipRiga">
+    <div class="chip attivo" data-p="grecia" style="--col:var(--grecia)">Grecia</div>
+    <div class="chip attivo" data-p="irlanda" style="--col:var(--irlanda)">Irlanda</div>
+    <div class="chip attivo" data-p="portogallo" style="--col:var(--portogallo)">Portogallo</div>
+    <div class="chip attivo" data-p="spagna" style="--col:var(--spagna)">Spagna</div>
+    <div class="chip attivo" data-p="italia" style="--col:var(--italia)">Italia</div>
+  </div>
+
+  <div class="grafico-riquadro">
+    <div class="grafico-wrap">
+      <div class="tooltip" id="tooltip"></div>
+      <svg id="grafico" viewBox="0 0 760 380"></svg>
+    </div>
+  </div>
+
+  <div class="controlli">
+    <button class="btn-play" id="playBtn" title="Play/Pausa">&#9658;</button>
+    <input type="range" id="slider" min="0" max="5" step="1" value="5">
+    <div class="anno-corrente" id="annoCorrente">2015</div>
+  </div>
+
+</div>
+
+<script>
+const anni = [2010,2011,2012,2013,2014,2015];
+const serie = {
+  grecia:{col:'var(--grecia)',hex:'#9c5b45',dati:[30,55,100,75,55,45]},
+  irlanda:{col:'var(--irlanda)',hex:'#5b7a8f',dati:[22,35,50,30,18,12]},
+  portogallo:{col:'var(--portogallo)',hex:'#7a8a5c',dati:[25,40,55,35,25,18]},
+  spagna:{col:'var(--spagna)',hex:'#b08d57',dati:[12,20,38,32,20,14]},
+  italia:{col:'var(--italia)',hex:'#6b5a63',dati:[10,16,30,22,14,10]}
+};
+const nomi = {grecia:'Grecia',irlanda:'Irlanda',portogallo:'Portogallo',spagna:'Spagna',italia:'Italia'};
+
+const margine = {sx:44,dx:20,alto:20,basso:36};
+const larghezza = 760, altezza = 380;
+const larghezzaGrafico = larghezza - margine.sx - margine.dx;
+const altezzaGrafico = altezza - margine.alto - margine.basso;
+
+function x(i){ return margine.sx + (i/(anni.length-1)) * larghezzaGrafico; }
+function y(v){ return margine.alto + altezzaGrafico - (v/100)*altezzaGrafico; }
+
+const svg = document.getElementById('grafico');
+const attivi = new Set(Object.keys(serie));
+let annoIdx = 5;
+
+function disegna(){
+  let html = '';
+  // griglia orizzontale
+  for(let g=0; g<=100; g+=25){
+    html += `<line class="griglia" x1="${margine.sx}" y1="${y(g)}" x2="${larghezza-margine.dx}" y2="${y(g)}"/>`;
+  }
+  // assi
+  html += `<line class="asse" x1="${margine.sx}" y1="${margine.alto}" x2="${margine.sx}" y2="${altezza-margine.basso}"/>`;
+  html += `<line class="asse" x1="${margine.sx}" y1="${altezza-margine.basso}" x2="${larghezza-margine.dx}" y2="${altezza-margine.basso}"/>`;
+  anni.forEach((a,i)=>{
+    html += `<text class="etichetta-asse" x="${x(i)}" y="${altezza-margine.basso+18}" text-anchor="middle">${a}</text>`;
+  });
+
+  // marcatore Draghi, luglio 2012, fra indice 2 (2012) e 3 (2013)
+  const xDraghi = x(2) + (x(3)-x(2))*0.55;
+  html += `<line class="marker-draghi" x1="${xDraghi}" y1="${margine.alto}" x2="${xDraghi}" y2="${altezza-margine.basso}"/>`;
+  html += `<text class="marker-testo" x="${xDraghi+6}" y="${margine.alto+12}">luglio 2012 — Draghi, «whatever it takes»</text>`;
+
+  Object.keys(serie).forEach(p=>{
+    if(!attivi.has(p)) return;
+    const d = serie[p];
+    const puntiVisibili = d.dati.slice(0, annoIdx+1);
+    let path = puntiVisibili.map((v,i)=> (i===0?'M':'L') + x(i) + ' ' + y(v)).join(' ');
+    html += `<path class="linea" d="${path}" stroke="${d.hex}"/>`;
+    puntiVisibili.forEach((v,i)=>{
+      html += `<circle class="punto" data-p="${p}" data-i="${i}" cx="${x(i)}" cy="${y(v)}" r="4.2" fill="${d.hex}"/>`;
+    });
+  });
+
+  svg.innerHTML = html;
+
+  svg.querySelectorAll('.punto').forEach(c=>{
+    c.addEventListener('mousemove', e=>{
+      const rect = svg.getBoundingClientRect();
+      const scala = rect.width/larghezza;
+      const px = parseFloat(c.getAttribute('cx'))*scala;
+      const py = parseFloat(c.getAttribute('cy'))*scala;
+      const p = c.dataset.p, i = +c.dataset.i;
+      tooltip.style.left = px+'px';
+      tooltip.style.top = py+'px';
+      tooltip.textContent = nomi[p]+' — '+anni[i]+': indice '+serie[p].dati[i];
+      tooltip.classList.add('visibile');
+    });
+    c.addEventListener('mouseleave', ()=> tooltip.classList.remove('visibile'));
+  });
+}
+
+const tooltip = document.getElementById('tooltip');
+document.getElementById('grafico').parentElement.style.position='relative';
+
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    const p = chip.dataset.p;
+    if(attivi.has(p)){ attivi.delete(p); chip.classList.remove('attivo'); }
+    else { attivi.add(p); chip.classList.add('attivo'); }
+    disegna();
+  });
+});
+
+const slider = document.getElementById('slider');
+const annoCorrente = document.getElementById('annoCorrente');
+slider.addEventListener('input', ()=>{
+  annoIdx = parseInt(slider.value,10);
+  annoCorrente.textContent = anni[annoIdx];
+  disegna();
+});
+
+const playBtn = document.getElementById('playBtn');
+let playing = false, timer = null;
+playBtn.addEventListener('click', ()=>{
+  playing = !playing;
+  playBtn.innerHTML = playing ? '&#10074;&#10074;' : '&#9658;';
+  if(playing){
+    if(annoIdx >= 5) { annoIdx = 0; slider.value = 0; }
+    timer = setInterval(()=>{
+      if(annoIdx >= 5){ playing=false; playBtn.innerHTML='&#9658;'; clearInterval(timer); return; }
+      annoIdx += 1;
+      slider.value = annoIdx;
+      annoCorrente.textContent = anni[annoIdx];
+      disegna();
+    }, 700);
+  } else {
+    clearInterval(timer);
+  }
+});
+
+disegna();
+</script>
+</body>
+</html>
