@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lo spread nel 2011</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --terra:#9c5b45; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:940px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 26px; font-style:italic; }
+
+  .pannello { background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:22px 24px; margin-bottom:20px; }
+  .pannello h2 { margin:0 0 6px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:1rem; color:var(--marrone); }
+  .pannello .unita { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.76rem; color:#8a7d68; margin-bottom:14px; }
+
+  svg { width:100%; height:auto; overflow:visible; }
+  .asse { stroke:#c9c2b0; stroke-width:1; }
+  .linea { fill:none; stroke:var(--terra); stroke-width:2.5; }
+  .punto { fill:var(--terra); stroke:var(--bianco); stroke-width:1.5; cursor:pointer; }
+  .punto:hover { r:7; }
+  .etichetta-punto { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10px; fill:#5c5344; text-anchor:middle; }
+  .valore-punto { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:10.5px; font-weight:700; fill:var(--terra); text-anchor:middle; }
+
+  .schede { display:none; margin-top:14px; }
+  .scheda-spread { display:none; background:#f7f4ec; border-left:3px solid var(--marrone); border-radius:6px; padding:10px 16px; margin-top:10px; font-size:0.9rem; line-height:1.5; }
+  .scheda-spread.visibile { display:block; }
+
+  .placeholder { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.84rem; color:#8a7d68; font-style:italic; margin-top:12px; }
+
+  .marker-dimissioni { stroke:var(--marrone); stroke-width:1.5; stroke-dasharray:3,3; }
+  .etichetta-dimissioni { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:9.5px; fill:var(--marrone); text-anchor:middle; font-weight:700; }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:720px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Lo spread nel 2011</h1>
+  <p class="sottotitolo">La misura del debito sovrano che decise le sorti di un governo</p>
+
+  <div class="pannello">
+    <h2>Il differenziale BTP-Bund a 10 anni</h2>
+    <div class="unita">punti base — clic su un punto per il dettaglio</div>
+    <svg viewBox="0 0 780 320" preserveAspectRatio="xMidYMid meet">
+      <line class="asse" x1="50" y1="270" x2="740" y2="270"></line>
+      <line class="asse" x1="50" y1="20" x2="50" y2="270"></line>
+      <text class="etichetta-punto" x="30" y="274" text-anchor="end">0</text>
+      <text class="etichetta-punto" x="30" y="200" text-anchor="end">200</text>
+      <text class="etichetta-punto" x="30" y="130" text-anchor="end">400</text>
+      <text class="etichetta-punto" x="30" y="60" text-anchor="end">600</text>
+      <line class="asse" x1="50" y1="200" x2="740" y2="200" stroke-dasharray="2,4"></line>
+      <line class="asse" x1="50" y1="130" x2="740" y2="130" stroke-dasharray="2,4"></line>
+      <line class="asse" x1="50" y1="60" x2="740" y2="60" stroke-dasharray="2,4"></line>
+
+      <polyline class="linea" points="90,205.5 220,182 340,130 495,17.5 545,42.5 690,58.5"></polyline>
+
+      <line class="marker-dimissioni" x1="610" y1="20" x2="610" y2="270"></line>
+      <text class="etichetta-dimissioni" x="610" y="14">dimissioni Berlusconi</text>
+
+      <g class="nodo-spread" data-id="p1"><circle class="punto" cx="90" cy="205.5" r="5"></circle><text class="valore-punto" x="90" y="192">173</text><text class="etichetta-punto" x="90" y="290">4 gen.</text></g>
+      <g class="nodo-spread" data-id="p2"><circle class="punto" cx="220" cy="182" r="5"></circle><text class="valore-punto" x="220" y="169">226</text><text class="etichetta-punto" x="220" y="290">7 lug.</text></g>
+      <g class="nodo-spread" data-id="p3"><circle class="punto" cx="340" cy="130" r="5"></circle><text class="valore-punto" x="340" y="117">≈ 400</text><text class="etichetta-punto" x="340" y="290">4-5 ago.</text></g>
+      <g class="nodo-spread" data-id="p4"><circle class="punto" cx="495" cy="17.5" r="5"></circle><text class="valore-punto" x="495" y="12">575</text><text class="etichetta-punto" x="495" y="290">9 nov.</text></g>
+      <g class="nodo-spread" data-id="p5"><circle class="punto" cx="545" cy="42.5" r="5"></circle><text class="valore-punto" x="545" y="35">552</text><text class="etichetta-punto" x="545" y="290">10 nov.</text></g>
+      <g class="nodo-spread" data-id="p6"><circle class="punto" cx="690" cy="58.5" r="5"></circle><text class="valore-punto" x="690" y="51">528</text><text class="etichetta-punto" x="690" y="290">30 dic.</text></g>
+    </svg>
+
+    <div class="placeholder" id="placeholder-spread">Clic su un punto per il dettaglio.</div>
+    <div class="scheda-spread" id="scheda-p1">4 gennaio 2011 — spread a 173 punti: il livello da cui parte la crisi, ancora relativamente contenuto.</div>
+    <div class="scheda-spread" id="scheda-p2">7 luglio 2011 — 226 punti, un record dalla nascita dell'euro fino a quel momento: i mercati iniziano a dubitare della sostenibilità del debito italiano.</div>
+    <div class="scheda-spread" id="scheda-p3">4-5 agosto 2011 — circa 400 punti: la Banca Centrale Europea interviene acquistando titoli di Stato italiani per calmare i mercati.</div>
+    <div class="scheda-spread" id="scheda-p4">9 novembre 2011 — 575 punti, il picco storico della crisi: il rendimento dei BTP a 10 anni sfiora il 7,5%, soglia considerata insostenibile nel lungo periodo.</div>
+    <div class="scheda-spread" id="scheda-p5">10 novembre 2011 — 552 punti, con il rendimento dei BTP al 7,25%: la pressione dei mercati precede di due giorni le dimissioni del governo.</div>
+    <div class="scheda-spread" id="scheda-p6">30 dicembre 2011 — 528 punti: sotto il governo Monti, insediato il 16 novembre, lo spread resta alto ma si stabilizza rispetto al picco di novembre.</div>
+  </div>
+
+  <p class="chiusura">Uno spread letto ogni giorno sui telegiornali come un moderno responso oracolare: la sua discesa, più che qualunque voto parlamentare, segnò la fine del governo Berlusconi il 12 novembre 2011.</p>
+</div>
+<script>
+  document.querySelectorAll('.nodo-spread').forEach(n => {
+    n.addEventListener('click', () => {
+      const id = n.dataset.id;
+      const scheda = document.getElementById('scheda-' + id);
+      const giaAperta = scheda.classList.contains('visibile');
+      document.querySelectorAll('.scheda-spread').forEach(s => s.classList.remove('visibile'));
+      document.getElementById('placeholder-spread').style.display = giaAperta ? 'block' : 'none';
+      if (!giaAperta) scheda.classList.add('visibile');
+    });
+  });
+</script>
+</body>
+</html>

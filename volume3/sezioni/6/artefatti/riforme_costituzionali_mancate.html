@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le riforme costituzionali mancate, 1997-2016</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --terra:#9c5b45; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:1020px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 30px; font-style:italic; }
+
+  .scroll-wrap { overflow-x:auto; padding-bottom:6px; }
+  .schema { position:relative; min-width:900px; padding: 10px 30px 10px; }
+
+  .corsia-titolo {
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.8rem; color:#8a7d68; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;
+  }
+
+  /* Corsia Costituzione: asse principale continuo, senza interruzioni */
+  .corsia-costituzione { position:relative; height:70px; margin-bottom:6px; }
+  .asse-principale {
+    position:absolute; top:30px; left:0; right:0; height:4px; background:var(--marrone); border-radius:2px;
+  }
+  .estremo { position:absolute; top:0; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.78rem; color:var(--marrone); font-weight:700; }
+  .estremo.sinistra { left:0; }
+  .estremo.destra { right:0; text-align:right; }
+
+  .ramo {
+    position:absolute; top:32px; width:2px; height:46px; background:repeating-linear-gradient(to bottom, var(--terra) 0 5px, transparent 5px 9px);
+  }
+  .nodo-ramo {
+    position:absolute; top:76px; transform: translateX(-50%); width:150px; text-align:center; cursor:pointer;
+  }
+  .pallino-x {
+    width:26px; height:26px; border-radius:50%; background:var(--terra); color:var(--bianco); font-weight:700;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 6px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    box-shadow:0 0 0 3px var(--bianco), 0 0 0 4px var(--terra); transition: transform .15s;
+  }
+  .nodo-ramo:hover .pallino-x, .nodo-ramo.attivo .pallino-x { transform: scale(1.15); }
+  .etichetta-ramo { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.76rem; color:#7a3d2e; line-height:1.3; }
+  .etichetta-ramo .anno-ramo { display:block; font-weight:700; font-size:0.72rem; color:var(--terra); }
+
+  /* posizioni rami (allineati sull'asse 1948->oggi) */
+  #ramo-1997 { left:66%; }
+  #ramo-2006 { left:80%; }
+  #ramo-2016 { left:94%; }
+
+  .divisorio { border-top:1px dashed #d6cfbc; margin: 34px 0 22px; }
+
+  /* Corsia legge elettorale */
+  .corsia-elettorale { position:relative; height:66px; margin-bottom:6px; }
+  .asse-secondario { position:absolute; top:30px; left:0; right:0; height:2px; background:var(--marrone); opacity:0.5; }
+  .nodo-elettorale { position:absolute; top:14px; transform: translateX(-50%); width:130px; text-align:center; cursor:pointer; }
+  .pallino-check {
+    width:22px; height:22px; border-radius:50%; background:var(--marrone); color:var(--bianco); font-weight:700;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 6px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.7rem; box-shadow:0 0 0 3px var(--bianco), 0 0 0 4px var(--marrone); transition: transform .15s;
+  }
+  .nodo-elettorale:hover .pallino-check, .nodo-elettorale.attivo .pallino-check { transform: scale(1.15); }
+  .etichetta-elettorale { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.74rem; color:#5c5344; line-height:1.25; }
+  .etichetta-elettorale .anno-elettorale { display:block; font-weight:700; font-size:0.7rem; color:var(--marrone); }
+
+  #el-1993 { left:26%; }
+  #el-2005 { left:56%; }
+  #el-2015 { left:82%; }
+  #el-2017 { left:93%; }
+
+  .scheda {
+    background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:20px 24px; margin-top:16px;
+    display:none; animation: apparizione .25s ease;
+  }
+  .scheda.visibile { display:block; }
+  @keyframes apparizione { from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+  .scheda h2 { margin:0 0 4px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; color:var(--marrone); font-size:1.02rem; }
+  .scheda .data-scheda { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.8rem; color:#8a7d68; margin-bottom:10px; }
+  .scheda p { font-size:0.92rem; line-height:1.58; margin:0; }
+
+  .placeholder { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.86rem; color:#8a7d68; font-style:italic; padding:12px 0; }
+
+  .nota-attualita {
+    margin-top: 22px; padding:14px 18px; background:#f0eee6; border-left:3px solid var(--marrone); border-radius:6px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.84rem; color:#5c5344; line-height:1.55;
+  }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:720px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Le riforme costituzionali mancate</h1>
+  <p class="sottotitolo">Ottant'anni di storia repubblicana restituiscono un solo dato costante</p>
+
+  <div class="scroll-wrap">
+    <div class="schema">
+      <div class="corsia-titolo">La Costituzione — mai riscritta</div>
+      <div class="corsia-costituzione">
+        <div class="estremo sinistra">1948</div>
+        <div class="estremo destra">oggi</div>
+        <div class="asse-principale"></div>
+        <div class="ramo" id="ramolinea-1997" style="left:66%;"></div>
+        <div class="ramo" id="ramolinea-2006" style="left:80%;"></div>
+        <div class="ramo" id="ramolinea-2016" style="left:94%;"></div>
+        <div class="nodo-ramo" id="ramo-1997" data-id="bicamerale">
+          <div class="pallino-x">✕</div>
+          <div class="etichetta-ramo"><span class="anno-ramo">1997</span>Bicamerale D'Alema</div>
+        </div>
+        <div class="nodo-ramo" id="ramo-2006" data-id="referendum2006">
+          <div class="pallino-x">✕</div>
+          <div class="etichetta-ramo"><span class="anno-ramo">2006</span>Referendum premierato</div>
+        </div>
+        <div class="nodo-ramo" id="ramo-2016" data-id="referendum2016">
+          <div class="pallino-x">✕</div>
+          <div class="etichetta-ramo"><span class="anno-ramo">2016</span>Referendum Renzi</div>
+        </div>
+      </div>
+
+      <div class="divisorio"></div>
+
+      <div class="corsia-titolo">La legge elettorale — sempre per via ordinaria</div>
+      <div class="corsia-elettorale">
+        <div class="asse-secondario"></div>
+        <div class="nodo-elettorale" id="el-1993" data-id="mattarellum">
+          <div class="pallino-check">✓</div>
+          <div class="etichetta-elettorale"><span class="anno-elettorale">1993</span>Mattarellum</div>
+        </div>
+        <div class="nodo-elettorale" id="el-2005" data-id="porcellum">
+          <div class="pallino-check">✓</div>
+          <div class="etichetta-elettorale"><span class="anno-elettorale">2005</span>Porcellum</div>
+        </div>
+        <div class="nodo-elettorale" id="el-2015" data-id="italicum">
+          <div class="pallino-check">✓</div>
+          <div class="etichetta-elettorale"><span class="anno-elettorale">2015</span>Italicum</div>
+        </div>
+        <div class="nodo-elettorale" id="el-2017" data-id="rosatellum">
+          <div class="pallino-check">✓</div>
+          <div class="etichetta-elettorale"><span class="anno-elettorale">2017</span>Rosatellum</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="placeholder" class="placeholder">Clic su un nodo, sopra o sotto, per aprire la scheda.</div>
+
+  <div class="scheda" id="scheda-bicamerale">
+    <h2>La Commissione bicamerale D'Alema</h2>
+    <div class="data-scheda">1997 — fallita</div>
+    <p>Il tentativo più organico di riscrivere le regole del gioco su basi nuove, che avrebbe dovuto introdurre elementi di semipresidenzialismo, si arenò senza produrre nulla: l'architettura costituzionale restò del tutto invariata.</p>
+  </div>
+  <div class="scheda" id="scheda-referendum2006">
+    <h2>Il referendum costituzionale del 2006</h2>
+    <div class="data-scheda">2006 — respinto</div>
+    <p>Gli italiani respinsero con un margine ampio — oltre il 61% dei "No" — una riforma costituzionale approvata dal centro-destra che avrebbe introdotto un premierato forte e la cosiddetta devolution.</p>
+  </div>
+  <div class="scheda" id="scheda-referendum2016">
+    <h2>Il referendum Renzi</h2>
+    <div class="data-scheda">2016 — respinto</div>
+    <p>Dieci anni dopo il 2006, un margine altrettanto netto affossò la riforma costituzionale del governo Renzi, che puntava a superare il bicameralismo perfetto: una sconfitta che costò a Renzi le proprie dimissioni.</p>
+  </div>
+  <div class="scheda" id="scheda-mattarellum">
+    <h2>Il Mattarellum</h2>
+    <div class="data-scheda">1993</div>
+    <p>Introdotto con legge ordinaria dopo il referendum Segni dell'aprile 1993 (oltre l'82% di "Sì"): tre quarti dei seggi con maggioritario a turno unico, un quarto con il proporzionale.</p>
+  </div>
+  <div class="scheda" id="scheda-porcellum">
+    <h2>Il Porcellum</h2>
+    <div class="data-scheda">2005</div>
+    <p>Nuova legge elettorale, anch'essa introdotta con legge ordinaria — nessuna revisione costituzionale è mai stata necessaria per cambiare il modo in cui gli italiani eleggono il proprio Parlamento.</p>
+  </div>
+  <div class="scheda" id="scheda-italicum">
+    <h2>L'Italicum</h2>
+    <div class="data-scheda">2015</div>
+    <p>Dichiarato in parte illegittimo dalla Corte costituzionale prima ancora di essere applicato.</p>
+  </div>
+  <div class="scheda" id="scheda-rosatellum">
+    <h2>Il Rosatellum</h2>
+    <div class="data-scheda">2017</div>
+    <p>Quarta legge elettorale in trent'anni, sempre con legge ordinaria, mai con la maggioranza qualificata e i tempi di riflessione che l'articolo 138 impone alle revisioni costituzionali.</p>
+  </div>
+
+  <div class="nota-attualita">Nel momento in cui si scrivono queste righe, il dibattito su una nuova riforma costituzionale che introduca l'elezione diretta del presidente del Consiglio è ancora aperto: cronaca, non ancora storia — un contenuto da aggiornare più vicino alla pubblicazione.</div>
+
+  <p class="chiusura">Ogni volta che una maggioranza di governo ha provato a mettere mano al testo del 1948 su questioni di assetto istituzionale, il tentativo è stato respinto. Ma il modo di eleggere il Parlamento è cambiato quattro volte in trent'anni, sempre con legge ordinaria: la stabilità della cornice è stata difesa, o solo aggirata altrove?</p>
+</div>
+<script>
+  const nodi = document.querySelectorAll('.nodo-ramo, .nodo-elettorale');
+  const placeholder = document.getElementById('placeholder');
+  let attivo = null;
+  nodi.forEach(nodo => {
+    nodo.addEventListener('click', () => {
+      const id = nodo.dataset.id;
+      const scheda = document.getElementById('scheda-' + id);
+      if (attivo === id) {
+        scheda.classList.remove('visibile');
+        nodo.classList.remove('attivo');
+        placeholder.style.display = 'block';
+        attivo = null;
+        return;
+      }
+      document.querySelectorAll('.scheda').forEach(s => s.classList.remove('visibile'));
+      nodi.forEach(n => n.classList.remove('attivo'));
+      scheda.classList.add('visibile');
+      nodo.classList.add('attivo');
+      placeholder.style.display = 'none';
+      attivo = id;
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le elezioni del 1948: uno "scontro di civiltà"</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Georgia, serif; background: var(--grigio); color: var(--testo); padding: 28px 16px 48px; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 30px; font-style:italic; }
+
+  .grafico { background: var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:24px; margin-bottom: 22px; }
+  .barre-riga { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+  .barre-riga:last-child { margin-bottom:0; }
+  .etichetta-anno { width:56px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; color:var(--marrone); text-align:right; flex-shrink:0; }
+  .barre { flex:1; display:flex; flex-direction:column; gap:8px; }
+  .barra-gruppo { display:flex; align-items:center; gap:10px; }
+  .barra-nome { width:120px; font-size:0.82rem; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; flex-shrink:0; }
+  .barra-esterno { flex:1; background:#e8e4da; border-radius:4px; height:22px; position:relative; overflow:hidden; }
+  .barra-interno { height:100%; border-radius:4px; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; color:var(--bianco); font-size:0.78rem; font-weight:600; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; transition: width 1s ease; }
+  .dc { background:#5b7a8f; }
+  .sin { background:#9c5b45; }
+
+  .nota-scarto {
+    margin-top: 16px; padding: 12px 16px; background:#f0eee6; border-left:3px solid var(--marrone);
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.82rem; color:#5c5344; line-height:1.5;
+  }
+
+  .contesto { display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 20px; }
+  .pulsante-contesto {
+    flex:1; min-width:220px; background: var(--bianco); border:2px solid var(--marrone); border-radius:10px;
+    padding:14px 16px; cursor:pointer; transition: box-shadow 0.2s;
+  }
+  .pulsante-contesto:hover { box-shadow: 0 3px 10px rgba(139,115,85,0.2); }
+  .pulsante-contesto h3 { margin:0 0 4px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.92rem; color:var(--marrone); }
+  .pulsante-contesto p.anteprima { margin:0; font-size:0.8rem; color:#7a6b54; font-style:italic; }
+
+  .scheda-contesto {
+    display:none; background:var(--bianco); border:2px solid var(--marrone); border-radius:10px;
+    padding:18px 20px; margin-bottom:20px; animation: apparizione .25s ease;
+  }
+  .scheda-contesto.visibile { display:block; }
+  @keyframes apparizione { from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+  .scheda-contesto h3 { margin:0 0 10px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; color:var(--marrone); font-size:1rem; }
+  .scheda-contesto p { font-size:0.92rem; line-height:1.55; margin:0; }
+
+  .chiusura {
+    text-align:center; font-family:Georgia,serif; font-size:0.92rem; font-style:italic; color:#5c5344;
+    max-width:680px; margin: 6px auto 0; line-height:1.5;
+  }
+  .legenda { display:flex; gap:18px; justify-content:center; margin-top:6px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.78rem; color:#5c5344;}
+  .legenda span { display:inline-flex; align-items:center; gap:6px; }
+  .quadrato { width:12px; height:12px; border-radius:3px; display:inline-block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Le elezioni del 1948: uno "scontro di civiltà"</h1>
+  <p class="sottotitolo">Dal voto per la Costituente al voto per il primo Parlamento ordinario: lo scarto in due anni</p>
+
+  <div class="grafico">
+    <div class="barre-riga">
+      <div class="etichetta-anno">1946</div>
+      <div class="barre">
+        <div class="barra-gruppo">
+          <div class="barra-nome">DC</div>
+          <div class="barra-esterno"><div class="barra-interno dc" style="width:35.2%">35,2%</div></div>
+        </div>
+        <div class="barra-gruppo">
+          <div class="barra-nome">Sinistre (separate)</div>
+          <div class="barra-esterno"><div class="barra-interno sin" style="width:40%">40%</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="barre-riga">
+      <div class="etichetta-anno">1948</div>
+      <div class="barre">
+        <div class="barra-gruppo">
+          <div class="barra-nome">DC</div>
+          <div class="barra-esterno"><div class="barra-interno dc" style="width:48.5%">48,5%</div></div>
+        </div>
+        <div class="barra-gruppo">
+          <div class="barra-nome">Fronte Popolare</div>
+          <div class="barra-esterno"><div class="barra-interno sin" style="width:31%">31%</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="legenda">
+      <span><span class="quadrato dc"></span>Democrazia Cristiana</span>
+      <span><span class="quadrato sin"></span>Sinistre / Fronte Popolare</span>
+    </div>
+    <div class="nota-scarto">Il salto della DC dal 35,2% al 48,5% non si spiega con la sola forza dei programmi. E l'alleanza fra PSI e PCI, che nel 1946 avevano raccolto separatamente il 40%, uniti nel Fronte Democratico Popolare del 1948 si fermò al 31%: unire le liste non bastò a sommare i voti.</div>
+  </div>
+
+  <div class="contesto">
+    <div class="pulsante-contesto" data-scheda="comitati">
+      <h3>I Comitati Civici</h3>
+      <p class="anteprima">Una mobilitazione cattolica capillare, parrocchia per parrocchia</p>
+    </div>
+    <div class="pulsante-contesto" data-scheda="praga">
+      <h3>Il colpo di Praga</h3>
+      <p class="anteprima">Un evento internazionale che pesò sul voto italiano</p>
+    </div>
+    <div class="pulsante-contesto" data-scheda="esito">
+      <h3>Che cosa resta del 1948</h3>
+      <p class="anteprima">Il "bipolarismo antagonistico"</p>
+    </div>
+  </div>
+
+  <div class="scheda-contesto" id="scheda-comitati">
+    <h3>I Comitati Civici e la crociata del 1948</h3>
+    <p>Pio XII intervenne in prima persona in una crociata anticomunista che impegnò l'intera rete diocesana. Lo strumento operativo più efficace furono i Comitati Civici fondati da Luigi Gedda, attivi in circa 19.000 parrocchie su 24.000. Non fu una competizione fra programmi di governo, ma una mobilitazione totale condotta con gli strumenti dell'emozione e della paura: manifesti come quello dei "due conigli", volantini apocalittici sulla deportazione dei cristiani in caso di vittoria delle sinistre, lo scudo crociato che protegge una bambina dal carro armato sovietico.</p>
+  </div>
+  <div class="scheda-contesto" id="scheda-praga">
+    <h3>Il colpo di Praga</h3>
+    <p>Il Fronte Democratico Popolare — l'alleanza elettorale fra PCI e PSI — scelse il volto di Garibaldi come simbolo per attenuare i toni classisti e fare appello al sentimento patriottico. Ma la sua campagna fu danneggiata da un evento che nessuna propaganda avrebbe potuto controllare: nel febbraio 1948, poche settimane prima del voto italiano, il colpo di Stato comunista a Praga cancellò in pochi giorni l'opposizione democratica cecoslovacca, e parve confermare agli occhi del ceto medio italiano proprio ciò che i manifesti democristiani annunciavano.</p>
+  </div>
+  <div class="scheda-contesto" id="scheda-esito">
+    <h3>Che cosa resta del 1948</h3>
+    <p>La DC ottenne la maggioranza assoluta dei seggi alla Camera; il PSI in particolare uscì dimezzato dall'alleanza con i comunisti. Da quel voto nacque un sistema di reciproca delegittimazione destinato a durare: per l'elettorato cattolico il comunismo restava sinonimo di minaccia totalitaria, per l'elettorato di sinistra l'anticomunismo democristiano era una sudditanza agli Stati Uniti. È l'inizio di ciò che gli storici hanno chiamato <strong>bipolarismo antagonistico</strong>, o "democrazia bloccata": un sistema in cui l'alternanza di governo restava, di fatto, impraticabile.</p>
+  </div>
+
+  <p class="chiusura">Non una normale competizione tra partiti, ma — nella propaganda di entrambi gli schieramenti — la scelta tra due modelli di civiltà incompatibili.</p>
+</div>
+<script>
+  document.querySelectorAll('.pulsante-contesto').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = 'scheda-' + btn.dataset.scheda;
+      const scheda = document.getElementById(id);
+      const eraAperta = scheda.classList.contains('visibile');
+      document.querySelectorAll('.scheda-contesto').forEach(s => s.classList.remove('visibile'));
+      if (!eraAperta) scheda.classList.add('visibile');
+    });
+  });
+</script>
+</body>
+</html>

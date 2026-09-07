@@ -73,3 +73,20 @@
     * [ATLANTE](sezione-5/atlante.md)
     * [Risorse digitali](sezione-5/08-risorse-digitali.md)
 <!-- SEZIONE:sezione-5 END -->
+<!-- SEZIONE:sezione-6 START -->
+<!-- TITOLO:L'Italia repubblicana, 1946-oggi -->
+  * [Sezione 6](sezione-6/README.md)
+    * [Una storia non ancora finita](sezione-6/01-una-storia-non-ancora-finita.md)
+    * [La Costituzione (richiamo)](sezione-6/02-la-costituzione-richiamo.md)
+    * [Ricostruzione e centrismo](sezione-6/03-ricostruzione-e-centrismo.md)
+    * [Il miracolo economico](sezione-6/04-il-miracolo-economico.md)
+    * [Il centro-sinistra e il 1968](sezione-6/05-il-centro-sinistra-e-il-1968.md)
+    * [Gli anni di piombo](sezione-6/06-gli-anni-di-piombo.md)
+    * [La crisi della Prima Repubblica](sezione-6/07-la-crisi-della-prima-repubblica.md)
+    * [La Seconda Repubblica](sezione-6/08-la-seconda-repubblica.md)
+    * [La crisi del debito sovrano](sezione-6/09-la-crisi-del-debito-sovrano.md)
+    * [Italia allo specchio: cinema e televisione dal dopoguerra a oggi](sezione-6/10-italia-allo-specchio-cinema-e-televisione-dal-dopoguerra-a-oggi.md)
+    * [Cambiare i partiti, non ancora la Costituzione](sezione-6/11-cambiare-i-partiti-non-ancora-la-costituzione.md)
+    * [ATLANTE](sezione-6/atlante.md)
+    * [Risorse digitali](sezione-6/13-risorse-digitali.md)
+<!-- SEZIONE:sezione-6 END -->

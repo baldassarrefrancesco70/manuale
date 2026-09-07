@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangentopoli in cifre</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --terra:#9c5b45; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:940px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 24px; font-style:italic; }
+
+  .cifre { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
+  .cifra { flex:1; min-width:150px; background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:16px 12px; text-align:center; }
+  .cifra .numero { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:700; font-size:1.5rem; color:var(--terra); }
+  .cifra .etichetta { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.76rem; color:#5c5344; margin-top:4px; line-height:1.3; }
+
+  .pannello { background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:20px 24px; margin-bottom:20px; }
+  .pannello h2 { margin:0 0 14px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:1rem; color:var(--marrone); }
+
+  .cronologia { position:relative; padding-left:22px; }
+  .cronologia::before { content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:var(--marrone); opacity:0.5; }
+  .tappa { position:relative; margin-bottom:14px; }
+  .tappa:last-child { margin-bottom:0; }
+  .tappa::before { content:""; position:absolute; left:-22px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--marrone); }
+  .tappa .data-tappa { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:700; font-size:0.82rem; color:var(--marrone); }
+  .tappa p { margin:3px 0 0; font-size:0.9rem; line-height:1.5; }
+
+  .avviso-esempi { background:#f0eee6; border-left:3px solid var(--marrone); border-radius:6px; padding:10px 16px; margin-bottom:14px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.78rem; color:#5c5344; line-height:1.5; }
+
+  .esempi { display:flex; flex-wrap:wrap; gap:10px; }
+  .persona { flex:1; min-width:220px; background:#f7f4ec; border-radius:8px; padding:10px 14px; cursor:pointer; }
+  .persona:hover { background:#f0ebdc; }
+  .persona .nome-persona { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:700; font-size:0.86rem; display:flex; justify-content:space-between; align-items:center; }
+  .persona .partito { font-size:0.72rem; font-weight:400; padding:2px 8px; border-radius:10px; color:var(--bianco); }
+  .persona .dettaglio-persona { display:none; font-family:Georgia,serif; font-size:0.85rem; margin-top:6px; line-height:1.5; }
+  .persona.aperta .dettaglio-persona { display:block; }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:720px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tangentopoli in cifre</h1>
+  <p class="sottotitolo">Un sistema di finanziamento illegale dei partiti, e la sua fine giudiziaria</p>
+
+  <div class="cifre">
+    <div class="cifra"><div class="numero">4.500+</div><div class="etichetta">arresti e ordini di custodia cautelare</div></div>
+    <div class="cifra"><div class="numero">25.000</div><div class="etichetta">avvisi di garanzia notificati</div></div>
+    <div class="cifra"><div class="numero">~1.100</div><div class="etichetta">tra parlamentari e dirigenti coinvolti</div></div>
+    <div class="cifra"><div class="numero">~10</div><div class="etichetta">suicidi fra gli indagati</div></div>
+  </div>
+
+  <div class="pannello">
+    <h2>La cronologia essenziale</h2>
+    <div class="cronologia">
+      <div class="tappa"><div class="data-tappa">17 febbraio 1992</div><p>Mario Chiesa, presidente del Pio Albergo Trivulzio a Milano, viene arrestato in flagranza mentre intasca una tangente: è la scintilla di "Mani Pulite".</p></div>
+      <div class="tappa"><div class="data-tappa">5 aprile 1992</div><p>Le elezioni politiche registrano già un primo, netto calo di consenso per i partiti di governo, mentre le inchieste si allargano.</p></div>
+      <div class="tappa"><div class="data-tappa">3 luglio 1992</div><p>Bettino Craxi tiene alla Camera un discorso in cui ammette che il finanziamento illegale dei partiti era una pratica diffusa e nota a tutto il sistema politico, non un'eccezione individuale.</p></div>
+      <div class="tappa"><div class="data-tappa">settembre 1992</div><p>La lira è svalutata di circa il 20% ed esce dallo SME: la crisi politica si intreccia con una crisi economica e finanziaria di prima grandezza.</p></div>
+      <div class="tappa"><div class="data-tappa">gennaio 1993</div><p>Viene arrestato Totò Riina e, nelle stesse settimane, la magistratura chiede l'autorizzazione a procedere contro Giulio Andreotti per concorso esterno in associazione mafiosa.</p></div>
+      <div class="tappa"><div class="data-tappa">18 aprile 1993</div><p>Un referendum abroga la quota proporzionale del sistema elettorale per il Senato: la spinta per il maggioritario nasce direttamente dal collasso di credibilità dei partiti.</p></div>
+    </div>
+  </div>
+
+  <div class="pannello">
+    <h2>Alcuni nomi, a titolo di esempio</h2>
+    <div class="avviso-esempi">Non un campione statistico né un elenco completo — solo alcuni fra i nomi più noti dell'inchiesta, a titolo esemplificativo delle diverse aree politiche coinvolte. Il testo del capitolo non fornisce una ripartizione sistematica per partito o per anno.</div>
+    <div class="esempi">
+      <div class="persona"><div class="nome-persona">Bettino Craxi <span class="partito" style="background:#9c5b45;">PSI</span></div><div class="dettaglio-persona">Segretario del PSI e più volte presidente del Consiglio, divenne il simbolo pubblico dell'inchiesta dopo il discorso alla Camera del luglio 1992; lasciò l'Italia per Hammamdi (Tunisia) nel 1994.</div></div>
+      <div class="persona"><div class="nome-persona">Carlo Tognoli <span class="partito" style="background:#9c5b45;">PSI</span></div><div class="dettaglio-persona">Ex sindaco di Milano, coinvolto fra i primi nell'inchiesta milanese.</div></div>
+      <div class="persona"><div class="nome-persona">Severino Citaristi <span class="partito" style="background:#5b7a8f;">DC</span></div><div class="dettaglio-persona">Tesoriere della Democrazia Cristiana, fra gli indagati con il maggior numero di avvisi di garanzia dell'intera inchiesta.</div></div>
+      <div class="persona"><div class="nome-persona">Primo Greganti <span class="partito" style="background:#7a8a5c;">PCI/PDS</span></div><div class="dettaglio-persona">Funzionario noto alle cronache come "il compagno G.", unico esponente dell'area ex comunista coinvolto in un filone di rilievo dell'inchiesta.</div></div>
+      <div class="persona"><div class="nome-persona">Renato Altissimo <span class="partito" style="background:#8a7d68;">PLI</span></div><div class="dettaglio-persona">Segretario del Partito Liberale Italiano, coinvolto nell'inchiesta negli anni della sua segreteria.</div></div>
+      <div class="persona"><div class="nome-persona">Sergio Moroni <span class="partito" style="background:#9c5b45;">PSI</span></div><div class="dettaglio-persona">Deputato socialista, si tolse la vita nel settembre 1992 lasciando una lettera sul finanziamento illegale come pratica di sistema: fra i casi che più colpirono l'opinione pubblica.</div></div>
+    </div>
+  </div>
+
+  <p class="chiusura">Non la scoperta di alcune mele marce, ma la messa a nudo di un intero sistema di finanziamento della politica: è per questo che Tangentopoli travolse, in meno di due anni, l'intera classe dirigente della Prima Repubblica.</p>
+</div>
+<script>
+  document.querySelectorAll('.persona').forEach(p => p.addEventListener('click', () => p.classList.toggle('aperta')));
+</script>
+</body>
+</html>

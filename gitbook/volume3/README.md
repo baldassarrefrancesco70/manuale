@@ -9,3 +9,4 @@ Manuale di Storia, Liceo Classico G. B. Vico, Chieti.
 - [Sezione 3 --- La fine degli imperi e la terra contesa](sezione-3/README.md)
 - [Sezione 4 --- Chi paga quando il sistema salta](sezione-4/README.md)
 - [Sezione 5 --- Un continente unito, per scelta](sezione-5/README.md)
+- [Sezione 6 --- L'Italia repubblicana, 1946-oggi](sezione-6/README.md)

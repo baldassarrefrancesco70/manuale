@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosa Nostra e lo Stato: gli omicidi eccellenti, 1979-1993</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:1000px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 28px; font-style:italic; }
+
+  .scroll-wrap { overflow-x:auto; padding-bottom:10px; }
+  .timeline { position:relative; display:flex; min-width:1500px; padding:40px 20px 10px; }
+  .filo { position:absolute; top:60px; left:0; right:0; height:2px; background:var(--marrone); opacity:0.5; }
+
+  .nodo { flex:1; text-align:center; position:relative; cursor:pointer; padding:0 6px; }
+  .pallino { width:16px; height:16px; border-radius:50%; background:var(--marrone); border:3px solid var(--bianco); box-shadow:0 0 0 2px var(--marrone); margin:52px auto 10px; position:relative; z-index:2; transition: transform .15s; }
+  .nodo:hover .pallino, .nodo.attivo .pallino { transform: scale(1.3); background:#5b3d2a; }
+  .anno { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:700; font-size:0.82rem; color:var(--marrone); }
+  .titolo-nodo { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.76rem; color:#5c5344; margin-top:2px; line-height:1.25; max-width:135px; margin-left:auto; margin-right:auto; }
+
+  .scheda {
+    background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:22px 26px; margin-top:14px;
+    display:none; animation: apparizione .25s ease;
+  }
+  .scheda.visibile { display:block; }
+  @keyframes apparizione { from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+  .scheda h2 { margin:0 0 4px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; color:var(--marrone); font-size:1.05rem; }
+  .scheda .data-scheda { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.8rem; color:#8a7d68; margin-bottom:12px; }
+  .scheda p { font-size:0.94rem; line-height:1.6; margin:0; }
+
+  .placeholder { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.88rem; color:#8a7d68; font-style:italic; padding:14px 0; }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:720px; margin:22px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Cosa Nostra e lo Stato: gli omicidi eccellenti</h1>
+  <p class="sottotitolo">Dal "sacco di Palermo" allo stragismo, 1979-1993 — scorri per seguire la cronologia</p>
+
+  <div class="scroll-wrap">
+    <div class="timeline">
+      <div class="filo"></div>
+
+      <div class="nodo" data-id="giuliano"><div class="anno">1979</div><div class="pallino"></div><div class="titolo-nodo">Boris Giuliano</div></div>
+      <div class="nodo" data-id="mattarella"><div class="anno">1980</div><div class="pallino"></div><div class="titolo-nodo">Piersanti Mattarella</div></div>
+      <div class="nodo" data-id="secondaguerra"><div class="anno">1981</div><div class="pallino"></div><div class="titolo-nodo">Bontate e Inzerillo</div></div>
+      <div class="nodo" data-id="latorre-dallachiesa"><div class="anno">1982</div><div class="pallino"></div><div class="titolo-nodo">La Torre e Dalla Chiesa</div></div>
+      <div class="nodo" data-id="chinnici"><div class="anno">1983</div><div class="pallino"></div><div class="titolo-nodo">Rocco Chinnici</div></div>
+      <div class="nodo" data-id="montana-cassara"><div class="anno">1985</div><div class="pallino"></div><div class="titolo-nodo">Montana e Cassarà</div></div>
+      <div class="nodo" data-id="maxiprocesso"><div class="anno">1986-87</div><div class="pallino"></div><div class="titolo-nodo">Il maxiprocesso</div></div>
+      <div class="nodo" data-id="cassazione"><div class="anno">gen. 1992</div><div class="pallino"></div><div class="titolo-nodo">La Cassazione conferma</div></div>
+      <div class="nodo" data-id="lima"><div class="anno">12 mar. 1992</div><div class="pallino"></div><div class="titolo-nodo">Salvo Lima</div></div>
+      <div class="nodo" data-id="capaci"><div class="anno">23 mag. 1992</div><div class="pallino"></div><div class="titolo-nodo">Strage di Capaci</div></div>
+      <div class="nodo" data-id="damelio"><div class="anno">19 lug. 1992</div><div class="pallino"></div><div class="titolo-nodo">Via D'Amelio</div></div>
+      <div class="nodo" data-id="riina"><div class="anno">gen. 1993</div><div class="pallino"></div><div class="titolo-nodo">Arresto di Riina</div></div>
+    </div>
+  </div>
+
+  <div id="placeholder" class="placeholder">Clic su un nodo per aprire la scheda.</div>
+
+  <div class="scheda" id="scheda-giuliano">
+    <h2>Boris Giuliano</h2>
+    <div class="data-scheda">1979</div>
+    <p>Capo della Squadra Mobile di Palermo, ucciso nel 1979: il primo di una serie di rappresentanti dello Stato colpiti da Cosa Nostra mentre la fazione dei Corleonesi si avviava a conquistare il controllo dell'organizzazione.</p>
+  </div>
+  <div class="scheda" id="scheda-mattarella">
+    <h2>Piersanti Mattarella</h2>
+    <div class="data-scheda">1980</div>
+    <p>Presidente della Regione Siciliana, esponente della corrente morotea impegnato in una pulizia degli appalti pubblici, assassinato nel 1980.</p>
+  </div>
+  <div class="scheda" id="scheda-secondaguerra">
+    <h2>La "seconda guerra di mafia"</h2>
+    <div class="data-scheda">dal 1981</div>
+    <p>L'enorme flusso di narcodollari dal traffico di eroina scatenò la campagna di sterminio dei Corleonesi di Salvatore Riina e Bernardo Provenzano contro i clan rivali. Stefano Bontate e Salvatore Inzerillo, che avevano guidato l'ascesa internazionale di Cosa Nostra, furono uccisi in quell'anno. Il conflitto lasciò sul terreno circa mille morti, molti fatti sparire con la pratica della "lupara bianca": ottenuto il controllo pressoché dittatoriale dell'organizzazione, i Corleonesi scatenarono una vera guerra contro lo Stato.</p>
+  </div>
+  <div class="scheda" id="scheda-latorre-dallachiesa">
+    <h2>Pio La Torre e Carlo Alberto Dalla Chiesa</h2>
+    <div class="data-scheda">1982</div>
+    <p>Il segretario regionale del PCI Pio La Torre, promotore della legge che avrebbe introdotto il reato di associazione mafiosa, fu ucciso nel 1982. Fu proprio lo sdegno per l'omicidio del generale dei Carabinieri Carlo Alberto Dalla Chiesa — inviato a Palermo come prefetto dopo il successo nella lotta al terrorismo, assassinato con la moglie Emanuela Setti Carraro dopo appena cento giorni dall'insediamento — a costringere il Parlamento ad approvare d'urgenza, nel settembre 1982, la legge Rognoni-La Torre: introdusse nel codice penale il reato di associazione mafiosa (art. 416-bis) e lo strumento della confisca dei beni.</p>
+  </div>
+  <div class="scheda" id="scheda-chinnici">
+    <h2>Rocco Chinnici</h2>
+    <div class="data-scheda">1983</div>
+    <p>Il magistrato ideatore del pool antimafia, ucciso con un'autobomba nel 1983.</p>
+  </div>
+  <div class="scheda" id="scheda-montana-cassara">
+    <h2>Giuseppe Montana e Ninni Cassarà</h2>
+    <div class="data-scheda">1985</div>
+    <p>Due funzionari di polizia, uccisi a distanza di otto giorni nell'estate del 1985.</p>
+  </div>
+  <div class="scheda" id="scheda-maxiprocesso">
+    <h2>Il maxiprocesso di Palermo</h2>
+    <div class="data-scheda">febbraio 1986 - dicembre 1987</div>
+    <p>Sulla base della legge Rognoni-La Torre, il pool antimafia guidato da Antonino Caponnetto, con Giovanni Falcone e Paolo Borsellino in prima linea, istruì il processo a 459 imputati in un'aula bunker costruita apposta: condanne pesantissime, fino all'ergastolo per l'intera "cupola", rese possibili dall'analisi dei flussi bancari e dalla rottura dell'omertà da parte di collaboratori di giustizia come Tommaso Buscetta. La prima volta che un tribunale sanciva, con prove, l'esistenza di un'organizzazione unitaria e piramidale.</p>
+  </div>
+  <div class="scheda" id="scheda-cassazione">
+    <h2>La Cassazione conferma le condanne</h2>
+    <div class="data-scheda">gennaio 1992</div>
+    <p>La conferma definitiva delle condanne del maxiprocesso dimostrò ai Corleonesi che l'epoca dell'impunità garantita da referenti politici compiacenti si era chiusa. Sentendosi tradita, la cupola di Riina scelse la strada dello stragismo per costringere lo Stato a trattare su carcere duro e legislazione antimafia.</p>
+  </div>
+  <div class="scheda" id="scheda-lima">
+    <h2>Salvo Lima</h2>
+    <div class="data-scheda">12 marzo 1992</div>
+    <p>L'eurodeputato democristiano, ritenuto responsabile di non aver evitato la conferma delle condanne del maxiprocesso, fu ucciso pochi mesi dopo la sentenza della Cassazione.</p>
+  </div>
+  <div class="scheda" id="scheda-capaci">
+    <h2>La strage di Capaci</h2>
+    <div class="data-scheda">23 maggio 1992</div>
+    <p>Un'autobomba uccise Giovanni Falcone, la moglie Francesca Morvillo e tre agenti di scorta. L'attacco frontale allo Stato si inseriva in una crisi che investiva contemporaneamente quattro fronti: la caduta del Muro e lo scioglimento del PCI, il voto del 5 aprile 1992 e l'esplosione della Lega Nord, la crisi valutaria di settembre, e ora l'offensiva stragista di Cosa Nostra.</p>
+  </div>
+  <div class="scheda" id="scheda-damelio">
+    <h2>Via D'Amelio</h2>
+    <div class="data-scheda">19 luglio 1992</div>
+    <p>Cinquantasette giorni dopo Capaci, un'autobomba sotto la casa della madre di Paolo Borsellino uccise il magistrato e altri cinque agenti di scorta. L'anno successivo l'offensiva si spostò sul continente — via dei Georgofili a Firenze, via Palestro a Milano, le chiese romane di San Giorgio al Velabro e San Giovanni in Laterano — nel tentativo di destabilizzare il governo Ciampi; fra le vittime va ricordato anche don Pino Puglisi, ucciso nel settembre 1993.</p>
+  </div>
+  <div class="scheda" id="scheda-riina">
+    <h2>L'arresto di Riina</h2>
+    <div class="data-scheda">gennaio 1993</div>
+    <p>La reazione dello Stato e della società civile — simboleggiata dai lenzuoli bianchi appesi ai balconi di Palermo — portò all'arresto del capo dei Corleonesi. Nello stesso periodo l'onda emotiva delle stragi si saldò alle inchieste milanesi di Tangentopoli: nel 1993 la Procura di Palermo ottenne l'autorizzazione a procedere contro Giulio Andreotti, accusato di essere stato per decenni il referente politico di Cosa Nostra.</p>
+  </div>
+
+  <p class="chiusura">Fra i tribunali di Milano e quelli di Palermo, la classe dirigente della Prima Repubblica si trovò giudicata su due fronti contemporaneamente: più che una somma di crisi separate, un unico collasso di legittimità.</p>
+</div>
+<script>
+  const nodi = document.querySelectorAll('.nodo');
+  const placeholder = document.getElementById('placeholder');
+  let attivo = null;
+  nodi.forEach(nodo => {
+    nodo.addEventListener('click', () => {
+      const id = nodo.dataset.id;
+      const scheda = document.getElementById('scheda-' + id);
+      if (attivo === id) {
+        scheda.classList.remove('visibile');
+        nodo.classList.remove('attivo');
+        placeholder.style.display = 'block';
+        attivo = null;
+        return;
+      }
+      document.querySelectorAll('.scheda').forEach(s => s.classList.remove('visibile'));
+      nodi.forEach(n => n.classList.remove('attivo'));
+      scheda.classList.add('visibile');
+      nodo.classList.add('attivo');
+      placeholder.style.display = 'none';
+      attivo = id;
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La colonna sonora della Repubblica, 1945-1981</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:900px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 26px; font-style:italic; }
+
+  .tabs { display:flex; gap:8px; margin-bottom:0; flex-wrap:wrap; }
+  .tab {
+    flex:1; min-width:160px; text-align:center; padding:12px 8px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    font-size:0.82rem; font-weight:600; background:#e4e0d5; color:#7a6b54; cursor:pointer; border-radius:8px 8px 0 0;
+    border:2px solid var(--marrone); border-bottom:none;
+  }
+  .tab.attivo { background:var(--bianco); color:var(--marrone); }
+  .tab .num { display:block; font-size:1.1rem; }
+
+  .pannello {
+    display:none; background:var(--bianco); border:2px solid var(--marrone); border-radius:0 0 10px 10px; padding:20px 24px;
+  }
+  .pannello.attivo { display:block; animation: apparizione .2s ease; }
+  @keyframes apparizione { from{opacity:0;} to{opacity:1;} }
+  .pannello h2 { margin:0 0 4px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; color:var(--marrone); font-size:1.05rem; }
+  .pannello .periodo { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.8rem; color:#8a7d68; margin-bottom:16px; }
+
+  .brano {
+    border-left:3px solid var(--marrone); padding:6px 0 6px 14px; margin-bottom:14px;
+  }
+  .brano:last-child { margin-bottom:0; }
+  .brano .titolo-brano { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:700; font-size:0.92rem; }
+  .brano .anno-brano { font-weight:400; color:#8a7d68; font-size:0.8rem; }
+  .brano p { margin:4px 0 0; font-size:0.9rem; line-height:1.5; }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:700px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>La colonna sonora della Repubblica</h1>
+  <p class="sottotitolo">Quattro puntate, dal conformismo della ricostruzione al disincanto del riflusso</p>
+
+  <div class="tabs">
+    <div class="tab attivo" data-tab="1"><span class="num">I</span>Il conformismo, 1945-1957</div>
+    <div class="tab" data-tab="2"><span class="num">II</span>Il 1958 e la svolta, 1958-1967</div>
+    <div class="tab" data-tab="3"><span class="num">III</span>Cantautori e contestazione, 1968-1975</div>
+    <div class="tab" data-tab="4"><span class="num">IV</span>Il disincanto del riflusso, 1978-1981</div>
+  </div>
+
+  <div class="pannello attivo" id="pannello-1">
+    <h2>Puntata I — Il conformismo della ricostruzione</h2>
+    <div class="periodo">1945-1957 — Cap. 2, Ricostruzione e centrismo</div>
+    <div class="brano">
+      <span class="titolo-brano">Melodia tradizionale <span class="anno-brano">1945-1950</span></span>
+      <p>Quadretti romantici e nostalgie rurali offrono a un paese ferito un porto sicuro, non uno specchio critico di sé.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Grazie dei fiori / Vola colomba, Nilla Pizzi <span class="anno-brano">1951-1952</span></span>
+      <p>Il Festival di Sanremo nasce nel 1951 come intrattenimento serale per i clienti del casinò: Nilla Pizzi lo vince due volte di fila.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Papaveri e papere, Nilla Pizzi <span class="anno-brano">1952</span></span>
+      <p>La stessa cantante incontra le resistenze della censura ministeriale: si sospetta che i "papaveri" alludano ai "pezzi grossi" della DC, le "papere" al popolo che li segue in fila.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Sanremo diventa fenomeno di massa <span class="anno-brano">dal 1955</span></span>
+      <p>Con l'arrivo della televisione (trasmissioni regolari dal gennaio 1954), Sanremo diventa un rito collettivo: vince Claudio Villa, il "reuccio" della melodia.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Tu vuò fa l'americano, Renato Carosone <span class="anno-brano">1957</span></span>
+      <p>Mentre l'Italia consolida la propria scelta atlantica, Carosone prende bonariamente in giro l'italiano medio che si atteggia a yankee restando legato alla pastasciutta di casa. L'ultima risata prima della rottura.</p>
+    </div>
+  </div>
+
+  <div class="pannello" id="pannello-2">
+    <h2>Puntata II — Il 1958 e la fine della rassicurazione</h2>
+    <div class="periodo">1958-1967 — Cap. 3, Il miracolo economico</div>
+    <div class="brano">
+      <span class="titolo-brano">Nel blu dipinto di blu, Domenico Modugno <span class="anno-brano">1958</span></span>
+      <p>La vittoria a Sanremo chiude di colpo la stagione del conformismo e dà voce, per la prima volta, all'ottimismo del boom.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Resta cu' mme, Domenico Modugno <span class="anno-brano">1958</span></span>
+      <p>Lo stesso Modugno finisce sotto le forbici della censura per alcuni versi giudicati troppo allusivi: l'apertura non è senza resistenze.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Non ho l'età, Gigliola Cinquetti <span class="anno-brano">1964</span></span>
+      <p>L'industria discografica gestisce il successo della diciottenne come un argine rassicurante contro il timore di una rapida decadenza dei costumi: oltre 140.000 lettere di fan.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Nessuno mi può giudicare, Caterina Caselli <span class="anno-brano">1966</span></span>
+      <p>Una vera dichiarazione di autonomia generazionale: "ognuno ha il diritto di vivere come può". Lo stesso anno Gianni Morandi porta in classifica una canzone di protesta contro la guerra del Vietnam, e Celentano, ne "Il ragazzo della via Gluck", denuncia con anticipo la cementificazione delle periferie.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Dio è morto, I Nomadi (scritta da Francesco Guccini) <span class="anno-brano">1967</span></span>
+      <p>Nonostante il divieto della Rai: un titolo blasfemo per la censura, un inno per i giovani cattolici già insofferenti al perbenismo borghese. In meno di un decennio la canzonetta è passata dal rassicurare all'interrogare.</p>
+    </div>
+  </div>
+
+  <div class="pannello" id="pannello-3">
+    <h2>Puntata III — Cantautori e contestazione</h2>
+    <div class="periodo">1968 - metà anni '70 — Cap. 5, Gli anni di piombo</div>
+    <div class="brano">
+      <span class="titolo-brano">Contessa, Paolo Pietrangeli <span class="anno-brano">1968</span></span>
+      <p>Scritta nel clima degli scontri di Valle Giulia del marzo 1968, diventa l'inno informale del movimento studentesco.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">La ballata di Pinelli <span class="anno-brano">1969-70</span></span>
+      <p>Canzone collettiva scritta e riscritta da più mani nei mesi successivi alla morte del ferroviere anarchico: la si cantava nei cortei con la musica de "Il feroce monarchico Bava", su un repertorio di lotta già esistente.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Storia di un impiegato, Fabrizio De André <span class="anno-brano">1973</span></span>
+      <p>Concept album ispirato — criticamente — proprio al Sessantotto: la parabola di un impiegato che si converte alla lotta armata, raccontata con un disincanto che anticipa la domanda sulla violenza politica.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Stormy Six, Area (Demetrio Stratos), Claudio Lolli <span class="anno-brano">primi anni '70</span></span>
+      <p>Un rock politico di ricerca (Stormy Six), una sperimentazione vocale di rottura con l'industria culturale (Area), una vena più intima e disincantata capace di raccontare anche i dubbi e le sconfitte della generazione del '68 (Lolli).</p>
+    </div>
+  </div>
+
+  <div class="pannello" id="pannello-4">
+    <h2>Puntata IV (conclusione) — Il disincanto del riflusso</h2>
+    <div class="periodo">1978-1981 — Cap. 6, La crisi della Prima Repubblica</div>
+    <div class="brano">
+      <span class="titolo-brano">Nuntereggae più, Rino Gaetano <span class="anno-brano">1978</span></span>
+      <p>Il titolo-slogan — un dialettale "non ce la reggo più" — fotografa con ironia amara la stanchezza di fine decennio più di qualunque comizio.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Lucio Dalla <span class="anno-brano">fine anni '70</span></span>
+      <p>Sposta la canzone d'autore verso un registro più intimo e narrativo, capace di raccontare la vita quotidiana senza la retorica militante della prima metà del decennio.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Io se fossi Dio, Giorgio Gaber <span class="anno-brano">1980</span></span>
+      <p>Porta alle estreme conseguenze la vena satirica del teatro-canzone.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Bandiera bianca, Franco Battiato <span class="anno-brano">1981</span></span>
+      <p>Forse la resa più colta e più definitiva del riflusso: un'ironia della sconfitta che documenta, più che denunciare, la sottomissione al corso delle cose.</p>
+    </div>
+    <div class="brano">
+      <span class="titolo-brano">Siamo solo noi, Vasco Rossi <span class="anno-brano">1981</span></span>
+      <p>Chiude idealmente il cerchio: inno di una generazione senza eroi che si rifugia in un presente continuo, privo di progetto.</p>
+    </div>
+  </div>
+
+  <p class="chiusura">Dalla propaganda operaia di "Contessa" del 1968 alla resa ironica di "Bandiera bianca" del 1981: tredici anni misurano, forse meglio di qualunque dato economico, la parabola dell'intero decennio.</p>
+</div>
+<script>
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('attivo'));
+      document.querySelectorAll('.pannello').forEach(p => p.classList.remove('attivo'));
+      tab.classList.add('attivo');
+      document.getElementById('pannello-' + tab.dataset.tab).classList.add('attivo');
+    });
+  });
+</script>
+</body>
+</html>

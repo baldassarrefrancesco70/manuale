@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il ventennio di Berlusconi: la sequenza dei governi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:1000px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 28px; font-style:italic; }
+
+  .scroll-wrap { overflow-x:auto; padding-bottom:10px; }
+  .timeline { position:relative; display:flex; min-width:1350px; padding:40px 20px 10px; }
+  .filo { position:absolute; top:60px; left:0; right:0; height:2px; background:var(--marrone); opacity:0.5; }
+
+  .nodo { flex:1; text-align:center; position:relative; cursor:pointer; padding:0 6px; }
+  .pallino { width:16px; height:16px; border-radius:50%; background:var(--marrone); border:3px solid var(--bianco); box-shadow:0 0 0 2px var(--marrone); margin:52px auto 10px; position:relative; z-index:2; transition: transform .15s; }
+  .pallino.sanzione { background:#9c5b45; box-shadow:0 0 0 2px #9c5b45; }
+  .nodo:hover .pallino, .nodo.attivo .pallino { transform: scale(1.3); }
+  .anno { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:700; font-size:0.82rem; color:var(--marrone); }
+  .titolo-nodo { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.76rem; color:#5c5344; margin-top:2px; line-height:1.25; max-width:140px; margin-left:auto; margin-right:auto; }
+
+  .legenda { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.78rem; color:#5c5344; margin-bottom:10px; }
+  .legenda .quadrato { display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+
+  .scheda {
+    background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:22px 26px; margin-top:14px;
+    display:none; animation: apparizione .25s ease;
+  }
+  .scheda.visibile { display:block; }
+  @keyframes apparizione { from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+  .scheda h2 { margin:0 0 4px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; color:var(--marrone); font-size:1.05rem; }
+  .scheda .data-scheda { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.8rem; color:#8a7d68; margin-bottom:12px; }
+  .scheda p { font-size:0.94rem; line-height:1.6; margin:0; }
+
+  .placeholder { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.88rem; color:#8a7d68; font-style:italic; padding:14px 0; }
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:720px; margin:22px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Il ventennio di Berlusconi</h1>
+  <p class="sottotitolo">Bipolarismo imperfetto e polarizzazione permanente, 1994-2011</p>
+
+  <div class="legenda"><span class="quadrato" style="background:#9c5b45;"></span>governo caduto per voto di sanzione &nbsp;&nbsp; <span class="quadrato" style="background:#8B7355;"></span>altro evento</div>
+
+  <div class="scroll-wrap">
+    <div class="timeline">
+      <div class="filo"></div>
+      <div class="nodo" data-id="discesa"><div class="anno">gen. 1994</div><div class="pallino"></div><div class="titolo-nodo">La "discesa in campo"</div></div>
+      <div class="nodo" data-id="berlusconi1"><div class="anno">1994</div><div class="pallino sanzione"></div><div class="titolo-nodo">Berlusconi I</div></div>
+      <div class="nodo" data-id="prodi1"><div class="anno">1996</div><div class="pallino"></div><div class="titolo-nodo">Prodi (Ulivo)</div></div>
+      <div class="nodo" data-id="bicamerale"><div class="anno">1997</div><div class="pallino"></div><div class="titolo-nodo">Fallisce la Bicamerale D'Alema</div></div>
+      <div class="nodo" data-id="berlusconi2"><div class="anno">2001</div><div class="pallino sanzione"></div><div class="titolo-nodo">Berlusconi II</div></div>
+      <div class="nodo" data-id="editto"><div class="anno">2002</div><div class="pallino"></div><div class="titolo-nodo">L'editto bulgaro</div></div>
+      <div class="nodo" data-id="prodi2"><div class="anno">2006</div><div class="pallino sanzione"></div><div class="titolo-nodo">Prodi II</div></div>
+      <div class="nodo" data-id="berlusconi4"><div class="anno">2008</div><div class="pallino sanzione"></div><div class="titolo-nodo">Berlusconi IV</div></div>
+      <div class="nodo" data-id="fini"><div class="anno">estate 2010</div><div class="pallino"></div><div class="titolo-nodo">Rottura Berlusconi-Fini</div></div>
+      <div class="nodo" data-id="dimissioni"><div class="anno">12 nov. 2011</div><div class="pallino sanzione"></div><div class="titolo-nodo">Le dimissioni</div></div>
+    </div>
+  </div>
+
+  <div id="placeholder" class="placeholder">Clic su un nodo per aprire la scheda.</div>
+
+  <div class="scheda" id="scheda-discesa">
+    <h2>La "discesa in campo"</h2>
+    <div class="data-scheda">26 gennaio 1994</div>
+    <p>Silvio Berlusconi annunciò in un videomessaggio televisivo — "l'Italia è il Paese che amo" — la propria candidatura, rivolgendosi a un elettorato moderato lasciato orfano dal crollo della Democrazia Cristiana. Forza Italia nacque come "partito-azienda", costruito in poche settimane impiegando sistematicamente i quadri di Publitalia '80: il consenso trattato come una quota di mercato da conquistare.</p>
+  </div>
+  <div class="scheda" id="scheda-berlusconi1">
+    <h2>Berlusconi I</h2>
+    <div class="data-scheda">1994</div>
+    <p>L'architettura del centro-destra fu deliberatamente "barocca": il Polo delle Libertà al Nord in alleanza con la Lega, il Polo del Buon Governo al Sud in alleanza con Alleanza Nazionale. Il governo cadde già nel dicembre 1994 con il "ribaltone" della Lega Nord.</p>
+  </div>
+  <div class="scheda" id="scheda-prodi1">
+    <h2>Prodi (Ulivo)</h2>
+    <div class="data-scheda">1996</div>
+    <p>Con Carlo Azeglio Ciampi al ministero del Tesoro, guidò la fase più intensa del risanamento verso l'euro: rientro della lira nello SME nel novembre 1996, deficit al 2,7% del PIL a fine 1997.</p>
+  </div>
+  <div class="scheda" id="scheda-bicamerale">
+    <h2>Fallisce la Commissione bicamerale</h2>
+    <div class="data-scheda">1997</div>
+    <p>Il tentativo più organico di riscrivere le regole del gioco su basi nuove — la Commissione bicamerale presieduta da Massimo D'Alema, che avrebbe dovuto introdurre elementi di semipresidenzialismo — fallì, lasciando l'architettura costituzionale del tutto invariata.</p>
+  </div>
+  <div class="scheda" id="scheda-berlusconi2">
+    <h2>Berlusconi II</h2>
+    <div class="data-scheda">2001</div>
+    <p>Il centro-destra varò una sequenza di leggi che l'opposizione bollò come "ad personam" — dal lodo Alfano sull'immunità delle alte cariche alla depenalizzazione del falso in bilancio, fino alle norme sulle rogatorie internazionali — e alimentò uno scontro aperto con la magistratura, bollata come una casta di "toghe rosse".</p>
+  </div>
+  <div class="scheda" id="scheda-editto">
+    <h2>L'editto bulgaro</h2>
+    <div class="data-scheda">2002</div>
+    <p>Il controllo dei media da parte del governo culminò nel 2002 nell'esclusione dalla Rai di Enzo Biagi, Michele Santoro e Daniele Luttazzi.</p>
+  </div>
+  <div class="scheda" id="scheda-prodi2">
+    <h2>Prodi II</h2>
+    <div class="data-scheda">2006</div>
+    <p>Le coalizioni, dall'Ulivo alla Casa delle Libertà, restarono strutturalmente fragili, esposte a veti incrociati e scissioni: un "voto di sanzione" ricorrente puniva sistematicamente chi governava, più che un reale confronto fra progetti alternativi.</p>
+  </div>
+  <div class="scheda" id="scheda-berlusconi4">
+    <h2>Berlusconi IV</h2>
+    <div class="data-scheda">2008</div>
+    <p>Le elezioni dell'aprile 2008 premiarono nettamente il neonato Popolo della Libertà e la Lega Nord, garantendo una maggioranza ampia quanto quella che, di lì a poco, si sarebbe rivelata incapace di usare di fronte alla crisi internazionale.</p>
+  </div>
+  <div class="scheda" id="scheda-fini">
+    <h2>La rottura con Fini</h2>
+    <div class="data-scheda">estate 2010</div>
+    <p>La rottura fra Berlusconi e il co-fondatore del PdL Gianfranco Fini indebolì il governo proprio quando la stabilità sarebbe stata più necessaria di fronte alla crisi del debito sovrano in arrivo.</p>
+  </div>
+  <div class="scheda" id="scheda-dimissioni">
+    <h2>Le dimissioni</h2>
+    <div class="data-scheda">12 novembre 2011</div>
+    <p>Di fronte a una maggioranza parlamentare ormai sgretolata e incalzato dallo spread, Silvio Berlusconi rassegnò le dimissioni: la fine, a conti fatti, del ventennio. Il tramonto non produsse un ritorno ai partiti tradizionali, ma lasciò un vuoto rapidamente occupato da un nuovo populismo, quello del Movimento 5 Stelle.</p>
+  </div>
+
+  <p class="chiusura">"Non ha vinto Berlusconi in quanto tale", scrisse Norberto Bobbio, "ha vinto la società che i suoi mass media, la sua pubblicità, hanno creato."</p>
+</div>
+<script>
+  const nodi = document.querySelectorAll('.nodo');
+  const placeholder = document.getElementById('placeholder');
+  let attivo = null;
+  nodi.forEach(nodo => {
+    nodo.addEventListener('click', () => {
+      const id = nodo.dataset.id;
+      const scheda = document.getElementById('scheda-' + id);
+      if (attivo === id) {
+        scheda.classList.remove('visibile');
+        nodo.classList.remove('attivo');
+        placeholder.style.display = 'block';
+        attivo = null;
+        return;
+      }
+      document.querySelectorAll('.scheda').forEach(s => s.classList.remove('visibile'));
+      nodi.forEach(n => n.classList.remove('attivo'));
+      scheda.classList.add('visibile');
+      nodo.classList.add('attivo');
+      placeholder.style.display = 'none';
+      attivo = id;
+    });
+  });
+</script>
+</body>
+</html>

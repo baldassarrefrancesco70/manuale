@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il "doppio Stato" e la macchina dei depistaggi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --terra:#9c5b45; --blu:#5b7a8f; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:960px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 24px; font-style:italic; }
+
+  .legenda { display:flex; gap:18px; justify-content:center; margin-bottom:24px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.78rem; color:#5c5344; flex-wrap:wrap; }
+  .legenda span { display:inline-flex; align-items:center; gap:6px; }
+  .quadrato { width:12px; height:12px; border-radius:3px; display:inline-block; }
+
+  .scroll-wrap { overflow-x:auto; padding-bottom:10px; }
+  .timeline { position:relative; display:flex; min-width:820px; padding:36px 20px 10px; }
+  .filo { position:absolute; top:56px; left:0; right:0; height:2px; background:var(--marrone); opacity:0.5; }
+
+  .nodo { flex:1; text-align:center; position:relative; cursor:pointer; padding:0 6px; }
+  .pallino { width:16px; height:16px; border-radius:50%; background:var(--marrone); border:3px solid var(--bianco); box-shadow:0 0 0 2px var(--marrone); margin:48px auto 10px; position:relative; z-index:2; transition: transform .15s; }
+  .nodo:hover .pallino, .nodo.attivo .pallino { transform: scale(1.3); }
+  .anno { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:700; font-size:0.95rem; color:var(--marrone); }
+  .titolo-nodo { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.76rem; color:#5c5344; margin-top:2px; line-height:1.25; max-width:150px; margin-left:auto; margin-right:auto; }
+
+  .scheda { background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:22px 26px; margin-top:18px; display:none; animation: apparizione .25s ease; }
+  .scheda.visibile { display:block; }
+  @keyframes apparizione { from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+  .scheda h2 { margin:0 0 14px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; color:var(--marrone); font-size:1.05rem; }
+  .scheda p { font-size:0.94rem; line-height:1.6; margin:0 0 10px; }
+  .scheda p:last-child { margin-bottom:0; }
+
+  .doppio-binario { display:flex; gap:16px; flex-wrap:wrap; }
+  .binario { flex:1; min-width:240px; border-radius:8px; padding:12px 14px; }
+  .binario.provocazione { background:#eef3f5; border-left:3px solid var(--blu); }
+  .binario.copertura { background:#f7ede9; border-left:3px solid var(--terra); }
+  .binario h3 { margin:0 0 6px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.86rem; }
+  .binario.provocazione h3 { color: var(--blu); }
+  .binario.copertura h3 { color: var(--terra); }
+  .binario p { font-size:0.88rem; margin:0; }
+
+  .placeholder { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.88rem; color:#8a7d68; font-style:italic; padding:14px 0; }
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:720px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Il "doppio Stato" e la macchina dei depistaggi</h1>
+  <p class="sottotitolo">Due modalità distinte, una lunga vicenda: dal 1969 al riconoscimento del 2009</p>
+
+  <div class="legenda">
+    <span><span class="quadrato" style="background:var(--blu);"></span>depistaggio di provocazione (Ufficio Affari Riservati)</span>
+    <span><span class="quadrato" style="background:var(--terra);"></span>depistaggio di copertura (SID/SISMI)</span>
+  </div>
+
+  <div class="scroll-wrap">
+    <div class="timeline">
+      <div class="filo"></div>
+      <div class="nodo" data-id="1969"><div class="anno">1969</div><div class="pallino"></div><div class="titolo-nodo">Piazza Fontana: si aprono i due binari del depistaggio</div></div>
+      <div class="nodo" data-id="1975"><div class="anno">1975</div><div class="pallino"></div><div class="titolo-nodo">Si chiude l'istruttoria sulla morte di Pinelli</div></div>
+      <div class="nodo" data-id="1981a"><div class="anno">1981</div><div class="pallino"></div><div class="titolo-nodo">Bologna: la pista neonazista orchestrata</div></div>
+      <div class="nodo" data-id="1981b"><div class="anno">1981</div><div class="pallino"></div><div class="titolo-nodo">Nasce l'Associazione fra i familiari delle vittime</div></div>
+      <div class="nodo" data-id="2009"><div class="anno">2009</div><div class="pallino"></div><div class="titolo-nodo">Il riconoscimento dello Stato</div></div>
+    </div>
+  </div>
+
+  <div id="placeholder" class="placeholder">Clic su una tappa per aprire la scheda.</div>
+
+  <div class="scheda" id="scheda-1969">
+    <h2>1969 — Piazza Fontana: si aprono i due binari del depistaggio</h2>
+    <p>Fin dai giorni immediatamente successivi alla strage, una parte degli apparati dello Stato lavorò non per accertare la verità ma per allontanarsene, secondo due modalità distinte che la ricerca storiografica ha ricostruito con precisione.</p>
+    <div class="doppio-binario">
+      <div class="binario provocazione">
+        <h3>Depistaggio di provocazione</h3>
+        <p>Condotto dall'Ufficio Affari Riservati del Viminale, guidato da Federico Umberto D'Amato: infiltrava i gruppi anarchici e di sinistra per costruire a tavolino la colpevolezza del ballerino anarchico Pietro Valpreda.</p>
+      </div>
+      <div class="binario copertura">
+        <h3>Depistaggio di copertura</h3>
+        <p>Gestito dal servizio segreto militare (il SID, poi SISMI), con figure come il generale Gianadelio Maletti: distrusse prove, favorì la fuga all'estero di terroristi neofascisti e protesse i canali con le intelligence straniere interessate a contenere l'influenza comunista in Italia.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scheda" id="scheda-1975">
+    <h2>1975 — Si chiude l'istruttoria sulla morte di Pinelli</h2>
+    <p>L'istruttoria sulla caduta del ferroviere anarchico Giuseppe Pinelli dalla finestra della questura di Milano si chiude con il proscioglimento degli agenti presenti e l'attribuzione della caduta a un "malore attivo" da stress e da mancanza di sonno: una formula che escludeva sia l'omicidio sia il suicidio, senza davvero chiarire l'accaduto.</p>
+  </div>
+
+  <div class="scheda" id="scheda-1981a">
+    <h2>1981 — Bologna: la pista neonazista orchestrata</h2>
+    <p>Il caso più clamoroso della macchina dei depistaggi si ripete undici anni dopo Piazza Fontana, sulla strage di Bologna: il ritrovamento — orchestrato — di esplosivi e armi su un treno viene costruito per accreditare un'inesistente pista internazionale neonazista, mentre la vera regia risaliva alla loggia massonica P2 di Licio Gelli, di cui facevano parte gli stessi ufficiali del SISMI, Pietro Musumeci e Giuseppe Belmonte, condannati per aver fabbricato le prove false.</p>
+  </div>
+
+  <div class="scheda" id="scheda-1981b">
+    <h2>1981 — Nasce l'Associazione fra i familiari delle vittime</h2>
+    <p>Contro questa cortina di depistaggi, la risposta più efficace non venne dalle istituzioni ma dalla società civile: l'Associazione tra i familiari delle vittime della strage di Bologna trasformò il lutto privato in una vigilanza pubblica costante — quello che la sociologia ha chiamato "familismo morale" — che impedì ai processi di Bologna l'insabbiamento toccato per decenni a Piazza Fontana.</p>
+  </div>
+
+  <div class="scheda" id="scheda-2009">
+    <h2>2009 — Il riconoscimento dello Stato</h2>
+    <p>Il presidente Giorgio Napolitano riceve al Quirinale la vedova di Pinelli, Licia Pinelli: definisce il marito la diciottesima vittima di piazza Fontana e denuncia apertamente "l'attività depistatoria di una parte degli apparati dello Stato" — quarant'anni dopo la strage.</p>
+  </div>
+
+  <p class="chiusura">Nessuna delle stragi di questo decennio restò senza copertura: a incrinare la fiducia dei cittadini verso lo Stato furono, più delle bombe stesse, i depistaggi che ne seguirono.</p>
+</div>
+<script>
+  const nodi = document.querySelectorAll('.nodo');
+  const placeholder = document.getElementById('placeholder');
+  let attivo = null;
+  nodi.forEach(nodo => {
+    nodo.addEventListener('click', () => {
+      const id = nodo.dataset.id;
+      const scheda = document.getElementById('scheda-' + id);
+      if (attivo === id) {
+        scheda.classList.remove('visibile');
+        nodo.classList.remove('attivo');
+        placeholder.style.display = 'block';
+        attivo = null;
+        return;
+      }
+      document.querySelectorAll('.scheda').forEach(s => s.classList.remove('visibile'));
+      nodi.forEach(n => n.classList.remove('attivo'));
+      scheda.classList.add('visibile');
+      nodo.classList.add('attivo');
+      placeholder.style.display = 'none';
+      attivo = id;
+    });
+  });
+</script>
+</body>
+</html>

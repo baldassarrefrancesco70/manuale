@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riforme realizzate, riforme mancate</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --verde:#7a8a5c; --terra:#9c5b45; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:920px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 26px; font-style:italic; }
+
+  .colonne { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px; }
+  .colonna { flex:1; min-width:300px; }
+  .colonna h2 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:1rem; text-align:center; padding:10px; border-radius:8px 8px 0 0; margin:0; color:var(--bianco); }
+  .colonna.realizzate h2 { background: var(--verde); }
+  .colonna.mancate h2 { background: var(--terra); }
+
+  .voce {
+    background:var(--bianco); border:2px solid var(--marrone); border-top:none; padding:14px 16px; cursor:pointer;
+  }
+  .colonna.realizzate .voce:first-of-type,
+  .colonna.mancate .voce:first-of-type { border-radius: 0; }
+  .colonna .voce:last-child { border-radius: 0 0 8px 8px; }
+
+  .voce h3 { margin:0; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.92rem; display:flex; justify-content:space-between; align-items:center; }
+  .voce .anno { font-size:0.78rem; color:#8a7d68; font-weight:400; }
+  .voce .dettaglio { display:none; margin-top:10px; font-size:0.88rem; line-height:1.5; }
+  .voce.aperta .dettaglio { display:block; animation: apparizione .2s ease; }
+  @keyframes apparizione { from{opacity:0;} to{opacity:1;} }
+  .voce .segno { font-weight:700; }
+  .colonna.realizzate .segno { color: var(--verde); }
+  .colonna.mancate .segno { color: var(--terra); }
+
+  .focus {
+    background: #f0eee6; border-left:3px solid var(--marrone); border-radius:8px; padding:16px 20px; margin-bottom:20px;
+    cursor:pointer;
+  }
+  .focus h3 { margin:0; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.92rem; color: var(--marrone); }
+  .focus .dettaglio-focus { display:none; margin-top:10px; font-size:0.88rem; line-height:1.55; }
+  .focus.aperta .dettaglio-focus { display:block; }
+  .focus p.anteprima { margin:4px 0 0; font-size:0.8rem; font-style:italic; color:#7a6b54; }
+  .focus.aperta p.anteprima { display:none; }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:700px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Riforme realizzate, riforme mancate</h1>
+  <p class="sottotitolo">Il centro-sinistra vinse la scommessa sulla carta, la perse nei fatti</p>
+
+  <div class="colonne">
+    <div class="colonna realizzate">
+      <h2>Realizzate</h2>
+      <div class="voce">
+        <h3><span>ENEL <span class="anno">novembre 1962</span></span><span class="segno">✓</span></h3>
+        <div class="dettaglio">La nazionalizzazione dell'energia elettrica tolse ai grandi gruppi privati — l'Edison in testa — il controllo delle tariffe, che Riccardo Lombardi considerava la precondizione di ogni riforma di struttura.</div>
+      </div>
+      <div class="voce">
+        <h3><span>Scuola media unica <span class="anno">dicembre 1962</span></span><span class="segno">✓</span></h3>
+        <div class="dettaglio">Abolì la separazione fra la scuola media, che apriva agli studi superiori, e l'avviamento professionale, binario morto riservato ai figli delle classi popolari: obbligo scolastico unico fino ai quattordici anni. Una delle poche riforme della Repubblica capaci di incidere davvero sulla mobilità sociale — anche se, come avrebbe scritto don Milani nel 1967, "non c'è ingiustizia più grande che fare parti uguali tra disuguali".</div>
+      </div>
+    </div>
+
+    <div class="colonna mancate">
+      <h2>Mancate</h2>
+      <div class="voce">
+        <h3><span>Riforma urbanistica Sullo <span class="anno">1962-63</span></span><span class="segno">✕</span></h3>
+        <div class="dettaglio">Avrebbe permesso ai comuni di espropriare preventivamente le aree di espansione urbana, per fermare una speculazione che aveva già gonfiato i valori fondiari del 400%. Bollata dalla stampa conservatrice come "nazionalizzazione della casa": sotto quella pressione, e con il presidente Segni pronto a rifiutare la firma, la DC scaricò Sullo e la legge non vide mai la luce.</div>
+      </div>
+      <div class="voce">
+        <h3><span>Nuovo tentativo <span class="anno">1964</span></span><span class="segno">✕</span></h3>
+        <div class="dettaglio">Un tentativo più moderato fu travolto dalla crisi del Piano Solo (v. Focus).</div>
+      </div>
+      <div class="voce">
+        <h3><span>Legge-ponte Mancini <span class="anno">1967</span></span><span class="segno">△</span></h3>
+        <div class="dettaglio">Approvata solo dopo che una frana aveva travolto interi condomini abusivi ad Agrigento. La sua entrata in vigore, rinviata di un anno per le resistenze parlamentari, scatenò nel 1968 una corsa forsennata alle licenze edilizie: oltre 8,5 milioni di vani residenziali richiesti in pochi mesi, l'ultima e più selvaggia ondata di cementificazione del decennio.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="focus" id="focus-piano-solo">
+    <h3>Focus — Il Piano Solo, l'estate 1964</h3>
+    <p class="anteprima">Perché il centro-sinistra si ridimensionò così in fretta</p>
+    <div class="dettaglio-focus">Nell'estate del 1964 il comandante generale dei Carabinieri Giovanni De Lorenzo predispose un piano di emergenza — il Piano Solo — per l'occupazione di sedi istituzionali, radio e giornali in caso di grave crisi di ordine pubblico, con il tacito beneplacito del presidente Antonio Segni. Prevedeva anche l'arresto e la deportazione nella base sarda di Capo Marrargiu di centinaia di dirigenti politici e sindacali della sinistra. Non fu un golpe messo in atto, ma una minaccia esibita: bastò farne trapelare l'esistenza perché Nenni e il PSI accettassero un drastico ridimensionamento del programma riformatore, pur di non offrire pretesti a una soluzione autoritaria.</div>
+  </div>
+
+  <p class="chiusura">Il paese, non avendo ricevuto dalla politica le riforme che il miracolo economico richiedeva, se le andò a prendere da sé: prima nelle università, poi nelle fabbriche.</p>
+</div>
+<script>
+  document.querySelectorAll('.voce').forEach(v => v.addEventListener('click', () => v.classList.toggle('aperta')));
+  document.querySelectorAll('.focus').forEach(f => f.addEventListener('click', () => f.classList.toggle('aperta')));
+</script>
+</body>
+</html>

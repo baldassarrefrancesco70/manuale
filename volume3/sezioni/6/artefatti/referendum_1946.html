@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il referendum del 2 giugno 1946</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --blu:#5b7a8f; --terra:#9c5b45; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:900px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 22px; font-style:italic; }
+
+  .nota-fonte {
+    background:#f0eee6; border-left:3px solid var(--marrone); border-radius:6px; padding:10px 16px; margin-bottom:20px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.78rem; color:#5c5344; line-height:1.5;
+  }
+
+  .pannello { background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:22px 24px; margin-bottom:20px; }
+  .pannello h2 { margin:0 0 14px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:1rem; color:var(--marrone); }
+
+  .barra-riga { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .barra-riga:last-child { margin-bottom:0; }
+  .barra-etichetta { width:110px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.84rem; flex-shrink:0; }
+  .barra-esterno { flex:1; background:#e8e4da; border-radius:4px; height:26px; overflow:hidden; display:flex; }
+  .segmento { height:100%; display:flex; align-items:center; justify-content:center; color:var(--bianco); font-size:0.8rem; font-weight:600; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; }
+  .segmento.rep { background: var(--blu); }
+  .segmento.mon { background: var(--terra); }
+
+  .legenda { display:flex; gap:18px; justify-content:center; margin-top:10px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.78rem; color:#5c5344; }
+  .legenda span { display:inline-flex; align-items:center; gap:6px; }
+  .quadrato { width:12px; height:12px; border-radius:3px; display:inline-block; }
+
+  .eccezioni { display:flex; gap:20px; flex-wrap:wrap; }
+  .colonna-ecc { flex:1; min-width:260px; }
+  .colonna-ecc h3 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.86rem; margin:0 0 10px; padding-bottom:6px; border-bottom:2px solid var(--marrone); }
+  .colonna-ecc.nord h3 { color: var(--terra); }
+  .colonna-ecc.sud h3 { color: var(--blu); }
+  .citta { background:#f7f4ec; border-radius:6px; padding:8px 12px; margin-bottom:8px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.84rem; cursor:pointer; }
+  .citta:hover { background:#f0ebdc; }
+  .citta .dettaglio-citta { display:none; font-family:Georgia,serif; font-size:0.86rem; margin-top:6px; line-height:1.5; }
+  .citta.aperta .dettaglio-citta { display:block; }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:700px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Il referendum del 2 giugno 1946</h1>
+  <p class="sottotitolo">Un margine stretto, non un plebiscito: il paese nasce già diviso</p>
+
+  <div class="pannello">
+    <h2>Il dato nazionale</h2>
+    <div class="barra-riga">
+      <div class="barra-etichetta">Italia</div>
+      <div class="barra-esterno">
+        <div class="segmento rep" style="width:54.27%">Repubblica 54,27%</div>
+        <div class="segmento mon" style="width:45.73%">Monarchia 45,73%</div>
+      </div>
+    </div>
+    <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.82rem; color:#5c5344; margin:12px 0 0;">12.717.923 voti contro 10.719.284, su circa 25 milioni di votanti: poco più di due milioni di voti di scarto.</p>
+  </div>
+
+  <div class="pannello">
+    <h2>La spaccatura Nord-Sud</h2>
+    <div class="barra-riga">
+      <div class="barra-etichetta">Nord</div>
+      <div class="barra-esterno">
+        <div class="segmento rep" style="width:66.2%">Repubblica 66,2%</div>
+        <div class="segmento mon" style="width:33.8%">33,8%</div>
+      </div>
+    </div>
+    <div class="barra-riga">
+      <div class="barra-etichetta">Sud</div>
+      <div class="barra-esterno">
+        <div class="segmento mon" style="width:63.8%">Monarchia 63,8%</div>
+        <div class="segmento rep" style="width:36.2%">36,2%</div>
+      </div>
+    </div>
+    <div class="barra-riga">
+      <div class="barra-etichetta">Piemonte</div>
+      <div class="barra-esterno">
+        <div class="segmento rep" style="width:56.9%">Repubblica 56,9%</div>
+        <div class="segmento mon" style="width:43.1%">43,1%</div>
+      </div>
+    </div>
+    <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.82rem; color:#5c5344; margin:12px 0 0;">Sorprendente, il dato piemontese, dato lo storico legame della regione con Casa Savoia.</p>
+    <div class="legenda">
+      <span><span class="quadrato" style="background:var(--blu);"></span>Repubblica</span>
+      <span><span class="quadrato" style="background:var(--terra);"></span>Monarchia</span>
+    </div>
+  </div>
+
+  <div class="pannello">
+    <h2>Eccezioni alla regola: "non ci furono due blocchi monolitici"</h2>
+    <div class="eccezioni">
+      <div class="colonna-ecc nord">
+        <h3>Al Nord, hanno votato Monarchia</h3>
+        <div class="citta" data-info="Cuneo, Asti, Bergamo, Padova"><strong>Cuneo, Asti, Bergamo, Padova</strong>
+          <div class="dettaglio-citta">Quattro province settentrionali che si discostano dalla tendenza maggioritaria della loro area — un promemoria che "Nord" e "Sud" restano categorie aggregate, non blocchi compatti.</div>
+        </div>
+      </div>
+      <div class="colonna-ecc sud">
+        <h3>Al Sud, hanno votato Repubblica</h3>
+        <div class="citta" data-info="Viterbo, Latina, Teramo, Pescara, Trapani"><strong>Viterbo, Latina, Teramo, Pescara, Trapani</strong>
+          <div class="dettaglio-citta">Cinque province centro-meridionali — fra cui due abruzzesi — che si discostano dalla tendenza maggioritaria della loro area.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="chiusura">Il paese nasceva già diviso, con una parte consistente di italiani, soprattutto nel Mezzogiorno, che avrebbe preferito la continuità monarchica.</p>
+</div>
+<script>
+  document.querySelectorAll('.citta').forEach(c => c.addEventListener('click', () => c.classList.toggle('aperta')));
+</script>
+</body>
+</html>

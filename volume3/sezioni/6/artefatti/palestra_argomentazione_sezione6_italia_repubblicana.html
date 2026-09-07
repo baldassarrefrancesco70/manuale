@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palestra di argomentazione — L'Italia repubblicana, 1946-oggi</title>
+<style>
+  :root{
+    --paper:#efe9dc; --paper-2:#e6dfcd; --ink:#201d18; --ink-soft:#5b5346;
+    --line:#cdc2a8; --rule:#b7ab8d;
+    --pro:#5c7343; --contra:#7c2e35; --nulla:#8a6a1f;
+    --ok:#4b6b3d; --err:#9c3d23;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    line-height:1.5;padding:22px;max-width:980px;margin-inline:auto}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--ink-soft)}
+  h1{font-size:1.55rem;font-weight:600;margin:.15rem 0 .1rem}
+  h2{font-size:1.32rem;font-weight:600;margin:.1rem 0 1rem}
+  .sub{color:var(--ink-soft);font-size:.98rem;margin:0 0 1.2rem}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .chips button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.78rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px}
+  .chips button .dot{width:8px;height:8px;border-radius:50%}
+  .chips button[aria-pressed="false"]{opacity:.5}
+  .chips button[aria-pressed="true"]{color:var(--ink);opacity:1}
+
+  .nodelist{display:flex;flex-direction:column;gap:9px}
+  .nodecard{appearance:none;text-align:left;border:1px solid var(--rule);border-left-width:4px;border-radius:2px;
+    background:linear-gradient(180deg,#f3eee2,#ece5d3);padding:12px 15px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .nodecard:hover{border-color:var(--ink-soft)}
+  .nodecard .cap{font-family:var(--sans);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+  .nodecard .q{margin:0;font-size:1.04rem;font-weight:600;line-height:1.35}
+
+  .back{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-family:var(--sans);
+    font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;margin-bottom:14px}
+
+  .formulazioni{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:6px}
+  @media(max-width:720px){.formulazioni{grid-template-columns:minmax(0,1fr)}}
+  .formcard{appearance:none;text-align:left;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper-2);padding:12px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+  .formcard:hover{border-color:var(--ink-soft)}
+  .formcard.sel{border-color:var(--ink);border-width:2px;background:linear-gradient(180deg,#f3eee2,#ece5d3)}
+  .formcard .k{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px}
+  .formcard.sel .k{color:var(--ink)}
+  .formcard p{margin:0;font-size:.92rem;line-height:1.42}
+
+  .switchhint{font-family:var(--sans);font-size:.72rem;color:var(--ink-soft);margin:0 0 20px;font-style:italic}
+
+  .poolhead{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:0 0 12px;padding-top:10px;
+    border-top:1px dotted var(--line)}
+
+  .stmt{border:1px solid var(--rule);border-left-width:3px;border-radius:2px;background:var(--paper-2);
+    padding:11px 14px;margin-bottom:9px}
+  .stmt.ok{border-left-color:var(--ok);background:#e6ecdf}
+  .stmt.err{border-left-color:var(--err);background:#f2ddd6}
+  .stmt .txt{margin:0 0 9px;font-size:.96rem;line-height:1.45}
+  .stmt .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .stmt .acts button{appearance:none;border:1px solid var(--rule);background:var(--paper);font-family:var(--sans);
+    font-size:.75rem;padding:6px 11px;border-radius:2px;cursor:pointer;color:var(--ink-soft)}
+  .stmt .acts button[aria-pressed="true"]{color:var(--paper)}
+  .stmt .acts button.p[aria-pressed="true"]{background:var(--pro);border-color:var(--pro)}
+  .stmt .acts button.c[aria-pressed="true"]{background:var(--contra);border-color:var(--contra)}
+  .stmt .acts button.n[aria-pressed="true"]{background:var(--nulla);border-color:var(--nulla)}
+  .stmt .result{font-family:var(--sans);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+    margin-top:8px}
+  .stmt.ok .result{color:var(--ok)}
+  .stmt.err .result{color:var(--err)}
+  .stmt .perche{margin-top:7px;padding-top:7px;border-top:1px dotted var(--line);font-size:.87rem;
+    font-style:italic;color:var(--ink-soft)}
+  .stmt .perche .k{font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);margin-right:5px}
+
+  .verify-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}
+  .verify-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .verify-row button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .verify-row button:disabled{opacity:.4;cursor:default}
+  .verify-row .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft)}
+
+  .nav-row{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:flex-end}
+  .nav-row button{appearance:none;border:1px solid var(--rule);background:var(--paper-2);font-family:var(--sans);
+    font-size:.84rem;padding:9px 16px;border-radius:2px;cursor:pointer;color:var(--ink)}
+  .nav-row button:hover{background:var(--ink);color:var(--paper)}
+
+  .note{font-family:var(--sans);font-size:.74rem;color:var(--ink-soft);margin-top:20px;
+    border-top:1px solid var(--line);padding-top:8px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">L'Italia repubblicana, 1946-oggi &middot; Apparati</div>
+  <h1>Palestra di argomentazione</h1>
+  <p class="sub">Quattro nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+
+  <div id="listView">
+    <div class="chips" id="chapChips"></div>
+    <div class="nodelist" id="nodeList"></div>
+  </div>
+
+  <div id="nodeView" style="display:none">
+    <button class="back" id="backBtn" type="button">&larr; Torna all'elenco dei nodi</button>
+    <div class="eyebrow" id="n-cap"></div>
+    <h2 id="n-title"></h2>
+
+    <div class="formulazioni" id="formCards"></div>
+    <p class="switchhint">Clicca su una delle tre per entrare nell'esercizio; clicca su un'altra in qualsiasi momento per cambiarla.</p>
+
+    <div id="poolSection" style="display:none">
+      <p class="poolhead" id="poolHead"></p>
+      <div id="pool"></div>
+      <div class="verify-row">
+        <button id="verifyBtn" class="primary" type="button" disabled>Verifica le tue risposte</button>
+        <span class="hint" id="verifyHint"></span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button id="nextNodeBtn" type="button">Prossimo nodo &rarr;</button>
+    </div>
+  </div>
+
+  <p class="note">Il pool di affermazioni si mescola a ogni apertura di un nodo e resta nello stesso ordine finch&eacute; non ne apri un altro. Le affermazioni sono tratte dai capitoli della sezione: nessuna &egrave; inventata.</p>
+
+<script>
+(function(){
+  var CAPCOLORS = {
+    "Cap. 5 — Gli anni di piombo":"#7c2e35",
+    "Cap. 6 — La crisi della Prima Repubblica":"#5a4a7a",
+    "Cap. 8 — La crisi del debito sovrano":"#8a5a2b"
+  };
+  var CAPORDER = [
+    "Cap. 5 — Gli anni di piombo",
+    "Cap. 6 — La crisi della Prima Repubblica",
+    "Cap. 8 — La crisi del debito sovrano"
+  ];
+
+  var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
+  var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
+
+  var NODI = [
+    {
+      capitolo:"Cap. 5 — Gli anni di piombo",
+      titolo:"La «strategia della tensione»: un disegno, o una convergenza?",
+      formulazioni:{
+        partenza:"Parlare di «strategia della tensione» come disegno unitario è già un errore di metodo: non è mai esistito un regista unico, solo apparati in conflitto fra loro.",
+        ristretta:"Non un regista unico che ordina le stragi, ma nemmeno una somma di conflitti casuali: fra i servizi di sicurezza e l'eversione neofascista corse una convergenza sistematica di interessi, la «doppia lealtà» descritta da Franco De Felice.",
+        opposta:"Le stragi degli anni Sessanta e Settanta furono un disegno unitario, deciso al vertice politico e militare ed eseguito attraverso una catena di comando riconoscibile: la «strage di Stato» della pubblicistica di sinistra."
+      },
+      affermazioni:[
+        {testo:"L'espressione «strategia della tensione» fu coniata nel dicembre 1969 dal giornalista britannico Leslie Finer, e ha avuto una vita giornalistica prima che storiografica.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Gli apparati di sicurezza italiani non furono mai un blocco unico e coordinato, ma furono attraversati da rivalità fra corpi diversi e da un disordine operativo.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{ristretta:"il disordine fra i corpi non esclude, di per sé, una convergenza informale di interessi: la Ristretta ammette entrambe le cose insieme."}},
+        {testo:"Franco De Felice propose la lettura della «doppia lealtà»: la coesistenza, dentro gli stessi apparati statali, di una lealtà formale alla Costituzione del 1948 e di una lealtà materiale, anticomunista, imposta dai vincoli della Guerra Fredda.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"confuta"},
+         perche:{partenza:"una lealtà materiale condivisa è più di «soli apparati in conflitto fra loro»: è già una forma di convergenza, che la Partenza esclude."}},
+        {testo:"Il caso della strage di Bologna, nel 1981, ripete lo stesso schema dei depistaggi di Piazza Fontana undici anni prima, con al centro la loggia P2 di Licio Gelli e ufficiali del SISMI condannati per aver fabbricato prove false.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"la sistematicità e la durata dei depistaggi, ripetuti su un decennio con attori in parte comuni, è difficile da spiegare con soli apparati in conflitto fra loro senza alcuna convergenza."}},
+        {testo:"Nel 2009 la tesi della «doppia bomba» di Paolo Cucchiarelli ha avuto ampia risonanza pubblica, ma la comunità storiografica l'ha accolta con un rigore critico quasi unanime, e nel 2012 la magistratura l'ha archiviata per inverosimiglianza.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Sul piano giudiziario, decenni di processi non sono riusciti a fissare una verità definitiva sugli esecutori e sui mandanti in molti dei casi ricostruiti in questo capitolo.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 5 — Gli anni di piombo",
+      titolo:"Le lettere di Moro: un prigioniero lucido, o una vittima da delegittimare?",
+      formulazioni:{
+        partenza:"Dichiarare le lettere di Moro «non imputabili» fu un atto necessario di autodifesa democratica, non una forma di violenza.",
+        ristretta:"Dichiarare le lettere di Moro «non imputabili» fu una scelta comprensibile sul piano della tenuta istituzionale, ma comportò anche un costo reale per la dignità intellettuale dell'uomo di Stato, non solo un atto di pura autodifesa.",
+        opposta:"Dichiarare le lettere di Moro «non imputabili» fu essa stessa una forma di violenza istituzionale: un modo per non dover rispondere nel merito a un uomo di Stato lucido, sacrificandone pubblicamente la credibilità."
+      },
+      affermazioni:[
+        {testo:"Durante i cinquantacinque giorni di prigionia, Aldo Moro scrisse numerose lettere nelle quali argomentava con lucidità la necessità di trattare con le BR per salvargli la vita.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La reazione dei partiti della fermezza fu di dichiarare quelle lettere «non moralmente imputabili al soggetto», presentando Moro come vittima di un plagio psicologico o di sostanze somministrate dai rapitori.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Riconoscere che Moro stesse ragionando lucidamente avrebbe dato credito politico al ricatto delle BR, in un momento in cui la tenuta stessa delle istituzioni sembrava in gioco.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Quella stessa operazione, nota tra gli storici come «Moro non è Moro», comportò il sacrificio pubblico della dignità intellettuale di un uomo di Stato, delegittimato proprio da chi per anni ne aveva riconosciuto l'autorevolezza.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Negli interrogatori dei suoi carcerieri, Moro fece riferimento a informazioni precise su Gladio e sul «lodo Moro» che difficilmente un uomo «non lucido» avrebbe potuto fornire.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"una precisione informativa di questo livello è difficile da conciliare con un'immagine di Moro puramente da tutelare per autodifesa di Stato, senza alcun costo di credibilità inflitto a un uomo lucido."}},
+        {testo:"Il vertice del PCI sbarrò la porta a ogni trattativa e gli operai scesero in piazza a difesa dello Stato democratico: «tra la DC e noi», dovette riconoscere lo stesso Moretti, «i lavoratori comunisti scelgono tranquillamente la DC».",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 6 — La crisi della Prima Repubblica",
+      titolo:"Mani Pulite: risanamento necessario, o rivoluzione giudiziaria?",
+      formulazioni:{
+        partenza:"Senza il crollo elettorale del 5 aprile 1992, l'inchiesta di Mani Pulite si sarebbe fermata a Mario Chiesa.",
+        ristretta:"Il crollo elettorale del 5 aprile 1992 accelerò e allargò l'inchiesta di Mani Pulite, ma il sistema di finanziamento illegale era già abbastanza esteso da rendere probabile, prima o poi, un'inchiesta di ampio respiro.",
+        opposta:"L'inchiesta di Mani Pulite si sarebbe comunque allargata ai vertici nazionali dei partiti indipendentemente dal voto del 5 aprile 1992: la sua ampiezza dipese dalla sistematicità della corruzione scoperta dai magistrati, non da un detonatore elettorale esterno."
+      },
+      affermazioni:[
+        {testo:"Il 17 febbraio 1992 la polizia arrestò in flagranza Mario Chiesa, esponente socialista alla presidenza di un ente assistenziale milanese; Craxi lo liquidò come un «mariuolo» isolato.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il 3 luglio 1992 Craxi ammise alla Camera che il finanziamento illecito dei partiti era una prassi collettiva e condivisa, sfidando l'aula a smentirlo.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{partenza:"un'ammissione di prassi collettiva e diffusa mostra un sistema già maturo per essere colpito su larga scala, non un'eccezione isolata resa pubblica solo dal voto."}},
+        {testo:"Secondo il sociologo Ilvo Diamanti, l'arresto di Chiesa sarebbe rimasto un episodio isolato se il voto del 5 aprile non avesse funzionato da detonatore politico, facendo perdere alla classe dirigente la propria legittimità agli occhi dell'elettorato.",
+         classificazione:{partenza:"sostiene", ristretta:"confuta", opposta:"confuta"},
+         perche:{ristretta:"Diamanti non dice che l'inchiesta si sarebbe comunque allargata più lentamente: dice che senza il voto si sarebbe fermata. È più forte di quanto la Ristretta conceda."}},
+        {testo:"È solo dopo aver registrato, nelle urne, la perdita pressoché totale di legittimità della classe dirigente agli occhi dell'elettorato che i magistrati trovarono lo spazio pubblico per colpire senza remore i vertici nazionali dei partiti.",
+         classificazione:{partenza:"sostiene", ristretta:"confuta", opposta:"confuta"},
+         perche:{}},
+        {testo:"L'inchiesta coinvolse, in meno di due anni, oltre 4.500 arresti, più di 25.000 avvisi di garanzia e circa 1.100 fra parlamentari e dirigenti politici.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Per una lettura largamente maggioritaria, l'azione del pool di Milano fu l'unico intervento di risanamento possibile di fronte a un sistema di corruzione che aveva smesso da tempo di essere un'eccezione per diventare la prassi con cui i partiti di governo finanziavano il proprio consenso.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"Cap. 8 — La crisi del debito sovrano",
+      titolo:"Il vincolo esterno: necessità tecnica, o strategia delle élite?",
+      formulazioni:{
+        partenza:"Il vincolo esterno non è mai stato una necessità tecnica: è sempre stato un modo per la politica italiana di scaricare su Bruxelles decisioni che non aveva il coraggio di assumersi.",
+        ristretta:"Il vincolo esterno rispose a una necessità tecnica reale, quella di disciplinare un sistema politico incapace di riformarsi da sé, ma la sua rappresentazione pubblica come «imposizione di Bruxelles» permise anche di scaricare su un soggetto esterno la responsabilità di scelte interne.",
+        opposta:"Il vincolo esterno fu una necessità tecnica autentica: senza la pressione delle scadenze europee, il sistema politico italiano, frammentato ed esposto al veto di innumerevoli gruppi di interesse, non avrebbe mai trovato la forza autonoma per correggere una traiettoria di debito insostenibile."
+      },
+      affermazioni:[
+        {testo:"I parametri di convergenza fissati dal trattato di Maastricht non furono soltanto un vincolo tecnico: furono, per una classe dirigente bloccata dal consociativismo e dai veti corporativi interni, un alleato prezioso.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Presentare riforme dolorose come «imposte da Bruxelles» permise di rendere politicamente sostenibile un rigore che altrimenti avrebbe incontrato un'opposizione difficile da superare.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{}},
+        {testo:"Una parte della storiografia sostiene che, senza la pressione delle scadenze europee, il sistema politico italiano non avrebbe mai trovato la forza autonoma per correggere una traiettoria di debito insostenibile.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Un intero governo di tecnici, scelto per competenza e non per investitura elettorale, varò in pochi mesi riforme di portata sociale enorme sotto la pressione diretta dei mercati.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Le prime tracce del vincolo esterno risalgono già all'adesione italiana al Sistema Monetario Europeo nel 1978: il caso Monti ne rappresenta l'applicazione più estrema e più discussa.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{ristretta:"un ricorso ricorrente allo stesso meccanismo per oltre trent'anni, sotto governi diversi, è compatibile sia con una lettura strategica sia con una necessità tecnica reale: è la Ristretta, che le tiene insieme, a essere confermata più delle due letture estreme."}},
+        {testo:"Che si tratti di una necessità della fase o di una forma di «commissariamento» della politica nazionale resta una domanda che riguarda non solo il 2011, ma ogni futura emergenza in cui sovranità democratica e vincoli sovranazionali dovessero tornare a confliggere.",
+         classificazione:{partenza:"non_decide", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}}
+      ]
+    }
+  ];
+
+  var state = { capFilter:null, nodeIdx:null, order:[], formulation:null, answers:{}, verified:false };
+
+  var chapChips=document.getElementById('chapChips');
+  var nodeListEl=document.getElementById('nodeList');
+  var listView=document.getElementById('listView');
+  var nodeView=document.getElementById('nodeView');
+  var formCards=document.getElementById('formCards');
+  var poolSection=document.getElementById('poolSection');
+  var poolHead=document.getElementById('poolHead');
+  var poolEl=document.getElementById('pool');
+  var verifyBtn=document.getElementById('verifyBtn');
+  var verifyHint=document.getElementById('verifyHint');
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function filteredIndices(){
+    var out=[];
+    NODI.forEach(function(n,i){
+      if(!state.capFilter || n.capitolo===state.capFilter) out.push(i);
+    });
+    return out;
+  }
+
+  function buildChips(){
+    chapChips.innerHTML='';
+    var all=document.createElement('button');
+    all.textContent='Tutti i capitoli';
+    all.setAttribute('aria-pressed', state.capFilter===null ? 'true':'false');
+    all.addEventListener('click',function(){ state.capFilter=null; buildChips(); renderList(); });
+    chapChips.appendChild(all);
+    CAPORDER.forEach(function(cap){
+      var b=document.createElement('button');
+      b.innerHTML='<span class="dot" style="background:'+CAPCOLORS[cap]+'"></span>'+cap;
+      b.setAttribute('aria-pressed', state.capFilter===cap ? 'true':'false');
+      b.addEventListener('click',function(){ state.capFilter=cap; buildChips(); renderList(); });
+      chapChips.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    nodeListEl.innerHTML='';
+    filteredIndices().forEach(function(i){
+      var n=NODI[i];
+      var b=document.createElement('button');
+      b.className='nodecard';
+      b.style.borderLeftColor=CAPCOLORS[n.capitolo];
+      b.innerHTML='<p class="cap" style="color:'+CAPCOLORS[n.capitolo]+'">'+n.capitolo+'</p><p class="q">'+n.titolo+'</p>';
+      b.addEventListener('click',function(){ openNode(i); });
+      nodeListEl.appendChild(b);
+    });
+  }
+
+  function openNode(i){
+    state.nodeIdx=i;
+    state.order=shuffle([0,1,2,3,4,5]);
+    state.formulation=null;
+    state.answers={};
+    state.verified=false;
+    listView.style.display='none';
+    nodeView.style.display='block';
+    renderNode();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function renderNode(){
+    var n=NODI[state.nodeIdx];
+    document.getElementById('n-cap').textContent=n.capitolo;
+    document.getElementById('n-cap').style.color=CAPCOLORS[n.capitolo];
+    document.getElementById('n-title').textContent=n.titolo;
+
+    formCards.innerHTML='';
+    ['partenza','ristretta','opposta'].forEach(function(k){
+      var c=document.createElement('button');
+      c.className='formcard'+(state.formulation===k?' sel':'');
+      c.innerHTML='<span class="k">'+FORMLAB[k]+'</span><p>'+n.formulazioni[k]+'</p>';
+      c.addEventListener('click',function(){
+        if(state.formulation===k) return;
+        state.formulation=k;
+        state.answers={};
+        state.verified=false;
+        renderNode();
+      });
+      formCards.appendChild(c);
+    });
+
+    if(!state.formulation){
+      poolSection.style.display='none';
+      return;
+    }
+    poolSection.style.display='block';
+    poolHead.textContent='Che cosa fa ciascuna affermazione, rispetto alla formulazione «'+FORMLAB[state.formulation]+'» che hai scelto?';
+
+    poolEl.innerHTML='';
+    state.order.forEach(function(affIdx){
+      var a=n.affermazioni[affIdx];
+      var correct=a.classificazione[state.formulation];
+      var chosen=state.answers[affIdx];
+      var card=document.createElement('div');
+      card.className='stmt';
+      if(state.verified && chosen){
+        card.classList.add(chosen===correct ? 'ok':'err');
+      }
+      var html='<p class="txt">'+a.testo+'</p><div class="acts">';
+      [['sostiene','p'],['confuta','c'],['non_decide','n']].forEach(function(pair){
+        var kind=pair[0], cls=pair[1];
+        html+='<button class="'+cls+'" data-aff="'+affIdx+'" data-kind="'+kind+'" aria-pressed="'+(chosen===kind?'true':'false')+'">'+LAB[kind]+'</button>';
+      });
+      html+='</div>';
+      if(state.verified && chosen){
+        html+='<p class="result">'+(chosen===correct ? 'corretta' : 'sbagliata, la risposta corretta è: '+LAB[correct])+'</p>';
+        var why=a.perche && a.perche[state.formulation];
+        if(why){
+          html+='<p class="perche"><span class="k">Perché</span>'+why+'</p>';
+        }
+      }
+      card.innerHTML=html;
+      poolEl.appendChild(card);
+    });
+
+    var answered=Object.keys(state.answers).length;
+    verifyBtn.disabled = answered===0;
+    if(state.verified){
+      var correctCount=0;
+      Object.keys(state.answers).forEach(function(k){
+        var a=n.affermazioni[parseInt(k,10)];
+        if(state.answers[k]===a.classificazione[state.formulation]) correctCount++;
+      });
+      verifyHint.textContent=correctCount+' corrette su '+answered+' classificate (su 6 affermazioni totali).';
+    } else if(answered<6){
+      verifyHint.textContent=answered+' su 6 classificate. Non serve classificarle tutte per verificare.';
+    } else {
+      verifyHint.textContent='Tutte e 6 classificate.';
+    }
+  }
+
+  poolEl.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-aff]');
+    if(!b) return;
+    var affIdx=parseInt(b.getAttribute('data-aff'),10);
+    var kind=b.getAttribute('data-kind');
+    if(state.verified) state.verified=false;
+    if(state.answers[affIdx]===kind){
+      delete state.answers[affIdx];
+    } else {
+      state.answers[affIdx]=kind;
+    }
+    renderNode();
+  });
+
+  verifyBtn.addEventListener('click',function(){
+    state.verified=true;
+    renderNode();
+  });
+
+  document.getElementById('backBtn').addEventListener('click',function(){
+    nodeView.style.display='none';
+    listView.style.display='block';
+  });
+
+  document.getElementById('nextNodeBtn').addEventListener('click',function(){
+    var list=filteredIndices();
+    var pos=list.indexOf(state.nodeIdx);
+    var next=list[(pos+1)%list.length];
+    openNode(next);
+  });
+
+  buildChips();
+  renderList();
+})();
+</script>
+</body>
+</html>

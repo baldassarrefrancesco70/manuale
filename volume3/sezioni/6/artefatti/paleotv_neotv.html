@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dalla paleotelevisione alla neotelevisione</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --beige:#F5F0E8; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --blu:#5b7a8f; --terra:#9c5b45; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--beige); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:940px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 26px; font-style:italic; }
+
+  .colonne { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px; }
+  .colonna { flex:1; min-width:320px; }
+  .colonna h2 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:1rem; text-align:center; padding:12px; border-radius:8px 8px 0 0; margin:0; color:var(--bianco); }
+  .colonna.paleo h2 { background: var(--blu); }
+  .colonna.neo h2 { background: var(--terra); }
+  .colonna p.definizione { background:var(--bianco); border:2px solid var(--marrone); border-top:none; padding:12px 16px; margin:0; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.8rem; font-style:italic; color:#5c5344; }
+
+  .voce { background:var(--bianco); border:2px solid var(--marrone); border-top:none; padding:13px 16px; cursor:pointer; }
+  .colonna .voce:last-child { border-radius:0 0 8px 8px; }
+  .voce h3 { margin:0; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.88rem; display:flex; justify-content:space-between; }
+  .voce .anno { font-size:0.76rem; color:#8a7d68; font-weight:400; }
+  .voce .dettaglio { display:none; margin-top:9px; font-size:0.85rem; line-height:1.5; }
+  .voce.aperta .dettaglio { display:block; animation: apparizione .2s ease; }
+  @keyframes apparizione { from{opacity:0;} to{opacity:1;} }
+
+  .cerniera {
+    text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:1.4rem; color:var(--marrone);
+    margin: -4px 0 18px;
+  }
+
+  .chiusura-riquadro {
+    background:#f0ebe0; border-left:3px solid var(--marrone); border-radius:8px; padding:16px 20px; margin-top:10px;
+    font-size:0.94rem; line-height:1.55;
+  }
+  .chiusura-riquadro strong { color: var(--marrone); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Dalla paleotelevisione alla neotelevisione</h1>
+  <p class="sottotitolo">La distinzione di Umberto Eco fra due modi opposti di essere spettatori</p>
+
+  <div class="colonne">
+    <div class="colonna paleo">
+      <h2>Paleotelevisione</h2>
+      <p class="definizione">La Rai bernabeiana: funzione pedagogica, il "nuovo focolare" che alfabetizza e unifica</p>
+      <div class="voce">
+        <h3><span>Avvio delle trasmissioni</span><span class="anno">3 gen. 1954</span></h3>
+        <div class="dettaglio">La Rai unificò la lingua parlata nelle case molto più di quanto avesse fatto la scuola dell'obbligo, trasformando la visione — spesso collettiva, nei bar o nelle sale parrocchiali — in un rito condiviso di cittadinanza moderna.</div>
+      </div>
+      <div class="voce">
+        <h3><span>Lascia o raddoppia? e Carosello</span><span class="anno">1954-57</span></h3>
+        <div class="dettaglio">Il quiz di Mike Bongiorno fu il primo grande motore di alfabetizzazione di massa. Carosello, dal 1957, mediò fra l'etica del risparmio cattolica e l'edonismo dei nuovi consumi, separando rigidamente lo spettacolo dal "codino" pubblicitario.</div>
+      </div>
+      <div class="voce">
+        <h3><span>La direzione Bernabei</span><span class="anno">1961-1974</span></h3>
+        <div class="dettaglio">Trasformò la funzione pedagogica in un progetto esplicitamente politico: il telegiornale unico marginalizzava sistematicamente le lotte operaie, la censura restava rigidissima su ogni immagine capace di incrinare l'armonia di facciata. Nel 1962 Dario Fo e Franca Rame furono allontanati da Canzonissima per uno sketch sulle "morti bianche".</div>
+      </div>
+      <div class="voce">
+        <h3><span>"L'orrendo coro" su Piazza Fontana</span><span class="anno">dic. 1969</span></h3>
+        <div class="dettaglio">Nelle ore e nei giorni successivi alla strage, la Rai concentrò l'attenzione sulla pista anarchica e su Pietro Valpreda molto prima e molto più a lungo di quanto le prove giustificassero: un contributo mediatico, non solo giudiziario, ai depistaggi.</div>
+      </div>
+      <div class="voce">
+        <h3><span>La lottizzazione</span><span class="anno">1975</span></h3>
+        <div class="dettaglio">Le sentenze della Corte Costituzionale del 1974 avevano stabilito che il monopolio pubblico fosse legittimo solo se garantiva l'accesso a tutte le forze politiche. La legge del 14 aprile 1975 tradusse quel principio in una spartizione esplicita: TG1 specchio dell'area democristiana, TG2 legato all'area socialista, TG3 vicino al PCI.</div>
+      </div>
+    </div>
+
+    <div class="colonna neo">
+      <h2>Neotelevisione</h2>
+      <p class="definizione">Fininvest: flusso continuo, lo spettatore chiamato a consumare, non a informarsi</p>
+      <div class="voce">
+        <h3><span>Il consolidamento Fininvest</span><span class="anno">anni '80</span></h3>
+        <div class="dettaglio">Canale 5, Italia 1, Rete 4 sotto la regia di Silvio Berlusconi segnano il tramonto del monopolio pedagogico della Rai. La pubblicità non è più confinata nello spazio protetto di Carosello: diventa un flusso ininterrotto di réclame brevi, costruite per suscitare desideri immediati.</div>
+      </div>
+      <div class="voce">
+        <h3><span>I decreti Berlusconi</span><span class="anno">1984</span></h3>
+        <div class="dettaglio">Fortemente voluti da Bettino Craxi, legalizzarono a posteriori un duopolio televisivo che il mercato aveva già creato di fatto, saldando un patto fra grande editoria commerciale e vertici dell'esecutivo.</div>
+      </div>
+      <div class="voce">
+        <h3><span>Dallas</span><span class="anno">dal 1981</span></h3>
+        <div class="dettaglio">Importato dal 1981, porta nelle case italiane i valori del successo individuale e del potere economico americani.</div>
+      </div>
+      <div class="voce">
+        <h3><span>Drive In</span><span class="anno">dal 1983</span></h3>
+        <div class="dettaglio">Manifesto di un'estetica dell'eccesso in cui la satira convive con la mercificazione del corpo. Anche le radio libere, nate come avamposti di controcultura, completano negli stessi anni la propria mutazione in emittenti commerciali.</div>
+      </div>
+      <div class="voce">
+        <h3><span>La distinzione di Umberto Eco</span><span class="anno">anni '80</span></h3>
+        <div class="dettaglio">Il semiologo distinse il passaggio dalla "paleotelevisione" pedagogica alla "neotelevisione" commerciale: un flusso continuo e autoreferenziale in cui lo spettatore non è più chiamato a informarsi ma a consumare intrattenimento, e in cui — secondo Miguel Gotor e Ilvo Diamanti — la politica stessa comincia a essere trattata come uno spettacolo fra gli altri.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chiusura-riquadro">Il terreno psicologico su cui sarebbe nato, pochi anni dopo, il <strong>"partito personale"</strong> non fu preparato nelle sezioni di partito, ma negli studi televisivi di Canale 5 e di Italia 1, molto prima che Silvio Berlusconi decidesse di candidarsi. La televisione, in questo caso, non si limitò a raccontare la storia d'Italia: contribuì a scriverla.</div>
+</div>
+<script>
+  document.querySelectorAll('.voce').forEach(v => v.addEventListener('click', () => v.classList.toggle('aperta')));
+</script>
+</body>
+</html>

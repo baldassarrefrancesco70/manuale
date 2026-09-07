@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La rivoluzione dei consumi, 1953-1980</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+  :root { --grigio:#F2F2F2; --marrone:#8B7355; --bianco:#fffdfa; --testo:#2e2a24; --blu:#5b7a8f; --terra:#9c5b45; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:var(--grigio); color:var(--testo); padding:28px 16px 48px; }
+  .wrap { max-width:920px; margin:0 auto; }
+  h1 { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-weight:600; font-size:1.4rem; text-align:center; color:var(--marrone); margin:0 0 6px; }
+  .sottotitolo { text-align:center; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.9rem; color:#5c5344; margin:0 0 26px; font-style:italic; }
+
+  .pannello { background:var(--bianco); border:2px solid var(--marrone); border-radius:10px; padding:22px; margin-bottom:20px; }
+  .pannello h2 { margin:0 0 14px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:1rem; color:var(--marrone); }
+
+  .chips { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+  .chip { font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.8rem; padding:6px 14px; border-radius:16px; border:2px solid var(--marrone); background:var(--bianco); cursor:pointer; user-select:none; transition:.15s; }
+  .chip.attivo.alimentare { background:var(--terra); color:var(--bianco); }
+  .chip.attivo.frigoriferi { background:var(--blu); color:var(--bianco); }
+  .chip.spento { opacity:0.4; }
+
+  svg#grafico { width:100%; height:auto; overflow:visible; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; }
+  .asse { stroke:#c9c2b0; stroke-width:1; }
+  .griglia { stroke:#e4dfd2; stroke-width:1; }
+  .linea { fill:none; stroke-width:2.5; stroke-dasharray:6 4; }
+  .linea.alimentare { stroke: var(--terra); }
+  .linea.frigoriferi { stroke: var(--blu); }
+  .punto { r:5; cursor:pointer; }
+  .punto.alimentare { fill: var(--terra); }
+  .punto.frigoriferi { fill: var(--blu); }
+  .etichetta-asse { font-size:11px; fill:#7a6b54; }
+  .etichetta-punto { font-size:11px; font-weight:600; }
+  .etichetta-punto.alimentare { fill: var(--terra); }
+  .etichetta-punto.frigoriferi { fill: var(--blu); }
+
+  .carte-moltiplicatore { display:flex; gap:16px; flex-wrap:wrap; }
+  .carta { flex:1; min-width:220px; background:#f0eee6; border-left:3px solid var(--marrone); border-radius:8px; padding:14px 16px; }
+  .carta h3 { margin:0 0 8px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.88rem; color:var(--marrone); }
+  .carta .valori { display:flex; align-items:center; gap:10px; font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; }
+  .carta .valori .num { font-size:1.3rem; font-weight:700; color:var(--testo); }
+  .carta .valori .freccia { color:var(--marrone); font-size:1.1rem; }
+  .carta p.nota { margin:8px 0 0; font-size:0.82rem; color:#5c5344; font-style:italic; line-height:1.4; }
+
+  .nota-salari { margin-top:6px; padding:14px 16px; background:#f0eee6; border-left:3px solid var(--marrone); font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif; font-size:0.86rem; color:#5c5344; line-height:1.5; }
+
+  .chiusura { text-align:center; font-family:Georgia,serif; font-size:0.9rem; font-style:italic; color:#5c5344; max-width:680px; margin:20px auto 0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>La rivoluzione dei consumi, 1953-1980</h1>
+  <p class="sottotitolo">Il cambiamento più visibile del miracolo economico non fu nei bilanci dello Stato, ma nelle case degli italiani</p>
+
+  <div class="pannello">
+    <h2>Due quote in movimento opposto</h2>
+    <div class="chips">
+      <div class="chip attivo alimentare" data-serie="alimentare">Spesa alimentare (% dei consumi familiari)</div>
+      <div class="chip attivo frigoriferi" data-serie="frigoriferi">Famiglie con frigorifero (%)</div>
+    </div>
+    <svg id="grafico" viewBox="0 0 780 300">
+      <!-- griglia orizzontale -->
+      <line class="griglia" x1="60" y1="20" x2="740" y2="20"/>
+      <line class="griglia" x1="60" y1="90" x2="740" y2="90"/>
+      <line class="griglia" x1="60" y1="160" x2="740" y2="160"/>
+      <line class="griglia" x1="60" y1="230" x2="740" y2="230"/>
+      <text class="etichetta-asse" x="45" y="234" text-anchor="end">0%</text>
+      <text class="etichetta-asse" x="45" y="164" text-anchor="end">25%</text>
+      <text class="etichetta-asse" x="45" y="94" text-anchor="end">50%</text>
+      <line class="asse" x1="60" y1="230" x2="740" y2="230"/>
+      <line class="asse" x1="60" y1="20" x2="60" y2="230"/>
+      <!-- anni: 1953(x=90) 1959(x=250) 1963(x=350) 1967(x=450) 1980(x=700) su scala 1953-1980 -->
+      <text class="etichetta-asse" x="90" y="250" text-anchor="middle">1953</text>
+      <text class="etichetta-asse" x="250" y="250" text-anchor="middle">1959</text>
+      <text class="etichetta-asse" x="350" y="250" text-anchor="middle">1963</text>
+      <text class="etichetta-asse" x="450" y="250" text-anchor="middle">1967</text>
+      <text class="etichetta-asse" x="700" y="250" text-anchor="middle">1980</text>
+
+      <!-- alimentare: 1953=50.5 (y=230-50.5*4.2=17) 1967=44.5(y=44) 1980=28(y=112) scale: y=230-val*4.2 -->
+      <g class="serie-alimentare">
+        <polyline class="linea alimentare" points="90,17.9 450,43.1 700,112.4"/>
+        <circle class="punto alimentare" cx="90" cy="17.9" data-val="1953 — 50,5% della spesa familiare in beni alimentari"/>
+        <circle class="punto alimentare" cx="450" cy="43.1" data-val="1967 — 44,5% della spesa familiare in beni alimentari"/>
+        <circle class="punto alimentare" cx="700" cy="112.4" data-val="1980 — 28% della spesa familiare in beni alimentari"/>
+        <text class="etichetta-punto alimentare" x="90" y="10">50,5%</text>
+        <text class="etichetta-punto alimentare" x="450" y="35">44,5%</text>
+        <text class="etichetta-punto alimentare" x="700" y="104">28%</text>
+      </g>
+
+      <!-- frigoriferi: 1959=13 (y=230-13*4.2=175.4) 1963=55 (y=230-55*4.2=-1) clamp; scale using same 4.2 -->
+      <g class="serie-frigoriferi">
+        <polyline class="linea frigoriferi" points="250,175.4 350,4"/>
+        <circle class="punto frigoriferi" cx="250" cy="175.4" data-val="1959 — 13% delle famiglie possiede un frigorifero"/>
+        <circle class="punto frigoriferi" cx="350" cy="4" data-val="1963 — 55% delle famiglie possiede un frigorifero"/>
+        <text class="etichetta-punto frigoriferi" x="250" y="192">13%</text>
+        <text class="etichetta-punto frigoriferi" x="350" y="-8">55%</text>
+      </g>
+    </svg>
+    <p style="font-size:0.78rem; color:#8a7d68; font-style:italic; text-align:center; margin-top:4px;">Punti radi, non serie annuale: sono gli unici dati puntuali riportati nel testo del capitolo.</p>
+  </div>
+
+  <div class="pannello">
+    <h2>Auto e televisione: la moltiplicazione degli oggetti</h2>
+    <div class="carte-moltiplicatore">
+      <div class="carta">
+        <h3>Parco automobili circolanti</h3>
+        <div class="valori"><span class="num">342.000</span><span class="freccia">→</span><span class="num">quasi 4.000.000</span></div>
+        <p class="nota">1950 → 1963. La 600 (1955, 2,6 milioni di esemplari) e la 500 (1957, 3,7 milioni) resero l'utilitaria un bene di massa.</p>
+      </div>
+      <div class="carta">
+        <h3>Abbonamenti TV</h3>
+        <div class="valori"><span class="num">88.000</span><span class="freccia">→</span><span class="num">1.000.000</span><span class="freccia">→</span><span class="num">5.000.000</span></div>
+        <p class="nota">1954 → 1958 → 1965, quando una famiglia italiana su due possedeva un apparecchio.</p>
+      </div>
+    </div>
+    <div class="nota-salari">Fra il 1953 e il 1961 la produttività crebbe dell'84%, i salari reali solo del 46,9%: fu questo scarto — non solo il boom dei consumi — a rendere competitive le imprese italiane sui mercati internazionali, e a preparare le vertenze sindacali dei primi anni Sessanta.</div>
+  </div>
+
+  <p class="chiusura">Non fu un impoverimento della tavola: fu la liberazione di una quota crescente di reddito verso beni fino ad allora impensabili.</p>
+</div>
+<script>
+  document.querySelectorAll('.punto').forEach(p => {
+    p.addEventListener('click', () => alert(p.dataset.val));
+  });
+  const chips = document.querySelectorAll('.chip');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const serie = chip.dataset.serie;
+      const gruppo = document.querySelector('.serie-' + serie);
+      const attivo = chip.classList.toggle('spento');
+      gruppo.style.display = attivo ? 'none' : '';
+    });
+  });
+</script>
+</body>
+</html>

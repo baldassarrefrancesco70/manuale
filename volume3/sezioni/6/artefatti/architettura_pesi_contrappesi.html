@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'architettura dei pesi e contrappesi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gill+Sans&display=swap');
+
+  :root {
+    --beige: #F5F0E8;
+    --marrone: #8B7355;
+    --bianco-caldo: #fffdfa;
+    --testo: #2e2a24;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--beige);
+    color: var(--testo);
+    padding: 28px 16px 48px;
+  }
+
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--marrone);
+    margin: 0 0 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .sottotitolo {
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.92rem;
+    color: #5c5344;
+    margin: 0 0 26px;
+    font-style: italic;
+  }
+
+  .diagramma {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 18px;
+  }
+
+  svg#connessioni {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .connessione {
+    stroke: var(--marrone);
+    stroke-width: 1.4;
+    fill: none;
+    stroke-dasharray: 4 4;
+    opacity: 0.55;
+  }
+
+  .centro {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.78rem;
+    color: #6b5a43;
+    line-height: 1.35;
+    padding: 10px;
+    pointer-events: none;
+  }
+
+  .nodo {
+    position: absolute;
+    width: 148px;
+    transform: translate(-50%, -50%);
+    background: var(--bianco-caldo);
+    border: 2px solid var(--marrone);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(139,115,85,0.18);
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+
+  .nodo:hover {
+    box-shadow: 0 4px 12px rgba(139,115,85,0.32);
+  }
+
+  .nodo.attivo {
+    background: var(--marrone);
+    color: var(--bianco-caldo);
+  }
+
+  .nodo .etichetta {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 600;
+    font-size: 0.86rem;
+    letter-spacing: 0.01em;
+  }
+
+  .nodo .sub {
+    font-size: 0.72rem;
+    margin-top: 3px;
+    font-style: italic;
+    color: #7a6b54;
+  }
+  .nodo.attivo .sub { color: #f0e9dc; }
+
+  /* posizioni pentagono */
+  #n-parlamento { top: 6%;  left: 50%; }
+  #n-corte      { top: 32%; left: 92%; }
+  #n-presidente { top: 78%; left: 76%; }
+  #n-magistratura { top: 78%; left: 24%; }
+  #n-governo    { top: 32%; left: 8%; }
+
+  .scheda {
+    background: var(--bianco-caldo);
+    border: 2px solid var(--marrone);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 6px;
+    display: none;
+    animation: apparizione 0.25s ease;
+  }
+  .scheda.visibile { display: block; }
+
+  @keyframes apparizione {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scheda h2 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    color: var(--marrone);
+    font-size: 1.05rem;
+    margin: 0 0 10px;
+    border-bottom: 1px solid #e4dac8;
+    padding-bottom: 8px;
+  }
+
+  .scheda p {
+    font-size: 0.94rem;
+    line-height: 1.55;
+    margin: 0 0 10px;
+  }
+
+  .scheda .risposta-al-ventennio {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.82rem;
+    background: #f0e9dc;
+    border-left: 3px solid var(--marrone);
+    padding: 8px 12px;
+    color: #5c5344;
+    margin-top: 12px;
+  }
+
+  .placeholder {
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-size: 0.88rem;
+    color: #8a7d68;
+    font-style: italic;
+    padding: 18px 0 4px;
+  }
+
+  .chiusura {
+    margin-top: 28px;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 0.92rem;
+    font-style: italic;
+    color: #5c5344;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 560px) {
+    .nodo { width: 108px; padding: 8px 6px; }
+    .nodo .etichetta { font-size: 0.72rem; }
+    .nodo .sub { font-size: 0.62rem; }
+    .centro { font-size: 0.66rem; width: 46%; }
+    .scheda { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>L'architettura dei pesi e contrappesi</h1>
+  <p class="sottotitolo">Cinque organi pensati, punto per punto, come risposta al ventennio appena chiuso</p>
+
+  <div class="diagramma">
+    <svg id="connessioni" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path class="connessione" d="M 50 6 L 92 32" />
+      <path class="connessione" d="M 92 32 L 76 78" />
+      <path class="connessione" d="M 76 78 L 24 78" />
+      <path class="connessione" d="M 24 78 L 8 32" />
+      <path class="connessione" d="M 8 32 L 50 6" />
+      <path class="connessione" d="M 50 6 L 76 78" />
+      <path class="connessione" d="M 50 6 L 24 78" />
+    </svg>
+
+    <div class="centro">non un'ingegneria neutra, ma un sistema costruito per rendere impossibile ciò che era appena accaduto</div>
+
+    <div class="nodo" id="n-parlamento" data-organo="parlamento">
+      <div class="etichetta">Parlamento</div>
+      <div class="sub">il baricentro</div>
+    </div>
+    <div class="nodo" id="n-corte" data-organo="corte">
+      <div class="etichetta">Corte costituzionale</div>
+      <div class="sub">chiude il cerchio</div>
+    </div>
+    <div class="nodo" id="n-presidente" data-organo="presidente">
+      <div class="etichetta">Presidente della Repubblica</div>
+      <div class="sub">media, non governa</div>
+    </div>
+    <div class="nodo" id="n-magistratura" data-organo="magistratura">
+      <div class="etichetta">Magistratura e CSM</div>
+      <div class="sub">indipendenza negata dal Ventennio</div>
+    </div>
+    <div class="nodo" id="n-governo" data-organo="governo">
+      <div class="etichetta">Governo</div>
+      <div class="sub">debole per scelta</div>
+    </div>
+  </div>
+
+  <div id="placeholder" class="placeholder">Clic su un organo per leggerne la scheda.</div>
+
+  <div class="scheda" id="scheda-parlamento">
+    <h2>Parlamento — il baricentro</h2>
+    <p>Due Camere — la Camera dei Deputati e il Senato della Repubblica — elette entrambe a suffragio universale e dotate degli stessi identici poteri legislativi: un bicameralismo "perfetto" nella sua funzione di controllo reciproco, ma anche, come si vedrà nei capitoli seguenti, una macchina lenta.</p>
+    <p>Il governo non ha potere proprio se non quello che le Camere gli concedono con la fiducia. Per tutelare al massimo il pluralismo la legge elettorale scelta fu proporzionale: una decisione che garantì una rappresentanza fedele di ogni sensibilità politica del paese, e che lasciò in eredità la frammentazione e l'instabilità cronica dei governi.</p>
+    <div class="risposta-al-ventennio">Risposta al ventennio: un potere legislativo diffuso e rappresentativo, non concentrato in un solo uomo o in un solo partito.</div>
+  </div>
+
+  <div class="scheda" id="scheda-governo">
+    <h2>Governo — debole per scelta</h2>
+    <p>Presidente del Consiglio e ministri, incaricati dal presidente della Repubblica ma tenuti a ottenere la fiducia di entrambe le Camere: un esecutivo concepito debole per scelta, non per difetto.</p>
+    <p>Sacrificare la forza dell'esecutivo parve, a chi usciva dal fascismo, un prezzo accettabile per la sicurezza della democrazia.</p>
+    <div class="risposta-al-ventennio">Risposta al ventennio: nessun uomo solo al comando, nemmeno alla guida del governo.</div>
+  </div>
+
+  <div class="scheda" id="scheda-magistratura">
+    <h2>Magistratura e CSM — un'indipendenza negata dal Ventennio</h2>
+    <p>Il potere giudiziario ricevette un'indipendenza che il fascismo gli aveva negato: accesso alla magistratura solo per concorso pubblico, e un organo di autogoverno, il Consiglio Superiore della Magistratura, composto per due terzi da magistrati eletti dai colleghi e per un terzo dal Parlamento — sottratto così alle ingerenze del ministero.</p>
+    <div class="risposta-al-ventennio">Risposta al ventennio: una magistratura che risponde alle leggi, non al potere esecutivo del momento.</div>
+  </div>
+
+  <div class="scheda" id="scheda-presidente">
+    <h2>Presidente della Repubblica — media, non governa</h2>
+    <p>Un presidente pensato come garante e non come guida politica: eletto dal Parlamento in seduta comune per sette anni, non dal popolo — come il presidente di Weimar, la cui elezione diretta e i cui poteri d'emergenza concorrenti avevano tanto pesato nella caduta di quella repubblica.</p>
+    <p>Il presidente italiano incarica il capo del governo, promulga le leggi, scioglie le Camere quando non trovano una maggioranza, presiede il CSM: media, non governa.</p>
+    <div class="risposta-al-ventennio">Risposta al ventennio: un vertice simbolico e di garanzia, mai un vertice di comando personale come quello che l'elezione diretta di Weimar aveva reso possibile.</div>
+  </div>
+
+  <div class="scheda" id="scheda-corte">
+    <h2>Corte costituzionale — chiude il cerchio</h2>
+    <p>Quindici giudici — un terzo nominati dal presidente della Repubblica, un terzo dal Parlamento, un terzo dalle supreme magistrature — con il compito di vigilare che le leggi ordinarie rispettino una Costituzione <strong>rigida</strong>, modificabile solo con procedimento aggravato.</p>
+    <p>È l'esatto contrario dello Statuto Albertino, che il fascismo aveva svuotato dall'interno senza mai abrogarlo.</p>
+    <div class="risposta-al-ventennio">Risposta al ventennio: una Costituzione che nessuna maggioranza di governo può cambiare a piacere, come invece era accaduto allo Statuto Albertino.</div>
+  </div>
+
+  <p class="chiusura">Fu un'architettura pensata per impedire l'autoritarismo, non per garantire la governabilità. I due obiettivi, come questa sezione avrà modo di verificare più volte, non furono mai facili da tenere insieme.</p>
+</div>
+
+<script>
+  const nodi = document.querySelectorAll('.nodo');
+  const schede = document.querySelectorAll('.scheda');
+  const placeholder = document.getElementById('placeholder');
+  let attivo = null;
+
+  nodi.forEach(nodo => {
+    nodo.addEventListener('click', () => {
+      const organo = nodo.dataset.organo;
+      const scheda = document.getElementById('scheda-' + organo);
+
+      if (attivo === organo) {
+        scheda.classList.remove('visibile');
+        nodo.classList.remove('attivo');
+        placeholder.style.display = 'block';
+        attivo = null;
+        return;
+      }
+
+      schede.forEach(s => s.classList.remove('visibile'));
+      nodi.forEach(n => n.classList.remove('attivo'));
+
+      scheda.classList.add('visibile');
+      nodo.classList.add('attivo');
+      placeholder.style.display = 'none';
+      attivo = organo;
+    });
+  });
+</script>
+</body>
+</html>

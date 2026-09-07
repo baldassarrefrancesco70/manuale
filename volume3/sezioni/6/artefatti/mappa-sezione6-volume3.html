@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'Italia repubblicana, 1946-oggi — Mappa della sezione</title>
+<style>
+  :root{
+    --paper: #ece2c8; --ink: #2a2318; --line: #b7a173; --rule: #b7a173; --rule-soft: #cfc09a;
+    --paper-card: #f2e9d2; --paper-deep: #ddcda3; --ink-soft: #5c5136;
+    --shadow: 0 2px 0 rgba(42,35,24,.12);
+    --font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-label: 'Gill Sans', 'Gill Sans MT', Corbel, Calibri, 'Trebuchet MS', sans-serif;
+
+    --cornice: #8a7a52;
+    --c1: #5c6b45; /* Cap 0 — una storia non ancora finita */
+    --c2: #3d5566; /* Cap 1 — la Costituzione */
+    --c3: #9d6b2b; /* Cap 2 — ricostruzione e centrismo */
+    --c4: #7a4a3d; /* Cap 3 — il miracolo economico */
+    --c5: #4a6b5c; /* Cap 4 — il centro-sinistra e il 1968 */
+    --c6: #7c2e35; /* Cap 5 — gli anni di piombo */
+    --c7: #5a4a7a; /* Cap 6 — la crisi della Prima Repubblica */
+    --c8: #6b7345; /* Cap 7 — la Seconda Repubblica */
+    --c9: #8a5a2b; /* Cap 8 — la crisi del debito sovrano */
+    --c10: #4a5a6b; /* Italia allo specchio — cinema e televisione */
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --paper:#1c1710; --paper-card:#241d13; --paper-deep:#241d13; --ink:#e8dcc0; --ink-soft:#b6a780;
+      --rule:#5a4d30; --rule-soft:#453a24; --line:#5a4d30; --shadow:0 2px 0 rgba(0,0,0,.4); }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); position:relative; min-height:100%; -webkit-font-smoothing:antialiased; }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; opacity:.35; } }
+
+  .sheet{ position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:0 30px 70px; }
+
+  header.masthead{ padding:36px 0 24px; border-bottom:1px solid var(--rule); }
+  .eyebrow{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.16em; font-size:11px; color:var(--ink-soft); margin:0 0 10px; }
+  h1{ font-weight:400; font-size:clamp(26px,3.6vw,40px); line-height:1.15; margin:0 0 12px; }
+  .dek{ font-family:var(--font-label); font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:70ch; margin:0; }
+
+  .controls{ display:flex; gap:10px; margin-top:22px; }
+  .ctrl-btn{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11.5px; padding:10px 18px;
+    background:transparent; border:1px solid var(--rule); color:var(--ink); cursor:pointer; }
+  .ctrl-btn:hover{ border-color:var(--ink); }
+
+  .cascade{ position:relative; margin-top:34px; }
+  .connectors-overlay{ position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:visible; }
+  .connectors-overlay path{ fill:none; stroke:var(--rule); stroke-width:1.5; }
+  .row{ position:relative; z-index:1; display:flex; margin-bottom:6px; }
+  .row.align-left{ justify-content:flex-start; }
+  .row.align-center{ justify-content:center; }
+  .row.align-right{ justify-content:flex-end; }
+
+  .node{ display:flex; align-items:center; gap:12px; background:var(--paper-card); border:1px solid var(--rule);
+    border-left:5px solid var(--n-c); padding:13px 20px 13px 16px; cursor:pointer; box-shadow:var(--shadow);
+    font-family:var(--font-label); min-width:280px; max-width:460px; transition:transform .12s ease; position:relative; }
+  .node:hover{ transform:translateY(-2px); }
+  .node.frame{ border-left-style:double; border-left-width:7px; }
+  .node .n-tag{ font-size:9.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--n-c); font-weight:700; white-space:nowrap; }
+  .node .n-title{ font-family:var(--font-body); font-size:16px; color:var(--ink); line-height:1.25; flex:1; }
+  .node .n-chevron{ font-size:13px; color:var(--ink-soft); transition:transform .2s ease; flex-shrink:0; }
+  .node[aria-expanded="true"] .n-chevron{ transform:rotate(90deg); }
+  .node[aria-expanded="true"]{ outline:2px solid var(--n-c); outline-offset:1px; }
+
+  .panel{ max-height:0; overflow:hidden; transition:max-height .3s ease; margin:0 0 6px; }
+  .panel.open{ max-height:2400px; }
+  .panel-inner{ background:var(--paper-deep); border:1px solid var(--rule); border-left:5px solid var(--n-c);
+    padding:20px 26px 22px; margin:4px 0 14px; max-width:900px; }
+
+  .frame-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px; }
+  .frame-list > li{ padding-left:18px; border-left:2px solid var(--rule-soft); position:relative; }
+  .bullets{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; }
+  .bullets li{ font-size:15px; line-height:1.5; padding-left:15px; position:relative; }
+  .bullets li::before{ content:"–"; position:absolute; left:0; color:var(--n-c); font-weight:700; }
+
+  .cluster{ margin-bottom:20px; }
+  .cluster:last-of-type{ margin-bottom:0; }
+  .cluster-name{ font-family:var(--font-label); text-transform:uppercase; letter-spacing:.08em; font-size:11px; color:var(--n-c); font-weight:700; margin:0 0 10px; }
+  .stmt-chain{ display:flex; flex-direction:column; }
+  .stmt-block{ padding:6px 0; }
+  .stmt-arrow{ font-family:var(--font-label); font-size:11px; color:var(--ink-soft); padding:2px 0 2px 15px; }
+
+  .histo-row{ margin-top:20px; padding-top:16px; border-top:1px dashed var(--rule-soft); display:flex; flex-direction:column; gap:10px; }
+  .histo-item{ font-size:14.5px; line-height:1.5; }
+  .histo-item .htag{ display:block; font-family:var(--font-label); font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:3px; }
+  .histo-item .htag b{ color:var(--n-c); }
+
+  footer.prompt{ margin-top:40px; padding-top:18px; border-top:1px solid var(--rule); font-family:var(--font-label); font-size:12px; color:var(--ink-soft); font-style:italic; }
+  footer.prompt span{ opacity:.7; margin-right:6px; font-style:normal; }
+
+  @media (max-width:760px){
+    .row.align-left, .row.align-center, .row.align-right{ justify-content:flex-start; }
+    .node{ min-width:0; width:100%; max-width:none; }
+    .connector-svg{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="masthead">
+    <p class="eyebrow">▸ Volume 3 · Sezione 6 · Mappa di apertura</p>
+    <h1>La Costituzione ferma, la politica in movimento</h1>
+    <p class="dek">Dall'apertura alla chiusura della sezione, undici tappe. Clicca ciascun nodo per aprire il suo pannello — più pannelli possono restare aperti insieme, per confrontare capitoli distanti fra loro.</p>
+  </header>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="expandAll" type="button">Espandi tutto</button>
+    <button class="ctrl-btn" id="collapseAll" type="button">Comprimi tutto</button>
+  </div>
+
+  <div class="cascade" id="cascade">
+    <svg class="connectors-overlay" id="connectors"></svg>
+  </div>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    { id:'apertura', kind:'frame', tag:'Apertura', title:'Cambiare i partiti, non la Costituzione', color:'var(--cornice)',
+      items:[
+        { bullets:['In ottant\'anni l\'Italia repubblicana ha cambiato più volte i partiti, il sistema elettorale, perfino il nome con cui si designano le proprie fasi storiche.','La Costituzione entrata in vigore il 1° gennaio 1948 non ha mai cambiato la propria struttura: nessuna delle svolte politiche raccontate in questa sezione ha richiesto di riscriverla.']},
+        { bullets:['Il lessico corrente, «Prima Repubblica» / «Seconda Repubblica», lascia intendere un cambio di regime istituzionale che non c\'è mai stato: è cambiato il sistema dei partiti, non la cornice costituzionale.','È il paradosso che questa sezione tiene fermo dall\'inizio alla fine: che cosa cambia davvero, e che cosa resta fermo?']}
+      ] },
+
+    { id:'cap0', kind:'chapter', tag:'Capitolo 0', title:'Una storia non ancora finita', color:'var(--c1)',
+      clusters:[
+        { name:'Una storia senza distanza', progression:false, statements:[
+          ['Raccontare la Repubblica italiana significa raccontare una cronaca che arriva fino a oggi: mancano gli esiti definitivi e la sedimentazione delle fonti che il tempo, di solito, produce.'] ] },
+        { name:'Il 2 giugno 1946', progression:true, statements:[
+          ['Voto a suffragio universale, uomini e donne insieme: la scelta fra monarchia e repubblica, e l\'elezione dell\'Assemblea Costituente.'],
+          ['La repubblica prevale con poco più di due milioni di voti di scarto su venticinque milioni: un margine stretto, non un plebiscito. Il Mezzogiorno resta in prevalenza monarchico.'] ] },
+        { name:'Due nomi, una parola sbagliata', progression:false, statements:[
+          ['«Prima Repubblica» e «Seconda Repubblica» indicano due sistemi politici davvero diversi, ma a separarli non c\'è mai stata una nuova Costituzione: c\'è stato il crollo di un sistema di partiti, non la nascita di una nuova Repubblica in senso costituzionale.'] ] }
+      ] },
+
+    { id:'cap1', kind:'chapter', tag:'Capitolo 1', title:'La Costituzione (richiamo)', color:'var(--c2)',
+      clusters:[
+        { name:'Un compromesso fra culture diverse', progression:false, statements:[
+          ['Cattolico-democratici, socialisti e comunisti, liberali: culture appena alleate nella Resistenza scrivono insieme, fra il 1946 e il 1948, un testo che nessuna delle tre, da sola, avrebbe scritto in quella forma.'] ] },
+        { name:'I principi in tre righe', progression:false, statements:[
+          ['Sovranità popolare e lavoro (art. 1), diritti inviolabili (art. 2), uguaglianza formale e sostanziale (art. 3): il metro con cui i capitoli seguenti misureranno la pratica politica della Repubblica.'] ] },
+        { name:'L\'architettura dei pesi e contrappesi', progression:false, statements:[
+          ['Bicameralismo perfetto, proporzionale, governo debole per scelta, magistratura indipendente, presidente della Repubblica garante e non guida: un\'ingegneria pensata contro il ventennio appena chiuso, non per la governabilità.'] ] },
+        { name:'Una costituzione a lungo inattuata', progression:true, statements:[
+          ['Corte costituzionale (1956), CSM (1958), Regioni a statuto ordinario (1970): fra il testo del 1948 e la sua piena attuazione passano anni, in alcuni casi decenni.'],
+          ['La Corte costituzionale, una volta attivata, funziona da motore di attuazione silenziosa: dal codice Rocco fascista al segreto di Stato, bonifica il diritto ereditato dal Ventennio.'] ] }
+      ] },
+
+    { id:'cap2', kind:'chapter', tag:'Capitolo 2', title:'Ricostruzione e centrismo', color:'var(--c3)',
+      clusters:[
+        { name:'Le macerie e la scelta di campo', progression:true, statements:[
+          ['1947: il quarto governo De Gasperi, solo DC e tecnici, vara la «linea Einaudi»; nasce il SIFAR, erede di uomini e pratiche non depurati dal fascismo.'],
+          ['1948-51: il Piano Marshall (circa 1300-1400 milioni di dollari) impone un salto di qualità produttivo; il 4 aprile 1949 il Patto Atlantico chiude la scelta di campo occidentale.'] ] },
+        { name:'Il 1948: uno «scontro di civiltà»', progression:false, statements:[
+          ['La DC passa dal 35,2% al 48,5% in due anni: non solo forza dei programmi, ma mobilitazione totale del paese attorno a una paura, fra crociata anticomunista e colpo di Praga.'] ] },
+        { name:'De Gasperi e il centrismo', progression:false, statements:[
+          ['Un centro che guarda a sinistra, isolando insieme PCI e MSI; riforma agraria e Cassa per il Mezzogiorno; la «legge truffa» del 1953 non scatta e chiude la stagione degasperiana.'] ] },
+        { name:'La rottura sindacale', progression:false, statements:[
+          ['L\'attentato a Togliatti nel luglio 1948 spacca la CGIL unitaria in tre: nasce la tripartizione sindacale (CGIL, CISL, UIL) che durerà decenni.'] ] }
+      ] },
+
+    { id:'cap3', kind:'chapter', tag:'Capitolo 3', title:'Il miracolo economico', color:'var(--c4)',
+      clusters:[
+        { name:'Un miracolo non governato', progression:false, statements:[
+          ['1958-63: il reddito per abitante quasi raddoppia, trainato dall\'industria di Stato (IRI, ENI di Mattei); ma nessuna riforma urbanistica accompagna la trasformazione.'] ] },
+        { name:'La rivoluzione dei consumi', progression:true, statements:[
+          ['Frigoriferi, utilitarie, televisione: fra il 1953 e il 1980 la spesa alimentare crolla dal 50,5% al 28% dei consumi delle famiglie.'],
+          ['La Rai (1954) impone per la prima volta l\'uso quotidiano di una lingua comune: un\'unificazione linguistica che un secolo di scuola pubblica non aveva completato.'] ] },
+        { name:'La nascita dei giovani come soggetto sociale', progression:false, statements:[
+          ['L\'adolescenza diventa una categoria storica a sé (Edgar Morin); lo scandalo della Zanzara (1966) e gli «angeli del fango» a Firenze anticipano il 1968.'] ] },
+        { name:'Le contraddizioni del boom', progression:false, statements:[
+          ['Nove milioni di italiani cambiano residenza fra il 1951 e il 1971; «cattedrali nel deserto» al Sud, cementificazione senza piano al Nord, salari indietro rispetto alla produttività.'] ] }
+      ] },
+
+    { id:'cap4', kind:'chapter', tag:'Capitolo 4', title:'Il centro-sinistra e il 1968', color:'var(--c5)',
+      clusters:[
+        { name:'L\'apertura a sinistra', progression:false, statements:[
+          ['Dopo il 1956 (Ungheria) e la morte di De Gasperi (1954), l\'alleanza DC-PSI diventa una via quasi obbligata per governare un miracolo economico rimasto senza guida politica.'] ] },
+        { name:'Riforme realizzate, riforme mancate', progression:true, statements:[
+          ['1962: nazionalizzazione dell\'energia elettrica (ENEL) e scuola media unica.'],
+          ['Il Piano Solo (1964) e la crisi della riforma urbanistica Sullo: il centro-sinistra sopravvive sul piano parlamentare ma si svuota dei propri contenuti.'] ] },
+        { name:'Il 1968', progression:false, statements:[
+          ['La specificità italiana è la saldatura precoce fra studenti e «operaio massa»; il 12 dicembre 1969 lo Statuto dei lavoratori è approvato poche ore prima della bomba di piazza Fontana.'] ] }
+      ] },
+
+    { id:'cap5', kind:'chapter', tag:'Capitolo 5', title:'Gli anni di piombo', color:'var(--c6)',
+      clusters:[
+        { name:'Piazza Fontana: la strage e il depistaggio', progression:false, statements:[
+          ['12 dicembre 1969: diciassette morti alla Banca dell\'Agricoltura. La morte di Giuseppe Pinelli in questura e l\'incolpevole Pietro Valpreda aprono la stagione dei depistaggi.'] ] },
+        { name:'Il doppio terrorismo', progression:true, statements:[
+          ['Le Brigate Rosse nascono nelle fabbriche del Nord-Ovest: dal sequestro Sossi (1974) al sequestro e omicidio di Aldo Moro (1978), fino all\'omicidio dell\'operaio Guido Rossa (1979), che ne segna l\'isolamento.'],
+          ['Il terrorismo neofascista sceglie l\'attentato indiscriminato: da Peteano (1972) alla strage di Bologna (1980, 85 morti); fra il 1969 e il 1973 quasi tutta la violenza politica italiana è di matrice neofascista.'] ] },
+        { name:'Il «doppio Stato» e i depistaggi', progression:false, statements:[
+          ['Ufficio Affari Riservati e SID/SISMI: due modalità distinte di depistaggio, dalla provocazione contro Valpreda alla copertura dei neofascisti, fino alla loggia P2 di Licio Gelli.'] ] }
+      ],
+      historio:[
+        { q:'La «strategia della tensione»: un disegno, o una convergenza?', from:'Il «doppio Stato» e i depistaggi' },
+        { q:'Le lettere di Moro: un prigioniero lucido, o una vittima da delegittimare?', from:'Il doppio terrorismo' }
+      ] },
+
+    { id:'cap6', kind:'chapter', tag:'Capitolo 6', title:'La crisi della Prima Repubblica', color:'var(--c7)',
+      clusters:[
+        { name:'Il compromesso storico e il suo esaurimento', progression:true, statements:[
+          ['Dopo il golpe cileno del 1973, Berlinguer propone l\'alleanza di lungo periodo fra DC, PSI e PCI; le elezioni del 1976 (PCI al 34,4%) la rendono politicamente inevitabile.'],
+          ['L\'omicidio di Moro (1978) priva il compromesso del suo interprete più autorevole nella DC; nel 1981 la «questione morale» di Berlinguer anticipa Tangentopoli.'] ] },
+        { name:'Il riflusso e la rivoluzione Fininvest', progression:false, statements:[
+          ['Dalla «marcia dei quarantamila» (1980) al craxismo decisionista: il conflitto di classe lascia il posto alla difesa dello status individuale, mentre Fininvest costruisce i nuovi immaginari di Canale 5.'] ] },
+        { name:'Tangentopoli: la fine della Prima Repubblica', progression:true, statements:[
+          ['17 febbraio 1992: l\'arresto di Mario Chiesa apre l\'inchiesta Mani Pulite, oltre 4.500 arresti e 25.000 avvisi di garanzia.'],
+          ['Quattro fronti insieme: il crollo elettorale del 5 aprile 1992 (Lega Nord all\'8,6%), la crisi valutaria del settembre 1992, le stragi di Capaci e via D\'Amelio: un unico collasso di legittimità, senza che una riga della Costituzione venga sospesa.'] ] }
+      ],
+      historio:[
+        { q:'Mani Pulite: risanamento necessario, o rivoluzione giudiziaria?', from:'Tangentopoli: la fine della Prima Repubblica' }
+      ] },
+
+    { id:'cap7', kind:'chapter', tag:'Capitolo 7', title:'La Seconda Repubblica', color:'var(--c8)',
+      clusters:[
+        { name:'Le stesse regole, un sistema diverso', progression:false, statements:[
+          ['Il referendum dell\'aprile 1993 (82% di Sì) porta al Mattarellum: due poli riconoscibili invece di una costellazione di partiti, ma bicameralismo perfetto e prerogative presidenziali restano quelle del 1948.'] ] },
+        { name:'Il ventennio di Berlusconi', progression:false, statements:[
+          ['Forza Italia, «partito-azienda» nato nel 1994: un bipolarismo imperfetto, fatto più di voto di sanzione che di confronto fra progetti, chiuso dalla crisi del debito del 2011.'] ] },
+        { name:'Il vincolo esterno', progression:false, statements:[
+          ['Maastricht (1992) e l\'euro (1999-2002): i parametri europei come alleato per una classe dirigente bloccata dai veti interni, non solo come vincolo tecnico.'] ] }
+      ] },
+
+    { id:'cap8', kind:'chapter', tag:'Capitolo 8', title:'La crisi del debito sovrano', color:'var(--c9)',
+      clusters:[
+        { name:'Il 2008 che non esplode subito', progression:true, statements:[
+          ['Banche italiane relativamente indenni nel 2008; ma crescita quasi nulla, immobilismo politico e giudizio dei mercati trasformano lo shock in minaccia esistenziale tre anni dopo.'],
+          ['Lo spread BTP-Bund diventa il termometro quotidiano di un paese percepito insolvente; il 12 novembre 2011 Berlusconi si dimette.'] ] },
+        { name:'Il governo Monti', progression:false, statements:[
+          ['La manovra «Salva Italia» e la riforma Fornero: la spirale recessiva e il problema degli «esodati» sono il prezzo pagato per allontanare lo spettro del default.'] ] }
+      ],
+      historio:[
+        { q:'Il vincolo esterno: necessità tecnica, o strategia delle élite?', from:'Il governo Monti' }
+      ] },
+
+    { id:'captv', kind:'chapter', tag:'Cinema e televisione', title:'Italia allo specchio', color:'var(--c10)',
+      clusters:[
+        { name:'Dal neorealismo alla commedia all\'italiana', progression:true, statements:[
+          ['Il neorealismo impone al paese un\'immagine vera di sé, ma il pubblico riempie le sale per Don Camillo; la censura fascista sul cinema resta in vigore fino al 1962.'],
+          ['La commedia all\'italiana usa il riso come un bisturi sui nuovi mostri del benessere, da Sordi a Gassman.'] ] },
+        { name:'La Rai bernabeiana e la lottizzazione', progression:true, statements:[
+          ['Il «nuovo focolare» unifica la lingua nazionale più della scuola dell\'obbligo; la legge del 1975 spartisce le tre reti Rai fra le aree politiche.'],
+          ['Fininvest e i decreti Berlusconi del 1984 legalizzano il duopolio: dalla «paleotelevisione» pedagogica alla «neotelevisione» commerciale di Umberto Eco.'] ] },
+        { name:'Un contributo alla storia, non solo un suo specchio', progression:false, statements:[
+          ['Il terreno psicologico del «partito personale» non nasce nelle sezioni di partito ma negli studi di Canale 5, anni prima della «discesa in campo».'] ] }
+      ] },
+
+    { id:'chiusura', kind:'frame', tag:'Chiusura', title:'Cambiare i partiti, non ancora la Costituzione', color:'var(--cornice)',
+      items:[
+        { bullets:['Quella fissità costituzionale è la prova che la cornice ha retto a ogni urto, o la prova che ogni tentativo di toccarla è semplicemente fallito? La Bicamerale D\'Alema (1997), il referendum del 2006 e quello del 2016 falliscono tutti.']},
+        { bullets:['Eppure la legge elettorale cambia quattro volte in trent\'anni — Mattarellum, Porcellum, Italicum (dichiarato in parte incostituzionale), Rosatellum — sempre con legge ordinaria, mai con revisione costituzionale.']},
+        { bullets:['La Costituzione del 1948 ha attraversato il terrorismo, il crollo di un intero sistema di partiti e la più grave crisi finanziaria dal dopoguerra senza mai essere sospesa: tenuta di un progetto ben scritto, inerzia di un sistema senza alternative, o entrambe le cose insieme?']}
+      ] }
+  ];
+
+  var ALIGN = ['left','center','right','left','center','right','left','center','right','left','center','right'];
+  var open = {};
+  DATA.forEach(function(n){ open[n.id] = false; });
+
+  var cascade = document.getElementById('cascade');
+  var connectorsSvg = document.getElementById('connectors');
+
+  function bulletList(bullets){
+    var html = '<ul class="bullets">';
+    bullets.forEach(function(b){ html += '<li>'+b+'</li>'; });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildFramePanel(node){
+    var html = '<ul class="frame-list">';
+    node.items.forEach(function(it){
+      html += '<li>' + bulletList(it.bullets) + '</li>';
+    });
+    html += '</ul>';
+    return html;
+  }
+
+  function buildChapterPanel(node){
+    var html = '';
+    node.clusters.forEach(function(cl){
+      html += '<div class="cluster"><div class="cluster-name">'+cl.name+'</div><div class="stmt-chain">';
+      cl.statements.forEach(function(bullets, i){
+        html += '<div class="stmt-block">'+bulletList(bullets)+'</div>';
+        if(cl.progression && i < cl.statements.length - 1){
+          html += '<div class="stmt-arrow">↓</div>';
+        }
+      });
+      html += '</div></div>';
+    });
+    if(node.historio && node.historio.length){
+      html += '<div class="histo-row">';
+      node.historio.forEach(function(h){
+        html += '<div class="histo-item"><span class="htag">Nodo storiografico · da: <b>'+h.from+'</b></span>'+h.q+'</div>';
+      });
+      html += '</div>';
+    }
+    return html;
+  }
+
+  function render(){
+    var rows = cascade.querySelectorAll('.row, .panel');
+    rows.forEach(function(el){ el.remove(); });
+
+    DATA.forEach(function(node, idx){
+      var row = document.createElement('div');
+      row.className = 'row align-' + ALIGN[idx];
+
+      var btn = document.createElement('button');
+      btn.className = 'node' + (node.kind === 'frame' ? ' frame' : '');
+      btn.style.setProperty('--n-c', node.color);
+      btn.type = 'button';
+      btn.setAttribute('data-node-id', node.id);
+      btn.setAttribute('aria-expanded', String(open[node.id]));
+      btn.innerHTML = '<span class="n-tag">'+node.tag+'</span><span class="n-title">'+node.title+'</span><span class="n-chevron">▸</span>';
+      btn.addEventListener('click', function(){ open[node.id] = !open[node.id]; render(); });
+      row.appendChild(btn);
+      cascade.appendChild(row);
+
+      var panel = document.createElement('div');
+      panel.className = 'panel' + (open[node.id] ? ' open' : '');
+      var inner = document.createElement('div');
+      inner.className = 'panel-inner';
+      inner.style.setProperty('--n-c', node.color);
+      inner.innerHTML = node.kind === 'frame' ? buildFramePanel(node) : buildChapterPanel(node);
+      panel.appendChild(inner);
+      cascade.appendChild(panel);
+    });
+
+    requestAnimationFrame(drawConnectors);
+  }
+
+  function drawConnectors(){
+    var anyOpen = Object.keys(open).some(function(k){ return open[k]; });
+    connectorsSvg.style.display = anyOpen ? 'none' : '';
+    if(anyOpen) return;
+
+    var cRect = cascade.getBoundingClientRect();
+    var nodes = cascade.querySelectorAll('.node');
+    connectorsSvg.setAttribute('width', cRect.width);
+    connectorsSvg.setAttribute('height', cascade.scrollHeight);
+    connectorsSvg.setAttribute('viewBox', '0 0 ' + cRect.width + ' ' + cascade.scrollHeight);
+
+    var points = [];
+    nodes.forEach(function(n){
+      var r = n.getBoundingClientRect();
+      points.push({
+        cx: r.left - cRect.left + r.width / 2,
+        top: r.top - cRect.top,
+        bottom: r.top - cRect.top + r.height
+      });
+    });
+
+    var paths = '';
+    for(var i = 0; i < points.length - 1; i++){
+      var a = points[i], b = points[i+1];
+      var midY = (a.bottom + b.top) / 2;
+      var d = 'M ' + a.cx + ' ' + a.bottom +
+              ' C ' + a.cx + ' ' + midY + ', ' + b.cx + ' ' + midY + ', ' + b.cx + ' ' + b.top;
+      paths += '<path d="' + d + '"></path>';
+    }
+    connectorsSvg.innerHTML = paths;
+  }
+
+  window.addEventListener('resize', function(){ requestAnimationFrame(drawConnectors); });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = true; });
+    render();
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    DATA.forEach(function(n){ open[n.id] = false; });
+    render();
+  });
+
+  render();
+
+})();
+</script>
+</body>
+</html>
