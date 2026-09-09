@@ -48,9 +48,10 @@
     * [I problemi dello Stato unitario e la Destra storica](sezione-4/04-i-problemi-dello-stato-unitario-e-la-destra-storica.md)
     * [Gli anni della Sinistra storica](sezione-4/05-gli-anni-della-sinistra-storica.md)
     * [L'età crispina e la crisi di fine secolo](sezione-4/06-l-et-crispina-e-la-crisi-di-fine-secolo.md)
-    * [Il plebiscito, riletto](sezione-4/07-il-plebiscito-riletto.md)
+    * [L'età giolittiana](sezione-4/07-l-et-giolittiana.md)
+    * [Il plebiscito, riletto](sezione-4/08-il-plebiscito-riletto.md)
     * [ATLANTE](sezione-4/atlante.md)
-    * [Risorse digitali](sezione-4/09-risorse-digitali.md)
+    * [Risorse digitali](sezione-4/10-risorse-digitali.md)
 <!-- SEZIONE:sezione-4 END -->
 <!-- SEZIONE:sezione-5 START -->
 <!-- TITOLO:Il mondo fuori dall'Europa -->

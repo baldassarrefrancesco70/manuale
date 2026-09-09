@@ -1,6 +1,6 @@
 # Riepilogo materiali caricati — manuale/volume2/sezioni/4
 
-_12 immagini, 12 artefatti_
+_16 immagini, 13 artefatti_
 
 Sito pubblicato (GitHub Pages): https://baldassarrefrancesco70.github.io/manuale/
 
@@ -14,6 +14,7 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | Corno d_Africa.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Corno%20d_Africa.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Corno%20d_Africa.png) |
 | Ferrovie italiane 1861.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Ferrovie%20italiane%201861.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Ferrovie%20italiane%201861.png) |
 | Ferrovie italiane 1870.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Ferrovie%20italiane%201870.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Ferrovie%20italiane%201870.png) |
+| Guerra Libia e Dodecaneso.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Guerra%20Libia%20e%20Dodecaneso.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Guerra%20Libia%20e%20Dodecaneso.png) |
 | Italia 1748.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Italia%201748.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Italia%201748.png) |
 | Italia 1799.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Italia%201799.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Italia%201799.png) |
 | Italia 1815.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Italia%201815.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Italia%201815.png) |
@@ -21,6 +22,9 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | Italia_1810.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Italia_1810.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/Italia_1810.png) |
 | info1_Mappa_politica_della_Restaurazione_italiana.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info1_Mappa_politica_della_Restaurazione_italiana.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/info1_Mappa_politica_della_Restaurazione_italiana.png) |
 | info2_Spedizione_dei_Mille_1860.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info2_Spedizione_dei_Mille_1860.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/info2_Spedizione_dei_Mille_1860.png) |
+| info5_L_estensione_del_suffragio_1912-1913.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info5_L_estensione_del_suffragio_1912-1913.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/info5_L_estensione_del_suffragio_1912-1913.png) |
+| info6_Divario_economico_età_giolittiana.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info6_Divario_economico_et%C3%A0_giolittiana.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/info6_Divario_economico_et%C3%A0_giolittiana.png) |
+| info7_Crisi_del_sistema_politico_giolittiano.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info7_Crisi_del_sistema_politico_giolittiano.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/info7_Crisi_del_sistema_politico_giolittiano.png) |
 | mappa_sezione4.png | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/mappa_sezione4.png | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/img/mappa_sezione4.png) |
 
 ## Artefatti interattivi (`artefatti/`)
@@ -35,6 +39,7 @@ La colonna **Link esteso** è l'indirizzo da usare per incorporare il materiale 
 | 10-palestra-italia.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/10-palestra-italia.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/artefatti/10-palestra-italia.html) |
 | confronto_destra_sinistra.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/confronto_destra_sinistra.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/artefatti/confronto_destra_sinistra.html) |
 | espansione_coloniale.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/espansione_coloniale.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/artefatti/espansione_coloniale.html) |
+| giolitti_scioperi.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/giolitti_scioperi.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/artefatti/giolitti_scioperi.html) |
 | mappa-italia.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/mappa-italia.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/artefatti/mappa-italia.html) |
 | mappa_problemi_italia_unitaria.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/mappa_problemi_italia_unitaria.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/artefatti/mappa_problemi_italia_unitaria.html) |
 | politica_economica.html | https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/politica_economica.html | [vedi](https://github.com/baldassarrefrancesco70/manuale/blob/main/volume2/sezioni/4/artefatti/politica_economica.html) |

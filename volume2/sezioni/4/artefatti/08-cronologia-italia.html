@@ -90,7 +90,7 @@
     </div>
   </div>
 
-  <div class="slider"><input type="range" id="range" min="1795" max="1900" value="1860" step="1" aria-label="Anno"></div>
+  <div class="slider"><input type="range" id="range" min="1795" max="1914" value="1860" step="1" aria-label="Anno"></div>
   <div class="yearNow">Intorno all'anno <strong id="ylab">1860</strong></div>
 
   <div class="now" id="now"></div>
@@ -113,7 +113,7 @@
   ];
   LANES[2].lab="Societ\u00E0";
 
-  var Y0=1795, Y1=1900, PPY=10, PAD=20;
+  var Y0=1795, Y1=1914, PPY=10, PAD=20;
   var W=(Y1-Y0)*PPY+PAD*2;
 
   var E=[
@@ -140,6 +140,16 @@
      n:"Abolisce la pena di morte e riconosce la liceità dello sciopero: uno dei codici penali più avanzati d'Europa, promulgato dallo stesso governo che l'anno dopo dichiarerà lo stato d'assedio in Sicilia."},
     {y:1894,l:"tec",t:"Fondazione della Banca d'Italia",
      n:"Nasce dallo scandalo della Banca Romana: la funzione di emettere moneta, gestita fino ad allora da una pluralità di istituti privati, passa a un istituto unico."},
+    {y:1901,l:"tec",t:"La neutralità dello Stato",
+     n:"Col governo Zanardelli, e con Giolitti all'Interno, i prefetti ricevono ordine di non intervenire negli scioperi economici: lo Stato che per trent'anni aveva risposto al conflitto sociale con lo stato d'assedio smette, nel giro di pochi mesi, di considerarlo un problema di ordine pubblico."},
+    {y:1904,l:"tec",t:"Legge Orlando sull'istruzione",
+     n:"Estende l'obbligo scolastico dai nove ai dodici anni: un tassello della legislazione sociale con cui Giolitti prova a dimostrare che lo Stato liberale sa includere, non solo temere, chi lo guarda con sospetto."},
+    {y:1906,l:"tec",t:"Ispettorato del lavoro",
+     n:"Vigila sull'applicazione delle norme su orario, lavoro minorile e femminile: la neutralità dello Stato nei conflitti di lavoro si accompagna a una capacità di controllo che prima non esisteva."},
+    {y:1911,l:"tec",t:"Legge Daneo-Credaro",
+     n:"Sottrae ai comuni, spesso privi di fondi, l'onere delle scuole elementari e lo trasferisce allo Stato: la scuola pubblica come strumento di integrazione nazionale, trent'anni dopo la riforma elettorale del 1882."},
+    {y:1912,l:"tec",t:"Suffragio universale maschile",
+     n:"Il corpo elettorale passa da poco più di tre milioni a oltre otto milioni e mezzo di elettori: la riforma più radicale del periodo, e insieme, per chi ne resta escluso, la misura più netta di ciò che quella cittadinanza politica ancora non è."},
 
     // ---- ECONOMIA ----
     {y:1796,y2:1814,l:"eco",t:"Sfruttamento fiscale francese",approx:true,
@@ -164,8 +174,14 @@
      n:"Le ritorsioni francesi chiudono i mercati alle esportazioni meridionali di vino, agrumi e olio: il prezzo pagato dal Sud per una tariffa pensata al Nord."},
     {y:1893,l:"eco",t:"Scandalo della Banca Romana",
      n:"Emissione illegale di banconote e prestiti occulti a politici e giornalisti: la scoperta che il sistema del credito e quello della politica erano la stessa cosa."},
-    {y:1880,y2:1900,l:"eco",t:"Grande emigrazione",approx:true,
-     n:"Centinaia di migliaia di persone lasciano il paese: la risposta di chi il sistema protetto ha lasciato fuori, prima dal Nord e poi in massa dal Mezzogiorno."},
+    {y:1880,y2:1914,l:"eco",t:"Grande emigrazione",approx:true,
+     n:"Centinaia di migliaia di persone lasciano il paese ogni anno, in misura crescente dal Mezzogiorno: la risposta di chi il sistema protetto, prima e dopo il 1900, ha lasciato fuori."},
+    {y:1896,y2:1914,l:"eco",t:"Decollo industriale del triangolo",approx:true,
+     n:"Milano, Torino e Genova crescono a un ritmo medio del 6,7 per cento l'anno: la prima vera stagione industriale del paese, concentrata su un territorio che nel 1911 impiega meno di un quarto dei suoi operai al Sud."},
+    {y:1905,l:"eco",t:"Nazionalizzazione delle ferrovie",
+     n:"Lo Stato rileva le linee gestite da privati, ma i ferrovieri, diventando dipendenti pubblici, perdono il diritto di sciopero: dove il servizio pubblico non può fermarsi, la neutralità giolittiana si rovescia."},
+    {y:1910,l:"eco",t:"Fondazione della Confindustria",
+     n:"Gli industriali si danno un'organizzazione unica proprio mentre la CGdL consolida la propria: la dialettica concordata fra le parti sociali, non la crescita economica da sola, permette i miglioramenti salariali reali di questi anni."},
 
     // ---- SOCIETÀ ----
     {y:1796,y2:1799,l:"soc",t:"Insorgenze antifrancesi",
@@ -194,6 +210,16 @@
      n:"Il generale Bava Beccaris usa i cannoni contro la folla che protesta per il prezzo del pane. Il re lo decorerà, non lo punirà."},
     {y:1900,l:"soc",t:"Assassinio di Umberto I",
      n:"L'anarchico Gaetano Bresci dichiara di voler vendicare i morti di Milano: la crisi di fine secolo chiude il secolo con un regicidio."},
+    {y:1904,l:"soc",t:"Primo sciopero generale nazionale",
+     n:"Indetto dalla corrente rivoluzionaria del PSI in settembre, Giolitti lascia che si esaurisca da solo invece di reprimerlo con la forza, e ne trae vantaggio politico alle elezioni successive."},
+    {y:1906,l:"soc",t:"Nascita della CGdL",
+     n:"Camere del lavoro, federazioni di categoria e leghe contadine si riuniscono sotto una sigla unica, superando in breve i duecentomila iscritti: la libertà di organizzazione promessa dalla neutralità giolittiana diventa un fatto di massa."},
+    {y:1911,y2:1912,l:"soc",t:"Guerra di Libia",
+     n:"Sedici anni dopo Adua, lo stesso genere di impresa coloniale che aveva chiuso la carriera di Crispi viene rilanciato da un governo che si presenta come il più riformatore della storia unitaria."},
+    {y:1913,l:"soc",t:"Patto Gentiloni",
+     n:"Un'intesa elettorale distretto per distretto, non una revoca del Non expedit del 1874, riporta i cattolici nella vita politica italiana quarantatré anni dopo la breccia di Porta Pia."},
+    {y:1914,l:"soc",t:"Settimana rossa",
+     n:"La repressione di una manifestazione ad Ancona accende in poche ore scioperi e insurrezioni in tutta la penisola: si esaurisce in pochi giorni, ma sposta l'opinione pubblica moderata su posizioni più conservatrici, pochi mesi prima della guerra mondiale."},
 
     // ---- IDEE ----
     {y:1797,l:"ide",t:"Il tricolore a Reggio Emilia",
@@ -215,7 +241,13 @@
     {y:1891,l:"ide",t:"Rerum Novarum",
      n:"Leone XIII mobilita la Chiesa sulla questione sociale: una svolta parziale che pone le basi per un movimento cattolico organizzato, ma non riporta i cattolici alle urne."},
     {y:1897,l:"ide",t:"«Torniamo allo Statuto»",
-     n:"Sonnino propone di sganciare il governo dalla fiducia del Parlamento per legarlo solo a quella del Re: il sistema liberale che dichiara di non sentirsi sicuro di affrontare la democrazia di massa a viso aperto."}
+     n:"Sonnino propone di sganciare il governo dalla fiducia del Parlamento per legarlo solo a quella del Re: il sistema liberale che dichiara di non sentirsi sicuro di affrontare la democrazia di massa a viso aperto."},
+    {y:1909,l:"ide",t:"«Il ministro della malavita»",
+     n:"Gaetano Salvemini dedica a Giolitti l'opuscolo che gli darà il soprannome con cui la storia lo ricorderà: un atto d'accusa contro il compromesso fra dazio sul grano e tariffe industriali che, per Salvemini, soffocava ogni modernizzazione agraria."},
+    {y:1910,l:"ide",t:"Associazione Nazionalista Italiana",
+     n:"Enrico Corradini capovolge la lotta di classe marxista in conflitto fra nazioni «ricche» e nazioni «proletarie»: prima di essere un partito, il nazionalismo italiano fu un umore letterario contro la «mediocrità» giolittiana."},
+    {y:1911,l:"ide",t:"«La grande Proletaria si è mossa»",
+     n:"Giovanni Pascoli, poeta di formazione democratica e non nazionalista di professione, immagina la Libia come una terra promessa capace di dare ai contadini italiani, in patria, la dignità che l'emigrazione negava loro."}
   ];
 
   var on={tec:true,eco:true,soc:true,ide:true};

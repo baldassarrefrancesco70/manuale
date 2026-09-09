@@ -9,11 +9,6 @@ Quindici anni di Destra storica lasciavano un bilancio in pareggio e un paese es
 
 Chi prendeva il potere prometteva di allargare. Allargare l'elettorato, l'istruzione, le basi sociali dello Stato, il ruolo pubblico nell'economia. Molto di quel programma fu realizzato, e le riforme di questi anni sono reali. La domanda che il capitolo pone è però un'altra, e non ha una risposta comoda: si può allargare la base di uno Stato senza cambiare chi lo governa e come. Perché mentre l'elettorato triplicava, il modo di costruire le maggioranze in parlamento assumeva la forma che avrebbe dato il proprio nome a un vizio italiano di lunga durata, e l'alleanza tra industria protetta e proprietà terriera si saldava intorno a una tariffa doganale.
 
-{% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/confronto_destra_sinistra.html" %}
-Risorsa digitale --- Confronto fra Destra e Sinistra storiche
-{% endembed %}
-
-
 ## La Sinistra storica
 
 
@@ -26,6 +21,11 @@ La base sociale della Sinistra era più larga e più eterogenea di quella della 
 La contraddizione più profonda, però, era ideologica. I leader della Sinistra provenivano quasi tutti dalla tradizione del **Partito d'Azione**: in gioventù erano stati mazziniani, repubblicani, garibaldini. Per arrivare al governo avevano dovuto abbandonare quegli ardori e convertirsi alla monarchia sabauda. Crispi lo sintetizzò con una formula destinata a restare: «*La monarchia ci unisce, la repubblica ci divide*». Era una resa pragmatica e come tutte le rese pragmatiche, aveva un costo: gli ideali risorgimentali sopravvissero quanto bastava per dare alla Sinistra una retorica riformatrice, non quanto bastava per tenerla al riparo dalle tentazioni del compromesso.
 
 I capisaldi ideologici che la Sinistra portò al governo erano tre. Il primo era un **riformismo graduale** orientato ad allargare le basi sociali dello Stato e a coinvolgere i ceti popolari nella vita politica. Il secondo era un **anticlericalismo** radicato, nutrito da un sostrato massonico diffuso tra i suoi esponenti, che si traduceva in una difesa intransigente della laicità dello Stato contro qualsiasi pretesa temporale della Chiesa. Il terzo era l'abbandono del liberismo della Destra in favore del **protezionismo economico** e di un intervento più attivo dello Stato nello sviluppo nazionale. Su questi tre assi si sarebbe giocata la stagione riformatrice degli anni Ottanta, e su questi stessi assi sarebbero emerse le sue contraddizioni più acute.
+
+{% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/confronto_destra_sinistra.html" %}
+Risorsa digitale --- Confronto fra Destra e Sinistra storiche
+{% endembed %}
+
 
 {% hint style="success" %}
 **Focus --- Il trasformismo**

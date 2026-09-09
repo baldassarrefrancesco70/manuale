@@ -1,13 +1,13 @@
 # Risorse digitali
 
-Le risorse di questa sezione non sono pensate per essere usate tutte, e neppure nello stesso momento. Ogni tipo risponde a un ostacolo diverso. Una risorsa digitale interattiva serve quando un passaggio richiede di essere maneggiato, non solo riletto — spostare variabili, confrontare due assetti, ricostruire una sequenza — ed è la scelta giusta quando un paragrafo, alla prima lettura, non è tornato. Un'infografica serve quando il problema non è capire un singolo elemento ma tenerne insieme più di uno che il testo, per forza di cose, presenta in sequenza: vale la pena aprirla quando ci si accorge di aver perso il quadro d'insieme. Un video serve quando è la concatenazione a mancare — una catena causale lunga, un raccordo fra due capitoli — ed è utile soprattutto in fase di ripasso, per ricostruire il filo prima di una verifica.
+Le risorse di questa sezione non sono pensate per essere usate tutte, e neppure nello stesso momento. Ogni tipo risponde a un ostacolo diverso. Una risorsa digitale interattiva serve quando un passaggio richiede di essere maneggiato, non solo riletto (spostare variabili, confrontare due assetti, ricostruire una sequenza), ed è la scelta giusta quando un paragrafo, alla prima lettura, non è tornato. Un'infografica serve quando il problema non è capire un singolo elemento ma tenerne insieme più di uno che il testo, per forza di cose, presenta in sequenza: vale la pena aprirla quando ci si accorge di aver perso il quadro d'insieme. Un video serve quando è la concatenazione a mancare, una catena causale lunga, un raccordo fra due capitoli, ed è utile soprattutto in fase di ripasso, per ricostruire il filo prima di una verifica.
 
-Le risorse digitali e i video sono già incontrati nel corso del capitolo, nel punto in cui erano pertinenti: l'elenco che segue non li ripropone, li mappa — con un link al punto esatto in cui compaiono — utile per tornare su una risorsa già vista senza dover scorrere di nuovo il capitolo intero.
+Le risorse digitali e i video sono già incontrati nel corso del capitolo, nel punto in cui erano pertinenti: l'elenco che segue non li ripropone, li mappa, con un link al punto esatto in cui compaiono: utile per tornare su una risorsa già vista senza dover scorrere di nuovo il capitolo intero.
 
 ## Capitolo · L'Italia napoleonica e la Restaurazione
 
 
-Il capitolo apre contro un'assunzione comoda — che la Restaurazione abbia semplicemente cancellato l'età napoleonica — e distingue due parole che il linguaggio comune tende a fondere in una sola.
+Il capitolo apre contro un'assunzione comoda, che la Restaurazione abbia semplicemente cancellato l'età napoleonica, e distingue due parole che il linguaggio comune tende a fondere in una sola.
 
 - **Risorsa digitale** --- [Che cosa la Restaurazione non poté cancellare](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/01-restaurazione-non-cancello.html)
 - **Infografica** --- [Due assi](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info1_Mappa_politica_della_Restaurazione_italiana.png)
@@ -64,10 +64,24 @@ Il capitolo lavora contro l'idea che nel passaggio 1876 cambi poco, e mostra com
 ## Capitolo · L'età crispina e la crisi di fine secolo
 
 
-Il capitolo chiude la sezione seguendo una contraddizione che il testo non risolve in una sola direzione, tenendo insieme più fili che altrimenti resterebbero sparsi negli ultimi anni del secolo.
+Il capitolo segue una contraddizione che il testo non risolve in una sola direzione, tenendo insieme più fili che altrimenti resterebbero sparsi negli ultimi anni del secolo.
 
 - **Risorsa digitale** --- [Timeline interattiva sulla crisi di fine secolo](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/timeline_crisi_fine_secolo.html)
 - **Video** --- [La crisi di fine secolo](https://youtu.be/97UP9ih2T2Q)
+
+
+## Capitolo · L'età giolittiana
+
+
+Il capitolo chiude la sezione seguendo un metodo di governo che sembra l'opposto di se stesso a seconda del punto da cui lo si osserva: le risorse qui aiutano a vedere insieme le proporzioni che il testo enuncia (chi vota e chi resta escluso, due economie nello stesso paese, due fratture politiche che convergono nello stesso biennio) e la concatenazione diplomatica e militare della guerra di Libia, troppo lunga per restare in un solo capoverso.
+
+- **Risorsa digitale** --- [Sciopero economico o politico? Decidi come Giolitti](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/giolitti_scioperi.html)
+- **Infografica** --- [Chi vota nel 1913](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info5_L_estensione_del_suffragio_1912-1913.png)
+- **Infografica** --- [Due economie](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info6_Divario_economico_et%C3%A0_giolittiana.png)
+- **Infografica** --- [Le due fratture](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/info7_Crisi_del_sistema_politico_giolittiano.png)
+- **Video** --- [Sedici anni dopo Adua](https://youtu.be/ZKxyHctiH0g)
+- **Video** --- [La grande Proletaria si è mossa](https://youtu.be/yvBZIRVBDug)
+- **Video** --- [Ancona, giugno 1914](https://youtu.be/1Eh59HJqo-c)
 
 
 
@@ -81,18 +95,18 @@ Risorsa digitale --- Cronologia della sezione
 {% endembed %}
 
 
-La cronologia mostra quattro corsie — tecnica, economia, società, idee — che scorrono insieme invece che in sequenza unica: utile per vedere che cosa succedeva *nello stesso momento* in campi diversi, per esempio che le riforme della Destra storica e le prime tensioni sociali post-unitarie non sono fasi separate ma sovrapposte. Le barre segnano i fenomeni lunghi, i punti gli eventi singoli.
+La cronologia mostra quattro corsie (tecnica, economia, società, idee) che scorrono insieme invece che in sequenza unica: utile per vedere che cosa succedeva *nello stesso momento* in campi diversi, per esempio che le riforme della Destra storica e le prime tensioni sociali post-unitarie non sono fasi separate ma sovrapposte. Le barre segnano i fenomeni lunghi, i punti gli eventi singoli.
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/09-glossario-italia.html" %}
 Risorsa digitale --- Glossario della sezione
 {% endembed %}
 
 
-Il glossario raccoglie i termini in grassetto incontrati nei capitoli. Alcune voci sono segnalate come **parole contese**: non hanno solo una definizione, ma anche la storia di chi le ha coniate e contro chi — utile quando un termine come "trasformismo" o "Risorgimento" sembra descrittivo e invece porta dentro un giudizio storiografico. Ha una modalità attiva, con frasi del manuale a termine oscurato, utile per l'autoverifica prima di una prova.
+Il glossario raccoglie i termini in grassetto incontrati nei capitoli. Alcune voci sono segnalate come **parole contese**: non hanno solo una definizione, ma anche la storia di chi le ha coniate e contro chi: utile quando un termine come "trasformismo" o "Risorgimento" sembra descrittivo e invece porta dentro un giudizio storiografico. Ha una modalità attiva, con frasi del manuale a termine oscurato, utile per l'autoverifica prima di una prova.
 
 {% embed url="https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/artefatti/10-palestra-italia.html" %}
 Risorsa digitale --- Palestra di argomentazione della sezione
 {% endembed %}
 
 
-La palestra raccoglie una tesi per ciascun nodo storiografico controverso incontrato nei capitoli e chiede di distribuirla fra tre contenitori: la sostiene, la confuta, non la decide — quest'ultimo è il contenitore più importante, perché riconoscere quando le prove non bastano a decidere è la competenza che la sezione vuole lasciare. Non chiude con un punteggio ma con la calibratura della propria tesi di partenza.
+La palestra raccoglie, per ciascun nodo storiografico controverso incontrato nei capitoli, tre formulazioni della stessa tesi, di partenza, ristretta, opposta: si sceglie prima quale mettere alla prova, poi si distribuisce un pool di affermazioni fra tre contenitori, la sostiene, la confuta, non la decide, rispetto alla formulazione scelta, e quest'ultimo contenitore resta il più importante, perché riconoscere quando le prove non bastano a decidere è la competenza che la sezione vuole lasciare. Un bottone verifica le risposte e restituisce un punteggio, con una spiegazione del perché per i casi meno ovvi.

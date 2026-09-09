@@ -95,7 +95,7 @@
 <body>
   <div class="eyebrow">Come nasce l'Italia &middot; Apparati</div>
   <h1>Palestra di argomentazione</h1>
-  <p class="sub">Nove nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
+  <p class="sub">Dodici nodi storiografici, tre formulazioni ciascuno, nessuna delle tre marcata come quella giusta. Scegli un nodo, scegli come formulare la domanda, poi decidi che cosa fa ciascuna affermazione del pool rispetto a quella formulazione precisa: la sostiene, la confuta, o non la decide affatto. Cambia formulazione sullo stesso nodo e guarda come cambiano le risposte corrette.</p>
 
   <div id="listView">
     <div class="chips" id="chapChips"></div>
@@ -134,9 +134,10 @@
     "Cavour e la costruzione del Regno":"#3d5566",
     "I problemi dello Stato unitario e la Destra storica":"#5c6b3d",
     "Gli anni della Sinistra storica":"#6d4c6b",
-    "L'età crispina e la crisi di fine secolo":"#4a7a7a"
+    "L'età crispina e la crisi di fine secolo":"#4a7a7a",
+    "L'età giolittiana":"#7a5230"
   };
-  var CAPORDER = ["L'Italia napoleonica e la Restaurazione","Il dibattito sull'unità e la prova del 1848","Cavour e la costruzione del Regno","I problemi dello Stato unitario e la Destra storica","Gli anni della Sinistra storica","L'età crispina e la crisi di fine secolo"];
+  var CAPORDER = ["L'Italia napoleonica e la Restaurazione","Il dibattito sull'unità e la prova del 1848","Cavour e la costruzione del Regno","I problemi dello Stato unitario e la Destra storica","Gli anni della Sinistra storica","L'età crispina e la crisi di fine secolo","L'età giolittiana"];
 
   var LAB = {sostiene:"La sostiene", confuta:"La confuta", non_decide:"Non la decide"};
   var FORMLAB = {partenza:"Partenza", ristretta:"Ristretta", opposta:"Opposta"};
@@ -377,6 +378,86 @@
          classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
          perche:{ristretta:"la Ristretta si concentra sul colonialismo liberale di Crispi, Giolitti e la Libia; questo dato riguarda la fase ottocentesca della colonia eritrea.",
                  opposta:"mostra una violenza strutturale precoce che complica l'idea di un dominio dal peso proporzionalmente trascurabile."}}
+      ]
+    },
+    {
+      capitolo:"L'età giolittiana",
+      titolo:"Giolitti: statista riformatore o abile manipolatore del sistema?",
+      formulazioni:{
+        partenza:"Giolitti fu il fondatore di un liberalismo finalmente capace di allargarsi: legislazione sociale, neutralità nei conflitti di lavoro e suffragio quasi universale furono passi reali verso uno Stato che integra invece di escludere.",
+        ristretta:"Giolitti ampliò realmente lo Stato liberale con riforme sociali e suffragio, ma lo fece anche ricorrendo sistematicamente ai prefetti e, nel Mezzogiorno, ai mazzieri per garantirsi le maggioranze parlamentari necessarie a governare, senza che le due cose si escludano a vicenda.",
+        opposta:"Il liberalismo di Giolitti fu una facciata: la tolleranza verso i sindacati del Nord e la tolleranza verso i mazzieri del Sud furono la stessa strategia, applicata con strumenti diversi a un solo obiettivo, la stabilità del proprio governo, e le riforme sociali non furono un fine ma un mezzo per disinnescare un conflitto che avrebbe potuto travolgere il sistema liberale."
+      },
+      affermazioni:[
+        {testo:"Il suffragio del 1912 triplica il corpo elettorale, includendo anche i braccianti meridionali che nessuna Camera del lavoro rappresentava ancora.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"se il fine fosse solo il controllo, sarebbe stato più coerente limitare il voto ai ceti urbani già organizzati, non estenderlo a chi i notabili locali avrebbero comunque continuato a controllare con i metodi di sempre."}},
+        {testo:"Nelle elezioni del Mezzogiorno il controllo del voto passava attraverso i prefetti e, nei centri minori, attraverso la corruzione e i mazzieri.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Con il suffragio del 1912 entrano in Parlamento anche i socialisti, che la strategia giolittiana avrebbe dovuto tenere sotto controllo, e che due anni dopo contribuiscono ad affondare il governo.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{ristretta:"un calcolo che si rivela rischioso e alla fine sbagliato è compatibile sia con la sincerità sia con il calcolo: da solo non decide fra le due.",
+                 opposta:"un puro manipolatore non avrebbe motivo di introdurre in Parlamento proprio chi la propria strategia era pensata per controllare."}},
+        {testo:"Gaetano Salvemini, nel 1909, definisce Giolitti «il ministro della malavita», accusandolo di un compromesso fra il dazio sul grano e le tariffe industriali a vantaggio della sola stabilità del proprio governo.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"La legislazione sociale del periodo, limiti al lavoro minorile, congedo di maternità, assicurazioni per vecchiaia e infortuni, precede di diversi anni il suffragio del 1912, quando l'elettorato che ne avrebbe beneficiato non poteva ancora votare Giolitti.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"riforme che avvantaggiano chi non può ancora votare sono difficili da spiegare come puro calcolo elettorale."}}
+      ]
+    },
+    {
+      capitolo:"L'età giolittiana",
+      titolo:"Il suffragio del 1912: conquista democratica o mossa difensiva?",
+      formulazioni:{
+        partenza:"Il suffragio del 1912 fu una conquista democratica: completò, nella linea aperta da Mazzini e proseguita dai riformatori della Sinistra storica, un processo di inclusione che il liberalismo della Destra storica aveva sempre rifiutato per principio.",
+        ristretta:"Il suffragio del 1912 fu insieme una conquista democratica reale e una mossa difensiva: Giolitti scelse di offrire per legge una partecipazione che i movimenti popolari stavano già conquistando nei fatti, regolandola dall'alto invece di doverla subire dal basso.",
+        opposta:"Il suffragio del 1912 fu anzitutto una mossa difensiva: Giolitti, dopo aver visto crescere sotto il proprio stesso metodo il PSI e la CGdL, scelse di offrire per legge una partecipazione che i movimenti popolari stavano già conquistando nei fatti, per poterla controllare invece di subirla."
+      },
+      affermazioni:[
+        {testo:"La riforma estende il voto anche ai braccianti meridionali che nessuna Camera del lavoro rappresentava ancora e che i notabili locali avrebbero continuato a controllare con i metodi di sempre.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{ristretta:"mostra un'estensione reale del voto e insieme un margine di controllo che sopravvive alla riforma: compatibile con entrambi gli elementi della Ristretta.",
+                 opposta:"chi non rappresentava una minaccia organizzata non aveva bisogno di essere «controllato» tramite il voto: il caso indebolisce la lettura puramente difensiva."}},
+        {testo:"Il suffragio del 1912 non tocca le donne, e la loro esclusione non è nemmeno discussa come problema aperto nel dibattito che porta alla legge.",
+         classificazione:{partenza:"confuta", ristretta:"non_decide", opposta:"non_decide"},
+         perche:{}},
+        {testo:"Il PSI riformista sostenne attivamente l'allargamento del voto, in continuità con la tradizione dei riformatori della Sinistra storica.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"un sostegno attivo e ideale, non subito, da parte di chi la riforma dovrebbe «controllare» è difficile da conciliare con una lettura puramente difensiva."}},
+        {testo:"Includere per legge un elettorato che i movimenti popolari stavano già conquistando nei fatti permette di regolarlo dall'alto invece di doverlo subire dal basso.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"Un'indennità parlamentare, introdotta contestualmente al suffragio, apre in teoria la candidatura anche a chi non dispone di mezzi propri.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}}
+      ]
+    },
+    {
+      capitolo:"L'età giolittiana",
+      titolo:"La guerra di Libia: una parentesi imperialista o la prova che il colonialismo non si era mai fermato?",
+      formulazioni:{
+        partenza:"La guerra di Libia fu una parentesi imperialista isolata: sedici anni separano le due imprese coloniali, in mezzo non ci sono tentativi di espansione, e fu il contesto specifico del 1911, la crisi marocchina, la rivalità con la Francia, la spinta nazionalista interna, a spiegare perché proprio quell'anno e non un altro.",
+        ristretta:"La guerra di Libia fu resa possibile da accordi diplomatici preparati fin dal 1902, ma senza la crisi marocchina del 1911 e la spinta nazionalista interna maturata nel frattempo l'accordo sarebbe potuto restare lettera morta ancora a lungo.",
+        opposta:"Il colonialismo italiano non si era mai fermato dopo Adua: gli accordi diplomatici che rendono possibile l'intervento in Libia risalgono al 1902, appena sei anni dopo la disfatta, e l'obiettivo di uno spazio coloniale in Nord Africa non fu mai abbandonato, solo rimandato in attesa delle condizioni giuste."
+      },
+      affermazioni:[
+        {testo:"Nel 1902 un accordo segreto riconosce all'Italia un diritto di priorità sulla Libia, allora ottomana, in cambio del riconoscimento italiano degli interessi francesi sul Marocco.",
+         classificazione:{partenza:"confuta", ristretta:"sostiene", opposta:"sostiene"},
+         perche:{}},
+        {testo:"L'occasione per intervenire arriva nell'estate del 1911, quando la Francia si appresta a imporre il proprio protettorato sul Marocco.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{opposta:"un'occasione colta al momento giusto è compatibile sia con un obiettivo mai abbandonato sia con una decisione nuova: da sola non decide."}},
+        {testo:"L'Associazione Nazionalista Italiana, fondata alla fine del 1910, conduce per mesi una campagna propagandistica a favore dell'intervento in Libia.",
+         classificazione:{partenza:"sostiene", ristretta:"sostiene", opposta:"confuta"},
+         perche:{opposta:"se l'obiettivo coloniale non fosse mai stato abbandonato indipendentemente dall'opinione pubblica, una campagna propagandistica mirata proprio in quegli anni assomiglia più a una causa prossima che alla semplice esecuzione di un piano già scritto."}},
+        {testo:"Fra il 1896 e il 1911 l'Italia non tenta alcuna nuova espansione coloniale.",
+         classificazione:{partenza:"sostiene", ristretta:"non_decide", opposta:"confuta"},
+         perche:{ristretta:"un'attesa lunga è compatibile sia con un obiettivo abbandonato sia con un obiettivo mantenuto ma rimandato: da sola non discrimina."}},
+        {testo:"Il discorso di Giovanni Pascoli, «La grande Proletaria si è mossa», del novembre 1911, mostra che il consenso all'impresa libica non restò confinato alla destra nazionalista.",
+         classificazione:{partenza:"non_decide", ristretta:"sostiene", opposta:"non_decide"},
+         perche:{}}
       ]
     }
   ];

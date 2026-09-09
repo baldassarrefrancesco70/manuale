@@ -123,6 +123,16 @@ Da questa miscela di delusione, miseria e insofferenza nacque il **brigantaggio*
 
 Lo Stato rispose con la forza. La repressione militare, affidata a generali come **Cialdini** e **Pallavicini**, fu durissima: esecuzioni sommarie, rappresaglie, distruzione di interi paesi, il caso più noto è la distruzione di **Pontelandolfo** e **Casalduni**, con le violenze che l'accompagnarono. Arrivarono a essere schierati fino a **120.000 soldati**, più di quanti ne fossero stati impiegati in tutte le guerre risorgimentali messe insieme. La svolta legislativa arrivò con la **legge Pica** dell'**agosto 1863**: i processi per brigantaggio furono devoluti ai **tribunali militari**, con la fucilazione per chi veniva preso con le armi in mano; fu istituito il **domicilio coatto** per i sospetti manutengoli, sgretolando la rete di supporto civile; furono introdotti sconti di pena per chi si arrendeva o tradiva i compagni. Le grandi bande a cavallo furono distrutte entro il 1865; le ultime resistenze annientate intorno al 1870.
 
+{% embed url="https://youtu.be/Z5G4UPIAAvo" %}
+Video --- Pontelandolfo e Casalduni, agosto 1861
+{% endembed %}
+
+
+{% embed url="https://youtu.be/ZXeebDP0WjA" %}
+Video --- Uno stato d'eccezione con le sue regole
+{% endembed %}
+
+
 La vittoria militare eliminò la minaccia eversiva, ma non toccò nulla di ciò che l'aveva prodotta. La miseria restava, il latifondo restava, il divario restava, e negli anni successivi si allargò. Fu la presa d'atto di questo fallimento a dare origine al **meridionalismo**: un filone di pensiero politico e intellettuale che, attraverso le inchieste e gli scritti di **Pasquale Villari**, **Leopoldo Franchetti**, **Sidney Sonnino**, **Giustino Fortunato** e **Francesco Saverio Nitti**, denunciò come l'unità non avesse sanato il divario tra le due Italie, ma lo avesse cristallizzato. La svolta protezionistica del 1887 avrebbe accelerato l'industrializzazione del Nord-Ovest condannando il Mezzogiorno a una crisi agricola senza uscita, spingendo centinaia di migliaia di meridionali verso le Americhe in quella che sarebbe diventata la **grande emigrazione** di massa.
 
 {% hint style="success" %}
@@ -159,6 +169,11 @@ I democratici, insofferenti alle esitazioni del governo, tentarono due volte di 
 La Destra cercò una via diplomatica. Nel **1864** il governo **Minghetti** stipulò segretamente con Napoleone III la **Convenzione di settembre**: l'Italia si impegnava a rispettare i confini dello Stato Pontificio in cambio del ritiro delle truppe francesi entro due anni. A garanzia dell'impegno, la capitale fu trasferita da Torino a **Firenze** nel **1865**, una mossa che provocò sanguinose proteste popolari a Torino, represse nel sangue, e costò le dimissioni al governo Minghetti. Era un compromesso fragile, che rimandava il problema senza risolverlo.
 
 A sciogliere il nodo non fu nessuna iniziativa italiana, ma un terremoto geopolitico europeo. Nel **1870** scoppiò la **guerra franco-prussiana**: la disastrosa sconfitta francese a **Sedan** travolse l'impero di Napoleone III e costrinse la Francia a richiamare le proprie truppe da Roma. Il governo **Lanza** colse il momento: il **20 settembre 1870** l'artiglieria italiana aprì un varco nelle mura della città, la celebre **Breccia di Porta Pia**, e i bersaglieri entrarono a Roma, sconfiggendo le truppe pontificie e ponendo fine al potere temporale della Chiesa. Il plebiscito del 2 ottobre confermò l'annessione; il **3 febbraio 1871** Roma divenne ufficialmente capitale del Regno d'Italia.
+
+{% embed url="https://youtu.be/jSTBfSjCxs4" %}
+Video --- Il prezzo di una capitale
+{% endembed %}
+
 
 Restava da regolare il rapporto con la Santa Sede. Il Parlamento approvò nel **maggio 1871** la **Legge delle Guarentigie**: riconosceva al Papa piena autonomia spirituale, l'extraterritorialità dei palazzi vaticani, lateranensi e di Castel Gandolfo, e la libertà di comunicazione diplomatica. Pio IX la respinse categoricamente, dichiarò l'occupazione «ingiusta, violenta, nulla e invalida», si proclamò prigioniero politico nei palazzi vaticani e nel **1874** promulgò il ***Non expedit***: i cattolici non dovevano partecipare alle elezioni né alla vita politica dello Stato italiano. La frattura era aperta, e le sue conseguenze furono immediate e durature: le fragili istituzioni liberali si trovarono private della partecipazione delle masse cattoliche, e il sistema politico italiano rimase a lungo senza un partito conservatore popolare capace di aggregarle.
 

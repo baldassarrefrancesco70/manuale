@@ -110,3 +110,15 @@ La cartina mostra l'espansione coloniale italiana nel Corno d'Africa dalla prima
 Al centro della cartina, in azzurro, il **Regno di Etiopia**: la didascalia interna ricorda che tra il 1889 e il 1896 l'Italia ne rivendicò il protettorato in forza del Trattato di Uccialli, rivendicazione che Menelik II non riconobbe mai. Le croci segnano i luoghi delle principali battaglie: **Dogali** (1887), prima sconfitta italiana nel tentativo di penetrazione nell'entroterra; **Adua** (1896), la disfatta definitiva che costrinse l'Italia a riconoscere formalmente l'indipendenza etiopica e a rinunciare per quindici anni alle ambizioni imperiali. Le croci minori di **Macallè** e **Amba Alagi** segnano gli scontri preparatori della campagna del 1895–96, che culminò ad Adua.
 
 La cartina rende visibile anche il contesto geopolitico in cui si inseriva l'espansione italiana: a nord la Somalia francese con il porto di Gibuti, a est la Somalia britannica, attorno all'Etiopia le potenze europee che si contendevano il controllo di una delle ultime aree non ancora colonizzate del continente. L'Italia arrivò tardi e con forze inadeguate, e la geografia della sconfitta è scritta nella cartina: il territorio che avrebbe voluto controllare, il Regno di Etiopia, fu l'unico a rimanere indipendente.
+
+### Cartina 7
+
+**La Libia e il Dodecaneso, 1911-1912**
+
+![Cartina 7 --- La Libia e il Dodecaneso, 1911-1912](https://baldassarrefrancesco70.github.io/manuale/volume2/sezioni/4/img/Guerra%20Libia%20e%20Dodecaneso.png)
+
+
+
+La cartina mostra il duplice teatro della guerra italo-turca: la costa libica, dove tra il settembre e l'ottobre 1911 l'Italia occupa rapidamente Tripoli, Bengasi e Tobruk lasciando però all'entroterra, verso il Fezzan, una resistenza che la sola occupazione costiera non riesce a piegare; e il mar Egeo, dove nella primavera del 1912 l'Italia occupa Rodi e l'intero arcipelago del Dodecaneso, a centinaia di chilometri di distanza dalla Libia.
+
+Quella distanza è il punto che la cartina rende visibile e che il testo, da solo, dovrebbe spiegare per esteso: l'estensione del conflitto al mare Egeo non fu un allargamento casuale del teatro di guerra, ma la mossa che permise di colpire l'Impero ottomano dove la sua presenza militare era più debole, vicino al cuore dell'impero, forzando a Losanna una resa che la sola occupazione della costa libica, da sola, non avrebbe ottenuto.
