@@ -1,6 +1,6 @@
 # ATLANTE
 
-*Le quattro cartine del Cap. 1, con didascalia estesa. Numerazione provvisoria (1-4): andrà verificata in fase di compilazione, in base all'ordine di apparizione dei richiami nel testo.*
+*Le quattro cartine del capitolo sulla Prima guerra mondiale, con didascalia estesa.*
 
 ### Cartina 1
 

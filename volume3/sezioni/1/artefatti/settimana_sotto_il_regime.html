@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una settimana sotto il regime</title>
+<style>
+  :root{
+    --bg:#F2F2F2; --card:#fffdfa; --beige:#F5F0E8; --brown:#8B7355;
+    --it:#8B7355; --de:#5b7a8f; --ink:#2b2620; --muted:#6f665a; --line:#d9d2c3;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: "Gill Sans", "Gill Sans MT", "Trebuchet MS", Calibri, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.5}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 40px}
+  h1{font-weight:normal;font-size:1.9rem;margin:0 0 4px}
+  .sub{font-family:var(--sans);color:var(--muted);font-size:.95rem;margin:0 0 18px}
+  .decl{background:var(--card);border-left:4px solid var(--brown);padding:12px 16px;margin:0 0 22px;font-size:.98rem}
+  .decl b{font-family:var(--sans);letter-spacing:.03em}
+  .label{font-family:var(--sans);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  button{font-family:var(--sans);cursor:pointer}
+  .tog{border:1.5px solid var(--brown);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:3px;font-size:.98rem}
+  .tog:hover{background:var(--beige)}
+  .tog.on{color:#fff}
+  .tog.country.on[data-c="it"]{background:var(--it);border-color:var(--it)}
+  .tog.country.on[data-c="de"]{background:var(--de);border-color:var(--de)}
+  .tog.pers.on{background:var(--brown);border-color:var(--brown)}
+  .hint{font-family:var(--sans);color:var(--muted);font-size:.95rem;padding:18px;border:1px dashed var(--line);background:var(--card);text-align:center}
+  .weekhead{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:8px 0 10px}
+  .weekhead h2{font-weight:normal;font-size:1.35rem;margin:0}
+  .flag{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .week{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .day{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--c);padding:10px 11px 12px;display:flex;flex-direction:column;min-height:190px}
+  .day .dn{font-family:var(--sans);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .day .sc{font-size:.93rem;flex:1;margin:0 0 10px}
+  .chip{align-self:flex-start;border:1.5px solid var(--c);background:#fff;color:var(--c);padding:6px 9px;border-radius:3px;font-size:.86rem;text-align:left;line-height:1.25}
+  .chip:hover{background:var(--beige)}
+  .chip.open{background:var(--c);color:#fff}
+  .chip.lim{border-style:dashed}
+  .none{font-family:var(--sans);font-size:.82rem;color:var(--muted);font-style:italic}
+  .scheda{margin-top:14px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c);padding:16px 20px}
+  .scheda h3{font-weight:normal;font-size:1.2rem;margin:0 0 4px}
+  .scheda .tipo{font-family:var(--sans);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:10px}
+  .scheda dl{margin:0;display:grid;grid-template-columns:200px 1fr;gap:8px 16px}
+  .scheda dt{font-family:var(--sans);font-size:.85rem;color:var(--muted);padding-top:2px}
+  .scheda dd{margin:0}
+  .actions{margin:20px 0 6px;display:flex;gap:10px;flex-wrap:wrap}
+  .primary{border:none;background:var(--brown);color:#fff;padding:11px 18px;border-radius:3px;font-size:1rem}
+  .primary:hover{opacity:.9}
+  .confronto{margin-top:26px;border-top:2px solid var(--brown);padding-top:18px}
+  .confronto h2{font-weight:normal;font-size:1.35rem;margin:0 0 12px}
+  .diff{background:var(--beige);border:1px solid var(--brown);padding:14px 18px;margin-bottom:16px}
+  .diff p{margin:0 0 8px}
+  .diff p:last-child{margin:0}
+  .diff .key{font-style:italic}
+  .diff .rinvio{font-family:var(--sans);font-size:.9rem;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;background:var(--card);font-size:.93rem}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{font-family:var(--sans);font-weight:normal;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+  th.d{background:var(--brown)} th.it{background:var(--it)} th.de{background:var(--de)}
+  td.dd{font-family:var(--sans);color:var(--muted);width:110px}
+  td .s{display:block}
+  td .n{color:var(--muted);font-style:italic;font-family:var(--sans);font-size:.85rem}
+  td .lim{font-family:var(--sans);font-size:.75rem;color:var(--muted)}
+  .domanda{margin-top:22px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--brown);padding:16px 20px}
+  .domanda p{margin:0 0 10px;font-size:1.08rem}
+  textarea{width:100%;min-height:110px;font-family:var(--serif);font-size:1rem;padding:10px;border:1px solid var(--line);background:#fff;resize:vertical}
+  .small{font-family:var(--sans);font-size:.82rem;color:var(--muted);margin:6px 0 0}
+  @media (max-width:640px){ .scheda dl{grid-template-columns:1fr} .wrap{padding:18px 12px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Una settimana sotto il regime</h1>
+  <p class="sub">Italia e Germania negli anni Trenta: gli strumenti del consenso nella vita di tutti i giorni</p>
+
+  <div class="decl"><b>Personaggi immaginari, strumenti reali.</b> Le persone e le scene sono ricostruzioni verosimili. Gli strumenti, le date e le condizioni vengono dal paragrafo «Gli strumenti del consenso». Ogni settimana è una <i>settimana tipo</i> degli anni Trenta: gli strumenti non nascono tutti nello stesso anno, e la scheda di ciascuno indica quando.</div>
+
+  <p class="label">1 · Scegli il paese</p>
+  <div class="row" id="countries"></div>
+  <p class="label">2 · Scegli un personaggio</p>
+  <div class="row" id="persons"></div>
+
+  <div id="main"></div>
+</div>
+
+<script>
+const DAYS = ["Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato","Domenica"];
+const COUNTRY = { it:{name:"Italia", color:"var(--it)"}, de:{name:"Germania", color:"var(--de)"} };
+const PERS = [
+  {id:"ragazzo", label:"Un ragazzo di dieci anni"},
+  {id:"ragazza", label:"Una ragazza di dieci anni"},
+  {id:"operaio", label:"Un operaio"},
+  {id:"madre", label:"Una madre di quattro figli"},
+  {id:"professore", label:"Un professore universitario"},
+  {id:"parroco", label:"Un parroco"}
+];
+
+/* Schede degli strumenti. lim:true = non uno strumento del regime, ma un suo limite. */
+const STR = {
+ it:{
+  luce:{nome:"Il cinegiornale dell'Istituto Luce", cosa:"Notiziario filmato prodotto dall'Istituto Luce. Milioni di spettatori vedevano il Duce inaugurare bonifiche e mietere il grano prima del film.", quando:"L'Istituto nasce a metà degli anni Venti; la proiezione prima del film diventa obbligatoria in tutte le sale.", scambio:"Nessuna adesione esplicita: chi andava al cinema lo vedeva comunque, prima di ciò per cui aveva pagato il biglietto."},
+  radio_it:{nome:"La radio", cosa:"Gestita dal monopolio pubblico, portava la voce del capo nelle piazze e nelle scuole.", scambio:"Nulla di esplicito: la voce del capo arrivava dove si stava, in piazza o in classe."},
+  veline:{nome:"Le veline", cosa:"Disposizioni riservate che indicavano ai direttori dei giornali che cosa pubblicare e con quale rilievo.", quando:"Solo nel 1937 la propaganda viene riunita nel Ministero della Cultura Popolare (Minculpop), dopo un sottosegretariato nel 1934 e un ministero nel 1935: il regime ha già quindici anni di vita.", scambio:"Ai direttori, obbedienza. Al lettore nulla: le disposizioni erano riservate."},
+  libro_unico:{nome:"Il libro unico di Stato", cosa:"Nelle scuole elementari sostituì la pluralità dei manuali con un testo scritto e approvato dal regime.", scambio:"Nessuna scelta: in classe c'era un solo libro."},
+  onb:{nome:"L'Opera Nazionale Balilla", cosa:"Inquadrava i ragazzi per fasce d'età, dai Balilla agli Avanguardisti, dalle Piccole alle Giovani Italiane, con divise, parate e addestramento ginnico-militare.", quando:"Istituita nel 1926. Nel 1937 confluisce nella Gioventù Italiana del Littorio, sotto il controllo diretto del partito.", scambio:"Il tempo dei ragazzi. La ragione, dice il capitolo: chi cresce dentro un'organizzazione non deve essere convinto da adulto."},
+  sabato:{nome:"Il sabato fascista", cosa:"Il pomeriggio del sabato riservato ad attività sportive, premilitari e politiche.", quando:"Dal 1935.", scambio:"Il pomeriggio del sabato, per tutti."},
+  dopolavoro:{nome:"L'Opera Nazionale Dopolavoro", cosa:"Gite, cinema, sport, biblioteche, bande musicali, spacci aziendali per gli adulti. Divenne la più grande organizzazione di massa del fascismo.", quando:"Fondata nel 1925.", scambio:"Offriva vantaggi concreti a chi non aveva mai avuto accesso a un tempo libero organizzato, e chiedeva in cambio la rinuncia a ogni forma di organizzazione autonoma."},
+  tessera:{nome:"La tessera", cosa:"Il capitolo la ricorda fra i dati che misurano l'estensione del regime: una tessera necessaria per lavorare.", scambio:"L'iscrizione, come condizione per lavorare."},
+  giuramento:{nome:"Il giuramento dei professori", cosa:"Una legge impose ai professori universitari ordinari un giuramento di fedeltà non solo al re ma al regime fascista.", quando:"1931.", scambio:"Una firma. Su oltre milleduecento docenti, dodici rifiutarono e persero la cattedra."},
+  premi:{nome:"I premi di nuzialità e natalità", cosa:"Strumenti della politica demografica, dichiarata apertamente politica di potenza: un paese più popoloso era un paese con più soldati e più coloni. Insieme ai premi, una tassa sui celibi.", scambio:"Figli, intesi come forza dello Stato."},
+  ente:{nome:"L'ente per la maternità e l'infanzia", cosa:"Un ente nazionale creato dal regime per l'assistenza alla maternità e all'infanzia, dentro la stessa politica demografica.", scambio:"Nulla di esplicito: è assistenza, al servizio di un paese più popoloso."},
+  madre_modello:{nome:"Il modello della madre prolifica", cosa:"Il regime celebrava la figura della madre prolifica e della massaia rurale: alle donne assegnava un ruolo definito in funzione della potenza dello Stato.", scambio:"Un ruolo: madre e massaia."},
+  impieghi:{nome:"I limiti agli impieghi pubblici", cosa:"Nel tempo il regime limitò per legge l'accesso delle donne agli impieghi pubblici.", scambio:"La rinuncia a un posto nel settore pubblico."},
+  patti:{nome:"I Patti Lateranensi e il Concordato", cosa:"Firmati da Mussolini e dal cardinale Gasparri, chiusero la questione romana. Il Concordato fece del cattolicesimo la religione dello Stato, ne estese l'insegnamento alle scuole superiori e riconobbe effetti civili al matrimonio religioso.", quando:"11 febbraio 1929.", scambio:"Non è un apparato creato dal regime, ma un patto con un'istituzione che esisteva da secoli. In Italia resse e produsse legittimità per tutto il ventennio."},
+  azione_catt:{nome:"Lo scontro sull'Azione Cattolica", lim:true, cosa:"Il regime tentò di sciogliere le organizzazioni giovanili dell'Azione Cattolica per avere il monopolio dell'inquadramento dei ragazzi. Pio XI protestò con un'enciclica; il compromesso le lasciò in piedi, ridimensionate.", quando:"1931.", scambio:"Qui è il regime a dover cedere qualcosa a un'organizzazione non fascista."}
+ },
+ de:{
+  propaganda_min:{nome:"Il ministero della propaganda", cosa:"Il Ministero per l'istruzione del popolo e la propaganda, affidato a Joseph Goebbels. La propaganda non fu un completamento del regime: ne fu uno degli atti costitutivi.", quando:"Marzo 1933, poche settimane dopo la nomina di Hitler e prima ancora che fossero sciolti i partiti.", scambio:"Nulla di esplicito: lavorava su ciò che si vedeva e si ascoltava."},
+  volks:{nome:"Il Volksempfänger", cosa:"L'apparecchio radio popolare, venduto a prezzo calmierato. La radio fu lo strumento centrale del regime.", scambio:"Dava una radio a poco prezzo, concepita per ricevere bene le stazioni tedesche e male quelle straniere."},
+  cinema_de:{nome:"Il cinema del regime", cosa:"Al cinema il regime affidò la propria immagine monumentale: i film di Leni Riefenstahl sul congresso di Norimberga e poi sulle Olimpiadi.", scambio:"Nulla di esplicito: lo spettacolo di un regime monumentale."},
+  olimpiadi:{nome:"Le Olimpiadi di Berlino", cosa:"La vetrina internazionale di un paese che si mostrava ordinato, moderno e ospitale.", quando:"1936.", scambio:"Durante i Giochi le insegne antisemite vennero temporaneamente rimosse dalle strade."},
+  roghi:{nome:"I roghi dei libri", cosa:"Nelle piazze di decine di città universitarie, studenti inquadrati nelle organizzazioni naziste bruciarono i libri di autori ebrei, marxisti e pacifisti, con una regia che faceva del rogo una cerimonia.", quando:"10 maggio 1933.", scambio:"Nessuna firma: una cerimonia pubblica che mostrava che cosa non si doveva più leggere."},
+  espulsione:{nome:"L'espulsione degli insegnanti ebrei e degli oppositori", cosa:"Gli insegnanti ebrei e gli oppositori furono espulsi dalle scuole e dalle università.", quando:"Già nei primi mesi del regime, nel 1933.", scambio:"Il capitolo: «Dove il fascismo chiese una firma, il nazismo procedette per esclusione»."},
+  nslb:{nome:"L'organizzazione nazista degli insegnanti", cosa:"Dopo le espulsioni, inquadrò rapidamente la quasi totalità della categoria.", scambio:"L'iscrizione: chi insegnava ne faceva parte quasi senza eccezioni."},
+  gh:{nome:"La Gioventù hitleriana", cosa:"Con la sua corrispondente femminile, inquadrava i ragazzi tedeschi.", quando:"Unica organizzazione giovanile ammessa per legge dalla fine del 1936; adesione resa di fatto obbligatoria nel 1939, con sanzioni per le famiglie renitenti.", scambio:"Il tempo dei ragazzi e, dal 1939, l'adesione stessa: chi si sottraeva esponeva la famiglia a sanzioni."},
+  kdf:{nome:"Forza attraverso la gioia", cosa:"Organizzazione del Fronte del lavoro: viaggi, crociere, spettacoli e sport a prezzi accessibili. Promise agli operai un'automobile popolare pagabile a rate.", scambio:"Dava qualcosa, e chiedeva in cambio la rinuncia a ogni forma di organizzazione autonoma."},
+  prestiti:{nome:"I prestiti matrimoniali", cosa:"Concessi alle coppie a condizione che la moglie lasciasse il lavoro.", scambio:"Erano riservati a chi fosse considerato di sangue tedesco e geneticamente sano."},
+  croce:{nome:"La croce d'onore della madre tedesca", cosa:"Onorificenza per le madri, dentro la stessa politica di premi e incentivi.", quando:"1938.", scambio:"Era riservata a chi fosse considerato di sangue tedesco e geneticamente sano. Per chi sano non era giudicato, accanto agli incentivi correva la sterilizzazione forzata."},
+  concordato_de:{nome:"Il concordato del 1933", cosa:"Firmato dal governo con la Santa Sede: garantiva libertà di culto e scuole cattoliche.", quando:"Luglio 1933.", scambio:"In cambio, il ritiro del clero dalla politica. Di fatto accompagnò la scomparsa del partito cattolico."},
+  enciclica:{nome:"L'enciclica del 1937", lim:true, cosa:"Scritta in tedesco e letta dai pulpiti, denunciava la violazione sistematica del concordato e il carattere anticristiano della dottrina della razza.", quando:"1937.", scambio:"Segna la fine del patto: in Germania durò meno di quattro anni."}
+ }
+};
+
+/* Settimane: [scena, chiave strumento | null] */
+const WEEK = {
+ it:{
+  ragazzo:[
+   ["In classe il maestro accende la radio: va in onda un discorso, e la lezione si ferma per ascoltarlo.","radio_it"],
+   ["Compiti di aritmetica sul libro di scuola: lo stesso che hanno tutti i suoi coetanei d'Italia.","libro_unico"],
+   ["Pomeriggio in divisa da Balilla: esercizi ginnici e marcia nel cortile.","onb"],
+   ["Va all'oratorio della parrocchia, dove si ritrovano i ragazzi dell'Azione Cattolica.","azione_catt"],
+   ["Gioca a pallone in strada fino a sera.",null],
+   ["Niente scuola il pomeriggio, ma c'è il sabato fascista: gare sportive e adunata.","sabato"],
+   ["Al cinema con il padre. Prima del film, il cinegiornale: il Duce miete il grano.","luce"]
+  ],
+  ragazza:[
+   ["Legge ad alta voce un brano del libro di lettura: è lo stesso in tutte le scuole elementari del paese.","libro_unico"],
+   ["Dopo la scuola aiuta la madre in casa.",null],
+   ["Saggio ginnico in divisa con le Piccole Italiane.","onb"],
+   ["Gioca con le amiche in cortile.",null],
+   ["La maestra legge in classe un testo sulle madri di molti figli e sulle massaie rurali.","madre_modello"],
+   ["Il pomeriggio è del sabato fascista: esercizi e sport con le compagne.","sabato"],
+   ["Messa la mattina, poi pranzo dai nonni.",null]
+  ],
+  operaio:[
+   ["Entra in fabbrica alle sette. Per avere il posto gli è servita la tessera.","tessera"],
+   ["Allo spaccio aziendale del Dopolavoro compra olio e pasta a prezzo ridotto.","dopolavoro"],
+   ["Turno lungo. La sera, a casa, cena e poi a letto.",null],
+   ["Al bar sfoglia il giornale. Non sa che titoli e rilievo delle notizie sono stati indicati al direttore.","veline"],
+   ["In piazza, dagli altoparlanti, la radio trasmette un discorso del capo.","radio_it"],
+   ["Il pomeriggio del sabato è riservato alle attività del regime, anche per lui.","sabato"],
+   ["Gita del Dopolavoro al mare, con la banda aziendale.","dopolavoro"]
+  ],
+  madre:[
+   ["Arriva il premio di natalità per il quarto figlio.","premi"],
+   ["Porta il più piccolo all'ambulatorio dell'ente per la maternità e l'infanzia.","ente"],
+   ["Bucato, spesa, i compiti dei figli.",null],
+   ["La figlia maggiore vorrebbe un impiego pubblico: la legge ne limita l'accesso alle donne.","impieghi"],
+   ["Alla radio, una trasmissione propone la madre di molti figli e la massaia rurale come modello.","madre_modello"],
+   ["I figli sono al sabato fascista: il pomeriggio la casa è vuota.","sabato"],
+   ["Messa e pranzo in famiglia.",null]
+  ],
+  professore:[
+   ["Lezione all'università, poi ricevimento degli studenti.",null],
+   ["In un cassetto, la copia del giuramento firmato nel 1931. In tutta Italia, dodici colleghi non l'hanno firmato.","giuramento"],
+   ["Pomeriggio in biblioteca a preparare un saggio.",null],
+   ["Legge il giornale: titoli e rilievo delle notizie sono stati indicati al direttore.","veline"],
+   ["Cena a casa di amici.",null],
+   ["Il pomeriggio del sabato è riservato alle attività del regime, anche per lui.","sabato"],
+   ["Al cinema con la moglie: prima del film, il cinegiornale con le bonifiche inaugurate dal Duce.","luce"]
+  ],
+  parroco:[
+   ["Insegna religione al ginnasio: con il Concordato è diventata materia anche delle scuole superiori.","patti"],
+   ["Celebra un matrimonio che, grazie al Concordato, vale anche per lo Stato.","patti"],
+   ["Visita gli ammalati della parrocchia.",null],
+   ["Riunione dei ragazzi dell'Azione Cattolica: sono meno di un tempo, ma l'associazione esiste ancora.","azione_catt"],
+   ["Confessioni e preparazione della predica.",null],
+   ["All'oratorio pochi ragazzi: il pomeriggio è del sabato fascista.","sabato"],
+   ["Dopo la messa il podestà lo saluta sul sagrato: dal 1929 Stato e Chiesa non sono più nemici.","patti"]
+  ]
+ },
+ de:{
+  ragazzo:[
+   ["Il maestro, come quasi tutti i suoi colleghi, è iscritto all'organizzazione nazista degli insegnanti.","nslb"],
+   ["Compiti, poi a giocare nel parco.",null],
+   ["Pomeriggio con la Gioventù hitleriana: marcia, canti, giochi all'aperto.","gh"],
+   ["Scuola la mattina, compiti il pomeriggio.",null],
+   ["A casa, il Volksempfänger acceso in cucina trasmette un programma per ragazzi.","volks"],
+   ["Escursione con il suo gruppo della Gioventù hitleriana.","gh"],
+   ["Al cinema, il film di Leni Riefenstahl sulle Olimpiadi.","cinema_de"]
+  ],
+  ragazza:[
+   ["Scuola la mattina, compiti il pomeriggio.",null],
+   ["Riunione con l'organizzazione femminile della Gioventù hitleriana: canti e lavori di gruppo.","gh"],
+   ["Aiuta la madre in casa.",null],
+   ["Alla radio di casa segue le gare delle Olimpiadi di Berlino.","olimpiadi"],
+   ["Gioca con le amiche in cortile.",null],
+   ["Gara sportiva con il suo gruppo.","gh"],
+   ["Gita in famiglia organizzata da Forza attraverso la gioia.","kdf"]
+  ],
+  operaio:[
+   ["Entra in fabbrica alle sette.",null],
+   ["Versa la rata per l'automobile popolare promessa agli operai.","kdf"],
+   ["In fabbrica, dagli altoparlanti, un discorso trasmesso per radio: la regia è del ministero di Goebbels.","propaganda_min"],
+   ["Turno lungo. La sera, a casa, cena e poi a letto.",null],
+   ["La sera, al Volksempfänger: le stazioni tedesche si sentono bene, quelle straniere quasi per niente.","volks"],
+   ["Spettacolo serale di Forza attraverso la gioia, a prezzo accessibile.","kdf"],
+   ["Al cinema: le immagini del congresso di Norimberga.","cinema_de"]
+  ],
+  madre:[
+   ["Anni fa, per avere il prestito matrimoniale, ha lasciato il lavoro.","prestiti"],
+   ["Bucato, spesa, i compiti dei figli.",null],
+   ["In cucina, il Volksempfänger resta acceso mentre lavora.","volks"],
+   ["Riceve la croce d'onore della madre tedesca. Alla vicina, giudicata «non sana», non spetta.","croce"],
+   ["Il figlio maggiore non vuole andare alla Gioventù hitleriana. Dal 1939 una famiglia renitente rischia sanzioni.","gh"],
+   ["Pomeriggio in casa con i più piccoli.",null],
+   ["Pranzo in famiglia.",null]
+  ],
+  professore:[
+   ["Due colleghi del suo istituto non ci sono più: ebrei, espulsi nei primi mesi del regime.","espulsione"],
+   ["È iscritto all'organizzazione nazista degli insegnanti, come quasi tutta la categoria.","nslb"],
+   ["In biblioteca mancano interi scaffali: libri finiti nel rogo del 10 maggio 1933.","roghi"],
+   ["Lezione all'università, poi ricevimento degli studenti.",null],
+   ["Cerca una stazione straniera alla radio: il Volksempfänger la riceve male.","volks"],
+   ["Pomeriggio a casa a correggere bozze.",null],
+   ["Al cinema, il film di Leni Riefenstahl sul congresso di Norimberga.","cinema_de"]
+  ],
+  parroco:[
+   ["Visita la scuola cattolica della parrocchia: il concordato del 1933 la garantisce.","concordato_de"],
+   ["Visita gli ammalati della parrocchia.",null],
+   ["Non parla di politica dal pulpito: il concordato lo ha chiesto in cambio. Il partito cattolico non c'è più.","concordato_de"],
+   ["I ragazzi della parrocchia non si riuniscono più con lui: la Gioventù hitleriana è l'unica organizzazione ammessa.","gh"],
+   ["Confessioni e preparazione della predica.",null],
+   ["Prepara la chiesa per la domenica.",null],
+   ["Legge dal pulpito l'enciclica del papa, scritta in tedesco: denuncia la violazione del concordato.","enciclica"]
+  ]
+ }
+};
+
+/* Confronto: chiave = frase del capitolo; righe = differenze; rinvio opzionale */
+const CONF = {
+ ragazzo:{key:"Stesso impianto, ma in Germania con una scansione più rapida e una stretta più forte.", righe:[
+   "In Italia i Balilla convivono con l'oratorio dell'Azione Cattolica, che il regime non riuscì a sciogliere (1931). In Germania la Gioventù hitleriana è per legge l'unica organizzazione giovanile ammessa (fine 1936), e dal 1939 di fatto obbligatoria.",
+   "In Italia il libro unico entra direttamente in classe; in Germania il regime arriva alla scuola attraverso gli insegnanti, inquadrati quasi tutti nell'organizzazione nazista."]},
+ ragazza:{key:"Stesso impianto, ma in Germania con una scansione più rapida e una stretta più forte.", righe:[
+   "Entrambe sono inquadrate in un'organizzazione femminile del regime. In Germania, dal 1939, sottrarsi ha un costo per la famiglia.",
+   "In Italia il ruolo di madre e massaia le viene proposto già a scuola. In Germania le Olimpiadi del 1936 mostrano al mondo un paese ospitale, mentre le insegne antisemite vengono tolte solo per l'occasione."]},
+ operaio:{key:"In entrambi i paesi il regime dava qualcosa, e chiedeva in cambio la rinuncia a ogni forma di organizzazione autonoma.", righe:[
+   "Dopolavoro e Forza attraverso la gioia sono strumenti gemelli: gite, spettacoli, sport, vantaggi concreti.",
+   "La differenza sta nei tempi della propaganda: in Germania il ministero di Goebbels nasce nel marzo 1933, prima ancora dello scioglimento dei partiti; in Italia l'apparato centrale arriva solo nel 1937, dopo quindici anni di regime."]},
+ madre:{key:"Dove il fascismo contava i nati, il nazismo li selezionava.", righe:[
+   "Gli strumenti sono quasi identici: premi, prestiti, onorificenze, un modello di madre.",
+   "In Italia premi e assistenza valgono per tutte le madri. In Germania prestiti e croce d'onore sono riservati a chi è considerato di sangue tedesco e geneticamente sano; per chi sano non è giudicato, c'è la sterilizzazione forzata."],
+   rinvio:"Questa differenza è il tema del paragrafo sullo Stato e la razza."},
+ professore:{key:"Dove il fascismo chiese una firma, il nazismo procedette per esclusione.", righe:[
+   "Il professore italiano firma il giuramento del 1931, come tutti tranne dodici colleghi su oltre milleduecento.",
+   "Il professore tedesco non firma nulla: vede espellere i colleghi ebrei e oppositori, bruciare i libri nelle piazze universitarie, inquadrare la categoria nell'organizzazione nazista degli insegnanti."],
+   rinvio:"Che cosa accadde agli ebrei, in Germania e in Italia, è il tema del paragrafo sullo Stato e la razza."},
+ parroco:{key:"In Italia il patto resse e produsse legittimità per tutto il ventennio; in Germania durò meno di quattro anni.", righe:[
+   "Entrambi i regimi firmano un accordo con la Santa Sede: l'Italia nel 1929, la Germania nel 1933.",
+   "In Italia l'Azione Cattolica sopravvive al compromesso del 1931. In Germania i ragazzi passano tutti alla Gioventù hitleriana, e nel 1937 il parroco legge dal pulpito l'enciclica che denuncia la violazione del concordato."]}
+};
+
+const state = {country:"it", pers:null, open:null, confronto:false};
+const $ = s => document.querySelector(s);
+const other = c => c === "it" ? "de" : "it";
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function renderSelectors(){
+  $("#countries").innerHTML = Object.keys(COUNTRY).map(c =>
+    `<button class="tog country ${state.country===c?"on":""}" data-c="${c}">${COUNTRY[c].name} · anni Trenta</button>`).join("");
+  $("#persons").innerHTML = PERS.map(p =>
+    `<button class="tog pers ${state.pers===p.id?"on":""}" data-p="${p.id}">${p.label}</button>`).join("");
+  document.querySelectorAll(".country").forEach(b => b.onclick = () => {
+    if (state.country === b.dataset.c) return;
+    state.country = b.dataset.c; state.open = null; state.confronto = false; render();
+  });
+  document.querySelectorAll(".pers").forEach(b => b.onclick = () => {
+    if (state.pers === b.dataset.p) return;
+    state.pers = b.dataset.p; state.open = null; state.confronto = false; render();
+  });
+}
+
+function schedaHTML(c, key){
+  const s = STR[c][key];
+  return `<div class="scheda" style="--c:${COUNTRY[c].color}">
+    <div class="tipo">${s.lim ? "Un limite del regime" : "Strumento del regime"} · ${COUNTRY[c].name}</div>
+    <h3>${esc(s.nome)}</h3>
+    <dl>
+      <dt>Che cos'è</dt><dd>${esc(s.cosa)}</dd>
+      ${s.quando ? `<dt>Quando nasce</dt><dd>${esc(s.quando)}</dd>` : ""}
+      <dt>${s.lim ? "Che cosa mostra" : "Che cosa dava, che cosa chiedeva"}</dt><dd>${esc(s.scambio)}</dd>
+    </dl></div>`;
+}
+
+function renderMain(){
+  const m = $("#main");
+  if (!state.pers){ m.innerHTML = `<div class="hint">Scegli un personaggio per vedere la sua settimana.</div>`; return; }
+  const c = state.country, p = PERS.find(x => x.id === state.pers);
+  const week = WEEK[c][state.pers];
+  let h = `<div class="weekhead"><h2><span class="flag" style="background:${COUNTRY[c].color}"></span>${p.label} · ${COUNTRY[c].name}</h2>
+    <span class="small">Tocca uno strumento per aprire la sua scheda; toccalo di nuovo per chiuderla.</span></div>
+    <div class="week" style="--c:${COUNTRY[c].color}">`;
+  week.forEach(([sc, key], i) => {
+    const s = key ? STR[c][key] : null;
+    h += `<div class="day"><div class="dn">${DAYS[i]}</div><p class="sc">${esc(sc)}</p>` +
+      (s ? `<button class="chip ${s.lim?"lim":""} ${state.open===i?"open":""}" data-i="${i}">${esc(s.nome)}</button>`
+         : `<span class="none">Nessuno strumento del regime</span>`) + `</div>`;
+  });
+  h += `</div>`;
+  if (state.open !== null) h += schedaHTML(c, week[state.open][1]);
+  h += `<div class="actions"><button class="primary" id="btnConf">${state.confronto ? "Nascondi il confronto" : `Lo stesso personaggio in ${COUNTRY[other(c)].name} →`}</button></div>`;
+  if (state.confronto) h += confrontoHTML();
+  m.innerHTML = h;
+  m.querySelectorAll(".chip").forEach(b => b.onclick = () => {
+    const i = +b.dataset.i; state.open = state.open === i ? null : i; renderMain();
+  });
+  $("#btnConf").onclick = () => {
+    state.confronto = !state.confronto; renderMain();
+    if (state.confronto) document.getElementById("conf").scrollIntoView({behavior:"smooth", block:"start"});
+  };
+  const ta = document.getElementById("risposta");
+  if (ta){ ta.value = answers[state.pers] || ""; ta.oninput = () => { answers[state.pers] = ta.value; }; }
+}
+
+const answers = {};
+
+function cell(c, key){
+  if (!key) return `<span class="n">nessuno strumento</span>`;
+  const s = STR[c][key];
+  return `<span class="s">${esc(s.nome)}</span>${s.lim ? `<span class="lim">un limite del regime</span>` : ""}`;
+}
+
+function confrontoHTML(){
+  const p = PERS.find(x => x.id === state.pers), cf = CONF[state.pers];
+  let h = `<section class="confronto" id="conf"><h2>${p.label}: Italia e Germania a confronto</h2>
+    <div class="diff"><p class="key">«${esc(cf.key)}»</p>${cf.righe.map(r => `<p>${esc(r)}</p>`).join("")}
+    ${cf.rinvio ? `<p class="rinvio">${esc(cf.rinvio)}</p>` : ""}</div>
+    <table><thead><tr><th class="d">Giorno</th><th class="it">Italia</th><th class="de">Germania</th></tr></thead><tbody>`;
+  DAYS.forEach((d, i) => {
+    h += `<tr><td class="dd">${d}</td><td>${cell("it", WEEK.it[state.pers][i][1])}</td><td>${cell("de", WEEK.de[state.pers][i][1])}</td></tr>`;
+  });
+  h += `</tbody></table>
+    <div class="domanda"><p>Quali di questi strumenti il personaggio poteva rifiutare, e che cosa gli costava farlo?</p>
+    <textarea id="risposta" placeholder="Scrivi qui il tuo ragionamento. Non c'è una risposta corretta."></textarea>
+    <p class="small">Il testo resta visibile finché la pagina è aperta: ricaricandola si cancella.</p></div></section>`;
+  return h;
+}
+
+function render(){ renderSelectors(); renderMain(); }
+render();
+</script>
+</body>
+</html>

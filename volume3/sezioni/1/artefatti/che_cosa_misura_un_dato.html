@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Che cosa misura un dato? Il consenso alla prova delle prove</title>
+<style>
+  :root{
+    --bg:#F5F0E8; --card:#fffdfa; --brown:#8B7355; --ink:#2b2620; --muted:#6f665a; --line:#d9d2c3;
+    --est:#5b7a8f; --ade:#9c5b45; --ent:#6b5a63; --nd:#7a8a5c;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: "Gill Sans", "Gill Sans MT", "Trebuchet MS", Calibri, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.5}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 22px 40px}
+  h1{font-weight:normal;font-size:1.8rem;margin:0 0 4px}
+  .sub{font-family:var(--sans);color:var(--muted);font-size:.95rem;margin:0 0 18px}
+  .intro{background:var(--card);border-left:4px solid var(--brown);padding:14px 18px;margin-bottom:20px}
+  .intro p{margin:0 0 8px} .intro p:last-child{margin:0}
+  .defs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .def{border:1px solid var(--line);padding:9px 12px;background:#fff;font-size:.95rem}
+  .def b{font-family:var(--sans);font-weight:normal;letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;display:block;margin-bottom:2px}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .count{font-family:var(--sans);color:var(--muted);font-size:.9rem}
+  .dots{display:flex;gap:6px;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--brown);background:var(--card);font-family:var(--sans);font-size:.78rem;color:var(--ink);padding:0}
+  .dot.cur{background:var(--brown);color:#fff}
+  .dot.done{box-shadow:inset 0 -4px 0 var(--dc)}
+  button{font-family:var(--sans);cursor:pointer}
+  .card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--brown);padding:20px 22px}
+  .fonte{font-family:var(--sans);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .dato{font-size:1.3rem;margin:0 0 18px}
+  .q{font-family:var(--sans);font-size:.92rem;color:var(--muted);margin:0 0 8px}
+  .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+  .opt{border:1.5px solid var(--oc);background:#fff;color:var(--oc);padding:11px 8px;border-radius:3px;font-size:.92rem;line-height:1.25}
+  .opt:hover{background:var(--bg)}
+  .opt.on{background:var(--oc);color:#fff}
+  label.why{font-family:var(--sans);font-size:.92rem;color:var(--muted);display:block;margin-bottom:4px}
+  input[type=text]{width:100%;font-family:var(--serif);font-size:1rem;padding:9px 10px;border:1px solid var(--line);background:#fff}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+  .sec{border:1.5px solid var(--brown);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:3px;font-size:.95rem}
+  .sec:disabled{opacity:.4;cursor:default}
+  .primary{border:none;background:var(--brown);color:#fff;padding:10px 16px;border-radius:3px;font-size:.95rem}
+  .primary:disabled{opacity:.4;cursor:default}
+  .lettura{margin-top:16px;border-left:5px solid var(--lc);background:#fff;padding:12px 16px}
+  .lettura .tag{font-family:var(--sans);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--lc);margin-bottom:4px}
+  .lettura p{margin:0}
+  .small{font-family:var(--sans);font-size:.82rem;color:var(--muted);margin:8px 0 0}
+  .riep{margin-top:22px}
+  .riep h2{font-weight:normal;font-size:1.3rem;margin:0 0 10px}
+  table{width:100%;border-collapse:collapse;background:var(--card);font-size:.92rem}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{font-family:var(--sans);font-weight:normal;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;background:var(--brown);color:#fff}
+  .pill{font-family:var(--sans);font-size:.82rem;color:#fff;padding:2px 7px;border-radius:2px;white-space:nowrap}
+  td .mot{display:block;font-style:italic;color:var(--muted);font-size:.88rem;margin-top:3px}
+  .chiusura{margin-top:16px;background:var(--card);border:1px solid var(--brown);padding:14px 18px}
+  .chiusura p{margin:0 0 8px} .chiusura p:last-child{margin:0}
+  @media (max-width:680px){ .opts{grid-template-columns:1fr 1fr} .defs{grid-template-columns:1fr} .wrap{padding:18px 12px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Che cosa misura un dato?</h1>
+  <p class="sub">Il consenso alla prova delle prove</p>
+
+  <div class="intro">
+    <p>Gli apparati del consenso «esistettero, costarono molto e raggiunsero quasi tutti». Che cosa producessero nella testa di chi li attraversava è un'altra questione, e non si risolve contandoli. Davanti a ogni dato, chiediti che cosa misura davvero.</p>
+    <div class="defs">
+      <div class="def" style="border-left:4px solid var(--est)"><b style="color:var(--est)">Estensione del regime</b>Fin dove arrivava: quante persone raggiungeva, inquadrava, obbligava.</div>
+      <div class="def" style="border-left:4px solid var(--ade)"><b style="color:var(--ade)">Adesione delle persone</b>Che cosa pensavano e volevano davvero quelle persone.</div>
+    </div>
+    <p><b style="font-family:var(--sans);font-weight:normal">Non è un quiz.</b> Non c'è punteggio. Per ogni scheda puoi confrontare la tua scelta con la lettura che si ricava dal capitolo; spesso la lettura più difendibile è che, sull'adesione, il dato da solo non decide.</p>
+  </div>
+
+  <div class="nav"><span class="count" id="count"></span><div class="dots" id="dots"></div></div>
+  <div id="card"></div>
+  <div id="riep"></div>
+</div>
+
+<script>
+const OPTS = [
+  {id:"est", label:"Misura l'estensione del regime", short:"Estensione", color:"var(--est)"},
+  {id:"ade", label:"Misura l'adesione delle persone", short:"Adesione", color:"var(--ade)"},
+  {id:"ent", label:"Misura entrambe", short:"Entrambe", color:"var(--ent)"},
+  {id:"nd",  label:"Non decide", short:"Non decide", color:"var(--nd)"}
+];
+const P = "Dal paragrafo «Gli strumenti del consenso»";
+const CARDS = [
+ {fonte:P, dato:"24 marzo 1929, un mese dopo i Patti Lateranensi: al plebiscito su lista unica, senza alternative in scheda, i sì superano il 98%.", lettura:"est",
+  commento:"È uno dei dati che, secondo il capitolo, misurano con precisione l'estensione del regime e con grande incertezza l'adesione. Senza un'alternativa in scheda, un sì non dice che cosa pensasse chi lo dava. Il legame con i Patti di un mese prima è il problema del nodo sul consenso."},
+ {fonte:"Dal capitolo sul fascismo italiano", dato:"Elezioni del 1924: il listone fascista ottiene il 64,9% dei voti.", lettura:"nd",
+  commento:"Si vota ancora con più liste, ma in un clima di violenza e con una legge elettorale costruita per premiare la lista più votata. Il regime non è ancora compiuto, quindi non c'è un'estensione da misurare; e il voto non fu espresso in condizioni libere, quindi non misura un'adesione pulita."},
+ {fonte:"Dal capitolo sulla Repubblica di Weimar", dato:"Novembre 1933: con i partiti ormai sciolti, la consultazione dà il 92% alla lista nazista.", lettura:"est",
+  commento:"Come per il plebiscito italiano del 1929: senza alternative reali, il dato dice fin dove il regime arrivava a portare gli elettori alle urne, non che cosa pensassero."},
+ {fonte:P, dato:"1931: su oltre milleduecento professori universitari, dodici rifiutano il giuramento di fedeltà al regime e perdono la cattedra.", lettura:"est",
+  commento:"Il capitolo lo mette fra i dati che misurano l'estensione. Sull'adesione la cifra «si presta a letture opposte», e il capitolo non la usa per chiuderne nessuna: dice quanto poco costasse adeguarsi, o quanto costasse non farlo."},
+ {fonte:P, dato:"Una tessera necessaria per lavorare.", lettura:"est",
+  commento:"Se senza tessera non si lavora, il numero degli iscritti dice fin dove arrivava il regime. Non distingue chi la prendeva per convinzione da chi la prendeva per lavorare."},
+ {fonte:P, dato:"La proiezione dei cinegiornali dell'Istituto Luce prima del film diventa obbligatoria in tutte le sale: li vedono milioni di spettatori.", lettura:"est",
+  commento:"Milioni di spettatori misurano quanto lontano arrivasse la propaganda. Che cosa ne restasse in chi era venuto per il film, il dato non lo dice."},
+ {fonte:P, dato:"L'Opera Nazionale Dopolavoro diventa la più grande organizzazione di massa del fascismo.", lettura:"est",
+  commento:"Misura quante persone raggiungeva. Ma il Dopolavoro offriva gite, sport, spacci aziendali: ci si poteva entrare per i vantaggi, non per il regime."},
+ {fonte:P, dato:"La gratitudine nata dal Dopolavoro era autentica, anche in chi di politica non voleva sapere.", lettura:"ade",
+  commento:"È l'unico dato della serie che parla di ciò che le persone provavano. Ma è gratitudine per un servizio, anche in chi di politica non voleva sapere: si può chiamarla adesione al regime? Qui il nodo sul consenso si fa più difficile, non più facile."},
+ {fonte:P, dato:"Germania, 1939: l'adesione alla Gioventù hitleriana è resa di fatto obbligatoria, con sanzioni per le famiglie renitenti.", lettura:"est",
+  commento:"Quando l'adesione è obbligatoria e chi si sottrae espone la famiglia a sanzioni, il numero degli iscritti misura solo la portata dell'obbligo. Sull'adesione non decide."},
+ {fonte:P, dato:"1931: il regime tenta di sciogliere le organizzazioni giovanili dell'Azione Cattolica; lo scontro si chiude con un compromesso che le lascia in piedi, ridimensionate.", lettura:"est",
+  commento:"Misura un limite dell'estensione: il regime voleva il monopolio dell'inquadramento dei ragazzi e non lo ottenne. Che chi restava nelle associazioni cattoliche fosse contrario al regime, il dato non lo dice."}
+];
+
+const state = {i:0, choice:CARDS.map(()=>null), why:CARDS.map(()=> ""), shown:CARDS.map(()=>false), riep:false};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const opt = id => OPTS.find(o => o.id === id);
+
+function renderNav(){
+  $("#count").textContent = `Scheda ${state.i+1} di ${CARDS.length}`;
+  $("#dots").innerHTML = CARDS.map((c,k) => {
+    const ch = state.choice[k];
+    return `<button class="dot ${k===state.i?"cur":""} ${ch?"done":""}" style="${ch?`--dc:${opt(ch).color}`:""}" data-k="${k}" aria-label="Scheda ${k+1}">${k+1}</button>`;
+  }).join("");
+  document.querySelectorAll(".dot").forEach(b => b.onclick = () => { state.i = +b.dataset.k; render(); });
+}
+
+function renderCard(){
+  const k = state.i, c = CARDS[k], ch = state.choice[k];
+  let h = `<div class="card"><div class="fonte">${esc(c.fonte)}</div><p class="dato">${esc(c.dato)}</p>
+    <p class="q">Che cosa misura questo dato?</p><div class="opts">`;
+  OPTS.forEach(o => { h += `<button class="opt ${ch===o.id?"on":""}" style="--oc:${o.color}" data-o="${o.id}">${o.label}</button>`; });
+  h += `</div><label class="why" for="why">Perché? Una riga.</label>
+    <input type="text" id="why" maxlength="220" value="${esc(state.why[k])}" placeholder="Il tuo motivo">
+    <div class="row"><button class="sec" id="btnShow" ${ch?"":"disabled"}>${state.shown[k]?"Nascondi la lettura del capitolo":"Confronta con la lettura del capitolo"}</button>
+    ${ch?"":`<span class="small" style="margin:0">Scegli prima una casella.</span>`}</div>`;
+  if (state.shown[k] && ch){
+    const l = opt(c.lettura);
+    h += `<div class="lettura" style="--lc:${l.color}"><div class="tag">Lettura che si ricava dal capitolo · ${l.short}</div><p>${esc(c.commento)}</p></div>`;
+  }
+  h += `<div class="row" style="justify-content:space-between">
+    <button class="sec" id="prev" ${k===0?"disabled":""}>← Scheda precedente</button>
+    ${k < CARDS.length-1 ? `<button class="primary" id="next">Scheda successiva →</button>` : `<button class="primary" id="fine">Vedi il riepilogo</button>`}
+    </div></div>`;
+  $("#card").innerHTML = h;
+  document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    state.choice[k] = state.choice[k] === b.dataset.o ? null : b.dataset.o;
+    if (!state.choice[k]) state.shown[k] = false;
+    render();
+  });
+  $("#why").oninput = e => { state.why[k] = e.target.value; if (state.riep) renderRiep(); };
+  $("#btnShow").onclick = () => { state.shown[k] = !state.shown[k]; render(); };
+  $("#prev").onclick = () => { if (state.i > 0){ state.i--; render(); } };
+  const n = $("#next"); if (n) n.onclick = () => { state.i++; render(); };
+  const f = $("#fine"); if (f) f.onclick = () => { state.riep = true; render(); $("#riep").scrollIntoView({behavior:"smooth", block:"start"}); };
+}
+
+function pill(id){ if(!id) return `<span class="small" style="margin:0">—</span>`; const o = opt(id); return `<span class="pill" style="background:${o.color}">${o.short}</span>`; }
+
+function renderRiep(){
+  if (!state.riep){ $("#riep").innerHTML = ""; return; }
+  let h = `<section class="riep"><h2>Riepilogo</h2>
+    <table><thead><tr><th>Dato</th><th>La tua scelta</th><th>Lettura del capitolo</th></tr></thead><tbody>`;
+  CARDS.forEach((c,k) => {
+    h += `<tr><td>${esc(c.dato)}</td><td>${pill(state.choice[k])}${state.why[k]?`<span class="mot">${esc(state.why[k])}</span>`:""}</td><td>${pill(c.lettura)}</td></tr>`;
+  });
+  h += `</tbody></table>
+    <div class="chiusura"><p>Nessun conteggio di risposte «giuste»: dove la tua scelta e la lettura del capitolo divergono, la domanda utile è quale delle due regge meglio, e perché.</p>
+    <p>Porta queste schede e le tue motivazioni nella <b>palestra di argomentazione</b>, al nodo «Ci fu consenso, o solo coercizione?».</p></div>
+    <p class="small">Scelte e motivazioni restano visibili finché la pagina è aperta: ricaricandola si cancellano.</p></section>`;
+  $("#riep").innerHTML = h;
+}
+
+function render(){ renderNav(); renderCard(); renderRiep(); }
+render();
+</script>
+</body>
+</html>
